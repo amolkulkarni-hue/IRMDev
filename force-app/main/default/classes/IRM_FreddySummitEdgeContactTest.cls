@@ -12,6 +12,12 @@ private class IRM_FreddySummitEdgeContactTest {
 
     @TestSetup
     static void setup() {
+        IM_Country__c testCountry = new IM_Country__c(Name = 'United States');
+        insert testCountry;
+        insert new IM_Alternative_Country_Name__c(
+            IM_Country__c = testCountry.Id, Alternative_Name__c = 'United States'
+        );
+
         insert new Account(
             Name = 'Summit Edge',
             BillingCountry = 'United States', BillingState = 'NY', BillingPostalCode = '11209'
