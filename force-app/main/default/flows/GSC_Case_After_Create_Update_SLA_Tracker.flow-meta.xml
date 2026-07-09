@@ -1,0 +1,781 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>57.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <decisions>
+        <description>Check the Current Status of the Case and assign the Start Date/Time of the Status whenever status gets changed</description>
+        <name>Check_Current_Status</name>
+        <label>Check Current Status</label>
+        <locationX>974</locationX>
+        <locationY>671</locationY>
+        <defaultConnector>
+            <targetReference>Check_Prior_Status</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Status_New</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>New</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_New_Start_Time</targetReference>
+            </connector>
+            <label>Status - New</label>
+        </rules>
+        <rules>
+            <name>Status_Assigned</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Assigned</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Assigned_Start_Time</targetReference>
+            </connector>
+            <label>Status - Assigned</label>
+        </rules>
+        <rules>
+            <name>Status_Waiting_for_Agent</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Waiting for Agent</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Waiting_for_Agent_Start_Time</targetReference>
+            </connector>
+            <label>Status - Waiting for Agent</label>
+        </rules>
+        <rules>
+            <name>Status_In_Progress</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>In Progress</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_In_Progress_Start_Time</targetReference>
+            </connector>
+            <label>Status - In Progress</label>
+        </rules>
+        <rules>
+            <name>Status</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Customer - On Hold</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Customer_On_Hold_Start_Time</targetReference>
+            </connector>
+            <label>Status - Customer On Hold</label>
+        </rules>
+        <rules>
+            <name>Status_Internal_On_Hold</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Internal - On Hold</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Internal_On_Hold_Start_Time</targetReference>
+            </connector>
+            <label>Status - Internal On Hold</label>
+        </rules>
+        <rules>
+            <name>Status_Reopened</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Reopened</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Reopened_Start_Time</targetReference>
+            </connector>
+            <label>Status - Reopened</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Check the Prior Status and calculate the Status Duration and display the duration in Days Hours Minutes and Seconds on the Case</description>
+        <name>Check_Prior_Status</name>
+        <label>Check Prior Status</label>
+        <locationX>974</locationX>
+        <locationY>1007</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Prior_Status_New</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record__Prior.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>New</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_New_Duration</targetReference>
+            </connector>
+            <label>Prior Status - New</label>
+        </rules>
+        <rules>
+            <name>Prior_Status_Assigned</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record__Prior.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Assigned</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Assigned_Duration</targetReference>
+            </connector>
+            <label>Prior Status - Assigned</label>
+        </rules>
+        <rules>
+            <name>Prior_Status_Waiting_for_Agent</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record__Prior.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Waiting for Agent</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Waiting_for_Agent_Duration</targetReference>
+            </connector>
+            <label>Prior Status - Waiting for Agent</label>
+        </rules>
+        <rules>
+            <name>Prior_Status_In_Progress</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record__Prior.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>In Progress</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_In_Progress_Duration</targetReference>
+            </connector>
+            <label>Prior Status - In Progress</label>
+        </rules>
+        <rules>
+            <name>Prior_Status_Customer_On_Hold</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record__Prior.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Customer - On Hold</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Customer_On_Hold_Duration</targetReference>
+            </connector>
+            <label>Prior Status - Customer On Hold</label>
+        </rules>
+        <rules>
+            <name>Prior_Status_Internal_On_Hold</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record__Prior.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Internal - On Hold</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Internal_On_Hold_Duration</targetReference>
+            </connector>
+            <label>Prior Status - Internal On Hold</label>
+        </rules>
+        <rules>
+            <name>Prior_Status_Reopened</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record__Prior.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Reopened</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Reopened_Duration</targetReference>
+            </connector>
+            <label>Prior Status - Reopened</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>This flow is tracking the Duration of each Status on the Global Service Case.
+Algo for the flow: 
+1) Check if the Status is changed or for newly created Case.
+2) For Newly created cases, its updating the Start Date/Time of the Case where Status= New
+3) For Status is changed, its updating the Start Date/Time of the Case according to the Current Status.
+4) It is checking the Prior Status on the Case and updating the two fields for Status Duration
+Field 1: Status Duration (in Seconds); it is calculating the Status duration from the Start Date/Time of the Prior Status. It will also consider the Prior Duration of the Status and add this in the Status Duration.
+Field 2: Converting the Status Duration in Days Hours Minutes Seconds and displaying those.
+
+Note: Using the After Flow to update SLA as the Waiting for Agent Status is getting updated after the record is getting saved.</description>
+        <name>Global_Service_Case_Updates</name>
+        <label>Global Service Case Updates</label>
+        <locationX>974</locationX>
+        <locationY>335</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Track_Status_Duration</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Status</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Check_Current_Status</targetReference>
+            </connector>
+            <label>Track Status Duration</label>
+        </rules>
+        <rules>
+            <name>Newly_Created_Cases</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Status</leftValueReference>
+                <operator>WasSet</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Check_Current_Status</targetReference>
+            </connector>
+            <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+            <label>Newly Created Cases</label>
+        </rules>
+    </decisions>
+    <description>Calculate the each Status Duration for Global Service Case. 
+For reference, check the user story #14209 on Gitlab</description>
+    <environments>Default</environments>
+    <formulas>
+        <description>Calculate the Total Duration in Seconds where Status = Assigned</description>
+        <name>Assigned_Duration_InSeconds</name>
+        <dataType>Number</dataType>
+        <expression>IF(ISBLANK({!$Record.GSC_Assigned_Duration__c}), VALUE(TEXT( {!$Flow.CurrentDateTime} - {!$Record__Prior.GSC_Assigned_Start_Time__c} ) )*84600,
+(VALUE(TEXT( {!$Flow.CurrentDateTime} - {!$Record__Prior.GSC_Assigned_Start_Time__c} ) )*84600) + {!$Record__Prior.GSC_Assigned_Duration__c}
+)</expression>
+        <scale>0</scale>
+    </formulas>
+    <formulas>
+        <description>Calculate the Total Duration in Seconds where Status = Customer - On Hold</description>
+        <name>CustomerOnHold_Duration_InSeconds</name>
+        <dataType>Number</dataType>
+        <expression>IF(ISBLANK({!$Record.GSC_On_Hold_Customer_Duration__c}), VALUE(TEXT( {!$Flow.CurrentDateTime} - {!$Record__Prior.GSC_On_Hold_Customer_Start_Time__c}) )*84600,
+(VALUE(TEXT( {!$Flow.CurrentDateTime} - {!$Record__Prior.GSC_On_Hold_Customer_Start_Time__c} ) )*84600) + {!$Record__Prior.GSC_On_Hold_Customer_Duration__c}
+)</expression>
+        <scale>0</scale>
+    </formulas>
+    <formulas>
+        <description>Calculate the Total Duration in Seconds where Status = In Progress</description>
+        <name>InProgress_Duration_inSeconds</name>
+        <dataType>Number</dataType>
+        <expression>IF(ISBLANK({!$Record.GSC_In_Progress_Duration__c}), VALUE(TEXT( {!$Flow.CurrentDateTime} - {!$Record__Prior.GSC_In_Progress_Start_Time__c} ) )*84600,
+(VALUE(TEXT( {!$Flow.CurrentDateTime} - {!$Record__Prior.GSC_In_Progress_Start_Time__c} ) )*84600) + {!$Record__Prior.GSC_In_Progress_Duration__c}
+)</expression>
+        <scale>0</scale>
+    </formulas>
+    <formulas>
+        <description>Calculate the Total Duration in Seconds where Status = Internal - On Hold</description>
+        <name>InternalOnHold_Duration_InSeconds</name>
+        <dataType>Number</dataType>
+        <expression>IF(ISBLANK({!$Record.GSC_On_Hold_Internal_Duration__c}), VALUE(TEXT( {!$Flow.CurrentDateTime} - {!$Record__Prior.GSC_On_Hold_Internal_Start_Time__c} ) )*84600,
+(VALUE(TEXT( {!$Flow.CurrentDateTime} - {!$Record__Prior.GSC_On_Hold_Internal_Start_Time__c} ) )*84600) + {!$Record__Prior.GSC_On_Hold_Internal_Duration__c}
+)</expression>
+        <scale>0</scale>
+    </formulas>
+    <formulas>
+        <description>Calculate the Total Duration in Seconds where Status = New</description>
+        <name>New_Duration_inSeconds</name>
+        <dataType>Number</dataType>
+        <expression>IF(ISBLANK({!$Record.GSC_New_Duration__c}), VALUE(TEXT( {!$Flow.CurrentDateTime} - {!$Record__Prior.GSC_New_Start_Time__c} ) )*84600,
+(VALUE(TEXT( {!$Flow.CurrentDateTime} - {!$Record__Prior.GSC_New_Start_Time__c} ) )*84600) + {!$Record__Prior.GSC_New_Duration__c}
+)</expression>
+        <scale>0</scale>
+    </formulas>
+    <formulas>
+        <description>Calculate the Total Duration in Seconds where Status = Reopened</description>
+        <name>Reopened_Duration_InSeconds</name>
+        <dataType>Number</dataType>
+        <expression>IF(ISBLANK({!$Record.GSC_Reopened_Duration__c}), VALUE(TEXT( {!$Flow.CurrentDateTime} - {!$Record__Prior.GSC_Reopened_Start_Time__c} ) )*84600,
+(VALUE(TEXT( {!$Flow.CurrentDateTime} - {!$Record__Prior.GSC_Reopened_Start_Time__c} ) )*84600) + {!$Record__Prior.GSC_Reopened_Duration__c}
+)</expression>
+        <scale>0</scale>
+    </formulas>
+    <formulas>
+        <description>Convert the Total Duration into Days Hours Minutes Seconds for Status = Assigned</description>
+        <name>Total_Assigned_Duration</name>
+        <dataType>String</dataType>
+        <expression>TEXT(FLOOR( {!$Record.GSC_Assigned_Duration__c} / (24 * 3600))) &amp;&apos; Days &apos;
+&amp; TEXT(FLOOR(MOD({!$Record.GSC_Assigned_Duration__c},(2.4 * 3600) )  / 3600)) &amp;&apos; Hours &apos;
+&amp; TEXT(FLOOR((MOD((MOD({!$Record.GSC_Assigned_Duration__c},(24 * 3600) )), 3600 ))/60))&amp;&apos; Minutes &apos; 
+&amp; TEXT(FLOOR((MOD((MOD((MOD({!$Record.GSC_Assigned_Duration__c},(24 * 3600))),3600)),60))))&amp;&apos; Seconds &apos;</expression>
+    </formulas>
+    <formulas>
+        <description>Convert the Total Duration into Days Hours Minutes Seconds for Status = Customer - On Hold</description>
+        <name>Total_CustomerOnHold_Duration</name>
+        <dataType>String</dataType>
+        <expression>TEXT(FLOOR( {!$Record.GSC_On_Hold_Customer_Duration__c} / (24 * 3600))) &amp;&apos; Days &apos;
+&amp; TEXT(FLOOR(MOD({!$Record.GSC_On_Hold_Customer_Duration__c},(24 * 3600) )  / 3600)) &amp;&apos; Hours &apos;
+&amp; TEXT(FLOOR((MOD((MOD({!$Record.GSC_On_Hold_Customer_Duration__c},(24 * 3600) )), 3600 ))/60))&amp;&apos; Minutes &apos; 
+&amp; TEXT(FLOOR((MOD((MOD((MOD({!$Record.GSC_On_Hold_Customer_Duration__c},(24 * 3600))),3600)),60))))&amp;&apos; Seconds &apos;</expression>
+    </formulas>
+    <formulas>
+        <description>Convert the Total Duration into Days Hours Minutes Seconds for Status = In Progress</description>
+        <name>Total_InProgress_Duration</name>
+        <dataType>String</dataType>
+        <expression>TEXT(FLOOR( {!$Record.GSC_In_Progress_Duration__c} / (24 * 3600))) &amp;&apos; Days &apos;
+&amp; TEXT(FLOOR(MOD({!$Record.GSC_In_Progress_Duration__c},(24 * 3600) )  / 3600)) &amp;&apos; Hours &apos;
+&amp; TEXT(FLOOR((MOD((MOD({!$Record.GSC_In_Progress_Duration__c},(24 * 3600) )), 3600 ))/60))&amp;&apos; Minutes &apos; 
+&amp; TEXT(FLOOR((MOD((MOD((MOD({!$Record.GSC_In_Progress_Duration__c},(24 * 3600))),3600)),60))))&amp;&apos; Seconds &apos;</expression>
+    </formulas>
+    <formulas>
+        <description>Convert the Total Duration into Days Hours Minutes Seconds for Status = Internal - On Hold</description>
+        <name>Total_InternalOnHold_Duration</name>
+        <dataType>String</dataType>
+        <expression>TEXT(FLOOR( {!$Record.GSC_On_Hold_Internal_Duration__c} / (24 * 3600))) &amp;&apos; Days &apos;
+&amp; TEXT(FLOOR((MOD({!$Record.GSC_On_Hold_Internal_Duration__c},(24 * 3600) ) ) / 3600)) &amp;&apos; Hours &apos;
+&amp; TEXT(FLOOR((MOD((MOD({!$Record.GSC_On_Hold_Internal_Duration__c},(24 * 3600) )), 3600 ))/60))&amp;&apos; Minutes &apos; 
+&amp; TEXT(FLOOR((MOD((MOD((MOD({!$Record.GSC_On_Hold_Internal_Duration__c},(24 * 3600))),3600)),60))))&amp;&apos; Seconds &apos;</expression>
+    </formulas>
+    <formulas>
+        <description>Convert the Total Duration into Days Hours Minutes Seconds for Status = New</description>
+        <name>Total_New_Duration</name>
+        <dataType>String</dataType>
+        <expression>TEXT(FLOOR( {!$Record.GSC_New_Duration__c} / (24 * 3600))) &amp;&apos; Days &apos;
+&amp; TEXT(FLOOR(MOD({!$Record.GSC_New_Duration__c},(24 * 3600) )  / 3600)) &amp;&apos; Hours &apos;
+&amp; TEXT(FLOOR((MOD((MOD({!$Record.GSC_New_Duration__c},(24 * 3600) )), 3600 ))/60))&amp;&apos; Minutes &apos; 
+&amp; TEXT(FLOOR((MOD((MOD((MOD({!$Record.GSC_New_Duration__c},(24 * 3600))),3600)),60))))&amp;&apos; Seconds &apos;</expression>
+    </formulas>
+    <formulas>
+        <description>Convert the Total Duration into Days Hours Minutes Seconds for Status = Reopened</description>
+        <name>Total_Reopened_Duration</name>
+        <dataType>String</dataType>
+        <expression>TEXT(FLOOR( {!$Record.GSC_Reopened_Duration__c} / (24 * 3600))) &amp;&apos; Days &apos;
+&amp; TEXT(FLOOR(MOD({!$Record.GSC_Reopened_Duration__c},(24 * 3600) )  / 3600)) &amp;&apos; Hours &apos;
+&amp; TEXT(FLOOR((MOD((MOD({!$Record.GSC_Reopened_Duration__c},(24 * 3600) )), 3600 ))/60))&amp;&apos; Minutes &apos; 
+&amp; TEXT(FLOOR((MOD((MOD((MOD({!$Record.GSC_Reopened_Duration__c},(24 * 3600))),3600)),60))))&amp;&apos; Seconds &apos;</expression>
+    </formulas>
+    <formulas>
+        <description>Convert the Total Duration into Days Hours Minutes Seconds for Status = Waiting for Agents</description>
+        <name>Total_WaitingforAgent_Duration</name>
+        <dataType>String</dataType>
+        <expression>TEXT(FLOOR( {!$Record.GSC_Waiting_for_Agent_Duration__c} / (24 * 3600))) &amp;&apos; Days &apos;
+&amp; TEXT(FLOOR(MOD({!$Record.GSC_Waiting_for_Agent_Duration__c},(24 * 3600) )  / 3600)) &amp;&apos; Hours &apos;
+&amp; TEXT(FLOOR((MOD((MOD({!$Record.GSC_Waiting_for_Agent_Duration__c},(24 * 3600) )), 3600 ))/60))&amp;&apos; Minutes &apos; 
+&amp; TEXT(FLOOR((MOD((MOD((MOD({!$Record.GSC_Waiting_for_Agent_Duration__c},(24 * 3600))),3600)),60))))&amp;&apos; Seconds &apos;</expression>
+    </formulas>
+    <formulas>
+        <description>Calculate the Total Duration in Seconds where Status = Waiting for Agent</description>
+        <name>WaitingForAgent_Duration_InSeconds</name>
+        <dataType>Number</dataType>
+        <expression>IF(ISBLANK({!$Record.GSC_Waiting_for_Agent_Duration__c}), VALUE(TEXT( {!$Flow.CurrentDateTime} - {!$Record__Prior.GSC_Waiting_for_Agent_Start_Time__c} ) )*84600,
+(VALUE(TEXT( {!$Flow.CurrentDateTime} - {!$Record__Prior.GSC_Waiting_for_Agent_Start_Time__c} ) )*84600) + {!$Record__Prior.GSC_Waiting_for_Agent_Duration__c}
+)</expression>
+        <scale>0</scale>
+    </formulas>
+    <interviewLabel>GSC Case - After Create/Update SLA Tracker {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>GSC Case - After Create&amp;Update SLA Tracker</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <description>Calculate and Display the Total Duration for Status = Assigned</description>
+        <name>Set_Assigned_Duration</name>
+        <label>Set Assigned Duration</label>
+        <locationX>314</locationX>
+        <locationY>1127</locationY>
+        <connector>
+            <targetReference>Set_Total_Assigned_Duration</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>GSC_Assigned_Duration__c</field>
+            <value>
+                <elementReference>Assigned_Duration_InSeconds</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <description>Set the Start Date/Time for Status = Assigned</description>
+        <name>Set_Assigned_Start_Time</name>
+        <label>Set Assigned Start Time</label>
+        <locationX>314</locationX>
+        <locationY>791</locationY>
+        <connector>
+            <targetReference>Check_Prior_Status</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>GSC_Assigned_Start_Time__c</field>
+            <value>
+                <elementReference>$Flow.CurrentDateTime</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <description>Calculate and Display the Total Duration for Status = Customer - On Hold</description>
+        <name>Set_Customer_On_Hold_Duration</name>
+        <label>Set Customer - On Hold Duration</label>
+        <locationX>1106</locationX>
+        <locationY>1127</locationY>
+        <connector>
+            <targetReference>Set_Total_Customer_On_Hold_Duration</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>GSC_On_Hold_Customer_Duration__c</field>
+            <value>
+                <elementReference>CustomerOnHold_Duration_InSeconds</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <description>Set the Start Date/Time for Status = Customer - On Hold</description>
+        <name>Set_Customer_On_Hold_Start_Time</name>
+        <label>Set Customer - On Hold Start Time</label>
+        <locationX>1106</locationX>
+        <locationY>791</locationY>
+        <connector>
+            <targetReference>Check_Prior_Status</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>GSC_On_Hold_Customer_Start_Time__c</field>
+            <value>
+                <elementReference>$Flow.CurrentDateTime</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <description>Calculate and Display the Total Duration for Status = In Progress</description>
+        <name>Set_In_Progress_Duration</name>
+        <label>Set In Progress Duration</label>
+        <locationX>842</locationX>
+        <locationY>1127</locationY>
+        <connector>
+            <targetReference>Set_Total_In_Progress_Duration</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>GSC_In_Progress_Duration__c</field>
+            <value>
+                <elementReference>InProgress_Duration_inSeconds</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <description>Set the Start Date/Time for Status = In Progress</description>
+        <name>Set_In_Progress_Start_Time</name>
+        <label>Set In Progress Start Time</label>
+        <locationX>842</locationX>
+        <locationY>791</locationY>
+        <connector>
+            <targetReference>Check_Prior_Status</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>GSC_In_Progress_Start_Time__c</field>
+            <value>
+                <elementReference>$Flow.CurrentDateTime</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <description>Calculate and Display the Total Duration for Status = Internal - On Hold</description>
+        <name>Set_Internal_On_Hold_Duration</name>
+        <label>Set Internal - On Hold Duration</label>
+        <locationX>1370</locationX>
+        <locationY>1127</locationY>
+        <connector>
+            <targetReference>Set_Total_Internal_On_Hold_Duration</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>GSC_On_Hold_Internal_Duration__c</field>
+            <value>
+                <elementReference>InternalOnHold_Duration_InSeconds</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <description>Set the Start Date/Time for Status = Internal - On Hold</description>
+        <name>Set_Internal_On_Hold_Start_Time</name>
+        <label>Set Internal - On Hold Start Time</label>
+        <locationX>1370</locationX>
+        <locationY>791</locationY>
+        <connector>
+            <targetReference>Check_Prior_Status</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>GSC_On_Hold_Internal_Start_Time__c</field>
+            <value>
+                <elementReference>$Flow.CurrentDateTime</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <description>Calculate and Display the Total Duration for Status = New</description>
+        <name>Set_New_Duration</name>
+        <label>Set New Duration</label>
+        <locationX>50</locationX>
+        <locationY>1127</locationY>
+        <connector>
+            <targetReference>Set_Total_New_Duration</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>GSC_New_Duration__c</field>
+            <value>
+                <elementReference>New_Duration_inSeconds</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <description>Set the Start Date/Time for Status = New</description>
+        <name>Set_New_Start_Time</name>
+        <label>Set New Start Time</label>
+        <locationX>50</locationX>
+        <locationY>791</locationY>
+        <connector>
+            <targetReference>Check_Prior_Status</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>GSC_New_Start_Time__c</field>
+            <value>
+                <elementReference>$Flow.CurrentDateTime</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <description>Calculate and Display the Total Duration for Status = Reopened</description>
+        <name>Set_Reopened_Duration</name>
+        <label>Set Reopened Duration</label>
+        <locationX>1634</locationX>
+        <locationY>1127</locationY>
+        <connector>
+            <targetReference>Set_Total_Reopened_Duration</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>GSC_Reopened_Duration__c</field>
+            <value>
+                <elementReference>Reopened_Duration_InSeconds</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <description>Set the Start Date/Time for Status = Reopened</description>
+        <name>Set_Reopened_Start_Time</name>
+        <label>Set Reopened Start Time</label>
+        <locationX>1634</locationX>
+        <locationY>791</locationY>
+        <connector>
+            <targetReference>Check_Prior_Status</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>GSC_Reopened_Start_Time__c</field>
+            <value>
+                <elementReference>$Flow.CurrentDateTime</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Set_Total_Assigned_Duration</name>
+        <label>Set Total Assigned Duration</label>
+        <locationX>314</locationX>
+        <locationY>1247</locationY>
+        <inputAssignments>
+            <field>GSC_Total_Assigned_Duration__c</field>
+            <value>
+                <elementReference>Total_Assigned_Duration</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Set_Total_Customer_On_Hold_Duration</name>
+        <label>Set Total Customer - On Hold Duration</label>
+        <locationX>1106</locationX>
+        <locationY>1247</locationY>
+        <inputAssignments>
+            <field>GSC_Total_On_Hold_Customer_Duration__c</field>
+            <value>
+                <elementReference>Total_CustomerOnHold_Duration</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Set_Total_In_Progress_Duration</name>
+        <label>Set Total In Progress Duration</label>
+        <locationX>842</locationX>
+        <locationY>1247</locationY>
+        <inputAssignments>
+            <field>GSC_Total_In_Progress_Duration__c</field>
+            <value>
+                <elementReference>Total_InProgress_Duration</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Set_Total_Internal_On_Hold_Duration</name>
+        <label>Set Total Internal - On Hold Duration</label>
+        <locationX>1370</locationX>
+        <locationY>1247</locationY>
+        <inputAssignments>
+            <field>GSC_Total_On_Hold_Internal_Duration__c</field>
+            <value>
+                <elementReference>Total_InternalOnHold_Duration</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Set_Total_New_Duration</name>
+        <label>Set Total New Duration</label>
+        <locationX>50</locationX>
+        <locationY>1247</locationY>
+        <inputAssignments>
+            <field>GSC_Total_New_Duration__c</field>
+            <value>
+                <elementReference>Total_New_Duration</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Set_Total_Reopened_Duration</name>
+        <label>Set Total Reopened Duration</label>
+        <locationX>1634</locationX>
+        <locationY>1247</locationY>
+        <inputAssignments>
+            <field>GSC_Total_Reopened_Duration__c</field>
+            <value>
+                <elementReference>Total_Reopened_Duration</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Set_Total_Waiting_for_Agent_Duration</name>
+        <label>Set Total Waiting for Agent Duration</label>
+        <locationX>578</locationX>
+        <locationY>1247</locationY>
+        <inputAssignments>
+            <field>GSC_Total_Waiting_for_Agent_Duration__c</field>
+            <value>
+                <elementReference>Total_WaitingforAgent_Duration</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <description>Calculate and Display the Total Duration for Status = Waiting for Agent</description>
+        <name>Set_Waiting_for_Agent_Duration</name>
+        <label>Set Waiting for Agent Duration</label>
+        <locationX>578</locationX>
+        <locationY>1127</locationY>
+        <connector>
+            <targetReference>Set_Total_Waiting_for_Agent_Duration</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>GSC_Waiting_for_Agent_Duration__c</field>
+            <value>
+                <elementReference>WaitingForAgent_Duration_InSeconds</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <description>Set the Start Date/Time for Status = Waiting for Agent</description>
+        <name>Set_Waiting_for_Agent_Start_Time</name>
+        <label>Set Waiting for Agent Start Time</label>
+        <locationX>578</locationX>
+        <locationY>791</locationY>
+        <connector>
+            <targetReference>Check_Prior_Status</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>GSC_Waiting_for_Agent_Start_Time__c</field>
+            <value>
+                <elementReference>$Flow.CurrentDateTime</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>848</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Global_Service_Case_Updates</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>RecordType_Name__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Global Service Case</stringValue>
+            </value>
+        </filters>
+        <object>Case</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+    <triggerOrder>600</triggerOrder>
+</Flow>

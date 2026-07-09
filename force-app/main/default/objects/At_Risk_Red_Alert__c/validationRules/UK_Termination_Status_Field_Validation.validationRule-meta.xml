@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>UK_Termination_Status_Field_Validation</fullName>
+    <active>true</active>
+    <description>Case #09102466 At Risk Process/Retention/Red Alert Process Enhancement and Standardization for UK in Salesforce
+Limited profiles can select &quot;Terminated&apos; value on Status Field</description>
+    <errorConditionFormula>AND(ISCHANGED(Status__c), 
+(TEXT(Status__c)) == &quot;Terminated&quot;, 
+NOT($Setup.AtRisk_StatusField_EditAccess_Profiles__c.Skip_validation_rule__c),NOT(OR(($Profile.Name == &apos;IME_SC_Account_Admin&apos;),($Profile.Name == &apos;IME_SC_In_Country_Admin&apos;),($Profile.Name == &apos;IME_SC_Manager&apos;),($Profile.Name == &apos;IME_SC_Representative&apos;))))</errorConditionFormula>
+    <errorMessage>Login Profile cannot change status to &quot;Terminated&quot;</errorMessage>
+</ValidationRule>

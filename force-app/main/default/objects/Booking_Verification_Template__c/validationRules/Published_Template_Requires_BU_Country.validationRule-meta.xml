@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Published_Template_Requires_BU_Country</fullName>
+    <active>true</active>
+    <description>Ensures that a template cannot be Published without both Business Unit and Country specified.</description>
+    <errorConditionFormula>AND(
+    ISPICKVAL(Status__c, &quot;Published&quot;),
+    OR(ISBLANK(TEXT(Business_Unit__c)), ISBLANK(TEXT(Country__c)))
+)</errorConditionFormula>
+    <errorMessage>Business Unit and Country are required before a template can be Published.</errorMessage>
+</ValidationRule>

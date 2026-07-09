@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>59.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <decisions>
+        <description>Record is new: Assign the request to a queue and update the Open Date</description>
+        <name>new_record_1</name>
+        <label>New Record</label>
+        <locationX>281</locationX>
+        <locationY>323</locationY>
+        <defaultConnector>
+            <targetReference>Update_Assignment_Date</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>FALSE_New Record</defaultConnectorLabel>
+        <rules>
+            <name>TRUE_new_record_1</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>New_Record</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_the_queue</targetReference>
+            </connector>
+            <label>TRUE_New Record</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Check if any opportunity is related to the Record</description>
+        <name>RelatedOppNOTBlank</name>
+        <label>Related Opp NOT Blank</label>
+        <locationX>710</locationX>
+        <locationY>539</locationY>
+        <defaultConnectorLabel>FALSE_Related Opp NOT Blank</defaultConnectorLabel>
+        <rules>
+            <name>TRUE_RelatedOppNOTBlank</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Related_Opportunity__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>UpdateRevenueFieldValue</targetReference>
+            </connector>
+            <label>TRUE_Related Opp NOT Blank</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>When the request is assigned from the queue to a user update the First Assignment Date</description>
+        <name>Update_Assignment_Date</name>
+        <label>Update_Assignment_Date</label>
+        <locationX>512</locationX>
+        <locationY>431</locationY>
+        <defaultConnector>
+            <targetReference>RelatedOppNOTBlank</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>FALSE_Update_Assignment_Date</defaultConnectorLabel>
+        <rules>
+            <name>TRUE_Update_Assignment_Date</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>OwnerUpdate</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assignment_Date_Update</targetReference>
+            </connector>
+            <label>TRUE_Update_Assignment_Date</label>
+        </rules>
+    </decisions>
+    <description>Migrated from the Corporate_Request Update process using multiple criteria.
+When the request is created, assign to Legal Request Queue &amp; Allow for the first Assignment (when changes from Queue to a user on legal team) to be date stamped in the First Assignment Date field
+(For reference use the gitlab story #18395)</description>
+    <environments>Default</environments>
+    <formulas>
+        <description>Evaluates the current date and time</description>
+        <name>CurrentDate</name>
+        <dataType>DateTime</dataType>
+        <expression>NOW()</expression>
+    </formulas>
+    <formulas>
+        <description>Evaluates if the record is new</description>
+        <name>New_Record</name>
+        <dataType>Boolean</dataType>
+        <expression>ISNEW()</expression>
+    </formulas>
+    <formulas>
+        <description>Evaluates if the Owner is assigned from a Queue to a User</description>
+        <name>OwnerUpdate</name>
+        <dataType>Boolean</dataType>
+        <expression>AND(BEGINS(PRIORVALUE( {!$Record.OwnerId} ) ,  &quot;00G&quot;)  ,BEGINS({!$Record.OwnerId} , &quot;005&quot;) ,
+
+  ISNULL( DATETIMEVALUE({!$Record.Assigned_Date__c}) ))</expression>
+    </formulas>
+    <interviewLabel>Corporate_Request Update {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Corporate_Request Update</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <description>Fetch the Legal Request Queue</description>
+        <name>Get_the_queue</name>
+        <label>Get the Queue</label>
+        <locationX>50</locationX>
+        <locationY>431</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Update_Owner_to_Queue</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Type</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Queue</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Legal_Request_Queue</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Group</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordUpdates>
+        <description>Update the First Assigned Date field with current date and time</description>
+        <name>Assignment_Date_Update</name>
+        <label>Assignment_Date_Update</label>
+        <locationX>314</locationX>
+        <locationY>539</locationY>
+        <inputAssignments>
+            <field>Assigned_Date__c</field>
+            <value>
+                <elementReference>CurrentDate</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <description>Updates the Open Date with Created Date
+Assigns the owner to Legal Request Queue</description>
+        <name>Update_Owner_to_Queue</name>
+        <label>Update_Owner_to_Queue</label>
+        <locationX>50</locationX>
+        <locationY>539</locationY>
+        <inputAssignments>
+            <field>Open_Date__c</field>
+            <value>
+                <elementReference>$Record.CreatedDate</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>OwnerId</field>
+            <value>
+                <elementReference>Get_the_queue.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <description>If the Related Customer Account field is null populate it with Opportunity Upsell Customer ID</description>
+        <name>UpdateCustomerAccount</name>
+        <label>Update Customer Account</label>
+        <locationX>578</locationX>
+        <locationY>863</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Related_Customer_Account__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Related_Customer_Account__c</field>
+            <value>
+                <elementReference>$Record.Related_Opportunity__r.Upsell_Customer_ID__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <description>If the Related Account field is null populate it with Opportunity Account</description>
+        <name>UpdateRelatedAccount</name>
+        <label>Update Related Account</label>
+        <locationX>578</locationX>
+        <locationY>755</locationY>
+        <connector>
+            <targetReference>UpdateCustomerAccount</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Related_Account__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Related_Account__c</field>
+            <value>
+                <elementReference>$Record.Related_Opportunity__r.AccountId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <description>If the Revenue for this Deal field is null populate it with  Opportunity Amount</description>
+        <name>UpdateRevenueFieldValue</name>
+        <label>Update Revenue Field Value</label>
+        <locationX>578</locationX>
+        <locationY>647</locationY>
+        <connector>
+            <targetReference>UpdateRelatedAccount</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Revenue_for_this_Deal__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Revenue_for_this_Deal__c</field>
+            <value>
+                <elementReference>$Record.Related_Opportunity__r.Amount</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>155</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>new_record_1</targetReference>
+        </connector>
+        <filterFormula>OR(ISNEW(),
+BEGINS(PRIORVALUE( {!$Record.OwnerId} ) ,  &quot;00G&quot;)  ,BEGINS({!$Record.OwnerId} , &quot;005&quot;) ,
+NOT(ISNULL({!$Record.Related_Opportunity__c})))</filterFormula>
+        <object>Corporate_Request__c</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>58.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <decisions>
+        <description>Lead Created or Edited, no Sequence and Date Added to Sequence</description>
+        <name>Lead_Created_Edited_no_Sequence</name>
+        <label>Lead Created or Edited, no Sequence and Date Added to Sequence</label>
+        <locationX>182</locationX>
+        <locationY>431</locationY>
+        <defaultConnector>
+            <targetReference>myRule_1_A1</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Lead_Created_or_Edited_no_Sequence_and_Date_Added_to_Sequence</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Outreach_Initial_Sequence_Name__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Initial_Sequence_Name_ID_Date</targetReference>
+            </connector>
+            <label>Lead Created or Edited, no Sequence and Date Added to Sequence</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>myRule_1</name>
+        <label>Current Sequence Name changed</label>
+        <locationX>578</locationX>
+        <locationY>323</locationY>
+        <defaultConnector>
+            <targetReference>myRule_5</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>FALSE_Current Sequence Name changed</defaultConnectorLabel>
+        <rules>
+            <name>TRUE_myRule_1</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Outreach_Current_Sequence_Name__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Outreach_Current_Sequence_Name__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Lead_Created_Edited_no_Sequence</targetReference>
+            </connector>
+            <label>TRUE_Current Sequence Name changed</label>
+        </rules>
+        <rules>
+            <name>Lead_Created_or_Edited_no_Sequence</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Outreach_Current_Sequence_Name__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Outreach_Initial_Sequence_Name__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Initial_Sequence_Name_ID</targetReference>
+            </connector>
+            <label>Lead Created or Edited, no Sequence</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>myRule_5</name>
+        <label>Current Sequence Name is blanked out</label>
+        <locationX>974</locationX>
+        <locationY>431</locationY>
+        <defaultConnectorLabel>FALSE_Current Sequence Name is blanked out</defaultConnectorLabel>
+        <rules>
+            <name>TRUE_myRule_5</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Outreach_Current_Sequence_Name__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Outreach_Current_Sequence_Name__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Outreach_Current_Sequence_Name__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>myRule_5_A1</targetReference>
+            </connector>
+            <label>TRUE_Current Sequence Name is blanked out</label>
+        </rules>
+    </decisions>
+    <description>Migrated from the Outreach Fill/Update Date Added to Sequence process using multiple criteria.
+Fills in the &apos;Date Added to Sequence&apos; field when Current Sequence name is changed/filled in
+
+Migrated from the Outreach - Update Initial Sequence - Leads process using Lead Created or Edited, no Sequence criteria.
+Updates the Initial Sequence fields when Current Sequence fields are filled in for first time on a Lead</description>
+    <environments>Default</environments>
+    <formulas>
+        <name>formula_1_myRule_1_A1_9844765640</name>
+        <dataType>Date</dataType>
+        <expression>TODAY()</expression>
+    </formulas>
+    <formulas>
+        <name>formula_2_myRule_5_A1_6826338347</name>
+        <dataType>Date</dataType>
+        <expression>null</expression>
+    </formulas>
+    <interviewLabel>Outreach Fill/Update Date Added to Sequence_2 {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Outreach Fill/Update Date Added to Sequence &amp; Update Initial Sequence Details</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <name>myRule_1_A1</name>
+        <label>Update Date Added to Sequence</label>
+        <locationX>314</locationX>
+        <locationY>539</locationY>
+        <inputAssignments>
+            <field>Outreach_Date_Added_to_Sequence__c</field>
+            <value>
+                <elementReference>formula_1_myRule_1_A1_9844765640</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>myRule_5_A1</name>
+        <label>Update Date Added to Sequence to Blank</label>
+        <locationX>842</locationX>
+        <locationY>539</locationY>
+        <inputAssignments>
+            <field>Outreach_Date_Added_to_Sequence__c</field>
+            <value>
+                <elementReference>formula_2_myRule_5_A1_6826338347</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Update_Initial_Sequence_Name_ID</name>
+        <label>Update Initial Sequence Name, ID</label>
+        <locationX>578</locationX>
+        <locationY>431</locationY>
+        <inputAssignments>
+            <field>Initial_Sequence_Date__c</field>
+            <value>
+                <elementReference>formula_1_myRule_1_A1_9844765640</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Outreach_Initial_Sequence_ID__c</field>
+            <value>
+                <elementReference>$Record.Outreach_Current_Sequence_ID__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Outreach_Initial_Sequence_Name__c</field>
+            <value>
+                <elementReference>$Record.Outreach_Current_Sequence_Name__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <description>Update Initial Sequence Name, ID, Date</description>
+        <name>Update_Initial_Sequence_Name_ID_Date</name>
+        <label>Update Initial Sequence Name, ID, Date</label>
+        <locationX>50</locationX>
+        <locationY>539</locationY>
+        <inputAssignments>
+            <field>Initial_Sequence_Date__c</field>
+            <value>
+                <elementReference>formula_1_myRule_1_A1_9844765640</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Outreach_Date_Added_to_Sequence__c</field>
+            <value>
+                <elementReference>formula_1_myRule_1_A1_9844765640</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Outreach_Initial_Sequence_ID__c</field>
+            <value>
+                <elementReference>$Record.Outreach_Current_Sequence_ID__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Outreach_Initial_Sequence_Name__c</field>
+            <value>
+                <elementReference>$Record.Outreach_Current_Sequence_Name__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>452</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>myRule_1</targetReference>
+        </connector>
+        <object>Lead</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

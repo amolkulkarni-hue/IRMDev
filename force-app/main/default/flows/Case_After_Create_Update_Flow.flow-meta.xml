@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <description>Gitlab #27806  if case owner is Cloud_Services_OnBoarding queue then sent email to the particular case owner queue and Elizabeth Parson.
+We are using existing Email Alert.
+emailAlert-Case.New_Iron_Cloud_Case</description>
+        <name>New_Iron_Cloud_Case</name>
+        <label>New Iron Cloud Case</label>
+        <locationX>50</locationX>
+        <locationY>431</locationY>
+        <actionName>Case.New_Iron_Cloud_Case</actionName>
+        <actionType>emailAlert</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>Case.New_Iron_Cloud_Case</nameSegment>
+        <offset>0</offset>
+    </actionCalls>
+    <apiVersion>62.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <decisions>
+        <description>Gitlab #27806  if case owner is Cloud_Services_OnBoarding queue then sent email to the particular case owner queue and Elizabeth Parson.
+ID  00G3400000401DtEAI = Cloud_Services_OnBoarding  Queue</description>
+        <name>Case_Cloud_Services_Email_Alert</name>
+        <label>Case - Cloud Services Email Alert</label>
+        <locationX>182</locationX>
+        <locationY>323</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Cloud_Services_OnBoarding</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.OwnerId</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>00G3400000401DtEAI</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>New_Iron_Cloud_Case</targetReference>
+            </connector>
+            <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+            <label>Cloud Services OnBoarding</label>
+        </rules>
+    </decisions>
+    <description>Gitlab #27806 this flow have been created as part of process builder conversion but this can be used for all after create &amp; update case scenarios.
+Process Builder Converted to flow - Case - Cloud Services Email Alert.</description>
+    <environments>Default</environments>
+    <interviewLabel>Case After Update Flow {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Case After Create &amp; Update Flow</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>56</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Case_Cloud_Services_Email_Alert</targetReference>
+        </connector>
+        <object>Case</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+    <variables>
+        <description>Single Case Record To Update</description>
+        <name>SingleCaseRecordToUpdate</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Case</objectType>
+    </variables>
+</Flow>

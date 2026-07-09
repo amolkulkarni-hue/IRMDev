@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>QTB_Linked_Sales_Account__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>This is a backend field used to store the Sales Account which assists us to display the windows on LWC componenet based upon the fact if theres an existing linking or not</description>
+    <label>Linked Sales Account</label>
+    <referenceTo>Account</referenceTo>
+    <relationshipLabel>Purchase Orders (Linked Sales Account)</relationshipLabel>
+    <relationshipName>LinkedSalesAccounts</relationshipName>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

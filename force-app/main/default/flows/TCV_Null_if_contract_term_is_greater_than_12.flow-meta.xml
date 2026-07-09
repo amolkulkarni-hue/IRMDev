@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>56.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <description>This is assigning Total Contract Value as Total Annual Amount</description>
+        <name>Assign_Total_Contract_Value_as_Total_Annual_Amount</name>
+        <label>Assign Total Contract Value as Total Annual Amount</label>
+        <locationX>50</locationX>
+        <locationY>395</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Total_Contract_Value_TCV__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Amount</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <description>It is making Total Contract Value as Null</description>
+        <name>Make_Total_Contract_Value_Null</name>
+        <label>Make Total Contract Value Null</label>
+        <locationX>314</locationX>
+        <locationY>395</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Total_Contract_Value_TCV__c</assignToReference>
+            <operator>Assign</operator>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.ValidationBypassDateTime__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Flow.CurrentDateTime</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <decisions>
+        <description>This decision checks for the Contract Term Months and Update TCV accordingly</description>
+        <name>Update_TCV_According_to_Contract_Term_Months</name>
+        <label>Update TCV According to Contract Term Months</label>
+        <locationX>314</locationX>
+        <locationY>287</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Contract_Term_Months_Is_Between_1_12</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Contract_Term_months__c</leftValueReference>
+                <operator>GreaterThanOrEqualTo</operator>
+                <rightValue>
+                    <numberValue>1.0</numberValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Contract_Term_months__c</leftValueReference>
+                <operator>LessThanOrEqualTo</operator>
+                <rightValue>
+                    <numberValue>12.0</numberValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Total_Contract_Value_TCV__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>$Record.Amount</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_Total_Contract_Value_as_Total_Annual_Amount</targetReference>
+            </connector>
+            <label>Contract Term Months Is Between 1-12</label>
+        </rules>
+        <rules>
+            <name>Contract_Term_Months_Is_Over_12</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Contract_Term_months__c</leftValueReference>
+                <operator>GreaterThan</operator>
+                <rightValue>
+                    <numberValue>12.0</numberValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record__Prior.Contract_Term_months__c</leftValueReference>
+                <operator>LessThanOrEqualTo</operator>
+                <rightValue>
+                    <numberValue>12.0</numberValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Amount</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>$Record.Total_Contract_Value_TCV__c</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.StageName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>4 - Negotiate</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Total_Contract_Value_TCV__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+            </conditions>
+            <connector>
+                <targetReference>Make_Total_Contract_Value_Null</targetReference>
+            </connector>
+            <label>Contract Term Months Is Over 12</label>
+        </rules>
+    </decisions>
+    <description>As part of #13026, clearing the TCV field value before entering stage 4 for opportunities with contract term(months)&gt;12
+#35879 - CRM: Merge TCV/Contract Term Flows</description>
+    <environments>Default</environments>
+    <interviewLabel>TCV Null if contract term is greater than 12 {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Update TCV Basis On Contact Term Months</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>188</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Update_TCV_According_to_Contract_Term_Months</targetReference>
+        </connector>
+        <filterFormula>OR(
+  AND(
+    {!$Record.Contract_Term_months__c} &gt;= 1,
+    {!$Record.Contract_Term_months__c} &lt;= 12,
+    OR(
+      ISPICKVAL({!$Record.StageName}, &apos;4 - Negotiate&apos;),
+      ISPICKVAL({!$Record.StageName}, &apos;5 - Signed/PO in&apos;)
+    )
+  ),
+  AND(
+    {!$Record.Contract_Term_months__c} &gt; 12,
+    {!$Record__Prior.Contract_Term_months__c} &lt;= 12,
+    ISPICKVAL({!$Record.StageName}, &apos;4 - Negotiate&apos;),
+    {!$Record.Amount} = {!$Record.Total_Contract_Value_TCV__c}
+  )
+)</filterFormula>
+        <object>Opportunity</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Active</status>
+    <variables>
+        <description>To store the null value in Decimal Datatype</description>
+        <name>NullDecimal</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <scale>0</scale>
+    </variables>
+</Flow>

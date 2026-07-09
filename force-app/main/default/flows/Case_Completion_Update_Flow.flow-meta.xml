@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>67.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <description>Record-Triggered After Save flow on Case (Update). Fires when Status or All_Exit_Docs_Final__c changes. Queries Case_Status_Progress__c config for the current Status and Record Type, then sets Case_Completion_Pct__c. If config weight is 90+ and All_Exit_Docs_Final__c is true the percentage is set to 100. If config weight is less than 90, or docs gate has not passed, the config weight is used directly. Ends silently if no config is found for the current Status.</description>
+    <label>Case Completion Update Flow</label>
+    <processType>AutoLaunchedFlow</processType>
+    <status>Active</status>
+
+    <!-- decisions ───────────────────────────────────────────────────────── -->
+    <decisions>
+        <name>checkConfigFound</name>
+        <label>Config Record Found?</label>
+        <locationX>176</locationX>
+        <locationY>288</locationY>
+        <defaultConnectorLabel>No Config — End</defaultConnectorLabel>
+        <rules>
+            <name>configFound</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>varConfigPct</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>checkDocGate</targetReference>
+            </connector>
+            <label>Config Found — Calculate</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>checkDocGate</name>
+        <label>Upgrade to 100% (Weight ge 90 and All Docs Final)?</label>
+        <locationX>176</locationX>
+        <locationY>408</locationY>
+        <defaultConnector>
+            <targetReference>updateCaseCompletionWithConfig</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Use Config Weight — Update</defaultConnectorLabel>
+        <rules>
+            <name>upgradeToFull</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>varConfigPct</leftValueReference>
+                <operator>GreaterThanOrEqualTo</operator>
+                <rightValue>
+                    <numberValue>90.0</numberValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.All_Exit_Docs_Final__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>updateCaseCompletionFull</targetReference>
+            </connector>
+            <label>All Docs Final + High Weight — Set 100%</label>
+        </rules>
+    </decisions>
+
+    <!-- recordLookups ───────────────────────────────────────────────────── -->
+    <recordLookups>
+        <name>getRecordTypeDevName</name>
+        <label>Get Case RecordType DeveloperName</label>
+        <locationX>176</locationX>
+        <locationY>48</locationY>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>getStatusConfig</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.RecordTypeId</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>SobjectType</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Case</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>RecordType</object>
+        <outputAssignments>
+            <assignToReference>varCaseRTDevName</assignToReference>
+            <field>DeveloperName</field>
+        </outputAssignments>
+    </recordLookups>
+    <recordLookups>
+        <name>getStatusConfig</name>
+        <label>Get Status Progress Config</label>
+        <locationX>176</locationX>
+        <locationY>168</locationY>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>checkConfigFound</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Case_Record_Type_Dev_Name__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>varCaseRTDevName</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Status_Value__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Status</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Case_Status_Progress__c</object>
+        <outputAssignments>
+            <assignToReference>varConfigPct</assignToReference>
+            <field>Progress_Pct__c</field>
+        </outputAssignments>
+    </recordLookups>
+
+    <!-- recordUpdates ───────────────────────────────────────────────────── -->
+    <recordUpdates>
+        <name>updateCaseCompletionFull</name>
+        <label>Set Case Completion Pct to 100</label>
+        <locationX>308</locationX>
+        <locationY>528</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Case_Completion_Pct__c</field>
+            <value>
+                <numberValue>100.0</numberValue>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
+    </recordUpdates>
+    <recordUpdates>
+        <name>updateCaseCompletionWithConfig</name>
+        <label>Set Case Completion Pct from Config</label>
+        <locationX>176</locationX>
+        <locationY>528</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Case_Completion_Pct__c</field>
+            <value>
+                <elementReference>varConfigPct</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
+    </recordUpdates>
+
+    <!-- start ───────────────────────────────────────────────────────────── -->
+    <start>
+        <locationX>176</locationX>
+        <locationY>72</locationY>
+        <connector>
+            <targetReference>getRecordTypeDevName</targetReference>
+        </connector>
+        <filterLogic>or</filterLogic>
+        <filters>
+            <field>Status</field>
+            <operator>IsChanged</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>All_Exit_Docs_Final__c</field>
+            <operator>IsChanged</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <object>Case</object>
+        <recordTriggerType>Update</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+
+    <!-- variables ───────────────────────────────────────────────────────── -->
+    <variables>
+        <name>varCaseRTDevName</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>varConfigPct</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <scale>0</scale>
+    </variables>
+</Flow>

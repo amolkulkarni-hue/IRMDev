@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>End_Date_is_5_days_after_Start_Date</fullName>
+    <active>true</active>
+    <description>The End Date must be 5 days from the Start Date</description>
+    <errorConditionFormula>End_Date__c - Start_Date__c != 4</errorConditionFormula>
+    <errorMessage>The End Date must be 5 days from the Start Date</errorMessage>
+</ValidationRule>

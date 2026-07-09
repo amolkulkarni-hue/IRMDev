@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IMLA_Sales_Support_Queue_Sales_Support_Request</fullName>
+    <columns>Requestor_s_Name__c</columns>
+    <columns>Request_Number__c</columns>
+    <columns>NAME</columns>
+    <columns>Parent_Sales_Support_Request__c</columns>
+    <columns>Sales_Rep__c</columns>
+    <columns>Status__c</columns>
+    <columns>CREATED_DATE</columns>
+    <columns>Task_Type__c</columns>
+    <columns>Sub_Type__c</columns>
+    <columns>Closed_Date__c</columns>
+    <filterScope>Queue</filterScope>
+    <filters>
+        <field>Status__c</field>
+        <operation>equals</operation>
+        <value>New,In Progress</value>
+    </filters>
+    <filters>
+        <field>RECORDTYPE</field>
+        <operation>equals</operation>
+        <value>Sales_Support_Request__c.Sales_Support_Request</value>
+    </filters>
+    <label>IMLA Sales Support Queue</label>
+    <queue>IMLA_Sales_Support_Queue</queue>
+    <sharedTo>
+        <group>IMAP_Sales_Support</group>
+        <group>IME_Sales_Support</group>
+        <group>IMLA_Sales_Support</group>
+        <group>SalesFactoryTeam</group>
+    </sharedTo>
+</ListView>

@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>63.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <description>Counts and assigns the total number of At-Risk accounts under IMGA</description>
+        <name>Count_of_At_Risk_Accounts</name>
+        <label>Count of At-Risk Accounts</label>
+        <locationX>50</locationX>
+        <locationY>458</locationY>
+        <assignmentItems>
+            <assignToReference>Count</assignToReference>
+            <operator>AssignCount</operator>
+            <value>
+                <elementReference>Get_Sales_Site_Accounts_under_IMGA</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_Count_of_At_Risk_Accounts</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <description>Checking if we have account with the ID received</description>
+        <name>Checking_if_Account_Exist</name>
+        <label>Checking if Account Exist</label>
+        <locationX>182</locationX>
+        <locationY>242</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Has_Account</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Account_Details</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Sales_Site_Accounts_under_IMGA</targetReference>
+            </connector>
+            <label>Has Account</label>
+        </rules>
+    </decisions>
+    <description>#29594 - Updates an &apos;At Risk&apos; counter on the IMGA Account that updates when the monthly risk model identifies a customer/Sales Site Accounts as &apos;At-Risk&apos;</description>
+    <environments>Default</environments>
+    <formulas>
+        <description>Converts the Account ID from 18 to 15 digits</description>
+        <name>ID</name>
+        <dataType>String</dataType>
+        <expression>LEFT({!Get_Account_Details.Id}, 15)</expression>
+    </formulas>
+    <interviewLabel>Count At-Risk Sales Site Accounts {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Count At-Risk Sales Site Accounts</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <description>Get the Account details from the ID passed by Batch job</description>
+        <name>Get_Account_Details</name>
+        <label>Get Account Details</label>
+        <locationX>182</locationX>
+        <locationY>134</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Checking_if_Account_Exist</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Account_ID</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Account</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <description>Fetch all the Sales Site Accounts under the IMGA with At-Risk Status</description>
+        <name>Get_Sales_Site_Accounts_under_IMGA</name>
+        <label>Get Sales Site Accounts under IMGA</label>
+        <locationX>50</locationX>
+        <locationY>350</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Count_of_At_Risk_Accounts</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>IMGA_Id__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>ID</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>IM_Hierarchy_Level__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Sales (Site)</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>At_Risk_Status_New__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>At-Risk</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>ParentId</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>IMGA_Id__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>Account</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordUpdates>
+        <description>Updates the count of at-risk accounts on IMGA</description>
+        <name>Update_Count_of_At_Risk_Accounts</name>
+        <label>Update Count of At-Risk Accounts</label>
+        <locationX>50</locationX>
+        <locationY>566</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>IM_Hierarchy_Level__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>IM Group (IMGA)</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Account_Details.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>of_At_Risk_Accounts__c</field>
+            <value>
+                <elementReference>Count</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Account</object>
+    </recordUpdates>
+    <start>
+        <locationX>56</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Get_Account_Details</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <variables>
+        <name>Account_ID</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>Count</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <scale>0</scale>
+        <value>
+            <numberValue>0.0</numberValue>
+        </value>
+    </variables>
+    <variables>
+        <name>IMGA_IDs</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Account</objectType>
+    </variables>
+    <variables>
+        <name>Imga_IDsText</name>
+        <dataType>String</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>

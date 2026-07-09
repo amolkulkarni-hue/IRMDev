@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Association_to_Opportunity_Status__c</fullName>
+    <description>Status of the association between the inbound storage record and the booked sale, managed by the commissions team.</description>
+    <inlineHelpText>Status of the association between the inbound storage record and the booked sale.</inlineHelpText>
+    <label>Association to Opportunity Status</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Rejected</fullName>
+                <default>false</default>
+                <label>Rejected</label>
+            </value>
+            <value>
+                <fullName>Unmatched</fullName>
+                <default>true</default>
+                <label>Unmatched</label>
+            </value>
+            <value>
+                <fullName>Matched - Approved</fullName>
+                <default>false</default>
+                <label>Matched - Approved</label>
+            </value>
+            <value>
+                <fullName>Matched - Pending</fullName>
+                <default>false</default>
+                <label>Matched - Pending</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

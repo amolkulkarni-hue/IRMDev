@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Calculate_Business_Case_Age</name>
+        <label>Calculate Business Case Age</label>
+        <locationX>176</locationX>
+        <locationY>323</locationY>
+        <actionName>GSCBusinessCaseAge</actionName>
+        <actionType>apex</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>closedDate</name>
+            <value>
+                <elementReference>$Record.ClosedDate</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>country</name>
+            <value>
+                <elementReference>$Record.IME_SC_Country__c</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>createdDate</name>
+            <value>
+                <elementReference>$Record.CreatedDate</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>recordId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>GSCBusinessCaseAge</nameSegment>
+    </actionCalls>
+    <apiVersion>60.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <description>This flow will call the GSC business case Apex class to update the Business Case Age field on the case object</description>
+    <environments>Default</environments>
+    <interviewLabel>GSC - Business Case Age {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>GSC - Business Case Age</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Calculate_Business_Case_Age</targetReference>
+        </connector>
+        <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+        <filterLogic>1 AND  2</filterLogic>
+        <filters>
+            <field>RecordType_Name__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Global Service Case</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>IsClosed</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <object>Case</object>
+        <recordTriggerType>Update</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

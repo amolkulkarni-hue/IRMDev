@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>My_Closed_Request</fullName>
+    <columns>Request_Number__c</columns>
+    <columns>NAME</columns>
+    <columns>Parent_Sales_Support_Request__c</columns>
+    <columns>Owner_Full_Name__c</columns>
+    <columns>Sales_Rep__c</columns>
+    <columns>Status__c</columns>
+    <columns>Task_Type__c</columns>
+    <columns>Sub_Type__c</columns>
+    <columns>CREATED_DATE</columns>
+    <columns>Closed_Date__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Status__c</field>
+        <operation>equals</operation>
+        <value>Closed</value>
+    </filters>
+    <filters>
+        <field>CanSeeMyRequestsView__c</field>
+        <operation>equals</operation>
+        <value>1</value>
+    </filters>
+    <label>My Closed Request</label>
+    <language>en_US</language>
+</ListView>

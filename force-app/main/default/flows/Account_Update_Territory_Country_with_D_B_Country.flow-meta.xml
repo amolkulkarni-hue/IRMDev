@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>62.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <description>Assign Address Country to Territory Country Variable</description>
+        <name>Update_Territory_Country_with_Address_Country</name>
+        <label>Update Territory Country with Address Country</label>
+        <locationX>314</locationX>
+        <locationY>431</locationY>
+        <assignmentItems>
+            <assignToReference>TerritoryCountry_Var</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.BillingCountry</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Get_Countries</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Assign D&amp;B Country to Territory Country Variable</description>
+        <name>Update_Territory_Country_with_D_B_Country</name>
+        <label>Update Territory Country with D&amp;B Country</label>
+        <locationX>50</locationX>
+        <locationY>431</locationY>
+        <assignmentItems>
+            <assignToReference>TerritoryCountry_Var</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.DnB_Country__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Get_Countries</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <description>Yes - D&amp;B Country has a value
+No - Country in the Address has a value
+Default - Set Territory Country to Blank</description>
+        <name>Check_if_D_B_Country_has_a_value</name>
+        <label>Check if D&amp;B Country has a value</label>
+        <locationX>314</locationX>
+        <locationY>323</locationY>
+        <defaultConnector>
+            <targetReference>Update_Territory_Country_to_BLANK</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.DnB_Country__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Territory_Country_with_D_B_Country</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+        <rules>
+            <name>No</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.BillingCountry</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.DnB_Country__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Territory_Country_with_Address_Country</targetReference>
+            </connector>
+            <label>No</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Yes - Update the Territory Country
+No - End</description>
+        <name>Check_if_Get_records_found_for_country</name>
+        <label>Check if Get records found for country</label>
+        <locationX>314</locationX>
+        <locationY>839</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yess</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Countries</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Territory_Country_Updater</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <description>#28225 - Update Territory Country with D&amp;B Country when Territory Country is &apos;BLANK&apos;
+#33362 - Update Territory Country logic to consider both D&amp;B Country &amp; Country field for value</description>
+    <environments>Default</environments>
+    <interviewLabel>Account_Update Territory Country with D&amp;B Country {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Account_Update Territory Country with D&amp;B Country</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <description>Fetch &apos;IM_Country&apos; record of the Territory Country Variable</description>
+        <name>Get_Countries</name>
+        <label>Get Countries</label>
+        <locationX>314</locationX>
+        <locationY>731</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Check_if_Get_records_found_for_country</targetReference>
+        </connector>
+        <filterLogic>1 AND 2</filterLogic>
+        <filters>
+            <field>Name</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>TerritoryCountry_Var</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Active__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>IM_Country__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordUpdates>
+        <description>Update Territory Country</description>
+        <name>Territory_Country_Updater</name>
+        <label>Territory Country Updater</label>
+        <locationX>182</locationX>
+        <locationY>947</locationY>
+        <inputAssignments>
+            <field>Territory_Country__c</field>
+            <value>
+                <elementReference>Get_Countries.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Update_Territory_Country_to_BLANK</name>
+        <label>Update Territory Country to BLANK</label>
+        <locationX>578</locationX>
+        <locationY>431</locationY>
+        <inputAssignments>
+            <field>Territory_Country__c</field>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>188</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Check_if_D_B_Country_has_a_value</targetReference>
+        </connector>
+        <filterFormula>OR(
+AND(ISNEW(),NOT(ISBLANK({!$Record.BillingCountry}))),
+ISCHANGED({!$Record.BillingCountry}),ISCHANGED({!$Record.DNBConnect__D_B_Connect_Company_Profile__c}))</filterFormula>
+        <object>Account</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+    <variables>
+        <name>TerritoryCountry_Var</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Running_User_Coverage__c</fullName>
+    <description>Used for List View to accurately show &quot;My Account Plans&quot; to anyone who is marked in one of the four account coverage fields (BDE, CDE, BDE-DB&amp;R, or CDE-DB&amp;R)</description>
+    <externalId>false</externalId>
+    <formula>if ( OR($User.Id =  Account__r.Primary_BDE__r.Id, $User.Id =  Account__r.Primary_CDE__r.Id, $User.Id =  Account__r.Primary_BDE_DB_R__r.Id, $User.Id =  Account__r.Primary_CDE_DB_R__r.Id)  , &quot;My Account Plans&quot;, &quot;Not&quot;)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Running User Coverage</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

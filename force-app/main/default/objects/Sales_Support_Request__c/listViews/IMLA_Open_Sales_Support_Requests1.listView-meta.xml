@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IMLA_Open_Sales_Support_Requests1</fullName>
+    <booleanFilter>(1 AND 2 and 4 and 5) or (3 and 1 and 4 and 5)</booleanFilter>
+    <columns>Request_Number__c</columns>
+    <columns>Owner_Full_Name__c</columns>
+    <columns>NAME</columns>
+    <columns>Status__c</columns>
+    <columns>Estimated_Complete_Date__c</columns>
+    <columns>Affected_Countries__c</columns>
+    <columns>Task_Type__c</columns>
+    <columns>CREATED_DATE</columns>
+    <columns>Parent_Sales_Support_Request__c</columns>
+    <columns>Sales_Rep__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Status__c</field>
+        <operation>equals</operation>
+        <value>New,In Progress</value>
+    </filters>
+    <filters>
+        <field>Affected_IM_Division__c</field>
+        <operation>equals</operation>
+        <value>IMLA</value>
+    </filters>
+    <filters>
+        <field>Owner_Full_Name__c</field>
+        <operation>equals</operation>
+        <value>IMLA Sales Support Queue</value>
+    </filters>
+    <filters>
+        <field>Requestor_s_Country__c</field>
+        <operation>notEqual</operation>
+        <value>Brazil</value>
+    </filters>
+    <filters>
+        <field>RECORDTYPE</field>
+        <operation>equals</operation>
+        <value>Sales_Support_Request__c.Sales_Support_Request</value>
+    </filters>
+    <label>IMLA Open Sales Support Requests</label>
+    <sharedTo>
+        <allInternalUsers></allInternalUsers>
+        <group>IMLA_Sales_Support</group>
+        <role>IMLA</role>
+        <role>IMLAAdmin</role>
+    </sharedTo>
+</ListView>

@@ -1,0 +1,367 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Transfer_To_Agent</name>
+        <label>Transfer To Agent</label>
+        <locationX>176</locationX>
+        <locationY>350</locationY>
+        <actionName>routeWork</actionName>
+        <actionType>routeWork</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>recordId</name>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>serviceChannelId</name>
+            <value>
+                <stringValue>0N9Hr000000g0QnKAI</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>serviceChannelLabel</name>
+            <value>
+                <stringValue>Messaging</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>serviceChannelDevName</name>
+            <value>
+                <stringValue>sfdc_livemessage</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>routingType</name>
+            <value>
+                <stringValue>QueueBased</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>routingConfigId</name>
+        </inputParameters>
+        <inputParameters>
+            <name>routingConfigLabel</name>
+        </inputParameters>
+        <inputParameters>
+            <name>queueId</name>
+            <value>
+                <elementReference>Get_Queue_Id.Id</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>agentId</name>
+        </inputParameters>
+        <inputParameters>
+            <name>agentLabel</name>
+        </inputParameters>
+        <inputParameters>
+            <name>queueLabel</name>
+        </inputParameters>
+        <inputParameters>
+            <name>skillOption</name>
+        </inputParameters>
+        <inputParameters>
+            <name>skillRequirementsResourceItem</name>
+        </inputParameters>
+        <inputParameters>
+            <name>botId</name>
+        </inputParameters>
+        <inputParameters>
+            <name>botLabel</name>
+        </inputParameters>
+        <inputParameters>
+            <name>isQueueVariable</name>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputParameters>
+        <nameSegment>routeWork</nameSegment>
+        <offset>0</offset>
+    </actionCalls>
+    <apiVersion>61.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <description>Updating the QueueId based on the Enduser language.
+#25617 -Updated the chat queue for authenticated users in North America to the &apos;IRM Customer Community Chat Queue&apos;.
+#25625 - updated condition for French Bot (Language : English(US) &amp; French (Canada))
+added type as Queue
+Added Spain Bot expansion Condition #27858
+Added France Bot expansion Condition #27860
+Added German and German(Austria) Bot expansion Condition #27859
+Updated for UKI Chat #28855
+#31818 - Updated Queue for Thailand APAC Chatbot
+#31839 - Updated Queue for South Korea APAC Chatbot</description>
+    <environments>Default</environments>
+    <formulas>
+        <description>#25617 -Updated the chat queue for authenticated users in North America to the &apos;IRM Customer Community Chat Queue&apos;.
+#26941 - Updated the formula to get the Queue (UKI_IMConnect) for Guest / Authenticated users(UKI)</description>
+        <name>queueName</name>
+        <dataType>String</dataType>
+        <expression>CASE({!VarT_EndUserLanguage},
+    &quot;en_US&quot;, 
+		CASE({!customerType},
+			&quot;Guest&quot;, &quot;IRM_Customer_Community_Chat_Queue&quot;,
+			&quot;Authenticated&quot;, &quot;IRM_Customer_Community_Chat_Queue&quot;,
+			&quot;IRM_Customer_Community_Chat_Queue&quot;
+		),
+	&quot;fr_CA&quot;, 
+		CASE({!customerType},
+			&quot;Guest&quot;, &quot;NAS_Quebec_Chat&quot;,
+			&quot;Authenticated&quot;, &quot;NAS_Quebec_Chat&quot;,
+			&quot;NAS_Quebec_Chat&quot;
+		),
+	&quot;en_GB&quot;, 
+		CASE({!customerType},
+			&quot;Guest&quot;, &quot;UKI_IMConnect&quot;,
+			&quot;Authenticated&quot;, &quot;UKI_IMConnect&quot;,
+			&quot;UKI_IMConnect&quot;
+		),
+	&quot;es&quot;, 
+		CASE({!customerType},
+			&quot;Guest&quot;, &quot;ESP_IMConnect&quot;,
+			&quot;Authenticated&quot;, &quot;ESP_IMConnect&quot;,
+			&quot;ESP_IMConnect&quot;
+		),
+	&quot;fr&quot;, 
+		CASE({!customerType},
+			&quot;Guest&quot;, &quot;FRA_IMConnect&quot;,
+			&quot;Authenticated&quot;, &quot;FRA_IMConnect&quot;,
+			&quot;FRA_IMConnect&quot;
+		),
+	&quot;de&quot;, 
+		CASE({!customerType},
+			&quot;Guest&quot;, &quot;DEU_IMConnect&quot;,
+			&quot;Authenticated&quot;, &quot;DEU_IMConnect&quot;,
+			&quot;DEU_IMConnect&quot;
+		),
+	&quot;de_AT&quot;, 
+		CASE({!customerType},
+			&quot;Guest&quot;, &quot;DEU_IMConnect&quot;,
+			&quot;Authenticated&quot;, &quot;DEU_IMConnect&quot;,
+			&quot;DEU_IMConnect&quot;
+		),
+&quot;en_AU&quot;, 
+		CASE({!customerType},
+			&quot;Guest&quot;, &quot;ANZ_Chat&quot;,
+			&quot;Authenticated&quot;, &quot;ANZ_Chat&quot;,
+			&quot;ANZ_Chat&quot;
+		),
+		&quot;en_IN&quot;, 
+		CASE({!customerType},
+			&quot;Guest&quot;, &quot;India_Chat_queue&quot;,
+			&quot;Authenticated&quot;, &quot;India_Chat_queue&quot;,
+			&quot;India_Chat_queue&quot;
+		),
+		&quot;en_SG&quot;, 
+		CASE({!customerType},
+			&quot;Guest&quot;, &quot;SGP_Chat&quot;,
+			&quot;Authenticated&quot;, &quot;SGP_Chat&quot;,
+			&quot;SGP_Chat&quot;
+		),
+		&quot;en_MY&quot;, 
+		CASE({!customerType},
+			&quot;Guest&quot;, &quot;MYS_Chat&quot;,
+			&quot;Authenticated&quot;, &quot;MYS_Chat&quot;,
+			&quot;MYS_Chat&quot;
+		),
+		&quot;en_PH&quot;, 
+		CASE({!customerType},
+			&quot;Guest&quot;, &quot;PHL_Chat&quot;,
+			&quot;Authenticated&quot;, &quot;PHL_Chat&quot;,
+			&quot;PHL_Chat&quot;
+		),
+		&quot;th&quot;, 
+		CASE({!customerType},
+			&quot;Guest&quot;, &quot;THA_Chat&quot;,
+			&quot;Authenticated&quot;, &quot;THA_Chat&quot;,
+			&quot;THA_Chat&quot;
+		),
+		&quot;in&quot;, 
+		CASE({!customerType},
+			&quot;Guest&quot;, &quot;IDN_Chat&quot;,
+			&quot;Authenticated&quot;, &quot;IDN_Chat&quot;,
+			&quot;IDN_Chat&quot;
+		),
+                &quot;en_IE&quot;, 
+		CASE({!customerType},
+			&quot;Guest&quot;, &quot;IDN_Chat&quot;,
+			&quot;Authenticated&quot;, &quot;IDN_Chat&quot;,
+			&quot;IDN_Chat&quot;
+		),
+		&quot;zh_TW&quot;, 
+		CASE({!customerType},
+			&quot;Guest&quot;, &quot;TWN_Chat&quot;,
+			&quot;Authenticated&quot;, &quot;TWN_Chat&quot;,
+			&quot;TWN_Chat&quot;
+		),
+&quot;en_HK&quot;, 
+		CASE({!customerType},
+			&quot;Guest&quot;, &quot;HKG_Chat&quot;,
+			&quot;Authenticated&quot;, &quot;HKG_Chat&quot;,
+			&quot;HKG_Chat&quot;
+		),
+	&quot;es_AR&quot;, 
+		CASE({!customerType},
+			&quot;Guest&quot;, &quot;IMLA_ARG_Service_Chat&quot;,
+			&quot;Authenticated&quot;, &quot;IMLA_ARG_Service_Chat&quot;,
+			&quot;IMLA_ARG_Service_Chat&quot;
+		),
+	&quot;pt_BR&quot;, 
+		CASE({!customerType},
+			&quot;Guest&quot;, &quot;IMLA_BRA_Service_Chat&quot;,
+			&quot;Authenticated&quot;, &quot;IMLA_BRA_Service_Chat&quot;,
+			&quot;IMLA_BRA_Service_Chat&quot;
+		),
+	&quot;es_CL&quot;, 
+		CASE({!customerType},
+			&quot;Guest&quot;, &quot;IMLA_CHL_Service_Chat&quot;,
+			&quot;Authenticated&quot;, &quot;IMLA_CHL_Service_Chat&quot;,
+			&quot;IMLA_CHL_Service_Chat&quot;
+		),
+	&quot;es_CO&quot;, 
+		CASE({!customerType},
+			&quot;Guest&quot;, &quot;IMLA_COL_Service_Chat&quot;,
+			&quot;Authenticated&quot;, &quot;IMLA_COL_Service_Chat&quot;,
+			&quot;IMLA_COL_Service_Chat&quot;
+		),
+	&quot;es_MX&quot;, 
+		CASE({!customerType},
+			&quot;Guest&quot;, &quot;IMLA_MEX_Service_Chat&quot;,
+			&quot;Authenticated&quot;, &quot;IMLA_MEX_Service_Chat&quot;,
+			&quot;IMLA_MEX_Service_Chat&quot;
+		),
+	&quot;es_PE&quot;, 
+		CASE({!customerType},
+			&quot;Guest&quot;, &quot;IMLA_PER_Service_Chat&quot;,
+			&quot;Authenticated&quot;, &quot;IMLA_PER_Service_Chat&quot;,
+			&quot;IMLA_PER_Service_Chat&quot;
+		),
+              &quot;ko&quot;, 
+		CASE({!customerType},
+			&quot;Guest&quot;, &quot;KOR_Chat&quot;,
+			&quot;Authenticated&quot;, &quot;KOR_Chat&quot;,
+			&quot;KOR_Chat&quot;
+		),
+		&quot;&quot;
+)</expression>
+    </formulas>
+    <interviewLabel>IRM Customer Community Enhanced Bot - Outbound Flow {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>IRM Customer Community English Chat - Outbound Flow</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>RoutingFlow</processType>
+    <recordLookups>
+        <name>Get_Messaging_session</name>
+        <label>Get Messaging session</label>
+        <locationX>176</locationX>
+        <locationY>134</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Get_Queue_Id</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <object>MessagingSession</object>
+        <outputAssignments>
+            <assignToReference>customerType</assignToReference>
+            <field>Customer_type__c</field>
+        </outputAssignments>
+        <outputAssignments>
+            <assignToReference>VarT_EndUserLanguage</assignToReference>
+            <field>EndUserLanguage</field>
+        </outputAssignments>
+        <outputAssignments>
+            <assignToReference>customerLang</assignToReference>
+            <field>Language_Selector__c</field>
+        </outputAssignments>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_Queue_Id</name>
+        <label>Get Queue Id</label>
+        <locationX>176</locationX>
+        <locationY>242</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Transfer_To_Agent</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>queueName</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Type</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Queue</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Group</object>
+        <queriedFields>Id</queriedFields>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Get_Messaging_session</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <variables>
+        <name>customerLang</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>customerType</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>recordId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>End user language from the messaging session record</description>
+        <name>VarT_EndUserLanguage</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>

@@ -1,0 +1,1303 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <description>Data Entry Alert for Resubmitted</description>
+        <name>Data_Entry_Alert_for_Resubmitted</name>
+        <label>Data Entry Alert for Resubmitted</label>
+        <locationX>314</locationX>
+        <locationY>647</locationY>
+        <actionName>Case.Data_Entry_Alert_for_Resubmitted</actionName>
+        <actionType>emailAlert</actionType>
+        <connector>
+            <targetReference>NCSP_CAC_R_Case_Comment_Alert</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>Case.Data_Entry_Alert_for_Resubmitted</nameSegment>
+        <offset>0</offset>
+    </actionCalls>
+    <apiVersion>62.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <description>Add to Task Collection Variable</description>
+        <name>Add_to_Task_Collection_Variable</name>
+        <label>Add to Task Collection Variable</label>
+        <locationX>314</locationX>
+        <locationY>1055</locationY>
+        <assignmentItems>
+            <assignToReference>TaskRecordToInsert</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>SingleTaskRecord</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>NCSP_CAC_R_Case_Comment_Clear</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Add to Task Collection Variable</description>
+        <name>Add_to_Task_Collection_Variable101</name>
+        <label>Add to Task Collection Variable</label>
+        <locationX>314</locationX>
+        <locationY>539</locationY>
+        <assignmentItems>
+            <assignToReference>TaskRecordToInsert</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>SingleTaskRecord</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Data_Entry_Alert_for_Resubmitted</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Review Paperwork for Processing</description>
+        <name>Add_to_TaskCollection_Variable</name>
+        <label>Add to Task Collection Variable</label>
+        <locationX>714</locationX>
+        <locationY>1895</locationY>
+        <assignmentItems>
+            <assignToReference>TaskRecordToInsert</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>SingleTaskRecord</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Check_Task_Creation_Record_exists</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Update indicator in SKP</description>
+        <name>Add_to_TaskCollectionVariable</name>
+        <label>Add to Task Collection Variable</label>
+        <locationX>978</locationX>
+        <locationY>2327</locationY>
+        <assignmentItems>
+            <assignToReference>TaskRecordToInsert</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>SingleTaskRecord</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Check_Task_Creation_Record_exists</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Set up rates in SKP and Oracle</description>
+        <name>Add_toTask_Collection_Variable</name>
+        <label>Add to Task Collection Variable</label>
+        <locationX>978</locationX>
+        <locationY>1895</locationY>
+        <assignmentItems>
+            <assignToReference>TaskRecordToInsert</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>SingleTaskRecord</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Task_Upload_to_DRCi</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Review Paperwork for Processing</description>
+        <name>Addto_Task_Collection_Variable</name>
+        <label>Add to Task Collection Variable</label>
+        <locationX>186</locationX>
+        <locationY>1571</locationY>
+        <assignmentItems>
+            <assignToReference>TaskRecordToInsert</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>SingleTaskRecord</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Status_Processing</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Upload Documents into DRCi</description>
+        <name>AddtoTaskCollection_Variable</name>
+        <label>Add to Task Collection Variable</label>
+        <locationX>978</locationX>
+        <locationY>2111</locationY>
+        <assignmentItems>
+            <assignToReference>TaskRecordToInsert</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>SingleTaskRecord</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Task_Update_indicator_in_SKP</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Case Comment added to your case</description>
+        <name>Case_Comment_added_to_your_case</name>
+        <label>Case Comment added to your case</label>
+        <locationX>314</locationX>
+        <locationY>947</locationY>
+        <assignmentItems>
+            <assignToReference>SingleTaskRecord.ActivityDate</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>RuleTriggerDate</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SingleTaskRecord.OwnerId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>CaseOwnerOrRunningUser</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SingleTaskRecord.Priority</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Normal</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SingleTaskRecord.Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Not Started</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SingleTaskRecord.Subject</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>varfSubject2</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SingleTaskRecord.WhatId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Add_to_Task_Collection_Variable</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Contract Status Resubmitted#1</description>
+        <name>Contract_Status_Resubmitted</name>
+        <label>Contract Status Resubmitted#1</label>
+        <locationX>314</locationX>
+        <locationY>431</locationY>
+        <assignmentItems>
+            <assignToReference>SingleTaskRecord.ActivityDate</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>DueDate</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SingleTaskRecord.OwnerId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>CaseOwnerOrRunningUser</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SingleTaskRecord.Priority</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Normal</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SingleTaskRecord.Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Not Started</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SingleTaskRecord.Subject</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>varfFSubject1</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SingleTaskRecord.WhatId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Add_to_Task_Collection_Variable101</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>clear the field Case Comment Added as soon as the Task is created</description>
+        <name>NCSP_CAC_R_Case_Comment_Clear</name>
+        <label>NCSP &amp; CAC/R Case Comment Clear</label>
+        <locationX>314</locationX>
+        <locationY>1163</locationY>
+        <assignmentItems>
+            <assignToReference>SingleCaseRecordToUpdate.Case_Comment_Added__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SingleCaseRecordToUpdate.Id</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>NCSP_Renewal_Status_Updates_Id_updated</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Re-review paperwork for processing</description>
+        <name>Re_review_paperwork_for_processing</name>
+        <label>Re-review paperwork for processing</label>
+        <locationX>714</locationX>
+        <locationY>1787</locationY>
+        <assignmentItems>
+            <assignToReference>SingleTaskRecord.Due_Date__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Today_plus_2_days__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SingleTaskRecord.OwnerId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Data_Entry_Owner__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SingleTaskRecord.Priority</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Normal</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SingleTaskRecord.Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Not Started</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SingleTaskRecord.Subject</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Re-review paperwork for processing</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SingleTaskRecord.WhatId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Add_to_TaskCollection_Variable</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Review Paperwork for Processing</description>
+        <name>Review_Paperwork</name>
+        <label>Review Paperwork</label>
+        <locationX>186</locationX>
+        <locationY>1463</locationY>
+        <assignmentItems>
+            <assignToReference>SingleTaskRecord.Due_Date__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Today_plus_2_days__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SingleTaskRecord.OwnerId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>CaseOwnerOrRunningUser</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SingleTaskRecord.Priority</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Normal</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SingleTaskRecord.Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Not Started</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SingleTaskRecord.Subject</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Review Paperwork for Processing</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SingleTaskRecord.WhatId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Addto_Task_Collection_Variable</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Set Contact Name</description>
+        <name>SetContact_Name</name>
+        <label>Set Contact Name</label>
+        <locationX>1506</locationX>
+        <locationY>2003</locationY>
+        <assignmentItems>
+            <assignToReference>SingleCaseRecordToUpdate.Id</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SingleCaseRecordToUpdate.ContactId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>0038000001EXAK3</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Check_Task_Creation_Record_exists</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Status: Closed</description>
+        <name>Status_Closed</name>
+        <label>Status: Closed</label>
+        <locationX>1242</locationX>
+        <locationY>1895</locationY>
+        <assignmentItems>
+            <assignToReference>SingleCaseRecordToUpdate.Id</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SingleCaseRecordToUpdate.Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Closed</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Close_Opportunity</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Status: Processing</description>
+        <name>Status_Processing</name>
+        <label>Status: Processing</label>
+        <locationX>186</locationX>
+        <locationY>1679</locationY>
+        <assignmentItems>
+            <assignToReference>SingleCaseRecordToUpdate.Data_Entry_Owner__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.OwnerId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SingleCaseRecordToUpdate.Id</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SingleCaseRecordToUpdate.Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Processing</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Check_Task_Creation_Record_exists</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Status: Processing Rejected</description>
+        <name>Status_Processing_Rejected</name>
+        <label>Status: Processing Rejected</label>
+        <locationX>450</locationX>
+        <locationY>1571</locationY>
+        <assignmentItems>
+            <assignToReference>SingleCaseRecordToUpdate.Id</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SingleCaseRecordToUpdate.Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Processing Rejected</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Case_Action</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Status: Resubmitted</description>
+        <name>Status_Resubmitted</name>
+        <label>Status: Resubmitted</label>
+        <locationX>714</locationX>
+        <locationY>1679</locationY>
+        <assignmentItems>
+            <assignToReference>SingleCaseRecordToUpdate.Id</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SingleCaseRecordToUpdate.Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Resubmitted</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Re_review_paperwork_for_processing</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Set up rates in SKP and Oracle</description>
+        <name>Task_Set_Up_Rates</name>
+        <label>Task: Set Up Rates</label>
+        <locationX>978</locationX>
+        <locationY>1787</locationY>
+        <assignmentItems>
+            <assignToReference>SingleTaskRecord.Due_Date__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Today_plus_2_days__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SingleTaskRecord.OwnerId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Data_Entry_Owner__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SingleTaskRecord.Priority</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Normal</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SingleTaskRecord.Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Not Started</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SingleTaskRecord.Subject</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Set up rates in SKP and Oracle</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SingleTaskRecord.WhatId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Add_toTask_Collection_Variable</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Update indicator in SKP</description>
+        <name>Task_Update_indicator_in_SKP</name>
+        <label>Task: Update indicator in SKP</label>
+        <locationX>978</locationX>
+        <locationY>2219</locationY>
+        <assignmentItems>
+            <assignToReference>SingleTaskRecord.Due_Date__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Today_plus_2_days__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SingleTaskRecord.OwnerId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Data_Entry_Owner__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SingleTaskRecord.Priority</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Normal</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SingleTaskRecord.Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Not Started</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SingleTaskRecord.Subject</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Update indicator in SKP</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SingleTaskRecord.WhatId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Add_to_TaskCollectionVariable</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Upload Documents into DRCi</description>
+        <name>Task_Upload_to_DRCi</name>
+        <label>Task: Upload to DRCi</label>
+        <locationX>978</locationX>
+        <locationY>2003</locationY>
+        <assignmentItems>
+            <assignToReference>SingleTaskRecord.Due_Date__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Today_plus_2_days__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SingleTaskRecord.OwnerId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Data_Entry_Owner__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SingleTaskRecord.Priority</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Normal</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SingleTaskRecord.Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Not Started</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SingleTaskRecord.Subject</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Upload Documents into DRCi</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SingleTaskRecord.WhatId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>AddtoTaskCollection_Variable</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <description>Check Case Updation Record exists</description>
+        <name>Check_Case_Updation_Record_exists</name>
+        <label>Check Case Updation Record exists</label>
+        <locationX>182</locationX>
+        <locationY>2987</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>CaseRecordExists</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>SingleCaseRecordToUpdate</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Case_Field_Update</targetReference>
+            </connector>
+            <label>Case Record Exists</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Check Only Case Updation Record exists</description>
+        <name>Check_Only_Case_Updation_Record_exists</name>
+        <label>Check Only Case Updation Record exists</label>
+        <locationX>710</locationX>
+        <locationY>2879</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Only_Case_Record_Exists</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>SingleCaseRecordToUpdate</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Case_Field_To_Update</targetReference>
+            </connector>
+            <label>Only Case Record Exists</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Check Task Creation Record exists</description>
+        <name>Check_Task_Creation_Record_exists</name>
+        <label>Check Task Creation Record exists</label>
+        <locationX>446</locationX>
+        <locationY>2771</locationY>
+        <defaultConnector>
+            <targetReference>Check_Only_Case_Updation_Record_exists</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>taskRecordExists</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>TaskRecordToInsert</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Create_Task</targetReference>
+            </connector>
+            <label>taskRecordExists</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Contract Accepted</description>
+        <name>Contract_Accepted</name>
+        <label>Contract Accepted</label>
+        <locationX>1209</locationX>
+        <locationY>1679</locationY>
+        <defaultConnector>
+            <targetReference>Setup_Complete</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>ContractAccepted</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.RecordTypeId</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>01280000000UP5sAAG</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Contract_Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Accepted</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Contract_Status__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Task_Set_Up_Rates</targetReference>
+            </connector>
+            <label>Contract Accepted</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Contract_Rejection</name>
+        <label>Contract Rejection</label>
+        <locationX>705</locationX>
+        <locationY>1463</locationY>
+        <defaultConnector>
+            <targetReference>Rejected_Case_Resubmitted</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>TRUE_Contract_Rejection</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.RecordTypeId</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>01280000000UP5sAAG</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Contract_Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Rejected</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Status_Processing_Rejected</targetReference>
+            </connector>
+            <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+            <label>TRUE Contract Rejection</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>creates a task when a case comment is added to the case by someone other than the case owner or a supervisor</description>
+        <name>NCSP_CAC_R_Case_Comment_Alert</name>
+        <label>NCSP &amp; CAC/R Case Comment Alert</label>
+        <locationX>446</locationX>
+        <locationY>839</locationY>
+        <defaultConnector>
+            <targetReference>NCSP_Renewal_Status_Updates_Id_updated</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>NCSP_CAC_R_Case_CommentAlert</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.RecordType_Name__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>NCSP Renewal</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Case_Comment_Added__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Case_Comment_added_to_your_case</targetReference>
+            </connector>
+            <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+            <label>NCSP &amp; CAC/R Case Comment Alert</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Case 10970957- Rule modification on Data Entry Criteria to avoid recursion (Updates the case status based on the data entry audit status)</description>
+        <name>NCSP_Renewal_Status_Updates_Id_updated</name>
+        <label>NCSP_Renewal_Status_Updates_Id_updated</label>
+        <locationX>446</locationX>
+        <locationY>1355</locationY>
+        <defaultConnector>
+            <targetReference>Contract_Rejection</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Data_Entry</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Data_Entry_Owner</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Review_Paperwork</targetReference>
+            </connector>
+            <label>Data Entry</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Create Task : Contract Status Resubmitted#1</description>
+        <name>NCSP_Task_Automation_Workflow_101</name>
+        <label>NCSP - Task Automation- Workflow -101</label>
+        <locationX>446</locationX>
+        <locationY>323</locationY>
+        <defaultConnector>
+            <targetReference>NCSP_CAC_R_Case_Comment_Alert</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>NCSP_Task_Automation_Workflow101</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.RecordType_Name__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>NCSP Renewal</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Data_Entry_Owner__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Parent.CaseNumber</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.IsClosed</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Contract_Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Resubmitted</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Contract_Status_Resubmitted</targetReference>
+            </connector>
+            <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+            <label>NCSP - Task Automation- Workflow -101</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Rejected Case Resubmitted</description>
+        <name>Rejected_Case_Resubmitted</name>
+        <label>Rejected Case Resubmitted</label>
+        <locationX>961</locationX>
+        <locationY>1571</locationY>
+        <defaultConnector>
+            <targetReference>Contract_Accepted</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>RejectedCaseResubmitted</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Data_Entry_Audit_Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Resubmitted</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.RecordTypeId</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>01280000000UP5sAAG</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Data_Entry_Owner__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Data_Entry_Audit_Status__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Status_Resubmitted</targetReference>
+            </connector>
+            <label>Rejected Case Resubmitted</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Set Contact Name</description>
+        <name>Set_Contact_Name</name>
+        <label>Set Contact Name</label>
+        <locationX>1638</locationX>
+        <locationY>1895</locationY>
+        <defaultConnector>
+            <targetReference>Check_Task_Creation_Record_exists</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>SetContactName</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.ContactId</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.RecordTypeId</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>01280000000UP5sAAG</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>SetContact_Name</targetReference>
+            </connector>
+            <label>Set Contact Name</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Setup Complete</description>
+        <name>Setup_Complete</name>
+        <label>Setup Complete</label>
+        <locationX>1440</locationX>
+        <locationY>1787</locationY>
+        <defaultConnector>
+            <targetReference>Set_Contact_Name</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>SetupComplete</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.RecordTypeId</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>01280000000UP5sAAG</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Setup_Complete_Date__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Setup_Complete_Date__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Status_Closed</targetReference>
+            </connector>
+            <label>Setup Complete</label>
+        </rules>
+    </decisions>
+    <description>As part of #26816 workflows merged : NCSP - Task Automation- Workflow -101,NCSP &amp; CAC/R Case Comment Alert
+
+As part of #27726
+Migrated from the NCSP_Renewal_Status_Updates_Id_updated process using multiple criteria.
+Case 10970957- Rule modification on Data Entry Criteria to avoid recursion (Updates the case status based on the data entry audit status)
+
+Created variables as part of Gitlab - #33449, to store the translated task subjects of different countries</description>
+    <environments>Default</environments>
+    <formulas>
+        <description>Case Owner Or Running User assigned as a task owner</description>
+        <name>CaseOwnerOrRunningUser</name>
+        <dataType>String</dataType>
+        <expression>IF(BEGINS({!$Record.OwnerId}, &apos;005&apos;), {!$Record.OwnerId}, {!$User.Id})</expression>
+    </formulas>
+    <formulas>
+        <name>Data_Entry_Owner</name>
+        <dataType>Boolean</dataType>
+        <expression>AND(
+{!$Record.RecordType.Name} = &apos;NCSP Renewal&apos;,
+PRIORVALUE({!$Record.OwnerId}) = &apos;00G80000002cxu3EAA&apos;,
+ NOT( BEGINS({!$Record.OwnerId}, &apos;00G&apos;) ),
+OR(
+ ISNULL({!$Record.Data_Entry_Owner__c}) ,
+ISBLANK({!$Record.Data_Entry_Owner__c}) 
+)
+)</expression>
+    </formulas>
+    <formulas>
+        <name>DueDate</name>
+        <dataType>Date</dataType>
+        <expression>TODAY() + 2</expression>
+    </formulas>
+    <formulas>
+        <name>RuleTriggerDate</name>
+        <dataType>Date</dataType>
+        <expression>Today ()</expression>
+    </formulas>
+    <formulas>
+        <description>Created variables as part of Gitlab - #33449, to store the translated task subjects of different countries</description>
+        <name>varfFSubject1</name>
+        <dataType>String</dataType>
+        <expression>&apos;^^$$## NCSP - Task Automation- Workflow -101-&apos;+{!varT_Country}</expression>
+    </formulas>
+    <formulas>
+        <description>Created variables as part of Gitlab - #33449, to store the translated task subjects of different countries</description>
+        <name>varfSubject2</name>
+        <dataType>String</dataType>
+        <expression>&apos;^^$$## NCSP &amp; CAC/R Case Comment Added-&apos;+{!varT_Country}</expression>
+    </formulas>
+    <interviewLabel>NCSP Renewal {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>NCSP Renewal</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordCreates>
+        <description>Case Action</description>
+        <name>Case_Action</name>
+        <label>Case Action</label>
+        <locationX>450</locationX>
+        <locationY>1679</locationY>
+        <connector>
+            <targetReference>Check_Task_Creation_Record_exists</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>Case_Action_Assigned_To__c</field>
+            <value>
+                <elementReference>$Record.Sales_Person_Name_Account_Manager__r.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Case__c</field>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Opportunity_Name__c</field>
+            <value>
+                <elementReference>$Record.NCSP_Opportunity__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Opportunity_Owner__c</field>
+            <value>
+                <elementReference>$Record.Sales_Person_Name_Account_Manager__r.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Other_Contract_Rejection_Reason__c</field>
+            <value>
+                <elementReference>$Record.Other_Contract_Rejection_Reason__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Primary_Contract_Rejection_Reason__c</field>
+            <value>
+                <elementReference>$Record.Primary_Contract_Rejection_Reason__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Rejection_Comments__c</field>
+            <value>
+                <elementReference>$Record.Rejection_Comments__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Second_Contract_Rejection_Reason__c</field>
+            <value>
+                <elementReference>$Record.Second_Contract_Rejection_Reason__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Status__c</field>
+            <value>
+                <stringValue>Rejected</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Case_Action__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
+    <recordCreates>
+        <description>Creating multiple task records.</description>
+        <name>Create_Task</name>
+        <label>Create Task</label>
+        <locationX>182</locationX>
+        <locationY>2879</locationY>
+        <connector>
+            <targetReference>Check_Case_Updation_Record_exists</targetReference>
+        </connector>
+        <inputReference>TaskRecordToInsert</inputReference>
+    </recordCreates>
+    <recordUpdates>
+        <description>Case Field Update</description>
+        <name>Case_Field_To_Update</name>
+        <label>Case Field Update</label>
+        <locationX>578</locationX>
+        <locationY>2987</locationY>
+        <inputReference>SingleCaseRecordToUpdate</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <description>Case Field Update</description>
+        <name>Case_Field_Update</name>
+        <label>Case Field Update</label>
+        <locationX>50</locationX>
+        <locationY>3095</locationY>
+        <inputReference>SingleCaseRecordToUpdate</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <description>Close Opportunity</description>
+        <name>Close_Opportunity</name>
+        <label>Close Opportunity</label>
+        <locationX>1242</locationX>
+        <locationY>2003</locationY>
+        <connector>
+            <targetReference>Check_Task_Creation_Record_exists</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>StageName</field>
+            <value>
+                <stringValue>7 - Closed</stringValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record.NCSP_Opportunity__r</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>320</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>NCSP_Task_Automation_Workflow_101</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>RecordType_Name__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>NCSP Renewal</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>IsClosed</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <object>Case</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+    <triggerOrder>1060</triggerOrder>
+    <variables>
+        <description>Multiple Case Record Field To Update</description>
+        <name>MultipleCaseRecordFieldToUpdate</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Case</objectType>
+    </variables>
+    <variables>
+        <description>Single Case Record To Update</description>
+        <name>SingleCaseRecordToUpdate</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Case</objectType>
+    </variables>
+    <variables>
+        <description>Single Task Record</description>
+        <name>SingleTaskRecord</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Task</objectType>
+    </variables>
+    <variables>
+        <description>Task Record to Insert</description>
+        <name>TaskRecordToInsert</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Task</objectType>
+    </variables>
+    <variables>
+        <name>varFSubject1</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <stringValue>&apos;^^$$## NCSP - Task Automation- Workflow -101-&apos;+{!varT_Country}</stringValue>
+        </value>
+    </variables>
+    <variables>
+        <name>varT_Country</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <elementReference>$Record.Country__c</elementReference>
+        </value>
+    </variables>
+</Flow>

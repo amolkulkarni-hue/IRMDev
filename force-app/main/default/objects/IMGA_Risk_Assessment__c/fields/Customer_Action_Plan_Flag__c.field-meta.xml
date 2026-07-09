@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Customer_Action_Plan_Flag__c</fullName>
+    <formula>AND($User.IMGA_CAP_User__c,
+    OR(At_Risk_Assessor__r.Id = $User.Id,
+       $User.IMGA_CAP_Assessor__c))</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Customer Action Plan Flag</label>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

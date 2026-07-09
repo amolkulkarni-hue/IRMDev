@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <description>GitLab #26635 -this action is used to send the bell icon notification to case owner.</description>
+        <name>Bell_Notification_to_Case_Owner</name>
+        <label>Bell Notification to Case Owner</label>
+        <locationX>50</locationX>
+        <locationY>647</locationY>
+        <actionName>customNotificationAction</actionName>
+        <actionType>customNotificationAction</actionType>
+        <connector>
+            <targetReference>Send_Email_to_Case_Owner</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>customNotifTypeId</name>
+            <value>
+                <elementReference>$Label.custom_notification_type_of_General_Service_Notification</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>recipientIds</name>
+            <value>
+                <elementReference>varRecord_CollectionofOwnerId</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>title</name>
+            <value>
+                <stringValue>You have a new update on a case</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>body</name>
+            <value>
+                <stringValue>You have received a new comment from {!Get_Users.Name} on case {!$Record.Parent:Case.CaseNumber}.</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>targetId</name>
+            <value>
+                <elementReference>$Record.Parent:Case.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>customNotificationAction</nameSegment>
+        <offset>0</offset>
+    </actionCalls>
+    <actionCalls>
+        <description>GitLab #26635 - This action is used to send email notifications to the case owner. We are using the email template: &apos;Community_Templates/Case_Feed_Item_Notification_to_Case_Owner&apos; and the email alert: &apos;Case.Case_Chatter_Feed_Notification.&apos;</description>
+        <name>Send_Email_to_Case_Owner</name>
+        <label>Send Email to Case Owner</label>
+        <locationX>50</locationX>
+        <locationY>755</locationY>
+        <actionName>Case.Case_Chatter_feed_notification</actionName>
+        <actionType>emailAlert</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>$Record.Parent:Case.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>Case.Case_Chatter_feed_notification</nameSegment>
+        <offset>0</offset>
+    </actionCalls>
+    <apiVersion>62.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <description>GitLab #26635 - Save the Case Owner ID to this collection variable. The action &quot;Bell Notification to Case Owner&quot; requires the recipient ID to be a collection variable, so we are using this to assign the owner ID accordingly.</description>
+        <name>Set_Case_owner_id_to_varR_CollectionofOwnerId</name>
+        <label>Set Case owner id to varR_CollectionofOwnerId</label>
+        <locationX>50</locationX>
+        <locationY>539</locationY>
+        <assignmentItems>
+            <assignToReference>varRecord_CollectionofOwnerId</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>$Record.Parent:Case.OwnerId</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Bell_Notification_to_Case_Owner</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <description>#26635 - Decision to check whether the feed item has been updated by the customer in the portal.</description>
+        <name>After_Feed_Item_Creation</name>
+        <label>After Feed Item Creation ?</label>
+        <locationX>182</locationX>
+        <locationY>323</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Notification_to_agents_from_CSC_portal</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.CreatedBy:User.Profile.Name</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Customer Community Plus Login Customer</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Parent:Case.Owner:User.Id</leftValueReference>
+                <operator>StartsWith</operator>
+                <rightValue>
+                    <stringValue>005</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Users</targetReference>
+            </connector>
+            <label>Notification to agents from CSC portal</label>
+        </rules>
+    </decisions>
+    <description>This is a generic flow that can be used to update the feed item after the save condition.
+
+#26635 - UAT Feedback: Bell Icon Notification on ACSC Community Site Chatter Notification Redirection. This flow sends a bell and email notification to the case owner when the customer updates the chatter feed from the community portal.</description>
+    <environments>Default</environments>
+    <interviewLabel>FeedItem after save flow {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>FeedItem After Save Flow</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <description>GitLab #26635 - Get the community user records to retrieve the &quot;created by&quot; name for use in the body of the action &quot;Bell Notification to Case Owner.&quot; Since it did not support directly fetching the user name, we are utilizing this Get Records to get the user name.</description>
+        <name>Get_Users</name>
+        <label>Get Users</label>
+        <locationX>50</locationX>
+        <locationY>431</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Set_Case_owner_id_to_varR_CollectionofOwnerId</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.CreatedBy:User.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>User</object>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>Name</queriedFields>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <start>
+        <locationX>56</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>After_Feed_Item_Creation</targetReference>
+        </connector>
+        <object>FeedItem</object>
+        <recordTriggerType>Create</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+    <variables>
+        <name>var_CaseOwnerId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>GitLab #26635 -It is used for collecting list of owner id of cases. as the action &apos;Bell Notification to case owner&apos; recipient ids requires collection variable so the owner ids we are storing it in this variable</description>
+        <name>varRecord_CollectionofOwnerId</name>
+        <dataType>String</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>

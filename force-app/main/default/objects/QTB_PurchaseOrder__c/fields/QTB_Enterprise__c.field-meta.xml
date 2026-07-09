@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>QTB_Enterprise__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>#QTB-38&amp;39 Enterprise(lookup)</description>
+    <label>Enterprise</label>
+    <lookupFilter>
+        <active>true</active>
+        <errorMessage>Only IMGA accounts can be selected</errorMessage>
+        <filterItems>
+            <field>Account.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>IMGA Record Type</value>
+        </filterItems>
+        <isOptional>false</isOptional>
+    </lookupFilter>
+    <referenceTo>Account</referenceTo>
+    <relationshipLabel>Purchase Orders (Enterprise)</relationshipLabel>
+    <relationshipName>Purchase_Orders1</relationshipName>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

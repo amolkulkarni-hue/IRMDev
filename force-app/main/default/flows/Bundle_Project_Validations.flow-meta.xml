@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>63.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <customErrors>
+        <name>Child_Bill_Code_Error</name>
+        <label>Child Bill Code Error</label>
+        <locationX>704</locationX>
+        <locationY>755</locationY>
+        <connector>
+            <targetReference>Iterate_Parent_Bill_Code</targetReference>
+        </connector>
+        <customErrorMessages>
+            <errorMessage>There are one or more child bill codes that do not have a parent bill code assigned. All child bill codes must have a parent assigned.</errorMessage>
+            <isFieldError>false</isFieldError>
+        </customErrorMessages>
+    </customErrors>
+    <customErrors>
+        <name>Show_Error</name>
+        <label>Show Error</label>
+        <locationX>264</locationX>
+        <locationY>755</locationY>
+        <connector>
+            <targetReference>Iterate_Parent_Bill_Code</targetReference>
+        </connector>
+        <customErrorMessages>
+            <errorMessage>There are one or more parent bill codes that do not have a child bill code assigned. All parent bill codes must have at least one child assigned.</errorMessage>
+            <isFieldError>false</isFieldError>
+        </customErrorMessages>
+    </customErrors>
+    <decisions>
+        <name>Check_Count_of_Child_Bill_codes</name>
+        <label>Check Count of Child Bill codes</label>
+        <locationX>396</locationX>
+        <locationY>647</locationY>
+        <defaultConnector>
+            <targetReference>Iterate_Parent_Bill_Code</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Total_Child_Bill_Codes</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Iterate_Parent_Bill_Code.Total_Child_Bill_Codes__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <numberValue>0.0</numberValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Show_Error</targetReference>
+            </connector>
+            <label>Total Child Bill Codes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>If_Child_Bill_Code_does_not_have_Parent</name>
+        <label>If Child Bill Code does not have Parent</label>
+        <locationX>836</locationX>
+        <locationY>647</locationY>
+        <defaultConnector>
+            <targetReference>Iterate_Parent_Bill_Code</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Child_does_not_have_parent</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Iterate_Parent_Bill_Code.Parent_Bill_Code__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Child_Bill_Code_Error</targetReference>
+            </connector>
+            <label>Child does not have parent</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>If_Parent_Project</name>
+        <label>If Parent Project</label>
+        <locationX>616</locationX>
+        <locationY>539</locationY>
+        <defaultConnector>
+            <targetReference>If_Child_Bill_Code_does_not_have_Parent</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Parent_Project</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Iterate_Parent_Bill_Code.Bundle_Bill_Code__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Check_Count_of_Child_Bill_codes</targetReference>
+            </connector>
+            <label>Parent Project</label>
+        </rules>
+    </decisions>
+    <environments>Default</environments>
+    <interviewLabel>Bundle Project Validations {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Bundle Project Validations</label>
+    <loops>
+        <name>Iterate_Parent_Bill_Code</name>
+        <label>Iterate Parent Bill Code</label>
+        <locationX>176</locationX>
+        <locationY>431</locationY>
+        <collectionReference>Get_Bill_Codes</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>If_Parent_Project</targetReference>
+        </nextValueConnector>
+    </loops>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <name>Get_Bill_Codes</name>
+        <label>Get Bill Codes</label>
+        <locationX>176</locationX>
+        <locationY>323</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Iterate_Parent_Bill_Code</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>pse__Project__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>pse__Milestone__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Get_Bill_Codes</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>SOW_Created__c</field>
+            <operator>IsChanged</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>SOW_Created__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>pse__Billing_Type__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Bundle</stringValue>
+            </value>
+        </filters>
+        <object>pse__Proj__c</object>
+        <recordTriggerType>Update</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

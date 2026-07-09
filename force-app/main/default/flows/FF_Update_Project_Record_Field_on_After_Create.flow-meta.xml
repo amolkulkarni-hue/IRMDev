@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>58.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <description>Customer Contact Related Field (Ex - Phone . Title, Email)
+Daily Notes is required should always be Uncheck
+Set billable as True Always
+Project Active should be checked
+Billable should be checked</description>
+    <environments>Default</environments>
+    <interviewLabel>FF - Update Project Record Field on After Create {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>FF - Update Project Record Field on After Create</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <name>Update_Records_when_Project_Created</name>
+        <label>Update Records when Project Created</label>
+        <locationX>176</locationX>
+        <locationY>323</locationY>
+        <inputAssignments>
+            <field>Customer_Contact_Email__c</field>
+            <value>
+                <elementReference>$Record.Customer_Contact__r.Email</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Customer_Contact_Phone__c</field>
+            <value>
+                <elementReference>$Record.Customer_Contact__r.Phone</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Customer_Contact_Title__c</field>
+            <value>
+                <elementReference>$Record.Customer_Contact__r.Title</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>pse__Apply_Billing_Cap__c</field>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>pse__Daily_Timecard_Notes_Required__c</field>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>pse__Is_Active__c</field>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>pse__Is_Billable__c</field>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Update_Records_when_Project_Created</targetReference>
+        </connector>
+        <object>pse__Proj__c</object>
+        <recordTriggerType>Create</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

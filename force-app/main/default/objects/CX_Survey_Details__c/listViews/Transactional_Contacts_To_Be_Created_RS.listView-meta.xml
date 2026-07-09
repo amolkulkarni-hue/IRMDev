@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Transactional_Contacts_To_Be_Created_RS</fullName>
+    <columns>NAME</columns>
+    <columns>Source_Sys_Name__c</columns>
+    <columns>Source_Sys_Email__c</columns>
+    <columns>Source_Sys_Phone__c</columns>
+    <columns>Source_Sys_Customer_Name__c</columns>
+    <columns>Source_Sys_Customer_ID__c</columns>
+    <columns>Source_Sys_Country_Code__c</columns>
+    <columns>Source_Sys_Order_Number__c</columns>
+    <columns>Insufficient_Contact_Details__c</columns>
+    <columns>CREATED_DATE</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>FollowUp_Reason__c</field>
+        <operation>notEqual</operation>
+    </filters>
+    <filters>
+        <field>Contact__c</field>
+        <operation>equals</operation>
+        <value>VOC PlaceHolder UK</value>
+    </filters>
+    <filters>
+        <field>Insufficient_Contact_Details__c</field>
+        <operation>equals</operation>
+        <value>0</value>
+    </filters>
+    <filters>
+        <field>CREATED_DATE</field>
+        <operation>greaterOrEqual</operation>
+        <value>LAST_N_DAYS:8</value>
+    </filters>
+    <label>Transactional Contacts To Be Created RS</label>
+    <language>en_US</language>
+    <sharedTo>
+        <group>IMEAllUsers</group>
+        <role>IronMountain</role>
+    </sharedTo>
+</ListView>

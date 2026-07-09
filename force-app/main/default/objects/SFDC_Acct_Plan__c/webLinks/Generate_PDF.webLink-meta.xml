@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebLink xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Generate_PDF</fullName>
+    <availability>online</availability>
+    <description>Fires CongaComposer functionality to create merge document</description>
+    <displayType>button</displayType>
+    <encodingKey>UTF-8</encodingKey>
+    <hasMenubar>false</hasMenubar>
+    <hasScrollbars>true</hasScrollbars>
+    <hasToolbar>false</hasToolbar>
+    <height>325</height>
+    <isResizable>true</isResizable>
+    <linkType>url</linkType>
+    <masterLabel>Generate PDF</masterLabel>
+    <openType>newWindow</openType>
+    <position>topLeft</position>
+    <protected>false</protected>
+    <showsLocation>false</showsLocation>
+    <showsStatus>false</showsStatus>
+    <url>https://composer.congamerge.com
+?sessionId={!API.Session_ID}
+&amp;serverUrl={!API.Partner_Server_URL_290}
+&amp;id={!SFDC_Acct_Plan__c.Id}
+&amp;ReportID=[MAPR]00O80000004pf77,
+[MAPRLast]00O80000004pgat,
+[pipeline]00O800000046O3m?pv0={!SFDC_Acct_Plan__c.IMGA_Group__c},
+[Contact2]00O80000005NK3p?pv0={!SFDC_Acct_Plan__c.Id},
+[ContactDecMaker2]00O80000005NK3k?pv0={!SFDC_Acct_Plan__c.Id},
+[ContactKeyInfl2]00O80000005NK4d?pv0={!SFDC_Acct_Plan__c.Id},
+[ContactTeamPlay2]00O80000005NK3f?pv0={!SFDC_Acct_Plan__c.Id},
+[tier1]00O800000046O3o?pv0={!SFDC_Acct_Plan__c.IMGA_Group__c},
+[tier2]00O800000046O3p?pv0={!SFDC_Acct_Plan__c.IMGA_Group__c},
+[tier3]00O800000046O3q?pv0={!SFDC_Acct_Plan__c.IMGA_Group__c},
+[products]00O800000046O3s?pv0={!SFDC_Acct_Plan__c.IMGA_Group__c},
+[bookings]00O800000046O3n?pv0={!SFDC_Acct_Plan__c.IMGA_Group__c},
+[team]00O800000046O3l?pv0={!SFDC_Acct_Plan__c.IMGA_Group__c},
+[objectives]00O800000046O3r?pv0={!SFDC_Acct_Plan__c.Id}
+&amp;queryid=[YTDBookingsSUM]a1m80000000TV1Z?pv0={!SFDC_Acct_Plan__c.IMGA_Group__c},
+[PipelineSUM]a1m80000000TV1Y?pv0={!SFDC_Acct_Plan__c.IMGA_Group__c}
+&amp;TemplateId=a1l80000000Tgs7
+&amp;DefaultPDF=true
+&amp;DS7=401
+&amp;LG4=1
+&amp;LGAttachOption=2
+&amp;OFN=Account+Plan+for+{!SFDC_Acct_Plan__c.Account__c}</url>
+    <width>400</width>
+</WebLink>

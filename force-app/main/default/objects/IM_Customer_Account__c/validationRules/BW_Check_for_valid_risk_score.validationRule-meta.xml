@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>BW_Check_for_valid_risk_score</fullName>
+    <active>true</active>
+    <description>Risk score must be between 0-10</description>
+    <errorConditionFormula>Or ( 10&lt; Overall_At_Risk_Score__c ,0&gt;Overall_At_Risk_Score__c)</errorConditionFormula>
+    <errorDisplayField>Overall_At_Risk_Score__c</errorDisplayField>
+    <errorMessage>Please select a risk score between 0-10.</errorMessage>
+</ValidationRule>

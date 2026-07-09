@@ -1,0 +1,901 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NA_Customer_Account</fullName>
+    <active>true</active>
+    <description>North American Customer Accounts</description>
+    <label>NA Customer Account</label>
+    <picklistValues>
+        <picklist>Account_Status__c</picklist>
+        <values>
+            <fullName>ACTIVE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CHANGED DISTRICT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>INACTIVE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SUSPENDED</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>TERMINATED</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Activity_Caps_Indicator__c</picklist>
+        <values>
+            <fullName>N%2FA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Admin_Fee_Indicator__c</picklist>
+        <values>
+            <fullName>N%2FA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Archivex_Indicator__c</picklist>
+        <values>
+            <fullName>N%2FA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>At_Risk_Category_Grouping__c</picklist>
+        <values>
+            <fullName>High Risk</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Low Risk</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Medium Risk</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Bundled_Indicator__c</picklist>
+        <values>
+            <fullName>N%2FA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Closure_Reason__c</picklist>
+        <values>
+            <fullName>1a - Price - Uncompetitive Pricing</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1b - Price - Unhappy with Price Increase</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1c - Price - Minimum Storage Increase %28RM Only%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2a - Program Change - Customer retrieved inventory w%2Fo explanation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2b - Program Change - Consolidation of data to internal systems%2Flocations</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2c - Program Change - Moved to electronic%2Fonline%2Fvirtual solution %28not Iron Mountain Digital%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2d - Program Change - Moved to electronic%2Fonline%2Fvirtual solution %28Iron Mountain Digital solution%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2e - Program Change - Moved to in-house tape rotation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2f - Program Change - Moved to custom in-house solution</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2g - Program Change - Lack of use %2F non-deployment</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2h - Program Change - Account moved out of district%2Fservice area %28IM does not retain storage%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2i - Program Change - Account moved out of district%2Fservice area %28IM retains storage%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2j - Program Change - Destruction of Material %2F Information no longer needs to be stored</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2k - Program Change - Moved to third party provider %28IM retains%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>3a - Service Quality - Technical Issues</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>3b - Service Quality - DR%2FRestores did not meet expectations</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>3c - Service Quality - Logistical Service Issues</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>3d - Service Quality - Lack of Features%2FFunctionality</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>3e - Service Quality - IM Non-responsive to %2F unable to resolve repeated service issues</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4a - Economic Change - Out of Business</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4b - Economic Change - Acquired</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4c - Economic Change - Bankrupt</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4d - Economic Change - Budget change</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>5a - Relationship - No contact from IM recently</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>5b - Relationship - Local competitor influenced decision</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>5c - Relationship - Decision Maker change</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>5d - Relationship - Contractual Concerns</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>6a - No Reason - Customer would not share</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>6b - No Reason - Unable to reach customer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>7a - IM Initiated - Account Setup in Error</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>7b - IM Initiated - End of Life of Service</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>7c - IM Initiated - Non-Payment%2FNon-Collectible</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>7d - IM Initiated - Technical Incompatibilities discovered during setup</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>7e - IM Initiated - Unauthorized Reseller</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Container_Billing_Indicator__c</picklist>
+        <values>
+            <fullName>N%2FA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>DB_R_Handling_Minimum_Indicator__c</picklist>
+        <values>
+            <fullName>N%2FA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>DB_R_Hourly_Handling_Indicator__c</picklist>
+        <values>
+            <fullName>N%2FA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>DB_R_Invoice_Minimum_Indicator__c</picklist>
+        <values>
+            <fullName>N%2FA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>DB_R_Monthly_Transportation_Indicator__c</picklist>
+        <values>
+            <fullName>N%2FA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>DB_R_Out_of_Territory_Premium__c</picklist>
+        <values>
+            <fullName>N%2FA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>DB_R_ThirdParty_Transportation_Indicator__c</picklist>
+        <values>
+            <fullName>N%2FA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Department_Level_Contacts__c</picklist>
+        <values>
+            <fullName>N%2FA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Division_Enabled__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Fuel_Surcharge_Indicator__c</picklist>
+        <values>
+            <fullName>N%2FA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>GSC_Dedicated_Support_Team__c</picklist>
+        <values>
+            <fullName>AETNA%2FCVS Pharmacy IMCSS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bank of America IMCSS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Wellsfargo%2FTravellers IMCSS</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>IM_At_Risk_Status__c</picklist>
+        <values>
+            <fullName>At Risk</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Exit in Progress</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Not At Risk</fullName>
+            <default>true</default>
+        </values>
+        <values>
+            <fullName>Notified</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Retained</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Salvaged</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Terminated</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Unknown</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>IM_Product_Class__c</picklist>
+        <values>
+            <fullName>Business Process Management</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Consulting Services</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Data Products</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Data Protection</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Destruction Services</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Digital Archiving and Discovery</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Digital Data Protection and Recovery</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Document Management Solutions</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Energy</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Film and Sound</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fulfillment Services</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Intellectual Property Management</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Records Management</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>IM_Status__c</picklist>
+        <values>
+            <fullName>Active</fullName>
+            <default>true</default>
+        </values>
+        <values>
+            <fullName>Inactive</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Suspended</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>IOD_Order_Minimum_Indicator__c</picklist>
+        <values>
+            <fullName>N%2FA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Language_Code__c</picklist>
+        <values>
+            <fullName>ENG</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FR</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Media_Destruction_Order_Min_Indicator__c</picklist>
+        <values>
+            <fullName>N%2FA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Offsite_Shred_Order_Minimum_Indicator__c</picklist>
+        <values>
+            <fullName>N%2FA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Onsite_Shred_Order_Minimum_Indicator__c</picklist>
+        <values>
+            <fullName>N%2FA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Originating_Org__c</picklist>
+        <values>
+            <fullName>ANZ</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Core</fullName>
+            <default>true</default>
+        </values>
+        <values>
+            <fullName>Crozier</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Data Center LLC</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Product_Management_Vertical__c</picklist>
+        <values>
+            <fullName>Archive%28IRM_Vertical%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Basic Materials</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Consumer Goods</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Financials - Banking</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Financials - Insurance</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Financials - Securities %2F Investing</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Government</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Healthcare</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Industrials</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Legal Services</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Services</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Technology</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Utilities</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Rate_Table_Minimums_Indicator__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Rush_Delivery_Hours__c</picklist>
+        <values>
+            <fullName>N%2FA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Self_Service_Eligibility__c</picklist>
+        <values>
+            <fullName>Self Service Eligible - RM</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Self Service Eligible - RM%2FShred</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Self Service Eligible - Shred Only</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Self Service Eligible with Decentralized User Administration - RM</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Self Service Eligible with Decentralized User Administration -RM%2FShred RM</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Self Service Eligible with Exception of Destruction orders - RM</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Self Service Eligible with Exception of Destruction orders - RM%2FShred</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Self Service Eligible with Exception of Pathology Orders - RM</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Self Service Eligible with Exception of Pathology Orders - RM%2FShred</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Self Service Eligible with high user turnover%2E - RM</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Self Service Eligible with high user turnover%2E - RM%2FShred</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Self Service Ineligible - RM</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Self Service Ineligible - RM%2FShred</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Self Service Mandatory - RM</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Self Service Mandatory - RM%2FShred</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Self Service Mandatory -Shred Only</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Self Service Mandatory with Exception of Destruction orders - RM</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Self Service Mandatory with Exception of Destruction orders - RM%2FShred</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Service_Order_Minimum_Indicator__c</picklist>
+        <values>
+            <fullName>N%2FA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Shred_Supply_Order_Minimum_Indicator__c</picklist>
+        <values>
+            <fullName>N%2FA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Source_System__c</picklist>
+        <values>
+            <fullName>ARCVMS Europe</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Business Central - ITRenew</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ESS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Jaguar</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Netsuite</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other Europe</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other IMLA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other NA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SB IMLA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SB NA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SKP Europe</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SKP IMLA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SKP NA</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Storage_DRCI_Minimum_Indicator__c</picklist>
+        <values>
+            <fullName>N%2FA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Storage_Minimum_Indicator__c</picklist>
+        <values>
+            <fullName>N%2FA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Storage_by_Department_Minimum_Indicator__c</picklist>
+        <values>
+            <fullName>N%2FA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Termination_Impact__c</picklist>
+        <values>
+            <fullName>Terminated- Entire Account At Risk</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Terminated- Local Risk Only</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Terminated- No Risk</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+</RecordType>

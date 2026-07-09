@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Initial_Move_Period_Mandatory</fullName>
+    <active>true</active>
+    <description>For Gitlab #24462</description>
+    <errorConditionFormula>ISBLANK( TEXT(Initial_Move_Period__c ))</errorConditionFormula>
+    <errorDisplayField>Initial_Move_Period__c</errorDisplayField>
+    <errorMessage>Complete this field</errorMessage>
+</ValidationRule>

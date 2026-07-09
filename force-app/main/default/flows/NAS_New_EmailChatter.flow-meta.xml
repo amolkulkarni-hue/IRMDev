@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>myRule_1_A1</name>
+        <label>Post To Chatter</label>
+        <locationX>176</locationX>
+        <locationY>323</locationY>
+        <actionName>NAS_PostToChatterAction</actionName>
+        <actionType>apex</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>message</name>
+            <value>
+                <elementReference>formula_1_myRule_1_A1_6742199410</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>subjectId</name>
+            <value>
+                <elementReference>$Record.Parent.OwnerId</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>NAS_PostToChatterAction</nameSegment>
+    </actionCalls>
+    <apiVersion>58.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <description>Migrated from the NAS New Email Chatter process using From Customer on NAS/CLAS Case criteria.
+Creates Chatter Post for New Case Emails received</description>
+    <environments>Default</environments>
+    <formulas>
+        <name>formula_1_myRule_1_A1_6742199410</name>
+        <dataType>String</dataType>
+        <expression>&apos;&lt;p&gt; {&apos; &amp; {!$Record.Parent.OwnerId} &amp; &apos;}, you have a case update to view: {&apos; &amp; {!$Record.Parent.id} &amp; &apos;} &lt;/p&gt;&apos;</expression>
+    </formulas>
+    <interviewLabel>NAS New Email {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>NAS New EmailChatter</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>myRule_1_A1</targetReference>
+        </connector>
+        <filterFormula>{!$Record.Incoming} = TRUE &amp;&amp; {!$Record.ParentId}  != null &amp;&amp; BEGINS({!$Record.ParentId}, &apos;500&apos;)   &amp;&amp; {!$Record.Parent.RecordTypeId} != null &amp;&amp; ({!$Record.Parent.RecordType.DeveloperName}  == &apos;NAS_General_Support_Case&apos; || {!$Record.Parent.RecordType.DeveloperName}  == &apos;CAC_SKP_RM&apos; || {!$Record.Parent.RecordType.DeveloperName}  == &apos;CAC_SKP_Shred&apos; || {!$Record.Parent.RecordType.DeveloperName}  == &apos;Global_Service_Case&apos; || {!$Record.Parent.RecordType.DeveloperName}  == &apos;Case_DM&apos;) &amp;&amp; BEGINS({!$Record.Parent.OwnerId} , &apos;005&apos;)</filterFormula>
+        <object>EmailMessage</object>
+        <recordTriggerType>Create</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

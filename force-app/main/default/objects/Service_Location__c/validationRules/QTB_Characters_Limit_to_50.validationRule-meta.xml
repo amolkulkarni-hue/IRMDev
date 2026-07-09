@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>QTB_Characters_Limit_to_50</fullName>
+    <active>true</active>
+    <description>Service location name cannot be more than 50 Characters.</description>
+    <errorConditionFormula>AND(NOT($Setup.Metadata_Activation_Settings__c.Disable_VR__c &amp;&amp;
+OR(ISBLANK($Setup.Metadata_Activation_Settings__c.SObject_API_Name__c),CONTAINS($Setup.Metadata_Activation_Settings__c.SObject_API_Name__c,&apos;Service_Location__c&apos;))), LEN( Name ) &gt; 50 )</errorConditionFormula>
+    <errorDisplayField>Name</errorDisplayField>
+    <errorMessage>Service location name cannot  be more than 50 Characters</errorMessage>
+</ValidationRule>

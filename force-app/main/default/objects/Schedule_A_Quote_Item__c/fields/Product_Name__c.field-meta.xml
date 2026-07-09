@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Product_Name__c</fullName>
+    <externalId>false</externalId>
+    <formula>IF ( Product__r.ProductCode = &apos;Next Day Delivery&apos;,
+SUBSTITUTE( Product__r.ProductCode,  &quot;Next Day&quot;,  &quot;Standard&quot; ),
+IF(Product__r.ProductCode = &apos;Trip Charge, Next Day, Zone 2&apos; || Product__r.ProductCode = &apos;Trip Charge, Next Day, Zone 3&apos; || Product__r.ProductCode = &apos;Trip Charge, Next Day, Zone 4&apos; || Product__r.ProductCode = &apos;Trip Charge, Next Day, Zone Metro&apos; || Product__r.ProductCode = &apos;Trip Charge, Next Day, Zone Metro NY&apos; , SUBSTITUTE( Product__r.ProductCode,  &quot;Next Day&quot;,  &quot;Standard Delivery&quot; ),Product__r.ProductCode))</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Product Name</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

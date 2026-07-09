@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebLink xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Generate_Plan_PDF</fullName>
+    <availability>online</availability>
+    <description>Fires CongaComposer functionality to create merged IMNA account plan document</description>
+    <displayType>button</displayType>
+    <encodingKey>UTF-8</encodingKey>
+    <hasMenubar>false</hasMenubar>
+    <hasScrollbars>true</hasScrollbars>
+    <hasToolbar>false</hasToolbar>
+    <height>600</height>
+    <isResizable>true</isResizable>
+    <linkType>url</linkType>
+    <masterLabel>Generate Plan Document</masterLabel>
+    <openType>newWindow</openType>
+    <position>none</position>
+    <protected>false</protected>
+    <showsLocation>false</showsLocation>
+    <showsStatus>false</showsStatus>
+    <url>https://composer.congamerge.com
+?sessionId={!API.Session_ID}
+&amp;serverUrl={!API.Partner_Server_URL_290}
+&amp;id={!SFDC_Acct_Plan__c.Id}
+&amp;ReportID=[AccountPlan]00O80000005M1Fa,
+&amp;ReportID=[Account]00O80000005M1Fb?pv0={!SFDC_Acct_Plan__c.Id}
+&amp;ReportID=[Competitor]00O80000005M1Fc?pv0={!SFDC_Acct_Plan__c.Id}
+&amp;ReportID=[Contact]00O80000005M1Fe?pv0={!SFDC_Acct_Plan__c.Id}
+&amp;ReportID=[ContactDecisionMaker]00O80000005M1Ff?pv0={!SFDC_Acct_Plan__c.Id}
+&amp;ReportID=[ContactKeyInfluencer]00O80000005M1Fg?pv0={!SFDC_Acct_Plan__c.Id}
+&amp;ReportID=[ContactTeamPlayer]00O80000005M1Fh?pv0={!SFDC_Acct_Plan__c.Id}
+&amp;ReportID=[ContactDataCenter]00O80000005M1Fk?pv0={!SFDC_Acct_Plan__c.Id}
+&amp;ReportID=[ContactCompliance]00O80000005M1Fd?pv0={!SFDC_Acct_Plan__c.Id}
+&amp;ReportID=[ContactProcurement]00O80000005M1Fp?pv0={!SFDC_Acct_Plan__c.Id}
+&amp;ReportID=[DMcustomerProfileIT]00O80000005M1Fj?pv0={!SFDC_Acct_Plan__c.Id}
+&amp;ReportID=[DMcustomerProfileDM]00O80000005M1Fi?pv0={!SFDC_Acct_Plan__c.Id}
+&amp;ReportID=[IMGATrigger]00O80000005M1Fl?pv0={!SFDC_Acct_Plan__c.Id}
+&amp;ReportID=[IMGATriggerDC]00O80000005N7Vf?pv0={!SFDC_Acct_Plan__c.Id}
+&amp;ReportID=[ContactITAsset]00O80000005M1Fm?pv0={!SFDC_Acct_Plan__c.Id}
+&amp;ReportID=[Obj/Milestones]00O80000005M1Fn?pv0={!SFDC_Acct_Plan__c.Id}
+&amp;ReportID=[OrganizationProfile]00O80000005M1Fo?pv0={!SFDC_Acct_Plan__c.Id}
+&amp;ReportID=[ContactDataCenter2]00O80000005NK3L?pv0={!SFDC_Acct_Plan__c.Id}
+&amp;ReportID=[ContactCompliance2]00O80000005NK3G?pv0={!SFDC_Acct_Plan__c.Id}
+&amp;ReportID=[ContactProcurement2]00O80000005NK3Q?pv0={!SFDC_Acct_Plan__c.Id}
+&amp;ReportID=[ContactITAsset2]00O80000005NK3V?pv0={!SFDC_Acct_Plan__c.Id}
+&amp;ReportID=[Contact2]00O80000005NK3p?pv0={!SFDC_Acct_Plan__c.Id}
+&amp;ReportID=[ContactDecMaker2]00O80000005NK3k?pv0={!SFDC_Acct_Plan__c.Id}
+&amp;ReportID=[ContactKeyInfl2]00O80000005NK4d?pv0={!SFDC_Acct_Plan__c.Id}
+&amp;ReportID=[ContactTeamPlay2]00O80000005NK3f?pv0={!SFDC_Acct_Plan__c.Id}
+&amp;ReportID=[CustomerCompetitor]00O80000005NP7B?pv0={!SFDC_Acct_Plan__c.Id}
+&amp;ReportID=[Competitor2]00O80000005NPKo?pv0={!SFDC_Acct_Plan__c.Id}
+&amp;ReportID=[Tasks]00O34000006HrMk?pv0={!SFDC_Acct_Plan__c.Id}
+&amp;ReportID=[Pipeline]00O34000006HrMr?pv0={!SFDC_Acct_Plan__c.Account__c}
+&amp;ReportID=[Bookings]00O34000006HrMq?pv0={!SFDC_Acct_Plan__c.Account__c} 
+&amp;TemplateID=
+{!IF( CONTAINS( SFDC_Acct_Plan__c.Conga_Text_Converter__c,&apos;IMNA Account Brief&apos; 
+)=TRUE ,&apos;a1l80000000ULtA&apos;,
+IF( CONTAINS(SFDC_Acct_Plan__c.Conga_Text_Converter__c,&apos;IMNA Account National/Vertical Plan&apos;
+)=TRUE,&apos;a1l80000000ULt5&apos;,
+IF( CONTAINS(SFDC_Acct_Plan__c.Conga_Text_Converter__c,&apos;IMNA Account Data Management Plan&apos; 
+)=TRUE,&apos;a1l80000000ULtF&apos;, 
+IF(CONTAINS(SFDC_Acct_Plan__c.Conga_Text_Converter__c,&apos;IMNA Account Territory Plan&apos;)=TRUE,&apos;a1l80000000ULt0&apos;,&apos;Error&apos;))))}
+&amp;OFN=Account+Plan+for+{!SFDC_Acct_Plan__c.Account__c}
+&amp;DS7=401
+&amp;LGAttachOption=2</url>
+</WebLink>

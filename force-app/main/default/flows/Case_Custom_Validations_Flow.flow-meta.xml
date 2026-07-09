@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>63.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <customErrors>
+        <description>Displaying Error Message</description>
+        <name>GSC_Cannot_edit_Resolved_Case_Error</name>
+        <label>Cannot edit &apos;Resolved&apos; Case Error</label>
+        <locationX>50</locationX>
+        <locationY>539</locationY>
+        <customErrorMessages>
+            <errorMessage>You cannot edit a resolved case. If you need to make changes, please reopen the case and proceed with the edits.</errorMessage>
+            <isFieldError>false</isFieldError>
+        </customErrorMessages>
+    </customErrors>
+    <decisions>
+        <description>This decision is used for checking the Record types for Case object. 
+Kindly utilise this flow for all the after create/update case validations.</description>
+        <name>Check_Record_Type</name>
+        <label>Check Record Type</label>
+        <locationX>380</locationX>
+        <locationY>323</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>GSC_Is_Global_Service_case</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.RecordType.DeveloperName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Global_Service_Case</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>GSC_Custom_Validation_Check</targetReference>
+            </connector>
+            <label>Is Global Service case</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>This decision is checking the criteria for case validation errors for record type &quot;Global Service Case&quot;.
+1 - Cannot edit &apos;Resolved&apos; Case: This criteria is checking the Custom Permission &quot;Allow_Edit_on_Resolved_Global_Service_Cases&quot; is FALSE that means other than admins no one is allowed to edit the Resolved Global Service Cases. For reference, check user story #29276 on Gitlab
+Added Follow Up Required logic to bypass Follow Up Required Field Update on Case as per Gitlab #31866</description>
+        <name>GSC_Custom_Validation_Check</name>
+        <label>GSC Custom Validation Check</label>
+        <locationX>182</locationX>
+        <locationY>431</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>GSC_Cannot_edit_Resolved_Case</name>
+            <conditionLogic>((1 AND 2) OR (3 AND 4)) AND 5 AND 6</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Resolved</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record__Prior.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Resolved</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Status</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Reopened</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record__Prior.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Resolved</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Permission.Allow_Edit_on_Resolved_Global_Service_Cases</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Follow_Up_Required__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>GSC_Cannot_edit_Resolved_Case_Error</targetReference>
+            </connector>
+            <label>1 - Cannot edit &apos;Resolved&apos; Case</label>
+        </rules>
+    </decisions>
+    <description>This flow handles the custom validations error for all the record types in Case After Create &amp; Update Scenarios. For reference, check user story #29276 on Gitlab
+Note: This flow should be kept at last in the Order of Flow Execution as it will fail other After create/update flows.</description>
+    <environments>Default</environments>
+    <interviewLabel>Case Custom Validation {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Case - Custom Validations Flow</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>254</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Check_Record_Type</targetReference>
+        </connector>
+        <filterFormula>{!$Record.RecordType.DeveloperName} = &apos;Global_Service_Case&apos;</filterFormula>
+        <object>Case</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+    <triggerOrder>1500</triggerOrder>
+</Flow>

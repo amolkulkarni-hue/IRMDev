@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Account__c</fullName>
+    <label>Account</label>
+    <lookupFilter>
+        <active>true</active>
+        <booleanFilter>(1 AND 2) OR (3 AND 4)</booleanFilter>
+        <errorMessage>BoB Coverage records can only be associated to an IMGA or Country Parent record</errorMessage>
+        <filterItems>
+            <field>Account.IM_Hierarchy_Level__c</field>
+            <operation>equals</operation>
+            <value>IM Group (IMGA)</value>
+        </filterItems>
+        <filterItems>
+            <field>$Source.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>IMGA</value>
+        </filterItems>
+        <filterItems>
+            <field>Account.IM_Hierarchy_Level__c</field>
+            <operation>equals</operation>
+            <value>Country Parent</value>
+        </filterItems>
+        <filterItems>
+            <field>$Source.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Country Parent</value>
+        </filterItems>
+        <infoMessage>BoB Coverage records can only be associated to an IMGA or CountryParent record</infoMessage>
+        <isOptional>false</isOptional>
+    </lookupFilter>
+    <referenceTo>Account</referenceTo>
+    <relationshipLabel>M2 BoB Coverage</relationshipLabel>
+    <relationshipName>BoB_Coverage</relationshipName>
+    <relationshipOrder>0</relationshipOrder>
+    <reparentableMasterDetail>true</reparentableMasterDetail>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>MasterDetail</type>
+    <writeRequiresMasterRead>false</writeRequiresMasterRead>
+</CustomField>

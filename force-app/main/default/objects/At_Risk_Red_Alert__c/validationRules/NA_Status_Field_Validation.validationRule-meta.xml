@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NA_Status_Field_Validation</fullName>
+    <active>true</active>
+    <description>Case : 04896472 - At Risk Process/Retention/Red Alert Process Enhancement and Standardization for NA in Salesforce</description>
+    <errorConditionFormula>AND( 
+ISCHANGED(Status__c),
+RecordType.DeveloperName == &quot;Retention_Large&quot;,
+OR(TEXT(PRIORVALUE( Status__c)) = &quot;Saved&quot;,TEXT(PRIORVALUE( Status__c)) = &quot;Lost&quot;),
+OR(TEXT(Status__c) &lt;&gt; &quot;Saved&quot;,TEXT(Status__c) &lt;&gt; &quot;Lost&quot;),
+NOT($Setup.AtRisk_StatusField_EditAccess_Profiles__c.Skip_validation_rule__c)
+)</errorConditionFormula>
+    <errorDisplayField>Status__c</errorDisplayField>
+    <errorMessage>Please select another value</errorMessage>
+</ValidationRule>

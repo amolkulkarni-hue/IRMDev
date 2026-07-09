@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Commission_Month_Calculation__c</fullName>
+    <externalId>false</externalId>
+    <formula>((YEAR( Storage_Date__c  ) - YEAR(  Opportunity__r.Original_First_Billed_Date__c   ) - 1) *12) + (12 - MONTH(  Opportunity__r.Original_First_Billed_Date__c  ) +1) + MONTH( Storage_Date__c )</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Commission Month Calculation</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>0</scale>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

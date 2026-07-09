@@ -1,0 +1,581 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Occurrence__c</fullName>
+    <label>Occurrence</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>Sub_Type__c</controllingField>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Monthly</fullName>
+                <default>false</default>
+                <label>Monthly</label>
+            </value>
+            <value>
+                <fullName>Quarterly</fullName>
+                <default>false</default>
+                <label>Quarterly</label>
+            </value>
+            <value>
+                <fullName>Semi-Annual</fullName>
+                <default>false</default>
+                <label>Semi-Annual</label>
+            </value>
+            <value>
+                <fullName>Annual</fullName>
+                <default>false</default>
+                <label>Annual</label>
+            </value>
+            <value>
+                <fullName>Non Recurring</fullName>
+                <default>false</default>
+                <label>Non Recurring</label>
+            </value>
+            <value>
+                <fullName>WA LAM</fullName>
+                <default>false</default>
+                <label>WA LAM</label>
+            </value>
+            <value>
+                <fullName>Aprovado</fullName>
+                <default>false</default>
+                <label>Aprovado</label>
+            </value>
+            <value>
+                <fullName>SAP Accepted</fullName>
+                <default>false</default>
+                <label>SAP Accepted</label>
+            </value>
+            <value>
+                <fullName>Em aprovação CLIENTE</fullName>
+                <default>false</default>
+                <label>Em aprovação CLIENTE</label>
+            </value>
+            <value>
+                <fullName>SAP Rejected</fullName>
+                <default>false</default>
+                <label>SAP Rejected</label>
+            </value>
+            <value>
+                <fullName>Em aprovação DIRETORIA IMB</fullName>
+                <default>false</default>
+                <label>Em aprovação DIRETORIA IMB</label>
+            </value>
+            <value>
+                <fullName>Em execução (A2C)</fullName>
+                <default>false</default>
+                <label>Em execução (A2C)</label>
+            </value>
+            <value>
+                <fullName>Em execução (Contratos)</fullName>
+                <default>false</default>
+                <label>Em execução (Contratos)</label>
+            </value>
+            <value>
+                <fullName>Em execução (Pricing Execution)</fullName>
+                <default>false</default>
+                <label>Em execução (Pricing Execution)</label>
+            </value>
+            <value>
+                <fullName>Em execução (Revenue Management)</fullName>
+                <default>false</default>
+                <label>Em execução (Revenue Management)</label>
+            </value>
+            <value>
+                <fullName>Solicitado informações adicionais</fullName>
+                <default>false</default>
+                <label>Solicitado informações adicionais</label>
+            </value>
+            <value>
+                <fullName>Aguardando Success</fullName>
+                <default>false</default>
+                <label>Aguardando Success</label>
+            </value>
+            <value>
+                <fullName>Aguardando Comercial</fullName>
+                <default>false</default>
+                <label>Aguardando Comercial</label>
+            </value>
+            <value>
+                <fullName>Aguardando Outros</fullName>
+                <default>false</default>
+                <label>Aguardando Outros</label>
+            </value>
+            <value>
+                <fullName>Encerrado (atendimento completo)</fullName>
+                <default>false</default>
+                <label>Encerrado (atendimento completo)</label>
+            </value>
+            <value>
+                <fullName>Encerrado (dados incompletos)</fullName>
+                <default>false</default>
+                <label>Encerrado (dados incompletos)</label>
+            </value>
+            <value>
+                <fullName>Encerrado (sem updates)</fullName>
+                <default>false</default>
+                <label>Encerrado (sem updates)</label>
+            </value>
+            <value>
+                <fullName>Encerrado (outros)</fullName>
+                <default>false</default>
+                <label>Encerrado (outros)</label>
+            </value>
+            <value>
+                <fullName>Outros</fullName>
+                <default>false</default>
+                <label>Outros</label>
+            </value>
+            <value>
+                <fullName>Non-Standard</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Non-Standard</label>
+            </value>
+            <value>
+                <fullName>Standard</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Standard</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>InfoSec</controllingFieldValue>
+            <valueName>SAP Accepted</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>InfoSec</controllingFieldValue>
+            <valueName>SAP Rejected</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Multi-Business Line</controllingFieldValue>
+            <controllingFieldValue>Adjustment</controllingFieldValue>
+            <controllingFieldValue>RM PA Model</controllingFieldValue>
+            <controllingFieldValue>Shred PA Model</controllingFieldValue>
+            <controllingFieldValue>DMS</controllingFieldValue>
+            <controllingFieldValue>DM PA Model</controllingFieldValue>
+            <controllingFieldValue>IMES</controllingFieldValue>
+            <valueName>WA LAM</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Support</controllingFieldValue>
+            <controllingFieldValue>Invoice Reprints</controllingFieldValue>
+            <controllingFieldValue>General Act Info</controllingFieldValue>
+            <controllingFieldValue>Relationship Research</controllingFieldValue>
+            <controllingFieldValue>Custom</controllingFieldValue>
+            <controllingFieldValue>Acct Info</controllingFieldValue>
+            <controllingFieldValue>Activity</controllingFieldValue>
+            <controllingFieldValue>AR/AP</controllingFieldValue>
+            <controllingFieldValue>Authorized users</controllingFieldValue>
+            <controllingFieldValue>C&amp;A Report</controllingFieldValue>
+            <controllingFieldValue>Escalations</controllingFieldValue>
+            <controllingFieldValue>Inventory Control</controllingFieldValue>
+            <controllingFieldValue>KPI/SLA</controllingFieldValue>
+            <controllingFieldValue>Reporting</controllingFieldValue>
+            <controllingFieldValue>Serviceability</controllingFieldValue>
+            <controllingFieldValue>Setup</controllingFieldValue>
+            <controllingFieldValue>Spend</controllingFieldValue>
+            <controllingFieldValue>Standard</controllingFieldValue>
+            <controllingFieldValue>Storage</controllingFieldValue>
+            <valueName>Monthly</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Support</controllingFieldValue>
+            <controllingFieldValue>Invoice Reprints</controllingFieldValue>
+            <controllingFieldValue>General Act Info</controllingFieldValue>
+            <controllingFieldValue>Relationship Research</controllingFieldValue>
+            <controllingFieldValue>Custom</controllingFieldValue>
+            <controllingFieldValue>Acct Info</controllingFieldValue>
+            <controllingFieldValue>Activity</controllingFieldValue>
+            <controllingFieldValue>AR/AP</controllingFieldValue>
+            <controllingFieldValue>Authorized users</controllingFieldValue>
+            <controllingFieldValue>C&amp;A Report</controllingFieldValue>
+            <controllingFieldValue>Escalations</controllingFieldValue>
+            <controllingFieldValue>Inventory Control</controllingFieldValue>
+            <controllingFieldValue>KPI/SLA</controllingFieldValue>
+            <controllingFieldValue>Reporting</controllingFieldValue>
+            <controllingFieldValue>Serviceability</controllingFieldValue>
+            <controllingFieldValue>Setup</controllingFieldValue>
+            <controllingFieldValue>Spend</controllingFieldValue>
+            <controllingFieldValue>Standard</controllingFieldValue>
+            <controllingFieldValue>Storage</controllingFieldValue>
+            <valueName>Quarterly</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Support</controllingFieldValue>
+            <controllingFieldValue>Invoice Reprints</controllingFieldValue>
+            <controllingFieldValue>General Act Info</controllingFieldValue>
+            <controllingFieldValue>Relationship Research</controllingFieldValue>
+            <controllingFieldValue>Custom</controllingFieldValue>
+            <controllingFieldValue>Acct Info</controllingFieldValue>
+            <controllingFieldValue>Activity</controllingFieldValue>
+            <controllingFieldValue>AR/AP</controllingFieldValue>
+            <controllingFieldValue>Authorized users</controllingFieldValue>
+            <controllingFieldValue>C&amp;A Report</controllingFieldValue>
+            <controllingFieldValue>Escalations</controllingFieldValue>
+            <controllingFieldValue>Inventory Control</controllingFieldValue>
+            <controllingFieldValue>KPI/SLA</controllingFieldValue>
+            <controllingFieldValue>Reporting</controllingFieldValue>
+            <controllingFieldValue>Serviceability</controllingFieldValue>
+            <controllingFieldValue>Setup</controllingFieldValue>
+            <controllingFieldValue>Spend</controllingFieldValue>
+            <controllingFieldValue>Standard</controllingFieldValue>
+            <controllingFieldValue>Storage</controllingFieldValue>
+            <valueName>Semi-Annual</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Support</controllingFieldValue>
+            <controllingFieldValue>Invoice Reprints</controllingFieldValue>
+            <controllingFieldValue>General Act Info</controllingFieldValue>
+            <controllingFieldValue>Relationship Research</controllingFieldValue>
+            <controllingFieldValue>Custom</controllingFieldValue>
+            <controllingFieldValue>Acct Info</controllingFieldValue>
+            <controllingFieldValue>Activity</controllingFieldValue>
+            <controllingFieldValue>AR/AP</controllingFieldValue>
+            <controllingFieldValue>Authorized users</controllingFieldValue>
+            <controllingFieldValue>C&amp;A Report</controllingFieldValue>
+            <controllingFieldValue>Escalations</controllingFieldValue>
+            <controllingFieldValue>Inventory Control</controllingFieldValue>
+            <controllingFieldValue>KPI/SLA</controllingFieldValue>
+            <controllingFieldValue>Reporting</controllingFieldValue>
+            <controllingFieldValue>Serviceability</controllingFieldValue>
+            <controllingFieldValue>Setup</controllingFieldValue>
+            <controllingFieldValue>Spend</controllingFieldValue>
+            <controllingFieldValue>Standard</controllingFieldValue>
+            <controllingFieldValue>Storage</controllingFieldValue>
+            <valueName>Annual</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Support</controllingFieldValue>
+            <controllingFieldValue>Invoice Reprints</controllingFieldValue>
+            <controllingFieldValue>General Act Info</controllingFieldValue>
+            <controllingFieldValue>Relationship Research</controllingFieldValue>
+            <controllingFieldValue>Custom</controllingFieldValue>
+            <controllingFieldValue>Acct Info</controllingFieldValue>
+            <controllingFieldValue>Activity</controllingFieldValue>
+            <controllingFieldValue>AR/AP</controllingFieldValue>
+            <controllingFieldValue>Authorized users</controllingFieldValue>
+            <controllingFieldValue>C&amp;A Report</controllingFieldValue>
+            <controllingFieldValue>Escalations</controllingFieldValue>
+            <controllingFieldValue>Inventory Control</controllingFieldValue>
+            <controllingFieldValue>KPI/SLA</controllingFieldValue>
+            <controllingFieldValue>Reporting</controllingFieldValue>
+            <controllingFieldValue>Serviceability</controllingFieldValue>
+            <controllingFieldValue>Setup</controllingFieldValue>
+            <controllingFieldValue>Spend</controllingFieldValue>
+            <controllingFieldValue>Standard</controllingFieldValue>
+            <controllingFieldValue>Storage</controllingFieldValue>
+            <valueName>Non Recurring</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Aditivo + Retroativo</controllingFieldValue>
+            <controllingFieldValue>Aditivo Contratual</controllingFieldValue>
+            <controllingFieldValue>Análise</controllingFieldValue>
+            <controllingFieldValue>Aplicação de Reajuste</controllingFieldValue>
+            <controllingFieldValue>Arquivamento de Documentos</controllingFieldValue>
+            <controllingFieldValue>Atualização de Dados (Visma/Calipso/SUSE)</controllingFieldValue>
+            <controllingFieldValue>Cadastramento de Preços</controllingFieldValue>
+            <controllingFieldValue>Correção/Ajuste valores tarifário</controllingFieldValue>
+            <controllingFieldValue>Desconto</controllingFieldValue>
+            <controllingFieldValue>Estorno de Reajuste</controllingFieldValue>
+            <controllingFieldValue>Farol</controllingFieldValue>
+            <controllingFieldValue>Harmonização</controllingFieldValue>
+            <controllingFieldValue>Iniciativas</controllingFieldValue>
+            <controllingFieldValue>Outros</controllingFieldValue>
+            <controllingFieldValue>Retroativo</controllingFieldValue>
+            <controllingFieldValue>Tabela(s) DE x PARA</controllingFieldValue>
+            <valueName>Aprovado</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Aditivo + Retroativo</controllingFieldValue>
+            <controllingFieldValue>Aditivo Contratual</controllingFieldValue>
+            <controllingFieldValue>Análise</controllingFieldValue>
+            <controllingFieldValue>Aplicação de Reajuste</controllingFieldValue>
+            <controllingFieldValue>Arquivamento de Documentos</controllingFieldValue>
+            <controllingFieldValue>Atualização de Dados (Visma/Calipso/SUSE)</controllingFieldValue>
+            <controllingFieldValue>Cadastramento de Preços</controllingFieldValue>
+            <controllingFieldValue>Correção/Ajuste valores tarifário</controllingFieldValue>
+            <controllingFieldValue>Desconto</controllingFieldValue>
+            <controllingFieldValue>Estorno de Reajuste</controllingFieldValue>
+            <controllingFieldValue>Farol</controllingFieldValue>
+            <controllingFieldValue>Harmonização</controllingFieldValue>
+            <controllingFieldValue>Iniciativas</controllingFieldValue>
+            <controllingFieldValue>Outros</controllingFieldValue>
+            <controllingFieldValue>Retroativo</controllingFieldValue>
+            <controllingFieldValue>Tabela(s) DE x PARA</controllingFieldValue>
+            <valueName>Em aprovação CLIENTE</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Aditivo + Retroativo</controllingFieldValue>
+            <controllingFieldValue>Aditivo Contratual</controllingFieldValue>
+            <controllingFieldValue>Análise</controllingFieldValue>
+            <controllingFieldValue>Aplicação de Reajuste</controllingFieldValue>
+            <controllingFieldValue>Arquivamento de Documentos</controllingFieldValue>
+            <controllingFieldValue>Atualização de Dados (Visma/Calipso/SUSE)</controllingFieldValue>
+            <controllingFieldValue>Cadastramento de Preços</controllingFieldValue>
+            <controllingFieldValue>Correção/Ajuste valores tarifário</controllingFieldValue>
+            <controllingFieldValue>Desconto</controllingFieldValue>
+            <controllingFieldValue>Estorno de Reajuste</controllingFieldValue>
+            <controllingFieldValue>Farol</controllingFieldValue>
+            <controllingFieldValue>Harmonização</controllingFieldValue>
+            <controllingFieldValue>Iniciativas</controllingFieldValue>
+            <controllingFieldValue>Outros</controllingFieldValue>
+            <controllingFieldValue>Retroativo</controllingFieldValue>
+            <controllingFieldValue>Tabela(s) DE x PARA</controllingFieldValue>
+            <valueName>Em aprovação DIRETORIA IMB</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Aditivo + Retroativo</controllingFieldValue>
+            <controllingFieldValue>Aditivo Contratual</controllingFieldValue>
+            <controllingFieldValue>Análise</controllingFieldValue>
+            <controllingFieldValue>Aplicação de Reajuste</controllingFieldValue>
+            <controllingFieldValue>Arquivamento de Documentos</controllingFieldValue>
+            <controllingFieldValue>Atualização de Dados (Visma/Calipso/SUSE)</controllingFieldValue>
+            <controllingFieldValue>Cadastramento de Preços</controllingFieldValue>
+            <controllingFieldValue>Correção/Ajuste valores tarifário</controllingFieldValue>
+            <controllingFieldValue>Desconto</controllingFieldValue>
+            <controllingFieldValue>Estorno de Reajuste</controllingFieldValue>
+            <controllingFieldValue>Farol</controllingFieldValue>
+            <controllingFieldValue>Harmonização</controllingFieldValue>
+            <controllingFieldValue>Iniciativas</controllingFieldValue>
+            <controllingFieldValue>Outros</controllingFieldValue>
+            <controllingFieldValue>Retroativo</controllingFieldValue>
+            <controllingFieldValue>Tabela(s) DE x PARA</controllingFieldValue>
+            <valueName>Em execução (A2C)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Aditivo + Retroativo</controllingFieldValue>
+            <controllingFieldValue>Aditivo Contratual</controllingFieldValue>
+            <controllingFieldValue>Análise</controllingFieldValue>
+            <controllingFieldValue>Aplicação de Reajuste</controllingFieldValue>
+            <controllingFieldValue>Arquivamento de Documentos</controllingFieldValue>
+            <controllingFieldValue>Atualização de Dados (Visma/Calipso/SUSE)</controllingFieldValue>
+            <controllingFieldValue>Cadastramento de Preços</controllingFieldValue>
+            <controllingFieldValue>Correção/Ajuste valores tarifário</controllingFieldValue>
+            <controllingFieldValue>Desconto</controllingFieldValue>
+            <controllingFieldValue>Estorno de Reajuste</controllingFieldValue>
+            <controllingFieldValue>Farol</controllingFieldValue>
+            <controllingFieldValue>Harmonização</controllingFieldValue>
+            <controllingFieldValue>Iniciativas</controllingFieldValue>
+            <controllingFieldValue>Outros</controllingFieldValue>
+            <controllingFieldValue>Retroativo</controllingFieldValue>
+            <controllingFieldValue>Tabela(s) DE x PARA</controllingFieldValue>
+            <valueName>Em execução (Contratos)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Aditivo + Retroativo</controllingFieldValue>
+            <controllingFieldValue>Aditivo Contratual</controllingFieldValue>
+            <controllingFieldValue>Análise</controllingFieldValue>
+            <controllingFieldValue>Aplicação de Reajuste</controllingFieldValue>
+            <controllingFieldValue>Arquivamento de Documentos</controllingFieldValue>
+            <controllingFieldValue>Atualização de Dados (Visma/Calipso/SUSE)</controllingFieldValue>
+            <controllingFieldValue>Cadastramento de Preços</controllingFieldValue>
+            <controllingFieldValue>Correção/Ajuste valores tarifário</controllingFieldValue>
+            <controllingFieldValue>Desconto</controllingFieldValue>
+            <controllingFieldValue>Estorno de Reajuste</controllingFieldValue>
+            <controllingFieldValue>Farol</controllingFieldValue>
+            <controllingFieldValue>Harmonização</controllingFieldValue>
+            <controllingFieldValue>Iniciativas</controllingFieldValue>
+            <controllingFieldValue>Outros</controllingFieldValue>
+            <controllingFieldValue>Retroativo</controllingFieldValue>
+            <controllingFieldValue>Tabela(s) DE x PARA</controllingFieldValue>
+            <valueName>Em execução (Pricing Execution)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Aditivo + Retroativo</controllingFieldValue>
+            <controllingFieldValue>Aditivo Contratual</controllingFieldValue>
+            <controllingFieldValue>Análise</controllingFieldValue>
+            <controllingFieldValue>Aplicação de Reajuste</controllingFieldValue>
+            <controllingFieldValue>Arquivamento de Documentos</controllingFieldValue>
+            <controllingFieldValue>Atualização de Dados (Visma/Calipso/SUSE)</controllingFieldValue>
+            <controllingFieldValue>Cadastramento de Preços</controllingFieldValue>
+            <controllingFieldValue>Correção/Ajuste valores tarifário</controllingFieldValue>
+            <controllingFieldValue>Desconto</controllingFieldValue>
+            <controllingFieldValue>Estorno de Reajuste</controllingFieldValue>
+            <controllingFieldValue>Farol</controllingFieldValue>
+            <controllingFieldValue>Harmonização</controllingFieldValue>
+            <controllingFieldValue>Iniciativas</controllingFieldValue>
+            <controllingFieldValue>Outros</controllingFieldValue>
+            <controllingFieldValue>Retroativo</controllingFieldValue>
+            <controllingFieldValue>Tabela(s) DE x PARA</controllingFieldValue>
+            <valueName>Em execução (Revenue Management)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Aditivo + Retroativo</controllingFieldValue>
+            <controllingFieldValue>Aditivo Contratual</controllingFieldValue>
+            <controllingFieldValue>Análise</controllingFieldValue>
+            <controllingFieldValue>Aplicação de Reajuste</controllingFieldValue>
+            <controllingFieldValue>Arquivamento de Documentos</controllingFieldValue>
+            <controllingFieldValue>Atualização de Dados (Visma/Calipso/SUSE)</controllingFieldValue>
+            <controllingFieldValue>Cadastramento de Preços</controllingFieldValue>
+            <controllingFieldValue>Correção/Ajuste valores tarifário</controllingFieldValue>
+            <controllingFieldValue>Desconto</controllingFieldValue>
+            <controllingFieldValue>Estorno de Reajuste</controllingFieldValue>
+            <controllingFieldValue>Farol</controllingFieldValue>
+            <controllingFieldValue>Harmonização</controllingFieldValue>
+            <controllingFieldValue>Iniciativas</controllingFieldValue>
+            <controllingFieldValue>Outros</controllingFieldValue>
+            <controllingFieldValue>Retroativo</controllingFieldValue>
+            <controllingFieldValue>Tabela(s) DE x PARA</controllingFieldValue>
+            <valueName>Solicitado informações adicionais</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Aditivo + Retroativo</controllingFieldValue>
+            <controllingFieldValue>Aditivo Contratual</controllingFieldValue>
+            <controllingFieldValue>Análise</controllingFieldValue>
+            <controllingFieldValue>Aplicação de Reajuste</controllingFieldValue>
+            <controllingFieldValue>Arquivamento de Documentos</controllingFieldValue>
+            <controllingFieldValue>Atualização de Dados (Visma/Calipso/SUSE)</controllingFieldValue>
+            <controllingFieldValue>Cadastramento de Preços</controllingFieldValue>
+            <controllingFieldValue>Correção/Ajuste valores tarifário</controllingFieldValue>
+            <controllingFieldValue>Desconto</controllingFieldValue>
+            <controllingFieldValue>Estorno de Reajuste</controllingFieldValue>
+            <controllingFieldValue>Farol</controllingFieldValue>
+            <controllingFieldValue>Harmonização</controllingFieldValue>
+            <controllingFieldValue>Iniciativas</controllingFieldValue>
+            <controllingFieldValue>Outros</controllingFieldValue>
+            <controllingFieldValue>Retroativo</controllingFieldValue>
+            <controllingFieldValue>Tabela(s) DE x PARA</controllingFieldValue>
+            <valueName>Aguardando Success</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Aditivo + Retroativo</controllingFieldValue>
+            <controllingFieldValue>Aditivo Contratual</controllingFieldValue>
+            <controllingFieldValue>Análise</controllingFieldValue>
+            <controllingFieldValue>Aplicação de Reajuste</controllingFieldValue>
+            <controllingFieldValue>Arquivamento de Documentos</controllingFieldValue>
+            <controllingFieldValue>Atualização de Dados (Visma/Calipso/SUSE)</controllingFieldValue>
+            <controllingFieldValue>Cadastramento de Preços</controllingFieldValue>
+            <controllingFieldValue>Correção/Ajuste valores tarifário</controllingFieldValue>
+            <controllingFieldValue>Desconto</controllingFieldValue>
+            <controllingFieldValue>Estorno de Reajuste</controllingFieldValue>
+            <controllingFieldValue>Farol</controllingFieldValue>
+            <controllingFieldValue>Harmonização</controllingFieldValue>
+            <controllingFieldValue>Iniciativas</controllingFieldValue>
+            <controllingFieldValue>Outros</controllingFieldValue>
+            <controllingFieldValue>Retroativo</controllingFieldValue>
+            <controllingFieldValue>Tabela(s) DE x PARA</controllingFieldValue>
+            <valueName>Aguardando Comercial</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Aditivo + Retroativo</controllingFieldValue>
+            <controllingFieldValue>Aditivo Contratual</controllingFieldValue>
+            <controllingFieldValue>Análise</controllingFieldValue>
+            <controllingFieldValue>Aplicação de Reajuste</controllingFieldValue>
+            <controllingFieldValue>Arquivamento de Documentos</controllingFieldValue>
+            <controllingFieldValue>Atualização de Dados (Visma/Calipso/SUSE)</controllingFieldValue>
+            <controllingFieldValue>Cadastramento de Preços</controllingFieldValue>
+            <controllingFieldValue>Correção/Ajuste valores tarifário</controllingFieldValue>
+            <controllingFieldValue>Desconto</controllingFieldValue>
+            <controllingFieldValue>Estorno de Reajuste</controllingFieldValue>
+            <controllingFieldValue>Farol</controllingFieldValue>
+            <controllingFieldValue>Harmonização</controllingFieldValue>
+            <controllingFieldValue>Iniciativas</controllingFieldValue>
+            <controllingFieldValue>Outros</controllingFieldValue>
+            <controllingFieldValue>Retroativo</controllingFieldValue>
+            <controllingFieldValue>Tabela(s) DE x PARA</controllingFieldValue>
+            <valueName>Aguardando Outros</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Aditivo + Retroativo</controllingFieldValue>
+            <controllingFieldValue>Aditivo Contratual</controllingFieldValue>
+            <controllingFieldValue>Análise</controllingFieldValue>
+            <controllingFieldValue>Aplicação de Reajuste</controllingFieldValue>
+            <controllingFieldValue>Arquivamento de Documentos</controllingFieldValue>
+            <controllingFieldValue>Atualização de Dados (Visma/Calipso/SUSE)</controllingFieldValue>
+            <controllingFieldValue>Cadastramento de Preços</controllingFieldValue>
+            <controllingFieldValue>Correção/Ajuste valores tarifário</controllingFieldValue>
+            <controllingFieldValue>Desconto</controllingFieldValue>
+            <controllingFieldValue>Estorno de Reajuste</controllingFieldValue>
+            <controllingFieldValue>Farol</controllingFieldValue>
+            <controllingFieldValue>Harmonização</controllingFieldValue>
+            <controllingFieldValue>Iniciativas</controllingFieldValue>
+            <controllingFieldValue>Outros</controllingFieldValue>
+            <controllingFieldValue>Retroativo</controllingFieldValue>
+            <controllingFieldValue>Tabela(s) DE x PARA</controllingFieldValue>
+            <valueName>Encerrado (atendimento completo)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Aditivo + Retroativo</controllingFieldValue>
+            <controllingFieldValue>Aditivo Contratual</controllingFieldValue>
+            <controllingFieldValue>Análise</controllingFieldValue>
+            <controllingFieldValue>Aplicação de Reajuste</controllingFieldValue>
+            <controllingFieldValue>Arquivamento de Documentos</controllingFieldValue>
+            <controllingFieldValue>Atualização de Dados (Visma/Calipso/SUSE)</controllingFieldValue>
+            <controllingFieldValue>Cadastramento de Preços</controllingFieldValue>
+            <controllingFieldValue>Correção/Ajuste valores tarifário</controllingFieldValue>
+            <controllingFieldValue>Desconto</controllingFieldValue>
+            <controllingFieldValue>Estorno de Reajuste</controllingFieldValue>
+            <controllingFieldValue>Farol</controllingFieldValue>
+            <controllingFieldValue>Harmonização</controllingFieldValue>
+            <controllingFieldValue>Iniciativas</controllingFieldValue>
+            <controllingFieldValue>Outros</controllingFieldValue>
+            <controllingFieldValue>Retroativo</controllingFieldValue>
+            <controllingFieldValue>Tabela(s) DE x PARA</controllingFieldValue>
+            <valueName>Encerrado (dados incompletos)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Aditivo + Retroativo</controllingFieldValue>
+            <controllingFieldValue>Aditivo Contratual</controllingFieldValue>
+            <controllingFieldValue>Análise</controllingFieldValue>
+            <controllingFieldValue>Aplicação de Reajuste</controllingFieldValue>
+            <controllingFieldValue>Arquivamento de Documentos</controllingFieldValue>
+            <controllingFieldValue>Atualização de Dados (Visma/Calipso/SUSE)</controllingFieldValue>
+            <controllingFieldValue>Cadastramento de Preços</controllingFieldValue>
+            <controllingFieldValue>Correção/Ajuste valores tarifário</controllingFieldValue>
+            <controllingFieldValue>Desconto</controllingFieldValue>
+            <controllingFieldValue>Estorno de Reajuste</controllingFieldValue>
+            <controllingFieldValue>Farol</controllingFieldValue>
+            <controllingFieldValue>Harmonização</controllingFieldValue>
+            <controllingFieldValue>Iniciativas</controllingFieldValue>
+            <controllingFieldValue>Outros</controllingFieldValue>
+            <controllingFieldValue>Retroativo</controllingFieldValue>
+            <controllingFieldValue>Tabela(s) DE x PARA</controllingFieldValue>
+            <valueName>Encerrado (sem updates)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Aditivo + Retroativo</controllingFieldValue>
+            <controllingFieldValue>Aditivo Contratual</controllingFieldValue>
+            <controllingFieldValue>Análise</controllingFieldValue>
+            <controllingFieldValue>Aplicação de Reajuste</controllingFieldValue>
+            <controllingFieldValue>Arquivamento de Documentos</controllingFieldValue>
+            <controllingFieldValue>Atualização de Dados (Visma/Calipso/SUSE)</controllingFieldValue>
+            <controllingFieldValue>Cadastramento de Preços</controllingFieldValue>
+            <controllingFieldValue>Correção/Ajuste valores tarifário</controllingFieldValue>
+            <controllingFieldValue>Desconto</controllingFieldValue>
+            <controllingFieldValue>Estorno de Reajuste</controllingFieldValue>
+            <controllingFieldValue>Farol</controllingFieldValue>
+            <controllingFieldValue>Harmonização</controllingFieldValue>
+            <controllingFieldValue>Iniciativas</controllingFieldValue>
+            <controllingFieldValue>Outros</controllingFieldValue>
+            <controllingFieldValue>Retroativo</controllingFieldValue>
+            <controllingFieldValue>Tabela(s) DE x PARA</controllingFieldValue>
+            <valueName>Encerrado (outros)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Aditivo + Retroativo</controllingFieldValue>
+            <controllingFieldValue>Aditivo Contratual</controllingFieldValue>
+            <controllingFieldValue>Análise</controllingFieldValue>
+            <controllingFieldValue>Aplicação de Reajuste</controllingFieldValue>
+            <controllingFieldValue>Arquivamento de Documentos</controllingFieldValue>
+            <controllingFieldValue>Atualização de Dados (Visma/Calipso/SUSE)</controllingFieldValue>
+            <controllingFieldValue>Cadastramento de Preços</controllingFieldValue>
+            <controllingFieldValue>Correção/Ajuste valores tarifário</controllingFieldValue>
+            <controllingFieldValue>Desconto</controllingFieldValue>
+            <controllingFieldValue>Estorno de Reajuste</controllingFieldValue>
+            <controllingFieldValue>Farol</controllingFieldValue>
+            <controllingFieldValue>Harmonização</controllingFieldValue>
+            <controllingFieldValue>Iniciativas</controllingFieldValue>
+            <controllingFieldValue>Outros</controllingFieldValue>
+            <controllingFieldValue>Retroativo</controllingFieldValue>
+            <controllingFieldValue>Tabela(s) DE x PARA</controllingFieldValue>
+            <valueName>Outros</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

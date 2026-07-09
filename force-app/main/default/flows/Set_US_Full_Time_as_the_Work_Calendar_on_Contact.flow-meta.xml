@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>58.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <name>Set_Work_Calendar</name>
+        <label>Set Work Calendar</label>
+        <locationX>618</locationX>
+        <locationY>499</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.pse__Work_Calendar__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Work_Calendar.Id</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <decisions>
+        <name>Check_PSA_Record_type</name>
+        <label>Check PSA Record type</label>
+        <locationX>417</locationX>
+        <locationY>338</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>PSA_Type</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Record_type_PSA_Resource</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.RecordType.Name</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>Get_Record_type_PSA_Resource.Name</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Work_Calendar</targetReference>
+            </connector>
+            <label>PSA Type</label>
+        </rules>
+    </decisions>
+    <environments>Default</environments>
+    <interviewLabel>Set US Full Time as the Work Calendar on Contact {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Set US Full Time as the Work Calendar on Contact</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <name>Get_Record_type_PSA_Resource</name>
+        <label>Get Record type PSA Resource</label>
+        <locationX>276</locationX>
+        <locationY>336</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Check_PSA_Record_type</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Name</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>PSA Resource</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>RecordType</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_Work_Calendar</name>
+        <label>Get Work Calendar</label>
+        <locationX>617</locationX>
+        <locationY>333</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Set_Work_Calendar</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Name</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>US Full Time</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>pse__Work_Calendar__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <start>
+        <locationX>150</locationX>
+        <locationY>51</locationY>
+        <connector>
+            <targetReference>Get_Record_type_PSA_Resource</targetReference>
+        </connector>
+        <object>Contact</object>
+        <recordTriggerType>Create</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

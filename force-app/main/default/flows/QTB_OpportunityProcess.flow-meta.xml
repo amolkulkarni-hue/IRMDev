@@ -1,0 +1,451 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <processMetadataValues>
+            <name>ActionCallType</name>
+            <value>
+                <stringValue>flow</stringValue>
+            </value>
+        </processMetadataValues>
+        <processMetadataValues>
+            <name>flowSelection</name>
+            <value>
+                <stringValue>QTB Price Book Stamping on Opportunity</stringValue>
+            </value>
+        </processMetadataValues>
+        <name>myRule_1_A1</name>
+        <label>Calling Flow</label>
+        <locationX>100</locationX>
+        <locationY>200</locationY>
+        <actionName>QTB_Price_Book_Stamping_on_Opportunity</actionName>
+        <actionType>flow</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <processMetadataValues>
+                <name>dataType</name>
+                <value>
+                    <stringValue>String</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>isRequired</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideLabel</name>
+                <value>
+                    <stringValue>varPriceBookCountry</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>maxOccurs</name>
+                <value>
+                    <numberValue>1.0</numberValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>objectType</name>
+                <value>
+                    <stringValue></stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>rightHandSideType</name>
+                <value>
+                    <stringValue>Reference</stringValue>
+                </value>
+            </processMetadataValues>
+            <name>varPriceBookCountry</name>
+            <value>
+                <elementReference>myVariable_current.Billing_Country__r.Name</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <processMetadataValues>
+                <name>dataType</name>
+                <value>
+                    <stringValue>String</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>isRequired</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideLabel</name>
+                <value>
+                    <stringValue>varOppotyID</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>maxOccurs</name>
+                <value>
+                    <numberValue>1.0</numberValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>objectType</name>
+                <value>
+                    <stringValue></stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>rightHandSideType</name>
+                <value>
+                    <stringValue>Reference</stringValue>
+                </value>
+            </processMetadataValues>
+            <name>varOppotyID</name>
+            <value>
+                <elementReference>myVariable_current.Opportunity_ID__c</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>QTB_Price_Book_Stamping_on_Opportunity</nameSegment>
+    </actionCalls>
+    <apiVersion>49.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <decisions>
+        <processMetadataValues>
+            <name>index</name>
+            <value>
+                <numberValue>0.0</numberValue>
+            </value>
+        </processMetadataValues>
+        <name>myDecision</name>
+        <label>myDecision</label>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>myDecision2</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>default</defaultConnectorLabel>
+        <rules>
+            <name>myRule_1</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>formula_myRule_1</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>myRule_1_A1</targetReference>
+            </connector>
+            <label>Check for Opportunity Billing Country for Sales Opp</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <processMetadataValues>
+            <name>index</name>
+            <value>
+                <numberValue>1.0</numberValue>
+            </value>
+        </processMetadataValues>
+        <name>myDecision2</name>
+        <label>myDecision2</label>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>default</defaultConnectorLabel>
+        <rules>
+            <name>myRule_3</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>formula_myRule_3</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>myRule_3_pmetdec</targetReference>
+            </connector>
+            <label>Stage 5 to Stage 6</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>myRule_3_pmetdec</name>
+        <label>Previously Met Decision</label>
+        <locationX>300</locationX>
+        <locationY>100</locationY>
+        <defaultConnector>
+            <targetReference>myRule_3_A1</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Not Previously Met</defaultConnectorLabel>
+        <rules>
+            <name>myRule_3_pmetnullrule</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>myVariable_old</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>myRule_3_A1</targetReference>
+            </connector>
+            <label>Previously Met - Null</label>
+        </rules>
+        <rules>
+            <name>myRule_3_pmetrule</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>formula_myRule_3_pmetrule</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>Previously Met - Prev</label>
+        </rules>
+    </decisions>
+    <description>#CPQ-9,#SFCPQBLG-648  This is used for stamping Price book on opportunity based on Opportunity Billing Country, GitLab # 777 - Updating to fire only for CPQ Sales Opportunity RT</description>
+    <formulas>
+        <processMetadataValues>
+            <name>originalFormula</name>
+            <value>
+                <stringValue>AND(
+	NOT($Setup.Metadata_Activation_Settings__c.Disable_PB__c &amp;&amp; OR(ISBLANK($Setup.Metadata_Activation_Settings__c.SObject_API_Name__c), CONTAINS($Setup.Metadata_Activation_Settings__c.SObject_API_Name__c,&apos;Opportunity&apos;))),
+	OR(
+		ISNEW(),
+		ISCHANGED([Opportunity].Billing_Country__c ),
+		ISCHANGED([Opportunity].CurrencyIsoCode )
+	),
+	NOT(ISBLANK([Opportunity].Billing_Country__c )),
+	[Opportunity].RecordType.DeveloperName=$Label.QTB_OpportunityRecordType_Sales 
+)</stringValue>
+            </value>
+        </processMetadataValues>
+        <name>formula_myRule_1</name>
+        <dataType>Boolean</dataType>
+        <expression>AND(
+	NOT({!$Setup.Metadata_Activation_Settings__c.Disable_PB__c} &amp;&amp; OR(ISBLANK({!$Setup.Metadata_Activation_Settings__c.SObject_API_Name__c}), CONTAINS({!$Setup.Metadata_Activation_Settings__c.SObject_API_Name__c},&apos;Opportunity&apos;))),
+	OR(
+		ISNEW(),
+		ISCHANGED({!myVariable_current.Billing_Country__c} ),
+		ISCHANGED({!myVariable_current.CurrencyIsoCode} )
+	),
+	NOT(ISBLANK({!myVariable_current.Billing_Country__c} )),
+	{!myVariable_current.RecordType.DeveloperName}={!$Label.QTB_OpportunityRecordType_Sales} 
+)</expression>
+    </formulas>
+    <formulas>
+        <processMetadataValues>
+            <name>originalFormula</name>
+            <value>
+                <stringValue>AND(
+	NOT($Setup.Metadata_Activation_Settings__c.Disable_PB__c &amp;&amp; OR(ISBLANK($Setup.Metadata_Activation_Settings__c.SObject_API_Name__c), CONTAINS($Setup.Metadata_Activation_Settings__c.SObject_API_Name__c,&apos;Opportunity&apos;))),
+	NOT(ISNEW()),
+	[Opportunity].RecordType.Name = &apos;CPQ Sales Opportunity&apos;,
+	ISPICKVAL(PRIORVALUE([Opportunity].StageName ),&apos;5 - Signed/PO in&apos;),
+	ISPICKVAL([Opportunity].StageName ,&apos;6 - Setup&apos;),
+	NOT(ISBLANK([Opportunity].SBQQ__PrimaryQuote__c)),
+        [Opportunity].QTB_APIProcess__c = false
+)</stringValue>
+            </value>
+        </processMetadataValues>
+        <name>formula_myRule_3</name>
+        <dataType>Boolean</dataType>
+        <expression>AND(
+	NOT({!$Setup.Metadata_Activation_Settings__c.Disable_PB__c} &amp;&amp; OR(ISBLANK({!$Setup.Metadata_Activation_Settings__c.SObject_API_Name__c}), CONTAINS({!$Setup.Metadata_Activation_Settings__c.SObject_API_Name__c},&apos;Opportunity&apos;))),
+	NOT(ISNEW()),
+	{!myVariable_current.RecordType.Name} = &apos;CPQ Sales Opportunity&apos;,
+	ISPICKVAL(PRIORVALUE({!myVariable_current.StageName} ),&apos;5 - Signed/PO in&apos;),
+	ISPICKVAL({!myVariable_current.StageName} ,&apos;6 - Setup&apos;),
+	NOT(ISBLANK({!myVariable_current.SBQQ__PrimaryQuote__c})),
+        {!myVariable_current.QTB_APIProcess__c} = false
+)</expression>
+    </formulas>
+    <formulas>
+        <processMetadataValues>
+            <name>originalFormula</name>
+            <value>
+                <stringValue>AND(
+	NOT($Setup.Metadata_Activation_Settings__c.Disable_PB__c &amp;&amp; OR(ISBLANK($Setup.Metadata_Activation_Settings__c.SObject_API_Name__c), CONTAINS($Setup.Metadata_Activation_Settings__c.SObject_API_Name__c,&apos;Opportunity&apos;))),
+	NOT(ISNEW()),
+	[Opportunity].RecordType.Name = &apos;CPQ Sales Opportunity&apos;,
+	ISPICKVAL(PRIORVALUE([Opportunity].StageName ),&apos;5 - Signed/PO in&apos;),
+	ISPICKVAL([Opportunity].StageName ,&apos;6 - Setup&apos;),
+	NOT(ISBLANK([Opportunity].SBQQ__PrimaryQuote__c)),
+        [Opportunity].QTB_APIProcess__c = false
+)</stringValue>
+            </value>
+        </processMetadataValues>
+        <name>formula_myRule_3_pmetrule</name>
+        <dataType>Boolean</dataType>
+        <expression>AND(
+	NOT({!$Setup.Metadata_Activation_Settings__c.Disable_PB__c} &amp;&amp; OR(ISBLANK({!$Setup.Metadata_Activation_Settings__c.SObject_API_Name__c}), CONTAINS({!$Setup.Metadata_Activation_Settings__c.SObject_API_Name__c},&apos;Opportunity&apos;))),
+	NOT(ISNEW()),
+	{!myVariable_old.RecordType.Name} = &apos;CPQ Sales Opportunity&apos;,
+	ISPICKVAL(PRIORVALUE({!myVariable_old.StageName} ),&apos;5 - Signed/PO in&apos;),
+	ISPICKVAL({!myVariable_old.StageName} ,&apos;6 - Setup&apos;),
+	NOT(ISBLANK({!myVariable_old.SBQQ__PrimaryQuote__c})),
+        {!myVariable_old.QTB_APIProcess__c} = false
+)</expression>
+    </formulas>
+    <interviewLabel>QTB_OpportunityProcess-13_InterviewLabel</interviewLabel>
+    <label>QTB_OpportunityProcess</label>
+    <processMetadataValues>
+        <name>ObjectType</name>
+        <value>
+            <stringValue>Opportunity</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>ObjectVariable</name>
+        <value>
+            <elementReference>myVariable_current</elementReference>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OldObjectVariable</name>
+        <value>
+            <elementReference>myVariable_old</elementReference>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>TriggerType</name>
+        <value>
+            <stringValue>onAllChanges</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>Workflow</processType>
+    <recordCreates>
+        <name>myRule_3_A1</name>
+        <label>Publish Oppt Data Generic</label>
+        <locationX>300</locationX>
+        <locationY>200</locationY>
+        <inputAssignments>
+            <processMetadataValues>
+                <name>dataType</name>
+                <value>
+                    <stringValue>String</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>isRequired</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideLabel</name>
+                <value>
+                    <stringValue>RecordID</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideReferenceTo</name>
+                <value>
+                    <stringValue></stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>rightHandSideType</name>
+                <value>
+                    <stringValue>Reference</stringValue>
+                </value>
+            </processMetadataValues>
+            <field>QTB_RecordID__c</field>
+            <value>
+                <elementReference>myVariable_current.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <processMetadataValues>
+                <name>dataType</name>
+                <value>
+                    <stringValue>String</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>isRequired</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideLabel</name>
+                <value>
+                    <stringValue>Related RecordID</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideReferenceTo</name>
+                <value>
+                    <stringValue></stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>rightHandSideType</name>
+                <value>
+                    <stringValue>Reference</stringValue>
+                </value>
+            </processMetadataValues>
+            <field>QTB_RelatedRecordID__c</field>
+            <value>
+                <elementReference>myVariable_current.SBQQ__PrimaryQuote__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <processMetadataValues>
+                <name>dataType</name>
+                <value>
+                    <stringValue>String</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>isRequired</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideLabel</name>
+                <value>
+                    <stringValue>Stage</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideReferenceTo</name>
+                <value>
+                    <stringValue></stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>rightHandSideType</name>
+                <value>
+                    <stringValue>Reference</stringValue>
+                </value>
+            </processMetadataValues>
+            <field>QTB_Stage__c</field>
+            <value>
+                <elementReference>myVariable_current.StageName</elementReference>
+            </value>
+        </inputAssignments>
+        <object>QTB_GenericFuncHandler__e</object>
+    </recordCreates>
+    <startElementReference>myDecision</startElementReference>
+    <status>Draft</status>
+    <variables>
+        <name>myVariable_current</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+        <objectType>Opportunity</objectType>
+    </variables>
+    <variables>
+        <name>myVariable_old</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Opportunity</objectType>
+    </variables>
+</Flow>

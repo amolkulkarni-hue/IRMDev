@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IME_Customer_Accounts</fullName>
+    <columns>NAME</columns>
+    <columns>IM_Customer_Account_Name__c</columns>
+    <columns>Billing_Country__c</columns>
+    <columns>IM_Account__c</columns>
+    <columns>IM_IMGA__c</columns>
+    <columns>IM_Status__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Source_System__c</field>
+        <operation>equals</operation>
+        <value>ARCVMS Europe,Other Europe,SKP Europe</value>
+    </filters>
+    <label>IME Customer Accounts (All)</label>
+    <sharedTo>
+        <role>ESA</role>
+        <role>IMEAdmin</role>
+        <role>IMECustomerProgram</role>
+    </sharedTo>
+</ListView>

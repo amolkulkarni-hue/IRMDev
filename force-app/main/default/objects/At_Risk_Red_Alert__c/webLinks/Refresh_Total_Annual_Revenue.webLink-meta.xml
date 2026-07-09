@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebLink xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Refresh_Total_Annual_Revenue</fullName>
+    <availability>online</availability>
+    <description>Recalculate Total Annual Revenue</description>
+    <displayType>button</displayType>
+    <linkType>javascript</linkType>
+    <masterLabel>Refresh Total Annual Revenue</masterLabel>
+    <openType>onClickJavaScript</openType>
+    <protected>false</protected>
+    <url>{!REQUIRESCRIPT(&quot;/soap/ajax/30.0/connection.js&quot;)} 
+{!REQUIRESCRIPT(&quot;/soap/ajax/30.0/apex.js&quot;)} 
+
+var result = sforce.apex.execute(&quot;AtRiskTriggerHelper&quot;,&quot;refreshTotalAnnualAmount&quot;,{receivedRAIDs: &quot;{!At_Risk_Red_Alert__c.Id}&quot;}); 
+
+window.location.reload();</url>
+</WebLink>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>M4_PY_YTD_Q3_Q4__c</fullName>
+    <formula>AND( 
+MONTH(Invoice_Date__c) &gt;= 7, 
+MONTH(Invoice_Date__c) &lt;= 12, 
+YEAR(Invoice_Date__c) = (VALUE($Label.Current_Commission_Year)-1),
+Bill_Code__r.Include_in_M4_Coverage__c  = true
+)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>M4 PY YTD Q3 Q4</label>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

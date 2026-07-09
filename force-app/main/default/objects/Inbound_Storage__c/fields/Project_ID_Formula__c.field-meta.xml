@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Project_ID_Formula__c</fullName>
+    <description>Required for Commissions Extract. Defaults to Customer Account Name if the Project_ID__c field is blank.</description>
+    <externalId>false</externalId>
+    <formula>IF( Project_ID__c = &quot;&quot;,  Customer_Account__r.IM_Customer_Account_Name__c , Project_ID__c )</formula>
+    <label>Project ID Formula</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

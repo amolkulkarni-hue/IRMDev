@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>65.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <description>#35339 - Partner Alliance: Create Flow to populate Co-Sell Cloud ID or Offer ID fields when triggered from the Tackle widget</description>
+    <environments>Default</environments>
+    <interviewLabel>Tackle MSFT Referral : {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Tackle MSFT Referral : Populate MSFT Referral ID to Related Opportunity</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <description>Updating MSFT Referral Id to related Opportunity</description>
+        <name>Update_MSFT_Referral_ID_to_Opportunity</name>
+        <label>Update MSFT Referral ID to Opportunity</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.tackleio__OpportunityCrmId__r.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>MSFT_Referral_ID__c</field>
+            <value>
+                <elementReference>$Record.tackleio__MsftReferralExternalId__c</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Opportunity</object>
+    </recordUpdates>
+    <start>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Update_MSFT_Referral_ID_to_Opportunity</targetReference>
+        </connector>
+        <filterFormula>AND(
+OR(
+ISNEW() &amp;&amp; NOT(ISBLANK({!$Record.tackleio__MsftReferralExternalId__c})),
+ISCHANGED({!$Record.tackleio__MsftReferralExternalId__c})),
+OR(
+{!$Record.tackleio__OpportunityCrmId__r.RecordType.DeveloperName}=&apos;Standard_Opportunity&apos;,
+{!$Record.tackleio__OpportunityCrmId__r.RecordType.DeveloperName}=&apos;IME_Standard_Opportunity&apos;,
+{!$Record.tackleio__OpportunityCrmId__r.RecordType.DeveloperName}=&apos;IMLA_Standard_Opportunity&apos;,
+{!$Record.tackleio__OpportunityCrmId__r.RecordType.DeveloperName}=&apos;IMAP_Standard_Opportunity&apos;)
+)</filterFormula>
+        <object>tackleio__TackleMsftReferral__c</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

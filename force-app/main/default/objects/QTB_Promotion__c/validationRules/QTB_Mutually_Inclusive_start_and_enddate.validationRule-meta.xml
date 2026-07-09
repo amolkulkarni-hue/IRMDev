@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>QTB_Mutually_Inclusive_start_and_enddate</fullName>
+    <active>true</active>
+    <description>#GITLAB --&gt;376: mutually inclusive start and end date</description>
+    <errorConditionFormula>OR(AND(NOT($Setup.Metadata_Activation_Settings__c.Disable_VR__c &amp;&amp; OR(
+ISBLANK($Setup.Metadata_Activation_Settings__c.SObject_API_Name__c),
+CONTAINS($Setup.Metadata_Activation_Settings__c.SObject_API_Name__c,
+&apos;QTB_Promotion__c&apos;))),
+NOT(ISBLANK(QTB_Start_Date__c)),
+ISBLANK((QTB_End_Date__c))),
+AND(NOT(ISBLANK(QTB_End_Date__c)),
+ISBLANK((QTB_Start_Date__c))))</errorConditionFormula>
+    <errorMessage>Start Date and End Date both should have values if one of the field have the value</errorMessage>
+</ValidationRule>

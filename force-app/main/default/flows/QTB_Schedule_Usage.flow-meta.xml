@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <description>Schedules the blng.UsageSchedulable job to rate usage 15 minutes after it is called.</description>
+        <name>Schedule_Usage</name>
+        <label>Schedule Usage</label>
+        <locationX>491</locationX>
+        <locationY>110</locationY>
+        <actionName>QTB_ScheduleUsageRating</actionName>
+        <actionType>apex</actionType>
+        <inputParameters>
+            <name>minutes</name>
+            <value>
+                <elementReference>minutes</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>QTB_ScheduleUsageRating</nameSegment>
+    </actionCalls>
+    <apiVersion>49.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <description>Schedules the blng.UsageSchedulable job for rating</description>
+    <interviewLabel>QTB_Schedule_Usage {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>QTB_Schedule_Usage</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>50</locationX>
+        <locationY>50</locationY>
+        <connector>
+            <targetReference>Schedule_Usage</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <variables>
+        <description>minutes to delay usage run from when called</description>
+        <name>minutes</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <scale>0</scale>
+        <value>
+            <numberValue>15.0</numberValue>
+        </value>
+    </variables>
+</Flow>

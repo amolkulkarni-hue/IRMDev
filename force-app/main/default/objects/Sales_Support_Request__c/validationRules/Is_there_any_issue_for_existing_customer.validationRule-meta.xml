@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Is_there_any_issue_for_existing_customer</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND( ISPICKVAL(Is_there_any_issue_for_existing_customer__c, &apos;Yes&apos;), ISBLANK(If_Yes_then_provide_the_details__c) )</errorConditionFormula>
+    <errorDisplayField>If_Yes_then_provide_the_details__c</errorDisplayField>
+    <errorMessage>If there is an issue for existing customer then please provide the details.</errorMessage>
+</ValidationRule>

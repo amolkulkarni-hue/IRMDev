@@ -1,0 +1,213 @@
+/**
+ * IRM_CaseRoutingTest
+ * US-1500: Case Queue Routing via Support_Engagement_Case_Assignment_Flow
+ * and Touch_Level_Case_Mapping__mdt
+ *
+ * Flow under test: Support_Engagement_Case_Assignment_Flow (After Insert — Case)
+ * Must be ACTIVE in Setup → Flows before running.
+ * Requires Touch_Level_Case_Mapping__mdt records deployed (included in package).
+ */
+@IsTest
+private class IRM_CaseRoutingTest {
+
+    @TestSetup
+    static void setup() {
+        IM_Country__c testCountry = new IM_Country__c(Name = 'United States');
+        insert testCountry;
+        insert new IM_Alternative_Country_Name__c(
+            IM_Country__c = testCountry.Id, Alternative_Name__c = 'United States'
+        );
+        // Required by OpportunityHelper.createOpportunityShare (Country_Settings__c and
+        // Opportunity_Security__c are list custom settings read during Opportunity AfterInsert)
+        insert new Country_Settings__c(Name = 'United States', Object_Name__c = 'Opportunity', SetupOwnerId = UserInfo.getOrganizationId());
+        insert new List<Opportunity_Security__c>{
+            new Opportunity_Security__c(Name = 'Primary CDE',          Field_Name__c = 'Primary_CDE__c',            Object_Name__c = 'Account',     Visibility_Access_Level__c = 'R', SetupOwnerId = UserInfo.getOrganizationId()),
+            new Opportunity_Security__c(Name = 'Original Lead Owner',  Field_Name__c = 'IM_Original_Lead_Owner__c', Object_Name__c = 'Opportunity', Visibility_Access_Level__c = 'W', SetupOwnerId = UserInfo.getOrganizationId()),
+            new Opportunity_Security__c(Name = 'Primary BDE',          Field_Name__c = 'Primary_BDE__c',            Object_Name__c = 'Account',     Visibility_Access_Level__c = 'W', SetupOwnerId = UserInfo.getOrganizationId())
+        };
+        // Required by OppPartnerAction (called from OpportunityTriggerHandler.BeforeUpdate
+        // via "Update Pricebook On Opportunity" flow — queries this record by name)
+        insert new OpportunityProductSelection__c(Name = 'CloudSolutionsProduct',
+            Product_Class_Name__c = 'Cloud', Product_Line_Name__c = 'Cloud Solutions');
+        Account acc = new Account(
+            Name = 'IRM Routing Test Co',
+            BillingCountry = 'United States', BillingState = 'NY', BillingPostalCode = '11209'
+        );
+        insert acc;
+        // Case VR: "Please enter a value for either the Contact or IM Employee" — need ContactId
+        insert new Contact(LastName = 'CaseContact', AccountId = acc.Id);
+    }
+
+    private static Account getAccount() {
+        return [SELECT Id FROM Account LIMIT 1];
+    }
+
+    private static Id getContactId() {
+        return [SELECT Id FROM Contact LIMIT 1].Id;
+    }
+
+    private static Id getQueueId(String developerName) {
+        List<Group> queues = [SELECT Id FROM Group
+                              WHERE DeveloperName = :developerName AND Type = 'Queue'];
+        System.debug('Queue lookup: DeveloperName=' + developerName
+            + ' | found=' + queues.size() + (queues.isEmpty() ? ' (QUEUE NOT FOUND — check deployment)' : ' | Id=' + queues[0].Id));
+        return queues.isEmpty() ? null : queues[0].Id;
+    }
+
+    // ── US-1500 AC1: SA Assignment → Solution Specialist Queue ───────────────
+
+    @IsTest
+    static void test_saAssignmentRoutedToSolutionSpecialistQueue() {
+        Id queueId = getQueueId('Solution_Specialist_Queue');
+        System.debug('TEST: Inserting Case with Case_Type__c=SA Assignment. Expect OwnerId=' + queueId);
+        System.assert(queueId != null,
+            'PRE-CONDITION: Solution_Specialist_Queue must exist in org. Was the queue deployment successful?');
+
+        Test.startTest();
+        Case c = new Case(
+            AccountId = getAccount().Id, ContactId = getContactId(),
+            Subject = 'SA Routing Test', Case_Type__c = 'SA Assignment', Status = 'New'
+        );
+        insert c;
+        Test.stopTest();
+
+        Case r = [SELECT Id, OwnerId, Case_Type__c FROM Case WHERE Id = :c.Id];
+        System.debug('RESULT: Case Id=' + r.Id + ' | Case_Type__c=' + r.Case_Type__c + ' | OwnerId=' + r.OwnerId + ' | Expected=' + queueId);
+
+        System.assertEquals(queueId, r.OwnerId,
+            'US-1500: SA Assignment Case should be routed to Solution_Specialist_Queue. OwnerId=' + r.OwnerId + ' Expected=' + queueId
+            + '. Check Touch_Level_Case_Mapping__mdt.SA_Assignment_HT is deployed and flow is active.');
+    }
+
+    // ── US-1500 AC2: Pricing → DOC Pricing Queue ─────────────────────────────
+
+    @IsTest
+    static void test_pricingRoutedToDOCPricingQueue() {
+        Id queueId = getQueueId('DOC_Pricing_Queue');
+        System.debug('TEST: Inserting Case with Case_Type__c=Pricing. Expect OwnerId=' + queueId);
+        System.assert(queueId != null, 'PRE-CONDITION: DOC_Pricing_Queue must exist in org.');
+
+        Test.startTest();
+        Case c = new Case(
+            AccountId = getAccount().Id, ContactId = getContactId(),
+            Subject = 'Pricing Routing Test', Case_Type__c = 'Pricing', Status = 'New'
+        );
+        insert c;
+        Test.stopTest();
+
+        Case r = [SELECT OwnerId FROM Case WHERE Id = :c.Id];
+        System.debug('RESULT: OwnerId=' + r.OwnerId + ' | Expected=' + queueId);
+
+        System.assertEquals(queueId, r.OwnerId,
+            'US-1500: Pricing Case should be routed to DOC_Pricing_Queue. OwnerId=' + r.OwnerId + ' Expected=' + queueId);
+    }
+
+    // ── US-1500 AC3: Legal Review → Legal GCCS Queue ─────────────────────────
+
+    @IsTest
+    static void test_legalReviewRoutedToLegalGCCSQueue() {
+        Id queueId = getQueueId('Legal_GCCS_Queue');
+        System.debug('TEST: Inserting Case with Case_Type__c=Legal Review. Expect OwnerId=' + queueId);
+        System.assert(queueId != null, 'PRE-CONDITION: Legal_GCCS_Queue must exist in org.');
+
+        Test.startTest();
+        Case c = new Case(
+            AccountId = getAccount().Id, ContactId = getContactId(),
+            Subject = 'Legal Routing Test', Case_Type__c = 'Legal Review', Status = 'New'
+        );
+        insert c;
+        Test.stopTest();
+
+        Case r = [SELECT OwnerId FROM Case WHERE Id = :c.Id];
+        System.debug('RESULT: OwnerId=' + r.OwnerId + ' | Expected=' + queueId);
+
+        System.assertEquals(queueId, r.OwnerId,
+            'US-1500: Legal Review Case should be routed to Legal_GCCS_Queue. OwnerId=' + r.OwnerId + ' Expected=' + queueId);
+    }
+
+    // ── US-1500 AC4: InfoSec → InfoSec Queue ─────────────────────────────────
+
+    @IsTest
+    static void test_infoSecRoutedToInfoSecQueue() {
+        Id queueId = getQueueId('InfoSec_Queue');
+        System.debug('TEST: Inserting Case with Case_Type__c=InfoSec Security Review. Expect OwnerId=' + queueId);
+        System.assert(queueId != null, 'PRE-CONDITION: InfoSec_Queue must exist in org.');
+
+        Test.startTest();
+        Case c = new Case(
+            AccountId = getAccount().Id, ContactId = getContactId(),
+            Subject = 'InfoSec Routing Test', Case_Type__c = 'InfoSec Security Review', Status = 'New'
+        );
+        insert c;
+        Test.stopTest();
+
+        Case r = [SELECT OwnerId FROM Case WHERE Id = :c.Id];
+        System.debug('RESULT: OwnerId=' + r.OwnerId + ' | Expected=' + queueId);
+
+        System.assertEquals(queueId, r.OwnerId,
+            'US-1500: InfoSec Security Review Case should be routed to InfoSec_Queue. OwnerId=' + r.OwnerId + ' Expected=' + queueId);
+    }
+
+    // ── US-1500 AC5: Unmapped Case Type inserts without error ────────────────
+
+    @IsTest
+    static void test_unmappedCaseTypeDoesNotError() {
+        System.debug('TEST: Inserting Case with Case_Type__c=Unmapped Type. No CMT record for this. Expect successful insert, no routing applied.');
+
+        Test.startTest();
+        Boolean errored = false;
+        Case c;
+        try {
+            c = new Case(
+                AccountId = getAccount().Id, ContactId = getContactId(),
+                Subject = 'Unmapped Routing Test', Case_Type__c = 'Unmapped Type', Status = 'New'
+            );
+            insert c;
+        } catch (Exception e) {
+            errored = true;
+            System.debug('EXCEPTION: ' + e.getMessage() + '\n' + e.getStackTraceString());
+        }
+        Test.stopTest();
+
+        System.assertEquals(false, errored,
+            'US-1500: Case with unmapped Case Type should insert without error. Flow should handle missing CMT gracefully.');
+        System.assertNotEquals(null, [SELECT Id FROM Case WHERE Id = :c.Id].Id,
+            'US-1500: Case should exist after insert.');
+    }
+
+    // ── US-1500 Bulk: 200 cases all routed ──────────────────────────────────
+
+    @IsTest
+    static void test_bulk200CasesRouted() {
+        Id queueId = getQueueId('Solution_Specialist_Queue');
+        System.assert(queueId != null, 'PRE-CONDITION: Solution_Specialist_Queue must exist in org.');
+
+        Account acc = getAccount();
+        Id contactId = getContactId();
+        List<Case> cases = new List<Case>();
+        for (Integer i = 0; i < 200; i++) {
+            cases.add(new Case(
+                AccountId = acc.Id, ContactId = contactId,
+                Subject = 'Bulk Case ' + i, Case_Type__c = 'SA Assignment', Status = 'New'
+            ));
+        }
+
+        System.debug('TEST: Bulk inserting 200 SA Assignment cases. Expect all routed to Solution_Specialist_Queue=' + queueId);
+
+        Test.startTest();
+        insert cases;
+        Test.stopTest();
+
+        List<Case> results = [SELECT Id, OwnerId FROM Case WHERE AccountId = :acc.Id];
+        System.debug('RESULT: Total cases=' + results.size());
+
+        Integer misrouted = 0;
+        for (Case r : results) {
+            if (r.OwnerId != queueId) misrouted++;
+        }
+        System.debug('Misrouted cases=' + misrouted + ' out of ' + results.size());
+
+        System.assertEquals(0, misrouted,
+            'Bulk US-1500: ' + misrouted + ' out of ' + results.size() + ' cases were not routed to Solution_Specialist_Queue.');
+    }
+}

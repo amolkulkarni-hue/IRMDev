@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>60.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <description>Migrated from the: Quote Expiration Date workflow rule
+Workflow rule description: Updates the Quote Expiration Date with Today () + 30 days, once the quote is generated for customer&quot;
+(gitlab story #22835 fyi)</description>
+    <environments>Default</environments>
+    <formulas>
+        <name>Quote_Expiration_DateFormula</name>
+        <dataType>Date</dataType>
+        <expression>$Record.Effective_Date__c + 365</expression>
+    </formulas>
+    <interviewLabel>Quote Expiration Date {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Quote Expiration Date</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <description>Update the Expiration Date with 365 days after Effective Date</description>
+        <name>Quote_Expiration_Date</name>
+        <label>Quote Expiration Date</label>
+        <locationX>176</locationX>
+        <locationY>287</locationY>
+        <inputAssignments>
+            <field>ExpirationDate</field>
+            <value>
+                <elementReference>Quote_Expiration_DateFormula</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Quote_Expiration_Date</targetReference>
+        </connector>
+        <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+        <filterFormula>{!$Record.Effective_Date__c} = Today() + 30</filterFormula>
+        <object>Quote</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

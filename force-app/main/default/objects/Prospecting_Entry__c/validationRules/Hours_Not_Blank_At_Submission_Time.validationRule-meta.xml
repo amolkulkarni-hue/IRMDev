@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Hours_Not_Blank_At_Submission_Time</fullName>
+    <active>true</active>
+    <description>Cannot submit a prospecting entry with a blank &apos;# of hours spent prospecting this week&apos; field</description>
+    <errorConditionFormula>AND( ISPICKVAL(Status__c, &apos;Submitted&apos;) ,
+OR( ISNULL(of_hours_spent_prospecting_this_week__c),
+of_hours_spent_prospecting_this_week__c &lt; 0
+))</errorConditionFormula>
+    <errorMessage>You must enter a number of Hours. If no hours were worked, enter 0.</errorMessage>
+</ValidationRule>

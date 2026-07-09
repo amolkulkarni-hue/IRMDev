@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Risk_Stage__c</fullName>
+    <inlineHelpText>1. Account identified as at risk
+2. Customer notification of their intent to term 
+3. IM discussed issue(s) with customer and working to address
+4. Solution(s) proposed 
+5. Customer agrees to remain with IM
+6. Customer decided to terminate</inlineHelpText>
+    <label>Risk Stage</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>true</sorted>
+            <value>
+                <fullName>0. Not At Risk</fullName>
+                <color>#DDDDDD</color>
+                <default>false</default>
+                <label>0. Not At Risk</label>
+            </value>
+            <value>
+                <fullName>1. At Risk</fullName>
+                <color>#FFFF66</color>
+                <default>true</default>
+                <label>1. At Risk</label>
+            </value>
+            <value>
+                <fullName>2. Notification Confirmed</fullName>
+                <color>#FFCC66</color>
+                <default>false</default>
+                <label>2. Notification Confirmed</label>
+            </value>
+            <value>
+                <fullName>3. Solution Developed</fullName>
+                <color>#FF9900</color>
+                <default>false</default>
+                <label>3. Solution Developed</label>
+            </value>
+            <value>
+                <fullName>4. Negotiate</fullName>
+                <color>#FF6600</color>
+                <default>false</default>
+                <label>4. Negotiate</label>
+            </value>
+            <value>
+                <fullName>5. Retained (closed)</fullName>
+                <color>#33CC00</color>
+                <default>false</default>
+                <label>5. Retained (closed)</label>
+            </value>
+            <value>
+                <fullName>6. Terminated (closed)</fullName>
+                <color>#FF0000</color>
+                <default>false</default>
+                <label>6. Terminated (closed)</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>60.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <decisions>
+        <name>myRule_1</name>
+        <label>Global Chatter Post for Opportunity Creation</label>
+        <locationX>248</locationX>
+        <locationY>323</locationY>
+        <defaultConnector>
+            <targetReference>myRule_3</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>FALSE_Global Chatter Post for Opportunity Creation</defaultConnectorLabel>
+        <rules>
+            <name>TRUE_myRule_1</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>formula_TRUE_myRule_1</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>myRule_1_A1</targetReference>
+            </connector>
+            <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+            <label>TRUE_Global Chatter Post for Opportunity Creation</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>myRule_3</name>
+        <label>New Opportunity- Global Chatter update</label>
+        <locationX>446</locationX>
+        <locationY>431</locationY>
+        <defaultConnectorLabel>FALSE_New Opportunity- Global Chatter update</defaultConnectorLabel>
+        <rules>
+            <name>TRUE_myRule_3</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>formula_TRUE_myRule_3</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>myRule_3_A1</targetReference>
+            </connector>
+            <label>TRUE_New Opportunity- Global Chatter update</label>
+        </rules>
+    </decisions>
+    <description>Migrated from the Opportunity Stage 1 to 4 - Post to Global chatter Group process using multiple criteria.
+Case# 06830598- The Chatter post should be posted only when the Opportunity is created and it should not trigger when someone edits the Opportunity later.
+#35882 : CRM: Merge Opportunity Stage 1 to 4 and Stage 5 Chatter Post Flows</description>
+    <environments>Default</environments>
+    <formulas>
+        <name>formula_TRUE_myRule_1</name>
+        <dataType>Boolean</dataType>
+        <expression>AND(
+	NOT($Setup.Metadata_Activation_Settings__c.Disable_PB__c &amp;&amp; OR(ISBLANK($Setup.Metadata_Activation_Settings__c.SObject_API_Name__c), CONTAINS($Setup.Metadata_Activation_Settings__c.SObject_API_Name__c, &apos;Opportunity&apos;))), 
+	NOT(ISBLANK({!$Record.AccountId} ) ),
+	NOT(ISBLANK({!$Record.Account.IM_IMGA_Indexed__c} ) ),
+	OR(
+	AND(OR(
+		ISPICKVAL({!$Record.Type} , &apos;New Deal&apos;),
+		ISPICKVAL({!$Record.Type} , &apos;Up-Sell/Lift&apos;) 
+	),
+	OR(
+		ISPICKVAL({!$Record.StageName} , &apos;1 - Qualification&apos;),
+		ISPICKVAL({!$Record.StageName} , &apos;2 - Solution Developed&apos;), 
+		ISPICKVAL({!$Record.StageName} , &apos;3 - Solution Agreed&apos;),
+		ISPICKVAL({!$Record.StageName} , &apos;4 - Negotiate&apos;)
+	), 
+	
+	{!$Record.Amount&gt;=30000}, 
+	{!$Record.Global_Chatter__c} =True),
+	
+	ISPICKVAL({!$Record.StageName},&apos;5 - Signed/PO in&apos;)))</expression>
+    </formulas>
+    <formulas>
+        <name>formula_TRUE_myRule_3</name>
+        <dataType>Boolean</dataType>
+        <expression>AND(
+	NOT($Setup.Metadata_Activation_Settings__c.Disable_PB__c &amp;&amp; OR(ISBLANK($Setup.Metadata_Activation_Settings__c.SObject_API_Name__c), CONTAINS($Setup.Metadata_Activation_Settings__c.SObject_API_Name__c, &apos;Opportunity&apos;))), 
+	{!$Record.Global_Chatter__c} = True ,
+	NOT(ISBLANK({!$Record.Amount} )) 
+)</expression>
+    </formulas>
+    <formulas>
+        <description>Set True if Stage is in 1 - 4</description>
+        <name>MarkTrueStage1_4</name>
+        <dataType>Boolean</dataType>
+        <expression>OR(
+		ISPICKVAL({!$Record.StageName} , &apos;1 - Qualification&apos;),
+		ISPICKVAL({!$Record.StageName} , &apos;2 - Solution Developed&apos;), 
+		ISPICKVAL({!$Record.StageName} , &apos;3 - Solution Agreed&apos;),
+		ISPICKVAL({!$Record.StageName} , &apos;4 - Negotiate&apos;)
+)</expression>
+    </formulas>
+    <interviewLabel>Opportunity Stage 1 to 4 - Post to Global chatter Group {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Opportunity Stage 1 to 4 and Stage 5 - Post to Global chatter Group</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <name>myRule_1_A2</name>
+        <label>Global Chatter Post Udate</label>
+        <locationX>50</locationX>
+        <locationY>539</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>StageName</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>5 - Signed/PO in</stringValue>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Global_Chatter__c</field>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>myRule_3_A1</name>
+        <label>Global Chatter Field Update</label>
+        <locationX>314</locationX>
+        <locationY>539</locationY>
+        <inputAssignments>
+            <field>Global_Chatter__c</field>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>122</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>myRule_1</targetReference>
+        </connector>
+        <object>Opportunity</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+    <subflows>
+        <name>myRule_1_A1</name>
+        <label>Invoke flow</label>
+        <locationX>50</locationX>
+        <locationY>431</locationY>
+        <connector>
+            <targetReference>myRule_1_A2</targetReference>
+        </connector>
+        <flowName>Oppty_Stage_5_Global_Chatter_Post</flowName>
+        <inputAssignments>
+            <name>GlobalAccountName</name>
+            <value>
+                <elementReference>$Record.Account.IM_IMGA_Indexed__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>OppId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>OpportunityStage</name>
+            <value>
+                <elementReference>MarkTrueStage1_4</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+</Flow>

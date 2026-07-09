@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>QTB_Post_Bill_Checked_after_Pre_Bill</fullName>
+    <active>true</active>
+    <description>#Gitlab: 5039 --&gt; Post Bill Run Checkbox checked only after the Pre Bill Run Checkbox Checked</description>
+    <errorConditionFormula>AND(NOT($Setup.Metadata_Activation_Settings__c.Disable_VR__c &amp;&amp;
+OR(ISBLANK($Setup.Metadata_Activation_Settings__c.SObject_API_Name__c),
+CONTAINS($Setup.Metadata_Activation_Settings__c.SObject_API_Name__c, &apos;QTB_Bill_Flow_Controller__c&apos;))),
+ISCHANGED( Execute_Post_Bill_Run__c ),  Execute_Pre_Bill_Run__c = FALSE,
+NOT(Contains(Invoice_Scheduler__r.Name, &apos;SecureITAD&apos;)))</errorConditionFormula>
+    <errorMessage>Post Bill Run Can be checked only after the Pre-Bill Run is Checked</errorMessage>
+</ValidationRule>

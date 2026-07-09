@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>BW_Opp_Assoc_Rejection_Code</fullName>
+    <active>true</active>
+    <description>Rejection code is required when Association to Opportunity Status = Rejected</description>
+    <errorConditionFormula>AND(ISPICKVAL(Association_to_Opportunity_Status__c, &quot;Rejected&quot;),  ISPICKVAL(Rejection_Code__c, &quot;&quot;))</errorConditionFormula>
+    <errorDisplayField>Rejection_Code__c</errorDisplayField>
+    <errorMessage>Please enter a rejection code.</errorMessage>
+</ValidationRule>

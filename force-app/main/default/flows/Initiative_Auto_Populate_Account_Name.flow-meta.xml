@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>65.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <description>34967 : Initiative: Capture Account Name from Account Plan</description>
+    <environments>Default</environments>
+    <interviewLabel>Initiative {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Initiative: Auto Populate Account Name</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <description>Get Account Plan record which is having Account.</description>
+        <name>Get_Account_Plan</name>
+        <label>Get Account Plan</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Update_Account_Name_On_Initiative_Record</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>TSPC__Account__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.TSPC__AP__r.TSPC__Account__r.Id</elementReference>
+            </value>
+        </filters>
+        <object>TSPC__AP__c</object>
+        <outputAssignments>
+            <assignToReference>Acccount_Id</assignToReference>
+            <field>TSPC__Account__c</field>
+        </outputAssignments>
+    </recordLookups>
+    <recordUpdates>
+        <description>Auto populate account name on initiative record.</description>
+        <name>Update_Account_Name_On_Initiative_Record</name>
+        <label>Update Account Name On Initiative Record</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <inputAssignments>
+            <field>Account_Name__c</field>
+            <value>
+                <elementReference>Acccount_Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Get_Account_Plan</targetReference>
+        </connector>
+        <object>TSPC__AP_WS_Initiative__c</object>
+        <recordTriggerType>Create</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Active</status>
+    <variables>
+        <name>Acccount_Id</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>

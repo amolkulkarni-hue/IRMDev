@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>63.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <name>Add_To_Collection_To_Update</name>
+        <label>Add To Collection To Update</label>
+        <locationX>138</locationX>
+        <locationY>566</locationY>
+        <assignmentItems>
+            <assignToReference>ListOfProjectsToUpdate</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>Iterate_Project_Collection</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Iterate_Project_Collection</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Cancel_The_Projects</name>
+        <label>Cancel The Projects</label>
+        <locationX>138</locationX>
+        <locationY>458</locationY>
+        <assignmentItems>
+            <assignToReference>Iterate_Project_Collection.pse__Project_Status__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Cancelled</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Iterate_Project_Collection.Cancelled_Reason__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Lost Opportunity</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Add_To_Collection_To_Update</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <name>Null_Check</name>
+        <label>Null Check</label>
+        <locationX>182</locationX>
+        <locationY>242</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>List_Is_Not_Empty</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Records_Related_Projects</leftValueReference>
+                <operator>IsEmpty</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Iterate_Project_Collection</targetReference>
+            </connector>
+            <label>List Is Not Empty</label>
+        </rules>
+    </decisions>
+    <environments>Default</environments>
+    <interviewLabel>Certinia Update Project Status {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Certinia Update Project Status - Auto Launched Flow</label>
+    <loops>
+        <name>Iterate_Project_Collection</name>
+        <label>Iterate Project Collection</label>
+        <locationX>50</locationX>
+        <locationY>350</locationY>
+        <collectionReference>Get_Records_Related_Projects</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>Cancel_The_Projects</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>Update_List_Of_Projects_Status_to_Cancelled</targetReference>
+        </noMoreValuesConnector>
+    </loops>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <name>Get_Records_Related_Projects</name>
+        <label>Get Records - Related Projects</label>
+        <locationX>182</locationX>
+        <locationY>134</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Null_Check</targetReference>
+        </connector>
+        <filterLogic>1 AND 2 AND (3 OR 4 OR 5 OR 6)</filterLogic>
+        <filters>
+            <field>pse__Opportunity__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>opportunityId</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>pse__Project_Status__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Active</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>pse__Stage__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Intake</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>pse__Stage__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>SOW Creation</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>pse__Stage__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Internal Review</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>pse__Stage__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Approved Internal</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>pse__Proj__c</object>
+        <sortField>Id</sortField>
+        <sortOrder>Desc</sortOrder>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordUpdates>
+        <name>Update_List_Of_Projects_Status_to_Cancelled</name>
+        <label>Update List Of Projects Status to Cancelled</label>
+        <locationX>50</locationX>
+        <locationY>758</locationY>
+        <inputReference>ListOfProjectsToUpdate</inputReference>
+    </recordUpdates>
+    <runInMode>SystemModeWithoutSharing</runInMode>
+    <start>
+        <locationX>56</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Get_Records_Related_Projects</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <textTemplates>
+        <name>ChatterMessageBodyPM1</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>Project is cancelled because the Opportunity is Lost.
+Project Owner : @[{!Iterate_Project_Collection.OwnerId}]
+Opportunity Owner : @[{!Iterate_Project_Collection.pse__Opportunity__r.OwnerId}]
+Project Manager 1 : @[{!Iterate_Project_Collection.pse__Project_Manager__r.pse__Salesforce_User__c}]</text>
+    </textTemplates>
+    <textTemplates>
+        <name>ChatterMessageBodyPM1_PM2</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>Project is cancelled because the Opportunity is Lost.
+Project Owner : @[{!Iterate_Project_Collection.OwnerId}]
+Opportunity Owner : @[{!Iterate_Project_Collection.pse__Opportunity__r.OwnerId}]
+
+Project Manager 1 : @[{!Iterate_Project_Collection.pse__Project_Manager__r.pse__Salesforce_User__c}]
+Project Manager 2 : @[{!Iterate_Project_Collection.Contact__r.pse__Salesforce_User__c}]</text>
+    </textTemplates>
+    <textTemplates>
+        <name>PosttoChatterWhenPM1_PM2areBlank</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>Project is cancelled because the Opportunity is Lost.
+Project Owner : @[{!Iterate_Project_Collection.OwnerId}]
+Opportunity Owner : @[{!Iterate_Project_Collection.pse__Opportunity__r.OwnerId}]</text>
+    </textTemplates>
+    <variables>
+        <name>ListOfProjectsToUpdate</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>pse__Proj__c</objectType>
+    </variables>
+    <variables>
+        <name>opportunityId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>ProjectId</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>pse__Proj__c</objectType>
+    </variables>
+</Flow>

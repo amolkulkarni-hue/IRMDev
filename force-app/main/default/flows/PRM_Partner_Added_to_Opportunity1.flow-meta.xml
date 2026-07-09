@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>PRM_Partner_Opportunity_Team_Member_Alert</name>
+        <label>OpportunityTeamMember.PRM_Partner_Opportunity_Team_Member_Alert</label>
+        <locationX>176</locationX>
+        <locationY>323</locationY>
+        <actionName>OpportunityTeamMember.PRM_Partner_Opportunity_Team_Member_Alert</actionName>
+        <actionType>emailAlert</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>OpportunityTeamMember.PRM_Partner_Opportunity_Team_Member_Alert</nameSegment>
+    </actionCalls>
+    <apiVersion>59.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <description>Migrated from the: PRM_Partner Added to Opportunity workflow rule
+Workflow rule description: Sends an email alert to the partner user when they are added to the Opportunity Team.&quot;</description>
+    <environments>Default</environments>
+    <interviewLabel>PRM_Partner Added to Opportunity {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>PRM_Partner Added to Opportunity</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>PRM_Partner_Opportunity_Team_Member_Alert</targetReference>
+        </connector>
+        <filterLogic>(1 OR 2)</filterLogic>
+        <filters>
+            <field>TeamMemberRole</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Partner Manager</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>TeamMemberRole</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Partner User</stringValue>
+            </value>
+        </filters>
+        <object>OpportunityTeamMember</object>
+        <recordTriggerType>Create</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

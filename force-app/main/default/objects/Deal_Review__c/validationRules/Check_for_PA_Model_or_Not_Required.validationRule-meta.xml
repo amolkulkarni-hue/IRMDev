@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Check_for_PA_Model_or_Not_Required</fullName>
+    <active>true</active>
+    <description>Only fires if the utility checkbox = false, designed to show only one error message at a time when a user tries to use an invalid method to create a record</description>
+    <errorConditionFormula>AND(
+
+Utility__c = False, 
+ISBLANK(Schedule_A__c),
+No_PA_Model_Required__c = False,
+ISBLANK(Duplicate_Source__c)
+
+)</errorConditionFormula>
+    <errorDisplayField>Schedule_A__c</errorDisplayField>
+    <errorMessage>Please specify a value for PA Model Approval, check No PA Model Required, 
+or provide a Previously Approved Deal Review</errorMessage>
+</ValidationRule>

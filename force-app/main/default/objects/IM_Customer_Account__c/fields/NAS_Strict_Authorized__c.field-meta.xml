@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NAS_Strict_Authorized__c</fullName>
+    <description>To indicate that the Customer Account has a least one Strict Authorized Department.</description>
+    <formula>IF(NAS_Strict_Authorization_Count__c&gt;=1,True,false)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Strict Authorized</label>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

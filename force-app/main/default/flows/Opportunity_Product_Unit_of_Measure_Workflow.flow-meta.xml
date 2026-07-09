@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>60.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <description>Unit of Measure value from product</description>
+        <name>Update_Unit_of_Measure</name>
+        <label>Update Unit of Measure</label>
+        <locationX>176</locationX>
+        <locationY>287</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Unit_of_Measure__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>ConvertUnitofMeasureIntoText</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <description>Populates the Unit of Measure of the Product as a text field, allowing for use in roll up summary fields.
+This Flow is converted workflow 
+&quot;Opportunity Product Unit of Measure&quot;</description>
+    <environments>Default</environments>
+    <formulas>
+        <description>Convert Unit of Measure Into Text</description>
+        <name>ConvertUnitofMeasureIntoText</name>
+        <dataType>String</dataType>
+        <expression>TEXT({!$Record.Product2.IM_Unit_of_Measure__c})</expression>
+    </formulas>
+    <interviewLabel>Opportunity Product Unit of Measure {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Opportunity Product Unit of Measure Workflow</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Update_Unit_of_Measure</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>CurrencyIsoCode</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>USD</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>TotalPrice</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <numberValue>0.0</numberValue>
+            </value>
+        </filters>
+        <object>OpportunityLineItem</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

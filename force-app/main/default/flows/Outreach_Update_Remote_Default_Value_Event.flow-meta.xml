@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>58.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <description>Activity type=Remote</description>
+        <name>Activity_type_Remote</name>
+        <label>Activity type=Remote</label>
+        <locationX>50</locationX>
+        <locationY>395</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.IM_Type__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Remote</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <decisions>
+        <description>Outreach Update Remote Default Value - Event</description>
+        <name>Event_processbuilder_merge</name>
+        <label>Event ProcessBuilder Merge</label>
+        <locationX>182</locationX>
+        <locationY>287</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Outreach_Integration_User</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.RecordType.DeveloperName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>NA_Sales_Event</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$User.Id</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>0052H00000DYXvU</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Activity_type_Remote</targetReference>
+            </connector>
+            <label>Outreach Integration User</label>
+        </rules>
+    </decisions>
+    <description>When an Outreach Integration User creates an Event record, the Activity type will be updated by a deafult value &quot;Remote&quot;.(Processbuilder)</description>
+    <environments>Default</environments>
+    <interviewLabel>Outreach Update Remote Default Value {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Outreach Update Remote Default Value - Event</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>56</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Event_processbuilder_merge</targetReference>
+        </connector>
+        <object>Event</object>
+        <recordTriggerType>Create</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

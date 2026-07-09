@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Prior_Year_Other_Revenue__c</fullName>
+    <description>Invoiced revenue for all other business lines for the prior calendar year.</description>
+    <inlineHelpText>Invoiced revenue for all other business lines for the prior calendar year.</inlineHelpText>
+    <label>Prior Year Other Revenue</label>
+    <summarizedField>Billings__c.Amount__c</summarizedField>
+    <summaryFilterItems>
+        <field>Billings__c.Business_Line__c</field>
+        <operation>notEqual</operation>
+        <value>Data Backup &amp; Recovery</value>
+    </summaryFilterItems>
+    <summaryFilterItems>
+        <field>Billings__c.Business_Line__c</field>
+        <operation>notEqual</operation>
+        <value>Document Management Solutions</value>
+    </summaryFilterItems>
+    <summaryFilterItems>
+        <field>Billings__c.Business_Line__c</field>
+        <operation>notEqual</operation>
+        <value>Records Management</value>
+    </summaryFilterItems>
+    <summaryFilterItems>
+        <field>Billings__c.Business_Line__c</field>
+        <operation>notEqual</operation>
+        <value>Secure Shredding</value>
+    </summaryFilterItems>
+    <summaryFilterItems>
+        <field>Billings__c.Billing_Year__c</field>
+        <operation>equals</operation>
+        <value>2013</value>
+    </summaryFilterItems>
+    <summaryForeignKey>Billings__c.Customer_Account__c</summaryForeignKey>
+    <summaryOperation>sum</summaryOperation>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Summary</type>
+</CustomField>

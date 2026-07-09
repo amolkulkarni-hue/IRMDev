@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Retained_Terminated_Account_Date_Req</fullName>
+    <active>true</active>
+    <description>Retained and Terminated accounts must have value in this field</description>
+    <errorConditionFormula>AND(
+OR(
+ISPICKVAL( IM_At_Risk_Status__c, &quot;Retained&quot;),
+ISPICKVAL( IM_At_Risk_Status__c, &quot;Terminated&quot;),
+ISPICKVAL( IM_At_Risk_Status__c, &quot;Salvaged&quot;)
+),
+ ISBLANK( Retained_Terminated_Date__c ) 
+)</errorConditionFormula>
+    <errorDisplayField>IM_At_Risk_Status__c</errorDisplayField>
+    <errorMessage>Please enter a date the account was Retained or Terminated</errorMessage>
+</ValidationRule>

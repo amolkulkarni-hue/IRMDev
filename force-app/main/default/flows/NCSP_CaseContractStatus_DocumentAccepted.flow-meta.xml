@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>61.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <decisions>
+        <description>Check if Customer Profile exists and associated to a triggering Case record.</description>
+        <name>Check_Customer_Profile</name>
+        <label>Check Customer Profile</label>
+        <locationX>380</locationX>
+        <locationY>431</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Customer_Profile_Exists</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Customer_Profile</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Government_Customer</targetReference>
+            </connector>
+            <label>Customer Profile Exists</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Check if customer profile is a government customer.</description>
+        <name>Government_Customer</name>
+        <label>Government Customer?</label>
+        <locationX>182</locationX>
+        <locationY>539</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Not_a_Government_Customer</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Customer_Profile.Government_Customer__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Send_Platform_Event_to_MuleSoft</targetReference>
+            </connector>
+            <label>Not a Government Customer</label>
+        </rules>
+    </decisions>
+    <description>Trigger the flow when the PDFs are uploaded to an Opportunity&apos;s attachment and linked to a Case record and the case&apos;s Contract Status is modified to &apos;Document Accepted&apos;.</description>
+    <environments>Default</environments>
+    <interviewLabel>NCSP CaseContractStatus DocumentAccepted {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>NCSP CaseContractStatus DocumentAccepted</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordCreates>
+        <description>Trigger platform event which can be subscribed by Mule Application.</description>
+        <name>Send_Platform_Event_to_MuleSoft</name>
+        <label>Send Platform Event to MuleSoft</label>
+        <locationX>50</locationX>
+        <locationY>647</locationY>
+        <inputAssignments>
+            <field>Case_Id__c</field>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Opportunity_Id__c</field>
+            <value>
+                <elementReference>$Record.NCSP_Opportunity__c</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Case_Document_Accepted_Event__e</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
+    <recordLookups>
+        <description>Fetch the Customer Profile associated to the triggering Case record.</description>
+        <name>Get_Customer_Profile</name>
+        <label>Get Customer Profile</label>
+        <locationX>380</locationX>
+        <locationY>323</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Check_Customer_Profile</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Customer_Profile__c</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Customer_Profile__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <start>
+        <locationX>254</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Get_Customer_Profile</targetReference>
+        </connector>
+        <filterLogic>1 AND 2 AND (3 OR 4) AND (5 OR 6 OR 7) AND (8 OR 9) AND 10 AND 11</filterLogic>
+        <filters>
+            <field>RecordType_Name__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>NCSP: SKP New Customer Setup</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>NCSP_Opportunity_Type__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>New Deal</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Status</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>New</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Status</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Contract Review</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>NCSP_Service_line__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>RM</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>NCSP_Service_line__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Shred</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>NCSP_Service_line__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>One Time Shred</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Country__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>USA</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Country__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Canada</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Contract_Status__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Document Accepted</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Contract_Status__c</field>
+            <operator>IsChanged</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <object>Case</object>
+        <recordTriggerType>Update</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

@@ -1,0 +1,1320 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>62.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <name>Case_Owner</name>
+        <label>Case Owner to NCSP FIFO</label>
+        <locationX>50</locationX>
+        <locationY>1547</locationY>
+        <assignmentItems>
+            <assignToReference>SingleCaseRecords.OwnerId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_id_of_NCSP_FIFO_First_in_First_out.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SingleCaseRecords.Id</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>NCSPCACRetentionRushChecked</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Case_Status_Update_to_Service</name>
+        <label>Case Status Update to Service</label>
+        <locationX>204</locationX>
+        <locationY>3131</locationY>
+        <assignmentItems>
+            <assignToReference>SingleCaseRecords.Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Service</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SingleCaseRecords.Id</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>NCSP_Task_Automation_Workflow_43</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Set Priority to Normal when the Rush Check box is unchecked</description>
+        <name>NCSP_CAC_Retention_Rush_Unchecked_Field_Update</name>
+        <label>NCSP CAC Retention Rush Unchecked Field Update</label>
+        <locationX>204</locationX>
+        <locationY>2231</locationY>
+        <assignmentItems>
+            <assignToReference>SingleCaseRecords.Priority</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Normal</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SingleCaseRecords.Id</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>NCSP_NCSP_Rejection_Date</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>update case Status to Service</description>
+        <name>NCSP_CASE_STATUSUPDATEService</name>
+        <label>NCSP CASE STATUS UPDATE Service</label>
+        <locationX>204</locationX>
+        <locationY>2831</locationY>
+        <assignmentItems>
+            <assignToReference>SingleCaseRecords.Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Service</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SingleCaseRecords.Id</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>NCSP_DMS_Service_Status</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>NCSP_Date_of_Non_Conversion</name>
+        <label>NCSP Date of Non Conversion</label>
+        <locationX>204</locationX>
+        <locationY>3431</locationY>
+        <assignmentItems>
+            <assignToReference>SingleCaseRecords.Date_of_Non_Conversion__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Today</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SingleCaseRecords.Id</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SingleCaseRecords.Task_Identifier__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>NCSP_Task_Automation_ Workflow _43</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>NCSP_Data_Center_Routing</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Updated to capture the rejection as soon as the status moves to Rejection and will only timestamp once.</description>
+        <name>NCSP_NCSP_Rejection_Date_Field_Update</name>
+        <label>NCSP - NCSP Rejection Date Field Update</label>
+        <locationX>204</locationX>
+        <locationY>2531</locationY>
+        <assignmentItems>
+            <assignToReference>SingleCaseRecords.NCSP_Rejection_Date__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Today</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SingleCaseRecords.Id</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SingleCaseRecords.Contract_Rejection_Date__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>NowDate</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>NCSP_CASE_STATUS_UPDATE_Service</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Set the Rush Date when the check box is checked</description>
+        <name>NCSPCACRetentionRushCheckedFieldUpdate</name>
+        <label>NCSP CAC Retention Rush Checked Field Update</label>
+        <locationX>204</locationX>
+        <locationY>1931</locationY>
+        <assignmentItems>
+            <assignToReference>SingleCaseRecords.Priority</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Rush</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SingleCaseRecords.Id</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SingleCaseRecords.Rush_Date__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>NowDate</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>NCSP_CAC_Retention_Rush_Unchecked</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Routes Data Center NCSP cases to the Data Center - Customer Set Up Queue</description>
+        <name>Route_to_Data_Center</name>
+        <label>Route to Data Center</label>
+        <locationX>204</locationX>
+        <locationY>3731</locationY>
+        <assignmentItems>
+            <assignToReference>SingleCaseRecords.OwnerId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>00G34000003Hrq1</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SingleCaseRecords.Id</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Check_Case_Updation_Record_exists</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_NCSP_Subject_Line_Update</name>
+        <label>Set NCSP Subject Line Update</label>
+        <locationX>204</locationX>
+        <locationY>431</locationY>
+        <assignmentItems>
+            <assignToReference>SingleCaseRecords.Subject</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>SetNCSPSubjectLineUpdateFormula</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SingleCaseRecords.Id</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>NCSP_Renewal_Submit_to_Audit</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Update_Audit_Assigned_To</name>
+        <label>Update Audit Assigned To</label>
+        <locationX>50</locationX>
+        <locationY>947</locationY>
+        <assignmentItems>
+            <assignToReference>SingleCaseRecords.Audit_Assigned_To__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Audit_id.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SingleCaseRecords.Id</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>NCSP_Customer_Facing1</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <name>Check_Audit_id</name>
+        <label>Check Audit id</label>
+        <locationX>182</locationX>
+        <locationY>839</locationY>
+        <defaultConnector>
+            <targetReference>NCSP_Customer_Facing1</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Check_Audit_Record_Exist</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Audit_id</leftValueReference>
+                <operator>NotEqualTo</operator>
+            </conditions>
+            <connector>
+                <targetReference>Update_Audit_Assigned_To</targetReference>
+            </connector>
+            <label>Check Audit Record Exist</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Check Case Updation Record exists</description>
+        <name>Check_Case_Updation_Record_exists</name>
+        <label>Check Case Updation Record exists</label>
+        <locationX>336</locationX>
+        <locationY>3923</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Case_Record_Exists</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>SingleCaseRecords</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Case_Field_Update</targetReference>
+            </connector>
+            <label>Case Record Exists</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_Record_of_NCSP_FIFO_First_in_First_out_Exist</name>
+        <label>Check Record of NCSP FIFO (First in First out) Exist</label>
+        <locationX>182</locationX>
+        <locationY>1439</locationY>
+        <defaultConnector>
+            <targetReference>NCSPCACRetentionRushChecked</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Check_Record_Exist</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_id_of_NCSP_FIFO_First_in_First_out</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Case_Owner</targetReference>
+            </connector>
+            <label>Check Record Exist</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Set Priority to Normal when the Rush Check box is unchecked</description>
+        <name>NCSP_CAC_Retention_Rush_Unchecked</name>
+        <label>NCSP CAC Retention Rush Unchecked</label>
+        <locationX>336</locationX>
+        <locationY>2123</locationY>
+        <defaultConnector>
+            <targetReference>NCSP_NCSP_Rejection_Date</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>NCSPCACRetentionRushUnchecked</name>
+            <conditionLogic>(1 OR 2 OR 3 OR 4 OR 5 OR 6) AND 7</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.RecordType_Name__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>NCSP: DMS</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.RecordType_Name__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>NCSP: DP New Customer Setup</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.RecordType_Name__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>NCSP: SKP New Customer Setup</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.RecordType_Name__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>NCSP: Upsell</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.RecordType_Name__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>NCSP: SKP Department Add Only</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.RecordType_Name__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>NCSP: Tech Services New Customer Setup</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Rush__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>NCSP_CAC_Retention_Rush_Unchecked_Field_Update</targetReference>
+            </connector>
+            <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+            <label>NCSP CAC Retention Rush Unchecked</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Field Update: case Status to Service</description>
+        <name>NCSP_CASE_STATUS_UPDATE_Service</name>
+        <label>NCSP CASE STATUS UPDATE Service</label>
+        <locationX>336</locationX>
+        <locationY>2723</locationY>
+        <defaultConnector>
+            <targetReference>NCSP_DMS_Service_Status</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>NCSP_CASE_STATUS_UPDATEService</name>
+            <conditionLogic>(1 OR 2 OR 3 OR 4) AND 5 AND (6 OR 7 OR 8 OR 9 ) AND 10</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.RecordType_Name__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>NCSP: DP New Customer Setup</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.RecordType_Name__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>NCSP: SKP Department Add Only</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.RecordType_Name__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>NCSP: SKP New Customer Setup</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.RecordType_Name__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>NCSP: Upsell</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Service_Completion_Date__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Status</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Cancelled</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Status</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Duplicate</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Status</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Non Conversion</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Status</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Closed</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Date_welcome_call_completed__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>NCSP_CASE_STATUSUPDATEService</targetReference>
+            </connector>
+            <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+            <label>NCSP CASE STATUS UPDATE Service</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>After Data Entry completes their task, Case will be automatically assign to NCSP FIFIO.</description>
+        <name>NCSP_Customer_Facing1</name>
+        <label>NCSP - Customer Facing</label>
+        <locationX>336</locationX>
+        <locationY>1223</locationY>
+        <defaultConnector>
+            <targetReference>NCSPCACRetentionRushChecked</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>NCSP_Customer_Facing</name>
+            <conditionLogic>(1 OR 2 OR 3 OR 4 OR 5 OR 6) AND 7 AND 8 AND 9 AND 10</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.RecordType_Name__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>NCSP: DMS</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.RecordType_Name__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>NCSP: DP New Customer Setup</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.RecordType_Name__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>NCSP: SKP New Customer Setup</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.RecordType_Name__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>NCSP: New Customer Setup</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.RecordType_Name__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>NCSP: Upsell</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.RecordType_Name__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>NCSP: SKP Department Add Only</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Contract_Status__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Accepted</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Setup_Complete_Date__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Date_On_Boarder_CSA_Assigned__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.NCSP_Service_line__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Data Center</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_id_of_NCSP_FIFO_First_in_First_out</targetReference>
+            </connector>
+            <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+            <label>NCSP - Customer Facing</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Routes Data Center NCSP cases to the Data Center - Customer Set Up Queue</description>
+        <name>NCSP_Data_Center_Routing</name>
+        <label>NCSP Data Center Routing</label>
+        <locationX>336</locationX>
+        <locationY>3623</locationY>
+        <defaultConnector>
+            <targetReference>Check_Case_Updation_Record_exists</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Data_Center_Queue</name>
+            <conditionLogic>(1 OR 2 OR 3 OR 4 ) AND 5 AND 6 AND 7 AND 8 AND 9</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.RecordType_Name__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>NCSP: DMS</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.RecordType_Name__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>NCSP: DP New Customer Setup</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.RecordType_Name__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>NCSP: SKP New Customer Setup</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.RecordType_Name__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>NCSP: New Customer Setup</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.NCSP_Service_line__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Data Center</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Contract_Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Accepted</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Setup_Complete_Date__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Date_On_Boarder_CSA_Assigned__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.IsClosed</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Route_to_Data_Center</targetReference>
+            </connector>
+            <label>Data Center Queue</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Updates the Case Status to Service on DMS Cases when the Project Start Date is populated.</description>
+        <name>NCSP_DMS_Service_Status</name>
+        <label>NCSP DMS Service Status</label>
+        <locationX>336</locationX>
+        <locationY>3023</locationY>
+        <defaultConnector>
+            <targetReference>NCSP_Task_Automation_Workflow_43</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>NCSP_DMS_ServiceStatus</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.RecordType_Name__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>NCSP: DMS</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Project_Start_Date__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Welcome</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Case_Status_Update_to_Service</targetReference>
+            </connector>
+            <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+            <label>NCSP DMS Service Status</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Updated to capture the rejection as soon as the status moves to Rejection and will only timestamp once.</description>
+        <name>NCSP_NCSP_Rejection_Date</name>
+        <label>NCSP - NCSP Rejection Date</label>
+        <locationX>336</locationX>
+        <locationY>2423</locationY>
+        <defaultConnector>
+            <targetReference>NCSP_CASE_STATUS_UPDATE_Service</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>NCSPNCSPRejectionDate</name>
+            <conditionLogic>(1 OR 2 OR 3 OR 4 OR 5 OR 6 OR 7 OR 8) AND 9 AND 10</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.RecordType_Name__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>NCSP: DMS</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.RecordType_Name__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>NCSP: DP New Customer Setup</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.RecordType_Name__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>NCSP: SKP New Customer Setup</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.RecordType_Name__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>NCSP: Upsell</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.RecordType_Name__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>NCSP: SKP Department Add Only</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.RecordType_Name__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>NCSP: Tech Services New Customer Setup</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.RecordType_Name__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>NCSP Renewal</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.RecordType_Name__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>NCSP: New Customer Setup</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Contract_Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Rejected</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Contract_Rejection_Date__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>NCSP_NCSP_Rejection_Date_Field_Update</targetReference>
+            </connector>
+            <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+            <label>NCSP - NCSP Rejection Date</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>NCSP_Renewal_Submit_to_Audit</name>
+        <label>NCSP - Renewal - Submit to Audit</label>
+        <locationX>336</locationX>
+        <locationY>623</locationY>
+        <defaultConnector>
+            <targetReference>NCSP_Customer_Facing1</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>NCSPRenewalSubmittoAudit</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.RecordType_Name__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>NCSP Renewal</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Audit_Assigned_To__c</leftValueReference>
+                <operator>EqualTo</operator>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Setup_Complete_Date__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+            </conditions>
+            <connector>
+                <targetReference>Get_Audit_id</targetReference>
+            </connector>
+            <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+            <label>NCSP - Renewal - Submit to Audit</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>NCSP_Subject_Line_Update</name>
+        <label>NCSP Subject Line Update</label>
+        <locationX>336</locationX>
+        <locationY>323</locationY>
+        <defaultConnector>
+            <targetReference>NCSP_Renewal_Submit_to_Audit</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>NCSPSubjectLineUpdate</name>
+            <conditionLogic>(1 OR 2 OR 3 OR 4 OR 5 OR 6 OR 7) AND 8 AND (9 OR 10 OR 11 OR 12 OR 13 OR 14 OR 15)</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.RecordType_Name__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>NCSP: DMS</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.RecordType_Name__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>NCSP: DP New Customer Setup</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.RecordType_Name__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>NCSP: SKP New Customer Setup</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.RecordType_Name__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>NCSP: Upsell</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.RecordType_Name__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>NCSP: SKP Department Add Only</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.RecordType_Name__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>NCSP: Tech Services New Customer Setup</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.RecordType_Name__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>NCSP: New Customer Setup</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.IsClosed</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Subject</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>IsCreate</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.NCSP_Service_line__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Customer_ID__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Material_Moving_From_Another_Vendor__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Free_Up_In__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.DB_R_Type__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_NCSP_Subject_Line_Update</targetReference>
+            </connector>
+            <label>NCSP Subject Line Update</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Field Update: Date of Non Conversion</description>
+        <name>NCSP_Task_Automation_Workflow_43</name>
+        <label>NCSP - Task Automation- Workflow -43</label>
+        <locationX>336</locationX>
+        <locationY>3323</locationY>
+        <defaultConnector>
+            <targetReference>NCSP_Data_Center_Routing</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>NCSPTaskAutomationWorkflow43</name>
+            <conditionLogic>(1 OR 2 OR 3 OR 4 OR 5 OR 6 OR 7 OR 8) AND 9 AND 10</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.RecordType_Name__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>NCSP: DMS</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.RecordType_Name__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>NCSP: DP New Customer Setup</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.RecordType_Name__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>NCSP: SKP New Customer Setup</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.RecordType_Name__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>NCSP: Upsell</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.RecordType_Name__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>NCSP: SKP Department Add Only</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.RecordType_Name__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>NCSP: Tech Services New Customer Setup</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.RecordType_Name__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>NCSP: New Customer Setup</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.RecordType_Name__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>NCSP Renewal</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Non Conversion</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Task_Identifier__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>NCSP_Task_Automation_ Workflow _43</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>NCSP_Date_of_Non_Conversion</targetReference>
+            </connector>
+            <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+            <label>NCSP - Task Automation- Workflow -43</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Set the Rush Date when the check box is checked</description>
+        <name>NCSPCACRetentionRushChecked</name>
+        <label>NCSP CAC Retention Rush Checked</label>
+        <locationX>336</locationX>
+        <locationY>1823</locationY>
+        <defaultConnector>
+            <targetReference>NCSP_CAC_Retention_Rush_Unchecked</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>NCSP_CAC_Retention_Rush_Checked</name>
+            <conditionLogic>(1 OR 2 OR 3 OR 4 OR 5 OR 6) AND 7</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.RecordType_Name__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>NCSP: DMS</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.RecordType_Name__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>NCSP: DP New Customer Setup</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.RecordType_Name__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>NCSP: SKP New Customer Setup</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.RecordType_Name__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>NCSP: Upsell</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.RecordType_Name__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>NCSP: SKP Department Add Only</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.RecordType_Name__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>NCSP: Tech Services New Customer Setup</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Rush__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>NCSPCACRetentionRushCheckedFieldUpdate</targetReference>
+            </connector>
+            <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+            <label>NCSP CAC Retention Rush Checked</label>
+        </rules>
+    </decisions>
+    <description>Converted from below workflow rule to flow
+NCSP - Customer Facing, 
+NCSP CAC Retention Rush Unchecked, 
+NCSP CAC Retention Rush Checked, 
+NCSP - NCSP Rejection Date ,
+NCSP CASE STATUS UPDATE Service ,
+NCSP DMS Service Status,
+NCSP Subject Line Update,
+NCSP - Renewal - Submit to Audit,
+NCSP - Task Automation- Workflow -43
+
+Converted from below Process Builder to flow
+1. NCSP Data Center Routing</description>
+    <environments>Default</environments>
+    <formulas>
+        <description>Record Creation</description>
+        <name>IsCreate</name>
+        <dataType>Boolean</dataType>
+        <expression>isnew()</expression>
+    </formulas>
+    <formulas>
+        <name>NowDate</name>
+        <dataType>DateTime</dataType>
+        <expression>NOW()</expression>
+    </formulas>
+    <formulas>
+        <name>SetNCSPSubjectLineUpdateFormula</name>
+        <dataType>String</dataType>
+        <expression>IF ({!$Record.State__c} = &quot;BC&quot; ,&quot;BC&quot; &amp; &quot;-&quot; &amp; TEXT( {!$Record.NCSP_Service_line__c} ) &amp; &quot;--&quot; &amp; {!$Record.RecordType_Name__c},
+IF ({!$Record.State__c} = &quot;bc&quot;, &quot;BC&quot; &amp; &quot;-&quot; &amp;TEXT( {!$Record.NCSP_Service_line__c} ) &amp; &quot;--&quot; &amp; {!$Record.RecordType_Name__c},
+IF ({!$Record.State__c} = &quot;qc&quot;, &quot;QC&quot; &amp; &quot;-&quot; &amp;TEXT( {!$Record.NCSP_Service_line__c} ) &amp; &quot;--&quot; &amp; {!$Record.RecordType_Name__c},
+IF ({!$Record.State__c} = &quot;QC&quot;,&quot;QC&quot; &amp; &quot;-&quot; &amp; TEXT( {!$Record.NCSP_Service_line__c} ) &amp; &quot;--&quot; &amp; {!$Record.RecordType_Name__c},
+IF ({!$Record.Customer_ID__c} = &apos;a088000000AzXAy&apos;,&quot;Prepaid&quot; &amp;&quot;-&quot; &amp; TEXT( {!$Record.NCSP_Service_line__c} ) &amp; &quot;--&quot; &amp; {!$Record.RecordType_Name__c},
+IF ( {!$Record.Customer_ID__c} = &apos;a0880000005qyzD&apos;,&quot;Prepaid&quot; &amp; &quot;-&quot; &amp; TEXT( {!$Record.NCSP_Service_line__c} ) &amp; &quot;--&quot; &amp; {!$Record.RecordType_Name__c},
+IF (ISPICKVAL({!$Record.Material_Moving_From_Another_Vendor__c}, &apos;Yes&apos;) &amp;&amp; ISPICKVAL({!$Record.Free_Up_In__c}, &apos;Yes&apos;), &quot;Free Up &amp; In: &quot; &amp; TEXT( {!$Record.NCSP_Service_line__c} ) &amp; &quot;--&quot; &amp; {!$Record.RecordType_Name__c},
+IF (NOT(ISPICKVAL({!$Record.DB_R_Type__c}, &apos;&apos;)), TEXT( {!$Record.DB_R_Type__c} ) &amp; &quot;--&quot; &amp; {!$Record.RecordType_Name__c},
+TEXT( {!$Record.NCSP_Service_line__c} ) &amp; &quot;--&quot; &amp; {!$Record.RecordType_Name__c})
+)
+)
+)
+)
+)
+)
+)</expression>
+    </formulas>
+    <formulas>
+        <name>Today</name>
+        <dataType>Date</dataType>
+        <expression>TODAY()</expression>
+    </formulas>
+    <interviewLabel>NCSP Case Workflow Rule Field Update {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>NCSP Case Workflow Rule Field Update</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <name>Get_Audit_id</name>
+        <label>Get Audit id</label>
+        <locationX>182</locationX>
+        <locationY>731</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Check_Audit_id</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Name</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Audit</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>User</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_id_of_NCSP_FIFO_First_in_First_out</name>
+        <label>Get id of NCSP FIFO (First in First out)</label>
+        <locationX>182</locationX>
+        <locationY>1331</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Check_Record_of_NCSP_FIFO_First_in_First_out_Exist</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Type</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Queue</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>NCSP_FIFO_First_in_First_out</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Group</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordUpdates>
+        <description>Case Field Update</description>
+        <name>Case_Field_Update</name>
+        <label>Case Field Update</label>
+        <locationX>204</locationX>
+        <locationY>4031</locationY>
+        <inputReference>SingleCaseRecords</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>210</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>NCSP_Subject_Line_Update</targetReference>
+        </connector>
+        <filterLogic>(1 OR 2 OR 3 OR 4 OR 5 OR 6 OR 7 OR 8) AND 9</filterLogic>
+        <filters>
+            <field>RecordType_Name__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>NCSP: DMS</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>RecordType_Name__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>NCSP: DP New Customer Setup</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>RecordType_Name__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>NCSP: SKP New Customer Setup</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>RecordType_Name__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>NCSP: Tech Services New Customer Setup</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>RecordType_Name__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>NCSP: New Customer Setup</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>RecordType_Name__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>NCSP: Upsell</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>RecordType_Name__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>NCSP: SKP Department Add Only</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>RecordType_Name__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>NCSP Renewal</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>IsClosed</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <object>Case</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+    <variables>
+        <name>SingleCaseRecords</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Case</objectType>
+    </variables>
+</Flow>

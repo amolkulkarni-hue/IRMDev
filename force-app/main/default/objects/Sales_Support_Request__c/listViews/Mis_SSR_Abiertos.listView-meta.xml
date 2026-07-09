@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Mis_SSR_Abiertos</fullName>
+    <columns>Request_Number__c</columns>
+    <columns>NAME</columns>
+    <columns>Sales_Rep__c</columns>
+    <columns>Task_Type__c</columns>
+    <columns>CREATED_DATE</columns>
+    <columns>Related_Opportunity__c</columns>
+    <columns>Internal_Notes__c</columns>
+    <columns>Requestor_s_Country__c</columns>
+    <filterScope>Mine</filterScope>
+    <filters>
+        <field>Status__c</field>
+        <operation>equals</operation>
+        <value>New,In Progress</value>
+    </filters>
+    <label>Mis SSR Abiertos</label>
+    <sharedTo>
+        <roleAndSubordinates>IMLAAdmin</roleAndSubordinates>
+    </sharedTo>
+</ListView>

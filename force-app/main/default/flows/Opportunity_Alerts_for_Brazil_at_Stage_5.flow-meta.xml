@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Clean_Start_opportunity_Alert</name>
+        <label>Clean Start opportunity Alert</label>
+        <locationX>50</locationX>
+        <locationY>731</locationY>
+        <actionName>Opportunity.Clean_Start_Opportunity_Alert</actionName>
+        <actionType>emailAlert</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>Opportunity.Clean_Start_Opportunity_Alert</nameSegment>
+        <offset>0</offset>
+    </actionCalls>
+    <actionCalls>
+        <name>Opportuntiy_Alerts_for_Brazil</name>
+        <label>Opportuntiy Alerts for Brazil</label>
+        <locationX>50</locationX>
+        <locationY>431</locationY>
+        <actionName>Opportunity.Opportuntiy_Alerts_for_Brazil</actionName>
+        <actionType>emailAlert</actionType>
+        <connector>
+            <targetReference>Notification_of_Clean_Start_opportunity</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>Opportunity.Opportuntiy_Alerts_for_Brazil</nameSegment>
+        <offset>0</offset>
+    </actionCalls>
+    <apiVersion>63.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <decisions>
+        <name>Notification_of_Clean_Start_opportunity</name>
+        <label>Notification of Clean Start opportunity</label>
+        <locationX>182</locationX>
+        <locationY>623</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Contains_Clean_Start</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.IM_Sales_Event__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Clean Start</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Clean_Start_opportunity_Alert</targetReference>
+            </connector>
+            <label>Contains Clean Start</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Flow : Opportunity Alerts for Brazil at Stage 5
+Flow : Notification of Clean Start opportunity</description>
+        <name>Opportunity_Alerts_for_Brazil_at_Stage_5</name>
+        <label>Opportunity Alerts for Brazil at Stage 5</label>
+        <locationX>182</locationX>
+        <locationY>323</locationY>
+        <defaultConnector>
+            <targetReference>Notification_of_Clean_Start_opportunity</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Email_notification_for_Brazil_Opportunity</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.StageName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>5 - Signed/PO in</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Billing_Country__r.Name</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Brazil</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Type</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Renewal</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Opportuntiy_Alerts_for_Brazil</targetReference>
+            </connector>
+            <label>Email notification for Brazil Opportunity</label>
+        </rules>
+    </decisions>
+    <description>A new email alert when an opportunity from Brazil reaches &quot;STAGE 5&quot; (Case#08271011)
+#30352 : Opportunity: Update Email notification trigger for Brazil Opps - do not send for Renewals - RITM0957799
+#35884 : CRM: Merge After Save Flows on Opportunity</description>
+    <environments>Default</environments>
+    <interviewLabel>Opportunity Alerts for Brazil at Stage 5 {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Opportunity Alerts for Brazil at Stage 5 and Notification of Clean Start opportunity</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>56</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Opportunity_Alerts_for_Brazil_at_Stage_5</targetReference>
+        </connector>
+        <filterLogic>(1 AND 2 AND 3) OR  4</filterLogic>
+        <filters>
+            <field>StageName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>5 - Signed/PO in</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>QTB_Billing_Country_Name__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Brazil</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Type</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>Renewal</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>IM_Sales_Event__c</field>
+            <operator>Contains</operator>
+            <value>
+                <stringValue>Clean Start</stringValue>
+            </value>
+        </filters>
+        <object>Opportunity</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

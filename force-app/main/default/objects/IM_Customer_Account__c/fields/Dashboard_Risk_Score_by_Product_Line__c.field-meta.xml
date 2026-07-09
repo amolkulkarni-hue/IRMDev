@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Dashboard_Risk_Score_by_Product_Line__c</fullName>
+    <externalId>false</externalId>
+    <formula>IMAGE(&quot;http://chart.googleapis.com/chart?chxl=0:|DB%26R|Shred|RM&amp;chxr=1,0,0|0,0,3&amp;chxs=0,676767,11.5,0,l,676767&amp;chxt=x,y&amp;chbh=a&amp;chf=bg,lg,0,F2F2F2,0,CECECE,1&amp;chs=350x175&amp;cht=bvs&amp;chco=008000,224499,FF9900&amp;chm=N*p*,ffffff,0,,12,,c|N*p*,ffffff,1,,12,,c|N*p*,ffffff,2,,12,,c&amp;chd=t:&quot;&amp; 
+TEXT(  DBR_Price__c *100 )&amp;&quot;,&quot;&amp; 
+TEXT(  Shred_Price__c *100 )&amp;&quot;,&quot;&amp; 
+TEXT(  RM_Price__c * 100 )&amp;&quot;|&quot;&amp; 
+TEXT(  DBR_Relationship__c * 100 )&amp;&quot;,&quot;&amp; 
+TEXT(  Shred_Relationship__c * 100 )&amp;&quot;,&quot;&amp; 
+TEXT(  RM_Relationship__c * 100 )&amp;&quot;|&quot;&amp; 
+TEXT(  DBR_Service__c * 100 )&amp;&quot;,&quot;&amp; 
+TEXT(  Shred_Service__c * 100 )&amp;&quot;,&quot;&amp; 
+TEXT(  RM_Service__c * 100)&amp;&quot;&amp;chds=0,&quot;&amp;TEXT(DBR_At_Risk_Score__c / 10)&amp;&quot;,0,&quot;&amp;TEXT(Shred_At_Risk_Score__c / 10)&amp;&quot;,0,&quot;&amp;TEXT(RM_At_Risk_Score__c / 10)&amp;&quot;&amp;chdl=Price|Relationship|Service&amp;chdlp=t&amp;chg=0,-1,5,4&amp;chma=45,2,0,2&amp;chtt=&amp;chts=676767,12.933&quot;, &quot;No Image&quot;, 175,350)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Dashboard: Risk Score - Line &amp; Category</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

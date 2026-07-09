@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>HeightAndRecordOffsetValidation</fullName>
+    <active>true</active>
+    <description>When Data Table Type is &quot;Infinite Loading(Lazy Loading)&quot;, then Datatable Height (in px) and Record Offset should be filled, otherwise should be left blank.</description>
+    <errorConditionFormula>(
+				ISPICKVAL(Data_Table_Load_Type__c, &apos;Infinite Loading&apos;) &amp;&amp;
+    (ISBLANK(Datatable_Height__c) || ISBLANK(Record_Offset__c))
+)
+||
+(
+				!ISPICKVAL(Data_Table_Load_Type__c, &apos;Infinite Loading&apos;) &amp;&amp;
+    (!ISBLANK(Datatable_Height__c) || !ISBLANK(Record_Offset__c))
+)</errorConditionFormula>
+    <errorMessage>When Data Table Type is &quot;Infinite Loading(Lazy Loading)&quot;, then Datatable Height (in px) and Record Offset should be filled, otherwise should be left blank.</errorMessage>
+</ValidationRule>

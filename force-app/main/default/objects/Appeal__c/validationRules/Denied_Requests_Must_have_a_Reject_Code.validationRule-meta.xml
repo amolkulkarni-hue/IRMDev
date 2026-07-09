@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Denied_Requests_Must_have_a_Reject_Code</fullName>
+    <active>true</active>
+    <description>a denied appeal must have a reject code</description>
+    <errorConditionFormula>AND( 
+ISCHANGED(Appeal_Stage__c), 
+ISPICKVAL(Appeal_Stage__c, &quot;Denied&quot;), 
+ISBLANK(TEXT( Commissions_Accounting_Reject_Code__c )) 
+)</errorConditionFormula>
+    <errorMessage>Denied requests must have a reject code.</errorMessage>
+</ValidationRule>

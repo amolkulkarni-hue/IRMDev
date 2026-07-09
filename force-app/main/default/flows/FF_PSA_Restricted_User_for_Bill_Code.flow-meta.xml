@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>57.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <customErrors>
+        <description>Throw error if this is a Restricted User</description>
+        <name>Restricted_User_Error</name>
+        <label>Restricted User Error</label>
+        <locationX>176</locationX>
+        <locationY>287</locationY>
+        <customErrorMessages>
+            <errorMessage>You have a restricted license, therefore you cannot edit Bill Codes. If you feel this is in error, please contact your manager.</errorMessage>
+            <isFieldError>false</isFieldError>
+        </customErrorMessages>
+    </customErrors>
+    <description>Don&apos;t allow a restricted user to edit a bill code</description>
+    <environments>Default</environments>
+    <interviewLabel>FF - PSA Restricted User for Bill Code {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>FF - PSA Restricted User for Bill Code</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Restricted_User_Error</targetReference>
+        </connector>
+        <filterFormula>{!$Permission.PSA_Restricted_User}</filterFormula>
+        <object>pse__Milestone__c</object>
+        <recordTriggerType>Update</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

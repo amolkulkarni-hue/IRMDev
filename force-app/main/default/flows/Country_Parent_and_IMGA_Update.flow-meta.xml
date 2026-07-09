@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <description>Country Parent Type Update Batch job is invoked</description>
+        <name>Update_Country_Parent_Type</name>
+        <label>Update Country Parent Type</label>
+        <locationX>50</locationX>
+        <locationY>431</locationY>
+        <actionName>Country_Parent_Type_Update</actionName>
+        <actionType>batchJobAction</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <nameSegment>Country_Parent_Type_Update</nameSegment>
+        <offset>0</offset>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
+    <actionCalls>
+        <description>IMGA Type Update Batch job is invoked</description>
+        <name>Update_IMGA_Type</name>
+        <label>Update IMGA Type</label>
+        <locationX>314</locationX>
+        <locationY>431</locationY>
+        <actionName>IMGA_Type_Update</actionName>
+        <actionType>batchJobAction</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <nameSegment>IMGA_Type_Update</nameSegment>
+        <offset>0</offset>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
+    <apiVersion>62.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <decisions>
+        <description>Checks the Job Type. If Sales SIte batch job is completed country Parent batch job action is called, else if Country Parent job is completed, IMGA batch job is called.</description>
+        <name>Job_Type</name>
+        <label>Job Type</label>
+        <locationX>314</locationX>
+        <locationY>323</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Sales_Site_Job</name>
+            <conditionLogic>1 AND 2 AND ( 3 OR 4)</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Name</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Sales_SIte_Type_Update</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Status</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Completed</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>CompletedWithFailures</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Country_Parent_Type</targetReference>
+            </connector>
+            <label>Sales Site Job</label>
+        </rules>
+        <rules>
+            <name>Country_Parent_Job_is_Completed</name>
+            <conditionLogic>1 AND 2 AND (3 OR 4)</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Name</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Country_Parent_Type_Update</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Status</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Completed</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>CompletedWithFailures</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_IMGA_Type</targetReference>
+            </connector>
+            <label>Country Parent Job is Completed</label>
+        </rules>
+    </decisions>
+    <description>#29019: Country Parent and IMGA batch jobs are called concurrently. After Sales Site job is completed, Country Parent job is invoked and after completion of Country Parent job IMGA job is invoked.</description>
+    <environments>Default</environments>
+    <interviewLabel>Country Parent and IMGA Update {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Country Parent and IMGA Update</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>188</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Job_Type</targetReference>
+        </connector>
+        <filterLogic>(1 OR 2) AND 3</filterLogic>
+        <filters>
+            <field>Name</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Sales_SIte_Type_Update</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Name</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Country_Parent_Type_Update</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Status</field>
+            <operator>Contains</operator>
+            <value>
+                <stringValue>Completed</stringValue>
+            </value>
+        </filters>
+        <object>BatchJob</object>
+        <recordTriggerType>Update</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

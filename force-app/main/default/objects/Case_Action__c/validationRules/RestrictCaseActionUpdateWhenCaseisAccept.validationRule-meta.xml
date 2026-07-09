@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>RestrictCaseActionUpdateWhenCaseisAccept</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND
+   ( 
+    NOT(ISBLANK(Case__r.Date_Sent_to_Contracts_Admin__c)), 
+    ISPICKVAL(Status__c,&apos;Resubmitted&apos;),
+    ISCHANGED(Status__c),
+    NOT(Primary_Contract_Rejection_Reason__c  = &apos;Autopay&apos;),
+    NOT( Second_Contract_Rejection_Reason__c = &apos;Autopay&apos;)
+  )</errorConditionFormula>
+    <errorDisplayField>Status__c</errorDisplayField>
+    <errorMessage>You cannot update the Status as the Contract Status on the Case has already been Accepted.</errorMessage>
+</ValidationRule>

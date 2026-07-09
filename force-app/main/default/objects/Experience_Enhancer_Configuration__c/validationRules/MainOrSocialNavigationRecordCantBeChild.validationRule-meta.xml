@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>MainOrSocialNavigationRecordCantBeChild</fullName>
+    <active>true</active>
+    <errorConditionFormula>(
+				RecordType.DeveloperName == &apos;Main_Navigation&apos; ||
+				RecordType.DeveloperName == &apos;Social_Navigation&apos;
+) &amp;&amp; Parent_EEC__c != null</errorConditionFormula>
+    <errorDisplayField>Parent_EEC__c</errorDisplayField>
+    <errorMessage>A Main Navigation or a Social Navigation record can never be a child record.</errorMessage>
+</ValidationRule>

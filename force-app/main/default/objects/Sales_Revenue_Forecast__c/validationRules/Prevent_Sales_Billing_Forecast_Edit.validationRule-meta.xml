@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Prevent_Sales_Billing_Forecast_Edit</fullName>
+    <active>true</active>
+    <description>Cannot Add, Edit or Delete Sales Billing Forecast record once Opportunity is Won</description>
+    <errorConditionFormula>AND(OR(
+ISPICKVAL( Forecast_Opportunity__r.StageName , &apos;5 - Signed/PO in&apos;),
+ISPICKVAL(Forecast_Opportunity__r.StageName, &apos;6 - Setup&apos;),
+ISPICKVAL(Forecast_Opportunity__r.StageName, &apos;7 - Closed&apos;)
+),
+$Profile.Name &lt;&gt; &apos;IM_Sales_IMTN&apos;,
+NOT($Permission.Edit_SBF_Lines_in_Late_Stage_Opp)
+)</errorConditionFormula>
+    <errorMessage>You cannot edit Sales Billing Forecast lines once an Opportunity has been Won. Need help? Contact your Sales Operations Business Partner.</errorMessage>
+</ValidationRule>

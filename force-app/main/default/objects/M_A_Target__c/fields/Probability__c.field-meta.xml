@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Probability__c</fullName>
+    <description>Probability of the Deal Closing</description>
+    <formula>IF(
+ RecordType.Name = &quot;Direct Process&quot;,
+
+CASE( Stage__c,
+&quot;1 - Prospect&quot;, 0.01,
+&quot;2 - NDA &amp; Info Exchange&quot;, 0.10,
+&quot;3 - Analysis/Valuation&quot;, 0.25,
+&quot;4 - LOI&quot;, 0.50,
+&quot;5 - Due Diligence&quot;, 0.85,
+&quot;6 - Closed&quot;, 1.0,
+0.0
+)
+,
+
+CASE( Stage__c,
+&quot;1 - Prospect&quot;, 0.01,
+&quot;2 - NDA &amp; Info Exchange&quot;, 0.15,
+&quot;3 - Analysis/Valuation&quot;, 0.25,
+&quot;4 - LOI&quot;, 0.50,
+&quot;5 - Due Diligence&quot;, 0.9,
+&quot;6 - Closed&quot;, 1.0,
+0
+)
+)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <inlineHelpText>Probability of the Deal Closing</inlineHelpText>
+    <label>Probability</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>0</scale>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Percent</type>
+</CustomField>

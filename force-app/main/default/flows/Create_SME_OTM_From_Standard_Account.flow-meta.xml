@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>56.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <description>Assign SME details to OTM Object Record Variable</description>
+        <name>OTM_Record_Details</name>
+        <label>OTM Record Details</label>
+        <locationX>1601</locationX>
+        <locationY>247</locationY>
+        <assignmentItems>
+            <assignToReference>Var_SME_OTM.OpportunityId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Iterate_Through_All_Available_Opps.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Var_SME_OTM.UserId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.DMS_Owner__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Var_SME_OTM.TeamMemberRole</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Subject Matter Expert</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Var_SME_OTM.OpportunityAccessLevel</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Edit</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Var_SME_OTM_Collection</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Assign All SME OTM Records to OTM Collection</description>
+        <name>Var_SME_OTM_Collection</name>
+        <label>Var_SME_OTM_Collection</label>
+        <locationX>1328</locationX>
+        <locationY>397</locationY>
+        <assignmentItems>
+            <assignToReference>Var_SME_OTM_List</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>Var_SME_OTM</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Iterate_Through_All_Available_Opps</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <description>Verify whether OTM records are available to Create</description>
+        <name>Has_OTM_Records</name>
+        <label>Has_OTM_Records</label>
+        <locationX>995</locationX>
+        <locationY>509</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Has_SMEs</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Var_SME_OTM_List</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Create_SME_OTM_Records</targetReference>
+            </connector>
+            <label>Has SMEs</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Check the Opportunity ID is available to create an SME</description>
+        <name>Opp_Id_is_Available</name>
+        <label>Opp Id is Available</label>
+        <locationX>1331</locationX>
+        <locationY>50</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Has_Opp_Id</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Iterate_Through_All_Available_Opps.Id</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>OTM_Record_Details</targetReference>
+            </connector>
+            <label>Has Opp Id</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Check if opportunities available or not.</description>
+        <name>Opportunities_Available</name>
+        <label>Opportunities Available</label>
+        <locationX>779</locationX>
+        <locationY>262</locationY>
+        <defaultConnectorLabel>Acct does not have Opps</defaultConnectorLabel>
+        <rules>
+            <name>Acct_Has_Opps</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_All_Opportunities</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Iterate_Through_All_Available_Opps</targetReference>
+            </connector>
+            <label>Acct Has Opps</label>
+        </rules>
+    </decisions>
+    <description>User story # 12190 : Update ALM SDE&apos;s Permissions
+Create SDE as an SME From standard account</description>
+    <environments>Default</environments>
+    <interviewLabel>Create_SME_ {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Create_SME_OTM_From_Standard_Account</label>
+    <loops>
+        <description>Iterate through all opportunities for the triggered account</description>
+        <name>Iterate_Through_All_Available_Opps</name>
+        <label>Iterate Through All Available Opps</label>
+        <locationX>1006</locationX>
+        <locationY>259</locationY>
+        <collectionReference>Get_All_Opportunities</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>Opp_Id_is_Available</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>Has_OTM_Records</targetReference>
+        </noMoreValuesConnector>
+    </loops>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordCreates>
+        <description>Create SME as an Opportunity Team Member</description>
+        <name>Create_SME_OTM_Records</name>
+        <label>Create SME OTM Records</label>
+        <locationX>1005</locationX>
+        <locationY>810</locationY>
+        <inputReference>Var_SME_OTM_List</inputReference>
+    </recordCreates>
+    <recordLookups>
+        <description>Get all opportunities which are having Primary Product line as &apos;DM SITAD&apos; under the triggered accounts</description>
+        <name>Get_All_Opportunities</name>
+        <label>Get All Opportunities</label>
+        <locationX>526</locationX>
+        <locationY>259</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Opportunities_Available</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>AccountId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Primary_Product_Line__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>DM SITAD</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>Opportunity</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <start>
+        <locationX>33</locationX>
+        <locationY>168</locationY>
+        <connector>
+            <targetReference>Get_All_Opportunities</targetReference>
+        </connector>
+        <filterFormula>AND(
+        {!$Record__Prior.DMS_Owner__c}&lt;&gt;{!$Record.DMS_Owner__c},
+	{!$Record.DMS_Owner__c} &lt;&gt; null,
+	{!$Record.DMS_Owner__r.IsActive},
+        {!$Record.RecordType.DeveloperName}=&apos;Standard_Account&apos;
+)</filterFormula>
+        <object>Account</object>
+        <recordTriggerType>Update</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+    <variables>
+        <description>Stores IMGA&apos;s related SDE</description>
+        <name>Var_SDE_From_IMGA</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>Stores SME details under Opportunity Team Member Object as Record Variable.</description>
+        <name>Var_SME_OTM</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <objectType>OpportunityTeamMember</objectType>
+    </variables>
+    <variables>
+        <description>Stores all SME Opportunity Team Member records</description>
+        <name>Var_SME_OTM_List</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <objectType>OpportunityTeamMember</objectType>
+    </variables>
+</Flow>

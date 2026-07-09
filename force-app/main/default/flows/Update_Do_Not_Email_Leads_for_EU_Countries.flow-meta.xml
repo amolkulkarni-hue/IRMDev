@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>60.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <description>Migrated from the workflow rule : Update Do Not Email - Leads for EU Countries 
+On creation, leads where the country (address) is in the European Union, &apos;Do Not Email&apos; checkbox is checked when a lead is manually created.  
+As per 22807 :  Remove Reference of Profile and Excluded  United Kingdom</description>
+    <environments>Default</environments>
+    <interviewLabel>Update Do Not Email - Leads for EU Countries {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Update Do Not Email - Leads for EU Countries</label>
+    <migratedFromWorkflowRuleName>Update Do Not Email - Leads for EU Countries</migratedFromWorkflowRuleName>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <description>Check the Do Not Email checkbox. Used for European opt out countries</description>
+        <name>Field_Update</name>
+        <label>Field Update</label>
+        <locationX>176</locationX>
+        <locationY>287</locationY>
+        <inputAssignments>
+            <field>HasOptedOutOfEmail</field>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Field_Update</targetReference>
+        </connector>
+        <filterFormula>OR({!$Record.Country} ==&apos;Austria&apos;, 
+{!$Record.Country} ==&apos;Belgium&apos;, 
+{!$Record.Country} ==&apos;Cyprus&apos;, 
+{!$Record.Country} ==&apos;Czech Republic&apos;, 
+{!$Record.Country} ==&apos;Denmark&apos;, 
+{!$Record.Country} ==&apos;Estonia&apos;, 
+{!$Record.Country} ==&apos;Finland&apos;, 
+{!$Record.Country} ==&apos;France&apos;, 
+{!$Record.Country} ==&apos;Germany&apos;,
+{!$Record.Country} ==&apos;Greece&apos;, 
+{!$Record.Country} ==&apos;Hungary&apos;, 
+{!$Record.Country} ==&apos;Ireland&apos;, 
+{!$Record.Country} ==&apos;Latvia&apos;, 
+{!$Record.Country} ==&apos;Lithuania&apos;, 
+{!$Record.Country} ==&apos;Luxembourg&apos;, 
+{!$Record.Country} ==&apos;Netherlands&apos;, 
+{!$Record.Country} ==&apos;Norway&apos;, 
+{!$Record.Country} ==&apos;Poland&apos;, 
+{!$Record.Country} ==&apos;Romania&apos;, 
+{!$Record.Country} ==&apos;Slovakia&apos;, 
+{!$Record.Country} ==&apos;Spain&apos;, 
+{!$Record.Country} ==&apos;Sweden&apos;, 
+{!$Record.Country} ==&apos;Switzerland&apos;)</filterFormula>
+        <object>Lead</object>
+        <recordTriggerType>Create</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

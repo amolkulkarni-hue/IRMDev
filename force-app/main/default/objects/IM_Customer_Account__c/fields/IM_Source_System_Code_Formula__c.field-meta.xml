@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IM_Source_System_Code_Formula__c</fullName>
+    <description>Formula field used for Cast Iron integration to perform field value encoding for BI extract.</description>
+    <externalId>false</externalId>
+    <formula>CASE( IM_Source_System_Code__c , 
+&apos;DIGI&apos;, &apos;39&apos;, 
+&apos;OSDP&apos;, &apos;25&apos;, 
+&apos;IPM&apos;, &apos;26&apos;, 
+&apos;IMRM&apos;, &apos;15&apos;, 
+&apos;ESS&apos;, &apos;43&apos;, 
+&apos;GDS&apos;, &apos;55&apos;, 
+&apos;TOBAS&apos;, &apos;57&apos;, 
+&apos;IMLA&apos;, &apos;A2&apos;, 
+&apos;SKPE&apos;, &apos;5S&apos;, 
+&apos;ARVE&apos;, &apos;5A&apos;, 
+&apos;OTHE&apos;, &apos;5M&apos;, 
+&apos;LEGACY ARCVMS&apos;,&apos;A1&apos;, 
+&apos;LEGACY SKP EUROPE&apos;,&apos;S1&apos;, 
+&apos;SBLA&apos;, &apos;7B&apos;,
+&apos;SKPL&apos;, &apos;7S&apos;,
+&apos;OTHL&apos;, &apos;7M&apos;,
+&apos;IMAP&apos;, &apos;AP&apos;,
+&apos;ARCH&apos;, &apos;AR&apos;, 
+&apos;ONE&apos;,&apos;OE&apos;,
+&apos;DOCO&apos;, &apos;DO&apos;,
+&apos;SKPA&apos;,&apos;7T&apos;,
+&apos;ONPA&apos;,&apos;OA&apos;,
+&apos;SRAP&apos;,&apos;SR&apos;,
+&apos;TGAP&apos;,&apos;TG&apos;,
+&apos;KSAP&apos;,&apos;KS&apos;,
+&apos;SBAP&apos;,&apos;8B&apos;,
+&apos;Error: Unknown Source System Code&apos; 
+)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <inlineHelpText>Formula field used for Cast Iron integration to perform field value encoding for BI extract.</inlineHelpText>
+    <label>Source System Code (Formula)</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

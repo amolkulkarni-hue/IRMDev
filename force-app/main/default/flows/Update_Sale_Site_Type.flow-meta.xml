@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>62.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <description>Account is marked as Active</description>
+        <name>Account_Type_to_Active</name>
+        <label>Account Type to Active</label>
+        <locationX>50</locationX>
+        <locationY>674</locationY>
+        <assignmentItems>
+            <assignToReference>CurrentAccount.Type</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Active</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_Account_Type</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Account is marked as Inactive</description>
+        <name>Account_Type_to_Inactive</name>
+        <label>Account Type to Inactive</label>
+        <locationX>314</locationX>
+        <locationY>674</locationY>
+        <assignmentItems>
+            <assignToReference>CurrentAccount.Type</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Inactive</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_Account_Type</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Account is marked as Prospect</description>
+        <name>Account_Type_to_Prospect</name>
+        <label>Account Type to Prospect</label>
+        <locationX>842</locationX>
+        <locationY>674</locationY>
+        <assignmentItems>
+            <assignToReference>CurrentAccount.Type</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Prospect</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_Account_Type</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Account is marked as Sanctioned</description>
+        <name>Account_Type_to_Sanctioned</name>
+        <label>Account Type to Sanctioned</label>
+        <locationX>1370</locationX>
+        <locationY>566</locationY>
+        <assignmentItems>
+            <assignToReference>CurrentAccount.Type</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Sanctioned (Do Not Contact)</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_Account_Type</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Stores the Account Details of input Account</description>
+        <name>Assign_Current_Account</name>
+        <label>Assign Current Account</label>
+        <locationX>1073</locationX>
+        <locationY>242</locationY>
+        <assignmentItems>
+            <assignToReference>CurrentAccount</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Account_Details</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Is_Country_Parent_Sanctioned</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <description>Checks for presence of Closed Opportunities with Close Date in Past 2 years
+If Account is previously not Active and has Bookings in last 2 Years then Type is marked as Active
+else if there are no Bookings in last 2 years(but there are CLosed Won Opportunities) then Type is marked as Inactive</description>
+        <name>Are_there_any_Bookings_with_Close_date_less_than_Past_2_Years</name>
+        <label>Are there any Bookings with Close date less than Past 2 Years</label>
+        <locationX>314</locationX>
+        <locationY>566</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Booked_in_Past_2_Years</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>CurrentAccount.Type</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Active</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>CurrentAccount.Count_of_Booked_Opportunities__c</leftValueReference>
+                <operator>GreaterThanOrEqualTo</operator>
+                <rightValue>
+                    <numberValue>1.0</numberValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Account_Type_to_Active</targetReference>
+            </connector>
+            <label>Booked in Past 2 Years</label>
+        </rules>
+        <rules>
+            <name>No_Bookings_in_Last_2_Years</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>CurrentAccount.Type</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Inactive</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>CurrentAccount.Count_of_Booked_Opportunities__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <numberValue>0.0</numberValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Account_Type_to_Inactive</targetReference>
+            </connector>
+            <label>No Bookings in Last 2 Years</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Checks if there are Bookings under this Account(closed Won Opportunities) or not
+If exist Yes_Opportunities Exist path is executed  else
+Default Outcome is Executed</description>
+        <name>Are_there_any_Closed_Opportunities_tied_to_Account</name>
+        <label>Are there any Closed Opportunities tied to Account?</label>
+        <locationX>644</locationX>
+        <locationY>458</locationY>
+        <defaultConnector>
+            <targetReference>Is_Type_Prospect</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes_OppportunitiesExist</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>CurrentAccount.Count_of_Closed_Won_Opportunities__c</leftValueReference>
+                <operator>GreaterThan</operator>
+                <rightValue>
+                    <numberValue>0.0</numberValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Are_there_any_Bookings_with_Close_date_less_than_Past_2_Years</targetReference>
+            </connector>
+            <label>Yes_OppportunitiesExist</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>CHecks if Country Parent Account is Sanctioned or not. If its not Sanctioned flow proceeds else ends</description>
+        <name>Is_Country_Parent_Sanctioned</name>
+        <label>Is Country Parent Sanctioned?</label>
+        <locationX>1073</locationX>
+        <locationY>350</locationY>
+        <defaultConnector>
+            <targetReference>Is_Sales_Site_Sanctioned</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Not_Sanctioned</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>CurrentAccount.Parent.Type</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Sanctioned (Do Not Contact)</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Are_there_any_Closed_Opportunities_tied_to_Account</targetReference>
+            </connector>
+            <label>Not Sanctioned</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>If Sales Site is not marked as Sanctioned update it to Sanctioned</description>
+        <name>Is_Sales_Site_Sanctioned</name>
+        <label>Is Sales Site Sanctioned?</label>
+        <locationX>1502</locationX>
+        <locationY>458</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Sanction_SS</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>CurrentAccount.Type</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Sanctioned (Do Not Contact)</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Account_Type_to_Sanctioned</targetReference>
+            </connector>
+            <label>Sanction_SS</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Checks if Account Type is already marked as Prospect or not.</description>
+        <name>Is_Type_Prospect</name>
+        <label>Is Type Prospect?</label>
+        <locationX>974</locationX>
+        <locationY>566</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Not_Prospect</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>CurrentAccount.Type</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Prospect</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Account_Type_to_Prospect</targetReference>
+            </connector>
+            <label>Not Prospect</label>
+        </rules>
+    </decisions>
+    <description>#Gitlab Story: 26453
+This flow is used to evaluate the Type on Sales Site Accounts.
+If there are any Closed Won Opportunities with a close date in past 2 years then Type is Active,
+If there are Closed won Opportunities but none are booked in last 2 years then its marked as Inactive,
+If there are no closed Won Opportunities then Type is marked as Prospect
+
+#27491: Account: Automate &quot;Sanctioned (Do Not Contact)&quot; 
+If Country Parent is Sanctioned, then update Type on Sales site to Sanctioned</description>
+    <environments>Default</environments>
+    <interviewLabel>Update Sale Site Type {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Update Sale Site Account Type</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <description>Fetches the Account details of received Sales Site Account</description>
+        <name>Get_Account_Details</name>
+        <label>Get Account Details</label>
+        <locationX>1073</locationX>
+        <locationY>134</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Assign_Current_Account</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Account_Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Account</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordUpdates>
+        <description>Updates Account Type based on the evaluated logic</description>
+        <name>Update_Account_Type</name>
+        <label>Update Account Type</label>
+        <locationX>1073</locationX>
+        <locationY>1034</locationY>
+        <inputReference>CurrentAccount</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>947</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Get_Account_Details</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <variables>
+        <name>Account_Id</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>CurrentAccount</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Account</objectType>
+    </variables>
+</Flow>

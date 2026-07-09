@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Commercial_Canada_Approved</fullName>
+    <booleanFilter>1 AND 2 AND 3 AND (4 OR 5 OR 6)</booleanFilter>
+    <columns>NAME</columns>
+    <columns>Customer_Account__c</columns>
+    <columns>Opportunity__c</columns>
+    <columns>Commission_Month__c</columns>
+    <columns>Total_Revenue__c</columns>
+    <columns>Total_Volume__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Associated_to_Opportunity_Date__c</field>
+        <operation>equals</operation>
+        <value>THIS_MONTH</value>
+    </filters>
+    <filters>
+        <field>RECORDTYPE</field>
+        <operation>equals</operation>
+        <value>Inbound_Storage__c.Inbound_Storage</value>
+    </filters>
+    <filters>
+        <field>Association_to_Opportunity_Status__c</field>
+        <operation>equals</operation>
+        <value>Matched - Approved</value>
+    </filters>
+    <filters>
+        <field>Opportunity_Owner_s_Role_Text__c</field>
+        <operation>contains</operation>
+        <value>BDE - Commercial - Canada Central,BDE - Commercial - Canada East</value>
+    </filters>
+    <filters>
+        <field>Opportunity_Owner_s_Role_Text__c</field>
+        <operation>contains</operation>
+        <value>BDE - Commercial - Canada West,CDE - Commercial - Canada Central</value>
+    </filters>
+    <filters>
+        <field>Opportunity_Owner_s_Role_Text__c</field>
+        <operation>contains</operation>
+        <value>CDE - Commercial - Canada East,CDE - Commercial - Canada West</value>
+    </filters>
+    <label>Commercial Canada - Approved</label>
+    <language>en_US</language>
+</ListView>

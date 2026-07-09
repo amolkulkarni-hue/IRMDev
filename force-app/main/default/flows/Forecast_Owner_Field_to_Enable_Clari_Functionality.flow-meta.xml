@@ -1,0 +1,377 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>58.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <description>Updates Forecast Owner as AE/ISR (Account Owner)</description>
+        <name>AE_ISR_Account_Owner_as_Forecast_Owner</name>
+        <label>AE/ISR (Account Owner) as Forecast Owner</label>
+        <locationX>314</locationX>
+        <locationY>395</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Forecast_Owner__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Account.Primary_BDE__r.Id</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <description>Updates Forecast Owner as Global Managing Director</description>
+        <name>Global_Managing_Director_as_Forecast_Owner</name>
+        <label>Global Managing Director as Forecast Owner</label>
+        <locationX>50</locationX>
+        <locationY>395</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Forecast_Owner__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Account.Global_IMGA_Owner__r.Id</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <description>Updates Forecast Owner as Opportunity Owner</description>
+        <name>Opportunity_Owner_as_Forecast_Owner</name>
+        <label>Opportunity Owner as Forecast Owner</label>
+        <locationX>490</locationX>
+        <locationY>803</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Forecast_Owner__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Owner.Id</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <decisions>
+        <description>If Billing Country = United States or Canada THEN Forecast Owner = Opportunity Owner
+If Type = Renewal THEN Forecast Owner = Opportunity Owner
+If Type = Framework, New Deal or Up-Sell/Lift and Opportunity Owner Role Type = BDE or ISR THEN Forecast Owner = Opportunity Owner
+If Type = Framework, New Deal or Up-sell/Lift and Billing Country = India and Close Date is &gt; or = 2026 THEN Forecast Owner = Opportunity Owner
+If Type = Framework, New Deal or Up-Sell/Lift and Billing Country != India and Account has Global Industries = TRUE THEN Forecast Owner = Global Managing Director (if populated) or Opportunity Owner
+If Type = Framework, New Deal or Up-Sell/Lift and Billing Country != India and Account has Global Industries = FALSE THEN Forecast Owner = AE/ISR (if populated) or Opportunity Owner
+If GMD / AE/ISR (with Billing Country changes)/ Opportunity Owner already exist -&gt; Flow End
+Default Outcome - Updates Forecast Owner as Opportunity Owner
+
+Note - Flow only updates forecast owner if needed ( it wont update if existing and current value are same )</description>
+        <name>Forecast_Owner_Logic_Check</name>
+        <label>Forecast Owner Logic Check</label>
+        <locationX>358</locationX>
+        <locationY>287</locationY>
+        <defaultConnector>
+            <targetReference>If_Opportunity_Owner_already_Exists</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Opportunity_Owner_Update_Logic_Check</name>
+            <conditionLogic>(9 OR 10) OR 1 OR ((2 OR 3 OR 4) AND (5 OR 6)) OR ((2 OR 3 OR 4) AND 7 AND 8)</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Renewal</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Framework</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>New Deal</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Up-Sell/Lift</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Owner.Role_Type__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>BDE</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Owner.Role_Type__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>ISR</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Billing_Country__r.Name</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>India</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.CloseDate</leftValueReference>
+                <operator>GreaterThanOrEqualTo</operator>
+                <rightValue>
+                    <dateValue>2026-01-01</dateValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Billing_Country__r.Name</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>United States</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Billing_Country__r.Name</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Canada</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>If_Opportunity_Owner_already_Exists</targetReference>
+            </connector>
+            <label>Opportunity Owner Update Logic Check</label>
+        </rules>
+        <rules>
+            <name>Global_Industries_is_true</name>
+            <conditionLogic>1 AND 2 AND 3 AND (4 OR 5 OR 6) AND 7</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Account.Global_Account__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Account.Global_IMGA_Owner__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Billing_Country__r.Name</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>India</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Framework</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>New Deal</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Up-Sell/Lift</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Forecast_Owner__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>$Record.Account.Global_IMGA_Owner__c</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Global_Managing_Director_as_Forecast_Owner</targetReference>
+            </connector>
+            <label>Global Industries is true</label>
+        </rules>
+        <rules>
+            <name>Global_Industries_is_false</name>
+            <conditionLogic>1 AND 2 AND 3 AND (4 OR 5 OR 6) AND 7</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Account.Global_Account__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Account.Primary_BDE__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Billing_Country__r.Name</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>India</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Framework</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>New Deal</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Up-Sell/Lift</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Forecast_Owner__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>$Record.Account.Primary_BDE__c</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>AE_ISR_Account_Owner_as_Forecast_Owner</targetReference>
+            </connector>
+            <label>Global Industries is false</label>
+        </rules>
+        <rules>
+            <name>If_GMD_AE_ISR_already_Exist</name>
+            <conditionLogic>(1 AND 3 AND 4 AND 5) OR (2 AND 3 AND NOT(4) AND 6)</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Forecast_Owner__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>$Record.Account.Global_IMGA_Owner__c</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Forecast_Owner__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>$Record.Account.Primary_BDE__c</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Billing_Country__r.Name</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>India</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Account.Global_Account__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Account.Global_IMGA_Owner__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Account.Primary_BDE__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>If GMD / AE/ISR already Exist</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Yes - End Flow
+No - Update Opportunity Owner as Forecast Owner</description>
+        <name>If_Opportunity_Owner_already_Exists</name>
+        <label>If Opportunity Owner already Exists</label>
+        <locationX>358</locationX>
+        <locationY>695</locationY>
+        <defaultConnector>
+            <targetReference>Opportunity_Owner_as_Forecast_Owner</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Yes</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Forecast_Owner__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>$Record.OwnerId</elementReference>
+                </rightValue>
+            </conditions>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <description>#28165 -- Opportunity: Provide visibility via Opp Forecast Owner to India pipeline in Clari via Forecast Owner - RITM0922334
+Updated in Decision Element of &apos;Billing Country India&apos; when BC=&apos;India&apos; and Close Date &gt;= 2025 then Forecast Owner = Opportunity Owner.
+#32492-Opportunity: Provide visibility via Opp Forecast Owner to China &amp; Hong Kong pipeline in Clari via Forecast Owner
+#34119-Opportunity: Update Forecast Owner Logic with adding Opportunity Owner changes to trigger
+#34699-Opportunity: Update Global Forecast Owner Logic to point to AE/ISR
+#35402-Opportunity: Update Global Forecast Owner Logic to point to AE/ISR
+#35868-Opportunity: Update Forecast Owner logic to support NA GTM rollout</description>
+    <environments>Default</environments>
+    <interviewLabel>Forecast Owner Field to Enable Clari Functionality {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Forecast Owner Field to Enable Clari Functionality</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>232</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Forecast_Owner_Logic_Check</targetReference>
+        </connector>
+        <filterFormula>OR(
+ISNEW(),
+ISBLANK({!$Record.Forecast_Owner__c}),
+ISCHANGED({!$Record.Billing_Country__c}),
+ISCHANGED({!$Record.OwnerId}),
+ISCHANGED({!$Record.Type})
+)</filterFormula>
+        <object>Opportunity</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

@@ -1,0 +1,484 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>60.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <description>To assign the owner as Straits Member : GitLab# 32719</description>
+        <name>Account_Owner_to_Straits_Member</name>
+        <label>Account Owner to Straits Member</label>
+        <locationX>50</locationX>
+        <locationY>611</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.OwnerId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Straits_Member_ID.Id</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>Account_Owner_to_US_Government_Member</name>
+        <label>Account Owner to US Government Member</label>
+        <locationX>1106</locationX>
+        <locationY>611</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.OwnerId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>US_Government_Member_Id.Id</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <description>Change Account Owner to System ID</description>
+        <name>Change_Account_Owner_to_System_ID</name>
+        <label>Change Account Owner to System ID</label>
+        <locationX>842</locationX>
+        <locationY>611</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.OwnerId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Iron_Mountain_Migration_ID.Id</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <description>IMAP Account Owner to System ID</description>
+        <name>IMAP_Account_Owner_to_System_ID</name>
+        <label>IMAP Account Owner to System ID</label>
+        <locationX>314</locationX>
+        <locationY>611</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.OwnerId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>IMAP_Migration_ID.Id</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <description>New Accounts Transfer IMLA Ownership to System ID</description>
+        <name>IMLA_Account_Owner_to_System_ID</name>
+        <label>IMLA Account Owner to System ID</label>
+        <locationX>578</locationX>
+        <locationY>611</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.OwnerId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>IMLA_Migration_ID.Id</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <decisions>
+        <description>Changed from China to Straits GitLab# 32719</description>
+        <name>New_Accont_Transfer_to_System_ID</name>
+        <label>New Accont Transfer  to System ID</label>
+        <locationX>710</locationX>
+        <locationY>395</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Account_transfer_to_Straits_Member</name>
+            <conditionLogic>(1 AND (2 OR 3 OR 4)) OR (5  AND (6 OR 7 OR 8 OR 10 OR 11 OR 12)) OR  (9  AND (6 OR 7 OR 8 OR 10 OR 11 OR 12))</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.RecordType.DeveloperName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Standard_Account</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.BillingCountry</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Hong Kong</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.BillingCountry</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>China</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.BillingCountry</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Macau</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.RecordType.DeveloperName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>QTB_Billing_Account</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.QTB_Legal_Entity_Country__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Hong Kong</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.QTB_Legal_Entity_Country__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>China</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.QTB_Legal_Entity_Country__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Macau</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.RecordType.DeveloperName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Operational_Account</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_country_from_contract_legal_entity.Legal_Country__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Hong Kong</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_country_from_contract_legal_entity.Legal_Country__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>China</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_country_from_contract_legal_entity.Legal_Country__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Macau</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Straits_Member_ID</targetReference>
+            </connector>
+            <label>Account transfer to Straits Member</label>
+        </rules>
+        <rules>
+            <name>New_Accounts_Transfer_IMAP_Ownership_to_System_ID</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Profile.Name</leftValueReference>
+                <operator>StartsWith</operator>
+                <rightValue>
+                    <stringValue>IMAP</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>IMAP_Migration_ID</targetReference>
+            </connector>
+            <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+            <label>New Accounts Transfer IMAP Ownership to System ID</label>
+        </rules>
+        <rules>
+            <name>New_Accounts_Transfer_IMLA_Ownership_to_System_ID</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Profile.Name</leftValueReference>
+                <operator>StartsWith</operator>
+                <rightValue>
+                    <stringValue>IMLA</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>IMLA_Migration_ID</targetReference>
+            </connector>
+            <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+            <label>New Accounts Transfer IMLA Ownership to System ID</label>
+        </rules>
+        <rules>
+            <name>New_Accounts_Transfer_Ownership_to_System_ID</name>
+            <conditionLogic>NOT (1 OR 2 OR 3) AND 4</conditionLogic>
+            <conditions>
+                <leftValueReference>$Profile.Name</leftValueReference>
+                <operator>StartsWith</operator>
+                <rightValue>
+                    <stringValue>IMLTD</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Profile.Name</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>IMAP</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Profile.Name</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>IMLA</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>ISNewRecord</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Iron_Mountain_Migration_ID</targetReference>
+            </connector>
+            <label>New Accounts Transfer Ownership to System ID</label>
+        </rules>
+        <rules>
+            <name>Account_Segment_is_USGS_and_SubSegment_is_Federal_US_or_SLED</name>
+            <conditionLogic>1 AND (2 OR 3) AND 4</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Account_Segment__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>USGS</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Account_Sub_Segment__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Federal-US</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Account_Sub_Segment__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>SLED</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.OwnerId</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>005Hr00000HI0vkIAD</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>US_Government_Member_Id</targetReference>
+            </connector>
+            <label>Account Segment is USGS and SubSegment is Federal-US or SLED</label>
+        </rules>
+    </decisions>
+    <description>This is single flow for 3 workflows whose Account transfer ownership to System ID, #22938
+New Accounts Transfer Ownership to System ID	
+New Accounts Transfer IMAP Ownership to System ID	
+New Accounts Transfer IMLA Ownership to System ID
+
+#32719, added the conditions for all the Straits Member (earlier it was only China)</description>
+    <environments>Default</environments>
+    <formulas>
+        <description>Check whether the record is newly created</description>
+        <name>ISNewRecord</name>
+        <dataType>Boolean</dataType>
+        <expression>ISNEW()</expression>
+    </formulas>
+    <interviewLabel>New Accounts Transfer to S {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>New Accounts Transfer ownership to System ID</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <description>Get the blng__Country__c  value from account contract legal entity field</description>
+        <name>Get_country_from_contract_legal_entity</name>
+        <label>Get country from contract legal entity</label>
+        <locationX>710</locationX>
+        <locationY>287</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>New_Accont_Transfer_to_System_ID</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.QTB_Contract_Entity__c</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>blng__LegalEntity__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>IMAP_Migration_ID</name>
+        <label>IMAP Migration ID</label>
+        <locationX>314</locationX>
+        <locationY>503</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>IMAP_Account_Owner_to_System_ID</targetReference>
+        </connector>
+        <filterLogic>or</filterLogic>
+        <filters>
+            <field>Name</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>IMAP Migration</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Name</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Migration IMAP</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>User</object>
+        <queriedFields>Id</queriedFields>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>IMLA_Migration_ID</name>
+        <label>IMLA Migration ID</label>
+        <locationX>578</locationX>
+        <locationY>503</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>IMLA_Account_Owner_to_System_ID</targetReference>
+        </connector>
+        <filterLogic>or</filterLogic>
+        <filters>
+            <field>Name</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>IMLA Migration</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Name</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Migration IMLA</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>User</object>
+        <queriedFields>Id</queriedFields>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <description>Change Account Owner to System ID</description>
+        <name>Iron_Mountain_Migration_ID</name>
+        <label>Iron Mountain Migration ID</label>
+        <locationX>842</locationX>
+        <locationY>503</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Change_Account_Owner_to_System_ID</targetReference>
+        </connector>
+        <filterLogic>or</filterLogic>
+        <filters>
+            <field>Name</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Iron Mountain Migration</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Name</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Migration Iron Mountain</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>User</object>
+        <queriedFields>Id</queriedFields>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <description>To get the user record of Straits Member : GitLab# 32719</description>
+        <name>Straits_Member_ID</name>
+        <label>Straits Member ID</label>
+        <locationX>50</locationX>
+        <locationY>503</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Account_Owner_to_Straits_Member</targetReference>
+        </connector>
+        <filterLogic>or</filterLogic>
+        <filters>
+            <field>Name</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Straits Member</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Name</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Member Straits</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>User</object>
+        <queriedFields>Id</queriedFields>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>US_Government_Member_Id</name>
+        <label>US Government Member Id</label>
+        <locationX>1106</locationX>
+        <locationY>503</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Account_Owner_to_US_Government_Member</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Name</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>US Government Member</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>User</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <start>
+        <locationX>584</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Get_country_from_contract_legal_entity</targetReference>
+        </connector>
+        <object>Account</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

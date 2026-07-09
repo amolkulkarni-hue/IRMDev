@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Level_2_approvers_are_present_and_active</fullName>
+    <active>true</active>
+    <errorConditionFormula>OR(
+
+AND(
+ISPICKVAL(Deal_Level__c , &quot;2&quot;),
+ISBLANK( Level_1_Approver__c )
+),
+
+NOT( Level_1_Approver__r.IsActive ),
+
+
+AND(
+ISPICKVAL(Deal_Level__c , &quot;2&quot;),
+ISBLANK( Level_1_Approver_Backup__c )
+),
+
+NOT( Level_1_Approver_Backup__r.IsActive ),
+
+
+AND(
+ISPICKVAL(Deal_Level__c , &quot;2&quot;),
+ISBLANK( Level_2_Commercial_Approver__c )
+),
+
+NOT( Level_2_Commercial_Approver__r.IsActive ),
+
+AND(
+ISPICKVAL(Deal_Level__c , &quot;2&quot;),
+ISBLANK( Level_2_Commercial_Approver_Backup__c )
+),
+
+NOT( Level_2_Commercial_Approver_Backup__r.IsActive ),
+
+
+AND(
+ISPICKVAL(Deal_Level__c , &quot;2&quot;),
+ISBLANK( Level_2_Finance_Approver__c )
+),
+
+NOT( Level_2_Finance_Approver__r.IsActive ),
+
+
+AND(
+ISPICKVAL(Deal_Level__c , &quot;2&quot;),
+ISBLANK( Level_2_Finance_Approver_Backup__c )
+),
+
+NOT( Level_2_Finance_Approver_Backup__r.IsActive )
+
+
+)</errorConditionFormula>
+    <errorDisplayField>Account_Segment__c</errorDisplayField>
+    <errorMessage>Please specify Active Users for all Deal Level 1 and 2 approvers (including backups)</errorMessage>
+</ValidationRule>

@@ -1,0 +1,524 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>60.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <decisions>
+        <description>Update the field or sends out an email notification based on the appeal stage</description>
+        <name>Appeal_Stage_Change</name>
+        <label>Appeal Stage Change</label>
+        <locationX>1436</locationX>
+        <locationY>611</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Acknowledge_Receipt_Update</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Appeal_Stage__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Acknowledge receipt</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Acknowledge_Date_Stamp</targetReference>
+            </connector>
+            <label>Acknowledge Receipt Update</label>
+        </rules>
+        <rules>
+            <name>Request_More_Info_Update</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Appeal_Stage__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Request more information</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Request_More_Info_Stamp</targetReference>
+            </connector>
+            <label>Request More Info Update</label>
+        </rules>
+        <rules>
+            <name>Under_Review_Update</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Appeal_Stage__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Under review</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Under_Review_Stamp</targetReference>
+            </connector>
+            <label>Under Review Update</label>
+        </rules>
+        <rules>
+            <name>Already_Being_Processed_Update</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Appeal_Stage__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Already being processed</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Already_Being_Processed_Stamp</targetReference>
+            </connector>
+            <label>Already Being Processed Update</label>
+        </rules>
+        <rules>
+            <name>Accepted_Update</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Appeal_Stage__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Accepted</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Accept_Stamp</targetReference>
+            </connector>
+            <label>Accepted Update</label>
+        </rules>
+        <rules>
+            <name>Denied_Update</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Appeal_Stage__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Denied</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Denied_Stamp</targetReference>
+            </connector>
+            <label>Denied Update</label>
+        </rules>
+        <rules>
+            <name>Appeal_Submission_Counter</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Appeal_Stage__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Resubmitted</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Appeal_Submission_1</targetReference>
+            </connector>
+            <label>Appeal Submission Counter</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Checks if the record is new or the appeal stage is updated. If the appeal stage = acknowledge, checks if the commision rep of finance rep has been assigned</description>
+        <name>Created_or_Updated</name>
+        <label>Created or Updated</label>
+        <locationX>1502</locationX>
+        <locationY>287</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Created</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>New</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Acknowledge_Date_Stamp_1</targetReference>
+            </connector>
+            <label>Created</label>
+        </rules>
+        <rules>
+            <name>Current_Stage_Entered_Date</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Appeal_Stage__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Current_Stage_Stamp</targetReference>
+            </connector>
+            <label>Current Stage Entered Date</label>
+        </rules>
+        <rules>
+            <name>Acknowledge_receipt</name>
+            <conditionLogic>1 AND ((2 AND 3) OR (4 AND 5))</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Appeal_Stage__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Acknowledge receipt</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record__Prior.Assigned_Commission_Rep__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Assigned_Commission_Rep__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record__Prior.Assigned_Finance_Rep__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Assigned_Finance_Rep__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Appeal_Stage_Update</targetReference>
+            </connector>
+            <label>Acknowledge receipt</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>update the stage value when a user is assigned to the appeal</description>
+        <name>Stage_Update_when_Assigned</name>
+        <label>Stage Update when Assigned</label>
+        <locationX>446</locationX>
+        <locationY>827</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Update_Stage</name>
+            <conditionLogic>(1 AND 2) OR (3 AND 4)</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record__Prior.Assigned_Commission_Rep__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Assigned_Commission_Rep__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record__Prior.Assigned_Finance_Rep__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Assigned_Finance_Rep__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Under_Review</targetReference>
+            </connector>
+            <label>Update Stage</label>
+        </rules>
+    </decisions>
+    <description>Based on the Appeal Stage the corresponding fields will get updated.
+(we have merged 10 different workflow rules from Commission Appeal object in this Flow. For reference use the gitlab story #21002)</description>
+    <environments>Default</environments>
+    <formulas>
+        <name>New</name>
+        <dataType>Boolean</dataType>
+        <expression>ISNEW()</expression>
+    </formulas>
+    <formulas>
+        <description>Fetches the current time</description>
+        <name>Now</name>
+        <dataType>DateTime</dataType>
+        <expression>Now()</expression>
+    </formulas>
+    <formulas>
+        <name>SubmissionCounter</name>
+        <dataType>Number</dataType>
+        <expression>{!$Record.Appeal_Submission_Attempts__c} + 1</expression>
+        <scale>2</scale>
+    </formulas>
+    <formulas>
+        <name>Today</name>
+        <dataType>Date</dataType>
+        <expression>TODAY()</expression>
+    </formulas>
+    <interviewLabel>Commission Appeals Stage Update {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Commission Appeals Stage Update</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <description>Get the &quot;Locked Layout&quot; record type for Commission Appeals</description>
+        <name>Record_Type</name>
+        <label>Record Type</label>
+        <locationX>1436</locationX>
+        <locationY>503</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Appeal_Stage_Change</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>SobjectType</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Appeal__c</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Locked_Layout</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>RecordType</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordUpdates>
+        <description>When Appeal Stage is &quot;Accepted&quot;, update accepted date field, move the record type to Locked Layout, send an email alert to Owner and Assigned Commission Rep. Accepted appeals automatically move the payment status to pending.</description>
+        <name>Accept_Stamp</name>
+        <label>Accept Stamp</label>
+        <locationX>1634</locationX>
+        <locationY>719</locationY>
+        <inputAssignments>
+            <field>Accepted_Date__c</field>
+            <value>
+                <elementReference>Now</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Payment_Status__c</field>
+            <value>
+                <stringValue>Pending Commission Accounting Action</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>RecordTypeId</field>
+            <value>
+                <elementReference>Record_Type.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <description>When the appeal stage = acknowledged the corresponding date field is updated and an email alert is generated</description>
+        <name>Acknowledge_Date_Stamp</name>
+        <label>Acknowledge Date Stamp</label>
+        <locationX>446</locationX>
+        <locationY>719</locationY>
+        <connector>
+            <targetReference>Stage_Update_when_Assigned</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>Acknowledged_Date__c</field>
+            <value>
+                <elementReference>Now</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <description>Update &apos;Acknowledged Date&apos; field with current date and time</description>
+        <name>Acknowledge_Date_Stamp_1</name>
+        <label>Acknowledge Date Stamp</label>
+        <locationX>50</locationX>
+        <locationY>395</locationY>
+        <inputAssignments>
+            <field>Acknowledged_Date__c</field>
+            <value>
+                <elementReference>Now</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <description>When an Appeal is marked &quot;Already Being Processed&quot; updates the Already Being Processed Date field, send an email alert to the owner and move the record type to &apos;Locked Layout&apos;</description>
+        <name>Already_Being_Processed_Stamp</name>
+        <label>Already Being Processed Stamp</label>
+        <locationX>1370</locationX>
+        <locationY>719</locationY>
+        <inputAssignments>
+            <field>Already_Being_Processed_Date__c</field>
+            <value>
+                <elementReference>Now</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>RecordTypeId</field>
+            <value>
+                <elementReference>Record_Type.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <description>Moves appeal stage to under review when a commissions rep or finance rep is assigned</description>
+        <name>Appeal_Stage_Update</name>
+        <label>Appeal Stage Update</label>
+        <locationX>2690</locationX>
+        <locationY>395</locationY>
+        <inputAssignments>
+            <field>Appeal_Stage__c</field>
+            <value>
+                <stringValue>Under review</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Current_Stage_Entered_Date__c</field>
+            <value>
+                <elementReference>Today</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Under_Review_Date__c</field>
+            <value>
+                <elementReference>Now</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <description>Used for resubmit path and use in reference ID.</description>
+        <name>Appeal_Submission_1</name>
+        <label>Appeal Submission +1</label>
+        <locationX>2162</locationX>
+        <locationY>719</locationY>
+        <inputAssignments>
+            <field>Appeal_Submission_Attempts__c</field>
+            <value>
+                <elementReference>SubmissionCounter</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <description>update current stage entered date when the stage changes</description>
+        <name>Current_Stage_Stamp</name>
+        <label>Current Stage Stamp</label>
+        <locationX>1436</locationX>
+        <locationY>395</locationY>
+        <connector>
+            <targetReference>Record_Type</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>Current_Stage_Entered_Date__c</field>
+            <value>
+                <elementReference>Today</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Denied_Stamp</name>
+        <label>Denied Stamp</label>
+        <locationX>1898</locationX>
+        <locationY>719</locationY>
+        <inputAssignments>
+            <field>Denied_Date__c</field>
+            <value>
+                <elementReference>Now</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>RecordTypeId</field>
+            <value>
+                <elementReference>Record_Type.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <description>Updates the Information Request Date field and sends an email alert to the owner when the Appeal stage is  &quot;Request more information&quot;.</description>
+        <name>Request_More_Info_Stamp</name>
+        <label>Request More Info Stamp</label>
+        <locationX>842</locationX>
+        <locationY>719</locationY>
+        <inputAssignments>
+            <field>Information_Request_Date__c</field>
+            <value>
+                <elementReference>Now</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Under_Review</name>
+        <label>Under Review</label>
+        <locationX>314</locationX>
+        <locationY>935</locationY>
+        <inputAssignments>
+            <field>Appeal_Stage__c</field>
+            <value>
+                <stringValue>Under review</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Under_Review_Date__c</field>
+            <value>
+                <elementReference>Now</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <description>Updates the Under Review Date field when Appeal Stage is &quot;Under Review&quot;.</description>
+        <name>Under_Review_Stamp</name>
+        <label>Under Review Stamp</label>
+        <locationX>1106</locationX>
+        <locationY>719</locationY>
+        <inputAssignments>
+            <field>Under_Review_Date__c</field>
+            <value>
+                <elementReference>Now</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>1376</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Created_or_Updated</targetReference>
+        </connector>
+        <filterFormula>OR( ISNEW(), ISCHANGED( {!$Record.Appeal_Stage__c} ) , ISPICKVAL({!$Record.Appeal_Stage__c}, &apos;Acknowledge receipt&apos;))</filterFormula>
+        <object>Appeal__c</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

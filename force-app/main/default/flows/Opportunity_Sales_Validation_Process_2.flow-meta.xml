@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>SV_Status_Open_40Day</name>
+        <label>SV Status Open 40Day</label>
+        <locationX>176</locationX>
+        <locationY>276</locationY>
+        <actionName>Opportunity.SV_Status_Open_40Days</actionName>
+        <actionType>emailAlert</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>Opportunity.SV_Status_Open_40Days</nameSegment>
+    </actionCalls>
+    <apiVersion>60.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <description>Migrated from the Opportunity Sales Validation Process process using multiple criteria.
+This process builder is used to track the SV changed date/time and send emails at different SV values</description>
+    <environments>Default</environments>
+    <label>Opportunity Sales Validation Process_2</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <name>SV_Status_Open_51Day</name>
+        <label>SV Status Open 51Day</label>
+        <locationX>440</locationX>
+        <locationY>276</locationY>
+        <inputAssignments>
+            <field>SV_Status__c</field>
+            <value>
+                <stringValue>Failed</stringValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>SV_Status__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Open</stringValue>
+            </value>
+        </filters>
+        <object>Opportunity</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <scheduledPaths>
+            <name>SV_Status_Open_40Days</name>
+            <connector>
+                <targetReference>SV_Status_Open_40Day</targetReference>
+            </connector>
+            <label>SV Status Open 40Days</label>
+            <offsetNumber>40</offsetNumber>
+            <offsetUnit>Days</offsetUnit>
+            <recordField>SV_Status_Last_Changed__c</recordField>
+            <timeSource>RecordField</timeSource>
+        </scheduledPaths>
+        <scheduledPaths>
+            <name>SV_Status_Open_51Days</name>
+            <connector>
+                <targetReference>SV_Status_Open_51Day</targetReference>
+            </connector>
+            <label>SV Status Open 51Days</label>
+            <offsetNumber>51</offsetNumber>
+            <offsetUnit>Days</offsetUnit>
+            <recordField>SV_Status_Last_Changed__c</recordField>
+            <timeSource>RecordField</timeSource>
+        </scheduledPaths>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

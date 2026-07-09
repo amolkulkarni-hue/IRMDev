@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>QTB_Bank_Detail_Description__c</fullName>
+    <description>This field is the combination of Name + Number + Currency and will be shown on the Billing Account creation</description>
+    <externalId>false</externalId>
+    <formula>Name + &quot; | &quot; + QTB_Bank_Account_Number__c + &quot; | &quot; +  TEXT(CurrencyIsoCode)</formula>
+    <label>Bank Detail Description</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

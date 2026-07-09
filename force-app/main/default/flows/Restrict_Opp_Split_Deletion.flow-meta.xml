@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>61.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <customErrors>
+        <name>Restrict_Opp_Split_Deletion</name>
+        <label>Restrict Opp Split Deletion</label>
+        <locationX>659</locationX>
+        <locationY>331</locationY>
+        <customErrorMessages>
+            <errorMessage>Opportunity Split cannot be updated or deleted on a Closed Opportunity. Need Help? Please contact your Business Partner.</errorMessage>
+            <isFieldError>false</isFieldError>
+        </customErrorMessages>
+    </customErrors>
+    <description>#24396 : Opp Governance: Lock Opp Split &amp; Opp Team in Stage 5/6/7 w/ special permissions - RITM0714831
+#25042: Add bypass logic. User with Update Splits and Team members on Closed Oppty	permission set/ Update_Fields_on_a_Closed_Opportunity permission set group will be bypassed</description>
+    <environments>Default</environments>
+    <interviewLabel>Restrict Opp Split Deletion {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Restrict Opp Split Deletion</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>373</locationX>
+        <locationY>48</locationY>
+        <connector>
+            <targetReference>Restrict_Opp_Split_Deletion</targetReference>
+        </connector>
+        <filterFormula>AND(
+NOT({!$Profile.Name} == &apos;IM_Custom Sys Admin&apos;),
+OR(ISPICKVAL({!$Record.Opportunity.StageName}, &apos;5 - Signed/PO in&apos;),
+ISPICKVAL({!$Record.Opportunity.StageName}, &apos;6 - Setup&apos;),
+ISPICKVAL({!$Record.Opportunity.StageName}, &apos;7 - Closed&apos;)),
+NOT({!$Permission.Update_Splits_and_Team_members_on_Closed_Oppty})
+)</filterFormula>
+        <object>OpportunitySplit</object>
+        <recordTriggerType>Delete</recordTriggerType>
+        <triggerType>RecordBeforeDelete</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

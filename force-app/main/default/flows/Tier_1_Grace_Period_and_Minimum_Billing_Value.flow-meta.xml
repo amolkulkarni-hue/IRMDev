@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>60.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <name>Assign_Grace_Period_and_Minimum_Billing</name>
+        <label>Assign Grace Period and Minimum % Billing</label>
+        <locationX>50</locationX>
+        <locationY>695</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Grace_Period__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Not Applicable</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Minimum_Billing__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Not Applicable</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>Assign_Value_to_Manager_Approval_Needed_Hidden</name>
+        <label>Assign Value to Manager Approval Needed (Hidden)</label>
+        <locationX>182</locationX>
+        <locationY>395</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Manager_Approval_Needed_Hidden__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>ManagerApprovalNeeded</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Check_Tier_Level_Grace_Period_and_Minimum_Billing_Values</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Copy_1_of_Assign_Grace_Period_and_Minimum_Billing</name>
+        <label>Assign Grace Period and Minimum % Billing</label>
+        <locationX>314</locationX>
+        <locationY>695</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Grace_Period__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>3</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Minimum_Billing__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>80</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <decisions>
+        <name>Check_Manager_Approval_Needed_field_value</name>
+        <label>Check Manager Approval Needed field value</label>
+        <locationX>314</locationX>
+        <locationY>287</locationY>
+        <defaultConnector>
+            <targetReference>Check_Tier_Level_Grace_Period_and_Minimum_Billing_Values</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Equals_to_Not_Null</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>ManagerApprovalNeeded</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Manager_Approval_Needed_Hidden__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>ManagerApprovalNeeded</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_Value_to_Manager_Approval_Needed_Hidden</targetReference>
+            </connector>
+            <label>Equals to Not Null Value</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_Tier_Level_Grace_Period_and_Minimum_Billing_Values</name>
+        <label>Check Tier Level,Grace Period and Minimum % Billing Values</label>
+        <locationX>314</locationX>
+        <locationY>587</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Equals_to_Tier1</name>
+            <conditionLogic>1 AND 4 AND 5 AND (2 OR 3)</conditionLogic>
+            <conditions>
+                <leftValueReference>TierFormula</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Tier 1</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Grace_Period__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Not Applicable</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Minimum_Billing__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Not Applicable</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>New Deal</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Service_Type__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Storage A la carte</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_Grace_Period_and_Minimum_Billing</targetReference>
+            </connector>
+            <label>Equals to Tier1</label>
+        </rules>
+        <rules>
+            <name>Equals_to_Tier2</name>
+            <conditionLogic>1 AND 14 AND 15 AND ((2 OR 3 OR 4 OR 5 OR 6 OR 7) OR ( 8 OR 9 OR 10 OR 11 OR 12 OR 13))</conditionLogic>
+            <conditions>
+                <leftValueReference>TierFormula</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Tier 2</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Grace_Period__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>1</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Grace_Period__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>2</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Grace_Period__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>3</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Grace_Period__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>4</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Grace_Period__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>5</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Grace_Period__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>6</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Minimum_Billing__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>50</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Minimum_Billing__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>55</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Minimum_Billing__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>60</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Minimum_Billing__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>70</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Minimum_Billing__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>75</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Minimum_Billing__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>80</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>New Deal</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Service_Type__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Storage A la carte</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Copy_1_of_Assign_Grace_Period_and_Minimum_Billing</targetReference>
+            </connector>
+            <label>Equals to Tier2</label>
+        </rules>
+    </decisions>
+    <description>Merged Tier 2 Grace Period and Minimum % Billing Value 
+Merged Update Manager Approval Needed Hidden with Manager Approval Needed? flows functionality into this flow as part of optimization US #35880</description>
+    <environments>Default</environments>
+    <formulas>
+        <name>ManagerApprovalNeeded</name>
+        <dataType>String</dataType>
+        <expression>IF(CONTAINS(TEXT({!$Record.Contract_Type__c}), &apos;Value&apos;),
+    IF( ISNUMBER(SUBSTITUTE(TEXT({!$Record.Services_Discount__c} ),&apos;%&apos;,&apos;&apos;)),
+        IF( VALUE(SUBSTITUTE(TEXT( {!$Record.Services_Discount__c} ),&apos;%&apos;,&apos;&apos;)) &gt; 31,
+            &apos;Yes&apos;,
+            &apos;No&apos;
+        ),
+        &apos;No&apos;
+    ),
+    IF( ISNUMBER(SUBSTITUTE(TEXT({!$Record.Storage_Discount__c}),&apos;%&apos;,&apos;&apos;)),
+        IF( VALUE(SUBSTITUTE(TEXT({!$Record.Storage_Discount__c}),&apos;%&apos;,&apos;&apos;)) &gt; 56,
+            &apos;Yes&apos;,
+            IF( ISNUMBER(SUBSTITUTE(TEXT( {!$Record.Services_Discount__c} ),&apos;%&apos;,&apos;&apos;)),
+                IF( VALUE(SUBSTITUTE(TEXT( {!$Record.Services_Discount__c} ),&apos;%&apos;,&apos;&apos;)) &gt; 56,
+                    &apos;Yes&apos;,
+                    &apos;No&apos;
+                ),
+                &apos;No&apos;
+            )
+        ),
+        IF( ISNUMBER(SUBSTITUTE(TEXT( {!$Record.Services_Discount__c} ),&apos;%&apos;,&apos;&apos;)),
+			IF( VALUE(SUBSTITUTE(TEXT( {!$Record.Services_Discount__c} ),&apos;%&apos;,&apos;&apos;)) &gt; 56,
+				&apos;Yes&apos;,
+				&apos;No&apos;
+			),
+			&apos;No&apos;
+		)
+    )
+)</expression>
+    </formulas>
+    <formulas>
+        <name>TierFormula</name>
+        <dataType>String</dataType>
+        <expression>IF( {!TotalNewStorageVolumeFormula} &gt; 500, &apos;Tier 2&apos;, &apos;Tier 1&apos;)</expression>
+    </formulas>
+    <formulas>
+        <name>TotalNewStorageVolumeFormula</name>
+        <dataType>Number</dataType>
+        <expression>{!$Record.New_Storage_Volume__c} + {!$Record.New_Open_Shelf_Storage_Volume__c}</expression>
+        <scale>2</scale>
+    </formulas>
+    <interviewLabel>Tier 1 Grace Period and Minimum % Billing Value {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Tier1 and Tier2 Grace Period,Minimum % Billing Value and Update Manager Approval Needed Hidden with Manager Approval Needed?</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>188</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Check_Manager_Approval_Needed_field_value</targetReference>
+        </connector>
+        <filterFormula>OR (
+   AND (
+     OR(ISNEW(), ISCHANGED({!$Record.Service_Type__c})),
+      ISPICKVAL({!$Record.Type}, &apos;New Deal&apos;),
+      ISPICKVAL({!$Record.Service_Type__c}, &apos;Storage A la carte&apos;)
+         ),
+NOT(ISNULL({!$Record.Manager_Approval_Needed__c}))
+)</filterFormula>
+        <object>Opportunity</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

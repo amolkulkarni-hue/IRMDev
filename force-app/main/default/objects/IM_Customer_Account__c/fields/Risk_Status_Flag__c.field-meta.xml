@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Risk_Status_Flag__c</fullName>
+    <description>DEPRECATED</description>
+    <externalId>false</externalId>
+    <formula>IF(
+ Risk_Status__c = &quot;At Risk&quot;, IMAGE(&quot;/img/msg_icons/error16.png&quot;, &quot;Red&quot;),
+
+IF(
+  Risk_Status__c = &quot;Terminated&quot; &amp;&amp; ISPICKVAL(Termination_Impact__c , &quot;Terminated- No Risk&quot;),  IMAGE(&quot;/img/msg_icons/confirm16.png&quot;, &quot;Green&quot;),
+IF(
+  Risk_Status__c = &quot;Terminated&quot; &amp;&amp; ISPICKVAL(Termination_Impact__c , &quot;Terminated- Local Risk Only&quot;), IMAGE(&quot;/img/msg_icons/warning16.png&quot;, &quot;Yellow&quot;),
+IF(
+  Risk_Status__c = &quot;Terminated&quot; &amp;&amp; ISPICKVAL(Termination_Impact__c , &quot;Terminated- Entire Account At Risk&quot;), IMAGE(&quot;/img/msg_icons/error16.png&quot;, &quot;Red&quot;),
+IF(
+  Risk_Status__c = &quot;Not At Risk&quot;, IMAGE(&quot;/img/msg_icons/confirm16.png&quot;, &quot;Green&quot;),
+IF(
+  Risk_Status__c = &quot;Retained&quot;, IMAGE(&quot;/img/msg_icons/confirm16.png&quot;, &quot;Green&quot;),
+
+IF(
+  Risk_Status__c = &quot;&quot;, IMAGE(&quot;/img/msg_icons/confirm16.png&quot;, &quot;Green&quot;),
+
+&quot;&quot;)
+)
+)
+)
+)
+)
+)</formula>
+    <inlineHelpText>Red- At Risk or Terminated (Entire Account At Risk)
+Yellow- Terminated (Local Risk Only) 
+Green- Not At Risk ,Retained or Terminated ( No Risk)</inlineHelpText>
+    <label>Risk Status Flag (DO NOT USE)</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

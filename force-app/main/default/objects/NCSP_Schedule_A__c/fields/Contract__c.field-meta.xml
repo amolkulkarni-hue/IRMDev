@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Contract__c</fullName>
+    <deleteConstraint>Restrict</deleteConstraint>
+    <description>Created as part of NCSP optimization project to store Schedule A data this will be used in integration to create records in SKP #Gitlab 23164</description>
+    <label>Contract</label>
+    <lookupFilter>
+        <active>false</active>
+        <booleanFilter>1</booleanFilter>
+        <filterItems>
+            <field>Contract.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>IM Contract</value>
+        </filterItems>
+        <isOptional>false</isOptional>
+    </lookupFilter>
+    <referenceTo>Contract</referenceTo>
+    <relationshipLabel>NCSP Schedule As</relationshipLabel>
+    <relationshipName>NCSP_Schedule_As</relationshipName>
+    <required>true</required>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

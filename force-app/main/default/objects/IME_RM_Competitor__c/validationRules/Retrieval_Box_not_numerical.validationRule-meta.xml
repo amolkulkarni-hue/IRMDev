@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Retrieval_Box_not_numerical</fullName>
+    <active>true</active>
+    <description>Only numerical characters, periods (.) and dashes (-) are valid in the pricing fields.</description>
+    <errorConditionFormula>AND(NOT( Unknown_Pricing__c = True),Retrieval_Box__c&lt;&gt;&quot;-&quot;,NOT(ISNUMBER(Retrieval_Box__c)))</errorConditionFormula>
+    <errorDisplayField>Retrieval_Box__c</errorDisplayField>
+    <errorMessage>Only numerical characters, periods (.) and dashes (-) are valid in the pricing fields.</errorMessage>
+</ValidationRule>

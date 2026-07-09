@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>OptionForRecordsPerPageValidation</fullName>
+    <active>true</active>
+    <description>Options for Records/Page should be filled if Data Table Type is &quot;Paginated&quot;, otherwise should be left blank.</description>
+    <errorConditionFormula>(
+				ISPICKVAL(Data_Table_Load_Type__c, &apos;Paginated&apos;) &amp;&amp;
+    ISBLANK(Options_For_Records_Page__c)
+)
+||
+(
+				!ISPICKVAL(Data_Table_Load_Type__c, &apos;Paginated&apos;) &amp;&amp;
+    !ISBLANK(Options_For_Records_Page__c)
+)</errorConditionFormula>
+    <errorMessage>Options for Records/Page should be filled if Data Table Type is &quot;Paginated&quot;, otherwise should be left blank.</errorMessage>
+</ValidationRule>

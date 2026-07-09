@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>57.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <description>This flow is to update the Global Service Case Status to Assigned when the Agent accepts the case via Omni Channel.
+Extended the functionality for the &quot;CAC Executive Escalations&quot; Record Type.#27299</description>
+    <environments>Default</environments>
+    <interviewLabel>GSC Agent Work - After Update Flow {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>GSC Agent Work - After Update Flow</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <description>Update Case Status to Assigned when Case has been accepted by Agent via Omni Channel.
+Extended the functionality for the &quot;CAC Executive Escalations&quot; Record Type.#27299</description>
+        <name>Update_Case_Status</name>
+        <label>Update Case Status</label>
+        <locationX>176</locationX>
+        <locationY>323</locationY>
+        <filterLogic>1 AND (2 OR 3)</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.WorkItemId</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>RecordType_Name__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Global Service Case</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>RecordType_Name__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>CAC Executive Escalations</stringValue>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Status</field>
+            <value>
+                <stringValue>Assigned</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
+    </recordUpdates>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Update_Case_Status</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>WorkItemId</field>
+            <operator>StartsWith</operator>
+            <value>
+                <stringValue>500</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>AcceptDateTime</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>AcceptDateTime</field>
+            <operator>IsChanged</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <object>AgentWork</object>
+        <recordTriggerType>Update</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

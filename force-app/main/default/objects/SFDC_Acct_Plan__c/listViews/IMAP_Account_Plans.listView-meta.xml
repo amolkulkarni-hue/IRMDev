@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IMAP_Account_Plans</fullName>
+    <columns>NAME</columns>
+    <columns>Account__c</columns>
+    <columns>Planning_Year__c</columns>
+    <columns>Plan_Status__c</columns>
+    <columns>Account_Type__c</columns>
+    <columns>Account_Country__c</columns>
+    <columns>OWNER.FIRST_NAME</columns>
+    <columns>OWNER.LAST_NAME</columns>
+    <columns>LAST_UPDATE</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Owner_Role__c</field>
+        <operation>contains</operation>
+        <value>IMAP</value>
+    </filters>
+    <label>IMAP Account Plans</label>
+    <language>en_US</language>
+</ListView>

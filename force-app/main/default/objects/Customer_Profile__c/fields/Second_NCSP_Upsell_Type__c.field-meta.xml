@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Second_NCSP_Upsell_Type__c</fullName>
+    <inlineHelpText>Upsell Type related to Second Service Line</inlineHelpText>
+    <label>Second NCSP Upsell Type</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>Second_Service_Line__c</controllingField>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>CloudBlue</fullName>
+                <default>false</default>
+                <label>CloudBlue</label>
+            </value>
+            <value>
+                <fullName>Inventory Transfer</fullName>
+                <default>false</default>
+                <label>Inventory Transfer</label>
+            </value>
+            <value>
+                <fullName>Media Destruction</fullName>
+                <default>false</default>
+                <label>Media Destruction</label>
+            </value>
+            <value>
+                <fullName>Paper Destruction</fullName>
+                <default>false</default>
+                <label>Paper Destruction</label>
+            </value>
+            <value>
+                <fullName>Service Frequency</fullName>
+                <default>false</default>
+                <label>Service Frequency</label>
+            </value>
+            <value>
+                <fullName>Storage Increase</fullName>
+                <default>false</default>
+                <label>Storage Increase</label>
+            </value>
+            <value>
+                <fullName>Supply Increase</fullName>
+                <default>false</default>
+                <label>Supply Increase</label>
+            </value>
+            <value>
+                <fullName>Library Move</fullName>
+                <default>false</default>
+                <label>Library Move</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>One Time Shred</controllingFieldValue>
+            <valueName>Paper Destruction</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>RM</controllingFieldValue>
+            <valueName>Inventory Transfer</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>RM</controllingFieldValue>
+            <valueName>Storage Increase</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Shred</controllingFieldValue>
+            <valueName>Service Frequency</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Shred</controllingFieldValue>
+            <valueName>Supply Increase</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

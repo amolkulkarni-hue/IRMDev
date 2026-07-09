@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Channel__c</fullName>
+    <description>The channel through which the work-item is received</description>
+    <inlineHelpText>The channel through which the work-item is received</inlineHelpText>
+    <label>Channel</label>
+    <required>true</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>LiveChatTranscript</fullName>
+                <default>false</default>
+                <label>Chat</label>
+            </value>
+            <value>
+                <fullName>MessagingSession</fullName>
+                <default>false</default>
+                <label>Messaging</label>
+            </value>
+            <value>
+                <fullName>VoiceCall</fullName>
+                <default>false</default>
+                <label>Voice</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

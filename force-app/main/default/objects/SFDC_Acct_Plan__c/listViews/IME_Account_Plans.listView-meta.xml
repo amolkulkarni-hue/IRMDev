@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IME_Account_Plans</fullName>
+    <columns>NAME</columns>
+    <columns>Account__c</columns>
+    <columns>Planning_Year__c</columns>
+    <columns>Plan_Status__c</columns>
+    <columns>Account_Type__c</columns>
+    <columns>Account_Country__c</columns>
+    <columns>OWNER.FIRST_NAME</columns>
+    <columns>OWNER.LAST_NAME</columns>
+    <columns>LAST_UPDATE</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>RECORDTYPE</field>
+        <operation>notEqual</operation>
+        <value>SFDC_Acct_Plan__c.IMNA_Account_National_Vertical_Plan</value>
+    </filters>
+    <filters>
+        <field>LAST_UPDATE</field>
+        <operation>greaterThan</operation>
+        <value>1/1/2014 12:00 AM</value>
+    </filters>
+    <label>IME Account Plans</label>
+    <language>en_US</language>
+    <sharedTo>
+        <roleAndSubordinates>ESA</roleAndSubordinates>
+    </sharedTo>
+</ListView>

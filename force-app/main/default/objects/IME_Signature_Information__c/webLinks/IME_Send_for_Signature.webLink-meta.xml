@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebLink xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IME_Send_for_Signature</fullName>
+    <availability>online</availability>
+    <displayType>button</displayType>
+    <linkType>javascript</linkType>
+    <masterLabel>Send for Signature</masterLabel>
+    <openType>onClickJavaScript</openType>
+    <protected>false</protected>
+    <url>{!REQUIRESCRIPT(&quot;/apex/dsfs__DocuSign_JavaScript&quot;)} 
+{!REQUIRESCRIPT(&quot;/soap/ajax/25.0/connection.js&quot;)} 
+{!REQUIRESCRIPT(&quot;/soap/ajax/30.0/apex.js&quot;)} 
+
+//**Note change made by Mark Jennison 16/10 to line &apos;if(prod==true)&apos; **/ 
+//**Note change made by Vinutha Iyengar Nov/17, case#06462026 to check for attachment count if standard contract **/ 
+//**Note change made by Amarendra Nallamalli Jul/18, case#07945998 UK Non-Standard Contracting Process with DocuSign **/ 
+//** Note change made by Vinutha Iyengar Aug/19, case# 08448469 Updates made for DocuSign version 7 and above 
+
+//********* Option Declarations (Do not modify )*********// 
+var RC = &apos;&apos;;var RSL=&apos;&apos;;var RSRO=&apos;&apos;;var RROS=&apos;&apos;;var CCRM=&apos;&apos;;var CCTM=&apos;&apos;;var CCNM=&apos;&apos;;var CRCL=&apos;&apos;; var CRL=&apos;&apos;;var OCO=&apos;&apos;;var DST=&apos;&apos;;var LA=&apos;&apos;;var LF=&apos;&apos;;var CEM=&apos;&apos;;var CES=&apos;&apos;;var STB=&apos;&apos;;var SSB=&apos;&apos;;var SES=&apos;&apos;;var SEM=&apos;&apos;;var SRS=&apos;&apos;;var SCS =&apos;&apos;;var RES=&apos;&apos;; 
+
+//*************************************************// 
+
+//************** Signer Logic ***************// 
+var financialController = &apos;&apos;; 
+var internalSigner = &apos;&apos;; 
+var customerSigners = &apos;&apos;; 
+var internalOrder = 0; 
+var ccSigners = &apos;&apos;; 
+var totalAttachments = 0; 
+var intSigningOrder = 0; 
+var custSigningOrder =0; 
+var CustomerSignFirst; 
+
+/*case#07945998 - Based on IME_Signing_Order__c value, the order of signing will change on the contract. 
+If IM signs first - Order of signing - internalSigner,customerSigners,ccSigner 
+Client signs first - Order of signing - customerSigners,internalSigner,ccSigner 
+*/ 
+if(&apos;{!IME_Signature_Information__c.IME_Signing_Order__c}&apos; == &apos;IM signs first&apos;){ 
+CustomerSignFirst = false; 
+intSigningOrder++; 
+custSigningOrder++; 
+}else if(&apos;{!IME_Signature_Information__c.IME_Signing_Order__c}&apos; == &apos;Client signs first&apos;){ 
+CustomerSignFirst = true; 
+} 
+
+
+
+var debug = false;//** changed by M Jennison 10/10 **// 
+var prod = true; 
+
+
+// Query for customer signers 
+var contactResult = sforce.connection.query(&quot;SELECT IME_Contact__r.Name, IME_Contact__r.Email, IME_Routing_Order__c FROM IME_Signatory_Contact__c WHERE IME_DocuSign_Contract_Envelope__c = &apos;{!IME_Signature_Information__c.Id}&apos; ORDER BY IME_Routing_Order__c ASC&quot;); 
+var contactRecords = contactResult.getArray(&quot;records&quot;); 
+
+// Construct Customer Signer CRL 
+for(var i=0;i&lt;contactRecords.length;i++){ 
+custSigningOrder++; 
+customerSigners = customerSigners+&apos;Email~&apos;+contactRecords[i].IME_Contact__r.Email+&apos;;LastName~&apos;+contactRecords[i].IME_Contact__r.Name+&apos;;Role~Signer &apos;+(i+1)+&apos;;RoutingOrder~&apos;+custSigningOrder+&apos;,&apos;; 
+} 
+
+
+/*Case # 06462026 - Below code is used to change the Order of attachments and 
+for Case # 07945998 - Added condition like below oder of attachment code will only be applicable for standard contract */ 
+var standardContractResult = sforce.connection.query(&quot;select IME_Contract__r.Standard_Contract__c from IME_Signature_Information__c where IME_Contract__c = &apos;{!Contract.Id}&apos;&quot;); 
+
+var standardcontractrecords = standardContractResult.getArray(&quot;records&quot;); 
+if(standardcontractrecords[0].IME_Contract__r.Standard_Contract__c == &apos;true&apos;){ 
+
+var contractAttachment = sforce.apex.execute(&quot;updateContractOrder&quot;,&quot;updateContractFileOrder&quot;,{signatureId:&quot;{!IME_Signature_Information__c.Id}&quot;}); 
+} 
+
+// Below code changed by M Jennison 6/3/2017 Case 06380979 
+
+// Construct Internal Signer CRL 
+if(CustomerSignFirst)intSigningOrder=custSigningOrder+1; 
+if(CustomerSignFirst) 
+{ 
+var ccSigingOrder=intSigningOrder+1; 
+} 
+else 
+{ 
+var ccSigingOrder=custSigningOrder+1; 
+} 
+
+if(prod==false) 
+{ 
+if( &apos;{!IME_Signature_Information__c.IME_Internal_Signatories__c}&apos; == &apos;Default Signatory&apos; ) { 
+internalSigner = &apos;SigningGroup~UKIDefault_Test;Role~Internal Signer;RoutingOrder~&apos;+intSigningOrder; 
+} else if ( &apos;{!IME_Signature_Information__c.IME_Internal_Signatories__c}&apos; == &apos;High Level Signatory&apos; ) { 
+internalSigner = &apos;SigningGroup~UKIHighLevel_Test;Role~Internal Signer;RoutingOrder~&apos;+intSigningOrder; 
+} else if ( &apos;{!IME_Signature_Information__c.IME_Internal_Signatories__c}&apos; == &apos;Novation or NDA&apos; ) { 
+internalSigner = &apos;SigningGroup~UKINovNDA_Test;Role~Internal Signer;RoutingOrder~&apos;+intSigningOrder; 
+} 
+// Construct Carbon Copy Signer 
+ccSigner= &apos;,SigningGroup~UKICCRecipients_Test;Role~CC Signer;RoutingOrder~&apos;+ccSigingOrder; 
+} 
+else 
+{ 
+if( &apos;{!IME_Signature_Information__c.IME_Internal_Signatories__c}&apos; == &apos;Default Signatory&apos; ) { 
+internalSigner = &apos;SigningGroup~UKIDefault;Role~Internal Signer;RoutingOrder~&apos;+intSigningOrder; 
+} else if ( &apos;{!IME_Signature_Information__c.IME_Internal_Signatories__c}&apos; == &apos;High Level Signatory&apos; ) { 
+internalSigner = &apos;SigningGroup~UKIHighLevel;Role~Internal Signer;RoutingOrder~&apos;+intSigningOrder; 
+} else if ( &apos;{!IME_Signature_Information__c.IME_Internal_Signatories__c}&apos; == &apos;Novation or NDA&apos; ) { 
+internalSigner = &apos;SigningGroup~UKINovNDA;Role~Internal Signer;RoutingOrder~&apos;+intSigningOrder; 
+} 
+// Construct Carbon Copy Signer 
+ccSigner= &apos;,SigningGroup~UKICCRecipients;Role~CC Signer;RoutingOrder~&apos;+ccSigingOrder; 
+} 
+
+
+// Above code changed by M Jennison 6/3/2017 Case 06380979 
+
+//*************************************************// 
+
+// Custom Contact Role Map (default config role) 
+CCRM = &apos;Signer 1~Signer 5;Signer 2~Signer 6;Signer 3~Signer 7;Signer 4~Signer 8;Financial Controller~Financial Controller;Internal Signer~Internal Signer;CC Signer~CC Signer&apos;; 
+
+// Custom Contact Type Map (default Signer) 
+CCTM = &apos;CC Signer~Carbon Copy&apos;; 
+
+// Custom Recipient List 
+//CRL = financialController + customerSigners + internalSigner + ccSigner; 
+
+if(&apos;{!IME_Signature_Information__c.IME_Signing_Order__c}&apos; == &apos;IM signs first&apos;){ 
+CRL = internalSigner +&apos;,&apos;+ customerSigners +&apos;,&apos;+ ccSigner; 
+}else if(&apos;{!IME_Signature_Information__c.IME_Signing_Order__c}&apos; == &apos;Client signs first&apos;){ 
+CRL = customerSigners + internalSigner +&apos;,&apos;+ ccSigner; 
+} 
+
+/*case#07945998 UK Non-Standard Contracting Process with DocuSign. 
+OCO tag is setting based on value Contract_Type__c field 
+If Contract_Type__c field is IM Non Standard or Customer setting OCO tag to &apos;tag&apos;,If IM Standard OCO tag setting to &apos;Send&apos;*/ 
+var ContractResult = sforce.connection.query(&quot;select IME_Contract__r.Contract_Type__c from IME_Signature_Information__c where IME_Contract__c = &apos;{!Contract.Id}&apos;&quot;); 
+
+var contractrecords = ContractResult.getArray(&quot;records&quot;); 
+// One Click Option (default edit envelope screen) 
+if(prod==false) //** Changed by Mark Jennison 15/10 from &apos;false&apos; to &apos;true&apos; to avoid DS screen in testing. This value should be &apos;false&apos; in Production **/ 
+{ 
+if(contractrecords[0].IME_Contract__r.Contract_Type__c == &apos;IM Non Standard&apos; || contractrecords[0].IME_Contract__r.Contract_Type__c == &apos;Customer&apos;) 
+{ 
+OCO = &apos;Tag&apos;; //&apos;Tag&apos; to be used for non-Production and True for Non-standard contract 
+} 
+else 
+{ 
+OCO = &apos;Tag&apos;; //&apos;Tag&apos; to be used for non-Production 
+} 
+} 
+else 
+{ 
+if(contractrecords[0].IME_Contract__r.Contract_Type__c == &apos;IM Non Standard&apos; || contractrecords[0].IME_Contract__r.Contract_Type__c == &apos;Customer&apos;) 
+{ 
+OCO = &apos;Tag&apos;; //&apos;Tag&apos; used for Non-standard contract 
+} 
+else 
+{ 
+OCO = &apos;Send&apos;; 
+} 
+} 
+
+// Load Attachments (default on) 
+LA = &apos;&apos;; 
+
+// Custom Email Message (default in config) 
+CEM = &apos;{!URLENCODE(JSENCODE(IME_Signature_Information__c.IME_Email_Message__c))}&apos;.replace(/%0D%0A/g, &apos;\\n&apos;); 
+
+// Custom Email Subject (default in config) 
+CES = &apos;{!JSENCODE( IME_Signature_Information__c.IME_Email_Subject__c )}&apos;; 
+
+// Reminder and Expiration Settings 
+RES = &apos;{!IME_Signature_Information__c.IME_EnableReminders__c},{!IME_Signature_Information__c.IME_ReminderDays__c},{!IME_Signature_Information__c.IME_ReminderRepeatDays__c},{!IME_Signature_Information__c.IME_ExpireVoid__c},{!IME_Signature_Information__c.IME_ExpireNDays__c},{!IME_Signature_Information__c.IME_ExpireWarnNDays__c}&apos;; 
+
+// perform validation checks on envelope before sending 
+function validateCriteria( ) 
+{ 
+var isValid = false; 
+var errorList = &quot;&quot;; 
+
+// validate attachments and recipients 
+if ( !isValidAttachment() ) { errorList += &quot; - The envelope is missing attachments.\n&quot;; } 
+if ( !isValidRecipient() ) { errorList += &quot; - No recipients have been specified for the envelope.\n&quot;; } 
+//if ( !isValidReminder() ) { errorList += &quot; - Invalid values were placed in the //Reminder fields.\n&quot;; } 
+
+if ( errorList.length == 0 ) 
+{ 
+isValid = true; 
+} 
+
+if ( !isValid ) 
+{ 
+var errorMessage = &quot;Before sending, please correct the following errors:\n&quot; + errorList; 
+alert( errorMessage ); 
+} 
+
+return isValid; 
+} 
+
+function isValidReminder() 
+{ 
+var isValid = false; 
+
+isValid = {!IME_Signature_Information__c.IME_EnableReminders__c}; 
+
+return isValid; 
+} 
+
+function isValidAttachment( ) 
+{ 
+
+var isValid = false; 
+var anyAttachment = &apos;Not Found&apos;; 
+
+try 
+{ 
+var result = sforce.connection.query(&quot;Select Id From Attachment where ParentId = &apos;{!IME_Signature_Information__c.Id}&apos; LIMIT 5&quot;); 
+
+var records = result.getArray(&quot;records&quot;); 
+
+totalAttachments = records.length; 
+if (records.length != 0) 
+{ 
+anyAttachment = &apos;Records Found&apos;; 
+isValid = true; 
+} 
+} 
+catch(error) 
+{ 
+if (debug) 
+{ 
+alert(&apos;Exception Name: &apos;+error.name+ &apos;Exception Message:&apos; + error.message); 
+} 
+} 
+finally 
+{ 
+if (debug) 
+{ 
+alert(&apos;Finally - isValidAttachment: anyAttachment = &apos; + anyAttachment); 
+} 
+} 
+return isValid; 
+} 
+
+function isValidRecipient( ) 
+{ 
+var isValid = false; 
+var anyRecipients = &apos;Not Found&apos;; 
+
+try 
+{ 
+var result = sforce.connection.query(&quot;Select Id From IME_Signatory_Contact__c where IME_DocuSign_Contract_Envelope__c = &apos;{!IME_Signature_Information__c.Id}&apos; LIMIT 1&quot;); 
+
+var records = result.getArray(&quot;records&quot;); 
+
+if (records.length != 0) 
+{ 
+anyRecipients = &apos;Records Found&apos;; 
+isValid = true; 
+} 
+} 
+catch(error) 
+{ 
+if (debug) 
+{ 
+alert(&apos;Exception Name: &apos;+error.name+ &apos;Exception Message:&apos; + error.message); 
+} 
+} 
+finally 
+{ 
+if (debug) 
+{ 
+alert(&apos;Finally - isValidRecipient: anyRecipients = &apos; + anyRecipients); 
+} 
+} 
+return isValid; 
+} 
+
+
+function confirmSending() 
+{ 
+var oppUp =&quot;{!IME_Signature_Information__c.sent_for_signature__c}&quot;; 
+if(oppUp == 1){ 
+alert(&apos;The contract has already been fully executed, this cannot be sent again for signature.&apos;); 
+} 
+else 
+{ 
+return confirm( &quot;Clicking on \&quot;OK\&quot; will send the Contract for Signatory to all Recipients. Are you sure?&quot; ); 
+} 
+} 
+
+var newLocation = &quot;/apex/dsfs__DocuSign_CreateEnvelope?DSEID=0&amp;SourceID={!IME_Signature_Information__c.Id}&amp;CCRM=&quot;+CCRM+&quot;&amp;CCTM=&quot;+CCTM+&quot;&amp;CRL=&quot;+CRL+&quot;&amp;OCO=&quot;+OCO+&quot;&amp;LA=&quot;+LA+&quot;&amp;CEM=&quot;+CEM+&quot;&amp;CES=&quot;+CES+&quot;&amp;RES=&quot;+RES; 
+
+// validate the form contents 
+if ( validateCriteria() ) 
+{ 
+// confirm the user is ready to send the form 
+if ( confirmSending() ) 
+{ 
+// if debug then show destination else go 
+//********* Page Callout (Do not modify) *********// 
+if ( debug ) 
+{ 
+alert( newLocation ); 
+} 
+else 
+{ 
+//**Note change made by Vinutha Iyengar Nov/17, case#06462026 to check for attachment count if standard contract **/ 
+if(totalAttachments!=2 &amp;&amp; {!IME_Signature_Information__c.Standard_Contract__c}) 
+{ 
+alert(&quot;Schedule A is not attached. Contract could not be sent.&quot;); 
+} 
+else 
+{ 
+//window.location.href = newLocation; 
+console.log(newLocation); 
+CRL=CRL.replace(&apos;,,&apos;, &apos;,&apos;);
+window.location.href = &quot;{!URLFOR(&apos;/apex/dsfs__DocuSign_CreateEnvelope&apos;,null,[SourceID=IME_Signature_Information__c.Id])}&amp;CCRM=&quot;+CCRM+&quot;&amp;CCTM=&quot;+CCTM+&quot;&amp;CRL=&quot;+CRL+&quot;&amp;OCO=&quot;+OCO+&quot;&amp;LA=&quot;+LA+&quot;&amp;CEM=&quot;+CEM+&quot;&amp;CES=&quot;+CES+&quot;&amp;RES=&quot;+RES; 
+
+} 
+} 
+//*******************************************// 
+} 
+}</url>
+</WebLink>

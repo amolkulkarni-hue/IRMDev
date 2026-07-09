@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>C_pia_de_Solicita_es_Abertas_Almir</fullName>
+    <columns>CREATED_DATE</columns>
+    <columns>Request_Number__c</columns>
+    <columns>Vendor_Name__c</columns>
+    <columns>NAME</columns>
+    <columns>Requestor_s_Name__c</columns>
+    <columns>Status__c</columns>
+    <columns>CREATEDBY_USER</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Requestor_s_Name__c</field>
+        <operation>equals</operation>
+        <value>Almir Carmo</value>
+    </filters>
+    <filters>
+        <field>Status__c</field>
+        <operation>notEqual</operation>
+        <value>Closed,Rejected</value>
+    </filters>
+    <label>Solicitações Abertas (Almir)</label>
+</ListView>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Split_Rep_percentage_not_filled_out</fullName>
+    <active>true</active>
+    <description>Requires that the split rep % be filled out if there is a split rep name added</description>
+    <errorConditionFormula>AND(  NOT( ISBLANK(Split_Commission_Rep__c ) ),    ISBLANK( Split_Rep_percent__c ) )</errorConditionFormula>
+    <errorMessage>Please enter a value for the Split Rep %</errorMessage>
+</ValidationRule>

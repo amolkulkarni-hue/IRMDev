@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>60.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <description>Migrated from the: Service Line Update on Quote Line Item workflow rule
+Workflow rule description: Updates Service Line text field on Quote LIne ITem object, so we can complete a roll up SUM field on the Quote object referencing this text field. (Gitlab story #22858 for your reference)</description>
+    <environments>Default</environments>
+    <formulas>
+        <name>Quote_Line_Item_Total_UpdateFormula</name>
+        <dataType>Currency</dataType>
+        <expression>$Record.UnitPrice  *  $Record.Quantity</expression>
+        <scale>0</scale>
+    </formulas>
+    <formulas>
+        <name>Service_Line_Update_on_Quote_Line_ItemFormula</name>
+        <dataType>String</dataType>
+        <expression>TEXT($Record.Product2.IM_Product_Class__c)</expression>
+    </formulas>
+    <interviewLabel>Service Line Update on Quote Line Item {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Service Line Update on Quote Line Item</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <description>Update the Service line with product class and Total field with the multiplication of Unit Price and Quantity.</description>
+        <name>Service_Line_Total_Update_on_Quote_Line_Item</name>
+        <label>Service Line &amp; Total Update on Quote Line Item</label>
+        <locationX>176</locationX>
+        <locationY>323</locationY>
+        <inputAssignments>
+            <field>Service_Line__c</field>
+            <value>
+                <elementReference>Service_Line_Update_on_Quote_Line_ItemFormula</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Total__c</field>
+            <value>
+                <elementReference>Quote_Line_Item_Total_UpdateFormula</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Service_Line_Total_Update_on_Quote_Line_Item</targetReference>
+        </connector>
+        <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>CreatedDate</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <object>QuoteLineItem</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

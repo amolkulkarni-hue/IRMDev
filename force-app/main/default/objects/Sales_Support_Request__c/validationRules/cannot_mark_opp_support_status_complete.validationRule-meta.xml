@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>cannot_mark_opp_support_status_complete</fullName>
+    <active>true</active>
+    <description>A opportunity support owner cannot mark request as complete until following fields have input: Requestor’s Name, Requestor’s Country, Request Origin, Task Type, Internal Notes,Actual efforts, Estimated Completion Date</description>
+    <errorConditionFormula>AND(RecordType.Name = &apos;Opportunity Support&apos; ,
+ISPICKVAL(Opportunity_Support_Status__c,&quot;Complete&quot;),
+OR(
+ISBLANK(Requestor_s_Name__c),
+ISBLANK(Requestor_s_Country__c),
+ISPICKVAL(Request_Origin__c,&apos;&apos;),
+ISPICKVAL(Task_Type__c,&apos;&apos;),
+ISBLANK(Internal_Notes__c),
+ISBLANK(Actual_Effort_hours__c),
+ISBLANK(Estimated_Complete_Date__c)
+)
+)</errorConditionFormula>
+    <errorMessage>A opportunity support owner cannot mark request as complete until following fields have input: Requestor’s Name, Requestor’s Country, Request Origin, Task Type, Internal Notes,Actual efforts, Estimated Completion Date</errorMessage>
+</ValidationRule>

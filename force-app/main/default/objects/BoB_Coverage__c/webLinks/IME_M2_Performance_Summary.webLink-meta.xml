@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebLink xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IME_M2_Performance_Summary</fullName>
+    <availability>online</availability>
+    <displayType>button</displayType>
+    <linkType>javascript</linkType>
+    <masterLabel>M2 Performance Summary</masterLabel>
+    <openType>onClickJavaScript</openType>
+    <protected>false</protected>
+    <url>{!REQUIRESCRIPT(&quot;/soap/ajax/15.0/connection.js&quot;)} 
+{!REQUIRESCRIPT(&quot;/soap/ajax/15.0/apex.js&quot;)} 
+var currencycode = sforce.connection.query(&quot;select id,DefaultCurrencyIsoCode from User where id=&apos;{!$User.Id}&apos;&quot;); 
+if(currencycode.records.DefaultCurrencyIsoCode== &apos;EUR&apos;){ 
+parent.location.href =&apos;/00O34000005etju?pv0={!SUBSTITUTE(BoB_Coverage__c.Sales_Rep_Name__c, &quot;&apos;&quot;, &quot;\&apos;&quot;)}&amp;pv1={!SUBSTITUTE(TEXT(BoB_Coverage__c.Sales_Rep_Role__c), &quot;&apos;&quot;, &quot;\&apos;&quot;)}&apos;; 
+}else{ 
+parent.location.href =&apos;/00O340000064qcX?pv0={!SUBSTITUTE(BoB_Coverage__c.Sales_Rep_Name__c, &quot;&apos;&quot;, &quot;\&apos;&quot;)}&amp;pv1={!SUBSTITUTE(TEXT(BoB_Coverage__c.Sales_Rep_Role__c), &quot;&apos;&quot;, &quot;\&apos;&quot;)}&apos;;
+}</url>
+</WebLink>

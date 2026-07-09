@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <description>This Batch job further calls Update_Sale_Site_Type flow to Update Type on Sales Site Accounts</description>
+        <name>Update_Type_of_Sales_SIte</name>
+        <label>Update Type of Sales SIte</label>
+        <locationX>176</locationX>
+        <locationY>252</locationY>
+        <actionName>Sales_SIte_Type_Update</actionName>
+        <actionType>batchJobAction</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <nameSegment>Sales_SIte_Type_Update</nameSegment>
+        <offset>0</offset>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
+    <apiVersion>62.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <description>#26453: This scheduled Flow calls the Batch Job which further calls Update_Sale_Site_Type Flow</description>
+    <environments>Default</environments>
+    <interviewLabel>Update Account Sites Scheduler {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Update Account Sites Scheduler</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Update_Type_of_Sales_SIte</targetReference>
+        </connector>
+        <schedule>
+            <frequency>Daily</frequency>
+            <startDate>2024-12-08</startDate>
+            <startTime>17:00:00.000Z</startTime>
+        </schedule>
+        <triggerType>Scheduled</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

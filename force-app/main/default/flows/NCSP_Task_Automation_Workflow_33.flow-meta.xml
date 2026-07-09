@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>NCSP_Task_Automation_Workflow_33_1</name>
+        <label>^^$$## NCSP - Task Automation- Workflow -33.1</label>
+        <locationX>308</locationX>
+        <locationY>276</locationY>
+        <actionName>NewTask</actionName>
+        <actionType>quickAction</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>Subject</name>
+            <value>
+                <elementReference>varFSubject</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>ActivityDate</name>
+            <value>
+                <elementReference>DueDate</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>WhatId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>OwnerId</name>
+            <value>
+                <elementReference>$User.Id</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>Status</name>
+            <value>
+                <stringValue>Not Started</stringValue>
+            </value>
+        </inputParameters>
+        <nameSegment>NewTask</nameSegment>
+        <offset>0</offset>
+    </actionCalls>
+    <apiVersion>62.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <description>Create Delayed Task: Invoice Review (SKP)
+
+Created variables as part of Gitlab - #33449, to store the translated task subjects of different countries</description>
+    <environments>Default</environments>
+    <formulas>
+        <name>DueDate</name>
+        <dataType>Date</dataType>
+        <expression>Today() + 2</expression>
+    </formulas>
+    <formulas>
+        <description>This variable is created as part of Gitlab - #33449, to store the translated task subjects of different countries</description>
+        <name>varFSubject</name>
+        <dataType>String</dataType>
+        <expression>&apos;^^$$## NCSP - Task Automation- Workflow -33.1-&apos;+{!varTCountry}</expression>
+    </formulas>
+    <interviewLabel>NCSP - Task Automation- Workflow -33 {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>NCSP - Task Automation- Workflow -33</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+        <filterLogic>(1 OR 2) AND 3 AND 4 AND 5</filterLogic>
+        <filters>
+            <field>RecordType_Name__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>NCSP: SKP New Customer Setup</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>RecordType_Name__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>NCSP: SKP Department Add Only</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Invoice_Mailing_Date__c</field>
+            <operator>NotEqualTo</operator>
+        </filters>
+        <filters>
+            <field>IsClosed</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Invoice_Review_date__c</field>
+            <operator>EqualTo</operator>
+        </filters>
+        <object>Case</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <scheduledPaths>
+            <name>X7_Days_Before_Case_Invoice_Mailing_Date</name>
+            <connector>
+                <targetReference>NCSP_Task_Automation_Workflow_33_1</targetReference>
+            </connector>
+            <label>7 Days Before Case: Invoice Mailing Date</label>
+            <offsetNumber>-7</offsetNumber>
+            <offsetUnit>Days</offsetUnit>
+            <recordField>Invoice_Mailing_Date__c</recordField>
+            <timeSource>RecordField</timeSource>
+        </scheduledPaths>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+    <triggerOrder>1130</triggerOrder>
+    <variables>
+        <name>varTCountry</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <elementReference>$Record.Country__c</elementReference>
+        </value>
+    </variables>
+</Flow>

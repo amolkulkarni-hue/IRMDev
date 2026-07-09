@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Customer__c</fullName>
+    <deleteConstraint>Restrict</deleteConstraint>
+    <description>IMGA Account record</description>
+    <label>Customer</label>
+    <lookupFilter>
+        <active>false</active>
+        <errorMessage>Storage Profile records can only be associated to an IMGA record</errorMessage>
+        <filterItems>
+            <field>Account.IM_Hierarchy_Level__c</field>
+            <operation>equals</operation>
+            <value>IM Group (IMGA)</value>
+        </filterItems>
+        <infoMessage>Storage Profile records can only be associated to an IMGA record</infoMessage>
+        <isOptional>false</isOptional>
+    </lookupFilter>
+    <referenceTo>Account</referenceTo>
+    <relationshipName>Storage_Profiles</relationshipName>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

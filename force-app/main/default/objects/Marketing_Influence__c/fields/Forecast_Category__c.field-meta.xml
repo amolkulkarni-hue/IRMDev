@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Forecast_Category__c</fullName>
+    <description>to categorize influence</description>
+    <externalId>false</externalId>
+    <formula>CASE(Stage_Name__c, &quot;1 - Qualification&quot;, &quot;Pipeline&quot;,
+&quot;2 - Solution Developed&quot;, &quot;Pipeline&quot;,
+&quot;3 - Solution Agreed&quot;, &quot;Pipeline&quot;,
+&quot;4 - Negotiate&quot;, &quot;Pipeline&quot;,
+&quot;5 - Signed/PO in&quot;, &quot;Closed&quot;,
+&quot;6 - Setup&quot;, &quot;Closed&quot;,
+&quot;7 - Closed&quot;, &quot;Closed&quot;,
+&quot;0 - Pre-Qualification&quot;,&quot;Omitted&quot;,
+&quot;Dead&quot;, &quot;Omitted&quot;,
+&quot;Lost&quot;, &quot;Omitted&quot;,
+&quot;Postponed&quot;,&quot;Omitted&quot;, 
+&quot;No Match&quot;)</formula>
+    <inlineHelpText>if returns no match, check stage names</inlineHelpText>
+    <label>Forecast Category</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

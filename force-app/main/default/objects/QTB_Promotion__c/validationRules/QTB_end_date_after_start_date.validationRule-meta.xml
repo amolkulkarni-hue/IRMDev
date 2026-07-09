@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>QTB_end_date_after_start_date</fullName>
+    <active>true</active>
+    <description>#GITLAB:376 --&gt; end  date must be same or after start date</description>
+    <errorConditionFormula>AND(NOT($Setup.Metadata_Activation_Settings__c.Disable_VR__c &amp;&amp; OR(
+ISBLANK($Setup.Metadata_Activation_Settings__c.SObject_API_Name__c),
+CONTAINS($Setup.Metadata_Activation_Settings__c.SObject_API_Name__c,
+&apos;QTB_Promotion__c&apos;))),
+NOT(ISBLANK(QTB_End_Date__c)),
+QTB_Start_Date__c &gt; QTB_End_Date__c
+)</errorConditionFormula>
+    <errorMessage>End Date must be same or after Start Date</errorMessage>
+</ValidationRule>

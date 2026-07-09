@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>QTB_RestrictQuoteLevelPromotionWithTerm</fullName>
+    <active>true</active>
+    <description>Gitlab#486 - to restrict user from entering promotion term greater than 0 in case of quote level promotion.</description>
+    <errorConditionFormula>AND(NOT($Setup.Metadata_Activation_Settings__c.Disable_VR__c &amp;&amp; OR(
+ISBLANK($Setup.Metadata_Activation_Settings__c.SObject_API_Name__c),
+CONTAINS($Setup.Metadata_Activation_Settings__c.SObject_API_Name__c,
+&apos;QTB_Promotion__c&apos;))),
+ISBLANK(QTB_Product__c),QTB_Promo_Term__c  &gt; 0)</errorConditionFormula>
+    <errorMessage>Promotion without product cannot have term greater than 0</errorMessage>
+</ValidationRule>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Vendor_Service_for_Vendor_ContractReview</fullName>
+    <active>true</active>
+    <description>Vendor Services Provided is required for Vendor Contract Review</description>
+    <errorConditionFormula>IF( AND( RecordType.DeveloperName = &apos;Legal_Privacy_Compliance&apos;, ISPICKVAL(Request_Type__c, &apos;Vendor Contract Review&apos;),ISBLANK(Vendor_Services_Provided__c)), true, false)</errorConditionFormula>
+    <errorMessage>Vendor Services Provided is required for Vendor Contract Review</errorMessage>
+</ValidationRule>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Accepted_Appeal_Must_have_Payment_Status</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+ISPICKVAL( Appeal_Stage__c , &quot;Accepted&quot;) ,
+ISBLANK( TEXT( Payment_Status__c )) ,
+NOT(ISBLANK(PRIORVALUE(Payment_Status__c)))
+)</errorConditionFormula>
+    <errorDisplayField>Payment_Status__c</errorDisplayField>
+    <errorMessage>Accepted appeals must have a payment status.</errorMessage>
+</ValidationRule>

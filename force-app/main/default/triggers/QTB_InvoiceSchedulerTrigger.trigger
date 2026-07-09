@@ -1,0 +1,12 @@
+/***************************************************************************************************
+* Trigger for Invoice Scheduler Object
+* ──────────────────────────────────────────────────────────────────────────────────────────────────
+* @Author        : Virtusa 
+* @ModifiedBy    : Virtusa
+* @Created       : 
+* @Modified      : 19/09/2025
+* ──────────────────────────────────────────────────────────────────────────────────────────────────
+****************************************************************************************************/
+trigger QTB_InvoiceSchedulerTrigger on blng__InvoiceScheduler__c (before insert, before update, before delete, after insert, after update, after delete, after undelete) {
+    TriggerDispatcher.Run(new QTB_InvoiceSchedulerTriggerHandler()); 
+}

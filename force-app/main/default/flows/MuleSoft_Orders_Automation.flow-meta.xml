@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>62.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <decisions>
+        <name>Check_Case_Origin</name>
+        <label>Check Case Origin</label>
+        <locationX>512</locationX>
+        <locationY>431</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Is_NAS_EM_Orders</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Origin</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>NAS_EM_Orders</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Check_If_Case_satisfies_IM_Connect_Order_conditions</targetReference>
+            </connector>
+            <label>Is NAS_EM_Orders?</label>
+        </rules>
+        <rules>
+            <name>Is_NAS_EM_Orders_Auto</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Origin</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>NAS_EM_Orders_Auto</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Create_NA_Shred_Email_Order</targetReference>
+            </connector>
+            <label>Is NAS_EM_Orders_Auto?</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_If_Case_satisfies_IM_Connect_Order_conditions</name>
+        <label>Check If Case satisfies IM Connect Order conditions</label>
+        <locationX>182</locationX>
+        <locationY>539</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Is_IM_Connect_Order</name>
+            <conditionLogic>(1 OR 2) AND 3</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Subject</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Secure Shredding Customer Request - On-Call Order</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Subject</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Secure Shredding Customer Request - Other</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SuppliedEmail</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>portal.inquiry@ironmountain.com</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Create_IM_Connect_Order</targetReference>
+            </connector>
+            <label>Is IM Connect Order?</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Check if Case Owner is &quot;TCOP Orders&quot; or &quot;IMLA Email Orders&quot; Queue</description>
+        <name>Checking_if_Case_Owner_is_TCOP_Orders_or_IMLA_Email_Orders_Queue</name>
+        <label>Checking if Case Owner is &quot;TCOP Orders&quot; or &quot;IMLA Email Orders&quot; Queue</label>
+        <locationX>941</locationX>
+        <locationY>323</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Verify_Case_Owner_is_TCOP_Orders</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.OwnerId</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>$Label.TCOP_Orders_Queue_ID</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Check_Case_Origin</targetReference>
+            </connector>
+            <label>Verify Case Owner is TCOP Orders</label>
+        </rules>
+        <rules>
+            <name>Verify_Case_Owner_is_IMLA_Email_Orders</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.OwnerId</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>$Label.IMLA_Email_Orders_Queue</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Create_Columbia_RM_Email_Order</targetReference>
+            </connector>
+            <label>Verify Case Owner is IMLA Email Orders</label>
+        </rules>
+    </decisions>
+    <description>This flow is for accepting IM Connect Orders, NA Email Orders and Columbia Email Orders by MuleSoft Automation.</description>
+    <environments>Default</environments>
+    <interviewLabel>MuleSoft Orders Automation {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>MuleSoft Orders Automation</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordCreates>
+        <description>Send essential fields to MuleSoft Automation via Platform Event.</description>
+        <name>Create_Columbia_RM_Email_Order</name>
+        <label>Create Columbia RM Email Order</label>
+        <locationX>1106</locationX>
+        <locationY>431</locationY>
+        <inputAssignments>
+            <field>Case_ID__c</field>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Case_Number__c</field>
+            <value>
+                <elementReference>$Record.CaseNumber</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Description__c</field>
+            <value>
+                <elementReference>$Record.Description</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Source__c</field>
+            <value>
+                <stringValue>Columbia RM Email Order</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Subject__c</field>
+            <value>
+                <elementReference>$Record.Subject</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Supplied_Email__c</field>
+            <value>
+                <elementReference>$Record.SuppliedEmail</elementReference>
+            </value>
+        </inputAssignments>
+        <object>MuleSoft_Orders_Automation__e</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
+    <recordCreates>
+        <description>Send essential fields to MuleSoft Automation via Platform Event.</description>
+        <name>Create_IM_Connect_Order</name>
+        <label>Create IM Connect Order</label>
+        <locationX>50</locationX>
+        <locationY>647</locationY>
+        <inputAssignments>
+            <field>Case_ID__c</field>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Case_Number__c</field>
+            <value>
+                <elementReference>$Record.CaseNumber</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Description__c</field>
+            <value>
+                <elementReference>$Record.Description</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Source__c</field>
+            <value>
+                <stringValue>IM Connect Order</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Subject__c</field>
+            <value>
+                <elementReference>$Record.Subject</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Supplied_Email__c</field>
+            <value>
+                <elementReference>$Record.SuppliedEmail</elementReference>
+            </value>
+        </inputAssignments>
+        <object>MuleSoft_Orders_Automation__e</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
+    <recordCreates>
+        <description>Send essential fields to MuleSoft Automation via Platform Event.</description>
+        <name>Create_NA_Shred_Email_Order</name>
+        <label>Create NA Shred Email Order</label>
+        <locationX>578</locationX>
+        <locationY>539</locationY>
+        <inputAssignments>
+            <field>Case_ID__c</field>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Case_Number__c</field>
+            <value>
+                <elementReference>$Record.CaseNumber</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Description__c</field>
+            <value>
+                <elementReference>$Record.Description</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Source__c</field>
+            <value>
+                <stringValue>NA Shred Email Order</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Subject__c</field>
+            <value>
+                <elementReference>$Record.Subject</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Supplied_Email__c</field>
+            <value>
+                <elementReference>$Record.SuppliedEmail</elementReference>
+            </value>
+        </inputAssignments>
+        <object>MuleSoft_Orders_Automation__e</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
+    <start>
+        <locationX>815</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Checking_if_Case_Owner_is_TCOP_Orders_or_IMLA_Email_Orders_Queue</targetReference>
+        </connector>
+        <filterLogic>1 AND 2 AND (3 OR 4 OR 5)</filterLogic>
+        <filters>
+            <field>RecordType_Name__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Global Orders</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>OwnerId</field>
+            <operator>StartsWith</operator>
+            <value>
+                <stringValue>00G</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Origin</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>NAS_EM_Orders</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Origin</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>NAS_EM_Orders_Auto</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Origin</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>IMLA_Email_Orders</stringValue>
+            </value>
+        </filters>
+        <object>Case</object>
+        <recordTriggerType>Create</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

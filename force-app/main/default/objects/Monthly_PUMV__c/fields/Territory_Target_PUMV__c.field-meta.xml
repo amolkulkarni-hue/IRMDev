@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Territory_Target_PUMV__c</fullName>
+    <externalId>false</externalId>
+    <formula>Case(Storage_Month__c, 
+1, Billing_Territory__r.PUMV_Target_Jan__c, 
+2, Billing_Territory__r.PUMV_Target_Feb__c, 
+3, Billing_Territory__r.PUMV_Target_Mar__c, 
+4, Billing_Territory__r.PUMV_Target_Apr__c, 
+5, Billing_Territory__r.PUMV_Target_May__c, 
+6, Billing_Territory__r.PUMV_Target_June__c, 
+7, Billing_Territory__r.PUMV_Target_July__c, 
+8, Billing_Territory__r.PUMV_Target_Aug__c, 
+9, Billing_Territory__r.PUMV_Target_Sept__c, 
+10, Billing_Territory__r.PUMV_Target_Oct__c, 
+11, Billing_Territory__r.PUMV_Target_Nov__c, 
+12, Billing_Territory__r.PUMV_Target_Dec__c, 
+0 
+)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Territory Target PUMV</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>2</scale>
+    <trackTrending>false</trackTrending>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

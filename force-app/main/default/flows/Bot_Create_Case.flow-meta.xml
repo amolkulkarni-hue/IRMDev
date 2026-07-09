@@ -1,0 +1,553 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>61.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <decisions>
+        <name>Check_Customer_Type</name>
+        <label>Check Customer Type</label>
+        <locationX>182</locationX>
+        <locationY>566</locationY>
+        <defaultConnector>
+            <targetReference>Create_Case_GuestUser</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Authenticated</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Messaging_Session.Customer_type__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Authenticated</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Customer_Account</targetReference>
+            </connector>
+            <label>Authenticated</label>
+        </rules>
+    </decisions>
+    <description>Added  the Case Creation for IMC chat - #33791
+Updating the Prechat email address in the case description - #33254
+Added the Case creation for ANZ chat -#33714
+Added Subject to the case - #32348
+Update the Customer Account, Contact , Account and description  details to case - #26878 
+Updated the French Queue - #25625
+V6: Assign case to queue
+V2: Get MS with form fields
+V4: System mode
+#26941 : Updated  the formula variables(forT_CaseOrigin, forT_CaseOwner) to populate the Case origin and owner for the UKI&apos;s Chat cases
+#27858: Added Spain Bot expansion Condition
+#27859: Added German And German(Austria) Bot expansion Condition
+#27860: Added France Bot expansion Condition
+#31682: Added Singapore APAC bot expansion condition
+#31818: Added Thailand APAC bot expansion condition
+#31853: Added Philippines APAC bot expansion condition
+#31839: Added South Korea APAC bot expansion condition
+#33941 - Updated the Formulas for Iron Mountain Website Chat.</description>
+    <environments>Default</environments>
+    <formulas>
+        <name>caseDescription</name>
+        <dataType>String</dataType>
+        <expression>IF(AND(NOT(ISNULL({!Get_BotForm_Record.Customer_ID__c})), {!Get_BotForm_Record.Customer_ID__c} &lt;&gt; &apos;&apos;), BR() + &apos;Customer ID: &apos; + {!Get_BotForm_Record.Customer_ID__c} + &apos;.&apos;, &apos;&apos;) +
+IF(AND(NOT(ISNULL({!Get_BotForm_Record.Division_ID__c})), {!Get_BotForm_Record.Division_ID__c} &lt;&gt; &apos;&apos;), BR() + &apos;Division ID: &apos; + {!Get_BotForm_Record.Division_ID__c} + &apos;.&apos;, &apos;&apos;) +
+IF(AND(NOT(ISNULL({!Get_BotForm_Record.Department_ID__c})), {!Get_BotForm_Record.Department_ID__c} &lt;&gt; &apos;&apos;), BR() + &apos;Department ID: &apos; + {!Get_BotForm_Record.Department_ID__c} + &apos;.&apos;, &apos;&apos;) +
+IF(AND(NOT(ISNULL({!Get_BotForm_Record.Anything_else_you_d_like_us_to_know__c})), {!Get_BotForm_Record.Anything_else_you_d_like_us_to_know__c} &lt;&gt; &apos;&apos;), BR() + &apos;Case Description: &apos; + {!Get_BotForm_Record.Anything_else_you_d_like_us_to_know__c} + &apos;.&apos;, &apos;&apos;) +
+IF(AND(NOT(ISNULL({!Get_Messaging_Session.Email__c})), {!Get_Messaging_Session.Email__c} &lt;&gt; &apos;&apos;), BR() + &apos;Email: &apos; + {!Get_Messaging_Session.Email__c} + &apos;.&apos;, &apos;&apos;)</expression>
+    </formulas>
+    <formulas>
+        <description>case origin formula based on customer type and messaging session language</description>
+        <name>forT_CaseOrigin</name>
+        <dataType>String</dataType>
+        <expression>IF(
+  {!Get_Messaging_Session.MessagingChannel.DeveloperName} = &quot;IRM_Customer_Community_English_Messaging_Channel&quot;,
+
+  /* Value if TRUE */
+  CASE(
+    {!Get_Messaging_Session.EndUserLanguage},
+      &quot;en_US&quot;, CASE({!Get_Messaging_Session.Customer_type__c}, &quot;Guest&quot;,&quot;Chat&quot;,&quot;Authenticated&quot;,&quot;NAS_Authenticated_chat&quot;,&quot;Chat&quot;),
+      &quot;fr_CA&quot;, CASE({!Get_Messaging_Session.Customer_type__c}, &quot;Guest&quot;,&quot;Chat&quot;,&quot;Authenticated&quot;,&quot;NAS_Authenticated_chat&quot;,&quot;Chat&quot;),
+      &quot;en_GB&quot;, CASE({!Get_Messaging_Session.Customer_type__c}, &quot;Guest&quot;,&quot;UKI_Chat&quot;,&quot;Authenticated&quot;,&quot;UKI_Chat&quot;,&quot;Chat&quot;),
+      &quot;es&quot;, CASE({!Get_Messaging_Session.Customer_type__c}, &quot;Guest&quot;,&quot;ESP_Chat&quot;,&quot;Authenticated&quot;,&quot;ESP_Chat&quot;,&quot;Chat&quot;),
+      &quot;de&quot;, CASE({!Get_Messaging_Session.Customer_type__c}, &quot;Guest&quot;,&quot;DEU_Chat&quot;,&quot;Authenticated&quot;,&quot;DEU_Chat&quot;,&quot;Chat&quot;),
+      &quot;fr&quot;, CASE({!Get_Messaging_Session.Customer_type__c}, &quot;Guest&quot;,&quot;FRA_Chat&quot;,&quot;Authenticated&quot;,&quot;FRA_Chat&quot;,&quot;Chat&quot;),
+      &quot;en_MY&quot;, CASE({!Get_Messaging_Session.Customer_type__c}, &quot;Guest&quot;,&quot;MYS_Chat&quot;,&quot;Authenticated&quot;,&quot;MYS_Chat&quot;,&quot;Chat&quot;),
+      &quot;en_IN&quot;, CASE({!Get_Messaging_Session.Customer_type__c}, &quot;Guest&quot;,&quot;IND_Chat&quot;,&quot;Authenticated&quot;,&quot;IND_Chat&quot;,&quot;Chat&quot;),
+      &quot;en_SG&quot;, CASE({!Get_Messaging_Session.Customer_type__c}, &quot;Guest&quot;,&quot;SGP_Chat&quot;,&quot;Authenticated&quot;,&quot;SGP_Chat&quot;,&quot;Chat&quot;),
+      &quot;th&quot;, CASE({!Get_Messaging_Session.Customer_type__c}, &quot;Guest&quot;,&quot;THA_Chat&quot;,&quot;Authenticated&quot;,&quot;THA_Chat&quot;,&quot;Chat&quot;),
+      &quot;en_PH&quot;, CASE({!Get_Messaging_Session.Customer_type__c}, &quot;Guest&quot;,&quot;PHL_Chat&quot;,&quot;Authenticated&quot;,&quot;PHL_Chat&quot;,&quot;Chat&quot;),
+      &quot;in&quot;, CASE({!Get_Messaging_Session.Customer_type__c}, &quot;Guest&quot;,&quot;IDN_Chat&quot;,&quot;Authenticated&quot;,&quot;IDN_Chat&quot;,&quot;Chat&quot;),
+      &quot;en_IE&quot;, CASE({!Get_Messaging_Session.Customer_type__c}, &quot;Guest&quot;,&quot;IDN_Chat&quot;,&quot;Authenticated&quot;,&quot;IDN_Chat&quot;,&quot;Chat&quot;),
+      &quot;zh_TW&quot;, CASE({!Get_Messaging_Session.Customer_type__c}, &quot;Guest&quot;,&quot;TWN_chat&quot;,&quot;Authenticated&quot;,&quot;TWN_chat&quot;,&quot;Chat&quot;),
+      &quot;ko&quot;, CASE({!Get_Messaging_Session.Customer_type__c}, &quot;Guest&quot;,&quot;KOR_chat&quot;,&quot;Authenticated&quot;,&quot;KOR_chat&quot;,&quot;Chat&quot;),
+    &quot;&quot;
+  ),
+
+  /* Value if FALSE */
+  CASE(
+    {!Get_Messaging_Session.MessagingChannel.DeveloperName}, 
+      &quot;ANZ_Messaging_Channel&quot;, &quot;ANZ_Chat&quot;,
+      &quot;IM_Connect_Messaging_Channel&quot;, &quot;Web&quot;,
+      &quot;IronMountainWebsite_Messaging_Channel&quot;,&quot;NAS_EMAIL_English_Auto_Response_AskCS&quot;,
+    &quot;&quot;
+  )
+)</expression>
+    </formulas>
+    <formulas>
+        <description>the formula used to get the Case Owner</description>
+        <name>forT_CaseOwner</name>
+        <dataType>String</dataType>
+        <expression>IF(
+  {!Get_Messaging_Session.MessagingChannel.DeveloperName} = &quot;IRM_Customer_Community_English_Messaging_Channel&quot;,
+  
+  /* Value if TRUE */
+  CASE(
+    {!Get_Messaging_Session.EndUserLanguage},
+      &quot;en_US&quot;, &quot;NAS_Tier_3&quot;,
+      &quot;fr_CA&quot;, &quot;NAS_Quebec&quot;,
+      &quot;en_GB&quot;, &quot;IME_SC_GBR_Indexing_Queue&quot;,
+      &quot;es&quot;, &quot;IME_SC_ESP_Indexing_Queue&quot;,
+      &quot;de&quot;, &quot;IME_SC_DEU_Indexing_Queue&quot;,
+      &quot;fr&quot;, &quot;IME_SC_FRA_Indexing_Queue&quot;,
+      &quot;en_MY&quot;, &quot;IMAP_SC_MYS_Indexing_Queue&quot;,
+      &quot;en_IN&quot;, &quot;GSC_IMAP_SC_IND_Indexing_queue&quot;,
+      &quot;en_SG&quot;, &quot;IMAP_SC_SGP_Indexing_Queue&quot;,
+      &quot;th&quot;, &quot;IMAP_SC_THA_Indexing_Queue&quot;,
+      &quot;en_PH&quot;, &quot;IMAP_SC_PHL_Indexing_Queue&quot;,
+      &quot;in&quot;, &quot;IMAP_SC_IDN_Indexing_Queue&quot;,
+      &quot;en_IE&quot;, &quot;IMAP_SC_IDN_Indexing_Queue&quot;,
+      &quot;zh_TW&quot;, &quot;IMAP_SC_TWN_Indexing_Queue&quot;,
+      &quot;ko&quot;, &quot;IMAP_SC_KOR_Indexing_Queue&quot;,
+    &quot;&quot;
+  ),
+  
+  /* Value if FALSE */
+  IF(
+    {!Get_Messaging_Session.MessagingChannel.DeveloperName} = &quot;ANZ_Messaging_Channel&quot;,
+    &quot;GSC_IMAP_SC_ANZ_Indexing_Queue&quot;,
+    
+    IF(
+      {!Get_Messaging_Session.MessagingChannel.DeveloperName} = &quot;IM_Connect_Messaging_Channel&quot;,
+      CASE(
+        {!Get_Messaging_Session.Language_Selector__c},
+          &quot;English (US)&quot;, &quot;NAS_Ask_Customer_Service&quot;,
+          &quot;English (Canada)&quot;, &quot;NAS_Ask_Customer_Service&quot;,
+          &quot;French (France)&quot;, &quot;IME_SC_FRA_Indexing_Queue&quot;,
+          &quot;Greek (Greece)&quot;, &quot;IME_SC_GRC_Indexing_Queue&quot;,
+          &quot;English (UK)&quot;, &quot;IME_SC_GBR_Indexing_Queue&quot;,
+          &quot;English (Ireland)&quot;, &quot;IME_SC_GBR_Indexing_Queue&quot;,
+          &quot;Spanish (Spain)&quot;, &quot;IME_SC_ESP_Indexing_Queue&quot;,
+          &quot;German (Germany)&quot;, &quot;IME_SC_DEU_Indexing_Queue&quot;,
+          &quot;Hungarian (Hungary)&quot;, &quot;IME_SC_HUN_Indexing_Queue&quot;,
+          &quot;Czech (Czech Republic)&quot;, &quot;IME_SC_CZE_Indexing_Queue&quot;,
+          &quot;Slovak (Slovakia)&quot;, &quot;IME_SC_SLO_Indexing_Queue&quot;,
+          &quot;Dutch (Netherlands)&quot;, &quot;IME_SC_NLD_Indexing_Queue&quot;,
+          &quot;Dutch (Belgium)&quot;, &quot;IME_SC_BEL_Indexing_Queue&quot;,
+          &quot;Romanian (Romania)&quot;, &quot;IME_SC_ROM_Indexing_Queue&quot;,
+        &quot;&quot;
+      ),
+	IF(
+    {!Get_Messaging_Session.MessagingChannel.DeveloperName} = &quot;IronMountainWebsite_Messaging_Channel&quot;,
+    &quot;NAS_Ask_Customer_Service&quot;,
+	&quot;&quot;
+    )
+    )
+  )
+)</expression>
+    </formulas>
+    <formulas>
+        <description>Case Subject formula</description>
+        <name>forT_Subject</name>
+        <dataType>String</dataType>
+        <expression>IF({!Get_Messaging_Session.MessagingChannel.DeveloperName} = &quot;ANZ_Messaging_Channel&quot;,&quot;Case created from ANZ Chat&quot;,IF({!Get_Messaging_Session.MessagingChannel.DeveloperName} = &quot;IM_Connect_Messaging_Channel&quot;,&quot;Case created from IMC Chat&quot;,IF({!Get_Messaging_Session.MessagingChannel.DeveloperName} = &quot;IronMountainWebsite_Messaging_Channel&quot;,&quot;Case created from IM Chat&quot;,&quot;Case created from Communities Chat&quot;)))</expression>
+    </formulas>
+    <interviewLabel>Bot Create Case {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Bot Create Case</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordCreates>
+        <description>Creation of a case with the record type &apos;Global Service Case&apos; and other mentioned details.</description>
+        <name>Create_Case</name>
+        <label>Create Case</label>
+        <locationX>50</locationX>
+        <locationY>782</locationY>
+        <assignRecordIdToReference>caseId</assignRecordIdToReference>
+        <connector>
+            <targetReference>Update_Messaging_Session_with_case_Id</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>AccountId</field>
+            <value>
+                <elementReference>Get_Messaging_Session.EndUserAccountId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>ContactId</field>
+            <value>
+                <elementReference>Get_Messaging_Session.EndUserContactId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Customer_ID__c</field>
+            <value>
+                <elementReference>Get_Customer_Account.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Description</field>
+            <value>
+                <elementReference>caseDescription</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Origin</field>
+            <value>
+                <elementReference>forT_CaseOrigin</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>OwnerId</field>
+            <value>
+                <elementReference>Get_Case_Owner.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>RecordTypeId</field>
+            <value>
+                <elementReference>Get_GSC_Record_Type.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Status</field>
+            <value>
+                <stringValue>New</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Subject</field>
+            <value>
+                <stringValue>Case created from Communities Chat</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
+    </recordCreates>
+    <recordCreates>
+        <description>Creation of a case with the record type &apos;Global Service Case&apos; and other mentioned details.</description>
+        <name>Create_Case_GuestUser</name>
+        <label>Create Case-GuestUser</label>
+        <locationX>314</locationX>
+        <locationY>674</locationY>
+        <assignRecordIdToReference>caseId</assignRecordIdToReference>
+        <connector>
+            <targetReference>Update_Messaging_Session_with_case_Id</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>ContactId</field>
+            <value>
+                <elementReference>contactId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Description</field>
+            <value>
+                <elementReference>caseDescription</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Origin</field>
+            <value>
+                <elementReference>forT_CaseOrigin</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>OwnerId</field>
+            <value>
+                <elementReference>Get_Case_Owner.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>RecordTypeId</field>
+            <value>
+                <elementReference>Get_GSC_Record_Type.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Status</field>
+            <value>
+                <stringValue>New</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Subject</field>
+            <value>
+                <elementReference>forT_Subject</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
+    </recordCreates>
+    <recordLookups>
+        <description>To get the BotForm Record</description>
+        <name>Get_BotForm_Record</name>
+        <label>Get BotForm Record</label>
+        <locationX>182</locationX>
+        <locationY>242</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Get_Case_Owner</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Messaging_Session__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Messaging_Session.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Bot_Forms__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_Case_Number</name>
+        <label>Get Case Number</label>
+        <locationX>182</locationX>
+        <locationY>1082</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>caseId</elementReference>
+            </value>
+        </filters>
+        <object>Case</object>
+        <outputAssignments>
+            <assignToReference>caseNumber</assignToReference>
+            <field>CaseNumber</field>
+        </outputAssignments>
+    </recordLookups>
+    <recordLookups>
+        <description>Used for updating the case owner to the respective queue based on the language.</description>
+        <name>Get_Case_Owner</name>
+        <label>Get Case Owner</label>
+        <locationX>182</locationX>
+        <locationY>350</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Get_GSC_Record_Type</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>forT_CaseOwner</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Type</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Queue</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Group</object>
+        <queriedFields>Id</queriedFields>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_Customer_Account</name>
+        <label>Get Customer Account</label>
+        <locationX>50</locationX>
+        <locationY>674</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Create_Case</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Name</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_BotForm_Record.Customer_ID__c</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>IM_Account__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Messaging_Session.EndUserAccountId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>IM_Customer_Account__c</object>
+        <queriedFields>Id</queriedFields>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <description>Used for updating the case record type to &apos;Global Service Case&apos;.</description>
+        <name>Get_GSC_Record_Type</name>
+        <label>Get GSC Record Type</label>
+        <locationX>182</locationX>
+        <locationY>458</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Check_Customer_Type</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Name</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Global Service Case</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>SobjectType</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Case</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>RecordType</object>
+        <queriedFields>Id</queriedFields>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_Messaging_Session</name>
+        <label>Get Messaging Session</label>
+        <locationX>182</locationX>
+        <locationY>134</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Get_BotForm_Record</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>messagingSessionId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>MessagingSession</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordUpdates>
+        <name>Update_Messaging_Session_with_case_Id</name>
+        <label>Update Messaging Session with case Id</label>
+        <locationX>182</locationX>
+        <locationY>974</locationY>
+        <connector>
+            <targetReference>Get_Case_Number</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>messagingSessionId</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>CaseId</field>
+            <value>
+                <elementReference>caseId</elementReference>
+            </value>
+        </inputAssignments>
+        <object>MessagingSession</object>
+    </recordUpdates>
+    <runInMode>SystemModeWithoutSharing</runInMode>
+    <start>
+        <locationX>56</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Get_Messaging_Session</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <variables>
+        <name>caseId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>caseNumber</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <name>contactId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>customerId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>customerType</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>departmentId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>description</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>divisionId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>messagingSessionId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Require_Notes_On_Rejection</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(ISPICKVAL(Status__c, &quot;Archived/Do Not Use&quot;), ISBLANK(Notes__c))</errorConditionFormula>
+    <errorMessage>A reason is required in the Notes field when Status = Archived/Do Not Use.</errorMessage>
+</ValidationRule>

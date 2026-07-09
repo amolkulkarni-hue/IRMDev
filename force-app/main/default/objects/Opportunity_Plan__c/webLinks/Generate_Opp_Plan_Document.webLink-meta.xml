@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebLink xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Generate_Opp_Plan_Document</fullName>
+    <availability>online</availability>
+    <displayType>button</displayType>
+    <encodingKey>UTF-8</encodingKey>
+    <hasMenubar>false</hasMenubar>
+    <hasScrollbars>true</hasScrollbars>
+    <hasToolbar>false</hasToolbar>
+    <height>600</height>
+    <isResizable>true</isResizable>
+    <linkType>url</linkType>
+    <masterLabel>Generate Opp Plan Document</masterLabel>
+    <openType>newWindow</openType>
+    <position>none</position>
+    <protected>false</protected>
+    <showsLocation>false</showsLocation>
+    <showsStatus>false</showsStatus>
+    <url>https://composer.congamerge.com
+?sessionId={!API.Session_ID}
+&amp;&amp;serverUrl={!API.Partner_Server_URL_290}
+
+&amp;id={!Opportunity_Plan__c.Id}
+&amp;TemplateID=a1l34000006JCGV
+
+&amp;ReportID=[OPOPPORTUNITYPLAN]00O34000006DCeg?pv0={!Opportunity_Plan__c.Id}
+&amp;ReportID=[OPCOMPETITORS]00O34000006DCeb?pv0={!Opportunity_Plan__c.Id}
+&amp;ReportID=[OPSTAKEHOLDERS]00O34000006DCef?pv0={!Opportunity_Plan__c.Id}
+&amp;ReportID=[OPDecisionCrit]00O34000006DCed?pv0={!Opportunity_Plan__c.Id}
+&amp;ReportID=[OPNEXTSTEPS]00O34000006DCee?pv0={!Opportunity_Plan__c.Id}
+&amp;ReportID=[OPCCOMPACT]00O34000006DCec?pv0={!Opportunity_Plan__c.Id}
+
+&amp;OFN=Opportunity+Plan+for+{!Opportunity_Plan__c.Account_Name__c}
+&amp;DS7=401
+&amp;LGAttachOption=2</url>
+</WebLink>

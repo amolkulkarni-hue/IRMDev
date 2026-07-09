@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Case_created_edits</fullName>
+    <active>true</active>
+    <description>When the case created checkbox is ticked, don&apos;t edit fields</description>
+    <errorConditionFormula>OR(
+AND(
+Case_Created__c = TRUE,
+RecordTypeId = &quot;012Q00000004jie&quot;,
+OR(
+ISCHANGED( Opportunity__c ),
+ISCHANGED(  Address__c  ),
+ISCHANGED(   City__c   ),
+ISCHANGED(   State_Province__c   ),
+ISCHANGED(   Zip_Postal_Code__c   ),
+ISCHANGED(    Country__c   ),
+ISCHANGED(     Division_Enabled__c    ),
+ISCHANGED(     Department_Restricted__c   ),
+ISCHANGED(    Remittance_Level__c    ), 
+ISCHANGED(    Department_Billing_Code__c     ), 
+ISCHANGED(     File_Level_Descriptive_Data_Entry__c    ), 
+ISCHANGED(     Record_Code_Parameter__c    )
+)
+),
+
+AND(PRIORVALUE(Case_Created__c)=TRUE, Ischanged(Case_Created__c) ) 
+
+)</errorConditionFormula>
+    <errorMessage>Customer profile fields may not be edited after a case has been created</errorMessage>
+</ValidationRule>

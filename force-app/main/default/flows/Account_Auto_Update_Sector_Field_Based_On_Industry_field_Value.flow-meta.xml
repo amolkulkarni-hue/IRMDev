@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>66.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <name>Assign_Sector_Value</name>
+        <label>Assign Sector Value</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Sector__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Industry_Sector_Mapping.Sector__c</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <decisions>
+        <name>Check_Industry_Present_OR_Not</name>
+        <label>Check Industry Present OR Not</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Found</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Industry_Sector_Mapping</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_Sector_Value</targetReference>
+            </connector>
+            <label>Found</label>
+        </rules>
+    </decisions>
+    <description>35414 : Account: Automate Sector based on Industry - PLNI0015831</description>
+    <environments>Default</environments>
+    <interviewLabel>Account :: Auto Update Sector Field Based On Industry field {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Account :: Auto Update Sector Field Based On Industry field Value</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <name>Get_Industry_Sector_Mapping</name>
+        <label>Get Industry Sector Mapping</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Check_Industry_Present_OR_Not</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Industry__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.IM_Industry__c</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Industry_Sector_Mapping__mdt</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <start>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Get_Industry_Sector_Mapping</targetReference>
+        </connector>
+        <filterFormula>AND(
+/* 1. Hierarchy must be IM Group (IMGA) OR Country Parent */
+OR(
+ISPICKVAL({!$Record.IM_Hierarchy_Level__c}, &quot;IM Group (IMGA)&quot;),
+AND( 
+/* Hierarchy Level equal to CP and Indusrty_Override checked */
+ISPICKVAL({!$Record.IM_Hierarchy_Level__c}, &quot;Country Parent&quot;),
+{!$Record.Industry_Override__c} = True
+)
+),
+/* Fire if its a New record OR if Industry changed */
+OR(
+AND(
+ISNEW(),
+NOT(ISBLANK(TEXT({!$Record.IM_Industry__c})))
+),
+ISCHANGED({!$Record.IM_Industry__c})
+)
+)</filterFormula>
+        <object>Account</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

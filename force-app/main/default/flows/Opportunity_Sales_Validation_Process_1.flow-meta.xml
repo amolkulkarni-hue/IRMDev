@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>myRule_10_A1</name>
+        <label>SV Status failed</label>
+        <locationX>842</locationX>
+        <locationY>1055</locationY>
+        <actionName>Opportunity.SV_Status_failed</actionName>
+        <actionType>emailAlert</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>Opportunity.SV_Status_failed</nameSegment>
+    </actionCalls>
+    <actionCalls>
+        <name>myRule_4_A1</name>
+        <label>SV Status Open</label>
+        <locationX>50</locationX>
+        <locationY>731</locationY>
+        <actionName>Opportunity.SV_Status_Open</actionName>
+        <actionType>emailAlert</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>Opportunity.SV_Status_Open</nameSegment>
+    </actionCalls>
+    <actionCalls>
+        <name>myRule_6_A1</name>
+        <label>SV Status BAU</label>
+        <locationX>314</locationX>
+        <locationY>839</locationY>
+        <actionName>Opportunity.SV_Status_BAU</actionName>
+        <actionType>emailAlert</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>Opportunity.SV_Status_BAU</nameSegment>
+    </actionCalls>
+    <actionCalls>
+        <name>myRule_8_A1</name>
+        <label>SV Status Passed</label>
+        <locationX>578</locationX>
+        <locationY>947</locationY>
+        <actionName>Opportunity.SV_Status_Passed</actionName>
+        <actionType>emailAlert</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>Opportunity.SV_Status_Passed</nameSegment>
+    </actionCalls>
+    <apiVersion>60.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <decisions>
+        <name>myRule_1</name>
+        <label>Populate SV Status Last Changed</label>
+        <locationX>297</locationX>
+        <locationY>323</locationY>
+        <defaultConnector>
+            <targetReference>myRule_4</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>FALSE_Populate SV Status Last Changed</defaultConnectorLabel>
+        <rules>
+            <name>TRUE_myRule_1</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>formula_TRUE_myRule_1</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>myRule_1_A1</targetReference>
+            </connector>
+            <label>TRUE_Populate SV Status Last Changed</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>myRule_10</name>
+        <label>Email SV Status Failed</label>
+        <locationX>974</locationX>
+        <locationY>947</locationY>
+        <defaultConnectorLabel>FALSE_Email SV Status Failed</defaultConnectorLabel>
+        <rules>
+            <name>TRUE_myRule_10</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>formula_TRUE_myRule_10</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>myRule_10_A1</targetReference>
+            </connector>
+            <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+            <label>TRUE_Email SV Status Failed</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>myRule_4</name>
+        <label>SV Status Open 40Days</label>
+        <locationX>297</locationX>
+        <locationY>623</locationY>
+        <defaultConnector>
+            <targetReference>myRule_6</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>FALSE_SV Status Open 40Days</defaultConnectorLabel>
+        <rules>
+            <name>TRUE_myRule_4</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>formula_TRUE_myRule_4</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>myRule_4_A1</targetReference>
+            </connector>
+            <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+            <label>TRUE_SV Status Open 40Days</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>myRule_6</name>
+        <label>Email SV Status Commission Ineligible</label>
+        <locationX>545</locationX>
+        <locationY>731</locationY>
+        <defaultConnector>
+            <targetReference>myRule_8</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>FALSE_Email SV Status Commission Ineligible</defaultConnectorLabel>
+        <rules>
+            <name>TRUE_myRule_6</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>formula_TRUE_myRule_6</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>myRule_6_A1</targetReference>
+            </connector>
+            <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+            <label>TRUE_Email SV Status Commission Ineligible</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>myRule_8</name>
+        <label>Email SV Status Passed</label>
+        <locationX>776</locationX>
+        <locationY>839</locationY>
+        <defaultConnector>
+            <targetReference>myRule_10</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>FALSE_Email SV Status Passed</defaultConnectorLabel>
+        <rules>
+            <name>TRUE_myRule_8</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>formula_TRUE_myRule_8</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>myRule_8_A1</targetReference>
+            </connector>
+            <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+            <label>TRUE_Email SV Status Passed</label>
+        </rules>
+    </decisions>
+    <description>Migrated from the Opportunity Sales Validation Process process using multiple criteria.
+This process builder is used to track the SV changed date/time and send emails at different SV values</description>
+    <environments>Default</environments>
+    <formulas>
+        <name>formula_1_myRule_1_A1_0488049360</name>
+        <dataType>DateTime</dataType>
+        <expression>NOW()</expression>
+    </formulas>
+    <formulas>
+        <name>formula_TRUE_myRule_1</name>
+        <dataType>Boolean</dataType>
+        <expression>AND(
+	NOT($Setup.Metadata_Activation_Settings__c.Disable_PB__c &amp;&amp; OR(ISBLANK($Setup.Metadata_Activation_Settings__c.SObject_API_Name__c), CONTAINS($Setup.Metadata_Activation_Settings__c.SObject_API_Name__c, &apos;Opportunity&apos;))),
+	ISCHANGED({!$Record.SV_Status__c} )
+)</expression>
+    </formulas>
+    <formulas>
+        <name>formula_TRUE_myRule_10</name>
+        <dataType>Boolean</dataType>
+        <expression>AND(
+	NOT($Setup.Metadata_Activation_Settings__c.Disable_PB__c &amp;&amp; OR(ISBLANK($Setup.Metadata_Activation_Settings__c.SObject_API_Name__c), CONTAINS($Setup.Metadata_Activation_Settings__c.SObject_API_Name__c, &apos;Opportunity&apos;))),
+	ISPICKVAL({!$Record.SV_Status__c} , &apos;Failed&apos;)
+)</expression>
+    </formulas>
+    <formulas>
+        <name>formula_TRUE_myRule_4</name>
+        <dataType>Boolean</dataType>
+        <expression>AND(
+	NOT($Setup.Metadata_Activation_Settings__c.Disable_PB__c &amp;&amp; OR(ISBLANK($Setup.Metadata_Activation_Settings__c.SObject_API_Name__c), CONTAINS($Setup.Metadata_Activation_Settings__c.SObject_API_Name__c, &apos;Opportunity&apos;))),
+	ISPICKVAL({!$Record.SV_Status__c} , &apos;Open&apos;)
+)</expression>
+    </formulas>
+    <formulas>
+        <name>formula_TRUE_myRule_6</name>
+        <dataType>Boolean</dataType>
+        <expression>AND(
+	NOT($Setup.Metadata_Activation_Settings__c.Disable_PB__c &amp;&amp; OR(ISBLANK($Setup.Metadata_Activation_Settings__c.SObject_API_Name__c), CONTAINS($Setup.Metadata_Activation_Settings__c.SObject_API_Name__c, &apos;Opportunity&apos;))), 
+	ISPICKVAL({!$Record.SV_Status__c} , &apos;Commission Ineligible&apos;)
+)</expression>
+    </formulas>
+    <formulas>
+        <name>formula_TRUE_myRule_8</name>
+        <dataType>Boolean</dataType>
+        <expression>AND(
+	NOT($Setup.Metadata_Activation_Settings__c.Disable_PB__c &amp;&amp; OR(ISBLANK($Setup.Metadata_Activation_Settings__c.SObject_API_Name__c), CONTAINS($Setup.Metadata_Activation_Settings__c.SObject_API_Name__c, &apos;Opportunity&apos;))),
+	OR(
+		ISPICKVAL({!$Record.SV_Status__c} , &apos;Passed&apos;) ,
+		ISPICKVAL({!$Record.SV_Status__c} , &apos;Appeal Approved&apos;) 
+	) 
+)</expression>
+    </formulas>
+    <interviewLabel>Opportunity Sales Validation Process_1 {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Opportunity Sales Validation Process_1</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <name>myRule_1_A1</name>
+        <label>Populate SV status Last Changed</label>
+        <locationX>165</locationX>
+        <locationY>431</locationY>
+        <connector>
+            <targetReference>myRule_4</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>SV_Status_Last_Changed__c</field>
+            <value>
+                <elementReference>formula_1_myRule_1_A1_0488049360</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>171</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>myRule_1</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>SV_Status__c</field>
+            <operator>IsChanged</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <object>Opportunity</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

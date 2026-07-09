@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Delete_Inv_Zip_Records</name>
+        <label>Delete Inv Zip Records</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <actionName>QTB_GenerateMassExtractCTRL</actionName>
+        <actionType>apex</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>invZipIds</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>QTB_GenerateMassExtractCTRL</nameSegment>
+        <offset>0</offset>
+    </actionCalls>
+    <apiVersion>65.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <description>Migrated from the Inv Zip Rec Delete process using Check Status criteria.
+Delete the record in Invoice Backing Report Compression after GEL sets Status is To Delete after ZIP file creation is complete.</description>
+    <environments>Default</environments>
+    <label>Inv Zip Rec Delete</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Delete_Inv_Zip_Records</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>QTB_Status__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>To delete</stringValue>
+            </value>
+        </filters>
+        <object>QTB_Invoice_Backing_Report_Compression__c</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

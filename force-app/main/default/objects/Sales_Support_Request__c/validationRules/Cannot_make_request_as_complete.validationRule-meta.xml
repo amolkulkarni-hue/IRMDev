@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Cannot_make_request_as_complete</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+ ISPICKVAL(Request_Status__c,&quot;Completed&quot;),
+OR(
+ ISPICKVAL(Task_Type__c,&apos;&apos;),
+ ISPICKVAL(Assignment_type__c,&apos;&apos;),
+ ISBLANK(Actual_Effort_hours__c),
+ ISBLANK(GCCS_Initial_Response_Date__c),
+ ISBLANK(GCCS_Initial_Request_Completion_Date__c),
+ ISBLANK(GCCS_Final_Completion_Date__c),
+ ISPICKVAL(GCCS_Initial_Request_Stage__c,&apos;&apos;))
+)</errorConditionFormula>
+    <errorMessage>Before marking request status as complete, make sure &quot;Task type, Actual Efforts, GCCS initial response date, GCCS initial request completion date, GCCS final completion date, GCCS initial request Stage&quot; are filled in</errorMessage>
+</ValidationRule>

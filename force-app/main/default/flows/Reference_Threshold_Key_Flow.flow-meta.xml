@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>61.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <name>assignUniqueKey</name>
+        <label>Assign Unique Key</label>
+        <locationX>176</locationX>
+        <locationY>168</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Unique_Key__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>formulaKey</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <description>Before Save Flow on Reference_Threshold__c. Auto-generates Unique_Key__c by concatenating Financial_Year__c, Region__c, Cluster__c, Country__c, and Volume_Profile__c with underscores. Spaces within values are replaced with underscores. Fires on Create and Update so the key stays current if any component field changes.</description>
+    <formulas>
+        <name>formulaKey</name>
+        <dataType>String</dataType>
+        <expression>SUBSTITUTE(TEXT({!$Record.Financial_Year__c}), &apos; &apos;, &apos;_&apos;) &amp; &apos;_&apos; &amp; SUBSTITUTE(TEXT({!$Record.Region__c}), &apos; &apos;, &apos;_&apos;) &amp; &apos;_&apos; &amp; SUBSTITUTE(TEXT({!$Record.Cluster__c}), &apos; &apos;, &apos;_&apos;) &amp; &apos;_&apos; &amp; SUBSTITUTE(TEXT({!$Record.Country__c}), &apos; &apos;, &apos;_&apos;) &amp; &apos;_&apos; &amp; SUBSTITUTE(TEXT({!$Record.Volume_Profile__c}), &apos; &apos;, &apos;_&apos;)</expression>
+    </formulas>
+    <label>Reference Threshold Key Flow</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>176</locationX>
+        <locationY>48</locationY>
+        <connector>
+            <targetReference>assignUniqueKey</targetReference>
+        </connector>
+        <object>Reference_Threshold__c</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

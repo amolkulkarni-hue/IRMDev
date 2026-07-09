@@ -1,0 +1,645 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>61.0</apiVersion>
+    <description>Screen Flow invoked from Case and Opportunity Quick Actions. Sets parent record references, creates the Document_Checklist__c record (Status=Draft), then shows a single screen to collect metadata and upload files (attached to the doc checklist record). After submission a duplicate-type check warns the user if applicable. Finally, uploaded files are cross-linked to the parent Case/Opp via IRM_AttachFilesAction.</description>
+    <label>Upload Document Checklist</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>Flow</processType>
+    <runInMode>SystemModeWithSharing</runInMode>
+    <status>Active</status>
+
+    <!-- ── VARIABLES ─────────────────────────────────────────────────────── -->
+
+    <variables>
+        <name>varRecordId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>varOppId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>varDocChecklist</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Document_Checklist__c</objectType>
+    </variables>
+    <variables>
+        <name>varDupDocChecklistId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>varNewDocChecklistId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>varDocChecklistLinks</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>ContentDocumentLink</objectType>
+    </variables>
+    <variables>
+        <name>varUploadedDocIds</name>
+        <dataType>String</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+
+    <!-- ── DECISIONS ─────────────────────────────────────────────────────── -->
+
+    <decisions>
+        <name>decisionIsCase</name>
+        <label>Is Case?</label>
+        <locationX>176</locationX>
+        <locationY>120</locationY>
+        <defaultConnector>
+            <targetReference>decisionSetFields</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Is Opportunity</defaultConnectorLabel>
+        <rules>
+            <name>ruleIsCase</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>varRecordId</leftValueReference>
+                <operator>StartsWith</operator>
+                <rightValue>
+                    <stringValue>500</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>getCase</targetReference>
+            </connector>
+            <label>Is Case</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>decisionSetFields</name>
+        <label>Set Parent Record Fields</label>
+        <locationX>176</locationX>
+        <locationY>360</locationY>
+        <defaultConnector>
+            <targetReference>assignOppFields</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Is Opportunity</defaultConnectorLabel>
+        <rules>
+            <name>ruleIsCase2</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>varRecordId</leftValueReference>
+                <operator>StartsWith</operator>
+                <rightValue>
+                    <stringValue>500</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>assignCaseFields</targetReference>
+            </connector>
+            <label>Is Case</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>decisionDuplicate</name>
+        <label>Duplicate Document Type Found?</label>
+        <locationX>176</locationX>
+        <locationY>960</locationY>
+        <defaultConnector>
+            <targetReference>updateDocChecklist</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No Duplicate</defaultConnectorLabel>
+        <rules>
+            <name>ruleDupFound</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>varDupDocChecklistId</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>screenDupWarning</targetReference>
+            </connector>
+            <label>Duplicate Exists</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>decisionHasFiles</name>
+        <label>Files Were Uploaded?</label>
+        <locationX>176</locationX>
+        <locationY>1560</locationY>
+        <defaultConnectorLabel>No Files</defaultConnectorLabel>
+        <rules>
+            <name>ruleHasFiles</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>varDocChecklistLinks</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>loopDocFiles</targetReference>
+            </connector>
+            <label>Has Files</label>
+        </rules>
+    </decisions>
+
+    <!-- ── RECORD LOOKUPS ─────────────────────────────────────────────────── -->
+
+    <recordLookups>
+        <name>getCase</name>
+        <label>Get Case — Read Linked Opportunity</label>
+        <locationX>440</locationX>
+        <locationY>240</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>decisionSetFields</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>varRecordId</elementReference>
+            </value>
+        </filters>
+        <object>Case</object>
+        <outputAssignments>
+            <assignToReference>varOppId</assignToReference>
+            <field>Opportunity__c</field>
+        </outputAssignments>
+    </recordLookups>
+    <recordLookups>
+        <name>checkDuplicate</name>
+        <label>Check for Duplicate Document Type</label>
+        <locationX>176</locationX>
+        <locationY>840</locationY>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>decisionDuplicate</targetReference>
+        </connector>
+        <filterLogic>1 AND (2 OR 3)</filterLogic>
+        <filters>
+            <field>DocumentType__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>varDocChecklist.DocumentType__c</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Case__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>varRecordId</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Opportunity__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>varRecordId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Document_Checklist__c</object>
+        <outputAssignments>
+            <assignToReference>varDupDocChecklistId</assignToReference>
+            <field>Id</field>
+        </outputAssignments>
+    </recordLookups>
+    <recordLookups>
+        <name>getDocChecklistFiles</name>
+        <label>Get Uploaded File Links</label>
+        <locationX>176</locationX>
+        <locationY>1440</locationY>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>decisionHasFiles</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>LinkedEntityId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>varNewDocChecklistId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>ContentDocumentLink</object>
+        <outputReference>varDocChecklistLinks</outputReference>
+    </recordLookups>
+
+    <!-- ── RECORD CREATES ────────────────────────────────────────────────── -->
+
+    <recordCreates>
+        <name>createDocChecklist</name>
+        <label>Create Document Checklist</label>
+        <locationX>176</locationX>
+        <locationY>600</locationY>
+        <assignRecordIdToReference>varNewDocChecklistId</assignRecordIdToReference>
+        <connector>
+            <targetReference>screenMetadata</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>screenCreateError</targetReference>
+        </faultConnector>
+        <inputAssignments>
+            <field>Status__c</field>
+            <value>
+                <stringValue>Draft</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Case__c</field>
+            <value>
+                <elementReference>varDocChecklist.Case__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Opportunity__c</field>
+            <value>
+                <elementReference>varDocChecklist.Opportunity__c</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Document_Checklist__c</object>
+    </recordCreates>
+
+    <!-- ── RECORD UPDATES ────────────────────────────────────────────────── -->
+
+    <recordUpdates>
+        <name>updateDocChecklist</name>
+        <label>Update Document Checklist with Metadata</label>
+        <locationX>176</locationX>
+        <locationY>1200</locationY>
+        <connector>
+            <targetReference>getDocChecklistFiles</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>varNewDocChecklistId</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Document_Category__c</field>
+            <value>
+                <elementReference>varDocChecklist.Document_Category__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>DocumentType__c</field>
+            <value>
+                <elementReference>varDocChecklist.DocumentType__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Notes__c</field>
+            <value>
+                <elementReference>varDocChecklist.Notes__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Due_Date__c</field>
+            <value>
+                <elementReference>varDocChecklist.Due_Date__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>IsRequired__c</field>
+            <value>
+                <elementReference>varDocChecklist.IsRequired__c</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Document_Checklist__c</object>
+    </recordUpdates>
+
+    <!-- ── SCREENS ───────────────────────────────────────────────────────── -->
+
+    <screens>
+        <name>screenMetadata</name>
+        <label>Add Document Checklist</label>
+        <locationX>176</locationX>
+        <locationY>720</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>checkDuplicate</targetReference>
+        </connector>
+        <fields>
+            <name>displayMetadataTitle</name>
+            <fieldText>&lt;p&gt;&lt;b&gt;Add Document Checklist&lt;/b&gt;&lt;/p&gt;&lt;p&gt;Select a document category and type, upload supporting files, and complete the optional fields, then click &lt;b&gt;Next&lt;/b&gt; to save.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <styleProperties>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
+        </fields>
+        <fields>
+            <name>fileUploadScreen1</name>
+            <extensionName>forceContent:fileUpload</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>varNewDocChecklistId</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>label</name>
+                <value>
+                    <stringValue>Upload Document</stringValue>
+                </value>
+            </inputParameters>
+            <isRequired>false</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+            <styleProperties>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
+        </fields>
+        <fields>
+            <name>sfDocCategory</name>
+            <dataType>String</dataType>
+            <fieldType>InputField</fieldType>
+            <isRequired>true</isRequired>
+            <objectFieldReference>varDocChecklist.Document_Category__c</objectFieldReference>
+            <styleProperties>
+                <width>
+                    <stringValue>6</stringValue>
+                </width>
+            </styleProperties>
+        </fields>
+        <fields>
+            <name>sfDocType</name>
+            <dataType>String</dataType>
+            <fieldType>InputField</fieldType>
+            <isRequired>true</isRequired>
+            <objectFieldReference>varDocChecklist.DocumentType__c</objectFieldReference>
+            <styleProperties>
+                <width>
+                    <stringValue>6</stringValue>
+                </width>
+            </styleProperties>
+        </fields>
+        <fields>
+            <name>sfNotes</name>
+            <dataType>String</dataType>
+            <fieldType>InputField</fieldType>
+            <isRequired>false</isRequired>
+            <objectFieldReference>varDocChecklist.Notes__c</objectFieldReference>
+            <styleProperties>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
+        </fields>
+        <fields>
+            <name>sfDueDate</name>
+            <dataType>Date</dataType>
+            <fieldType>InputField</fieldType>
+            <isRequired>false</isRequired>
+            <objectFieldReference>varDocChecklist.Due_Date__c</objectFieldReference>
+            <styleProperties>
+                <width>
+                    <stringValue>6</stringValue>
+                </width>
+            </styleProperties>
+        </fields>
+        <fields>
+            <name>sfIsRequired</name>
+            <dataType>Boolean</dataType>
+            <fieldType>InputField</fieldType>
+            <isRequired>true</isRequired>
+            <objectFieldReference>varDocChecklist.IsRequired__c</objectFieldReference>
+            <styleProperties>
+                <width>
+                    <stringValue>6</stringValue>
+                </width>
+            </styleProperties>
+        </fields>
+        <fields>
+            <name>displayStatusDraft</name>
+            <fieldText>&lt;p&gt;&lt;b&gt;Status:&lt;/b&gt; Draft (assigned automatically)&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <styleProperties>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>screenDupWarning</name>
+        <label>Duplicate Document Warning</label>
+        <locationX>440</locationX>
+        <locationY>1080</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>updateDocChecklist</targetReference>
+        </connector>
+        <fields>
+            <name>displayDupWarning</name>
+            <fieldText>&lt;p&gt;&lt;b&gt;Warning: Duplicate Document Type&lt;/b&gt;&lt;/p&gt;&lt;p&gt;A document checklist of type &lt;b&gt;{!varDocChecklist.DocumentType__c}&lt;/b&gt; already exists on this record.&lt;/p&gt;&lt;p&gt;Click &lt;b&gt;Next&lt;/b&gt; to proceed and create a duplicate entry, or close this window to cancel.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <styleProperties>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>screenCreateError</name>
+        <label>Record Creation Error</label>
+        <locationX>440</locationX>
+        <locationY>600</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>displayCreateError</name>
+            <fieldText>&lt;p&gt;&lt;b&gt;Error: Could Not Create Document Checklist&lt;/b&gt;&lt;/p&gt;&lt;p&gt;The document checklist record could not be created. Please verify you have the required permissions or contact your system administrator.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <styleProperties>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>screenAttachError</name>
+        <label>File Attachment Error</label>
+        <locationX>440</locationX>
+        <locationY>1800</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>displayAttachError</name>
+            <fieldText>&lt;p&gt;&lt;b&gt;Warning: Files Could Not Be Cross-Linked&lt;/b&gt;&lt;/p&gt;&lt;p&gt;The document checklist record was created and your files were uploaded successfully, but the files could not be linked to the parent record. You may manually attach them or contact your system administrator if the issue persists.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <styleProperties>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+
+    <!-- ── ASSIGNMENTS ───────────────────────────────────────────────────── -->
+
+    <assignments>
+        <name>assignCaseFields</name>
+        <label>Set Case and Opportunity Fields</label>
+        <locationX>440</locationX>
+        <locationY>480</locationY>
+        <assignmentItems>
+            <assignToReference>varDocChecklist.Case__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>varRecordId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varDocChecklist.Opportunity__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>varOppId</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>createDocChecklist</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>assignOppFields</name>
+        <label>Set Opportunity Field Only</label>
+        <locationX>176</locationX>
+        <locationY>480</locationY>
+        <assignmentItems>
+            <assignToReference>varDocChecklist.Opportunity__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>varRecordId</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>createDocChecklist</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>assignDocId</name>
+        <label>Add ContentDocumentId to Collection</label>
+        <locationX>264</locationX>
+        <locationY>1800</locationY>
+        <assignmentItems>
+            <assignToReference>varUploadedDocIds</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>loopDocFiles.ContentDocumentId</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>loopDocFiles</targetReference>
+        </connector>
+    </assignments>
+
+    <!-- ── LOOPS ──────────────────────────────────────────────────────────── -->
+
+    <loops>
+        <name>loopDocFiles</name>
+        <label>Loop Document Files</label>
+        <locationX>176</locationX>
+        <locationY>1680</locationY>
+        <collectionReference>varDocChecklistLinks</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>assignDocId</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>callAttachFiles</targetReference>
+        </noMoreValuesConnector>
+    </loops>
+
+    <!-- ── ACTION CALLS ───────────────────────────────────────────────────── -->
+
+    <actionCalls>
+        <name>callAttachFiles</name>
+        <label>Attach Files to Parent Record</label>
+        <locationX>176</locationX>
+        <locationY>1920</locationY>
+        <actionName>IRM_AttachFilesAction</actionName>
+        <actionType>apex</actionType>
+        <faultConnector>
+            <targetReference>screenAttachError</targetReference>
+        </faultConnector>
+        <inputParameters>
+            <name>contentDocumentIds</name>
+            <value>
+                <elementReference>varUploadedDocIds</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>targetRecordId</name>
+            <value>
+                <elementReference>varRecordId</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>additionalTargetRecordId</name>
+            <value>
+                <elementReference>varOppId</elementReference>
+            </value>
+        </inputParameters>
+    </actionCalls>
+
+    <!-- ── START ──────────────────────────────────────────────────────────── -->
+
+    <start>
+        <locationX>176</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>decisionIsCase</targetReference>
+        </connector>
+    </start>
+
+</Flow>

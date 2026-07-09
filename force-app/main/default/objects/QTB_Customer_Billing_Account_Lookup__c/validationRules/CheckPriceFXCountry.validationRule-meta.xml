@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CheckPriceFXCountry</fullName>
+    <active>true</active>
+    <description>If Billing Account country is within PriceFXCountry then Quote is mandatory</description>
+    <errorConditionFormula>AND( QTB_Billing_Account__r.QTB_SITAD__c = false
+, AND((CONTAINS($CustomMetadata.Quote_mandatory_for_Pricefx_country__mdt.Canada.Billing_Country__c,
+ QTB_Billing_Account__r.BillingCountry ) || CONTAINS($CustomMetadata.Quote_mandatory_for_Pricefx_country__mdt.United_States.Billing_Country__c,
+ QTB_Billing_Account__r.BillingCountry )) , QTB_Billing_Account__r.QTB_Account_Record_Type__c  = &quot;Billing Account&quot;,  (QTB_Quote__c = null) ))</errorConditionFormula>
+    <errorDisplayField>QTB_Quote__c</errorDisplayField>
+    <errorMessage>Quote is mandatory</errorMessage>
+</ValidationRule>

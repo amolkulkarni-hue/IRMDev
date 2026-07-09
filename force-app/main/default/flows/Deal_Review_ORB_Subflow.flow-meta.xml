@@ -1,0 +1,2212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Get_Slack_User_Id_of_L1_Approver</name>
+        <label>Get Slack User Id of L1 Approver</label>
+        <locationX>1106</locationX>
+        <locationY>650</locationY>
+        <actionName>SlackUserIdLookup</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Check_L1_Approver_for_Slack_Account</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>salesforceIDs</name>
+            <value>
+                <elementReference>Requery_Deal_Review_Record.L1_Approver__r.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>SlackUserIdLookup</nameSegment>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
+    <actionCalls>
+        <name>Get_Slack_User_Id_of_L1_Backup_Approver</name>
+        <label>Get Slack User Id of L1  Backup Approver</label>
+        <locationX>1106</locationX>
+        <locationY>1058</locationY>
+        <actionName>SlackUserIdLookup</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Check_L1_Backup_Approver_for_Slack_Account</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>salesforceIDs</name>
+            <value>
+                <elementReference>Requery_Deal_Review_Record.L1_Approver_Backup__r.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>SlackUserIdLookup</nameSegment>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
+    <actionCalls>
+        <name>Get_Slack_User_Id_of_L2_Backup_Commercial_Approver</name>
+        <label>Get Slack User Id of L2  Backup Commercial Approver</label>
+        <locationX>1106</locationX>
+        <locationY>2690</locationY>
+        <actionName>SlackUserIdLookup</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Check_L2_Backup_Commercial_Approver_for_Slack_Account</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>salesforceIDs</name>
+            <value>
+                <elementReference>Requery_Deal_Review_Record.L2_Commercial_Approver_Backup__r.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>SlackUserIdLookup</nameSegment>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
+    <actionCalls>
+        <name>Get_Slack_User_Id_of_L2_Backup_Finance_Approver</name>
+        <label>Get Slack User Id of L2 Backup Finance Approver</label>
+        <locationX>1106</locationX>
+        <locationY>1874</locationY>
+        <actionName>SlackUserIdLookup</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Check_L2_Backup_Finance_Approver_for_Slack_Account</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>salesforceIDs</name>
+            <value>
+                <elementReference>Requery_Deal_Review_Record.L2_Finance_Approver_Backup__r.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>SlackUserIdLookup</nameSegment>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
+    <actionCalls>
+        <name>Get_Slack_User_Id_of_L2_Commercial_Approver</name>
+        <label>Get Slack User Id of L2 Commercial Approver</label>
+        <locationX>1106</locationX>
+        <locationY>2282</locationY>
+        <actionName>SlackUserIdLookup</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Check_L2_Commercial_Approver_for_Slack_Account</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>salesforceIDs</name>
+            <value>
+                <elementReference>Requery_Deal_Review_Record.L2_Commercial_Approver__r.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>SlackUserIdLookup</nameSegment>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
+    <actionCalls>
+        <name>Get_Slack_User_Id_of_L2_Finance_Approver</name>
+        <label>Get Slack User Id of L2 Finance Approver</label>
+        <locationX>1106</locationX>
+        <locationY>1466</locationY>
+        <actionName>SlackUserIdLookup</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Check_L2_Finance_Approver_for_Slack_Account</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>salesforceIDs</name>
+            <value>
+                <elementReference>Requery_Deal_Review_Record.L2_Finance_Approver__r.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>SlackUserIdLookup</nameSegment>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
+    <actionCalls>
+        <name>Get_Slack_User_Id_of_L3_Global_Digital_Product_Approver</name>
+        <label>Get Slack User Id of L3 Global Digital Product Approver</label>
+        <locationX>644</locationX>
+        <locationY>3206</locationY>
+        <actionName>SlackUserIdLookup</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Check_L3_Global_Digital_Product_Approver_for_Slack_Account</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>salesforceIDs</name>
+            <value>
+                <elementReference>Requery_Deal_Review_Record.L3_Global_Digital_Product_Approver__r.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>SlackUserIdLookup</nameSegment>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
+    <actionCalls>
+        <name>Get_Slack_User_Id_of_L3_Global_EVP</name>
+        <label>Get Slack User Id of L3 Global EVP</label>
+        <locationX>1172</locationX>
+        <locationY>3206</locationY>
+        <actionName>SlackUserIdLookup</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Check_L3_Global_EVP_Approver_for_Slack_Account</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>salesforceIDs</name>
+            <value>
+                <elementReference>Requery_Deal_Review_Record.L3_Global_RIM_EVP_Approver__r.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>SlackUserIdLookup</nameSegment>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
+    <actionCalls>
+        <name>Get_Slack_User_Id_of_L3_GRO_CFO</name>
+        <label>Get Slack User Id of L3 GRO CFO</label>
+        <locationX>1172</locationX>
+        <locationY>3614</locationY>
+        <actionName>SlackUserIdLookup</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Check_L3_GRO_CFO_Approver_for_Slack_Account</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>salesforceIDs</name>
+            <value>
+                <elementReference>Requery_Deal_Review_Record.L3_GRO_CFO_Approver__r.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>SlackUserIdLookup</nameSegment>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
+    <actionCalls>
+        <name>Get_Slack_User_Id_of_User_Who_Created_Record</name>
+        <label>Get Slack User Id of User Who Created Record</label>
+        <locationX>1106</locationX>
+        <locationY>242</locationY>
+        <actionName>SlackUserIdLookup</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Check_User_Who_Created_Record_for_Slack_Account</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>salesforceIDs</name>
+            <value>
+                <elementReference>Requery_Deal_Review_Record.CreatedBy.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>SlackUserIdLookup</nameSegment>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
+    <actionCalls>
+        <name>Level_2_Edit_ORB_Message</name>
+        <label>Level 2 Edit ORB Message</label>
+        <locationX>1898</locationX>
+        <locationY>5306</locationY>
+        <actionName>slackUpdateMessage</actionName>
+        <actionType>slackUpdateMessage</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>slackAppIdForToken</name>
+            <value>
+                <elementReference>$Label.Slack_SlackAppID</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>slackWorkspaceIdForToken</name>
+            <value>
+                <elementReference>$Label.Slack_TeamId</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>slackConversationId</name>
+            <value>
+                <elementReference>OrbSlackChannel</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>slackMessage</name>
+            <value>
+                <elementReference>Slack_ORB_Message_Template</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>slackMessageTimestamp</name>
+            <value>
+                <elementReference>input_Deal_Review.Slack_Message_TS__c</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>slackUpdateMessage</nameSegment>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
+    <actionCalls>
+        <name>Level_3_Edit_ORB_Message</name>
+        <label>Level 3 Edit ORB Message</label>
+        <locationX>842</locationX>
+        <locationY>5306</locationY>
+        <actionName>slackUpdateMessage</actionName>
+        <actionType>slackUpdateMessage</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>slackAppIdForToken</name>
+            <value>
+                <elementReference>$Label.Slack_SlackAppID</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>slackWorkspaceIdForToken</name>
+            <value>
+                <elementReference>$Label.Slack_TeamId</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>slackConversationId</name>
+            <value>
+                <elementReference>OrbSlackChannel</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>slackMessage</name>
+            <value>
+                <elementReference>Slack_ORB_Level_3_Message_Template</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>slackMessageTimestamp</name>
+            <value>
+                <elementReference>input_Deal_Review.Slack_Message_TS__c</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>slackUpdateMessage</nameSegment>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
+    <actionCalls>
+        <name>Send_Deal_Level_2_Slack_Message_to_ORB_Channel</name>
+        <label>Send Deal Level 2 Slack Message to ORB Channel</label>
+        <locationX>1370</locationX>
+        <locationY>5306</locationY>
+        <actionName>slackPostMessage</actionName>
+        <actionType>slackPostMessage</actionType>
+        <connector>
+            <targetReference>Set_Slack_Message_TS_Off_DL2_Message</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>slackAppIdForToken</name>
+            <value>
+                <stringValue>A03269G3DNE</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>slackWorkspaceIdForToken</name>
+            <value>
+                <elementReference>$Label.Slack_TeamId</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>slackConversationId</name>
+            <value>
+                <elementReference>OrbSlackChannel</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>slackMessage</name>
+            <value>
+                <elementReference>Slack_ORB_Message_Template</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>slackPostMessage</nameSegment>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
+    <actionCalls>
+        <name>Send_Deal_Level_3_Slack_Message_to_ORB_Channel</name>
+        <label>Send Deal Level 3 Slack Message to ORB Channel</label>
+        <locationX>314</locationX>
+        <locationY>5306</locationY>
+        <actionName>slackPostMessage</actionName>
+        <actionType>slackPostMessage</actionType>
+        <connector>
+            <targetReference>Set_Slack_Message_TS_Off_DL3_Message</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>slackAppIdForToken</name>
+            <value>
+                <stringValue>A03269G3DNE</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>slackWorkspaceIdForToken</name>
+            <value>
+                <elementReference>$Label.Slack_TeamId</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>slackConversationId</name>
+            <value>
+                <elementReference>OrbSlackChannel</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>slackMessage</name>
+            <value>
+                <elementReference>Slack_ORB_Level_3_Message_Template</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>slackPostMessage</nameSegment>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
+    <apiVersion>58.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <name>Copy_1_of_Set_Current_Approver_to_Complete</name>
+        <label>Copy 1 of Set Current Approver to Complete</label>
+        <locationX>2921</locationX>
+        <locationY>4730</locationY>
+        <assignmentItems>
+            <assignToReference>currentApprover</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>N/A</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Is_Deal_Level_3_for_Different_ORB_Message</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Copy_1_of_Set_Current_Approver_to_L2_Commercial</name>
+        <label>Copy 1 of Set Current Approver to L2 Commercial</label>
+        <locationX>1865</locationX>
+        <locationY>4730</locationY>
+        <assignmentItems>
+            <assignToReference>currentApprover</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>L2 Commercial</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Is_Deal_Level_3_for_Different_ORB_Message</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Copy_1_of_Set_Current_Approver_to_L2_Finance</name>
+        <label>Copy 1 of Set Current Approver to L2 Finance</label>
+        <locationX>1601</locationX>
+        <locationY>4730</locationY>
+        <assignmentItems>
+            <assignToReference>currentApprover</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>L2 Finance</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Is_Deal_Level_3_for_Different_ORB_Message</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Copy_1_of_Set_L3_Global_EVP_Approver_in_Slack_Message_to_UserId_Mention</name>
+        <label>Copy 1 of Set L3 Global EVP Approver in Slack Message to UserId Mention</label>
+        <locationX>776</locationX>
+        <locationY>3422</locationY>
+        <assignmentItems>
+            <assignToReference>L3_Global_Digital_Product_Slack</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>&lt;@{!Get_Slack_User_Id_of_L3_Global_Digital_Product_Approver}&gt;</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Get_Slack_User_Id_of_L3_Global_EVP</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Level_3_Set_Current_Approver_to_L3_GRO_CFO</name>
+        <label>Level 3 Set Current Approver to L3 GRO CFO</label>
+        <locationX>2129</locationX>
+        <locationY>4730</locationY>
+        <assignmentItems>
+            <assignToReference>currentApprover</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>L3 GRO CFO</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Is_Deal_Level_3_for_Different_ORB_Message</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Level_3_Set_Current_Approver_to_L3_RIM_EVP</name>
+        <label>Level 3 Set Current Approver to L3 RIM EVP</label>
+        <locationX>2393</locationX>
+        <locationY>4730</locationY>
+        <assignmentItems>
+            <assignToReference>currentApprover</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>L3 Global EVP</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Is_Deal_Level_3_for_Different_ORB_Message</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Created_By_in_Slack_Message_to_Static_Name</name>
+        <label>Set Created By in Slack Message to Static Name</label>
+        <locationX>974</locationX>
+        <locationY>458</locationY>
+        <assignmentItems>
+            <assignToReference>Created_By_Slack</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>{!Requery_Deal_Review_Record.CreatedBy.FirstName} {!Requery_Deal_Review_Record.CreatedBy.LastName}  - {!Requery_Deal_Review_Record.CreatedBy.Email}</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Get_Slack_User_Id_of_L1_Approver</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Created_By_in_Slack_Message_to_UserId_Mention</name>
+        <label>Set Created By in Slack Message to UserId Mention</label>
+        <locationX>1238</locationX>
+        <locationY>458</locationY>
+        <assignmentItems>
+            <assignToReference>Created_By_Slack</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>&lt;@{!Get_Slack_User_Id_of_User_Who_Created_Record}&gt;</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Get_Slack_User_Id_of_L1_Approver</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Current_Approver_to_Complete</name>
+        <label>Set Current Approver to Complete</label>
+        <locationX>1337</locationX>
+        <locationY>4730</locationY>
+        <assignmentItems>
+            <assignToReference>currentApprover</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>N/A</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Is_Deal_Level_3_for_Different_ORB_Message</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Current_Approver_to_L2_Finance</name>
+        <label>Set Current Approver to L2 Finance</label>
+        <locationX>809</locationX>
+        <locationY>4730</locationY>
+        <assignmentItems>
+            <assignToReference>currentApprover</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>L2 Finance</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Is_Deal_Level_3_for_Different_ORB_Message</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Current_Approver_to_L3_Global_Digital_Approver</name>
+        <label>Set Current Approver to L3 Global Digital Approver</label>
+        <locationX>2657</locationX>
+        <locationY>4730</locationY>
+        <assignmentItems>
+            <assignToReference>currentApprover</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>L3 Global Digital Product</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Is_Deal_Level_3_for_Different_ORB_Message</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Current_Approver_to_NA</name>
+        <label>Set Current Approver to NA</label>
+        <locationX>545</locationX>
+        <locationY>4514</locationY>
+        <assignmentItems>
+            <assignToReference>currentApprover</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>N/A</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Is_Deal_Level_3_for_Different_ORB_Message</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_L1_Approver_in_Slack_Message_to_Static_Name</name>
+        <label>Set L1 Approver in Slack Message to Static Name</label>
+        <locationX>974</locationX>
+        <locationY>866</locationY>
+        <assignmentItems>
+            <assignToReference>L1_Approver_Slack</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>{!Requery_Deal_Review_Record.L1_Approver__r.FirstName} {!Requery_Deal_Review_Record.L1_Approver__r.LastName} - {!Requery_Deal_Review_Record.L1_Approver__r.Email}</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Get_Slack_User_Id_of_L1_Backup_Approver</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_L1_Approver_in_Slack_Message_to_UserId_Mention</name>
+        <label>Set L1 Approver in Slack Message to UserId Mention</label>
+        <locationX>1238</locationX>
+        <locationY>866</locationY>
+        <assignmentItems>
+            <assignToReference>L1_Approver_Slack</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>&lt;@{!Get_Slack_User_Id_of_L1_Approver}&gt;</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Get_Slack_User_Id_of_L1_Backup_Approver</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_L1_Backup_Approver_in_Slack_Message_to_Static_Name</name>
+        <label>Set L1 Backup Approver in Slack Message to Static Name</label>
+        <locationX>974</locationX>
+        <locationY>1274</locationY>
+        <assignmentItems>
+            <assignToReference>L1_Backup_Approver_Slack</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>{!Requery_Deal_Review_Record.L1_Approver_Backup__r.FirstName} {!Requery_Deal_Review_Record.L1_Approver_Backup__r.LastName} - {!Requery_Deal_Review_Record.L1_Approver_Backup__r.Email}</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Get_Slack_User_Id_of_L2_Finance_Approver</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_L1_Backup_Approver_in_Slack_Message_to_UserId_Mention</name>
+        <label>Set L1 Backup Approver in Slack Message to UserId Mention</label>
+        <locationX>1238</locationX>
+        <locationY>1274</locationY>
+        <assignmentItems>
+            <assignToReference>L1_Backup_Approver_Slack</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>&lt;@{!Get_Slack_User_Id_of_L1_Backup_Approver}&gt;</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Get_Slack_User_Id_of_L2_Finance_Approver</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_L2_Backup_Commercial_Approver_in_Slack_Message_to_Static_Name</name>
+        <label>Set L2 Backup Commercial Approver in Slack Message to Static Name</label>
+        <locationX>974</locationX>
+        <locationY>2906</locationY>
+        <assignmentItems>
+            <assignToReference>L2_Backup_Commercial_Approver_Slack</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>{!Requery_Deal_Review_Record.L2_Commercial_Approver_Backup__r.FirstName} {!Requery_Deal_Review_Record.L2_Commercial_Approver_Backup__r.LastName} - {!Requery_Deal_Review_Record.L2_Commercial_Approver_Backup__r.Email}</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Check_for_DL3</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_L2_Backup_Commercial_Approver_in_Slack_Message_to_UserId_Mention</name>
+        <label>Set L2 Backup Commercial Approver in Slack Message to UserId Mention</label>
+        <locationX>1238</locationX>
+        <locationY>2906</locationY>
+        <assignmentItems>
+            <assignToReference>L2_Backup_Commercial_Approver_Slack</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>&lt;@{!Get_Slack_User_Id_of_L2_Backup_Commercial_Approver}&gt;</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Check_for_DL3</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_L2_Backup_Finance_Approver_in_Slack_Message_to_Static_Name</name>
+        <label>Set L2 Backup Finance Approver in Slack Message to Static Name</label>
+        <locationX>974</locationX>
+        <locationY>2090</locationY>
+        <assignmentItems>
+            <assignToReference>L2_Backup_Finance_Approver_Slack</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>{!Requery_Deal_Review_Record.L2_Finance_Approver_Backup__r.FirstName} {!Requery_Deal_Review_Record.L2_Finance_Approver_Backup__r.LastName} - {!Requery_Deal_Review_Record.L2_Finance_Approver_Backup__r.Email}</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Get_Slack_User_Id_of_L2_Commercial_Approver</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_L2_Backup_Finance_Approver_in_Slack_Message_to_UserId_Mention</name>
+        <label>Set L2 Backup Finance Approver in Slack Message to UserId Mention</label>
+        <locationX>1238</locationX>
+        <locationY>2090</locationY>
+        <assignmentItems>
+            <assignToReference>L2_Backup_Finance_Approver_Slack</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>&lt;@{!Get_Slack_User_Id_of_L2_Backup_Finance_Approver}&gt;</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Get_Slack_User_Id_of_L2_Commercial_Approver</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_L2_Commercial_Approver_in_Slack_Message_to_Static_Name</name>
+        <label>Set L2 Commercial Approver in Slack Message to Static Name</label>
+        <locationX>974</locationX>
+        <locationY>2498</locationY>
+        <assignmentItems>
+            <assignToReference>L2_Commercial_Approver_Slack</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>{!Requery_Deal_Review_Record.L2_Commercial_Approver__r.FirstName} {!Requery_Deal_Review_Record.L2_Commercial_Approver__r.LastName} - {!Requery_Deal_Review_Record.L2_Commercial_Approver__r.Email}</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Get_Slack_User_Id_of_L2_Backup_Commercial_Approver</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_L2_Commercial_Approver_in_Slack_Message_to_UserId_Mention</name>
+        <label>Set L2 Commercial Approver in Slack Message to UserId Mention</label>
+        <locationX>1238</locationX>
+        <locationY>2498</locationY>
+        <assignmentItems>
+            <assignToReference>L2_Commercial_Approver_Slack</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>&lt;@{!Get_Slack_User_Id_of_L2_Commercial_Approver}&gt;</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Get_Slack_User_Id_of_L2_Backup_Commercial_Approver</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_L2_Finance_Approver_in_Slack_Message_to_Static_Name</name>
+        <label>Set L2 Finance Approver in Slack Message to Static Name</label>
+        <locationX>974</locationX>
+        <locationY>1682</locationY>
+        <assignmentItems>
+            <assignToReference>L2_Finance_Approver_Slack</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>{!Requery_Deal_Review_Record.L2_Finance_Approver__r.FirstName} {!Requery_Deal_Review_Record.L2_Finance_Approver__r.LastName} - {!Requery_Deal_Review_Record.L2_Finance_Approver__r.Email}</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Get_Slack_User_Id_of_L2_Backup_Finance_Approver</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_L2_Finance_Approver_in_Slack_Message_to_UserId_Mention</name>
+        <label>Set L2 Finance Approver in Slack Message to UserId Mention</label>
+        <locationX>1238</locationX>
+        <locationY>1682</locationY>
+        <assignmentItems>
+            <assignToReference>L2_Finance_Approver_Slack</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>&lt;@{!Get_Slack_User_Id_of_L2_Finance_Approver}&gt;</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Get_Slack_User_Id_of_L2_Backup_Finance_Approver</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_L3_Global_Digital_Approver_static_name</name>
+        <label>Set L3 Global Digital Approver static name</label>
+        <locationX>512</locationX>
+        <locationY>3422</locationY>
+        <assignmentItems>
+            <assignToReference>L3_Global_Digital_Product_Slack</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>{!Requery_Deal_Review_Record.L3_Global_Digital_Product_Approver__r.FirstName} {!Requery_Deal_Review_Record.L3_Global_Digital_Product_Approver__r.LastName} - {!Requery_Deal_Review_Record.L3_Global_Digital_Product_Approver__r.Email}</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Get_Slack_User_Id_of_L3_Global_EVP</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_L3_Global_EVP_Approver_in_Slack_Message_to_Static_Name</name>
+        <label>Set L3 Global EVP static name</label>
+        <locationX>1040</locationX>
+        <locationY>3422</locationY>
+        <assignmentItems>
+            <assignToReference>L3_Global_EVP_Approver_Slack</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>{!Requery_Deal_Review_Record.L3_Global_RIM_EVP_Approver__r.FirstName} {!Requery_Deal_Review_Record.L3_Global_RIM_EVP_Approver__r.LastName} - {!Requery_Deal_Review_Record.L3_Global_RIM_EVP_Approver__r.Email}</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Get_Slack_User_Id_of_L3_GRO_CFO</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_L3_Global_EVP_Approver_in_Slack_Message_to_UserId_Mention</name>
+        <label>Set L3 Global EVP Approver in Slack Message to UserId Mention</label>
+        <locationX>1304</locationX>
+        <locationY>3422</locationY>
+        <assignmentItems>
+            <assignToReference>L3_Global_EVP_Approver_Slack</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>&lt;@{!Get_Slack_User_Id_of_L3_Global_EVP}&gt;</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Get_Slack_User_Id_of_L3_GRO_CFO</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_L3_GRO_CFO_Approver_in_Slack_Message_to_UserId_Mention</name>
+        <label>Set L3 GRO CFO Approver in Slack Message to UserId Mention</label>
+        <locationX>1304</locationX>
+        <locationY>3830</locationY>
+        <assignmentItems>
+            <assignToReference>L3_GRO_CFO_Approver_Slack</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>&lt;@{!Get_Slack_User_Id_of_L3_GRO_CFO}&gt;</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Pick_Corresponding_Slack_Channel_for_ORB_Message_Delivery</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_L3_GRO_CFO_static_name</name>
+        <label>Set L3 GRO CFO static name</label>
+        <locationX>1040</locationX>
+        <locationY>3830</locationY>
+        <assignmentItems>
+            <assignToReference>L3_GRO_CFO_Approver_Slack</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>{!Requery_Deal_Review_Record.L3_GRO_CFO_Approver__r.FirstName} {!Requery_Deal_Review_Record.L3_GRO_CFO_Approver__r.LastName} - {!Requery_Deal_Review_Record.L3_GRO_CFO_Approver__r.Email}</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Pick_Corresponding_Slack_Channel_for_ORB_Message_Delivery</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Next_Approver_to_L2_Commercial</name>
+        <label>Set Current Approver to L2 Commercial</label>
+        <locationX>1073</locationX>
+        <locationY>4730</locationY>
+        <assignmentItems>
+            <assignToReference>currentApprover</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>L2 Commercial</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Is_Deal_Level_3_for_Different_ORB_Message</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Orb_Slack_Channel_to_APAC_Channel</name>
+        <label>Set Orb Slack Channel to APAC Channel</label>
+        <locationX>710</locationX>
+        <locationY>4214</locationY>
+        <assignmentItems>
+            <assignToReference>OrbSlackChannel</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Label.Slack_orbAPACChannelId</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Check_Status_of_Deal_Review</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Orb_Slack_Channel_to_ESA_Channel</name>
+        <label>Set Orb Slack Channel to ESA Channel</label>
+        <locationX>1238</locationX>
+        <locationY>4214</locationY>
+        <assignmentItems>
+            <assignToReference>OrbSlackChannel</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Label.Slack_orbESAChannelId</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Check_Status_of_Deal_Review</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Orb_Slack_Channel_to_GI</name>
+        <label>Set Orb Slack Channel to GI Channel</label>
+        <locationX>446</locationX>
+        <locationY>4214</locationY>
+        <assignmentItems>
+            <assignToReference>OrbSlackChannel</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Label.Slack_orbGIChannelId</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Check_Status_of_Deal_Review</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Orb_Slack_Channel_to_LATAM_Channel</name>
+        <label>Set Orb Slack Channel to LATAM Channel</label>
+        <locationX>1502</locationX>
+        <locationY>4214</locationY>
+        <assignmentItems>
+            <assignToReference>OrbSlackChannel</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Label.Slack_orbLATAMChannelId</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Check_Status_of_Deal_Review</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Orb_Slack_Channel_to_MENAT_Channel</name>
+        <label>Set Orb Slack Channel to MENAT Channel</label>
+        <locationX>974</locationX>
+        <locationY>4214</locationY>
+        <assignmentItems>
+            <assignToReference>OrbSlackChannel</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Label.Slack_orbMENATChannelId</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Check_Status_of_Deal_Review</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Orb_Slack_Channel_to_NA_Channel</name>
+        <label>Set Orb Slack Channel to NA Channel</label>
+        <locationX>1766</locationX>
+        <locationY>4214</locationY>
+        <assignmentItems>
+            <assignToReference>OrbSlackChannel</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Label.Slack_orbNAChannelId</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Check_Status_of_Deal_Review</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Slack_Message_TS_Off_DL2_Message</name>
+        <label>Set Slack Message TS Off DL2 Message</label>
+        <locationX>1370</locationX>
+        <locationY>5414</locationY>
+        <assignmentItems>
+            <assignToReference>SlackMessageTS</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Send_Deal_Level_2_Slack_Message_to_ORB_Channel.slackMessageTimestamp</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Check_the_Sales_Region_of_DR</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Slack_Message_TS_Off_DL3_Message</name>
+        <label>Set Slack Message TS Off DL3 Message</label>
+        <locationX>314</locationX>
+        <locationY>5414</locationY>
+        <assignmentItems>
+            <assignToReference>SlackMessageTS</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Send_Deal_Level_3_Slack_Message_to_ORB_Channel.slackMessageTimestamp</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Check_the_Sales_Region_of_Deal_Review</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <name>Check_Deal_Level_for_Approver_updates</name>
+        <label>Check Deal Level for Approver updates</label>
+        <locationX>1667</locationX>
+        <locationY>4514</locationY>
+        <defaultConnector>
+            <targetReference>Level_3_Check_What_Approver_It_Is</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Level 3</defaultConnectorLabel>
+        <rules>
+            <name>Level_2</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>input_Deal_Review.Deal_Level__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>2</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Level_2_Check_What_Approver_It_Is</targetReference>
+            </connector>
+            <label>Level 2</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>If Deal Level = 3 then add in additional approvers</description>
+        <name>Check_for_DL3</name>
+        <label>Check for DL3</label>
+        <locationX>1106</locationX>
+        <locationY>3098</locationY>
+        <defaultConnector>
+            <targetReference>Pick_Corresponding_Slack_Channel_for_ORB_Message_Delivery</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>False</defaultConnectorLabel>
+        <rules>
+            <name>TRUE_add_L3_Global_Digital_Approver</name>
+            <conditionLogic>1 AND (2 OR 3 OR 4)</conditionLogic>
+            <conditions>
+                <leftValueReference>Requery_Deal_Review_Record.Deal_Level__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>3</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Requery_Deal_Review_Record.Primary_Product_Line__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Digital Solutions</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Requery_Deal_Review_Record.Primary_Product_Line__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Information Governance</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Requery_Deal_Review_Record.Primary_Product_Line__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>InSight</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Slack_User_Id_of_L3_Global_Digital_Product_Approver</targetReference>
+            </connector>
+            <label>TRUE (add L3 Global Digital Approver)</label>
+        </rules>
+        <rules>
+            <name>TRUE_add_L3_approvers</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Requery_Deal_Review_Record.Deal_Level__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>3</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Requery_Deal_Review_Record.Primary_Product_Line__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Digital Solutions</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Requery_Deal_Review_Record.Primary_Product_Line__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Information Governance</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Requery_Deal_Review_Record.Primary_Product_Line__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>InSight</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Slack_User_Id_of_L3_Global_EVP</targetReference>
+            </connector>
+            <label>TRUE (add L3 approvers)</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_if_DR_Slack_TS_Is_Empty_Level_2</name>
+        <label>Check if DR Slack TS Is Empty Level 2</label>
+        <locationX>1634</locationX>
+        <locationY>5198</locationY>
+        <defaultConnector>
+            <targetReference>Level_2_Edit_ORB_Message</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Slack Message Timestamp is not Null Level 2</defaultConnectorLabel>
+        <rules>
+            <name>Message_Timestamp_is_Null_Level_2</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>input_Deal_Review.Slack_Message_TS__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Send_Deal_Level_2_Slack_Message_to_ORB_Channel</targetReference>
+            </connector>
+            <label>Message Timestamp is Null Level 2</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_if_DR_Slack_TS_Is_Empty_Level_3</name>
+        <label>Check if DR Slack TS Is Empty Level 3</label>
+        <locationX>578</locationX>
+        <locationY>5198</locationY>
+        <defaultConnector>
+            <targetReference>Level_3_Edit_ORB_Message</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Slack Message Timestamp is not Null Level 3</defaultConnectorLabel>
+        <rules>
+            <name>Message_Timestamp_is_Null_Level_3</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>input_Deal_Review.Slack_Message_TS__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Send_Deal_Level_3_Slack_Message_to_ORB_Channel</targetReference>
+            </connector>
+            <label>Message Timestamp is Null Level 3</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_L1_Approver_for_Slack_Account</name>
+        <label>Check L1 Approver for Slack Account</label>
+        <locationX>1106</locationX>
+        <locationY>758</locationY>
+        <defaultConnector>
+            <targetReference>Set_L1_Approver_in_Slack_Message_to_UserId_Mention</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Has Connected Slack</defaultConnectorLabel>
+        <rules>
+            <name>L1_Approver_Does_Not_Have_Connected_Slack</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Slack_User_Id_of_L1_Approver</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_L1_Approver_in_Slack_Message_to_Static_Name</targetReference>
+            </connector>
+            <label>No Connected Slack</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_L1_Backup_Approver_for_Slack_Account</name>
+        <label>Check L1 Backup Approver for Slack Account</label>
+        <locationX>1106</locationX>
+        <locationY>1166</locationY>
+        <defaultConnector>
+            <targetReference>Set_L1_Backup_Approver_in_Slack_Message_to_UserId_Mention</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Has Connected Slack</defaultConnectorLabel>
+        <rules>
+            <name>L1_Backup_Approver_Does_Not_Have_Connected_Slack</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Slack_User_Id_of_L1_Backup_Approver</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_L1_Backup_Approver_in_Slack_Message_to_Static_Name</targetReference>
+            </connector>
+            <label>No Connected Slack</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_L2_Backup_Commercial_Approver_for_Slack_Account</name>
+        <label>Check L2 Backup Commercial Approver for Slack Account</label>
+        <locationX>1106</locationX>
+        <locationY>2798</locationY>
+        <defaultConnector>
+            <targetReference>Set_L2_Backup_Commercial_Approver_in_Slack_Message_to_UserId_Mention</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Has Connected Slack</defaultConnectorLabel>
+        <rules>
+            <name>No_Connected_Slack</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Slack_User_Id_of_L2_Backup_Commercial_Approver</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_L2_Backup_Commercial_Approver_in_Slack_Message_to_Static_Name</targetReference>
+            </connector>
+            <label>No Connected Slack</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_L2_Backup_Finance_Approver_for_Slack_Account</name>
+        <label>Check L2 Backup Finance Approver for Slack Account</label>
+        <locationX>1106</locationX>
+        <locationY>1982</locationY>
+        <defaultConnector>
+            <targetReference>Set_L2_Backup_Finance_Approver_in_Slack_Message_to_UserId_Mention</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Has Connected Slack</defaultConnectorLabel>
+        <rules>
+            <name>L2_Backup_Finance_Approver_Does_Not_Have_Connected_Slack</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Slack_User_Id_of_L2_Backup_Finance_Approver</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_L2_Backup_Finance_Approver_in_Slack_Message_to_Static_Name</targetReference>
+            </connector>
+            <label>No Connected Slack</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_L2_Commercial_Approver_for_Slack_Account</name>
+        <label>Check L2 Commercial Approver for Slack Account</label>
+        <locationX>1106</locationX>
+        <locationY>2390</locationY>
+        <defaultConnector>
+            <targetReference>Set_L2_Commercial_Approver_in_Slack_Message_to_UserId_Mention</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Has Connected Slack</defaultConnectorLabel>
+        <rules>
+            <name>L2_Commercial_Approver_Does_Not_Have_Connected_Slack</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Slack_User_Id_of_L2_Commercial_Approver</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_L2_Commercial_Approver_in_Slack_Message_to_Static_Name</targetReference>
+            </connector>
+            <label>No Connected Slack</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_L2_Finance_Approver_for_Slack_Account</name>
+        <label>Check L2 Finance Approver for Slack Account</label>
+        <locationX>1106</locationX>
+        <locationY>1574</locationY>
+        <defaultConnector>
+            <targetReference>Set_L2_Finance_Approver_in_Slack_Message_to_UserId_Mention</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Has Connected Slack</defaultConnectorLabel>
+        <rules>
+            <name>L2_Finance_Approver_Does_Not_Have_Connected_Slack</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Slack_User_Id_of_L2_Finance_Approver</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_L2_Finance_Approver_in_Slack_Message_to_Static_Name</targetReference>
+            </connector>
+            <label>No Connected Slack</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_L3_Global_Digital_Product_Approver_for_Slack_Account</name>
+        <label>Check L3 Global Digital Product Approver for Slack Account</label>
+        <locationX>644</locationX>
+        <locationY>3314</locationY>
+        <defaultConnector>
+            <targetReference>Copy_1_of_Set_L3_Global_EVP_Approver_in_Slack_Message_to_UserId_Mention</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Has Connected Slack</defaultConnectorLabel>
+        <rules>
+            <name>Not_Connected_Slack</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Slack_User_Id_of_L3_Global_Digital_Product_Approver</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_L3_Global_Digital_Approver_static_name</targetReference>
+            </connector>
+            <label>Not Connected Slack</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_L3_Global_EVP_Approver_for_Slack_Account</name>
+        <label>Check L3 Global EVP Approver for Slack Account</label>
+        <locationX>1172</locationX>
+        <locationY>3314</locationY>
+        <defaultConnector>
+            <targetReference>Set_L3_Global_EVP_Approver_in_Slack_Message_to_UserId_Mention</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Has Connected Slack</defaultConnectorLabel>
+        <rules>
+            <name>L3_Global_EVP_Approver_Does_Not_Have_Connected_Slack</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Slack_User_Id_of_L3_Global_EVP</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_L3_Global_EVP_Approver_in_Slack_Message_to_Static_Name</targetReference>
+            </connector>
+            <label>No Connected Slack</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_L3_GRO_CFO_Approver_for_Slack_Account</name>
+        <label>Check L3 GRO CFO Approver for Slack Account</label>
+        <locationX>1172</locationX>
+        <locationY>3722</locationY>
+        <defaultConnector>
+            <targetReference>Set_L3_GRO_CFO_Approver_in_Slack_Message_to_UserId_Mention</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Has Connected Slack</defaultConnectorLabel>
+        <rules>
+            <name>No_Connected_Slack_cfo</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Slack_User_Id_of_L3_GRO_CFO</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_L3_GRO_CFO_static_name</targetReference>
+            </connector>
+            <label>No Connected Slack</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_Status_of_Deal_Review</name>
+        <label>Check Status of Deal Review</label>
+        <locationX>1106</locationX>
+        <locationY>4406</locationY>
+        <defaultConnector>
+            <targetReference>Check_Deal_Level_for_Approver_updates</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Other Statuses</defaultConnectorLabel>
+        <rules>
+            <name>Deal_Review_Is_Reject_Recall_Invalid</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>input_Deal_Review.Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Invalid</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>input_Deal_Review.Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Rejected</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>input_Deal_Review.Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Recalled</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Current_Approver_to_NA</targetReference>
+            </connector>
+            <label>Deal Review Is Reject Recall Invalid</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_the_Sales_Region_of_Deal_Review</name>
+        <label>Check the Sales Region of Deal Review</label>
+        <locationX>314</locationX>
+        <locationY>5522</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Copy_1_of_Equals_to_NA</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>input_Deal_Review.Sales_Region__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>North America</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Add_Slack_Message_Link_to_Deal_Review</targetReference>
+            </connector>
+            <label>Equals  to NA</label>
+        </rules>
+        <rules>
+            <name>Copy_1_of_Equals_to_Europe</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>input_Deal_Review.Sales_Region__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>$Label.Deal_Review_Europe_Region</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Add_Slack_Message_Link_to_DR_If_Region_is_Europe</targetReference>
+            </connector>
+            <label>Equals to Europe</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_the_Sales_Region_of_DR</name>
+        <label>Check the Sales Region of DR</label>
+        <locationX>1370</locationX>
+        <locationY>5522</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Equals_to_NA</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>input_Deal_Review.Sales_Region__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>North America</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Copy_1_of_Add_Slack_Message_Link_to_Deal_Review</targetReference>
+            </connector>
+            <label>Equals  to NA</label>
+        </rules>
+        <rules>
+            <name>Equals_to_Europe</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>input_Deal_Review.Sales_Region__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>$Label.Deal_Review_Europe_Region</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Add_Slack_Message_Link_to_Deal_Review_if_Region_is_Europe</targetReference>
+            </connector>
+            <label>Equals to Europe</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_User_Who_Created_Record_for_Slack_Account</name>
+        <label>Check User Who Created Record for Slack Account</label>
+        <locationX>1106</locationX>
+        <locationY>350</locationY>
+        <defaultConnector>
+            <targetReference>Set_Created_By_in_Slack_Message_to_UserId_Mention</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Created By Has Connected Slack</defaultConnectorLabel>
+        <rules>
+            <name>No_Created_BY_Connected_Slack</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Slack_User_Id_of_User_Who_Created_Record</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Created_By_in_Slack_Message_to_Static_Name</targetReference>
+            </connector>
+            <label>No Created BY Connected Slack</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Is_Deal_Level_3_for_Different_ORB_Message</name>
+        <label>Is Deal Level 3 for Different ORB Message</label>
+        <locationX>1106</locationX>
+        <locationY>5090</locationY>
+        <defaultConnector>
+            <targetReference>Check_if_DR_Slack_TS_Is_Empty_Level_2</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Use Default Deal Level 2 Template</defaultConnectorLabel>
+        <rules>
+            <name>Deal_Level_is_3_Use_That_Template</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Requery_Deal_Review_Record.Deal_Level__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>3</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Check_if_DR_Slack_TS_Is_Empty_Level_3</targetReference>
+            </connector>
+            <label>Deal Level is 3 Use That Template</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Level_2_Check_What_Approver_It_Is</name>
+        <label>Level 2 Check What Approver It Is</label>
+        <locationX>1073</locationX>
+        <locationY>4622</locationY>
+        <defaultConnector>
+            <targetReference>Set_Current_Approver_to_Complete</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Approvals Complete</defaultConnectorLabel>
+        <rules>
+            <name>L12_Financial_Approver_Next</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>input_Deal_Review.L2_Finance_Approved_Date__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>input_Deal_Review.L1_Approved_Date__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Current_Approver_to_L2_Finance</targetReference>
+            </connector>
+            <label>L2 Financial Approver Next</label>
+        </rules>
+        <rules>
+            <name>L2_Commercial_Approver_Next</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>input_Deal_Review.L1_Approved_Date__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>input_Deal_Review.L2_Commercial_Approved_Date__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>input_Deal_Review.L2_Finance_Approved_Date__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Next_Approver_to_L2_Commercial</targetReference>
+            </connector>
+            <label>L2 Commercial Approver Next</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Level_3_Check_What_Approver_It_Is</name>
+        <label>Level 3 Check What Approver It Is</label>
+        <locationX>2261</locationX>
+        <locationY>4622</locationY>
+        <defaultConnector>
+            <targetReference>Copy_1_of_Set_Current_Approver_to_Complete</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Approvals Complete</defaultConnectorLabel>
+        <rules>
+            <name>Level_3_L2_Financial_Approver_Next</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>input_Deal_Review.L2_Finance_Approved_Date__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>input_Deal_Review.L1_Approved_Date__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Copy_1_of_Set_Current_Approver_to_L2_Finance</targetReference>
+            </connector>
+            <label>Level 3 L2 Financial Approver Next</label>
+        </rules>
+        <rules>
+            <name>Level_3_L2_Commercial_Approver_Next</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>input_Deal_Review.L1_Approved_Date__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>input_Deal_Review.L2_Commercial_Approved_Date__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>input_Deal_Review.L2_Finance_Approved_Date__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Copy_1_of_Set_Current_Approver_to_L2_Commercial</targetReference>
+            </connector>
+            <label>Level 3 L2 Commercial Approver Next</label>
+        </rules>
+        <rules>
+            <name>Level_3_L3_GRO_CFO</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>input_Deal_Review.L1_Approved_Date__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>input_Deal_Review.L2_Commercial_Approved_Date__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>input_Deal_Review.L2_Finance_Approved_Date__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>input_Deal_Review.L3_GRO_CFO_Approved_Date__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Level_3_Set_Current_Approver_to_L3_GRO_CFO</targetReference>
+            </connector>
+            <label>Level 3 L3 GRO CFO</label>
+        </rules>
+        <rules>
+            <name>Level_3_L3_Global_RIM_EVP_Approver_Next</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>input_Deal_Review.L1_Approved_Date__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>input_Deal_Review.L2_Commercial_Approved_Date__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>input_Deal_Review.L2_Finance_Approved_Date__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>input_Deal_Review.L3_Global_RIM_EVP_Approved_Date__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>input_Deal_Review.L3_GRO_CFO_Approved_Date__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Level_3_Set_Current_Approver_to_L3_RIM_EVP</targetReference>
+            </connector>
+            <label>Level 3 L3 Global RIM EVP Approver Next</label>
+        </rules>
+        <rules>
+            <name>Level_3_L3_Global_Digital_Product_Approver</name>
+            <conditionLogic>(1 AND 2 AND 3 AND 4 AND 8 AND 9) AND (5 OR 6 OR 7)</conditionLogic>
+            <conditions>
+                <leftValueReference>input_Deal_Review.L1_Approved_Date__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>input_Deal_Review.L2_Commercial_Approved_Date__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>input_Deal_Review.L2_Finance_Approved_Date__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>input_Deal_Review.L3_Global_Digital_Product_Approved_Date__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>input_Deal_Review.Primary_Product_Line__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Digital Solutions</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>input_Deal_Review.Primary_Product_Line__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Information Governance</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>input_Deal_Review.Primary_Product_Line__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>InSight</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>input_Deal_Review.L3_GRO_CFO_Approved_Date__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>input_Deal_Review.L3_Global_RIM_EVP_Approved_Date__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Current_Approver_to_L3_Global_Digital_Approver</targetReference>
+            </connector>
+            <label>Level 3 L3 Global Digital Product Approver</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Pick_Corresponding_Slack_Channel_for_ORB_Message_Delivery</name>
+        <label>Pick Corresponding Slack Channel for ORB Message Delivery</label>
+        <locationX>1106</locationX>
+        <locationY>4106</locationY>
+        <defaultConnector>
+            <targetReference>Set_Orb_Slack_Channel_to_NA_Channel</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Region for ORB is NA</defaultConnectorLabel>
+        <rules>
+            <name>Region_for_ORB_is_GI</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>input_Deal_Review.Sales_Region__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>GI</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Orb_Slack_Channel_to_GI</targetReference>
+            </connector>
+            <label>Region for ORB is GI</label>
+        </rules>
+        <rules>
+            <name>Region_for_ORB_is_APAC</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>input_Deal_Review.Sales_Region__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Asia Pacific</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Orb_Slack_Channel_to_APAC_Channel</targetReference>
+            </connector>
+            <label>Region for ORB is APAC</label>
+        </rules>
+        <rules>
+            <name>Region_for_ORB_is_MENAT</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>input_Deal_Review.Sales_Region__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>MENAT</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Orb_Slack_Channel_to_MENAT_Channel</targetReference>
+            </connector>
+            <label>Region for ORB is MENAT</label>
+        </rules>
+        <rules>
+            <name>Region_for_ORB_is_ESA</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>input_Deal_Review.Sales_Region__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Europe</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Orb_Slack_Channel_to_ESA_Channel</targetReference>
+            </connector>
+            <label>Region for ORB is ESA</label>
+        </rules>
+        <rules>
+            <name>Region_for_ORB_is_LATAM</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>input_Deal_Review.Sales_Region__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Latin America</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Orb_Slack_Channel_to_LATAM_Channel</targetReference>
+            </connector>
+            <label>Region for ORB is LATAM</label>
+        </rules>
+    </decisions>
+    <description>Adding Additional fields on Slack ORB Message Template and Slack ORB Level 3 Message Template and Added the New Requirement logic based on US 19511 and reorder the Commercial and finance approvers conditions and added Red Flag Value to both slack templates.</description>
+    <environments>Default</environments>
+    <formulas>
+        <name>L3GlobalApproverFormula</name>
+        <dataType>String</dataType>
+        <expression>IF(ISBLANK({!Requery_Deal_Review_Record.L3_Global_Digital_Product_Approver__c}), &apos;N/A&apos;, {!L3_Global_Digital_Product_Slack})</expression>
+    </formulas>
+    <interviewLabel>Deal Review - ORB Subflow {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Deal Review - ORB Subflow</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <name>Requery_Deal_Review_Record</name>
+        <label>Requery Deal Review Record</label>
+        <locationX>1106</locationX>
+        <locationY>134</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Get_Slack_User_Id_of_User_Who_Created_Record</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>varT_DealReview_Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Deal_Review__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordUpdates>
+        <name>Add_Slack_Message_Link_to_Deal_Review</name>
+        <label>Add Slack Message Link to Deal Review</label>
+        <locationX>50</locationX>
+        <locationY>5630</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>varT_DealReview_Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>ORB_Slack_Link__c</field>
+            <value>
+                <stringValue> https://app.slack.com/client/{!$Label.Slack_TeamId}/{!$Label.Slack_orbNAChannelId}/{!SlackMessageTS}</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Slack_Message_TS__c</field>
+            <value>
+                <elementReference>SlackMessageTS</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Deal_Review__c</object>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Add_Slack_Message_Link_to_Deal_Review_if_Region_is_Europe</name>
+        <label>Add Slack Message Link to Deal Review if Region is Europe</label>
+        <locationX>1370</locationX>
+        <locationY>5630</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>varT_DealReview_Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>ORB_Slack_Link__c</field>
+            <value>
+                <stringValue> https://app.slack.com/client/{!$Label.Slack_TeamId}/{!$Label.Slack_orbESAChannelId}/{!SlackMessageTS}</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Slack_Message_TS__c</field>
+            <value>
+                <elementReference>SlackMessageTS</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Deal_Review__c</object>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Add_Slack_Message_Link_to_DR_If_Region_is_Europe</name>
+        <label>Add Slack Message Link to DR If Region is Europe</label>
+        <locationX>314</locationX>
+        <locationY>5630</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>varT_DealReview_Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>ORB_Slack_Link__c</field>
+            <value>
+                <stringValue> https://app.slack.com/client/{!$Label.Slack_TeamId}/{!$Label.Slack_orbESAChannelId}/{!SlackMessageTS}</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Slack_Message_TS__c</field>
+            <value>
+                <elementReference>SlackMessageTS</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Deal_Review__c</object>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Copy_1_of_Add_Slack_Message_Link_to_Deal_Review</name>
+        <label>Add Slack Message Link to Deal Review</label>
+        <locationX>1106</locationX>
+        <locationY>5630</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>varT_DealReview_Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>ORB_Slack_Link__c</field>
+            <value>
+                <stringValue> https://app.slack.com/client/{!$Label.Slack_TeamId}/{!$Label.Slack_orbNAChannelId}/{!SlackMessageTS}</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Slack_Message_TS__c</field>
+            <value>
+                <elementReference>SlackMessageTS</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Deal_Review__c</object>
+    </recordUpdates>
+    <start>
+        <locationX>980</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Requery_Deal_Review_Record</targetReference>
+        </connector>
+    </start>
+    <status>Obsolete</status>
+    <textTemplates>
+        <name>Slack_ORB_Level_3_Message_Template</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>:bell: *A New Deal Review Requires ORB Approval* :bell:
+  • *Deal Review: * &lt;https://{!$Label.Slack_SalesforceDomain}/lightning/r/Deal_Review__c/{!Requery_Deal_Review_Record.Id}/view | {!Requery_Deal_Review_Record.Name} &gt;
+  • *Opportunity: * &lt;https://{!$Label.Slack_SalesforceDomain}/lightning/r/Opportunity/{!Requery_Deal_Review_Record.Opportunity__r.Id}/view | {!Requery_Deal_Review_Record.Opportunity__r.Name} &gt;
+  • *Account: * {!Requery_Deal_Review_Record.Opportunity__r.Account.Name}
+  • *ACV (Annual Contract Value): * ${!Requery_Deal_Review_Record.ACV_Annual_Contract_Value__c}
+  • *Sales Region: * {!Requery_Deal_Review_Record.Sales_Region__c}
+  • *Close Date:* {!Requery_Deal_Review_Record.Opportunity__r.CloseDate}
+  • *Plan to Win:* {!Requery_Deal_Review_Record.Plan_To_Win_Link__c}
+  • *Deal Review Submitted By*: {!Created_By_Slack}
+  • *Status of Deal Review*: {!Requery_Deal_Review_Record.Status__c}
+  • *Deal Type:* {!Requery_Deal_Review_Record.Deal_Type__c}
+  • *Link to PA Model Approval record: * &lt;https://{!$Label.Slack_SalesforceDomain}/lightning/r/Schedule_A__c/{!Requery_Deal_Review_Record.Schedule_A__r.Id}/view | {!Requery_Deal_Review_Record.Schedule_A__r.Name}&gt;
+  • *Revenue Dilution $:* {!Requery_Deal_Review_Record.Revenue_Dilution_dollar__c}
+  • *Total Cashview Margin %:* {!Requery_Deal_Review_Record.Total_Cashview_Margin_Percent__c}
+  • *Dedicated Capital:* {!Requery_Deal_Review_Record.Dedicated_Capital__c} 
+  • *% Floor Revenue Realization:* {!Requery_Deal_Review_Record.Floor_Revenue_Realization_Percent__c} 
+  • *Red Flag:* {!Requery_Deal_Review_Record.Red_Flag__c}
+  • *Primary Product Line:* {!Requery_Deal_Review_Record.Primary_Product_Line__c}
+  • *Next Approver:* {!currentApprover}
+
+:busts_in_silhouette: *Assigned Approvers * :busts_in_silhouette:
+  • *L1 Approver: * {!L1_Approver_Slack}
+  • *L1 Backup Approver: * {!L1_Backup_Approver_Slack}
+  • *L2 Finance Approver: * {!L2_Finance_Approver_Slack}
+  • *L2 Backup Finance Approver: * {!L2_Backup_Finance_Approver_Slack}
+  • *L2 Commercial Approver: * {!L2_Commercial_Approver_Slack}
+  • *L2 Backup Commercial Approver: * {!L2_Backup_Commercial_Approver_Slack}
+  • *L3 GRO CFO Approver:* {!L3_GRO_CFO_Approver_Slack}
+  • *L3 Global EVP Approver:* {!L3_Global_EVP_Approver_Slack}
+  • *L3 Global Digital Product Approver:* {!L3GlobalApproverFormula}</text>
+    </textTemplates>
+    <textTemplates>
+        <name>Slack_ORB_Message_Template</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>:bell: *A New Deal Review Requires ORB Approval* :bell:
+  • *Deal Review: * &lt;https://{!$Label.Slack_SalesforceDomain}/lightning/r/Deal_Review__c/{!Requery_Deal_Review_Record.Id}/view | {!Requery_Deal_Review_Record.Name} &gt;
+  • *Opportunity: * &lt;https://{!$Label.Slack_SalesforceDomain}/lightning/r/Opportunity/{!Requery_Deal_Review_Record.Opportunity__r.Id}/view | {!Requery_Deal_Review_Record.Opportunity__r.Name} &gt;
+  • *Account: * {!Requery_Deal_Review_Record.Opportunity__r.Account.Name}
+  • *ACV (Annual Contract Value): * ${!Requery_Deal_Review_Record.ACV_Annual_Contract_Value__c}
+  • *Sales Region: * {!Requery_Deal_Review_Record.Sales_Region__c}
+  • *Close Date:* {!Requery_Deal_Review_Record.Opportunity__r.CloseDate}
+  • *Plan to Win:* {!Requery_Deal_Review_Record.Plan_To_Win_Link__c}
+  • *Deal Review Submitted By*: {!Created_By_Slack}
+  • *Status of Deal Review*: {!Requery_Deal_Review_Record.Status__c}
+  • *Deal Type:* {!Requery_Deal_Review_Record.Deal_Type__c}
+  • *Link to PA Model Approval record: * &lt;https://{!$Label.Slack_SalesforceDomain}/lightning/r/Schedule_A__c/{!Requery_Deal_Review_Record.Schedule_A__r.Id}/view | {!Requery_Deal_Review_Record.Schedule_A__r.Name}&gt;
+  • *Revenue Dilution $:* {!Requery_Deal_Review_Record.Revenue_Dilution_dollar__c}
+  • *Total Cashview Margin %:* {!Requery_Deal_Review_Record.Total_Cashview_Margin_Percent__c}
+  • *Dedicated Capital:* {!Requery_Deal_Review_Record.Dedicated_Capital__c} 
+  • *% Floor Revenue Realization:* {!Requery_Deal_Review_Record.Floor_Revenue_Realization_Percent__c} 
+  • *Red Flag:* {!Requery_Deal_Review_Record.Red_Flag__c}
+  • *Primary Product Line:* {!Requery_Deal_Review_Record.Primary_Product_Line__c}
+  • *Next Approver:* {!currentApprover}
+
+:busts_in_silhouette: *Assigned Approvers * :busts_in_silhouette:
+  • *L1 Approver: * {!L1_Approver_Slack}
+  • *L1 Backup Approver: * {!L1_Backup_Approver_Slack}
+  • *L2 Finance Approver: * {!L2_Finance_Approver_Slack}
+  • *L2 Backup Finance Approver: * {!L2_Backup_Finance_Approver_Slack}
+  • *L2 Commercial Approver: * {!L2_Commercial_Approver_Slack}
+  • *L2 Backup Commercial Approver: * {!L2_Backup_Commercial_Approver_Slack}</text>
+    </textTemplates>
+    <variables>
+        <name>Created_By_Slack</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>currentApprover</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>input_Deal_Review</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Deal_Review__c</objectType>
+    </variables>
+    <variables>
+        <name>L1_Approver_Slack</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>L1_Backup_Approver_Slack</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>L2_Backup_Commercial_Approver_Slack</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>L2_Backup_Finance_Approver_Slack</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>L2_Commercial_Approver_Slack</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>L2_Finance_Approver_Slack</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>L3_Global_Digital_Product_Slack</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>L3_Global_EVP_Approver_Slack</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>L3_GRO_CFO_Approver_Slack</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>OrbSlackChannel</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>SlackMessageTS</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>varT_DealReview_Id</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>

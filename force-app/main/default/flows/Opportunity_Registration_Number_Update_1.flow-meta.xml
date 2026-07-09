@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>60.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <description>Migrated from the Opportunity Registration Number Update process using New Record criteria.
+Case#05119686-Whenever a new record is created the field need to be automatically populated from the Account’s ‘Registration Number’ field</description>
+    <environments>Default</environments>
+    <interviewLabel>Opportunity Registration Number Update {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Opportunity Registration Number Update</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <name>myRule_1_A1</name>
+        <label>Account Registration Num Update</label>
+        <locationX>176</locationX>
+        <locationY>323</locationY>
+        <inputAssignments>
+            <field>Account_Registration_Number__c</field>
+            <value>
+                <elementReference>$Record.Account.Registration_Number__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>myRule_1_A1</targetReference>
+        </connector>
+        <filterFormula>AND(
+	NOT({!$Setup.Metadata_Activation_Settings__c.Disable_PB__c} &amp;&amp; OR(ISBLANK({!$Setup.Metadata_Activation_Settings__c.SObject_API_Name__c}), CONTAINS({!$Setup.Metadata_Activation_Settings__c.SObject_API_Name__c}, &apos;Opportunity&apos;))), 
+	NOT(ISBLANK({!$Record.Account.Registration_Number__c} )) 
+)</filterFormula>
+        <object>Opportunity</object>
+        <recordTriggerType>Create</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

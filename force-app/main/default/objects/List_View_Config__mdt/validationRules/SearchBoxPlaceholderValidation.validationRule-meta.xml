@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>SearchBoxPlaceholderValidation</fullName>
+    <active>true</active>
+    <description>If &quot;Show Search Box&quot; is selected then &quot;Search Box Placeholder&quot; should be filled, otherwise should be left blank.</description>
+    <errorConditionFormula>(
+				Show_Search_Box__c &amp;&amp; ISBLANK(Search_Box_Placeholder__c)
+)
+||
+(
+				!Show_Search_Box__c &amp;&amp; !ISBLANK(Search_Box_Placeholder__c)
+)</errorConditionFormula>
+    <errorDisplayField>Search_Box_Placeholder__c</errorDisplayField>
+    <errorMessage>If &quot;Show Search Box&quot; is selected then &quot;Search Box Placeholder&quot; should be filled, otherwise should be left blank.</errorMessage>
+</ValidationRule>

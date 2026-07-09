@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Imported_Records_This_Month_No_Assoc</fullName>
+    <columns>NAME</columns>
+    <columns>Customer_Account__c</columns>
+    <columns>Opportunity__c</columns>
+    <columns>Commission_Month__c</columns>
+    <columns>Total_Revenue__c</columns>
+    <columns>Total_Volume__c</columns>
+    <columns>CREATED_DATE</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>CREATED_DATE</field>
+        <operation>equals</operation>
+        <value>THIS_MONTH</value>
+    </filters>
+    <filters>
+        <field>RECORDTYPE</field>
+        <operation>equals</operation>
+        <value>Inbound_Storage__c.Inbound_Storage</value>
+    </filters>
+    <filters>
+        <field>Association_to_Opportunity_Status__c</field>
+        <operation>equals</operation>
+        <value>Unmatched</value>
+    </filters>
+    <label>Imported Records This Month - No Assoc.</label>
+    <language>en_US</language>
+</ListView>

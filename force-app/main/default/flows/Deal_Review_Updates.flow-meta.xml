@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>58.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <decisions>
+        <description>Ensures there is a related PA Model for the Deal Review</description>
+        <name>Check_for_PA_Model</name>
+        <label>Check for PA Model</label>
+        <locationX>182</locationX>
+        <locationY>539</locationY>
+        <defaultConnectorLabel>Not Found</defaultConnectorLabel>
+        <rules>
+            <name>Found</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Schedule_A__r.Id</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_PA_Model_to_Active</targetReference>
+            </connector>
+            <label>Found</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Proceed ONLY if Deal Review has just been updated to Approved</description>
+        <name>Was_Deal_Review_Approved</name>
+        <label>Was Deal Review Approved?</label>
+        <locationX>380</locationX>
+        <locationY>431</locationY>
+        <defaultConnectorLabel>False</defaultConnectorLabel>
+        <rules>
+            <name>TRUE_approved</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Approved</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Duplicate_Source__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Duplicate__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Check_for_PA_Model</targetReference>
+            </connector>
+            <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+            <label>TRUE (approved)</label>
+        </rules>
+    </decisions>
+    <description>Restricted to updated approval date on pa model to date/time if Deal review created from Duplicate Deal Review</description>
+    <environments>Default</environments>
+    <formulas>
+        <name>varDT_Now</name>
+        <dataType>DateTime</dataType>
+        <expression>NOW()</expression>
+    </formulas>
+    <interviewLabel>Deal Review Updates {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Deal Review Updates</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <description>Set the attached PA Model record to Active</description>
+        <name>Set_PA_Model_to_Active</name>
+        <label>Set PA Model to Active</label>
+        <locationX>50</locationX>
+        <locationY>647</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Schedule_A__r.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Approve_Date__c</field>
+            <value>
+                <elementReference>varDT_Now</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Status__c</field>
+            <value>
+                <stringValue>Active</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Schedule_A__c</object>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Update_Summary</name>
+        <label>Update Summary</label>
+        <locationX>380</locationX>
+        <locationY>323</locationY>
+        <connector>
+            <targetReference>Was_Deal_Review_Approved</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Duplicate__c</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Summary__c</field>
+            <value>
+                <elementReference>varTT_Summary_of_Deal_Review</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>254</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Update_Summary</targetReference>
+        </connector>
+        <filterLogic>1 OR 2</filterLogic>
+        <filters>
+            <field>Status__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Pending</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Status__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Approved</stringValue>
+            </value>
+        </filters>
+        <object>Deal_Review__c</object>
+        <recordTriggerType>Update</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+    <textTemplates>
+        <name>varTT_Summary_of_Deal_Review</name>
+        <isViewedAsPlainText>false</isViewedAsPlainText>
+        <text>&lt;p&gt;Deal Review: {!$Record.Name}&lt;/p&gt;&lt;p&gt;Opportunity Name: {!$Record.Opportunity__r.Name}&lt;/p&gt;&lt;p&gt;Deal Level: {!$Record.Deal_Level__c}&lt;/p&gt;&lt;p&gt;Product Type: {!$Record.Product_Type__c}&lt;/p&gt;&lt;p&gt;ACV: {!$Record.ACV_Annual_Contract_Value__c}&lt;/p&gt;</text>
+    </textTemplates>
+</Flow>

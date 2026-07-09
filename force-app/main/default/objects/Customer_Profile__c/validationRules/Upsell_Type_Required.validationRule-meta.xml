@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Upsell_Type_Required</fullName>
+    <active>true</active>
+    <description>Requires an Upsell Type for DB&amp;R, One Time Shred, RM, and Shred</description>
+    <errorConditionFormula>AND(
+OR(
+ISPICKVAL(NCSP_Service_Line__c,&apos;DB&amp;R&apos;),
+ISPICKVAL(NCSP_Service_Line__c,&apos;RM&apos;),
+ISPICKVAL(NCSP_Service_Line__c,&apos;Shred&apos;),
+ISPICKVAL(NCSP_Service_Line__c,&apos;One Time Shred&apos;)),
+ISBLANK(TEXT(NCSP_Upsell_Type__c)),
+ispickval( Opportunity__r.Type, &quot;Up-Sell/Lift&quot;),
+ISPICKVAL( Deal_Type__c , &quot;Upsell&quot;)
+
+)</errorConditionFormula>
+    <errorDisplayField>NCSP_Upsell_Type__c</errorDisplayField>
+    <errorMessage>Please select an Upsell Type</errorMessage>
+</ValidationRule>

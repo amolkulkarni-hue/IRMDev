@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>61.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <customErrors>
+        <description>To Show the error message on record page</description>
+        <name>Custom_Error</name>
+        <label>Custom Error</label>
+        <locationX>50</locationX>
+        <locationY>647</locationY>
+        <customErrorMessages>
+            <errorMessage>Unable to close the case. Please ensure that at least one manual order is associated with this case before closing</errorMessage>
+            <isFieldError>false</isFieldError>
+        </customErrorMessages>
+    </customErrors>
+    <decisions>
+        <description>Route Global Order Case validations</description>
+        <name>Global_Order_Case_Validations</name>
+        <label>Global Order Case Validations</label>
+        <locationX>380</locationX>
+        <locationY>323</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>X1_Case_Order_Details_Validation</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Origin</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Phone</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Closed</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Related_Order_Details</targetReference>
+            </connector>
+            <label>1. Case&apos;s Order Details Validation</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>To Check case is having manual order details</description>
+        <name>Is_Case_having_manual_order_details</name>
+        <label>Is Case having manual order details?</label>
+        <locationX>182</locationX>
+        <locationY>539</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Order_Details_Missing</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Related_Order_Details</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Custom_Error</targetReference>
+            </connector>
+            <label>Order Details Missing</label>
+        </rules>
+    </decisions>
+    <description>Gitlab: 25619: A case should have at least one related manual order detail if the case&apos;s origin is &apos;Phone&apos; when closing the case</description>
+    <environments>Default</environments>
+    <interviewLabel>Global Orders Case validation Flow {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Global Orders Case validation Flow</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <description>To get Case&apos;s related order details</description>
+        <name>Get_Related_Order_Details</name>
+        <label>Get Related Order Details</label>
+        <locationX>182</locationX>
+        <locationY>431</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Is_Case_having_manual_order_details</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Case__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Order_Detail__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <start>
+        <locationX>254</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Global_Order_Case_Validations</targetReference>
+        </connector>
+        <filterFormula>{!$Record.RecordType.DeveloperName} = &apos;Global_Orders&apos;</filterFormula>
+        <object>Case</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Region_Validation</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND( 
+ISPICKVAL(Region__c, &quot;North America&quot;), 
+OR( 
+ISPICKVAL(Country_Picklist__c,&quot;&quot;), 
+ISPICKVAL(Area__c ,&quot;&quot;), 
+ISPICKVAL(Market_City__c,&quot;&quot;), 
+ISPICKVAL(Territory_State_Province__c,&quot;&quot;) 
+) 
+)</errorConditionFormula>
+    <errorMessage>If North America is selected as the Region then Area, Country, Market/City and Territory are required.</errorMessage>
+</ValidationRule>

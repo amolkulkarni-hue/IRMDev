@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>59.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <name>Update_Do_Not_Call</name>
+        <label>Update Do Not Call</label>
+        <locationX>714</locationX>
+        <locationY>523</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.DoNotCall</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>Update_Do_not_Email</name>
+        <label>Update  Do not Email</label>
+        <locationX>609</locationX>
+        <locationY>598</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.HasOptedOutOfEmail</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>Update_Lead_Stage_1_Inquiry</name>
+        <label>Update Lead Stage 1-Inquiry</label>
+        <locationX>575</locationX>
+        <locationY>443</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.IM_Lead_Stage__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>1-Inquiry</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>Update_Stage_1_Inquiry</name>
+        <label>Update Stage 1-Inquiry</label>
+        <locationX>47</locationX>
+        <locationY>443</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.IM_Lead_Stage__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>1-Inquiry</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>Update_Stage_3_Sales_Accepted</name>
+        <label>Update Stage  3-Sales Accepted</label>
+        <locationX>311</locationX>
+        <locationY>443</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.IM_Lead_Stage__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue> 3-Sales Accepted</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Open</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>Update_Stage_to_MQL</name>
+        <label>Update Stage to MQL</label>
+        <locationX>839</locationX>
+        <locationY>443</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.IM_Lead_Stage__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>2-Marketing Qual</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Open</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>Updates_the_Lead_Country_if_US_or_United_States_is_entered</name>
+        <label>Updates the Lead Country if US or United States is entered.</label>
+        <locationX>472</locationX>
+        <locationY>612</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Country</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>United States</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <decisions>
+        <name>Change_Lead_status</name>
+        <label>Change Lead status</label>
+        <locationX>575</locationX>
+        <locationY>335</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Lead_Status_DQ_Lead</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Disqualified</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.IM_Lead_Stage__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>0-Suspect</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Stage_1_Inquiry</targetReference>
+            </connector>
+            <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+            <label>Lead Status DQ Lead</label>
+        </rules>
+        <rules>
+            <name>Lead_Status_Accepted_Lead</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Accepted</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Stage_3_Sales_Accepted</targetReference>
+            </connector>
+            <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+            <label>Lead Status Accepted Lead</label>
+        </rules>
+        <rules>
+            <name>Lead_Status_Nurture_Lead</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Nurture</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.IM_Lead_Stage__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>0-Suspect</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Lead_Stage_1_Inquiry</targetReference>
+            </connector>
+            <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+            <label>Lead Status Nurture Lead</label>
+        </rules>
+        <rules>
+            <name>Lead_Status_Qualified_Lead</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Qualified</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Stage_to_MQL</targetReference>
+            </connector>
+            <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+            <label>Lead Status Qualified Lead</label>
+        </rules>
+        <rules>
+            <name>Leads_in_the_USA</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Country</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>US</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Country</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>USA</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Updates_the_Lead_Country_if_US_or_United_States_is_entered</targetReference>
+            </connector>
+            <label>Leads in the USA</label>
+        </rules>
+        <rules>
+            <name>Do_Not_Call</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Email</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>@DLAPiper.com</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Email</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>@Littler.com</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Email</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>@selectmedicalcorp.com</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Email</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>@commercebank.com</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Do_Not_Call</targetReference>
+            </connector>
+            <label>Do Not Call</label>
+        </rules>
+        <rules>
+            <name>Email_Opt_Out_Intel_com_Leads</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Email</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>intel.com</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.HasOptedOutOfEmail</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Do_not_Email</targetReference>
+            </connector>
+            <label>Email Opt Out Intel.com Leads</label>
+        </rules>
+    </decisions>
+    <description>Converted from below workflows :
+Leads in the USA
+Lead Status Accepted Lead
+Lead Status DQ Lead
+Lead Status Nurture Lead
+Lead Status Qualified Lead
+Do Not Call
+Email Opt Out Intel.com Leads</description>
+    <environments>Default</environments>
+    <interviewLabel>Update Lead Stage {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Update Lead Stage/DoNotCall/EmailOptOut Intel.com</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>449</locationX>
+        <locationY>48</locationY>
+        <connector>
+            <targetReference>Change_Lead_status</targetReference>
+        </connector>
+        <object>Lead</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Obsolete</status>
+</Flow>

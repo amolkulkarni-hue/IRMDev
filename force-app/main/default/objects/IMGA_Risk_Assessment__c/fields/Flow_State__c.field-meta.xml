@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Flow_State__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <label>Flow State</label>
+    <lookupFilter>
+        <active>true</active>
+        <filterItems>
+            <field>$Source.At_Risk_Assessor__c</field>
+            <operation>equals</operation>
+            <valueField>$User.Id</valueField>
+        </filterItems>
+        <filterItems>
+            <field>$Source.At_Risk_Assessor__c</field>
+            <operation>equals</operation>
+            <valueField>Flow_State__c.Owner:User.Id</valueField>
+        </filterItems>
+        <filterItems>
+            <field>Flow_State__c.Active__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </filterItems>
+        <filterItems>
+            <field>$Source.IMGA_Account__c</field>
+            <operation>equals</operation>
+            <valueField>Flow_State__c.Account__r.Id</valueField>
+        </filterItems>
+        <filterItems>
+            <field>$Source.Id</field>
+            <operation>equals</operation>
+            <valueField>Flow_State__c.IMGA_Risk_Assessment__r.Id</valueField>
+        </filterItems>
+        <isOptional>true</isOptional>
+    </lookupFilter>
+    <referenceTo>Flow_State__c</referenceTo>
+    <relationshipLabel>IMGA Risk Assessments</relationshipLabel>
+    <relationshipName>IMGA_Risk_Assessments</relationshipName>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

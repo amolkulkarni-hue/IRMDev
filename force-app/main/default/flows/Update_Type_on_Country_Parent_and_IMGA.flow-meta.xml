@@ -1,0 +1,412 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>62.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <description>Marks Country Parent Account Type as Active</description>
+        <name>Type_is_Active</name>
+        <label>Type is Active</label>
+        <locationX>50</locationX>
+        <locationY>998</locationY>
+        <assignmentItems>
+            <assignToReference>Get_Country_Parent_Account.Type</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Active</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_Type</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Marks Country Parent as Inactive</description>
+        <name>Type_is_Inactive</name>
+        <label>Type is Inactive</label>
+        <locationX>578</locationX>
+        <locationY>998</locationY>
+        <assignmentItems>
+            <assignToReference>Get_Country_Parent_Account.Type</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Inactive</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_Type</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Marks Country Parent Account as Prospect</description>
+        <name>Type_is_Prospect</name>
+        <label>Type is Prospect</label>
+        <locationX>314</locationX>
+        <locationY>998</locationY>
+        <assignmentItems>
+            <assignToReference>Get_Country_Parent_Account.Type</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Prospect</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_Type</targetReference>
+        </connector>
+    </assignments>
+    <collectionProcessors>
+        <description>Filters all the Active Child Accounts</description>
+        <name>FIlter_Active_Accounts</name>
+        <elementSubtype>FilterCollectionProcessor</elementSubtype>
+        <label>FIlter Active Accounts</label>
+        <locationX>446</locationX>
+        <locationY>566</locationY>
+        <assignNextValueToReference>currentItem_FIlter_Active_Accounts</assignNextValueToReference>
+        <collectionProcessorType>FilterCollectionProcessor</collectionProcessorType>
+        <collectionReference>Get_Child_Accounts</collectionReference>
+        <conditionLogic>and</conditionLogic>
+        <conditions>
+            <leftValueReference>currentItem_FIlter_Active_Accounts.Type</leftValueReference>
+            <operator>EqualTo</operator>
+            <rightValue>
+                <stringValue>Active</stringValue>
+            </rightValue>
+        </conditions>
+        <connector>
+            <targetReference>Filter_Prospect_Accounts</targetReference>
+        </connector>
+    </collectionProcessors>
+    <collectionProcessors>
+        <name>Filter_Inactive_Accounts</name>
+        <elementSubtype>FilterCollectionProcessor</elementSubtype>
+        <label>Filter Inactive Accounts</label>
+        <locationX>446</locationX>
+        <locationY>782</locationY>
+        <assignNextValueToReference>currentItem_Filter_Inactive_Accounts</assignNextValueToReference>
+        <collectionProcessorType>FilterCollectionProcessor</collectionProcessorType>
+        <collectionReference>Get_Child_Accounts</collectionReference>
+        <conditionLogic>and</conditionLogic>
+        <conditions>
+            <leftValueReference>currentItem_Filter_Inactive_Accounts.Type</leftValueReference>
+            <operator>EqualTo</operator>
+            <rightValue>
+                <stringValue>Inactive</stringValue>
+            </rightValue>
+        </conditions>
+        <connector>
+            <targetReference>Are_there_any_Active_Accounts</targetReference>
+        </connector>
+    </collectionProcessors>
+    <collectionProcessors>
+        <description>Filters all the Prospect Sales Site Accounts</description>
+        <name>Filter_Prospect_Accounts</name>
+        <elementSubtype>FilterCollectionProcessor</elementSubtype>
+        <label>Filter Prospect Accounts</label>
+        <locationX>446</locationX>
+        <locationY>674</locationY>
+        <assignNextValueToReference>currentItem_Filter_Prospect_Accounts</assignNextValueToReference>
+        <collectionProcessorType>FilterCollectionProcessor</collectionProcessorType>
+        <collectionReference>Get_Child_Accounts</collectionReference>
+        <conditionLogic>and</conditionLogic>
+        <conditions>
+            <leftValueReference>currentItem_Filter_Prospect_Accounts.Type</leftValueReference>
+            <operator>EqualTo</operator>
+            <rightValue>
+                <stringValue>Prospect</stringValue>
+            </rightValue>
+        </conditions>
+        <connector>
+            <targetReference>Filter_Inactive_Accounts</targetReference>
+        </connector>
+    </collectionProcessors>
+    <decisions>
+        <description>If there is at least 1 Active child Account Type is updated to Active, else if there is at least one Prospect Child Account Type is Updated to Prospect else update Type as Inactive</description>
+        <name>Are_there_any_Active_Accounts</name>
+        <label>Are there any Active Accounts?</label>
+        <locationX>446</locationX>
+        <locationY>890</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Active</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>FIlter_Active_Accounts</leftValueReference>
+                <operator>IsEmpty</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Country_Parent_Account.Type</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Active</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Type_is_Active</targetReference>
+            </connector>
+            <label>Yes_Active</label>
+        </rules>
+        <rules>
+            <name>All_Prospect</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Filter_Prospect_Accounts</leftValueReference>
+                <operator>IsEmpty</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Country_Parent_Account.Type</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Prospect</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>FIlter_Active_Accounts</leftValueReference>
+                <operator>IsEmpty</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Filter_Inactive_Accounts</leftValueReference>
+                <operator>IsEmpty</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Type_is_Prospect</targetReference>
+            </connector>
+            <label>All Prospect</label>
+        </rules>
+        <rules>
+            <name>No_Active_and_Prospective_Child_Accounts</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>FIlter_Active_Accounts</leftValueReference>
+                <operator>IsEmpty</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Country_Parent_Account.Type</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Inactive</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Filter_Inactive_Accounts</leftValueReference>
+                <operator>IsEmpty</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Type_is_Inactive</targetReference>
+            </connector>
+            <label>No Active and Prospective Child Accounts</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Checks if there are child Accounts under the Account or not.
+If yes runs path Yes else runs default Outcome</description>
+        <name>Are_there_any_Child_Accounts</name>
+        <label>Are there any Child Accounts?</label>
+        <locationX>776</locationX>
+        <locationY>458</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Child_Accounts</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>FIlter_Active_Accounts</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Checks for Account&apos;s type. If its Sanctioned or Partner end the flow.</description>
+        <name>Is_Account_Type_Sanctioned_Partner</name>
+        <label>Is Account Type Sanctioned/Partner</label>
+        <locationX>1073</locationX>
+        <locationY>242</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Not_Sanctioned_or_Partner</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Country_Parent_Account.Type</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Sanctioned (Do Not Contact)</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Country_Parent_Account.Type</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Partner</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Country_Parent_Account</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Child_Accounts</targetReference>
+            </connector>
+            <label>Not Sanctioned or Partner</label>
+        </rules>
+    </decisions>
+    <description>#Gitlab Story: 26453
+This flow Updates Type on IMGA/Country Parent Account
+If there is at least one Active child Account then  Type is marked as Active,  else
+If there is at least one Prospect Child Account , then  Type is marked as Prospect else
+Account Type is marked as Inactive.
+Note: Flow is excluded to run for Sanctioned and Partner  Accounts and is called from a Scheduler Flow
+GitLab story #36371
+Account: Update Account Type logic to support GTM strategy - PLNI0017245
+If there is at least one Active child Account then  Type is marked as Active,  else
+If there is at least one Inactive Child Account , then  Type is marked as Inactive else
+if all the Child Account is prospect then Account Type is marked as Prospect.</description>
+    <environments>Default</environments>
+    <interviewLabel>Update Type on Country Parent and IMGA {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Update Type on Country Parent and IMGA</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <description>Get all the child Accounts</description>
+        <name>Get_Child_Accounts</name>
+        <label>Get Child Accounts</label>
+        <locationX>776</locationX>
+        <locationY>350</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Are_there_any_Child_Accounts</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>ParentId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>AccountId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>Account</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <description>Fetch the Account details of input Account</description>
+        <name>Get_Country_Parent_Account</name>
+        <label>Get Account Details</label>
+        <locationX>1073</locationX>
+        <locationY>134</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Is_Account_Type_Sanctioned_Partner</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>AccountId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Account</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordUpdates>
+        <description>Update Type on input Account
+- If there are any Active child Accounts update Type on input Account to Active else
+- If there are any Prospect child Accounts update Type of input Parent to Prospect else
+- Update Account Type to Inactive</description>
+        <name>Update_Type</name>
+        <label>Update Type</label>
+        <locationX>446</locationX>
+        <locationY>1190</locationY>
+        <inputReference>Get_Country_Parent_Account</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>947</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Get_Country_Parent_Account</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <variables>
+        <name>AccountId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>currentItem_Active_Sales_Site_accounts_of_Country_Parent</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Account</objectType>
+    </variables>
+    <variables>
+        <name>currentItem_FIlter_Active_Accounts</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Account</objectType>
+    </variables>
+    <variables>
+        <name>currentItem_Filter_Inactive_Accounts</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Account</objectType>
+    </variables>
+    <variables>
+        <name>currentItem_Filter_Prospect_Accounts</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Account</objectType>
+    </variables>
+</Flow>

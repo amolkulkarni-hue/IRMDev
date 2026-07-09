@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ParentMandatoryForItemNavigationRecords</fullName>
+    <active>true</active>
+    <errorConditionFormula>Parent_EEC__c == null &amp;&amp; (
+				RecordType.DeveloperName == &apos;Main_Navigation_Item&apos;
+				||
+				RecordType.DeveloperName == &apos;Social_Navigation_Item&apos;
+)</errorConditionFormula>
+    <errorDisplayField>Parent_EEC__c</errorDisplayField>
+    <errorMessage>Please associate the Navigation Item record to a Navigation or Navigation Item record.</errorMessage>
+</ValidationRule>

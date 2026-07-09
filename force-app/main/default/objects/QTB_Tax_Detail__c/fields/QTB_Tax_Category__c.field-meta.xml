@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>QTB_Tax_Category__c</fullName>
+    <description>#27150 - Cluster-3 Add Tax category field on Tax detail object</description>
+    <externalId>false</externalId>
+    <formula>IF( OR(
+
+ AND( NOT( ISBLANK( QTB_Invoice_Line__c ) ), QTB_Invoice_Line__r.blng__Invoice__r.blng__Account__r.QTB_Withholding_Applicable__c == True,
+NOT( ISBLANK( QTB_Withholding_Tax_Rate__c ) ) ),
+
+  AND(NOT( ISBLANK( QTB_Sub_Invoice_Line__c ) ),
+
+ QTB_Sub_Invoice_Line__r.blng__InvoiceLine__r.blng__Invoice__r.blng__Account__r.QTB_Withholding_Applicable__c == True, NOT( ISBLANK( QTB_Withholding_Tax_Rate__c ) )),
+
+ AND(NOT( ISBLANK(  QTB_Credit_Note_Line__c ) ),
+
+  QTB_Credit_Note_Line__r.QTB_Account__r.QTB_Withholding_Applicable__c  == True,
+NOT( ISBLANK( QTB_Withholding_Tax_Rate__c ) ))
+
+ ), &apos;WithHolding Tax Rate&apos;,
+
+
+IF(
+AND(NOT(ISBLANK(QTB_Invoice__c)),ISPICKVAL(QTB_Invoice__r.blng__Account__r.SBQQ__TaxExempt__c,&apos;Yes&apos;)),
+CASE(
+QTB_Invoice__r.blng__Account__r.QTB_Special_Tax_Condition__c,
+&apos;Intra EU Euro Rate&apos;,&apos;Intra EU Euro Rate&apos;,
+&apos;Export Rate&apos;,&apos;Export Rate&apos;,
+&apos;None&apos;,&apos;Exempt Rate&apos;,&apos;Standard Rate&apos;
+),
+IF(
+AND(NOT(ISBLANK(QTB_Invoice_Line__c)),ISPICKVAL(QTB_Invoice_Line__r.blng__Invoice__r.blng__Account__r.SBQQ__TaxExempt__c,&apos;Yes&apos;)),
+CASE(
+QTB_Invoice_Line__r.blng__Invoice__r.blng__Account__r.QTB_Special_Tax_Condition__c,
+&apos;Intra EU Euro Rate&apos;,&apos;Intra EU Euro Rate&apos;,
+&apos;Export Rate&apos;,&apos;Export Rate&apos;,
+&apos;None&apos;,&apos;Exempt Rate&apos;,&apos;Standard Rate&apos;
+),
+IF(
+AND(NOT(ISBLANK(QTB_Credit_Note__c)),ISPICKVAL(QTB_Credit_Note__r.blng__Account__r.SBQQ__TaxExempt__c,&apos;Yes&apos;)),
+CASE(
+QTB_Credit_Note__r.blng__Account__r.QTB_Special_Tax_Condition__c,
+&apos;Intra EU Euro Rate&apos;,&apos;Intra EU Euro Rate&apos;,
+&apos;Export Rate&apos;,&apos;Export Rate&apos;,
+&apos;None&apos;,&apos;Exempt Rate&apos;,&apos;Standard Rate&apos;
+),
+IF(
+AND(NOT(ISBLANK(QTB_Credit_Note_Line__c)),ISPICKVAL(QTB_Credit_Note_Line__r.blng__CreditNote__r.blng__Account__r.SBQQ__TaxExempt__c,&apos;Yes&apos;)),
+CASE(
+QTB_Credit_Note_Line__r.blng__CreditNote__r.blng__Account__r.QTB_Special_Tax_Condition__c ,
+&apos;Intra EU Euro Rate&apos;,&apos;Intra EU Euro Rate&apos;,
+&apos;Export Rate&apos;,&apos;Export Rate&apos;,
+&apos;None&apos;,&apos;Exempt Rate&apos;,&apos;Standard Rate&apos;
+),
+IF(
+AND(NOT(ISBLANK(QTB_Invoice__c)),ISPICKVAL(QTB_Invoice__r.blng__Account__r.SBQQ__TaxExempt__c,&apos;No&apos;)),
+CASE(
+QTB_Invoice__r.blng__Account__r.QTB_Special_Tax_Condition__c,
+&apos;Intra EU Euro Rate&apos;,&apos;Intra EU Euro Rate&apos;,
+&apos;Export Rate&apos;,&apos;Export Rate&apos;,
+&apos;None&apos;,&apos;Standard Rate&apos;,&apos;Standard Rate&apos;
+),
+IF(
+AND(NOT(ISBLANK(QTB_Invoice_Line__c)),ISPICKVAL(QTB_Invoice_Line__r.blng__Invoice__r.blng__Account__r.SBQQ__TaxExempt__c,&apos;No&apos;)),
+CASE(
+QTB_Invoice_Line__r.blng__Invoice__r.blng__Account__r.QTB_Special_Tax_Condition__c,
+&apos;Intra EU Euro Rate&apos;,&apos;Intra EU Euro Rate&apos;,
+&apos;Export Rate&apos;,&apos;Export Rate&apos;,
+&apos;None&apos;,&apos;Standard Rate&apos;,&apos;Standard Rate&apos;
+),
+IF(
+AND(NOT(ISBLANK(QTB_Credit_Note__c)),ISPICKVAL(QTB_Credit_Note__r.blng__Account__r.SBQQ__TaxExempt__c,&apos;No&apos;)),
+CASE(
+QTB_Credit_Note__r.blng__Account__r.QTB_Special_Tax_Condition__c,
+&apos;Intra EU Euro Rate&apos;,&apos;Intra EU Euro Rate&apos;,
+&apos;Export Rate&apos;,&apos;Export Rate&apos;,
+&apos;None&apos;,&apos;Standard Rate&apos;,&apos;Standard Rate&apos;
+),
+IF(
+AND(NOT(ISBLANK(QTB_Credit_Note_Line__c)),ISPICKVAL(QTB_Credit_Note_Line__r.blng__CreditNote__r.blng__Account__r.SBQQ__TaxExempt__c,&apos;No&apos;)),
+CASE(
+QTB_Credit_Note_Line__r.blng__CreditNote__r.blng__Account__r.QTB_Special_Tax_Condition__c ,
+&apos;Intra EU Euro Rate&apos;,&apos;Intra EU Euro Rate&apos;,
+&apos;Export Rate&apos;,&apos;Export Rate&apos;,
+&apos;None&apos;,&apos;Standard Rate&apos;,&apos;Standard Rate&apos;
+),&apos;Standard Rate&apos;
+)
+)
+)
+)
+)
+)
+)
+)
+)</formula>
+    <label>Tax Category</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

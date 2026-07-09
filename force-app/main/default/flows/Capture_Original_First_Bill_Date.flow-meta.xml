@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>60.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <description>Migrated from the: Capture Original First Bill Date workflow rule
+Workflow rule description: This workflow captures what the value of the First Bill Date is when Inbound Storage is first assigned to an Opportunity.&quot;</description>
+    <label>Capture Original First Bill Date</label>
+    <migratedFromWorkflowRuleName>Capture Original First Bill Date</migratedFromWorkflowRuleName>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <description>Update the Original First Bill Date field when Inbound Storage is approved against this Opportunity. This value will drive formulas on Inbound Storage Records which are important for Commissions Extract Report.</description>
+        <name>mainUpdate</name>
+        <label>mainUpdate</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <inputAssignments>
+            <field>Original_First_Billed_Date__c</field>
+            <value>
+                <elementReference>$Record.CloseDate</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>mainUpdate</targetReference>
+        </connector>
+        <filterFormula>AND(ISBLANK(PRIORVALUE( {!$Record.Total_Inbound_Storage_Received__c} )), NOT(ISBLANK({!$Record.Total_Inbound_Storage_Received__c})))</filterFormula>
+        <object>Opportunity</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

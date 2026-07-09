@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>QTB_StopSubLinesBatchAfterPostBill</fullName>
+    <active>true</active>
+    <description>#Gitlab: 30514--&gt; Sub Invoice Line batch should be executed before post bill run for Product Based legal Entity and storage/service period is true</description>
+    <errorConditionFormula>AND(NOT($Setup.Metadata_Activation_Settings__c.Disable_VR__c &amp;&amp;
+OR(ISBLANK($Setup.Metadata_Activation_Settings__c.SObject_API_Name__c),
+CONTAINS($Setup.Metadata_Activation_Settings__c.SObject_API_Name__c, &apos;QTB_Bill_Flow_Controller__c&apos;))),
+ ISCHANGED( QTB_SubInvoiceLine_Creation__c ),   Execute_Post_Bill_Run__c = True
+)</errorConditionFormula>
+    <errorMessage>Can not update Execute Sub Invoice Line check box after Post Bill Run</errorMessage>
+</ValidationRule>

@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>65.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <decisions>
+        <name>Check_for_Opportunity_Billing_Country_for_Sales_Opp</name>
+        <label>Check for Opportunity Billing Country for Sales Opp</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Stage_5_to_Stage_6</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>FALSE_Check for Opportunity Billing Country for Sales Opp</defaultConnectorLabel>
+        <rules>
+            <name>TRUE_Check_for_Opportunity_Billing_Country_for_Sales_Opp</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>formula_TRUE_myRule_1</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Calling_Flow</targetReference>
+            </connector>
+            <label>TRUE_Check for Opportunity Billing Country for Sales Opp</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Stage_5_to_Stage_6</name>
+        <label>Stage 5 to Stage 6</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>FALSE_Stage 5 to Stage 6</defaultConnectorLabel>
+        <rules>
+            <name>TRUE_Stage_5_to_Stage_6</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>formula_TRUE_myRule_3</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>myRule_3_A1</targetReference>
+            </connector>
+            <label>TRUE_Stage 5 to Stage 6</label>
+        </rules>
+    </decisions>
+    <description>Migrated from the QTB_OpportunityProcess process using multiple criteria.
+#CPQ-9,#SFCPQBLG-648  This is used for stamping Price book on opportunity based on Opportunity Billing Country, GitLab # 777 - Updating to fire only for CPQ Sales Opportunity RT</description>
+    <environments>Default</environments>
+    <formulas>
+        <name>formula_TRUE_myRule_1</name>
+        <dataType>Boolean</dataType>
+        <expression>AND(
+	NOT($Setup.Metadata_Activation_Settings__c.Disable_PB__c &amp;&amp; OR(ISBLANK($Setup.Metadata_Activation_Settings__c.SObject_API_Name__c), CONTAINS($Setup.Metadata_Activation_Settings__c.SObject_API_Name__c,&apos;Opportunity&apos;))),
+	OR(
+		ISNEW(),
+		ISCHANGED({!$Record.Billing_Country__c} ),
+		ISCHANGED({!$Record.CurrencyIsoCode} )
+	),
+	NOT(ISBLANK({!$Record.Billing_Country__c} )),
+	{!$Record.RecordType.DeveloperName=$Label.QTB_OpportunityRecordType_Sales} 
+)</expression>
+    </formulas>
+    <formulas>
+        <name>formula_TRUE_myRule_3</name>
+        <dataType>Boolean</dataType>
+        <expression>AND(
+	NOT($Setup.Metadata_Activation_Settings__c.Disable_PB__c &amp;&amp; OR(ISBLANK($Setup.Metadata_Activation_Settings__c.SObject_API_Name__c), CONTAINS($Setup.Metadata_Activation_Settings__c.SObject_API_Name__c,&apos;Opportunity&apos;))),
+	NOT(ISNEW()),
+	{!$Record.RecordType.Name} = &apos;CPQ Sales Opportunity&apos;,
+	ISPICKVAL(PRIORVALUE({!$Record.StageName} ),&apos;5 - Signed/PO in&apos;),
+	ISPICKVAL({!$Record.StageName} ,&apos;6 - Setup&apos;),
+	NOT(ISBLANK({!$Record.SBQQ__PrimaryQuote__c}))
+)</expression>
+    </formulas>
+    <label>QTB_OpportunityProcess_1</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordCreates>
+        <name>myRule_3_A1</name>
+        <label>Publish Oppt Data Generic</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <inputAssignments>
+            <field>QTB_RecordID__c</field>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>QTB_RelatedRecordID__c</field>
+            <value>
+                <elementReference>$Record.SBQQ__PrimaryQuote__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>QTB_Stage__c</field>
+            <value>
+                <elementReference>$Record.StageName</elementReference>
+            </value>
+        </inputAssignments>
+        <object>QTB_GenericFuncHandler__e</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
+    <start>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Check_for_Opportunity_Billing_Country_for_Sales_Opp</targetReference>
+        </connector>
+        <object>Opportunity</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+    <subflows>
+        <name>Calling_Flow</name>
+        <label>Calling Flow</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <flowName>QTB_Price_Book_Stamping_on_Opportunity</flowName>
+        <inputAssignments>
+            <name>varOppotyID</name>
+            <value>
+                <elementReference>$Record.Opportunity_ID__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>varPriceBookCountry</name>
+            <value>
+                <elementReference>$Record.Billing_Country__r.Name</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+</Flow>

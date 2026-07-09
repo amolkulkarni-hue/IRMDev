@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>At_Risk_Score__c</fullName>
+    <description>Pulls the value from the AT Risk Score Roll up summary field and sets the value to zero when the At Risk Status is terminated or retained.</description>
+    <externalId>false</externalId>
+    <formula>CASE (
+IM_At_Risk_Status__c,&quot;At Risk&quot;, At_Risk_Assessment_Score__c  , 
+&quot;Not At Risk&quot;, At_Risk_Assessment_Score__c  ,
+&quot;Resolved&quot;, At_Risk_Assessment_Score__c  , 
+&quot;Unknown&quot;, At_Risk_Assessment_Score__c ,&quot;&quot;,At_Risk_Assessment_Score__c , 0)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>At Risk Score</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>0</scale>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

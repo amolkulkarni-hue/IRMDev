@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>56.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <description>Update Total Contract term to Total Annual amount, if Contract term(Month) less than or equal to 12.</description>
+    <environments>Default</environments>
+    <interviewLabel>Contract term(Month) less than or equal to 12 {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Contract term(Month) less than or equal to 12</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <description>If, Contract term(Month) less than or equal to 12 then update Total contract term to Total Annual Amount.</description>
+        <name>Contract_term_Month_less_than_or_equal_to_12</name>
+        <label>Contract term(Month) less than or equal to 12</label>
+        <locationX>176</locationX>
+        <locationY>311</locationY>
+        <filterLogic>1 AND (2 OR 4) AND 3</filterLogic>
+        <filters>
+            <field>Contract_Term_months__c</field>
+            <operator>LessThanOrEqualTo</operator>
+            <value>
+                <numberValue>12.0</numberValue>
+            </value>
+        </filters>
+        <filters>
+            <field>StageName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>4 - Negotiate</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Contract_Term_months__c</field>
+            <operator>GreaterThanOrEqualTo</operator>
+            <value>
+                <numberValue>1.0</numberValue>
+            </value>
+        </filters>
+        <filters>
+            <field>StageName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>5 - Signed/PO in</stringValue>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Total_Contract_Value_TCV__c</field>
+            <value>
+                <elementReference>$Record.Amount</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Contract_term_Month_less_than_or_equal_to_12</targetReference>
+        </connector>
+        <filterFormula> AND({!$Record.Contract_Term_months__c}&lt;=12,{!$Record.Contract_Term_months__c}&gt;=1,
+OR(ISPICKVAL({!$Record.StageName}, &apos;4 - Negotiate&apos;),ISPICKVAL({!$Record.StageName}, &apos;5 - Signed/PO in&apos;)))</filterFormula>
+        <object>Opportunity</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Obsolete</status>
+</Flow>

@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>59.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <decisions>
+        <name>New_status</name>
+        <label>New status</label>
+        <locationX>494</locationX>
+        <locationY>696</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>new_status_change</name>
+            <conditionLogic>1</conditionLogic>
+            <conditions>
+                <leftValueReference>NewStatus</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>update_New_status_entered_date</targetReference>
+            </connector>
+            <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+            <label>new status change</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Status_changed</name>
+        <label>Status changed</label>
+        <locationX>491</locationX>
+        <locationY>441</locationY>
+        <defaultConnector>
+            <targetReference>New_status</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Status_changed1</name>
+            <conditionLogic>1</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Status</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Status_last_change_date</targetReference>
+            </connector>
+            <label>Status changed1</label>
+        </rules>
+    </decisions>
+    <description>Migrated from the workflow : Lead Status Last Change Date workflow rule  and New Status Entered Date Update workflow rule</description>
+    <environments>Default</environments>
+    <formulas>
+        <name>NewStatus</name>
+        <dataType>Boolean</dataType>
+        <expression>(
+  ISNEW() &amp;&amp; TEXT({!$Record.Status}) = &quot;New&quot;
+)
+||
+(
+  ISCHANGED({!$Record.Status}) &amp;&amp; TEXT({!$Record.Status}) = &quot;New&quot;
+)</expression>
+    </formulas>
+    <formulas>
+        <name>Status_change_DateFormula</name>
+        <dataType>Date</dataType>
+        <expression>TODAY()</expression>
+    </formulas>
+    <interviewLabel>Lead Status Last Change Date {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Lead Status Last Change Date</label>
+    <migratedFromWorkflowRuleName>Lead Status Last Change Date</migratedFromWorkflowRuleName>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <name>Status_last_change_date</name>
+        <label>Status last change date</label>
+        <locationX>392</locationX>
+        <locationY>540</locationY>
+        <connector>
+            <targetReference>New_status</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>Lead_Status_Last_Change_Date__c</field>
+            <value>
+                <elementReference>Status_change_DateFormula</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>update_New_status_entered_date</name>
+        <label>update New status entered date</label>
+        <locationX>517</locationX>
+        <locationY>854</locationY>
+        <inputAssignments>
+            <field>New_Status_Entered_Date__c</field>
+            <value>
+                <elementReference>Status_change_DateFormula</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>373</locationX>
+        <locationY>48</locationY>
+        <connector>
+            <targetReference>Status_changed</targetReference>
+        </connector>
+        <filterFormula>AND(ISCHANGED({!$Record.Status}),ISPICKVAL({!$Record.Status}, &quot;New&quot;)) || AND(ISNEW(),ISPICKVAL({!$Record.Status}, &quot;New&quot;)) || ISCHANGED({!$Record.Status})</filterFormula>
+        <object>Lead</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

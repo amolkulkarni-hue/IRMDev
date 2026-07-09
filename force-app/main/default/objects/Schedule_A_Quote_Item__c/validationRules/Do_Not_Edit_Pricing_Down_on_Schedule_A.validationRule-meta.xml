@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Do_Not_Edit_Pricing_Down_on_Schedule_A</fullName>
+    <active>false</active>
+    <description>Prevents users from pricing a schedule A line item below the originally uploaded price</description>
+    <errorConditionFormula>and(not(isblank(Floor_Price__c )),
+OR(
+Proposed_Price__c &lt; Floor_Price__c,
+Adjusted_Price__c &lt; Floor_Price__c 
+)
+)</errorConditionFormula>
+    <errorMessage>You cannot propose/adjust a price lower than what was originally approved (Floor Price)</errorMessage>
+</ValidationRule>

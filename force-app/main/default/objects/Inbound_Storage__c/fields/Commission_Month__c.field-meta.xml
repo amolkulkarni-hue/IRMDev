@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Commission_Month__c</fullName>
+    <description>Required for Commission Extract</description>
+    <externalId>false</externalId>
+    <formula>IF( Storage_Date__c &gt;  Track_Thru_Date__c, &quot;Outside Comm Window&quot;,  TEXT(Commission_Month_Calculation__c) )</formula>
+    <inlineHelpText>Represents the month this Inbound Storage came in against the First Bill Date within the Commissionable Window.</inlineHelpText>
+    <label>Commission Month</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

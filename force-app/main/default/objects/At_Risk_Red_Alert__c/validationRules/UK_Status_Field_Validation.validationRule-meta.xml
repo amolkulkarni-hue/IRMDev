@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>UK_Status_Field_Validation</fullName>
+    <active>true</active>
+    <description>Case #09102466 At Risk Process/Retention/Red Alert Process Enhancement and Standardization for UK in Salesforce</description>
+    <errorConditionFormula>AND( 
+ISCHANGED(Status__c), 
+OR(TEXT(PRIORVALUE( Status__c)) = &quot;Returned to BAU&quot;,TEXT(PRIORVALUE( Status__c)) = &quot;Consolidated&quot;,TEXT(PRIORVALUE( Status__c)) = &quot;Notified&quot;,TEXT(PRIORVALUE( Status__c)) = &quot;Terminated&quot;,TEXT(PRIORVALUE( Status__c)) = &quot;Cancelled&quot;), 
+OR(TEXT(Status__c) &lt;&gt; &quot;Returned to BAU&quot;,TEXT(Status__c) &lt;&gt; &quot;Consolidated&quot;,TEXT(Status__c) &lt;&gt; &quot;Notified&quot;,TEXT(Status__c) &lt;&gt; &quot;Terminated&quot;,TEXT(Status__c) &lt;&gt; &quot;Cancelled&quot;), 
+NOT($Setup.AtRisk_StatusField_EditAccess_Profiles__c.Skip_validation_rule__c) 
+)</errorConditionFormula>
+    <errorDisplayField>Status__c</errorDisplayField>
+    <errorMessage>Please select another value</errorMessage>
+</ValidationRule>

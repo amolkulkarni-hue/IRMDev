@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>57.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <decisions>
+        <name>Check_if_After_the_Update_and_Before_the_update_DTMF_Option_is_same</name>
+        <label>Check if After the Update and Before the update DTMF Option is same</label>
+        <locationX>396</locationX>
+        <locationY>671</locationY>
+        <defaultConnector>
+            <targetReference>Copy_1_of_Update_Valid_Call_Experience_with_true</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>No_Changes_in_DTMF</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Check_if_the_triggering_record_has_the_same_DTMF_option.DTMF_Option__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>$Record__Prior.DTMF_Option__c</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <isGoTo>true</isGoTo>
+                <targetReference>Update_Valid_Call_Experience_with_true</targetReference>
+            </connector>
+            <label>No Changes in DTMF</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_if_the_DTMF_Options_are_same</name>
+        <label>Check if the DTMF Options are same</label>
+        <locationX>594</locationX>
+        <locationY>551</locationY>
+        <defaultConnector>
+            <targetReference>Check_if_the_triggering_record_has_the_same_DTMF_option</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Same_Option</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Check_if_the_triggering_record_has_the_same_DTMF_option.DTMF_Option__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>$Record.DTMF_Option__c</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Check_if_After_the_Update_and_Before_the_update_DTMF_Option_is_same</targetReference>
+            </connector>
+            <label>Same Option</label>
+        </rules>
+    </decisions>
+    <description>This flow is used for updating the Call_Experience_Validation__c field which then prevents the creation/linking of call experience records consisting of the same DTMF_Option__c value to the same Language_Setup record.</description>
+    <environments>Default</environments>
+    <formulas>
+        <name>FirstValueFor_Call_Experience_Validation</name>
+        <dataType>String</dataType>
+        <expression>{!$Record.Language_Setup__r.Id} + TEXT({!$Record.DTMF_Option__c})</expression>
+    </formulas>
+    <formulas>
+        <name>SecondValueFor_Call_Experience_Validation</name>
+        <dataType>String</dataType>
+        <expression>LEFT({!$Record.Language_Setup__r.Id}, 15) + TEXT({!$Record.DTMF_Option__c})</expression>
+    </formulas>
+    <interviewLabel>Call Experience Validation Flow {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Call Experience Validation Flow</label>
+    <loops>
+        <name>Check_if_the_triggering_record_has_the_same_DTMF_option</name>
+        <label>Check if the triggering record has the same DTMF option</label>
+        <locationX>176</locationX>
+        <locationY>431</locationY>
+        <collectionReference>Get_Call_Experience_Records_Tied_to_Language_Setup</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>Check_if_the_DTMF_Options_are_same</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>Update_Valid_Call_Experience_with_true</targetReference>
+        </noMoreValuesConnector>
+    </loops>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <name>Get_Call_Experience_Records_Tied_to_Language_Setup</name>
+        <label>Get Call Experience Records Tied to Language Setup</label>
+        <locationX>176</locationX>
+        <locationY>311</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Check_if_the_triggering_record_has_the_same_DTMF_option</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Language_Setup__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Language_Setup__r.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>Call_Experience__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordUpdates>
+        <name>Copy_1_of_Update_Valid_Call_Experience_with_true</name>
+        <label>Copy 1 of Update Valid_Call_Experience with true</label>
+        <locationX>528</locationX>
+        <locationY>791</locationY>
+        <inputAssignments>
+            <field>Valid_Call_Experience__c</field>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Update_Valid_Call_Experience_with_true</name>
+        <label>Update Valid_Call_Experience with true</label>
+        <locationX>176</locationX>
+        <locationY>1319</locationY>
+        <inputAssignments>
+            <field>Valid_Call_Experience__c</field>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Get_Call_Experience_Records_Tied_to_Language_Setup</targetReference>
+        </connector>
+        <object>Call_Experience__c</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Active</status>
+    <variables>
+        <name>NumberofMatchedRecords</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <scale>2</scale>
+    </variables>
+</Flow>

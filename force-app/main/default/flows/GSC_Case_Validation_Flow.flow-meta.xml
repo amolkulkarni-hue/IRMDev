@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>64.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <customErrors>
+        <description>This validation message prompts agents to fill in the mandatory fields while creating or editing a GSC case</description>
+        <name>Validation_Message</name>
+        <label>Validation Message</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <customErrorMessages>
+            <errorMessage>Country, Category, Sub Category, Customer ID/Billing Account/Operational Account  and (Contact Name or Is IM Employee checked) are required.</errorMessage>
+            <isFieldError>false</isFieldError>
+        </customErrorMessages>
+    </customErrors>
+    <decisions>
+        <description>To check the status of the case and  required fields while creating or updating a case when the case status is &apos;New&apos; #31022</description>
+        <name>Case_New_Status_Validation</name>
+        <label>Case New Status Validation</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>X1_New_Status</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>forB_ValidateNewStatus</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>New</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Validation_Message</targetReference>
+            </connector>
+            <label>1. New Status</label>
+        </rules>
+    </decisions>
+    <description>Converting Existing validation rules on Global Service Cases to flow. #31022</description>
+    <environments>Default</environments>
+    <formulas>
+        <description>Formula to evaluate required fields while creating or updating a case when the case status is &apos;New&apos; #31022</description>
+        <name>forB_ValidateNewStatus</name>
+        <dataType>Boolean</dataType>
+        <expression>AND(
+NOT(OR(AND(ISNEW(),ISPICKVAL($Record.Channel__c, &quot;Voice&quot; )),
+AND(ISNEW(),ISPICKVAL($Record.Channel__c, &quot;WhatsApp&quot;)),
+ISCHANGED($Record.SourceId),
+ISCHANGED($Record.EnabledForQualtricsIntegration__c),		
+$Profile.Name = &apos;IM_Custom Sys Admin&apos;,
+$Profile.Name = &apos;IM_Custom Sys Admin with ModifyAll&apos;,
+$Profile.Name = &apos;Customer Community Plus Login Customer&apos;,
+$Profile.Name = &apos;Customer Support Center Profile&apos;,
+$Profile.Name = &apos;UKI Customer Support Center Profile&apos;,
+$Profile.Name = &apos;Customer Information Form Profile&apos;,
+$Profile.Name = &apos;Iron Mountain Partner Connect Profile&apos;,
+$Profile.Name = &apos;Latam Customer Support Center Profile&apos;,
+$Profile.Name = &apos;India Customer Support Center Profile&apos;,
+$Profile.Name = &apos;Iron Mountain Customer Support Community Profile&apos;,
+$Profile.Name = &apos;Legal Intake Corporate Requests Profile&apos;,
+$Profile.Name = &apos;Coro User Service Profile&apos;,
+$Profile.Name = &apos;Customer References Profile&apos;,
+$Profile.Name = &apos;Iron Mountain Public community Profile&apos;,
+$Profile.Name = &apos;Minimum Access - API Only Integrations&apos;,
+$Profile.Name = &apos;Salesforce API Only System Integrations&apos;,
+$Profile.Name = &apos;NAS_IMC API Only&apos;,
+$User.Id =&apos;00580000001ylFj&apos;,
+$User.Id =&apos;0053400000C2UBB&apos;,
+$User.Id =&apos;0052H00000CMKwD&apos;,
+$User.Id =&apos;00534000009uVnW&apos;,
+$User.Id =&apos;005Hr00000EOyd6&apos;,
+$User.Id =&apos;0052H00000BxW3Y&apos;)),
+OR(ISPICKVAL($Record.IME_SC_Country__c , &quot;&quot; ),ISPICKVAL($Record.GSC_Category__c , &quot;&quot; ),ISPICKVAL($Record.GSC_Sub_Category__c , &quot;&quot; ),
+AND(ISBLANK($Record.Customer_ID__c),ISBLANK($Record.GSC_Billing_Account__c),ISBLANK($Record.GSC_Operational_Account__c)),
+AND(ISBLANK( $Record.ContactId ),$Record.Is_IM_Employee__c = False)))</expression>
+    </formulas>
+    <interviewLabel>GSC Case Validation Flow {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>GSC Case Validation Flow</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Case_New_Status_Validation</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>RecordTypeId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>012Hr0000007pOsIAI</stringValue>
+            </value>
+        </filters>
+        <object>Case</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Global_Account_Plan__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <label>Global Account Plan</label>
+    <lookupFilter>
+        <active>true</active>
+        <booleanFilter>1</booleanFilter>
+        <errorMessage>Please choose Global Account Plan</errorMessage>
+        <filterItems>
+            <field>SFDC_Acct_Plan__c.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Global Account Plan</value>
+        </filterItems>
+        <isOptional>false</isOptional>
+    </lookupFilter>
+    <referenceTo>SFDC_Acct_Plan__c</referenceTo>
+    <relationshipLabel>Related Account Plans</relationshipLabel>
+    <relationshipName>Account_Plans</relationshipName>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

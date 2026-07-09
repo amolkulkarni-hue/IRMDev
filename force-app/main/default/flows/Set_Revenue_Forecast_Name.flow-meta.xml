@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>54.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <description>#9084 - 2022-06-15
+#7894
+Technical evaluation : Enhancement: Value  of &quot;Revenue Forecast Name&quot; to &quot;Account-OppName-MonthID&quot;
+
+---------------------------------------------------------------------------------------------------------------------
+
+#8538
+We need to update the existing flow For &quot;Sales Billing Forecast Set Revenue Forecast Name&quot; that&apos;s been built in the List view for  &quot;Revenue Forecast Name&quot; Instead of &quot;Revenue Month Id&quot; we need to populate with &quot; Forecast Date&quot;</description>
+    <environments>Default</environments>
+    <formulas>
+        <name>RevenueForecastName</name>
+        <dataType>String</dataType>
+        <expression>TRIM(LEFT( {!$Record.Forecast_Opportunity__r.Account.Name} , 26))+&apos;-&apos;+TRIM(LEFT( {!$Record.Forecast_Opportunity__r.Name} , 26))+&apos;-&apos;+if(text({!$Record.Forecast_Revenue_Date__c})!=&apos;&apos;,text(MONTH({!$Record.Forecast_Revenue_Date__c}))+ &quot;/&quot; +text(DAY({!$Record.Forecast_Revenue_Date__c}))+ &quot;/&quot; +text(YEAR({!$Record.Forecast_Revenue_Date__c})),{!$Record.Id})</expression>
+    </formulas>
+    <interviewLabel>Revenue Forecast Name {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>For Sales Billing Forecast Set Revenue Forecast Name</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <name>Update_Revenue_Forecast_Name</name>
+        <label>Update Revenue Forecast Name</label>
+        <locationX>176</locationX>
+        <locationY>335</locationY>
+        <inputAssignments>
+            <field>CurrencyIsoCode</field>
+            <value>
+                <elementReference>$Record.Forecast_Opportunity__r.CurrencyIsoCode</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Name</field>
+            <value>
+                <elementReference>RevenueForecastName</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Update_Revenue_Forecast_Name</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Forecast_Opportunity__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <object>Sales_Revenue_Forecast__c</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

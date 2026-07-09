@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>60.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <description>Migrated from the: Opportunity Product Updates workflow rule
+Workflow rule description: Performs multiple actions when opty product is added.&quot;
+#23960- Added a field update. Stamping the Business Unit data onto Opportunity Product field called Product Business Unit</description>
+    <environments>Default</environments>
+    <formulas>
+        <name>Booked_Amount_CopyFormula</name>
+        <dataType>Currency</dataType>
+        <expression>IF (
+ISPICKVAL($Record.Product2.IM_Revenue_Type__c , &quot;Recurring&quot;),
+	if( LEFT($Record.Product2.Name , 19) &lt;&gt; &quot;Document Conversion&quot; ,
+		IF(  isnew() ,$Record.TotalPrice , $Record.TotalPrice * 12),
+		IF(  isnew() ,$Record.TotalPrice / 12 , $Record.TotalPrice ) ) ,
+$Record.TotalPrice
+)</expression>
+        <scale>0</scale>
+    </formulas>
+    <label>Opportunity Product Updates</label>
+    <migratedFromWorkflowRuleName>Opportunity Product Updates</migratedFromWorkflowRuleName>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <description>Update the Bill_Code_Classification__c, Booked_Amount__c, NA_MM_Commission_Category__c, Product_Class__c, Product_Line__c values
+#23690- Stamping Business Unit of Product onto Opportunity Product</description>
+        <name>Update_the_Values</name>
+        <label>Update the Values</label>
+        <locationX>176</locationX>
+        <locationY>323</locationY>
+        <inputAssignments>
+            <field>Bill_Code_Classification__c</field>
+            <value>
+                <elementReference>$Record.Bill_Code_Classification_FORMULA__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Booked_Amount__c</field>
+            <value>
+                <elementReference>Booked_Amount_CopyFormula</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>NA_MM_Commission_Category__c</field>
+            <value>
+                <elementReference>$Record.NA_MM_Commission_Category_Formula__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Product_Business_Unit__c</field>
+            <value>
+                <elementReference>$Record.Product2.Business_Unit__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Product_Class__c</field>
+            <value>
+                <elementReference>$Record.Product_Class_FORMULA__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Product_Line__c</field>
+            <value>
+                <elementReference>$Record.Product_Line_FORMULA__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Update_the_Values</targetReference>
+        </connector>
+        <filterFormula>NOT( ISBLANK( {!$Record.Opportunity.RecordTypeId} ) )</filterFormula>
+        <object>OpportunityLineItem</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

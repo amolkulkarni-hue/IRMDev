@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>62.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <decisions>
+        <description>Check Case Operation Insert/Update
+For Update need to check &apos;Open Tasks?&apos; Field remains same.</description>
+        <name>Check_Case_Operation</name>
+        <label>Check Case Operation</label>
+        <locationX>380</locationX>
+        <locationY>287</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Check_Open_Tasks_for_Case_Update</name>
+            <conditionLogic>1 OR (NOT(1) AND 2)</conditionLogic>
+            <conditions>
+                <leftValueReference>ISNEW</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Open_Tasks__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Case_Fields</targetReference>
+            </connector>
+            <label>Check Open Tasks for Case Update</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Check Case RecordType Field</description>
+        <name>Check_Case_RecordType_Field</name>
+        <label>Check Case RecordType Field</label>
+        <locationX>182</locationX>
+        <locationY>503</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Check_RecordType</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.RecordTypeId</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Case_Field</targetReference>
+            </connector>
+            <label>Check RecordType</label>
+        </rules>
+    </decisions>
+    <description>This flow is to populate Original Fields (Orig. Assigned Team, Orig. Case Subtype, Orig. Record Type and Orig. Type)  on Case Object when Sub Case Type is filled. For reference. check user story #27072 on Gitlab</description>
+    <environments>Default</environments>
+    <formulas>
+        <name>ISNEW</name>
+        <dataType>Boolean</dataType>
+        <expression>ISNEW()</expression>
+    </formulas>
+    <interviewLabel>Populate {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Case Before Insert &amp; Update - Populate Original Fields</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <description>Update Case Field &apos;Orig. Record Type&apos;</description>
+        <name>Update_Case_Field</name>
+        <label>Update Case Field</label>
+        <locationX>50</locationX>
+        <locationY>611</locationY>
+        <inputAssignments>
+            <field>Orig_Record_Type__c</field>
+            <value>
+                <elementReference>$Record.RecordType.Name</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <description>Update Case Fields &apos;Orig. Case SubType&apos;, &apos;Orig. Assigned Team&apos; &amp; &apos;Orig. Type&apos;</description>
+        <name>Update_Case_Fields</name>
+        <label>Update Case Fields</label>
+        <locationX>182</locationX>
+        <locationY>395</locationY>
+        <connector>
+            <targetReference>Check_Case_RecordType_Field</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>Orig_Assigned_Team__c</field>
+            <value>
+                <elementReference>$Record.Assigned_Team__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Orig_Case_Subtype__c</field>
+            <value>
+                <elementReference>$Record.IM_Case_Sub_Type__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Orig_Type__c</field>
+            <value>
+                <elementReference>$Record.Type</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>254</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Check_Case_Operation</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>RecordType_Name__c</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>IME SC Case</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>RecordType_Name__c</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>IME SC Case Resolved</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>IM_Case_Sub_Type__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Orig_Record_Type__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <object>Case</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

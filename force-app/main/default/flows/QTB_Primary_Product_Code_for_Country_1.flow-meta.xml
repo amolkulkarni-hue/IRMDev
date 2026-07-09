@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>65.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <environments>Default</environments>
+    <formulas>
+        <name>formula_1_myRule_1_A1_6128855975</name>
+        <dataType>String</dataType>
+        <expression>{!$Record.QTB_Product2__c} + &apos;-&apos;+{!$Record.QTB_Country__c} +&apos;-&apos;+
+IF({!$Record.QTB_Primary__c} , &apos;True&apos;, &apos;False&apos;)</expression>
+    </formulas>
+    <interviewLabel>QTB Primary Product Code for Country {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>QTB Primary Product Code for Country</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <name>Update_field</name>
+        <label>Update field</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <inputAssignments>
+            <field>Primary_Product_for_Country__c</field>
+            <value>
+                <elementReference>formula_1_myRule_1_A1_6128855975</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Update_field</targetReference>
+        </connector>
+        <object>QTB_Bill_Code_Product_Lookup__c</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

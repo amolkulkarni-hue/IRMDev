@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Action__c</fullName>
+    <description>This is used to determine the action that needs to be taken for a certain tile. 
+
+No Action, clicking on the tile has no effect on the user&apos;s experience
+-If you want to use links within the HTML use this option to have multiple links within the tile. 
+
+Open Link, if a link is provided a link will be open for the user. 
+
+Open Chat, open a chat if available. (You must provided the class of the button to be pressed for this option to work</description>
+    <fieldManageability>SubscriberControlled</fieldManageability>
+    <inlineHelpText>This is used to determine the action that needs to be taken for a certain tile.</inlineHelpText>
+    <label>Action</label>
+    <required>true</required>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>NoAction</fullName>
+                <default>true</default>
+                <label>No Action</label>
+            </value>
+            <value>
+                <fullName>ButtonToPress</fullName>
+                <default>false</default>
+                <label>Button Press</label>
+            </value>
+            <value>
+                <fullName>OpenLink</fullName>
+                <default>false</default>
+                <label>Open Link</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IME_NoCompetitorIsSelected</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+    Opportunity__r.IME_Nb_NoUnknownCompetitor__c &gt;0, 
+    NOT(
+        ISPICKVAL(
+                  PRIORVALUE(Competitor__c),
+                  &quot;-No/Unknown Competitor-&quot;
+                  )
+       )
+)</errorConditionFormula>
+    <errorMessage>This opportunity has a No/Unknown Competitor. Please remove it before creating any new competitor.</errorMessage>
+</ValidationRule>

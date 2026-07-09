@@ -1,0 +1,1341 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <description>Data Entry Alert for Resubmitted</description>
+        <name>Data_Entry_Alert_for_Resubmitted</name>
+        <label>Data Entry Alert for Resubmitted</label>
+        <locationX>248</locationX>
+        <locationY>1163</locationY>
+        <actionName>Case.Data_Entry_Alert_for_Resubmitted</actionName>
+        <actionType>emailAlert</actionType>
+        <connector>
+            <targetReference>NCSP_Task_Automation_Workflow_18b</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>Case.Data_Entry_Alert_for_Resubmitted</nameSegment>
+        <offset>0</offset>
+    </actionCalls>
+    <apiVersion>62.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <description>Add to Task Collection Variable 19</description>
+        <name>Add_Task_Collection_Variable19</name>
+        <label>Add to Task Collection Variable</label>
+        <locationX>248</locationX>
+        <locationY>2087</locationY>
+        <assignmentItems>
+            <assignToReference>TaskRecordToInsert</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>SingleTaskRecord</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>NCSP_Task_Automation_Workflow_23</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Contract Status Accepted - Add Task for Setup Complete</description>
+        <name>Add_Task_for_Setup_Complete</name>
+        <label>Contract Status Accepted - Add Task for Setup Complete</label>
+        <locationX>248</locationX>
+        <locationY>431</locationY>
+        <assignmentItems>
+            <assignToReference>SingleTaskRecord.ActivityDate</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>DueDate</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SingleTaskRecord.OwnerId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>CaseOwnerOrRunningUser</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SingleTaskRecord.Priority</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Normal</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SingleTaskRecord.Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Not Started</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SingleTaskRecord.Subject</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>varFSubject1</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SingleTaskRecord.WhatId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Add_to_Task_Collection_Variable102</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Add to Task Collection Variable 9</description>
+        <name>Add_to_Task_Collection_Variable101</name>
+        <label>Add to Task Collection Variable</label>
+        <locationX>248</locationX>
+        <locationY>1055</locationY>
+        <assignmentItems>
+            <assignToReference>TaskRecordToInsert</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>SingleTaskRecord</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Data_Entry_Alert_for_Resubmitted</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Add to Task Collection Variable</description>
+        <name>Add_to_Task_Collection_Variable102</name>
+        <label>Add to Task Collection Variable</label>
+        <locationX>248</locationX>
+        <locationY>539</locationY>
+        <assignmentItems>
+            <assignToReference>TaskRecordToInsert</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>SingleTaskRecord</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>NCSP_Workflow_Rule_102_Update</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Add to Task Collection Variable</description>
+        <name>Add_to_Task_Collection_Variable18</name>
+        <label>Add to Task Collection Variable</label>
+        <locationX>248</locationX>
+        <locationY>1571</locationY>
+        <assignmentItems>
+            <assignToReference>TaskRecordToInsert</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>SingleTaskRecord</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>NCSP_Workflow_Rule_18b_Update</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Add to Task Collection Variable</description>
+        <name>Add_to_Task_Collection_Variable41_1</name>
+        <label>Add to Task Collection Variable</label>
+        <locationX>248</locationX>
+        <locationY>2903</locationY>
+        <assignmentItems>
+            <assignToReference>TaskRecordToInsert</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>SingleTaskRecord</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>NCSP_Task_Automation_Workflow_27a</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Add to Task Collection Variable</description>
+        <name>Add_to_Task_Collection_Variable44</name>
+        <label>Add to Task Collection Variable</label>
+        <locationX>248</locationX>
+        <locationY>3311</locationY>
+        <assignmentItems>
+            <assignToReference>TaskRecordToInsert</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>SingleTaskRecord</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>NCSP_CAC_R_Case_Comment_Alert</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Add to Task Collection Variable</description>
+        <name>Add_to_Task_Collection_Variable_23</name>
+        <label>Add to Task Collection Variable</label>
+        <locationX>248</locationX>
+        <locationY>2495</locationY>
+        <assignmentItems>
+            <assignToReference>TaskRecordToInsert</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>SingleTaskRecord</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>NCSP_Task_Automation_Workflow_24</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Add to Task Collection Variable</description>
+        <name>Addto_Task_Collection_Variable</name>
+        <label>Add to Task Collection Variable</label>
+        <locationX>248</locationX>
+        <locationY>3719</locationY>
+        <assignmentItems>
+            <assignToReference>TaskRecordToInsert</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>SingleTaskRecord</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>NCSP_CAC_R_Case_Comment_Clear</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Case Comment added to your case</description>
+        <name>Case_Comment_added_to_your_case</name>
+        <label>Case Comment added to your case</label>
+        <locationX>248</locationX>
+        <locationY>3611</locationY>
+        <assignmentItems>
+            <assignToReference>SingleTaskRecord.ActivityDate</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>RuleTriggerDate</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SingleTaskRecord.OwnerId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>CaseOwnerOrRunningUser</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SingleTaskRecord.Priority</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Normal</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SingleTaskRecord.Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Not Started</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SingleTaskRecord.Subject</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>varFSubject8</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SingleTaskRecord.WhatId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Addto_Task_Collection_Variable</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Contract Status Resubmitted#1</description>
+        <name>Contract_Status_Resubmitted</name>
+        <label>Contract Status Resubmitted#1</label>
+        <locationX>248</locationX>
+        <locationY>947</locationY>
+        <assignmentItems>
+            <assignToReference>SingleTaskRecord.ActivityDate</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>DueDate</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SingleTaskRecord.OwnerId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>CaseOwnerOrRunningUser</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SingleTaskRecord.Priority</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Normal</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SingleTaskRecord.Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Not Started</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SingleTaskRecord.Subject</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>varFSubject2</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SingleTaskRecord.WhatId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Add_to_Task_Collection_Variable101</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Modify Visit Profile</description>
+        <name>Modify_Visit_Profile</name>
+        <label>Modify Visit Profile</label>
+        <locationX>248</locationX>
+        <locationY>3203</locationY>
+        <assignmentItems>
+            <assignToReference>SingleTaskRecord.ActivityDate</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>DueDate</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SingleTaskRecord.OwnerId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>CaseOwnerOrRunningUser</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SingleTaskRecord.Priority</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Normal</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SingleTaskRecord.Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Not Started</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SingleTaskRecord.Subject</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>varFSubject7</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SingleTaskRecord.WhatId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Add_to_Task_Collection_Variable44</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>clear the field Case Comment Added as soon as the Task is created</description>
+        <name>NCSP_CAC_R_Case_Comment_Clear</name>
+        <label>NCSP &amp; CAC/R Case Comment Clear</label>
+        <locationX>248</locationX>
+        <locationY>3827</locationY>
+        <assignmentItems>
+            <assignToReference>SingleCaseRecordToUpdate.Case_Comment_Added__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SingleCaseRecordToUpdate.Id</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Check_Task_Creation_Record_exists</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>update case field Task Identifier in order to prevent duplicate task creation</description>
+        <name>NCSP_Workflow_Rule_102_Update</name>
+        <label>NCSP Workflow Rule 102 Update</label>
+        <locationX>248</locationX>
+        <locationY>647</locationY>
+        <assignmentItems>
+            <assignToReference>SingleCaseRecordToUpdate.Task_Identifier__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>NCSP_Task_Automation_ Workflow_102</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SingleCaseRecordToUpdate.Id</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>NCSP_Task_Automation_Workflow_101</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>update case field Task Identifier in order to prevent duplicate task creation
+Update case Status to Welcome</description>
+        <name>NCSP_Workflow_Rule_18b_Update</name>
+        <label>NCSP Workflow Rule 18b Update</label>
+        <locationX>248</locationX>
+        <locationY>1679</locationY>
+        <assignmentItems>
+            <assignToReference>SingleCaseRecordToUpdate.Task_Identifier__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>NCSP_Task_Automation_ Workflow _18b</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SingleCaseRecordToUpdate.Id</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SingleCaseRecordToUpdate.Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Welcome</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>NCSP_Task_Automation_Workflow_19</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Place Service Order</description>
+        <name>Place_Service_Order</name>
+        <label>Place Service Order</label>
+        <locationX>248</locationX>
+        <locationY>2795</locationY>
+        <assignmentItems>
+            <assignToReference>SingleTaskRecord.ActivityDate</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>DueDate</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SingleTaskRecord.OwnerId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>CaseOwnerOrRunningUser</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SingleTaskRecord.Priority</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Normal</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SingleTaskRecord.Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Not Started</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SingleTaskRecord.Subject</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>varFSubject6</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SingleTaskRecord.WhatId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Add_to_Task_Collection_Variable41_1</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Place Supply Order</description>
+        <name>Place_Supply_Order</name>
+        <label>Place Supply Order</label>
+        <locationX>248</locationX>
+        <locationY>2387</locationY>
+        <assignmentItems>
+            <assignToReference>SingleTaskRecord.ActivityDate</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>DueDate</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SingleTaskRecord.OwnerId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>CaseOwnerOrRunningUser</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SingleTaskRecord.Priority</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Normal</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SingleTaskRecord.Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Not Started</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SingleTaskRecord.Subject</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>varFSubject5</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SingleTaskRecord.WhatId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Add_to_Task_Collection_Variable_23</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Create Task : Create Delayed Task : Welcome Call 2
+Create Task : Send Welcome Call Attempt E-mail</description>
+        <name>Send_Welcome_Call_Attempt_E_mail</name>
+        <label>Send Welcome Call Attempt E-mail</label>
+        <locationX>248</locationX>
+        <locationY>1979</locationY>
+        <assignmentItems>
+            <assignToReference>SingleTaskRecord.ActivityDate</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>DueDate</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SingleTaskRecord.OwnerId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>CaseOwnerOrRunningUser</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SingleTaskRecord.Priority</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Normal</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SingleTaskRecord.Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Not Started</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SingleTaskRecord.Subject</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>varFSubject4</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SingleTaskRecord.WhatId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Add_Task_Collection_Variable19</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Create Task : Welcome Call 1</description>
+        <name>Welcome_Call_1</name>
+        <label>Welcome Call 1</label>
+        <locationX>248</locationX>
+        <locationY>1463</locationY>
+        <assignmentItems>
+            <assignToReference>SingleTaskRecord.ActivityDate</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>DueDate</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SingleTaskRecord.OwnerId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>CaseOwnerOrRunningUser</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SingleTaskRecord.Priority</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Normal</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SingleTaskRecord.Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Not Started</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SingleTaskRecord.Subject</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>varFSubject3</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SingleTaskRecord.WhatId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Add_to_Task_Collection_Variable18</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <description>Check Case Updation Record exists</description>
+        <name>Check_Case_Updation_Record_exists</name>
+        <label>Check Case Updation Record exists</label>
+        <locationX>182</locationX>
+        <locationY>4235</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>CaseRecordExists</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>SingleCaseRecordToUpdate</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Case_Field_Update</targetReference>
+            </connector>
+            <label>Case Record Exists</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Check Task Creation Record exists</description>
+        <name>Check_Task_Creation_Record_exists</name>
+        <label>Check Task Creation Record exists</label>
+        <locationX>380</locationX>
+        <locationY>4019</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>taskRecordExists</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>TaskRecordToInsert</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Create_Task</targetReference>
+            </connector>
+            <label>taskRecordExists</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>creates a task when a case comment is added to the case by someone other than the case owner or a supervisor</description>
+        <name>NCSP_CAC_R_Case_Comment_Alert</name>
+        <label>NCSP &amp; CAC/R Case Comment Alert</label>
+        <locationX>380</locationX>
+        <locationY>3503</locationY>
+        <defaultConnector>
+            <targetReference>Check_Task_Creation_Record_exists</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>NCSP_CACR_Case_Comment_Alert</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.RecordType_Name__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>NCSP: Upsell</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Case_Comment_Added__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Case_Comment_added_to_your_case</targetReference>
+            </connector>
+            <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+            <label>NCSP &amp; CAC/R Case Comment Alert</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Create Task : Contract Status Resubmitted#1</description>
+        <name>NCSP_Task_Automation_Workflow_101</name>
+        <label>NCSP - Task Automation- Workflow -101</label>
+        <locationX>380</locationX>
+        <locationY>839</locationY>
+        <defaultConnector>
+            <targetReference>NCSP_Task_Automation_Workflow_18b</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>NCSP_Task_Automation_Workflow101</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.RecordType_Name__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>NCSP: Upsell</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Data_Entry_Owner__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Parent.CaseNumber</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.IsClosed</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Contract_Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Resubmitted</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Contract_Status_Resubmitted</targetReference>
+            </connector>
+            <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+            <label>NCSP - Task Automation- Workflow -101</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Create Task : Contract Status Accepted - Add Task for Setup Complete</description>
+        <name>NCSP_Task_Automation_Workflow_102</name>
+        <label>NCSP - Task Automation- Workflow -102</label>
+        <locationX>380</locationX>
+        <locationY>323</locationY>
+        <defaultConnector>
+            <targetReference>NCSP_Task_Automation_Workflow_101</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>NCSP_Task_Automation_Workflow102</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.RecordType_Name__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>NCSP: Upsell</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Data_Entry_Owner__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Parent.CaseNumber</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.IsClosed</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Contract_Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Accepted</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Setup_Complete_Date__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Task_Identifier__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>NCSP_Task_Automation_ Workflow_102</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Add_Task_for_Setup_Complete</targetReference>
+            </connector>
+            <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+            <label>NCSP - Task Automation- Workflow -102</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Dept Add Create Task : Welcome Call 1
+Field Update: Status Welcome</description>
+        <name>NCSP_Task_Automation_Workflow_18b</name>
+        <label>NCSP - Task Automation- Workflow -18b</label>
+        <locationX>380</locationX>
+        <locationY>1355</locationY>
+        <defaultConnector>
+            <targetReference>NCSP_Task_Automation_Workflow_19</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>NCSP_Task_Automation_Workflow18b</name>
+            <conditionLogic>1 AND 2 AND 3 AND 4 AND 5</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.RecordType_Name__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>NCSP: Upsell</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Task_Identifier__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>NCSP_Task_Automation_ Workflow _18b</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.IsClosed</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Date_On_Boarder_CSA_Assigned__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Date_Welcome_Call_Attempt_1__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Welcome_Call_1</targetReference>
+            </connector>
+            <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+            <label>NCSP - Task Automation- Workflow -18b</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Create Task : Create Delayed Task : Welcome Call 2
+Create Task : Send Welcome Call Attempt E-mail</description>
+        <name>NCSP_Task_Automation_Workflow_19</name>
+        <label>NCSP - Task Automation- Workflow -19</label>
+        <locationX>380</locationX>
+        <locationY>1871</locationY>
+        <defaultConnector>
+            <targetReference>NCSP_Task_Automation_Workflow_23</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>NCSP_Task_Automation_Workflow19</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.RecordType_Name__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>NCSP: Upsell</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Date_Welcome_Call_Attempt_2__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.IsClosed</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Date_Welcome_Call_Attempt_1__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Date_welcome_call_completed__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Send_Welcome_Call_Attempt_E_mail</targetReference>
+            </connector>
+            <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+            <label>NCSP - Task Automation- Workflow -19</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Create Task : Place Supply Order</description>
+        <name>NCSP_Task_Automation_Workflow_23</name>
+        <label>NCSP - Task Automation- Workflow -23</label>
+        <locationX>380</locationX>
+        <locationY>2279</locationY>
+        <defaultConnector>
+            <targetReference>NCSP_Task_Automation_Workflow_24</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>NCSP_Task_Automation_Workflow23</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.RecordType_Name__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>NCSP: Upsell</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Date_welcome_call_completed__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.IsClosed</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Supplies_Order_Required__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Yes</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Supplies_Scheduled_Date__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Place_Supply_Order</targetReference>
+            </connector>
+            <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+            <label>NCSP - Task Automation- Workflow23</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Create Task : Place Service Order</description>
+        <name>NCSP_Task_Automation_Workflow_24</name>
+        <label>NCSP - Task Automation- Workflow -24</label>
+        <locationX>380</locationX>
+        <locationY>2687</locationY>
+        <defaultConnector>
+            <targetReference>NCSP_Task_Automation_Workflow_27a</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>NCSP_Task_Automation_Workflow24</name>
+            <conditionLogic>1 AND 2 AND 3 AND 4 AND ((5 AND 6) OR 7)</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.RecordType.Name</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>NCSP: Upsell</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Date_welcome_call_completed__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.IsClosed</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Service_Schedule_Date__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Supplies_Order_Required__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Yes</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Supplies_Delivered_Date__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Supplies_Order_Required__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>No</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Place_Service_Order</targetReference>
+            </connector>
+            <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+            <label>NCSP - Task Automation- Workflow -24</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Create Task : Modify Visit Profile</description>
+        <name>NCSP_Task_Automation_Workflow_27a</name>
+        <label>NCSP - Task Automation- Workflow -27a</label>
+        <locationX>380</locationX>
+        <locationY>3095</locationY>
+        <defaultConnector>
+            <targetReference>NCSP_CAC_R_Case_Comment_Alert</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>NCSP_Task_Automation_Workflow27a</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.NCSP_Service_line__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Shred</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.IsClosed</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Date_welcome_call_completed__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Shred_Date_Visit_Profile_Modified__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.RecordType_Name__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>NCSP: Upsell</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Modify_Visit_Profile</targetReference>
+            </connector>
+            <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+            <label>NCSP - Task Automation- Workflow -27a</label>
+        </rules>
+    </decisions>
+    <description>Below Workflow rule converted into the flow for NCSP: Upsell record type
+NCSP - Task Automation- Workflow -19
+NCSP - Task Automation- Workflow -23
+NCSP - Task Automation- Workflow -24
+NCSP - Task Automation- Workflow -18b
+NCSP - Task Automation- Workflow -27a
+NCSP &amp; CAC/R Case Comment Alert
+NCSP - Task Automation- Workflow -101
+NCSP - Task Automation- Workflow -102
+
+Created variables as part of Gitlab - #33449, to store the translated task subjects of different countries</description>
+    <environments>Default</environments>
+    <formulas>
+        <description>Case Owner Or Running User assigned as a task owner.</description>
+        <name>CaseOwnerOrRunningUser</name>
+        <dataType>String</dataType>
+        <expression>IF(BEGINS({!$Record.OwnerId}, &apos;005&apos;), {!$Record.OwnerId}, {!$User.Id})</expression>
+    </formulas>
+    <formulas>
+        <name>DueDate</name>
+        <dataType>Date</dataType>
+        <expression>TODAY() + 2</expression>
+    </formulas>
+    <formulas>
+        <name>NowDate</name>
+        <dataType>DateTime</dataType>
+        <expression>NOW()</expression>
+    </formulas>
+    <formulas>
+        <name>RuleTriggerDate</name>
+        <dataType>Date</dataType>
+        <expression>TODAY()</expression>
+    </formulas>
+    <formulas>
+        <description>Created variables as part of Gitlab - #33449, to store the translated task subjects of different countries</description>
+        <name>varFSubject1</name>
+        <dataType>String</dataType>
+        <expression>&apos;^^$$## NCSP - Task Automation- Workflow -102-&apos;+{!varTCountry}</expression>
+    </formulas>
+    <formulas>
+        <description>Created variables as part of Gitlab - #33449, to store the translated task subjects of different countries</description>
+        <name>varFSubject2</name>
+        <dataType>String</dataType>
+        <expression>&apos;^^$$## NCSP - Task Automation- Workflow -101-&apos;+{!varTCountry}</expression>
+    </formulas>
+    <formulas>
+        <description>Created variables as part of Gitlab - #33449, to store the translated task subjects of different countries</description>
+        <name>varFSubject3</name>
+        <dataType>String</dataType>
+        <expression>&apos;^^$$## NCSP - Task Automation- Workflow -18-&apos;+{!varTCountry}</expression>
+    </formulas>
+    <formulas>
+        <description>Created variables as part of Gitlab - #33449, to store the translated task subjects of different countries</description>
+        <name>varFSubject4</name>
+        <dataType>String</dataType>
+        <expression>&apos;^^$$## NCSP - Task Automation- Workflow -19-&apos;+{!varTCountry}</expression>
+    </formulas>
+    <formulas>
+        <description>Created variables as part of Gitlab - #33449, to store the translated task subjects of different countries</description>
+        <name>varFSubject5</name>
+        <dataType>String</dataType>
+        <expression>&apos;^^$$## NCSP - Task Automation- Workflow -23-&apos;+{!varTCountry}</expression>
+    </formulas>
+    <formulas>
+        <description>Created variables as part of Gitlab - #33449, to store the translated task subjects of different countries</description>
+        <name>varFSubject6</name>
+        <dataType>String</dataType>
+        <expression>&apos;^^$$## NCSP - Task Automation- Workflow -24-&apos;+{!varTCountry}</expression>
+    </formulas>
+    <formulas>
+        <description>Created variables as part of Gitlab - #33449, to store the translated task subjects of different countries</description>
+        <name>varFSubject7</name>
+        <dataType>String</dataType>
+        <expression>&apos;^^$$## NCSP - Task Automation- Workflow -27a-&apos;+{!varTCountry}</expression>
+    </formulas>
+    <formulas>
+        <description>Created variables as part of Gitlab - #33449, to store the translated task subjects of different countries</description>
+        <name>varFSubject8</name>
+        <dataType>String</dataType>
+        <expression>&apos;^^$$## NCSP &amp; CAC/R Case Comment Added-&apos;+{!varTCountry}</expression>
+    </formulas>
+    <interviewLabel>NCSP: Upsell {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>NCSP: Upsell</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordCreates>
+        <description>Creating multiple task records.</description>
+        <name>Create_Task</name>
+        <label>Create Task</label>
+        <locationX>182</locationX>
+        <locationY>4127</locationY>
+        <connector>
+            <targetReference>Check_Case_Updation_Record_exists</targetReference>
+        </connector>
+        <inputReference>TaskRecordToInsert</inputReference>
+    </recordCreates>
+    <recordUpdates>
+        <description>Case Field Update</description>
+        <name>Case_Field_Update</name>
+        <label>Case Field Update</label>
+        <locationX>50</locationX>
+        <locationY>4343</locationY>
+        <inputReference>SingleCaseRecordToUpdate</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>254</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>NCSP_Task_Automation_Workflow_102</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>RecordType_Name__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>NCSP: Upsell</stringValue>
+            </value>
+        </filters>
+        <object>Case</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+    <triggerOrder>1170</triggerOrder>
+    <variables>
+        <description>Multiple Case Record Field To Update</description>
+        <name>MultipleCaseRecordFieldToUpdate</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Case</objectType>
+    </variables>
+    <variables>
+        <description>Single Case Record To Update</description>
+        <name>SingleCaseRecordToUpdate</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Case</objectType>
+    </variables>
+    <variables>
+        <description>Single Task Record</description>
+        <name>SingleTaskRecord</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Task</objectType>
+    </variables>
+    <variables>
+        <description>Task Record to Insert</description>
+        <name>TaskRecordToInsert</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Task</objectType>
+    </variables>
+    <variables>
+        <name>varTCountry</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <elementReference>$Record.Country__c</elementReference>
+        </value>
+    </variables>
+</Flow>

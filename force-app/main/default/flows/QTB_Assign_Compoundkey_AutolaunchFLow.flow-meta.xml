@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>49.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <description>Assign Compound key</description>
+        <name>QTB_CBA_Autopopulate_Compound_Field</name>
+        <label>Asst_Set_CBA _Autopopulate_Compound_Field</label>
+        <locationX>296</locationX>
+        <locationY>93</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.QTB_Compound_Key__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>QTB_Assign_Compound_Key</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <formulas>
+        <description>Assign Compound key</description>
+        <name>QTB_Assign_Compound_Key</name>
+        <dataType>String</dataType>
+        <expression>{!$Record.QTB_Customer_Account__c}&amp;{!$Record.QTB_Quote__c}&amp;{!$Record.QTB_Billing_Account__c}</expression>
+    </formulas>
+    <interviewLabel>QTB_Assign_Compoundkey_AutolaunchFLow {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>QTB_Assign_Compoundkey_AutolaunchFLow</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>108</locationX>
+        <locationY>95</locationY>
+        <connector>
+            <targetReference>QTB_CBA_Autopopulate_Compound_Field</targetReference>
+        </connector>
+        <object>QTB_Customer_Billing_Account_Lookup__c</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>59.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <description>Migrated from the workflow: NCSP &amp; CAC/R Case Comment Notice
+Workflow Description: updates a field on the case when a case comment has been added to the case by someone other than the owner or supervisor
+(Kindly refer to the gitlab user story #18779 for details)</description>
+    <environments>Default</environments>
+    <interviewLabel>NCSP &amp; CAC/R Case Comment Notice {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>NCSP &amp; CAC/R Case Comment Notice</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <description>update the field Case Comment Added when a comment is added to the case</description>
+        <name>NCSP_CAC_R_Case_Comment_Added</name>
+        <label>NCSP &amp; CAC/R Case Comment Added</label>
+        <locationX>176</locationX>
+        <locationY>323</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.ParentId</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Case_Comment_Added__c</field>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
+    </recordUpdates>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>NCSP_CAC_R_Case_Comment_Added</targetReference>
+        </connector>
+        <filterFormula>NOT(BEGINS({!$Record.Parent.OwnerId}, &apos;00G&apos;))
+&amp;&amp;
+{!$Record.Parent.IsClosed} = False
+&amp;&amp;
+{!$Record.CreatedById} &lt;&gt; {!$Record.Parent.OwnerId}
+&amp;&amp;
+(
+{!$Record.Parent.RecordTypeId} = &apos;01280000000UDqk&apos; ||
+{!$Record.Parent.RecordTypeId} = &apos;01280000000UDql&apos; ||
+{!$Record.Parent.RecordTypeId} = &apos;01280000000UDqm&apos; ||
+{!$Record.Parent.RecordTypeId} = &apos;01280000000UDqu&apos; ||
+{!$Record.Parent.RecordTypeId} = &apos;01280000000UDqt&apos; ||
+{!$Record.Parent.RecordTypeId} = &apos;01280000000UDqq&apos; ||
+{!$Record.Parent.RecordTypeId} = &apos;01280000000UDqr&apos; ||
+{!$Record.Parent.RecordTypeId} = &apos;01280000000UDqs&apos; ||
+{!$Record.Parent.RecordTypeId} = &apos;01280000000UF4s&apos;
+)
+&amp;&amp;
+(
+{!$Profile.Id} &lt;&gt; &apos;00e80000001OHLW&apos; &amp;&amp;
+{!$Profile.Id} &lt;&gt; &apos;00e80000001OHLZ&apos; &amp;&amp;
+{!$Profile.Id} &lt;&gt; &apos;00e80000001OHLa&apos; &amp;&amp;
+{!$Profile.Id} &lt;&gt; &apos;00e80000001OHLT&apos;
+)</filterFormula>
+        <object>CaseComment</object>
+        <recordTriggerType>Create</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

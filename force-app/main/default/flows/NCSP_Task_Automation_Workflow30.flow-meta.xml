@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>NCSP_Task_Automation_Workflow_30</name>
+        <label>^^$$## NCSP - Task Automation- Workflow -30</label>
+        <locationX>308</locationX>
+        <locationY>276</locationY>
+        <actionName>NewTask</actionName>
+        <actionType>quickAction</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>Subject</name>
+            <value>
+                <elementReference>varfSubject</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>ActivityDate</name>
+            <value>
+                <elementReference>DueDATE</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>WhatId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>OwnerId</name>
+            <value>
+                <elementReference>$User.Id</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>Status</name>
+            <value>
+                <stringValue>Not Started</stringValue>
+            </value>
+        </inputParameters>
+        <nameSegment>NewTask</nameSegment>
+        <offset>0</offset>
+    </actionCalls>
+    <apiVersion>61.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <description>Converted workflow NCSP - Task Automation- Workflow -30 as part of #26891
+
+Created variables as part of Gitlab - #33449, to store the translated task subjects of different countries</description>
+    <environments>Default</environments>
+    <formulas>
+        <name>DueDATE</name>
+        <dataType>Date</dataType>
+        <expression>TODAY() + 2</expression>
+    </formulas>
+    <formulas>
+        <description>Created variables as part of Gitlab - #33449, to store the translated task subjects of different countries</description>
+        <name>varfSubject</name>
+        <dataType>String</dataType>
+        <expression>&apos;^^$$## NCSP - Task Automation- Workflow -30-&apos;+{!varTCountry}</expression>
+    </formulas>
+    <interviewLabel>NCSP - Task Automation- Workflow -30 {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>NCSP - Task Automation- Workflow -30</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+        <filterLogic>(1 OR 2 OR 3 OR 4 OR 5) AND 6 AND 7 AND 8</filterLogic>
+        <filters>
+            <field>RecordType_Name__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>NCSP: DP New Customer Setup</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>RecordType_Name__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>NCSP: SKP New Customer Setup</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>RecordType_Name__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>NCSP: SKP Department Add Only</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>RecordType_Name__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>NCSP: DMS</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>RecordType_Name__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>NCSP: Upsell</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Supplies_Delivered_Date__c</field>
+            <operator>EqualTo</operator>
+        </filters>
+        <filters>
+            <field>IsClosed</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Supplies_Scheduled_Date__c</field>
+            <operator>NotEqualTo</operator>
+        </filters>
+        <object>Case</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <scheduledPaths>
+            <name>X12_Hours_After_Case_Supplies_Scheduled_Date</name>
+            <connector>
+                <targetReference>NCSP_Task_Automation_Workflow_30</targetReference>
+            </connector>
+            <label>12 Hours After Case: Supplies Scheduled Date</label>
+            <offsetNumber>12</offsetNumber>
+            <offsetUnit>Hours</offsetUnit>
+            <recordField>Supplies_Scheduled_Date__c</recordField>
+            <timeSource>RecordField</timeSource>
+        </scheduledPaths>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+    <triggerOrder>1090</triggerOrder>
+    <variables>
+        <name>varTCountry</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <elementReference>$Record.Country__c</elementReference>
+        </value>
+    </variables>
+</Flow>

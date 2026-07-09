@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>60.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <description>Migrated from the: Date Paid Timestamp workflow rule
+Workflow rule description: Stamp the opportunity with the date and time when the payment status moves to paid&quot;
+(Gitlab user story #21002 for your reference)</description>
+    <environments>Default</environments>
+    <formulas>
+        <description>Generates the current time</description>
+        <name>Now</name>
+        <dataType>DateTime</dataType>
+        <expression>Now()</expression>
+    </formulas>
+    <interviewLabel>Date Paid Timestamp {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Date Paid Timestamp</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <description>Update &apos;Date Paid&apos; field with the current time</description>
+        <name>Paid_timestamp</name>
+        <label>Paid timestamp</label>
+        <locationX>176</locationX>
+        <locationY>287</locationY>
+        <inputAssignments>
+            <field>Date_Paid__c</field>
+            <value>
+                <elementReference>Now</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Paid_timestamp</targetReference>
+        </connector>
+        <filterFormula>AND(  ISCHANGED(  {!$Record.Payment_Status__c}) ,  ISPICKVAL( {!$Record.Payment_Status__c}, &quot;Submitted for Payment&quot;)  )</filterFormula>
+        <object>Appeal__c</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

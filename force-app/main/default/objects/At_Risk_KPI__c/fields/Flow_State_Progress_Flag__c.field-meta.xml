@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Flow_State_Progress_Flag__c</fullName>
+    <formula>/*if(
+    or(
+        Flow_State_Status__c = &apos;In Progress&apos;,
+        Flow_State_Status__c = &apos;Complete&apos;
+    ),
+    true,
+    false
+)*/
+null</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Flow State Progress Flag To Be Deleted</label>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

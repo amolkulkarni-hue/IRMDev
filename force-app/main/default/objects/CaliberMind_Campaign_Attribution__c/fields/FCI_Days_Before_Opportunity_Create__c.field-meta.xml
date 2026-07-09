@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>FCI_Days_Before_Opportunity_Create__c</fullName>
+    <description>Evaluates to number of days before opportunity create date based on response date. Same day is 0, after opportunity create is blank.</description>
+    <externalId>false</externalId>
+    <formula>IF( Opportunity__r.CreatedDate - Response_Date__c &gt;= 0, Opportunity__r.CreatedDate - Response_Date__c, NULL)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <inlineHelpText>Evaluates to number of days before opportunity create date based on response date. Same day is 0, after opportunity create is blank.</inlineHelpText>
+    <label>Days Before Opportunity Create</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>0</scale>
+    <trackTrending>false</trackTrending>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

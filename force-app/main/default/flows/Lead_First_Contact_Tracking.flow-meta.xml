@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>67.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <name>Populate_First_Date_Time_Value_Value</name>
+        <label>Populate First Date Time Value Value</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.First_Contacted_Date_Time__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Flow.CurrentDateTime</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Time_to_First_Contact__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>timeToContacted</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <description>Automatically captures First Contacted Date/Time and calculates Time to First Contact when a Lead moves from Accepted to Contacted.
+Automatically captures Accepted Date/Time and calculates Time to Accept  when a Lead moves from New to Accepted.</description>
+    <environments>Default</environments>
+    <formulas>
+        <name>TimeToAccept</name>
+        <dataType>Number</dataType>
+        <expression>(NOW() - {!$Record.CreatedDate}) * 24</expression>
+        <scale>2</scale>
+    </formulas>
+    <formulas>
+        <name>timeToContacted</name>
+        <dataType>Number</dataType>
+        <expression>({!$Flow.CurrentDateTime} - {!$Record.Accepted_Date_Time__c})*24</expression>
+        <scale>2</scale>
+    </formulas>
+    <formulas>
+        <name>TimeToFirstContactHours</name>
+        <dataType>Number</dataType>
+        <expression>(
+$Flow.CurrentDateTime -
+$Record.Accepted_Date_Time__c
+) * 24</expression>
+        <scale>2</scale>
+    </formulas>
+    <interviewLabel>Lead First Contact Tracking {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Lead First Contact Tracking</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Populate_First_Date_Time_Value_Value</targetReference>
+        </connector>
+        <filterFormula>AND(
+    {!$Record.RecordType.DeveloperName} = &apos;Standard_Lead&apos;,
+    TEXT({!$Record__Prior.Status}) = &apos;Accepted&apos;,
+    TEXT({!$Record.Status}) = &apos;Contacted&apos;,
+    ISBLANK({!$Record.First_Contacted_Date_Time__c})
+)</filterFormula>
+        <object>Lead</object>
+        <recordTriggerType>Update</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

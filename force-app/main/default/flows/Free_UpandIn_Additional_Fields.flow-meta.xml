@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>59.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <description>Migrated from the: Free Up and In Additional Fields workflow rule
+Workflow rule description: &quot;</description>
+    <environments>Default</environments>
+    <interviewLabel>Free UpandIn Additional Fields {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Free UpandIn Additional Fields</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <description>Returning &apos;Customer Reimbursement for Term. Fees?&apos; to Null if Free Up In is No or Null
+Returning &apos;Is &gt;2000 Cube Moving via Free Up &amp; In?&apos; to Null if Free Up In is set to No or Null
+Returning &apos;Material Moving From Another Vendor?&apos; to Null if Free Up In is No or Null</description>
+        <name>mainUpdate</name>
+        <label>mainUpdate</label>
+        <locationX>575</locationX>
+        <locationY>335</locationY>
+        <inputAssignments>
+            <field>Customer_Reimbursement_for_Term_Fees__c</field>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Is_2000_Cube_Moving_via_Free_Up_In__c</field>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Material_Moving_From_Another_Vendor__c</field>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>449</locationX>
+        <locationY>48</locationY>
+        <connector>
+            <targetReference>mainUpdate</targetReference>
+        </connector>
+        <filterLogic>1 OR 2</filterLogic>
+        <filters>
+            <field>Free_Up_In__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>No</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Free_Up_In__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <object>Customer_Profile__c</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

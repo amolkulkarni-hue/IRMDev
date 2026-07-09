@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Termination_Impact__c</fullName>
+    <description>The impact that this terminated customer account has on the overall account. Required when Risk Status is set to ‘Terminated’</description>
+    <inlineHelpText>The impact that this terminated customer account has on the overall account. Required when Risk Status is set to ‘Terminated’</inlineHelpText>
+    <label>delete_Termination Impact</label>
+    <required>false</required>
+    <trackFeedHistory>true</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>Closure_Reason__c</controllingField>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Terminated- No Risk</fullName>
+                <default>false</default>
+                <label>Terminated- No Risk</label>
+            </value>
+            <value>
+                <fullName>Terminated- Local Risk Only</fullName>
+                <default>false</default>
+                <label>Terminated- Local Risk Only</label>
+            </value>
+            <value>
+                <fullName>Terminated- Entire Account At Risk</fullName>
+                <default>false</default>
+                <label>Terminated- Entire Account At Risk</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>4c - Economic Change - Bankrupt</controllingFieldValue>
+            <controllingFieldValue>4d - Economic Change - Budget change</controllingFieldValue>
+            <controllingFieldValue>5a - Relationship - No contact from IM recently</controllingFieldValue>
+            <controllingFieldValue>5b - Relationship - Local competitor influenced decision</controllingFieldValue>
+            <controllingFieldValue>5c - Relationship - Decision Maker change</controllingFieldValue>
+            <controllingFieldValue>5d - Relationship - Contractual Concerns</controllingFieldValue>
+            <controllingFieldValue>6a - No Reason - Customer would not share</controllingFieldValue>
+            <controllingFieldValue>6b - No Reason - Unable to reach customer</controllingFieldValue>
+            <controllingFieldValue>7a - IM Initiated - Account Setup in Error</controllingFieldValue>
+            <controllingFieldValue>7b - IM Initiated - End of Life of Service</controllingFieldValue>
+            <controllingFieldValue>2g - Program Change - Lack of use / non-deployment</controllingFieldValue>
+            <controllingFieldValue>7c - IM Initiated - Non-Payment/Non-Collectible</controllingFieldValue>
+            <controllingFieldValue>2h - Program Change - Account moved out of district/service area (IM does not retain storage)</controllingFieldValue>
+            <controllingFieldValue>7d - IM Initiated - Technical Incompatibilities discovered during setup</controllingFieldValue>
+            <controllingFieldValue>2i - Program Change - Account moved out of district/service area (IM retains storage)</controllingFieldValue>
+            <controllingFieldValue>7e - IM Initiated - Unauthorized Reseller</controllingFieldValue>
+            <controllingFieldValue>2j - Program Change - Destruction of Material / Information no longer needs to be stored</controllingFieldValue>
+            <controllingFieldValue>2k - Program Change - Moved to third party provider (IM retains)</controllingFieldValue>
+            <controllingFieldValue>3a - Service Quality - Technical Issues</controllingFieldValue>
+            <controllingFieldValue>3b - Service Quality - DR/Restores did not meet expectations</controllingFieldValue>
+            <controllingFieldValue>3c - Service Quality - Logistical Service Issues</controllingFieldValue>
+            <controllingFieldValue>3d - Service Quality - Lack of Features/Functionality</controllingFieldValue>
+            <controllingFieldValue>3e - Service Quality - IM Non-responsive to / unable to resolve repeated service issues</controllingFieldValue>
+            <controllingFieldValue>1a - Price - Uncompetitive Pricing</controllingFieldValue>
+            <controllingFieldValue>1b - Price - Unhappy with Price Increase</controllingFieldValue>
+            <controllingFieldValue>1c - Price - Minimum Storage Increase (RM Only)</controllingFieldValue>
+            <controllingFieldValue>2a - Program Change - Customer retrieved inventory w/o explanation</controllingFieldValue>
+            <controllingFieldValue>2b - Program Change - Consolidation of data to internal systems/locations</controllingFieldValue>
+            <controllingFieldValue>2c - Program Change - Moved to electronic/online/virtual solution (not Iron Mountain Digital)</controllingFieldValue>
+            <controllingFieldValue>2d - Program Change - Moved to electronic/online/virtual solution (Iron Mountain Digital solution)</controllingFieldValue>
+            <controllingFieldValue>2e - Program Change - Moved to in-house tape rotation</controllingFieldValue>
+            <controllingFieldValue>2f - Program Change - Moved to custom in-house solution</controllingFieldValue>
+            <controllingFieldValue>4a - Economic Change - Out of Business</controllingFieldValue>
+            <controllingFieldValue>4b - Economic Change - Acquired</controllingFieldValue>
+            <valueName>Terminated- No Risk</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>4c - Economic Change - Bankrupt</controllingFieldValue>
+            <controllingFieldValue>4d - Economic Change - Budget change</controllingFieldValue>
+            <controllingFieldValue>5a - Relationship - No contact from IM recently</controllingFieldValue>
+            <controllingFieldValue>5b - Relationship - Local competitor influenced decision</controllingFieldValue>
+            <controllingFieldValue>5c - Relationship - Decision Maker change</controllingFieldValue>
+            <controllingFieldValue>5d - Relationship - Contractual Concerns</controllingFieldValue>
+            <controllingFieldValue>6a - No Reason - Customer would not share</controllingFieldValue>
+            <controllingFieldValue>6b - No Reason - Unable to reach customer</controllingFieldValue>
+            <controllingFieldValue>7a - IM Initiated - Account Setup in Error</controllingFieldValue>
+            <controllingFieldValue>7b - IM Initiated - End of Life of Service</controllingFieldValue>
+            <controllingFieldValue>2g - Program Change - Lack of use / non-deployment</controllingFieldValue>
+            <controllingFieldValue>7c - IM Initiated - Non-Payment/Non-Collectible</controllingFieldValue>
+            <controllingFieldValue>2h - Program Change - Account moved out of district/service area (IM does not retain storage)</controllingFieldValue>
+            <controllingFieldValue>7d - IM Initiated - Technical Incompatibilities discovered during setup</controllingFieldValue>
+            <controllingFieldValue>2i - Program Change - Account moved out of district/service area (IM retains storage)</controllingFieldValue>
+            <controllingFieldValue>7e - IM Initiated - Unauthorized Reseller</controllingFieldValue>
+            <controllingFieldValue>2j - Program Change - Destruction of Material / Information no longer needs to be stored</controllingFieldValue>
+            <controllingFieldValue>2k - Program Change - Moved to third party provider (IM retains)</controllingFieldValue>
+            <controllingFieldValue>3a - Service Quality - Technical Issues</controllingFieldValue>
+            <controllingFieldValue>3b - Service Quality - DR/Restores did not meet expectations</controllingFieldValue>
+            <controllingFieldValue>3c - Service Quality - Logistical Service Issues</controllingFieldValue>
+            <controllingFieldValue>3d - Service Quality - Lack of Features/Functionality</controllingFieldValue>
+            <controllingFieldValue>3e - Service Quality - IM Non-responsive to / unable to resolve repeated service issues</controllingFieldValue>
+            <controllingFieldValue>1a - Price - Uncompetitive Pricing</controllingFieldValue>
+            <controllingFieldValue>1b - Price - Unhappy with Price Increase</controllingFieldValue>
+            <controllingFieldValue>1c - Price - Minimum Storage Increase (RM Only)</controllingFieldValue>
+            <controllingFieldValue>2a - Program Change - Customer retrieved inventory w/o explanation</controllingFieldValue>
+            <controllingFieldValue>2b - Program Change - Consolidation of data to internal systems/locations</controllingFieldValue>
+            <controllingFieldValue>2c - Program Change - Moved to electronic/online/virtual solution (not Iron Mountain Digital)</controllingFieldValue>
+            <controllingFieldValue>2d - Program Change - Moved to electronic/online/virtual solution (Iron Mountain Digital solution)</controllingFieldValue>
+            <controllingFieldValue>2e - Program Change - Moved to in-house tape rotation</controllingFieldValue>
+            <controllingFieldValue>2f - Program Change - Moved to custom in-house solution</controllingFieldValue>
+            <controllingFieldValue>4a - Economic Change - Out of Business</controllingFieldValue>
+            <controllingFieldValue>4b - Economic Change - Acquired</controllingFieldValue>
+            <valueName>Terminated- Local Risk Only</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>4c - Economic Change - Bankrupt</controllingFieldValue>
+            <controllingFieldValue>4d - Economic Change - Budget change</controllingFieldValue>
+            <controllingFieldValue>5a - Relationship - No contact from IM recently</controllingFieldValue>
+            <controllingFieldValue>5b - Relationship - Local competitor influenced decision</controllingFieldValue>
+            <controllingFieldValue>5c - Relationship - Decision Maker change</controllingFieldValue>
+            <controllingFieldValue>5d - Relationship - Contractual Concerns</controllingFieldValue>
+            <controllingFieldValue>6a - No Reason - Customer would not share</controllingFieldValue>
+            <controllingFieldValue>6b - No Reason - Unable to reach customer</controllingFieldValue>
+            <controllingFieldValue>7a - IM Initiated - Account Setup in Error</controllingFieldValue>
+            <controllingFieldValue>7b - IM Initiated - End of Life of Service</controllingFieldValue>
+            <controllingFieldValue>2g - Program Change - Lack of use / non-deployment</controllingFieldValue>
+            <controllingFieldValue>7c - IM Initiated - Non-Payment/Non-Collectible</controllingFieldValue>
+            <controllingFieldValue>2h - Program Change - Account moved out of district/service area (IM does not retain storage)</controllingFieldValue>
+            <controllingFieldValue>7d - IM Initiated - Technical Incompatibilities discovered during setup</controllingFieldValue>
+            <controllingFieldValue>2i - Program Change - Account moved out of district/service area (IM retains storage)</controllingFieldValue>
+            <controllingFieldValue>7e - IM Initiated - Unauthorized Reseller</controllingFieldValue>
+            <controllingFieldValue>2j - Program Change - Destruction of Material / Information no longer needs to be stored</controllingFieldValue>
+            <controllingFieldValue>2k - Program Change - Moved to third party provider (IM retains)</controllingFieldValue>
+            <controllingFieldValue>3a - Service Quality - Technical Issues</controllingFieldValue>
+            <controllingFieldValue>3b - Service Quality - DR/Restores did not meet expectations</controllingFieldValue>
+            <controllingFieldValue>3c - Service Quality - Logistical Service Issues</controllingFieldValue>
+            <controllingFieldValue>3d - Service Quality - Lack of Features/Functionality</controllingFieldValue>
+            <controllingFieldValue>3e - Service Quality - IM Non-responsive to / unable to resolve repeated service issues</controllingFieldValue>
+            <controllingFieldValue>1a - Price - Uncompetitive Pricing</controllingFieldValue>
+            <controllingFieldValue>1b - Price - Unhappy with Price Increase</controllingFieldValue>
+            <controllingFieldValue>1c - Price - Minimum Storage Increase (RM Only)</controllingFieldValue>
+            <controllingFieldValue>2a - Program Change - Customer retrieved inventory w/o explanation</controllingFieldValue>
+            <controllingFieldValue>2b - Program Change - Consolidation of data to internal systems/locations</controllingFieldValue>
+            <controllingFieldValue>2c - Program Change - Moved to electronic/online/virtual solution (not Iron Mountain Digital)</controllingFieldValue>
+            <controllingFieldValue>2d - Program Change - Moved to electronic/online/virtual solution (Iron Mountain Digital solution)</controllingFieldValue>
+            <controllingFieldValue>2e - Program Change - Moved to in-house tape rotation</controllingFieldValue>
+            <controllingFieldValue>2f - Program Change - Moved to custom in-house solution</controllingFieldValue>
+            <controllingFieldValue>4a - Economic Change - Out of Business</controllingFieldValue>
+            <controllingFieldValue>4b - Economic Change - Acquired</controllingFieldValue>
+            <valueName>Terminated- Entire Account At Risk</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

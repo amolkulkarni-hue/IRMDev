@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Dashboard_Revenue_at_Risk_by_Product_Li__c</fullName>
+    <externalId>false</externalId>
+    <formula>IMAGE(&quot;http://chart.googleapis.com/chart?chf=bg,lg,0,F2F2F2,0,CECECE,1&amp;chs=350x175&amp;cht=p3&amp;chco=3072F3|49188F|990066&amp;chd=t:&quot;&amp; 
+TEXT( DBR_Monthly_Value__c )&amp;&quot;,&quot;&amp; 
+TEXT( Shred_Monthly_Value__c)&amp;&quot;,&quot;&amp; 
+TEXT( RM_Monthly_Value__c )&amp;&quot;&amp;chds=a&amp;chdl=DB%26R|Shred|RM&amp;chdlp=t&amp;chl=&quot;&amp;&quot;$&quot;&amp; 
+IF(DBR_Monthly_Value__c &lt; 1000, TEXT(FLOOR(DBR_Monthly_Value__c)), 
+IF(DBR_Monthly_Value__c &lt; 1000000, TEXT(FLOOR(DBR_Monthly_Value__c/1000)) &amp; &apos;,&apos; &amp; RIGHT(TEXT(FLOOR(DBR_Monthly_Value__c)), 3), 
+IF(DBR_Monthly_Value__c &lt; 1000000000, TEXT(FLOOR(DBR_Monthly_Value__c/1000000)) &amp; &apos;,&apos; &amp; TEXT(FLOOR(MOD(DBR_Monthly_Value__c,1000000)/1000)) &amp; &apos;,&apos; &amp; RIGHT(TEXT(FLOOR(DBR_Monthly_Value__c)), 3), &quot;E&quot;) 
+) 
+)&amp;&quot;|&quot;&amp;&quot;$&quot;&amp; 
+IF(Shred_Monthly_Value__c &lt; 1000, TEXT(FLOOR(Shred_Monthly_Value__c)), 
+IF(Shred_Monthly_Value__c &lt; 1000000, TEXT(FLOOR(Shred_Monthly_Value__c/1000)) &amp; &apos;,&apos; &amp; RIGHT(TEXT(FLOOR(Shred_Monthly_Value__c)), 3), 
+IF(Shred_Monthly_Value__c &lt; 1000000000, TEXT(FLOOR(Shred_Monthly_Value__c/1000000)) &amp; &apos;,&apos; &amp; TEXT(FLOOR(MOD(Shred_Monthly_Value__c,1000000)/1000)) &amp; &apos;,&apos; &amp; RIGHT(TEXT(FLOOR(Shred_Monthly_Value__c)), 3), &quot;E&quot;) 
+) 
+)&amp;&quot;|&quot;&amp;&quot;$&quot;&amp; 
+IF(RM_Monthly_Value__c &lt; 1000, TEXT(FLOOR(RM_Monthly_Value__c)), 
+IF(RM_Monthly_Value__c &lt; 1000000, TEXT(FLOOR(RM_Monthly_Value__c/1000)) &amp; &apos;,&apos; &amp; RIGHT(TEXT(FLOOR(RM_Monthly_Value__c)), 3), 
+IF(RM_Monthly_Value__c &lt; 1000000000, TEXT(FLOOR(RM_Monthly_Value__c/1000000)) &amp; &apos;,&apos; &amp; TEXT(FLOOR(MOD(RM_Monthly_Value__c,1000000)/1000)) &amp; &apos;,&apos; &amp; RIGHT(TEXT(FLOOR(RM_Monthly_Value__c)), 3), &quot;E&quot;) 
+) 
+) 
+&amp;&quot;&amp;chma=45,2,0,2&amp;chtt=&amp;chts=676767,12.933&quot;, &quot;No Image&quot;, 175,350)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Dashboard: Revenue at Risk by Product Li</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

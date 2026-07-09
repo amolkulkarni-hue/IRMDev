@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>61.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <customErrors>
+        <name>addValidationError</name>
+        <label>Block Case Close Missing Documents</label>
+        <locationX>396</locationX>
+        <locationY>288</locationY>
+        <customErrorMessages>
+            <errorMessage>This Case cannot be closed until all required Document Checklist records have a Status of Final. Please ensure all required documents are approved before closing this Case.</errorMessage>
+            <isFieldError>false</isFieldError>
+        </customErrorMessages>
+    </customErrors>
+    <decisions>
+        <name>checkMissingDocs</name>
+        <label>Non-Final Documents Present?</label>
+        <locationX>176</locationX>
+        <locationY>288</locationY>
+        <defaultConnectorLabel>All Docs Final — Allow Close</defaultConnectorLabel>
+        <rules>
+            <name>nonFinalDocsExist</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>varNonFinalDocChecklists</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>addValidationError</targetReference>
+            </connector>
+            <label>Non-Final Documents Present — Block</label>
+        </rules>
+    </decisions>
+    <description>Record-Triggered Flow on Case (Before Update). Fires when Case Status changes. Checks whether all Document_Checklist__c records linked directly to this Case (Case__c = Case.Id) have Status = Final. Blocks the save if any are not yet Final.</description>
+    <label>Case Exit Document Validation Flow</label>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <name>getNonFinalCaseExitDocs</name>
+        <label>Get Non-Final Document Checklists on Case</label>
+        <locationX>176</locationX>
+        <locationY>168</locationY>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>checkMissingDocs</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Case__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Status__c</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>Final</stringValue>
+            </value>
+        </filters>
+        <object>Document_Checklist__c</object>
+        <outputReference>varNonFinalDocChecklists</outputReference>
+        <queriedFields>Id</queriedFields>
+    </recordLookups>
+    <start>
+        <locationX>176</locationX>
+        <locationY>48</locationY>
+        <connector>
+            <targetReference>getNonFinalCaseExitDocs</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Status</field>
+            <operator>IsChanged</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Status</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Closed - Approved</stringValue>
+            </value>
+        </filters>
+        <object>Case</object>
+        <recordTriggerType>Update</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Active</status>
+    <variables>
+        <name>varNonFinalDocChecklists</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Document_Checklist__c</objectType>
+    </variables>
+</Flow>

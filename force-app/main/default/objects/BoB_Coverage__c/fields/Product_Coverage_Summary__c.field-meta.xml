@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Product_Coverage_Summary__c</fullName>
+    <externalId>false</externalId>
+    <formula>IF ( INCLUDES ( Product_Coverage__c , &quot;Records Management&quot; ), &quot;Records Management, &quot;, null ) &amp;
+IF ( INCLUDES ( Product_Coverage__c , &quot;Document Management Solutions&quot; ), &quot;Document Management Solutions, &quot;, null ) &amp;
+IF ( INCLUDES ( Product_Coverage__c , &quot;Entertainment Services&quot; ), &quot;Entertainment Services, &quot;,null ) &amp;
+IF ( INCLUDES ( Product_Coverage__c , &quot;Secure Shredding&quot; ), &quot;Secure Shredding, &quot;,null ) &amp;
+IF ( INCLUDES ( Product_Coverage__c , &quot;Intellectual Property Management&quot; ), &quot;Intellectual Property Management, &quot;,null )&amp;
+IF ( INCLUDES ( Product_Coverage__c , &quot;Data Backup and Recovery&quot; ), &quot;Data Backup and Recovery, &quot;,null ) &amp;
+IF ( INCLUDES ( Product_Coverage__c , &quot;Data Protection&quot; ), &quot;Data Protection, &quot;,null ) &amp;
+IF ( INCLUDES ( Product_Coverage__c , &quot;Data Management&quot; ), &quot;Data Management&quot;,null )</formula>
+    <label>Product Coverage</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

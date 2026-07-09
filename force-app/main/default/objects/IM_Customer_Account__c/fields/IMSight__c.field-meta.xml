@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IMSight__c</fullName>
+    <description>Alternative to inventory system number for up and downstream integration purposes. Built to accommodate PROS PPSS integration.</description>
+    <externalId>false</externalId>
+    <formula>IF( 
+OR(
+ISPICKVAL(Source_System__c, &quot;SKP NA&quot;),
+ISPICKVAL(Source_System__c, &quot;SB NA&quot;),
+ISPICKVAL(Source_System__c, &quot;Other NA&quot;)
+),
+IM_Source_System_Code_Formula__c &amp; &quot;.&quot; &amp; IM_District_Branch_Id__c &amp; &quot;.&quot; &amp; Name, 
+&quot;Not Available&quot;
+)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>IMSight</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

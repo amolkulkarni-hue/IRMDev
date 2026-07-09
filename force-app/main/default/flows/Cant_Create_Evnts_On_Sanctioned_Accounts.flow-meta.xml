@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>58.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <description>To avoid error, add an assignment with some text.  So, it will work for non sanctioned accounts.</description>
+        <name>Not_A_Sanctioned_Account</name>
+        <label>Not A Sanctioned Account</label>
+        <locationX>937</locationX>
+        <locationY>233</locationY>
+        <assignmentItems>
+            <assignToReference>Var_NonSanctionedAccount</assignToReference>
+            <operator>Assign</operator>
+        </assignmentItems>
+    </assignments>
+    <decisions>
+        <description>Verify the account type.  If the selected account is Sanctioned, then update the activity&apos;s selected sanctioned account to true, else just add an assignment in default path to avoid errors.</description>
+        <name>Verify_Account_Type</name>
+        <label>Verify Account Type</label>
+        <locationX>601</locationX>
+        <locationY>126</locationY>
+        <defaultConnector>
+            <targetReference>Not_A_Sanctioned_Account</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Selected_A_Sanctioned_Account</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Related_Account_Details.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Sanctioned (Do Not Contact)</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Selected_Sanctioned_To_True</targetReference>
+            </connector>
+            <label>Selected A Sanctioned Account</label>
+        </rules>
+    </decisions>
+    <description>#16069 - Sanctioned Accounts: Restrict New Activities on Existing Sanctioned Account.
+This flow fire, while creating an activity if a user choses a sanctioned account.  We can not create flows on Activity object.  So, need to create flows on Event and Task objects individually.  If user chsoses Sanctioned account, then this flow will update Selected Sanctioned account field to true.  Then a VR will be fired and restricts new activities on Sanctioned Accounts.</description>
+    <environments>Default</environments>
+    <interviewLabel>Cant_Create_Evnts_On_Sanctioned_Accounts {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Cant_Create_Evnts_On_Sanctioned_Accounts</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <description>Get the selected account details when creating a new activity, which will help to determine Account type.</description>
+        <name>Get_Related_Account_Details</name>
+        <label>Get Related Account Details</label>
+        <locationX>466</locationX>
+        <locationY>125</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Verify_Account_Type</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.WhatId</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Type</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Sanctioned (Do Not Contact)</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Account</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordUpdates>
+        <description>Update Selected Sanctioned Account to true.  When this is true, while saving the activity VR will be fired and restricts activities on Sanctioned accounts.</description>
+        <name>Update_Selected_Sanctioned_To_True</name>
+        <label>Update Selected Sanctioned To True</label>
+        <locationX>928</locationX>
+        <locationY>33</locationY>
+        <inputAssignments>
+            <field>Selected_Sanctioned_Account__c</field>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>65</locationX>
+        <locationY>31</locationY>
+        <connector>
+            <targetReference>Get_Related_Account_Details</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>WhatId</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>WhatId</field>
+            <operator>StartsWith</operator>
+            <value>
+                <stringValue>001</stringValue>
+            </value>
+        </filters>
+        <object>Event</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Active</status>
+    <variables>
+        <description>To hold some text to avoid errors for non sanctioned accounts related activities.</description>
+        <name>Var_NonSanctionedAccount</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+        <value>
+            <stringValue>Selected Non Sanctioned Account</stringValue>
+        </value>
+    </variables>
+</Flow>

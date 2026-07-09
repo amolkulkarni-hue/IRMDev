@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebLink xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>QTB_New</fullName>
+    <availability>online</availability>
+    <description>SFCPQBLG-512: to fix shred profile currency not defaulted to quote currency</description>
+    <displayType>massActionButton</displayType>
+    <encodingKey>UTF-8</encodingKey>
+    <height>600</height>
+    <linkType>url</linkType>
+    <masterLabel>New</masterLabel>
+    <openType>sidebar</openType>
+    <protected>false</protected>
+    <requireRowSelection>true</requireRowSelection>
+    <url>/lightning/o/QTB_Shred_Profile__c/new?backgroundContext=%2Flightning%2Fr%2FQTB_Shred_Profile__c%2F{!SBQQ__Quote__c.Id}%2Fview&amp;defaultFieldValues=
+QTB_Quote__c={! SBQQ__Quote__c.Id},
+CurrencyIsoCode={! SBQQ__Quote__c.CurrencyIsoCode }</url>
+</WebLink>

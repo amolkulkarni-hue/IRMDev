@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>58.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <description>Migrated from the Outreach - Update Initial Sequence - Contacts process using Check if initial sequence is blank criteria.
+Updates the Initial Sequence fields when Current Sequence fields are filled in for first time on a Contact</description>
+    <formulas>
+        <name>formula_1_myRule_1_A1_1546422979</name>
+        <dataType>Date</dataType>
+        <expression>TODAY()</expression>
+    </formulas>
+    <label>Outreach - Update Initial Sequence - Contacts_1</label>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <name>myRule_1_A1</name>
+        <label>Update Contact w initial sequence</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <inputAssignments>
+            <field>Initial_Sequence_Date__c</field>
+            <value>
+                <elementReference>formula_1_myRule_1_A1_1546422979</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Outreach_Initial_Sequence_ID__c</field>
+            <value>
+                <elementReference>$Record.Outreach_Current_Sequence_ID__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Outreach_Initial_Sequence_Name__c</field>
+            <value>
+                <elementReference>$Record.Outreach_Current_Sequence_Name__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>myRule_1_A1</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Outreach_Initial_Sequence_Name__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Outreach_Current_Sequence_Name__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <object>Contact</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

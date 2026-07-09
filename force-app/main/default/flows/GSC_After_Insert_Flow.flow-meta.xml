@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <description>Send notification to the Case&apos;s Owner / IM Employee Contact, if the Child case is created for the NAS Recurring Support Case. GitLab #30750, #31895</description>
+        <name>Notification_To_the_Case_s_Owner</name>
+        <label>Notification To the Case&apos;s Owner</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <actionName>customNotificationAction</actionName>
+        <actionType>customNotificationAction</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>customNotifTypeId</name>
+            <value>
+                <elementReference>$Label.CustomNotificationId</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>recipientIds</name>
+            <value>
+                <elementReference>varT_RecepientList</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>title</name>
+            <value>
+                <stringValue>Child Case is created</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>body</name>
+            <value>
+                <elementReference>txtT_NotificationBody</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>targetId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>customNotificationAction</nameSegment>
+        <offset>0</offset>
+    </actionCalls>
+    <actionCalls>
+        <description>Send email notification to the case&apos;s owner, after creating the child case of NAS Recurring Support Case. GitLab #30750</description>
+        <name>Send_Email_To_The_Case_Owner</name>
+        <label>Send Email To The Case Owner</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <actionName>emailSimple</actionName>
+        <actionType>emailSimple</actionType>
+        <connector>
+            <targetReference>Assign_Case_s_Owner_IDs</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>emailAddresses</name>
+            <value>
+                <elementReference>$Record.Owner:User.Email</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>senderType</name>
+            <value>
+                <stringValue>OrgWideEmailAddress</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>senderAddress</name>
+            <value>
+                <stringValue>noreply@ironmountain.com</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>composeEmailContent</name>
+            <value>
+                <stringValue>True</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>emailSubject</name>
+            <value>
+                <stringValue>Child Case Created for NAS Recurring Support Case</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>emailBody</name>
+            <value>
+                <elementReference>EmailBody</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>sendRichBody</name>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputParameters>
+        <nameSegment>emailSimple</nameSegment>
+        <offset>0</offset>
+        <versionString>1.0.1</versionString>
+    </actionCalls>
+    <actionCalls>
+        <description>Send email notification to the M Employee Contact of NAS Recurring Case if the Case&apos;s Owner is the Queue, after creating the child case of NAS Recurring Support Case. GitLab #31895</description>
+        <name>Send_Email_To_The_IM_Employee</name>
+        <label>Send Email To The IM Employee</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <actionName>emailSimple</actionName>
+        <actionType>emailSimple</actionType>
+        <connector>
+            <targetReference>Assign_IM_Employee_IDs</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>emailAddresses</name>
+            <value>
+                <elementReference>$Record.Parent.IM_Employee_Contact__r.Email</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>senderType</name>
+            <value>
+                <stringValue>OrgWideEmailAddress</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>senderAddress</name>
+            <value>
+                <stringValue>noreply@ironmountain.com</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>composeEmailContent</name>
+            <value>
+                <stringValue>True</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>emailSubject</name>
+            <value>
+                <stringValue>Child Case Created for NAS Recurring Support Case</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>emailBody</name>
+            <value>
+                <elementReference>EmailBody</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>sendRichBody</name>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputParameters>
+        <nameSegment>emailSimple</nameSegment>
+        <offset>0</offset>
+        <versionString>1.0.1</versionString>
+    </actionCalls>
+    <apiVersion>64.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <description>To Assign Case&apos;s Owner ids to the colllection variable to include in Custom notification Recipient IDs. GitLab#30750</description>
+        <name>Assign_Case_s_Owner_IDs</name>
+        <label>Assign Case&apos;s Owner IDs</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>varT_RecepientList</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>$Record.OwnerId</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Notification_To_the_Case_s_Owner</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>To Assign Case&apos;s Im Employee&apos;s  ids to the colllection variable to include in Custom notification Recipient IDs. GitLab#31895</description>
+        <name>Assign_IM_Employee_IDs</name>
+        <label>Assign IM Employee IDs</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>varT_RecepientList</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>$Record.Parent.IM_Employee_Contact__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Notification_To_the_Case_s_Owner</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <description>To Check if the Case&apos;s Owner is User / Queue: GitLab #30750, #31895</description>
+        <name>To_Check_Ower_is_User_Queue</name>
+        <label>To Check Ower is User / Queue</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Case_s_Owner_is_User</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.OwnerId</leftValueReference>
+                <operator>StartsWith</operator>
+                <rightValue>
+                    <stringValue>005</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Owner:User.IsActive</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Send_Email_To_The_Case_Owner</targetReference>
+            </connector>
+            <label>Case&apos;s Owner is User</label>
+        </rules>
+        <rules>
+            <name>Owner_Is_Queue</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.OwnerId</leftValueReference>
+                <operator>StartsWith</operator>
+                <rightValue>
+                    <stringValue>00G</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Parent.IM_Employee_Contact__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Parent.IM_Employee_Contact__r.IsActive</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Send_Email_To_The_IM_Employee</targetReference>
+            </connector>
+            <label>Owner Is Queue</label>
+        </rules>
+    </decisions>
+    <description>To send email and bell notifications to the case&apos;s owner/ Im Employee Contact, if the child case is created for the NAS Recurring case : GitLab#30750, #31895</description>
+    <environments>Default</environments>
+    <formulas>
+        <description>Formula to generate the Salesforce org link using the RecordId. This will be placed in the email template so that agents can be redirected to the respective record in Salesforce. GitLab #30750.</description>
+        <name>forT_caseLink</name>
+        <dataType>String</dataType>
+        <expression>LEFT({!$Api.Partner_Server_URL_340},FIND(&quot;/services&quot;, {!$Api.Partner_Server_URL_340})) &amp; {!$Record.Id}</expression>
+    </formulas>
+    <interviewLabel>GSC {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Notify Case Owner - NAS Recurring</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>To_Check_Ower_is_User_Queue</targetReference>
+        </connector>
+        <filterFormula>AND({!$Record.RecordType.DeveloperName} = &apos;Global_Service_Case&apos;, {!$Record.Parent.RecordType.DeveloperName}=&apos;NAS_Recurring_Support_Case&apos;)</filterFormula>
+        <object>Case</object>
+        <recordTriggerType>Create</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+    <textTemplates>
+        <description>Email body that agents will receive after the creation of child GSC cases for NAS Recurring Support Cases. GitLab #30750, #31895</description>
+        <name>EmailBody</name>
+        <isViewedAsPlainText>false</isViewedAsPlainText>
+        <text>&lt;p&gt;Dear Team,&lt;/p&gt;&lt;p&gt;We would like to inform you that a child case has been created for NAS Recurring Support Case : {!$Record.Parent.CaseNumber}.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(34, 34, 34); font-family: Arial, Helvetica, sans-serif; font-size: small; background-color: rgb(255, 255, 255);&quot;&gt;To view the record click here: &lt;/span&gt;{!forT_caseLink}&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Best Regards,&lt;/p&gt;&lt;p&gt;Support Team&lt;/p&gt;</text>
+    </textTemplates>
+    <textTemplates>
+        <description>Bell notification message that agents will receive after the creation of child GSC cases for NAS Recurring Support Cases. GitLab #30750.</description>
+        <name>txtT_NotificationBody</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>Child Case {!$Record.CaseNumber} has been created for the NAS Recurring Support Case.</text>
+    </textTemplates>
+    <variables>
+        <description>To store the Case&apos;s ownersIds to include in Custom Notification Recipient ID. GitLab #30750</description>
+        <name>varT_RecepientList</name>
+        <dataType>String</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Only_Admin_Can_Change_Source_Syst_Code</fullName>
+    <active>true</active>
+    <description>Only Admin Can Change Source System Code Field</description>
+    <errorConditionFormula>AND( 
+ISCHANGED ( IM_Source_System_Code__c ), 
+$Profile.Name &lt;&gt; &quot;System Administrator&quot;, 
+$Profile.Name &lt;&gt; &quot;IM_API Only_Admin&quot;,
+$Profile.Name &lt;&gt; &quot;IME_Custom Sys Admin&quot;,
+$Profile.Name &lt;&gt; &quot;IMLA_Custom Sys Admin&quot;,
+$Profile.Name &lt;&gt; &quot;IM_Custom Sys Admin&quot;)</errorConditionFormula>
+    <errorDisplayField>IM_Source_System_Code__c</errorDisplayField>
+    <errorMessage>You do not have the permission to modify Source System Code field.</errorMessage>
+</ValidationRule>

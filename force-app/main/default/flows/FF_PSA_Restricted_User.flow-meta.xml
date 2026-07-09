@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>57.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <customErrors>
+        <description>Can&apos;t edit the project</description>
+        <name>Restricted_Edit</name>
+        <label>Restricted Edit</label>
+        <locationX>176</locationX>
+        <locationY>287</locationY>
+        <customErrorMessages>
+            <errorMessage>You have a restricted license, therefore you cannot edit projects. If you feel this is in error, please contact your manager.</errorMessage>
+            <isFieldError>false</isFieldError>
+        </customErrorMessages>
+    </customErrors>
+    <description>Throws an error when a user with the PSA restricted custom permission tries to edit a project.</description>
+    <environments>Default</environments>
+    <interviewLabel>FF - PSA Restricted User {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>FF - PSA Restricted User</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Restricted_Edit</targetReference>
+        </connector>
+        <filterFormula>AND(({!$Permission.PSA_Restricted_User}),
+    (NOT {!$Record.pse__Opportunity__r.Bypass_Validation__c}))</filterFormula>
+        <object>pse__Proj__c</object>
+        <recordTriggerType>Update</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Active</status>
+    <triggerOrder>400</triggerOrder>
+</Flow>

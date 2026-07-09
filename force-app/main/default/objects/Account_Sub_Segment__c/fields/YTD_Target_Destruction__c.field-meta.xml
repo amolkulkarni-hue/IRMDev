@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>YTD_Target_Destruction__c</fullName>
+    <externalId>false</externalId>
+    <formula>Case(YTD_End_Period__c, 
+1, Destruction_Target_Jan__c, 
+2, Destruction_Target_Jan__c + Destruction_Target_Feb__c, 
+3, Destruction_Target_Jan__c + Destruction_Target_Feb__c + Destruction_Target_Mar__c, 
+4, Destruction_Target_Jan__c + Destruction_Target_Feb__c + Destruction_Target_Mar__c + Destruction_Target_Apr__c, 
+5, Destruction_Target_Jan__c + Destruction_Target_Feb__c + Destruction_Target_Mar__c + Destruction_Target_Apr__c + Destruction_Target_May__c, 
+6, Destruction_Target_Jan__c + Destruction_Target_Feb__c + Destruction_Target_Mar__c + Destruction_Target_Apr__c + Destruction_Target_May__c + Destruction_Target_June__c, 
+7, Destruction_Target_Jan__c + Destruction_Target_Feb__c + Destruction_Target_Mar__c + Destruction_Target_Apr__c + Destruction_Target_May__c + Destruction_Target_June__c + Destruction_Target_July__c, 
+8, Destruction_Target_Jan__c + Destruction_Target_Feb__c + Destruction_Target_Mar__c + Destruction_Target_Apr__c + Destruction_Target_May__c + Destruction_Target_June__c + Destruction_Target_July__c + Destruction_Target_Aug__c, 
+9, Destruction_Target_Jan__c + Destruction_Target_Feb__c + Destruction_Target_Mar__c + Destruction_Target_Apr__c + Destruction_Target_May__c + Destruction_Target_June__c + Destruction_Target_July__c + Destruction_Target_Aug__c + Destruction_Target_Sept__c, 
+10, Destruction_Target_Jan__c + Destruction_Target_Feb__c + Destruction_Target_Mar__c + Destruction_Target_Apr__c + Destruction_Target_May__c + Destruction_Target_June__c + Destruction_Target_July__c + Destruction_Target_Aug__c + Destruction_Target_Sept__c + Destruction_Target_Oct__c, 
+11, Destruction_Target_Jan__c + Destruction_Target_Feb__c + Destruction_Target_Mar__c + Destruction_Target_Apr__c + Destruction_Target_May__c + Destruction_Target_June__c + Destruction_Target_July__c + Destruction_Target_Aug__c + Destruction_Target_Sept__c + Destruction_Target_Oct__c + Destruction_Target_Nov__c, 
+12, Destruction_Target_Jan__c + Destruction_Target_Feb__c + Destruction_Target_Mar__c + Destruction_Target_Apr__c + Destruction_Target_May__c + Destruction_Target_June__c + Destruction_Target_July__c + Destruction_Target_Aug__c + Destruction_Target_Sept__c + Destruction_Target_Oct__c + Destruction_Target_Nov__c + Destruction_Target_Dec__c, 
+0 
+)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>YTD Target Destruction</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>2</scale>
+    <trackTrending>false</trackTrending>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

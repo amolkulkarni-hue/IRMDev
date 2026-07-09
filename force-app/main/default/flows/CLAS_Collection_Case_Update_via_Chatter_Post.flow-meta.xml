@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>PostAChatterUpdate</name>
+        <label>PostAChatterUpdate</label>
+        <locationX>733</locationX>
+        <locationY>287</locationY>
+        <actionName>chatterPost</actionName>
+        <actionType>chatterPost</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>text</name>
+            <value>
+                <elementReference>ParentCaseChatterMessage</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>subjectNameOrId</name>
+            <value>
+                <elementReference>ParentCase</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>chatterPost</nameSegment>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
+    <apiVersion>50.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <name>Set_The_Parent_Id</name>
+        <label>Set The Parent Id</label>
+        <locationX>166</locationX>
+        <locationY>275</locationY>
+        <assignmentItems>
+            <assignToReference>ParentCase</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.ParentId</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Parent_Case_Record</targetReference>
+        </connector>
+    </assignments>
+    <constants>
+        <description>This stores the CLAS DM</description>
+        <name>CLASDMRecordType</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>CLAS – Data Management</stringValue>
+        </value>
+    </constants>
+    <constants>
+        <description>Stores the CLAS RM Record Type Name</description>
+        <name>CLASRMRecordType</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>CLAS - RM</stringValue>
+        </value>
+    </constants>
+    <constants>
+        <description>This Stores the CLAS Shred Case Record Type</description>
+        <name>CLASShredRecordType</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>CLAS - Shred</stringValue>
+        </value>
+    </constants>
+    <decisions>
+        <name>Check_Parent_Case_Fields</name>
+        <label>Check Parent Case Fields</label>
+        <locationX>485</locationX>
+        <locationY>205</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Check_Parent_Case_Details</name>
+            <conditionLogic>(1 OR 2 OR 3) AND 4</conditionLogic>
+            <conditions>
+                <leftValueReference>ParentCaseRecord.RecordType_Name__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>CLASRMRecordType</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>ParentCaseRecord.RecordType_Name__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>CLASDMRecordType</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>ParentCaseRecord.RecordType_Name__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>CLASShredRecordType</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>ParentCaseRecord.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>On Hold - Internal</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>PostAChatterUpdate</targetReference>
+            </connector>
+            <label>Check Parent Case Details</label>
+        </rules>
+    </decisions>
+    <description>This Flow trigger when a child collections case is closed then the Parent Case which is on hold - internal is being notified via chatter post</description>
+    <interviewLabel>CLAS/Collection Case Update via Chatter Post {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>CLAS/Collection Case Update via Chatter Post</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <description>Get the Parent case Record</description>
+        <name>Parent_Case_Record</name>
+        <label>Parent Case Record</label>
+        <locationX>295</locationX>
+        <locationY>286</locationY>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Check_Parent_Case_Fields</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Case_ID_18_digit__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.ParentId</elementReference>
+            </value>
+        </filters>
+        <object>Case</object>
+        <outputReference>ParentCaseRecord</outputReference>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>RecordType_Name__c</queriedFields>
+        <queriedFields>Status</queriedFields>
+    </recordLookups>
+    <start>
+        <locationX>55</locationX>
+        <locationY>15</locationY>
+        <connector>
+            <targetReference>Set_The_Parent_Id</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Status</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Closed</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>RecordType_Name__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>NAS General Support Case</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>ParentId</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </filters>
+        <object>Case</object>
+        <recordTriggerType>Update</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Draft</status>
+    <variables>
+        <description>This variable stores Parent Case Id</description>
+        <name>ParentCase</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <name>ParentCaseChatterMessage</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <stringValue>Please be advised, a child case related to this case has been closed.</stringValue>
+        </value>
+    </variables>
+    <variables>
+        <name>ParentCaseRecord</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+        <objectType>Case</objectType>
+    </variables>
+</Flow>

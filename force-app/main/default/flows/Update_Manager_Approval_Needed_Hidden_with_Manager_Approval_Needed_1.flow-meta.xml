@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>60.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <description>Migrated from the: Update Manager Approval Needed Hidden with Manager Approval Needed? workflow rule
+Flow description: Updates the &apos;Manager Approval Needed (Hidden)&quot; field</description>
+    <environments>Default</environments>
+    <interviewLabel>Update Manager Approval Needed Hidden with Manager Approval Needed? {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Update Manager Approval Needed Hidden with Manager Approval Needed?</label>
+    <migratedFromWorkflowRuleName>Update Manager Approval Needed Hidden with Manager Approval Needed?</migratedFromWorkflowRuleName>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <description>Update &quot;Manager Approval Needed (Hidden)&quot; field from &quot;Manager Approval Needed?&quot; field</description>
+        <name>Manager_Approval_Needed_Hidden</name>
+        <label>Manager Approval Needed Hidden</label>
+        <locationX>176</locationX>
+        <locationY>323</locationY>
+        <inputAssignments>
+            <field>Manager_Approval_Needed_Hidden__c</field>
+            <value>
+                <elementReference>$Record.Manager_Approval_Needed__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Manager_Approval_Needed_Hidden</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Manager_Approval_Needed__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <object>Opportunity</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Obsolete</status>
+</Flow>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>58.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <description>Migrated from the: NCSP DMS Imaging Invoice Review workflow rule
+Workflow rule description: See Case 06543228&quot;</description>
+    <environments>Default</environments>
+    <formulas>
+        <name>NCSP_DMS_Imaging_Invoice_ReviewFormula</name>
+        <dataType>DateTime</dataType>
+        <expression>DATETIMEVALUE( $Record.ActivityDate )</expression>
+    </formulas>
+    <label>NCSP DMS Imaging Invoice Review</label>
+    <migratedFromWorkflowRuleName>NCSP DMS Imaging Invoice Review</migratedFromWorkflowRuleName>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <description>See Case 06543228</description>
+        <name>Activity_Date</name>
+        <label>Activity Date</label>
+        <locationX>176</locationX>
+        <locationY>323</locationY>
+        <inputAssignments>
+            <field>Due_Date__c</field>
+            <value>
+                <elementReference>NCSP_DMS_Imaging_Invoice_ReviewFormula</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Activity_Date</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Subject</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Imaging Invoice Review</stringValue>
+            </value>
+        </filters>
+        <object>Task</object>
+        <recordTriggerType>Create</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

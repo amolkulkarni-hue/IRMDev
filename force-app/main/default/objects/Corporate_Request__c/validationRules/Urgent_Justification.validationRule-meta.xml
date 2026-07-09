@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Urgent_Justification</fullName>
+    <active>true</active>
+    <description>Must have justification if Urgent is checked TRUE.</description>
+    <errorConditionFormula>AND (Urgent__c = TRUE ,  ISBLANK( Justification_for_Urgency__c ) )</errorConditionFormula>
+    <errorDisplayField>Justification_for_Urgency__c</errorDisplayField>
+    <errorMessage>You must give a justification for the urgency.</errorMessage>
+</ValidationRule>

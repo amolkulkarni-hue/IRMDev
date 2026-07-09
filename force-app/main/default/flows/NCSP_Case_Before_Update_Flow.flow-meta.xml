@@ -1,0 +1,459 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>62.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <customErrors>
+        <description>Throw Custom Validation Error</description>
+        <name>Show_error</name>
+        <label>Show error</label>
+        <locationX>578</locationX>
+        <locationY>611</locationY>
+        <customErrorMessages>
+            <errorMessage>There are no Billing Cut Off Schedule dates for DB&amp;R Service Line Records</errorMessage>
+            <isFieldError>false</isFieldError>
+        </customErrorMessages>
+    </customErrors>
+    <customErrors>
+        <description>Throw Custom Validation Error</description>
+        <name>Show_error2</name>
+        <label>Show error</label>
+        <locationX>1634</locationX>
+        <locationY>611</locationY>
+        <customErrorMessages>
+            <errorMessage>There are no Billing Cut Off Schedule dates for RM Service Line Records</errorMessage>
+            <isFieldError>false</isFieldError>
+        </customErrorMessages>
+    </customErrors>
+    <decisions>
+        <description>This flow is to update NCSP fields &apos;Invoice Mailing Date&apos; when Service Completion date is filled/removed and throw custom validation error when there are no Billing Cut Off Schedule dates. Check for Case field &quot;NCSP Service Line&quot;
+1) For &apos;DB&amp;R&apos;
+2) For not &apos;DB&amp;R&apos;</description>
+        <name>Check_Case_field_NCSP_Service_Line</name>
+        <label>Check Case field &quot;NCSP Service Line&quot;</label>
+        <locationX>1304</locationX>
+        <locationY>287</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>NCSP_Service_Line_is_DB_R</name>
+            <conditionLogic>1 AND 2 AND 3 AND (NOT(4 AND (5 OR 6)))</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.NCSP_Service_line__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>DB&amp;R</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Invoice_Review_date__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record__Prior.Service_Completion_Date__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>$Record.Service_Completion_Date__c</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.NCSP_Service_line__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>One Time Shred</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Customer_ID__r.IM_Customer_Account_Name__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>A5000</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Customer_ID__r.IM_Customer_Account_Name__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>A7000</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Records_Billing_Cut_Off_Schedule</targetReference>
+            </connector>
+            <label>1- &quot;NCSP Service Line&quot; is &quot;DB&amp;R&quot;</label>
+        </rules>
+        <rules>
+            <name>NCSP_Service_Line_is_other_than_DB_R</name>
+            <conditionLogic>1 AND 2 AND 3 AND (NOT(4 AND (5 OR 6)))</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.NCSP_Service_line__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>DB&amp;R</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Invoice_Review_date__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record__Prior.Service_Completion_Date__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>$Record.Service_Completion_Date__c</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.NCSP_Service_line__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>One Time Shred</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Customer_ID__r.IM_Customer_Account_Name__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>A5000</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Customer_ID__r.IM_Customer_Account_Name__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>A7000</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Records_Billing_Cut_Off_Schedule_for_Service_Line_other_than_DB_R</targetReference>
+            </connector>
+            <label>2- &quot;NCSP Service Line&quot; is other than &quot;DB&amp;R&quot;</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Update Case Field &quot;Invoice Mailing Date&quot;
+1) Update field &quot;Invoice Mailing Date&quot; as Invoice Mailing Date
+2) Update field &quot;Invoice Mailing Date&quot; as Null
+3) Throw Custom Validation Error when there are no Billing Cut Off Schedule dates</description>
+        <name>Update_Case_Field_Invoice_Mailing_Date</name>
+        <label>Update Case Field &quot;Invoice Mailing Date&quot;</label>
+        <locationX>446</locationX>
+        <locationY>503</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Update_field_Invoice_Mailing_Date_as_Invoice_Mailing_Date</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Service_Completion_Date__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Records_Billing_Cut_Off_Schedule</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Case_Field</targetReference>
+            </connector>
+            <label>1- Update field &quot;Invoice Mailing Date&quot; as Invoice Mailing Date</label>
+        </rules>
+        <rules>
+            <name>Update_field_Invoice_Mailing_Date_as_Null</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Records_Billing_Cut_Off_Schedule</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Service_Completion_Date__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Case_Fields_as_Null</targetReference>
+            </connector>
+            <label>2- Update field &quot;Invoice Mailing Date&quot; as Null</label>
+        </rules>
+        <rules>
+            <name>Throw_Custom_Validation_Error</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Records_Billing_Cut_Off_Schedule</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Show_error</targetReference>
+            </connector>
+            <label>3- Throw Custom Validation Error</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Update Case Field &quot;Invoice Mailing Date&quot;
+1) Update field &quot;Invoice Mailing Date&quot; as Invoice Mailing Date
+2) Update field &quot;Invoice Mailing Date&quot; as Null
+3) Throw Custom Validation Error when there are no Billing Cut Off Schedule dates</description>
+        <name>Update_Case_Field_Invoice_Mailing_Date2</name>
+        <label>Update Case Field &quot;Invoice Mailing Date&quot;</label>
+        <locationX>1502</locationX>
+        <locationY>503</locationY>
+        <defaultConnectorLabel>Throw Custom Error</defaultConnectorLabel>
+        <rules>
+            <name>Update_field_Invoice_Mailing_Date_as_Invoice_Mailing_Date2</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Service_Completion_Date__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Records_Billing_Cut_Off_Schedule_for_Service_Line_other_than_DB_R</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Case_Fields2</targetReference>
+            </connector>
+            <label>Update field &quot;Invoice Mailing Date&quot; as Invoice Mailing Date</label>
+        </rules>
+        <rules>
+            <name>Update_field_Invoice_Mailing_Date_as_Null2</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Records_Billing_Cut_Off_Schedule_for_Service_Line_other_than_DB_R</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Service_Completion_Date__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Case_Fields_as_Null2</targetReference>
+            </connector>
+            <label>Update field &quot;Invoice Mailing Date&quot; as Null</label>
+        </rules>
+        <rules>
+            <name>Throw_Custom_Validation_Error2</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Records_Billing_Cut_Off_Schedule_for_Service_Line_other_than_DB_R</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Show_error2</targetReference>
+            </connector>
+            <label>Throw Custom Validation Error</label>
+        </rules>
+    </decisions>
+    <description>This flow is to update NCSP fields &apos;Invoice Mailing Date&apos; when Service Completion date is filled/removed and throw custom validation error when there are no Billing Cut Off Schedule dates. For reference, check user story #27066 on Gitlab</description>
+    <environments>Default</environments>
+    <interviewLabel>NCSP Case - Before Update Flow {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>NCSP Case - Before Update Flow</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <description>Get custom settings records &quot;Billing Cut Off Schedule&quot; related to &apos;NCSP Service Line&apos;= &apos;DB&amp;R&apos; and sort it by Invoice Mailing Date ascending</description>
+        <name>Get_Records_Billing_Cut_Off_Schedule</name>
+        <label>Get Records &quot;Billing Cut Off Schedule&quot;</label>
+        <locationX>446</locationX>
+        <locationY>395</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Update_Case_Field_Invoice_Mailing_Date</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Billing_Cut_Off_Date__c</field>
+            <operator>GreaterThanOrEqualTo</operator>
+            <value>
+                <elementReference>$Flow.CurrentDate</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Invoice_Mailing_Date__c</field>
+            <operator>GreaterThanOrEqualTo</operator>
+            <value>
+                <elementReference>$Flow.CurrentDate</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Service_Line__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>DB&amp;R</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Billing_Cut_Off_Schedule__c</object>
+        <sortField>Invoice_Mailing_Date__c</sortField>
+        <sortOrder>Asc</sortOrder>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <description>Get custom settings records &quot;Billing Cut Off Schedule&quot; related to &apos;NCSP Service Line&apos; != &apos;DB&amp;R&apos; and sort it by Invoice Mailing Date ascending</description>
+        <name>Get_Records_Billing_Cut_Off_Schedule_for_Service_Line_other_than_DB_R</name>
+        <label>Get Records &quot;Billing Cut Off Schedule&quot; for Service Line other than &quot;DB&amp;R&quot;</label>
+        <locationX>1502</locationX>
+        <locationY>395</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Update_Case_Field_Invoice_Mailing_Date2</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Billing_Cut_Off_Date__c</field>
+            <operator>GreaterThanOrEqualTo</operator>
+            <value>
+                <elementReference>$Flow.CurrentDate</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Invoice_Mailing_Date__c</field>
+            <operator>GreaterThanOrEqualTo</operator>
+            <value>
+                <elementReference>$Flow.CurrentDate</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Service_Line__c</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>DB&amp;R</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Billing_Cut_Off_Schedule__c</object>
+        <sortField>Invoice_Mailing_Date__c</sortField>
+        <sortOrder>Asc</sortOrder>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordUpdates>
+        <description>Update Case Field &apos;Invoice Mailing Date&apos; same as Custom Setting&apos;s Invoice Mailing Date.</description>
+        <name>Update_Case_Field</name>
+        <label>Update Case Field</label>
+        <locationX>50</locationX>
+        <locationY>611</locationY>
+        <inputAssignments>
+            <field>Invoice_Mailing_Date__c</field>
+            <value>
+                <elementReference>Get_Records_Billing_Cut_Off_Schedule.Invoice_Mailing_Date__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <description>Update Case Field &apos;Invoice Mailing Date&apos; same as Custom Setting&apos;s Invoice Mailing Date.</description>
+        <name>Update_Case_Fields2</name>
+        <label>Update Case Fields</label>
+        <locationX>1106</locationX>
+        <locationY>611</locationY>
+        <inputAssignments>
+            <field>Invoice_Mailing_Date__c</field>
+            <value>
+                <elementReference>Get_Records_Billing_Cut_Off_Schedule_for_Service_Line_other_than_DB_R.Invoice_Mailing_Date__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <description>Update Case Field &apos;Invoice Mailing Date&apos; as Null</description>
+        <name>Update_Case_Fields_as_Null</name>
+        <label>Update Case Fields as Null</label>
+        <locationX>314</locationX>
+        <locationY>611</locationY>
+        <inputAssignments>
+            <field>Invoice_Mailing_Date__c</field>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <description>Update Case Field &apos;Invoice Mailing Date&apos; as Null</description>
+        <name>Update_Case_Fields_as_Null2</name>
+        <label>Update Case Fields as Null</label>
+        <locationX>1370</locationX>
+        <locationY>611</locationY>
+        <inputAssignments>
+            <field>Invoice_Mailing_Date__c</field>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>1178</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Check_Case_field_NCSP_Service_Line</targetReference>
+        </connector>
+        <filterLogic>or</filterLogic>
+        <filters>
+            <field>RecordType_Name__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>NCSP: SKP New Customer Setup</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>RecordType_Name__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>NCSP: DP New Customer Setup</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>RecordType_Name__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>NCSP: SKP Department Add Only</stringValue>
+            </value>
+        </filters>
+        <object>Case</object>
+        <recordTriggerType>Update</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

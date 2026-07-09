@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>66.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <decisions>
+        <name>Is_Corrent_Month_Record_Present</name>
+        <label>Is  Corrent Month Record Present</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Yes</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Delay_Reasons_B2B_Billing_Outlook__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>$Record.Forecast_Opportunity__r.Delay_Category__c</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Forecast_Revenue_Date__c</leftValueReference>
+                <operator>GreaterThanOrEqualTo</operator>
+                <rightValue>
+                    <elementReference>StartOfMonth</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Forecast_Revenue_Date__c</leftValueReference>
+                <operator>LessThanOrEqualTo</operator>
+                <rightValue>
+                    <elementReference>EndOfMonth</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Delay_Reason_to_Opp_Delay_Category</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <description>#35845 - Opportunity: Capture most recent Delay Reason from SBF lines - PLNI0016296
+#36160 - Opportunity: Update &quot;Delay Category&quot; logic to only capture current month Delay Reason from SBF lines</description>
+    <environments>Default</environments>
+    <formulas>
+        <name>EndOfMonth</name>
+        <dataType>Date</dataType>
+        <expression>DATE(YEAR(TODAY()),MONTH(TODAY())+1,1)-1</expression>
+    </formulas>
+    <formulas>
+        <name>StartOfMonth</name>
+        <dataType>Date</dataType>
+        <expression>DATE(YEAR(TODAY()),MONTH(TODAY()),1)</expression>
+    </formulas>
+    <interviewLabel>Populate Delay Reason to Related Opp Delay Category {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Populate Delay Reason to Related Opp Delay Category</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <description>Updating Delay Reasons-B2B Billing Outlook to Related Opportunity Delay Category</description>
+        <name>Update_Delay_Reason_to_Opp_Delay_Category</name>
+        <label>Update Delay Reason to Opp Delay Category</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Forecast_Opportunity__r.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Delay_Category__c</field>
+            <value>
+                <elementReference>$Record.Delay_Reasons_B2B_Billing_Outlook__c</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Opportunity</object>
+    </recordUpdates>
+    <start>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Is_Corrent_Month_Record_Present</targetReference>
+        </connector>
+        <filterFormula>AND(ISCHANGED({!$Record.Delay_Reasons_B2B_Billing_Outlook__c}),
+NOT(ISNULL({!$Record.Forecast_Opportunity__c})),
+OR(
+{!$Record.Forecast_Opportunity__r.RecordType.DeveloperName}=&apos;CPQ_Sales_Opportunity&apos;,
+{!$Record.Forecast_Opportunity__r.RecordType.DeveloperName}=&apos;IMAP_Standard_Opportunity&apos;,
+{!$Record.Forecast_Opportunity__r.RecordType.DeveloperName}=&apos;IME_Standard_Opportunity&apos;,
+{!$Record.Forecast_Opportunity__r.RecordType.DeveloperName}=&apos;IMLA_Standard_Opportunity&apos;,
+{!$Record.Forecast_Opportunity__r.RecordType.DeveloperName}=&apos;Standard_Opportunity&apos;))</filterFormula>
+        <object>Sales_Revenue_Forecast__c</object>
+        <recordTriggerType>Update</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

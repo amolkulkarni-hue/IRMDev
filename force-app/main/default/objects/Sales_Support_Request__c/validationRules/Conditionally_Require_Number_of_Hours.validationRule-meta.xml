@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Conditionally_Require_Number_of_Hours</fullName>
+    <active>true</active>
+    <description>Whenever a Request is in the status of Complete/Submitted, the Number of Hours is required.</description>
+    <errorConditionFormula>ISPICKVAL(Request_Status__c, &quot;Complete/Submitted&quot;) &amp;&amp; ISBLANK(Number_of_Hours__c )</errorConditionFormula>
+    <errorDisplayField>Number_of_Hours__c</errorDisplayField>
+    <errorMessage>Please add the Number of Hours when the request reaches a Status of &apos;Complete/Submitted&apos;.</errorMessage>
+</ValidationRule>

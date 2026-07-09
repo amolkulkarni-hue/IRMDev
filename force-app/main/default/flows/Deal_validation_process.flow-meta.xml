@@ -1,0 +1,379 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>60.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <customErrors>
+        <description>Throw this error if System fails to create Commercial Support Request</description>
+        <name>Error</name>
+        <label>Error</label>
+        <locationX>754</locationX>
+        <locationY>863</locationY>
+        <customErrorMessages>
+            <errorMessage>Failed to create Commercial Support Request.
+
+
+Error Details: {!$Flow.FaultMessage}</errorMessage>
+            <isFieldError>false</isFieldError>
+        </customErrorMessages>
+    </customErrors>
+    <customErrors>
+        <description>Throw this error if there is no such Commercial Support Request record type in System</description>
+        <name>Unable_to_find_Opportunity_Support_record_type</name>
+        <label>Unable to find Opportunity Support record type</label>
+        <locationX>50</locationX>
+        <locationY>755</locationY>
+        <customErrorMessages>
+            <errorMessage>Failed to create Commercial Support Request as there is no record type named &apos;Opportunity Support&apos;</errorMessage>
+            <isFieldError>false</isFieldError>
+        </customErrorMessages>
+    </customErrors>
+    <decisions>
+        <description>Check if BV flag is True to update it to False to avoid unnecessary updates</description>
+        <name>Check_BV_Flag</name>
+        <label>Check BV Flag</label>
+        <locationX>1150</locationX>
+        <locationY>539</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Is_True</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Booking_Verification_Validation__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_BV_Flag_On_Opp_as_False</targetReference>
+            </connector>
+            <label>Is True</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Check if BV flag is False to update it to True to avoid unnecessary updates</description>
+        <name>Check_BV_Flag_Is_False</name>
+        <label>Check BV Flag Is False</label>
+        <locationX>446</locationX>
+        <locationY>863</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Is_False</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Booking_Verification_Validation__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Booking_Verification_Flag_On_Opp</targetReference>
+            </connector>
+            <label>Is False</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Check if Deal Validation process is enabled or not based on the record types added under the Deal Validation record Types Custom Metadata Type
+#24425:Adding an additional condition to check if Billing country is Brazil or Mexico
+#25502: Removing Amount criteria for Brazil and Mexico
+#29018: Expanding the process to Spain with record Type as Any
+#30107:Booking Verification: Expand Booking Verification process to Peru - RITM1003306
+#31144: Booking Verification: Commercial Support record should be created on any Std. Opps w/ Region = North America</description>
+        <name>If_record_type_matched_proceed_with_Deal_Validation_process</name>
+        <label>If Billing Country matches proceed with Deal Validation process</label>
+        <locationX>699</locationX>
+        <locationY>431</locationY>
+        <defaultConnector>
+            <targetReference>Check_BV_Flag</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Proceed</name>
+            <conditionLogic>1 AND (2 OR (  NOT(2) AND 3))</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Deal_Validation_Record_Types</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Deal_Validation_Record_Types.Total_Annual_Amount__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>OpportunityAmountinUSD</leftValueReference>
+                <operator>GreaterThanOrEqualTo</operator>
+                <rightValue>
+                    <elementReference>Get_Deal_Validation_Record_Types.Total_Annual_Amount__c</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Fetch_Opportunity_Support_record_type</targetReference>
+            </connector>
+            <label>Proceed</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Check if flow is able to fetch Opportunity Support(Sales_Support_Request) record type or not</description>
+        <name>Unable_to_find_Opportunity_Support_Record_Type1</name>
+        <label>Unable to find Opportunity Support Record Type</label>
+        <locationX>248</locationX>
+        <locationY>647</locationY>
+        <defaultConnector>
+            <targetReference>Create_commercial_support_request</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Record_type_Not_found</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Fetch_Opportunity_Support_record_type</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Unable_to_find_Opportunity_Support_record_type</targetReference>
+            </connector>
+            <label>Record type Not found</label>
+        </rules>
+    </decisions>
+    <description>#20810 Auto creates Commercial Support Request when an Opportunity with Amount &gt;=25k and record type as Standard Opportunity(IMNA) is moved to Stage 5
+#24425: Expanding the Booking Verification process to IMLA(Mexico and Brazil countries only)
+#25502: Removing the Amount criteria for Brazil and Mexico
+#29018: Expanding the process to Spain with record Type as Any
+#30107: Booking Verification: Expand Booking Verification process to Peru - RITM1003306
+#31144: Booking Verification: Commercial Support record should be created on any Std. Opps w/ Region = North America
+#31292: Set Booking Verification Flag on Opp as True OR False based on billing country and TAA conditions
+#31274: Capture Opp Currency &amp; Country to support Booking Verification workflow - RITM1050209</description>
+    <environments>Default</environments>
+    <formulas>
+        <description>Converting Opportunity Amount to USD</description>
+        <name>OpportunityAmountinUSD</name>
+        <dataType>Currency</dataType>
+        <expression>{!$Record.Amount}/CURRENCYRATE(TEXT({!$Record.CurrencyIsoCode}))</expression>
+        <scale>2</scale>
+    </formulas>
+    <interviewLabel>Deal validation process {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Deal validation process</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordCreates>
+        <description>Creating commercial support request with record type as opportunity support. Modified this to add the currency on commercial support request to the Opportunity currency</description>
+        <name>Create_commercial_support_request</name>
+        <label>Create commercial support request</label>
+        <locationX>446</locationX>
+        <locationY>755</locationY>
+        <connector>
+            <targetReference>Check_BV_Flag_Is_False</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Error</targetReference>
+        </faultConnector>
+        <inputAssignments>
+            <field>Assignment_type__c</field>
+            <value>
+                <stringValue>Standard</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>CurrencyIsoCode</field>
+            <value>
+                <elementReference>$Record.CurrencyIsoCode</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Description__c</field>
+            <value>
+                <stringValue>Booking Verification</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Name</field>
+            <value>
+                <stringValue>Booking Verification</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>RecordTypeId</field>
+            <value>
+                <elementReference>Fetch_Opportunity_Support_record_type.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Related_Opportunity__c</field>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Request_Type__c</field>
+            <value>
+                <stringValue>Deal Validation</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Sales_Support_Request__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
+    <recordLookups>
+        <description>Fetching the details of opportunity support record type</description>
+        <name>Fetch_Opportunity_Support_record_type</name>
+        <label>Fetch Opportunity Support record type</label>
+        <locationX>248</locationX>
+        <locationY>539</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Unable_to_find_Opportunity_Support_Record_Type1</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>SobjectType</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Sales_Support_Request__c</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Sales_Support_Request</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>IsActive</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>RecordType</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <description>Fetch the Billing Country and Total Annual Amount threshold (If any) where Deal Validation process is enabled. These are stored in Custom Metadata Type called Deal Validation Countries.</description>
+        <name>Get_Deal_Validation_Record_Types</name>
+        <label>Get Deal Validation Country</label>
+        <locationX>699</locationX>
+        <locationY>323</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>If_record_type_matched_proceed_with_Deal_Validation_process</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Label</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Billing_Country__r.Name</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Valid__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Deal_Validation_Record_Types__mdt</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordUpdates>
+        <description>#31292: Updates the Booking_Verification_Validation__c field on Opportunity record to True when BV rules apply, based on country and TAA conditions evaluated from custom metadata</description>
+        <name>Set_Booking_Verification_Flag_On_Opp</name>
+        <label>Set Booking Verification Flag On Opp</label>
+        <locationX>314</locationX>
+        <locationY>971</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Booking_Verification_Validation__c</field>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <description>#31292: Updates the Booking_Verification_Validation__c field on Opportunity record to False when BV rules does not apply and BV flag is already True</description>
+        <name>Set_BV_Flag_On_Opp_as_False</name>
+        <label>Set BV Flag On Opp as False</label>
+        <locationX>1018</locationX>
+        <locationY>647</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Booking_Verification_Validation__c</field>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>573</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Get_Deal_Validation_Record_Types</targetReference>
+        </connector>
+        <filterFormula>AND(
+OR(
+{!$Record.RecordType.DeveloperName}= &apos;IMLA_Standard_Opportunity&apos;,
+{!$Record.RecordType.DeveloperName}= &apos;Standard_Opportunity&apos;,
+{!$Record.RecordType.DeveloperName}= &apos;IMAP_Standard_Opportunity&apos;,
+{!$Record.RecordType.DeveloperName}= &apos;IME_Standard_Opportunity&apos;),
+ISCHANGED({!$Record.StageName}),
+ISPICKVAL({!$Record.StageName},&apos;5 - Signed/PO in&apos;))</filterFormula>
+        <object>Opportunity</object>
+        <recordTriggerType>Update</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+    <variables>
+        <name>RecordtypeMatched</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </variables>
+</Flow>

@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>67.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <description>Record-Triggered After Save flow on Opportunity (Create). When a Standard_Opportunity or Framework_Parent_Opportunity is created, queries active Opp_Naming_Segment__c config records and calls IRM_OppNamingAction to build the Opportunity Name dynamically. Blank fields are replaced with the segment Fallback_Value__c (default TBD). The companion Opportunity_Auto_Name_Update_Flow recalculates on subsequent saves while the Name still contains TBD.</description>
+    <label>Opportunity Auto Name - Create</label>
+    <processType>AutoLaunchedFlow</processType>
+    <status>Active</status>
+
+    <!-- actionCalls ─────────────────────────────────────────────────────── -->
+    <actionCalls>
+        <name>buildOppName</name>
+        <label>Build Opportunity Name</label>
+        <locationX>176</locationX>
+        <locationY>768</locationY>
+        <actionName>IRM_OppNamingAction</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>updateOppName</targetReference>
+        </connector>
+        <inputParameters>
+            <name>opportunity</name>
+            <value>
+                <elementReference>$Record</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>accountName</name>
+            <value>
+                <elementReference>varAccountName</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>segments</name>
+            <value>
+                <elementReference>varNamingSegments</elementReference>
+            </value>
+        </inputParameters>
+        <outputParameters>
+            <assignToReference>varBuiltName</assignToReference>
+            <name>opportunityName</name>
+        </outputParameters>
+    </actionCalls>
+
+    <!-- decisions ───────────────────────────────────────────────────────── -->
+    <decisions>
+        <name>checkRecordType</name>
+        <label>Is Target Record Type?</label>
+        <locationX>176</locationX>
+        <locationY>288</locationY>
+        <defaultConnectorLabel>Not Target RT — End</defaultConnectorLabel>
+        <rules>
+            <name>isTargetRT</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>varRecordTypeDevName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Standard_Opportunity</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>varRecordTypeDevName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Framework_Parent_Opportunity</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>getAccount</targetReference>
+            </connector>
+            <label>Standard or Framework RT</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>checkSegmentsExist</name>
+        <label>Naming Segments Found?</label>
+        <locationX>176</locationX>
+        <locationY>648</locationY>
+        <defaultConnectorLabel>No Segments — End</defaultConnectorLabel>
+        <rules>
+            <name>segmentsFound</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>varNamingSegments</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>buildOppName</targetReference>
+            </connector>
+            <label>Segments Found</label>
+        </rules>
+    </decisions>
+
+    <!-- recordLookups ───────────────────────────────────────────────────── -->
+    <recordLookups>
+        <name>getRecordTypeName</name>
+        <label>Get RecordType Dev Name</label>
+        <locationX>176</locationX>
+        <locationY>168</locationY>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>checkRecordType</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.RecordTypeId</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>SObjectType</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Opportunity</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>RecordType</object>
+        <outputAssignments>
+            <assignToReference>varRecordTypeDevName</assignToReference>
+            <field>DeveloperName</field>
+        </outputAssignments>
+    </recordLookups>
+    <recordLookups>
+        <name>getAccount</name>
+        <label>Get Account Name</label>
+        <locationX>176</locationX>
+        <locationY>408</locationY>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>getNamingSegments</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.AccountId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Account</object>
+        <outputAssignments>
+            <assignToReference>varAccountName</assignToReference>
+            <field>Name</field>
+        </outputAssignments>
+    </recordLookups>
+    <recordLookups>
+        <name>getNamingSegments</name>
+        <label>Get Naming Segments</label>
+        <locationX>176</locationX>
+        <locationY>528</locationY>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>checkSegmentsExist</targetReference>
+        </connector>
+        <filterLogic>1 AND (2 OR 3)</filterLogic>
+        <filters>
+            <field>Is_Active__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Record_Type_Dev_Name__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>All</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Record_Type_Dev_Name__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>varRecordTypeDevName</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>Opp_Naming_Segment__c</object>
+        <outputReference>varNamingSegments</outputReference>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>Order__c</queriedFields>
+        <queriedFields>Field_API_Name__c</queriedFields>
+        <queriedFields>Fallback_Value__c</queriedFields>
+    </recordLookups>
+
+    <!-- recordUpdates ───────────────────────────────────────────────────── -->
+    <recordUpdates>
+        <name>updateOppName</name>
+        <label>Update Opportunity Name</label>
+        <locationX>176</locationX>
+        <locationY>888</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Name</field>
+            <value>
+                <elementReference>varBuiltName</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Opportunity</object>
+    </recordUpdates>
+
+    <!-- start ───────────────────────────────────────────────────────────── -->
+    <start>
+        <locationX>176</locationX>
+        <locationY>48</locationY>
+        <connector>
+            <targetReference>getRecordTypeName</targetReference>
+        </connector>
+        <object>Opportunity</object>
+        <recordTriggerType>Create</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+
+    <!-- variables ───────────────────────────────────────────────────────── -->
+    <variables>
+        <name>varAccountName</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>varBuiltName</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>varNamingSegments</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Opp_Naming_Segment__c</objectType>
+    </variables>
+    <variables>
+        <name>varRecordTypeDevName</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>

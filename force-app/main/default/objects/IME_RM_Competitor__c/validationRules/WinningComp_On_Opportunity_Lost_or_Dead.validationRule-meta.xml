@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>WinningComp_On_Opportunity_Lost_or_Dead</fullName>
+    <active>true</active>
+    <description>Winning Competitor can only be entered when Opportunity Stage  = &quot;Dead&quot; or &quot;Lost&quot;</description>
+    <errorConditionFormula>IF(
+ OR(
+   ISPICKVAL(Winning_Competitor__c,&apos;Yes&apos;),
+   ISPICKVAL(Winning_Competitor__c,&apos;No&apos;)
+ ),
+ IF(
+  NOT(OR(
+    ISPICKVAL(Opportunity__r.StageName ,&apos;Lost&apos;), 
+    ISPICKVAL(Opportunity__r.StageName ,&apos;Dead&apos;)
+  )), 
+  TRUE, 
+  FALSE
+ ),
+ FALSE
+)</errorConditionFormula>
+    <errorDisplayField>Winning_Competitor__c</errorDisplayField>
+    <errorMessage>A Winning Competitor can only be entered when Opportunity Stage  is &quot;Lost&quot;</errorMessage>
+</ValidationRule>

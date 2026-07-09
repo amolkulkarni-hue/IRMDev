@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Restrict_Changing_Record_Name</fullName>
+    <active>true</active>
+    <description>This rule prevents users from changing the Lex IVR Setup Record Name once it is created. This is to avoid the collapsing of IVR as these Names are directly mapped in the contact flows.</description>
+    <errorConditionFormula>ISCHANGED(Name) &amp;&amp; NOT(ISNEW())</errorConditionFormula>
+    <errorMessage>You can not change the Name of this record.</errorMessage>
+</ValidationRule>

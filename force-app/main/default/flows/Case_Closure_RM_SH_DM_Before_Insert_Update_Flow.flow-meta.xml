@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>58.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <description>This will update the Reopened Counter for Record types: CLAS RM/SH/DM</description>
+        <name>Update_Reopened_Counter</name>
+        <label>Update Reopened Counter</label>
+        <locationX>50</locationX>
+        <locationY>395</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.GSC_Reopened_Counter__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Reopened_Counter_Increment</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <decisions>
+        <description>1) For Record Types CLAS RM/SH/DM, check if the status is getting reopened then increase the Reopened Counter by one.
+Gitlab #33492 - Added functionality for Retention RM/SH record types.</description>
+        <name>CLAS_RM_SH_DM_Updates</name>
+        <label>CLAS RM/SH/DM &amp; Retention RM/SH Updates</label>
+        <locationX>182</locationX>
+        <locationY>287</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>CLAS_Update_Reopened_Counter</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Reopened</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Reopened_Counter</targetReference>
+            </connector>
+            <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+            <label>1 - Update Reopened Counter</label>
+        </rules>
+    </decisions>
+    <description>Case Closure RM/SH/DM Before Insert &amp; Update Flow.
+For reference, check user story #15288 on GitLab
+Gitlab #33492 - Added functionality for Retention RM/SH record types.</description>
+    <environments>Default</environments>
+    <formulas>
+        <description>Increase the Reopened Counter Variable by 1</description>
+        <name>Reopened_Counter_Increment</name>
+        <dataType>Number</dataType>
+        <expression>{!$Record__Prior.GSC_Reopened_Counter__c} +1</expression>
+        <scale>0</scale>
+    </formulas>
+    <interviewLabel>Case Closure RM/SH/DM Before Insert &amp; Update Flow {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Case Closure RM/SH/DM &amp; Retention RM/SH Before Insert &amp; Update Flow</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>56</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>CLAS_RM_SH_DM_Updates</targetReference>
+        </connector>
+        <filterLogic>or</filterLogic>
+        <filters>
+            <field>RecordType_Name__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>CLAS - RM</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>RecordType_Name__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>CLAS - Shred</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>RecordType_Name__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>CLAS – Data Management</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>RecordType_Name__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Retention RM</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>RecordType_Name__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Retention SH</stringValue>
+            </value>
+        </filters>
+        <object>Case</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

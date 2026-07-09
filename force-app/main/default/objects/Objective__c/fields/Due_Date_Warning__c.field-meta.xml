@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Due_Date_Warning__c</fullName>
+    <externalId>false</externalId>
+    <formula>IF( 
+ISPICKVAL( Status__c , &quot;Completed&quot;) = False &amp;&amp;  Due_Date__c &lt; TODAY(), IMAGE(&quot;/img/msg_icons/error16.png&quot;, &quot;Past Due&quot;), 
+IF(
+ISPICKVAL( Status__c , &quot;Completed&quot;) = False &amp;&amp;  Due_Date__c -TODAY() &lt;=14, IMAGE(&quot;/img/msg_icons/warning16.png&quot;, &quot;Approaching Due Date&quot;), &quot;&quot;)
+
+)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Due Date Warning</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

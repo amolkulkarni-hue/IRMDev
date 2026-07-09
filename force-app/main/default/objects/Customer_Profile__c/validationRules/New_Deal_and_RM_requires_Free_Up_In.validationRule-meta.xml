@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>New_Deal_and_RM_requires_Free_Up_In</fullName>
+    <active>true</active>
+    <errorConditionFormula>(ISNEW() || (ISCHANGED(NCSP_Service_Line__c) || ISCHANGED(Second_Service_Line__c) || ISCHANGED(Free_Up_In__c))) &amp;&amp;
+ISPICKVAL(Deal_Type__c, &apos;New Deal&apos;) &amp;&amp; (ISPICKVAL(NCSP_Service_Line__c, &apos;RM&apos;) || ISPICKVAL(Second_Service_Line__c, &apos;RM&apos;)) &amp;&amp;
+ISPICKVAL(Free_Up_In__c, &apos;&apos;)</errorConditionFormula>
+    <errorDisplayField>Free_Up_In__c</errorDisplayField>
+    <errorMessage>For RM deals, please identify whether this Opportunity is eligible for Free Up and In.</errorMessage>
+</ValidationRule>

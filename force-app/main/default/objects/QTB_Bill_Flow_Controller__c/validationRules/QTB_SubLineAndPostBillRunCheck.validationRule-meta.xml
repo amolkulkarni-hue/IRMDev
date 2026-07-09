@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>QTB_SubLineAndPostBillRunCheck</fullName>
+    <active>true</active>
+    <description>#33490
+Execute Sub Invoice Line and Post Bill Run should be checked after the invoice run is completed</description>
+    <errorConditionFormula>AND(
+NOT(
+$Setup.Metadata_Activation_Settings__c.Disable_VR__c &amp;&amp;
+OR(
+ISBLANK($Setup.Metadata_Activation_Settings__c.SObject_API_Name__c),
+CONTAINS($Setup.Metadata_Activation_Settings__c.SObject_API_Name__c, &apos;QTB_Bill_Flow_Controller__c&apos;)
+)
+),
+AND(
+    
+    OR(
+         QTB_SubInvoiceLine_Creation__c,
+         Execute_Post_Bill_Run__c 
+    ), NOT(ISBLANK(Invoice_Scheduler__c  ) ),
+    NOT( Invoice_Scheduler__r.QTB_InvoiceRunCompleted__c )
+))</errorConditionFormula>
+    <errorMessage>Wait until the Invoice run is completed, before proceeding to the Subline Generation and Posting of the invoice</errorMessage>
+</ValidationRule>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Primary_Product_Line_and_Country_Require</fullName>
+    <active>true</active>
+    <description>Make Primary Product Line &amp; Billing Country mandatory of opp fields when Deal Review is created.</description>
+    <errorConditionFormula>AND(
+ISNEW(),
+ OR(
+ISBLANK( TEXT(Opportunity__r.Primary_Product_Line__c)), 
+ISBLANK( Opportunity__r.Billing_Country__c )
+   )
+)</errorConditionFormula>
+    <errorMessage>Deal Review requires Billing Country and Primary Product Line. Please update these Opportunity fields</errorMessage>
+</ValidationRule>

@@ -1,0 +1,401 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>57.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <description>Adding all &quot;CampaignMemberStatus&quot; records to be inserted into new Collection.</description>
+        <name>AllCampaignMemberStatusRecords</name>
+        <label>All CampaignMemberStatus Records</label>
+        <locationX>138</locationX>
+        <locationY>863</locationY>
+        <assignmentItems>
+            <assignToReference>BulkData</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>NewRecord</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Member_Status_Loop</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Adding all Label Values into Collection Variable &quot;MemberStatus&quot;.</description>
+        <name>Assign_Values_to_Collection</name>
+        <label>Assign Values to Collection</label>
+        <locationX>50</locationX>
+        <locationY>539</locationY>
+        <assignmentItems>
+            <assignToReference>MemberStatus</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>Attended IRM Hosted Event</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>MemberStatus</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>Attended IRM Hosted Webinar</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>MemberStatus</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>Attended Customer Event</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>MemberStatus</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>Qualified by Third Party</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>MemberStatus</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>Attended Third Party Event</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>MemberStatus</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>Attended Third Party Webinar</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>MemberStatus</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>Registered for IRM Hosted Event</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>MemberStatus</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>Registered for Customer Event</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>MemberStatus</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>Registered for Third Party Event</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>MemberStatus</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>Registered for IRM Hosted Webinar</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>MemberStatus</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>Registered for Third Party Webinar</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>MemberStatus</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>Submitted Form</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>MemberStatus</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>Viewed Demo at Tradeshow</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>MemberStatus</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>Downloaded Asset via Third Party</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>MemberStatus</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>Visited Booth at Tradeshow</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>MemberStatus</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>Downloaded Third Party Asset</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>MemberStatus</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>Sent Email</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>MemberStatus</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>Campaign Member</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Member_Status_Loop</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Assigning Label,CampaignId, Has Responded Values to the record.</description>
+        <name>Assign_Values_to_New_Record</name>
+        <label>Assign Values to New Record</label>
+        <locationX>138</locationX>
+        <locationY>755</locationY>
+        <assignmentItems>
+            <assignToReference>NewRecord.Label</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Member_Status_Loop</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>NewRecord.HasResponded</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>HasRespondedValue</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>NewRecord.CampaignId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>AllCampaignMemberStatusRecords</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <name>Merge_Flow</name>
+        <label>Merge_Flow</label>
+        <locationX>446</locationX>
+        <locationY>323</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>run_at_record_creation</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Isnew</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.IM_Department__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Marketing</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Active_Checkbox_Checked</targetReference>
+            </connector>
+            <label>run at record creation</label>
+        </rules>
+        <rules>
+            <name>run_at_record_updation</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Active</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Isnew</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Active_Checkbox</targetReference>
+            </connector>
+            <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+            <label>run at record updation</label>
+        </rules>
+        <rules>
+            <name>run_at_record_creation_for_active_field_update</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Active</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Isnew</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>active_checkbox_checked1</targetReference>
+            </connector>
+            <label>run at record creation for active field update</label>
+        </rules>
+    </decisions>
+    <description>When a Campaign is created with Department&quot; Marketing&quot; ,then a new related &quot;Campaign Member status&quot; records need to be created.
+Campaign Status = Active then when a record is created, and any time it&apos;s edited to subsequently meet criteria the &quot;Active&quot; checkbox should be checked to TRUE.</description>
+    <environments>Default</environments>
+    <formulas>
+        <description>Formula to get &quot;Has Responded&quot; Value (True / False) to be assigned to the current record</description>
+        <name>HasRespondedValue</name>
+        <dataType>Boolean</dataType>
+        <expression>IF({!Member_Status_Loop} = &apos;Sent Email&apos; || {!Member_Status_Loop} =&apos;Campaign Member&apos; , false, true)</expression>
+    </formulas>
+    <formulas>
+        <name>Isnew</name>
+        <dataType>Boolean</dataType>
+        <expression>ISNEW()</expression>
+    </formulas>
+    <interviewLabel>Create new CampaignMemberStatus based on Campaign Department {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Create new CampaignMemberStatus based on Campaign Department and Update Active Field Based On Status</label>
+    <loops>
+        <description>Iterating over items in a collection variable &quot;MemberStatus&quot;.</description>
+        <name>Member_Status_Loop</name>
+        <label>Member Status Loop</label>
+        <locationX>50</locationX>
+        <locationY>647</locationY>
+        <collectionReference>MemberStatus</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>Assign_Values_to_New_Record</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>Create_CampaignMemberStatus_Records</targetReference>
+        </noMoreValuesConnector>
+    </loops>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordCreates>
+        <description>Create &quot;CampaignMemberStatus&quot; Records</description>
+        <name>Create_CampaignMemberStatus_Records</name>
+        <label>Create CampaignMemberStatus Records</label>
+        <locationX>50</locationX>
+        <locationY>1055</locationY>
+        <inputReference>BulkData</inputReference>
+    </recordCreates>
+    <recordUpdates>
+        <description>Checked Active Checkbox.</description>
+        <name>Active_Checkbox</name>
+        <label>Active_Checkbox</label>
+        <locationX>314</locationX>
+        <locationY>431</locationY>
+        <inputAssignments>
+            <field>IsActive</field>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Active_Checkbox_Checked</name>
+        <label>Active Checkbox Checked</label>
+        <locationX>50</locationX>
+        <locationY>431</locationY>
+        <connector>
+            <targetReference>Assign_Values_to_Collection</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>IsActive</field>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>active_checkbox_checked1</name>
+        <label>active checkbox checked</label>
+        <locationX>578</locationX>
+        <locationY>431</locationY>
+        <inputAssignments>
+            <field>IsActive</field>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>320</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Merge_Flow</targetReference>
+        </connector>
+        <object>Campaign</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+    <variables>
+        <description>Collection to Store all &quot;CampaignMemberStatus&quot; records.</description>
+        <name>BulkData</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+        <objectType>CampaignMemberStatus</objectType>
+    </variables>
+    <variables>
+        <description>This Collection Variable stores all &quot;Campaign Member Status&quot; Label to be Inserted</description>
+        <name>MemberStatus</name>
+        <dataType>String</dataType>
+        <isCollection>true</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <description>The new single record which will be used for insertion</description>
+        <name>NewRecord</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+        <objectType>CampaignMemberStatus</objectType>
+    </variables>
+</Flow>

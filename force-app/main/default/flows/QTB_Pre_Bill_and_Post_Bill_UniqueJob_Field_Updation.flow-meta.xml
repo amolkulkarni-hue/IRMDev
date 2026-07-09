@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>52.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <formulas>
+        <name>InvoiceSchedulerIdandTagetDateConcate</name>
+        <dataType>String</dataType>
+        <expression>{!$Record.Invoice_Scheduler__r.Id}&amp;&apos; &apos;&amp;TEXT({!$Record.Invoice_Scheduler__r.blng__TargetDate__c})</expression>
+    </formulas>
+    <interviewLabel>QTB Pre Bill and Post Bill UniqueJob Field  Updation {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>QTB Pre Bill and Post Bill UniqueJob Field  Updation</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <name>update_unique_job_field</name>
+        <label>update unique job field</label>
+        <locationX>175</locationX>
+        <locationY>367</locationY>
+        <inputAssignments>
+            <field>QTB_UniqueJob__c</field>
+            <value>
+                <elementReference>InvoiceSchedulerIdandTagetDateConcate</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>50</locationX>
+        <locationY>50</locationY>
+        <connector>
+            <targetReference>update_unique_job_field</targetReference>
+        </connector>
+        <object>QTB_Bill_Flow_Controller__c</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

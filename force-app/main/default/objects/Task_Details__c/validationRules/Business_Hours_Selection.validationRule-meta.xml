@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Business_Hours_Selection</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(ISPICKVAL(SLA_Time_Type__c, &apos;Business&apos;) ,  Business_Hours__c == null)</errorConditionFormula>
+    <errorDisplayField>Business_Hours__c</errorDisplayField>
+    <errorMessage>Define Business Hours for Business SLA Time Type</errorMessage>
+</ValidationRule>

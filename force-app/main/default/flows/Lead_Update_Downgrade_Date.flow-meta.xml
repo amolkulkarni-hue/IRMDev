@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>59.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <description>Migrated from the: Lead Update Downgrade Date workflow rule
+Workflow rule description: Checks to see if current value is 1-Inquiry and previous value is 2-Marketing Qual or 3-Sales Accepted&quot;</description>
+    <formulas>
+        <name>Update_Stage_Downgrade_DateFormula</name>
+        <dataType>Date</dataType>
+        <expression>today()</expression>
+    </formulas>
+    <label>Lead Update Downgrade Date</label>
+    <migratedFromWorkflowRuleName>Lead Update Downgrade Date</migratedFromWorkflowRuleName>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <description>Update Lead Stage Downgrade Date to today</description>
+        <name>mainUpdate</name>
+        <label>mainUpdate</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <inputAssignments>
+            <field>Stage_Downgrade_Date__c</field>
+            <value>
+                <elementReference>Update_Stage_Downgrade_DateFormula</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>mainUpdate</targetReference>
+        </connector>
+        <filterFormula>OR ( AND ( ispickval({!$Record.IM_Lead_Stage__c}, &quot;1-Inquiry&quot;), ispickval(PRIORVALUE( {!$Record.IM_Lead_Stage__c}),&quot;3-Sales Accepted&quot;) ), AND ( ispickval({!$Record.IM_Lead_Stage__c}, &quot;1-Inquiry&quot;), ispickval(PRIORVALUE( {!$Record.IM_Lead_Stage__c}),&quot;2-Marketing Qual&quot;) ) )</filterFormula>
+        <object>Lead</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

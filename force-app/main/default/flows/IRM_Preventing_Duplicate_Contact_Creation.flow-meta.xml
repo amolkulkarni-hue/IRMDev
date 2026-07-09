@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>60.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <customErrors>
+        <name>Contact_Converted_From_Lead</name>
+        <label>Contact Converted From Lead</label>
+        <locationX>314</locationX>
+        <locationY>755</locationY>
+        <customErrorMessages>
+            <errorMessage>This contact already exists.  Please choose their existing contact record.</errorMessage>
+            <isFieldError>false</isFieldError>
+        </customErrorMessages>
+    </customErrors>
+    <customErrors>
+        <name>Copy_1_of_Custom_Error_Message_1</name>
+        <label>Custom Error Message</label>
+        <locationX>842</locationX>
+        <locationY>647</locationY>
+        <customErrorMessages>
+            <errorMessage>This contact already exists. Please use their existing contact record. If needed, you can relate their existing contact to another account using the Related Accounts function within their existing contact record.</errorMessage>
+            <isFieldError>false</isFieldError>
+        </customErrorMessages>
+    </customErrors>
+    <customErrors>
+        <name>Custom_Error_Message_1</name>
+        <label>Custom Error Message 1</label>
+        <locationX>50</locationX>
+        <locationY>755</locationY>
+        <customErrorMessages>
+            <errorMessage>This contact already exists. Please use their existing contact record. If needed, you can relate their existing contact to another account using the Related Accounts function within their existing contact record.</errorMessage>
+            <isFieldError>false</isFieldError>
+        </customErrorMessages>
+    </customErrors>
+    <decisions>
+        <name>Converted_From_Lead</name>
+        <label>Converted From Lead</label>
+        <locationX>182</locationX>
+        <locationY>647</locationY>
+        <defaultConnector>
+            <targetReference>Contact_Converted_From_Lead</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Is_Converted_From_Lead</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Converted_From_Lead__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Custom_Error_Message_1</targetReference>
+            </connector>
+            <label>Is Converted From Lead?</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Copy_1_of_Validating_Existing_Contacts_Records</name>
+        <label>Validating Existing Contacts Records On Update</label>
+        <locationX>974</locationX>
+        <locationY>539</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Copy_1_of_Check_Duplicate_Contact</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Copy_1_of_Checking_Existing_Contacts</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Copy_1_of_Custom_Error_Message_1</targetReference>
+            </connector>
+            <label>Copy 1 of Check Duplicate Contact</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Create_and_Update_Contact_Check</name>
+        <label>Create and Update Contact Check</label>
+        <locationX>875</locationX>
+        <locationY>323</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Create_Contact</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>ISNEW</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Checking_Existing_Contacts</targetReference>
+            </connector>
+            <label>Create Contact</label>
+        </rules>
+        <rules>
+            <name>Update_Contact</name>
+            <conditionLogic>1 AND (2 OR 3)</conditionLogic>
+            <conditions>
+                <leftValueReference>ISNEW</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.LastName</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Email</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Copy_1_of_Checking_Existing_Contacts</targetReference>
+            </connector>
+            <label>Update Contact</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Validating_Existing_Contacts_Records</name>
+        <label>Validating Existing Contacts Records</label>
+        <locationX>380</locationX>
+        <locationY>539</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Check_Duplicate_Contact</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Checking_Existing_Contacts</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Converted_From_Lead</targetReference>
+            </connector>
+            <label>Check Duplicate Contact</label>
+        </rules>
+    </decisions>
+    <description>Users shouldn&apos;t be allowed to create a duplicate contact if the Last name and the Email address match. We should have the user provide the error message &quot; There is a duplicate existing contact; please update an existing contact; this should apply to the Contact data load for the CDM team.
+
+Gitlab #31919
+1. When the user tries to create a new contact record, where in the system the existing name and email address** in the contact record do exist, then an Error message should be displayed: You are unable to create this record as this contact already exists in Salesforce, please search for the contact and associate it to the relevant account records.
+2. Exclude PSA contact record type    
+3. Excluded for the EDP Integration user, Sierra26 integration users, and exclude Account Payable and the email address indiainvoices@ironmountain.com.</description>
+    <environments>Default</environments>
+    <formulas>
+        <name>ISNEW</name>
+        <dataType>Boolean</dataType>
+        <expression>ISNEW()</expression>
+    </formulas>
+    <interviewLabel>IRM Preventing Duplicate Contact Creation {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>IRM Preventing Duplicate Contact Creation</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <description>Checking Existing Contacts If any</description>
+        <name>Checking_Existing_Contacts</name>
+        <label>Checking Existing Contacts</label>
+        <locationX>380</locationX>
+        <locationY>431</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Validating_Existing_Contacts_Records</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>LastName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.LastName</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Email</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Email</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Id</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>Contact</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <description>Checking Existing Contacts If any</description>
+        <name>Copy_1_of_Checking_Existing_Contacts</name>
+        <label>Checking Existing Contacts on Update</label>
+        <locationX>974</locationX>
+        <locationY>431</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Copy_1_of_Validating_Existing_Contacts_Records</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>LastName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.LastName</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Email</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Email</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Id</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>Contact</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <start>
+        <locationX>749</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Create_and_Update_Contact_Check</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>RecordTypeId</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>012Hr000000xiXcIAI</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>CreatedById</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>0052H00000CMbu3QAD</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>CreatedById</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>0052H00000DaS7OQAV</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Email</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>indiainvoices@ironmountain.com</stringValue>
+            </value>
+        </filters>
+        <object>Contact</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

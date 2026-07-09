@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>60.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <description>Assigning one item in loop to the record single variable</description>
+        <name>Assign_Single_Record_Var</name>
+        <label>Assign Single Record Var</label>
+        <locationX>534</locationX>
+        <locationY>350</locationY>
+        <assignmentItems>
+            <assignToReference>SingleRecordId.Id</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Loop_Selected_List</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Assign_Single_to_connection</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Add single record to collection</description>
+        <name>Assign_Single_to_connection</name>
+        <label>Assign Single to connection</label>
+        <locationX>534</locationX>
+        <locationY>458</locationY>
+        <assignmentItems>
+            <assignToReference>CollectionVar</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>SingleRecordId</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Loop_Selected_List</targetReference>
+        </connector>
+    </assignments>
+    <choices>
+        <name>No</name>
+        <choiceText>No</choiceText>
+        <dataType>Boolean</dataType>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Yes</name>
+        <choiceText>Yes</choiceText>
+        <dataType>Boolean</dataType>
+        <value>
+            <booleanValue>true</booleanValue>
+        </value>
+    </choices>
+    <decisions>
+        <name>Check_Confirmation</name>
+        <label>Check Confirmation</label>
+        <locationX>446</locationX>
+        <locationY>758</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>If_Yes</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Please_select_an_option</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Delete_Selected_Items</targetReference>
+            </connector>
+            <label>If Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_Selection</name>
+        <label>Check Selection</label>
+        <locationX>248</locationX>
+        <locationY>134</locationY>
+        <defaultConnector>
+            <targetReference>Loop_Selected_List</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Is_Null</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>ids</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Selection_validation_screen</targetReference>
+            </connector>
+            <label>Is Null</label>
+        </rules>
+    </decisions>
+    <description>Gitlab #24258 , Screen flow to mass delete NCSP schedule A line item from list view. 
+This Flow will call from &quot;NCSP Schedule A Line Item&quot; object &quot;Bulk Delete&quot; Button.</description>
+    <environments>Default</environments>
+    <interviewLabel>NCSP Bulk Delete Schedule A Line Item {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>NCSP Bulk Delete Schedule A Line Item</label>
+    <loops>
+        <description>Looping through the selected items</description>
+        <name>Loop_Selected_List</name>
+        <label>Loop Selected List</label>
+        <locationX>446</locationX>
+        <locationY>242</locationY>
+        <collectionReference>ids</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>Assign_Single_Record_Var</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>Confirmation_Screen</targetReference>
+        </noMoreValuesConnector>
+    </loops>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>Flow</processType>
+    <recordDeletes>
+        <description>Delete NCSP Schedule A line items selected in list views</description>
+        <name>Delete_Selected_Items</name>
+        <label>Delete Selected Items</label>
+        <locationX>314</locationX>
+        <locationY>866</locationY>
+        <connector>
+            <targetReference>Success_Screen</targetReference>
+        </connector>
+        <inputReference>CollectionVar</inputReference>
+    </recordDeletes>
+    <screens>
+        <name>Confirmation_Screen</name>
+        <label>Confirmation Screen</label>
+        <locationX>446</locationX>
+        <locationY>650</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Check_Confirmation</targetReference>
+        </connector>
+        <fields>
+            <name>ConfirmationText</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Are you sure you want to delete these items ?&lt;/strong&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
+        </fields>
+        <fields>
+            <name>Please_select_an_option</name>
+            <choiceReferences>Yes</choiceReferences>
+            <choiceReferences>No</choiceReferences>
+            <dataType>Boolean</dataType>
+            <fieldText>Please select an option</fieldText>
+            <fieldType>RadioButtons</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>Selection_validation_screen</name>
+        <label>Selection validation screen</label>
+        <locationX>50</locationX>
+        <locationY>242</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>SelectItem</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Please select atleast one line item to delete&lt;/strong&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>Success_Screen</name>
+        <label>Success Screen</label>
+        <locationX>314</locationX>
+        <locationY>974</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>SuccessText</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Records deleted successfully.&lt;/strong&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <start>
+        <locationX>122</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Check_Selection</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <variables>
+        <description>Stores the all list of ids to delete</description>
+        <name>CollectionVar</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>NCSP_Schedule_A_Line_Item__c</objectType>
+    </variables>
+    <variables>
+        <description>Standard variable to store list of ids in list view</description>
+        <name>ids</name>
+        <dataType>String</dataType>
+        <isCollection>true</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>Variable to store single record Var</description>
+        <name>SingleRecordId</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>NCSP_Schedule_A_Line_Item__c</objectType>
+    </variables>
+</Flow>

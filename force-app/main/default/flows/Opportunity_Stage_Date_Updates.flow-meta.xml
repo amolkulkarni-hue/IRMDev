@@ -1,0 +1,515 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>60.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <description>Assigning bands</description>
+        <name>Assign_Bands</name>
+        <label>Assign Bands</label>
+        <locationX>50</locationX>
+        <locationY>395</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.W_L_Band__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>W_L_Band</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.ALM_Band__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>ALM_Band</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Digital_Band__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Digital_Band</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Data_Center_Band__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>DataCenterBand</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.MAS_Band__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>MASBand</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.RIM_Band__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>RIMBand</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>Opportunity_Stage_1_Update_and_Stage_1_Date_Reached_Update</name>
+        <label>Opportunity Stage 1 Update and Stage 1 Date Reached Update</label>
+        <locationX>314</locationX>
+        <locationY>503</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.IM_X1_Qualification_Reached__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.IM_Stage_1_Entered_Date__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>StageDateUpdate</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>Opportunity_Stage_2_Update_and_Stage_2_Date_Reached_Update</name>
+        <label>Opportunity Stage 2 Update and Stage 2 Date Reached Update</label>
+        <locationX>578</locationX>
+        <locationY>503</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.IM_X2_Solution_Development_Reached__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.IM_Stage_2_Entered_Date__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>StageDateUpdate</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>Opportunity_Stage_3_Update_and_Stage_3_Date_Reached_Update</name>
+        <label>Opportunity Stage 3 Update and Stage 3 Date Reached Update</label>
+        <locationX>842</locationX>
+        <locationY>503</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.IM_X3_Propose_Reached__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.IM_Stage_3_Entered_Date__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>StageDateUpdate</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>Opportunity_Stage_4_Update_and_Stage_4_Date_Reached_Update</name>
+        <label>Opportunity Stage 4 Update and Stage 4 Date Reached Update</label>
+        <locationX>1106</locationX>
+        <locationY>503</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.IM_X4_Negotiate_Reached__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.IM_Stage_4_Entered_Date__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>StageDateUpdate</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>Opportunity_Stage_5_Update_and_Stage_5_Date_Reached_Update</name>
+        <label>Opportunity Stage 5 Update and Stage 5 Date Reached Update</label>
+        <locationX>1370</locationX>
+        <locationY>503</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.IM_X5_Signed_PO_in_Reached__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.IM_Stage_5_Entered_Date__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>StageDateUpdate</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.CloseDate</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>StageDateUpdate</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>Opportunity_Stage_6_Update_and_Stage_6_Date_Reached_Update</name>
+        <label>Opportunity Stage 6 Update and Stage 6 Date Reached Update</label>
+        <locationX>1634</locationX>
+        <locationY>503</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.IM_X6_Setup_Reached__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.IM_Stage_6_Entered_Date__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>StageDateUpdate</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>Opportunity_Stage_7_Update_and_Stage_7_Date_Reached_Update</name>
+        <label>Opportunity Stage 7 Update and Stage 7 Date Reached Update</label>
+        <locationX>1898</locationX>
+        <locationY>503</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.IM_X7_Closed_Reached__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.IM_Stage_7_Entered_Date__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>StageDateUpdate</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <decisions>
+        <description>Check if AMount is changed or not and if changed calculate the Bands based on Business Unit</description>
+        <name>Amount_is_Changed</name>
+        <label>Amount is Changed?</label>
+        <locationX>644</locationX>
+        <locationY>287</locationY>
+        <defaultConnector>
+            <targetReference>Opportunity_Stage_Update_and_Stage_Date_Reached</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Amount</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_Bands</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Opportunity_Stage_Update_and_Stage_Date_Reached</name>
+        <label>Opportunity Stage Update and Stage Date Reached</label>
+        <locationX>1238</locationX>
+        <locationY>395</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Opportunity_Stage_1_Update_and_Stage_1_Date_Reached</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.StageName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>1 - Qualification</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Opportunity_Stage_1_Update_and_Stage_1_Date_Reached_Update</targetReference>
+            </connector>
+            <label>Opportunity Stage 1 Update and Stage 1 Date Reached</label>
+        </rules>
+        <rules>
+            <name>Opportunity_Stage_2_Update_and_Stage_2_Date_Reached</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.StageName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>2 - Solution Developed</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Opportunity_Stage_2_Update_and_Stage_2_Date_Reached_Update</targetReference>
+            </connector>
+            <label>Opportunity Stage 2 Update and Stage 2 Date Reached</label>
+        </rules>
+        <rules>
+            <name>Opportunity_Stage_3_Update_and_Stage_3_Date_Reached</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.StageName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>3 - Solution Agreed</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Opportunity_Stage_3_Update_and_Stage_3_Date_Reached_Update</targetReference>
+            </connector>
+            <label>Opportunity Stage 3 Update and Stage 3 Date Reached</label>
+        </rules>
+        <rules>
+            <name>Opportunity_Stage_4_Update_and_Stage_4_Date_Reached</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.StageName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>4 - Negotiate</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Opportunity_Stage_4_Update_and_Stage_4_Date_Reached_Update</targetReference>
+            </connector>
+            <label>Opportunity Stage 4 Update and Stage 4 Date Reached</label>
+        </rules>
+        <rules>
+            <name>Opportunity_Stage_5_Update_and_Stage_5_Date_Reached</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.StageName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>5 - Signed/PO in</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Opportunity_Stage_5_Update_and_Stage_5_Date_Reached_Update</targetReference>
+            </connector>
+            <label>Opportunity Stage 5 Update and Stage 5 Date Reached</label>
+        </rules>
+        <rules>
+            <name>Opportunity_Stage_6_Update_and_Stage_6_Date_Reached</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.StageName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>6 - Setup</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Opportunity_Stage_6_Update_and_Stage_6_Date_Reached_Update</targetReference>
+            </connector>
+            <label>Opportunity Stage 6 Update and Stage 6 Date Reached</label>
+        </rules>
+        <rules>
+            <name>Opportunity_Stage_7_Update_and_Stage_7_Date_Reached</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.StageName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>7 - Closed</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Opportunity_Stage_7_Update_and_Stage_7_Date_Reached_Update</targetReference>
+            </connector>
+            <label>Opportunity Stage 7 Update and Stage 7 Date Reached</label>
+        </rules>
+    </decisions>
+    <description>Migrated from the below Workflow Rule using criteria.
+1. Opportunity Stage Date Updates1
+2. Opportunity Stage Date Updates2
+3. Opportunity Stage Date Updates3
+4. Opportunity Stage Date Updates4
+5. Opportunity Stage Date Updates5
+6. Opportunity Stage Date Updates6
+7. Opportunity Stage Date Updates7
+
+#21267: Update Bands based on BU
+#25372: Removed the Other band logic</description>
+    <environments>Default</environments>
+    <formulas>
+        <description>To decide the ALM band based on ALM BU</description>
+        <name>ALM_Band</name>
+        <dataType>String</dataType>
+        <expression>IF({!Total_ALM_Converted}==0,&quot;Band 0&quot;,
+IF(AND({!Total_ALM_Converted}&gt; 0 ,{!Total_ALM_Converted}&lt;5000), &quot;Band 1&quot;,
+     IF(AND({!Total_ALM_Converted}&gt;=5000 ,{!Total_ALM_Converted}&lt;25000),  &quot;Band 2&quot;,
+          IF(AND({!Total_ALM_Converted}&gt;=25000 ,{!Total_ALM_Converted}&lt;100000), &quot;Band 3&quot;,
+              IF(AND({!Total_ALM_Converted}&gt;=100000, {!Total_ALM_Converted}&lt;250000), &quot;Band 4&quot;,
+                   IF(AND({!Total_ALM_Converted}&gt;=250000,{!Total_ALM_Converted}&lt;500000), &quot;Band 5&quot;,
+                       IF(AND({!Total_ALM_Converted}&gt;=500000 , {!Total_ALM_Converted}&lt;1000000),&quot;Band 6&quot;,
+                                 &quot;Band 7&quot;
+)))))))</expression>
+    </formulas>
+    <formulas>
+        <description>To decide the Data Center band based on Data Center BU</description>
+        <name>DataCenterBand</name>
+        <dataType>String</dataType>
+        <expression>IF({!Total_Data_Center_Converted}==0, &quot;Band 0&quot;,
+IF(AND({!Total_Data_Center_Converted}&gt; 0 ,{!Total_Data_Center_Converted}&lt;5000), &quot;Band 1&quot;,
+     IF(AND({!Total_Data_Center_Converted}&gt;=5000 ,{!Total_Data_Center_Converted}&lt;25000),  &quot;Band 2&quot;,
+          IF(AND({!Total_Data_Center_Converted}&gt;=25000 ,{!Total_Data_Center_Converted}&lt;100000), &quot;Band 3&quot;,
+              IF(AND({!Total_Data_Center_Converted}&gt;=100000, {!Total_Data_Center_Converted}&lt;250000), &quot;Band 4&quot;,
+                   IF(AND({!Total_Data_Center_Converted}&gt;=250000,{!Total_Data_Center_Converted}&lt;500000), &quot;Band 5&quot;,
+                       IF(AND({!Total_Data_Center_Converted}&gt;=500000 , {!Total_Data_Center_Converted}&lt;1000000),&quot;Band 6&quot;,
+                                 &quot;Band 7&quot;
+)))))))</expression>
+    </formulas>
+    <formulas>
+        <description>To decide the Digital band based on Digital BU</description>
+        <name>Digital_Band</name>
+        <dataType>String</dataType>
+        <expression>IF({!Total_DIgital_Converted}==0, &quot;Band 0&quot;,
+IF(AND({!Total_DIgital_Converted}&gt; 0 ,{!Total_DIgital_Converted}&lt;5000), &quot;Band 1&quot;,
+     IF(AND({!Total_DIgital_Converted}&gt;=5000 ,{!Total_DIgital_Converted}&lt;25000),  &quot;Band 2&quot;,
+          IF(AND({!Total_DIgital_Converted}&gt;=25000 ,{!Total_DIgital_Converted}&lt;100000), &quot;Band 3&quot;,
+              IF(AND({!Total_DIgital_Converted}&gt;=100000, {!Total_DIgital_Converted}&lt;250000), &quot;Band 4&quot;,
+                   IF(AND({!Total_DIgital_Converted}&gt;=250000,{!Total_DIgital_Converted}&lt;500000), &quot;Band 5&quot;,
+                       IF(AND({!Total_DIgital_Converted}&gt;=500000 , {!Total_DIgital_Converted}&lt;1000000),&quot;Band 6&quot;,
+                                 &quot;Band 7&quot;
+)))))))</expression>
+    </formulas>
+    <formulas>
+        <description>To decide the MAS band based on MAS BU</description>
+        <name>MASBand</name>
+        <dataType>String</dataType>
+        <expression>IF({!Total_MAS_Converted}==0, &quot;Band 0&quot;,
+IF(AND({!Total_MAS_Converted}&gt; 0 ,{!Total_MAS_Converted}&lt;5000), &quot;Band 1&quot;,
+     IF(AND({!Total_MAS_Converted}&gt;=5000 ,{!Total_MAS_Converted}&lt;25000),  &quot;Band 2&quot;,
+          IF(AND({!Total_MAS_Converted}&gt;=25000 ,{!Total_MAS_Converted}&lt;100000), &quot;Band 3&quot;,
+              IF(AND({!Total_MAS_Converted}&gt;=100000, {!Total_MAS_Converted}&lt;250000), &quot;Band 4&quot;,
+                   IF(AND({!Total_MAS_Converted}&gt;=250000,{!Total_MAS_Converted}&lt;500000), &quot;Band 5&quot;,
+                       IF(AND({!Total_MAS_Converted}&gt;=500000 , {!Total_MAS_Converted}&lt;1000000),&quot;Band 6&quot;,
+                                 &quot;Band 7&quot;
+)))))))</expression>
+    </formulas>
+    <formulas>
+        <description>To decide the RIM band based on RIM BU</description>
+        <name>RIMBand</name>
+        <dataType>String</dataType>
+        <expression>IF({!Total_RIM_Converted}==0, &quot;Band 0&quot;,
+IF(AND({!Total_RIM_Converted}&gt; 0 ,{!Total_RIM_Converted}&lt;5000), &quot;Band 1&quot;,
+     IF(AND({!Total_RIM_Converted}&gt;=5000 ,{!Total_RIM_Converted}&lt;25000),  &quot;Band 2&quot;,
+          IF(AND({!Total_RIM_Converted}&gt;=25000 ,{!Total_RIM_Converted}&lt;100000), &quot;Band 3&quot;,
+              IF(AND({!Total_RIM_Converted}&gt;=100000, {!Total_RIM_Converted}&lt;250000), &quot;Band 4&quot;,
+                   IF(AND({!Total_RIM_Converted}&gt;=250000,{!Total_RIM_Converted}&lt;500000), &quot;Band 5&quot;,
+                       IF(AND({!Total_RIM_Converted}&gt;=500000 , {!Total_RIM_Converted}&lt;1000000),&quot;Band 6&quot;,
+                                 &quot;Band 7&quot;
+)))))))</expression>
+    </formulas>
+    <formulas>
+        <name>StageDateUpdate</name>
+        <dataType>Date</dataType>
+        <expression>TODAY()</expression>
+    </formulas>
+    <formulas>
+        <description>To calculated the converted amount of Total ALM</description>
+        <name>Total_ALM_Converted</name>
+        <dataType>Currency</dataType>
+        <expression>{!$Record.Total_ALM__c}/CURRENCYRATE(Text({!$Record.CurrencyIsoCode}))</expression>
+        <scale>3</scale>
+    </formulas>
+    <formulas>
+        <description>To calculated the converted amount of Total data Center</description>
+        <name>Total_Data_Center_Converted</name>
+        <dataType>Currency</dataType>
+        <expression>{!$Record.Total_Data_Center__c}/CURRENCYRATE(Text({!$Record.CurrencyIsoCode}))</expression>
+        <scale>3</scale>
+    </formulas>
+    <formulas>
+        <description>To calculated the converted amount of Total Digital</description>
+        <name>Total_DIgital_Converted</name>
+        <dataType>Currency</dataType>
+        <expression>{!$Record.Total_Digital__c}/CURRENCYRATE(Text({!$Record.CurrencyIsoCode}))</expression>
+        <scale>3</scale>
+    </formulas>
+    <formulas>
+        <description>To calculated the converted amount of Total MAS</description>
+        <name>Total_MAS_Converted</name>
+        <dataType>Currency</dataType>
+        <expression>{!$Record.Total_IMES__c}/CURRENCYRATE(Text({!$Record.CurrencyIsoCode}))</expression>
+        <scale>3</scale>
+    </formulas>
+    <formulas>
+        <description>To calculated the converted amount of Total RIM</description>
+        <name>Total_RIM_Converted</name>
+        <dataType>Currency</dataType>
+        <expression>{!$Record.Total_RIM__c}/CURRENCYRATE(Text({!$Record.CurrencyIsoCode}))</expression>
+        <scale>3</scale>
+    </formulas>
+    <formulas>
+        <description>To store Total W&amp;L amount value in USD</description>
+        <name>Total_W_L_Converted</name>
+        <dataType>Currency</dataType>
+        <expression>{!$Record.Total_W_L__c}/CURRENCYRATE(Text({!$Record.CurrencyIsoCode}))</expression>
+        <scale>3</scale>
+    </formulas>
+    <formulas>
+        <description>To decide the band of W&amp;L BU</description>
+        <name>W_L_Band</name>
+        <dataType>String</dataType>
+        <expression>IF({!Total_W_L_Converted}==0, &quot;Band 0&quot;,
+IF(AND({!Total_W_L_Converted}&gt; 0 ,{!Total_W_L_Converted}&lt;5000), &quot;Band 1&quot;,
+     IF(AND({!Total_W_L_Converted}&gt;=5000 ,{!Total_W_L_Converted}&lt;25000),  &quot;Band 2&quot;,
+          IF(AND({!Total_W_L_Converted}&gt;=25000 ,{!Total_W_L_Converted}&lt;100000), &quot;Band 3&quot;,
+              IF(AND({!Total_W_L_Converted}&gt;=100000, {!Total_W_L_Converted}&lt;250000), &quot;Band 4&quot;,
+                   IF(AND({!Total_W_L_Converted}&gt;=250000,{!Total_W_L_Converted}&lt;500000), &quot;Band 5&quot;,
+                       IF(AND({!Total_W_L_Converted}&gt;=500000 , {!Total_W_L_Converted}&lt;1000000),&quot;Band 6&quot;,
+                                 &quot;Band 7&quot;
+)))))))</expression>
+    </formulas>
+    <interviewLabel>Opportunity Stage Date Updates {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Opportunity Stage Date and Band Updates</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>518</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Amount_is_Changed</targetReference>
+        </connector>
+        <filterFormula>OR( ISNEW() , ISCHANGED({!$Record.StageName}) ,ISCHANGED({!$Record.Amount}))</filterFormula>
+        <object>Opportunity</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Obsolete</status>
+</Flow>

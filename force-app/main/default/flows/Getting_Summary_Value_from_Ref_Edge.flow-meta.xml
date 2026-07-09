@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>57.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <description>#13553-Plan to Win: Update page layout &amp; Create new fields Part 1
+
+The &quot;Brief Account History&quot; field is part of the &quot;Reference Profile&quot; object in package &quot;refedge&quot;.
+There is no direct way to get full data from the Summary field. Therefore, I created a flow to update the field value from the Summary field to the Account object.</description>
+    <environments>Default</environments>
+    <interviewLabel>Getting Summary Value from Ref Edge {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Getting Summary Value from Ref Edge-Plan to Win</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <description>The Summary field is a &quot;Long Text Area&quot; field, so updating the field value in the Account object field is necessary</description>
+        <name>Get_summary_value_and_match_the_account_Id</name>
+        <label>Get summary value and match the account Id</label>
+        <locationX>541</locationX>
+        <locationY>334</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Brief_Account_History_field_mapping_and_updating</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.refedge__Account__r.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Account</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordUpdates>
+        <name>Brief_Account_History_field_mapping_and_updating</name>
+        <label>Brief Account History field mapping and updating</label>
+        <locationX>719</locationX>
+        <locationY>382</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.refedge__Account__r.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Brief_Account_History__c</field>
+            <value>
+                <elementReference>$Record.refedge__Ref_Profile_Summary__c</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Account</object>
+    </recordUpdates>
+    <start>
+        <locationX>449</locationX>
+        <locationY>48</locationY>
+        <connector>
+            <targetReference>Get_summary_value_and_match_the_account_Id</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>refedge__Ref_Profile_Summary__c</field>
+            <operator>IsChanged</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <object>refedge__Reference_Basic_Information__c</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

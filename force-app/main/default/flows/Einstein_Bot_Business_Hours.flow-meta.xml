@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>62.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <description>Assign Business Hours Name to varTxt_BusinessHoursName variable</description>
+        <name>Assign_Business_Hours_Name</name>
+        <label>Assign Business Hours Name</label>
+        <locationX>176</locationX>
+        <locationY>350</locationY>
+        <assignmentItems>
+            <assignToReference>varTxt_BusinessHoursName</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Community_Site_Configuration_mdt.Business_Hours_Name__c</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <description>To pass the Business hours name to the Einstein Bot#26941</description>
+    <environments>Default</environments>
+    <interviewLabel>Bus {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Einstein Bot - Business Hours</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <description>To get the Business Hours name from the Community_Site_Configuration__mdt</description>
+        <name>Get_Community_Site_Configuration_mdt</name>
+        <label>Get Community Site Configuration mdt</label>
+        <locationX>176</locationX>
+        <locationY>242</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Assign_Business_Hours_Name</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Functionality_Type__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Einstein Bot</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Language__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Messaging_Session.Language_Selector__c</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Community_Site_Configuration__mdt</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_Messaging_Session</name>
+        <label>Get Messaging Session</label>
+        <locationX>176</locationX>
+        <locationY>134</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Get_Community_Site_Configuration_mdt</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>varMessagingSessionID</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>MessagingSession</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <runInMode>SystemModeWithoutSharing</runInMode>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Get_Messaging_Session</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <variables>
+        <name>varMessagingSessionID</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>Out put variable to send the business hours name to Chat bot</description>
+        <name>varTxt_BusinessHoursName</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+</Flow>

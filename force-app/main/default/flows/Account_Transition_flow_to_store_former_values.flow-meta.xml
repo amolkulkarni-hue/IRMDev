@@ -1,0 +1,423 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>65.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <name>Set_Account_for_Transition</name>
+        <label>Set Account for Transition</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Account_for_Transition__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Transition_date__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Flow.CurrentDateTime</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Is_AE_ISR_changed</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Store_Former_AE_ISR_owner</name>
+        <label>Store Former AE/ISR owner</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Former_AE_ISR_Account_Owner__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Former_AE_ISR</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Is_DBU_SDE_changed</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Store_Former_ALM_VSE</name>
+        <label>Store Former ALM VSE</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Former_ALM_VSE__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Former_ALM_VSE</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Is_GMD_changed</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Store_Former_AMD</name>
+        <label>Store Former AMD</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Former_AMD__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Former_AMD</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>Store_Former_DBU_SDE</name>
+        <label>Store Former DBU SDE</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Former_DBU_SDE__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Former_DBU_SDE</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Is_ALM_VSE_changed</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Store_Former_GMD</name>
+        <label>Store Former GMD</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Former_Global_Managing_Director__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Former_GMD</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Is</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Store_Former_RIM_SDE</name>
+        <label>Store Former RIM SDE</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Former_RIM_SDE__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Former_RIM_SDE</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Is_AMD_Changed</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <name>Is</name>
+        <label>Is RIM SDE changed?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Is_AMD_Changed</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>RIM_SDE_changed</name>
+            <conditionLogic>1 AND 2 AND NOT(3)</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.RIM_SDE__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record__Prior.RIM_SDE__c</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Former_RIM_SDE</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>TBH</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Store_Former_RIM_SDE</targetReference>
+            </connector>
+            <label>RIM SDE changed</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Is_AE_ISR_changed</name>
+        <label>Is AE/ISR changed?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Is_DBU_SDE_changed</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>AE_ISR_changed</name>
+            <conditionLogic>1 AND 2 AND NOT(3)</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Primary_BDE__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record__Prior.Primary_BDE__c</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Former_AE_ISR</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>TBH</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Store_Former_AE_ISR_owner</targetReference>
+            </connector>
+            <label>AE/ISR changed</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Is_ALM_VSE_changed</name>
+        <label>Is ALM VSE changed</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Is_GMD_changed</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>ALM_VSE_Changed</name>
+            <conditionLogic>1 AND 2 AND NOT(3)</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.DMS_Owner__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record__Prior.DMS_Owner__c</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Former_ALM_VSE</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>TBH</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Store_Former_ALM_VSE</targetReference>
+            </connector>
+            <label>ALM VSE Changed</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Is_AMD_Changed</name>
+        <label>Is AMD Changed?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>AMD_Changed</name>
+            <conditionLogic>1 AND 2 AND NOT(3)</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.AMD__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record__Prior.AMD__c</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Former_AMD</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>TBH</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Store_Former_AMD</targetReference>
+            </connector>
+            <label>AMD Changed</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Is_DBU_SDE_changed</name>
+        <label>Is DBU SDE changed?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Is_ALM_VSE_changed</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>DBU_SDE_changed</name>
+            <conditionLogic>1 AND 2 AND NOT(3)</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Information_Governance_Rep__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record__Prior.Information_Governance_Rep__c</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Former_DBU_SDE</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>TBH</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Store_Former_DBU_SDE</targetReference>
+            </connector>
+            <label>DBU SDE changed</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Is_GMD_changed</name>
+        <label>Is GMD changed?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Is</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>GMD_changed</name>
+            <conditionLogic>1 AND 2 AND NOT(3)</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Global_IMGA_Owner__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record__Prior.Global_IMGA_Owner__c</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Former_GMD</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>TBH</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Store_Former_GMD</targetReference>
+            </connector>
+            <label>GMD changed</label>
+        </rules>
+    </decisions>
+    <environments>Default</environments>
+    <formulas>
+        <name>Former_AE_ISR</name>
+        <dataType>String</dataType>
+        <expression>{!$Record__Prior.Primary_BDE__r.FirstName}+ &apos; &apos;+{!$Record__Prior.Primary_BDE__r.LastName}</expression>
+    </formulas>
+    <formulas>
+        <name>Former_ALM_VSE</name>
+        <dataType>String</dataType>
+        <expression>{!$Record__Prior.DMS_Owner__r.FirstName}+ &apos; &apos;+ {!$Record__Prior.DMS_Owner__r.LastName}</expression>
+    </formulas>
+    <formulas>
+        <name>Former_AMD</name>
+        <dataType>String</dataType>
+        <expression>{!$Record__Prior.AMD__r.FirstName}+&apos; &apos;+{!$Record__Prior.AMD__r.LastName}</expression>
+    </formulas>
+    <formulas>
+        <name>Former_DBU_SDE</name>
+        <dataType>String</dataType>
+        <expression>{!$Record__Prior.Information_Governance_Rep__r.FirstName}+&apos; &apos;+{!$Record__Prior.Information_Governance_Rep__r.LastName}</expression>
+    </formulas>
+    <formulas>
+        <name>Former_GMD</name>
+        <dataType>String</dataType>
+        <expression>{!$Record__Prior.Global_IMGA_Owner__r.FirstName}+&apos; &apos;+{!$Record__Prior.Global_IMGA_Owner__r.LastName}</expression>
+    </formulas>
+    <formulas>
+        <name>Former_RIM_SDE</name>
+        <dataType>String</dataType>
+        <expression>{!$Record__Prior.RIM_SDE__r.FirstName}+&apos; &apos;+{!$Record__Prior.RIM_SDE__r.LastName}</expression>
+    </formulas>
+    <interviewLabel>Account Transition flow to store former values {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Account Transition flow to store former values</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Set_Account_for_Transition</targetReference>
+        </connector>
+        <filterFormula>OR(
+ISCHANGED({!$Record.Primary_BDE__c}),
+ISCHANGED({!$Record.Information_Governance_Rep__c} ),
+ISCHANGED({!$Record.DMS_Owner__c}),
+ISCHANGED({!$Record.Global_IMGA_Owner__c}),
+ISCHANGED({!$Record.RIM_SDE__c}),
+ISCHANGED({!$Record.AMD__c})
+)</filterFormula>
+        <object>Account</object>
+        <recordTriggerType>Update</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

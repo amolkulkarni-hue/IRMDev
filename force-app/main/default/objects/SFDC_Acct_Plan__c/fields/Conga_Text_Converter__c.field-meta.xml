@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Conga_Text_Converter__c</fullName>
+    <description>Used in conjunction with the account plan &apos;Generate PDF&apos; button.  This field converts a record type&apos;s name to text for use in the button url.</description>
+    <externalId>false</externalId>
+    <formula>IF
+( 
+RecordType.Name = &apos;IMNA Account Brief&apos;, &apos;IMNA Account Brief&apos;, 
+IF
+( 
+RecordType.Name = &apos;IMNA Account National/Vertical Plan&apos;, &apos;IMNA Account National/Vertical Plan&apos;, 
+IF
+( 
+RecordType.Name = &apos;IMNA Account Data Management Plan&apos;, &apos;IMNA Account Data Management Plan&apos;,
+IF
+( 
+RecordType.Name = &apos;IMNA Account Territory Plan&apos;, &apos;IMNA Account Territory Plan&apos;,
+&apos;Error&apos; 
+)
+)
+)
+)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Conga Text Converter</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

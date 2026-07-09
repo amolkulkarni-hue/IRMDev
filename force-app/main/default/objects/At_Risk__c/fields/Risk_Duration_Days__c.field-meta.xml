@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Risk_Duration_Days__c</fullName>
+    <description>The number of days the At Risk Assessment has been at a Risk Stage 1 - 4.</description>
+    <externalId>false</externalId>
+    <formula>IF(ISPICKVAL( Risk_Stage__c, &apos;1. At Risk&apos;),TODAY() -  At_Risk_Entered_Date__c,
+IF(ISPICKVAL( Risk_Stage__c, &apos;2. Notification Confirmed&apos;), TODAY() -  At_Risk_Entered_Date__c, 
+IF(ISPICKVAL( Risk_Stage__c, &apos;3. Solution Developed&apos;), TODAY() -  At_Risk_Entered_Date__c, 
+IF(ISPICKVAL( Risk_Stage__c, &apos;4. Negotiate&apos;),  TODAY() -  At_Risk_Entered_Date__c,
+IF(ISPICKVAL( Risk_Stage__c, &apos;5. Retained (closed)&apos;), Risk_Stage_5_Entered_Date__c - At_Risk_Entered_Date__c, 
+IF(ISPICKVAL( Risk_Stage__c, &apos;6. Terminated (closed)&apos;), Risk_Stage_6_Entered_Date__c - At_Risk_Entered_Date__c,  
+NULL ))))))</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <inlineHelpText>The number of days the At Risk Assessment has been at a Risk Stage 1 - 4.</inlineHelpText>
+    <label>Risk Duration (Days)</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>0</scale>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

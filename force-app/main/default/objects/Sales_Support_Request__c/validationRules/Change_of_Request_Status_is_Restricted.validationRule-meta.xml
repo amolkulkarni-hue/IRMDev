@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Change_of_Request_Status_is_Restricted</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND (ISCHANGED(Request_Status__c),AND($Profile.Name &lt;&gt; &apos;IM_Sales_Support&apos;,$Profile.Name &lt;&gt; &quot;IM_Custom Sys Admin&quot; , $Profile.Name &lt;&gt; &quot;System Administrator&quot;),
+(RecordType.Name = &apos;Global Commercial Contracts Support&apos;))</errorConditionFormula>
+    <errorMessage>Change of Request Status is Restricted only to IM Sales Support Users</errorMessage>
+</ValidationRule>

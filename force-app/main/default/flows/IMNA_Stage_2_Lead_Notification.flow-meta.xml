@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <description>Stage is now changed to 2 - Marketing Qual</description>
+        <name>Stage_is_now_changed_to_2_Marketing_Qual</name>
+        <label>Stage is now changed to 2 - Marketing Qual</label>
+        <locationX>176</locationX>
+        <locationY>323</locationY>
+        <actionName>chatterPost</actionName>
+        <actionType>chatterPost</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>text</name>
+            <value>
+                <stringValue>@[{!$Record.OwnerId}] This Lead has been changed to Stage 2-Marketing Qual.  Please follow up immediately.</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>subjectNameOrId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>chatterPost</nameSegment>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
+    <apiVersion>58.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <description>Migrated from the IMNA Stage 2 Lead Notification process.
+Sends a chatter post @ the lead owner when the Lead stage changes from Stage 0 or 1 to Stage 2.</description>
+    <environments>Default</environments>
+    <interviewLabel>IMNA Stage 2 Lead Notification {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>IMNA Stage 2 Lead Notification</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Stage_is_now_changed_to_2_Marketing_Qual</targetReference>
+        </connector>
+        <filterFormula>AND(NOT(BEGINS({!$Record.OwnerId}, &quot;00G&quot;)),ISPICKVAL({!$Record.IM_Lead_Stage__c}, &quot;2-Marketing Qual&quot;),OR( ISPICKVAL(PRIORVALUE({!$Record.IM_Lead_Stage__c}),&quot;0-Suspect&quot;), ISPICKVAL(PRIORVALUE({!$Record.IM_Lead_Stage__c}),&quot;1-Inquiry&quot;)),NOT(AND(LEFT(PRIORVALUE({!$Record.OwnerId}) , 3) = &quot;00G&quot;,BEGINS(PRIORVALUE({!$Record.Owner:Queue.Name}),&quot;SS_&quot;) )) )</filterFormula>
+        <object>Lead</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

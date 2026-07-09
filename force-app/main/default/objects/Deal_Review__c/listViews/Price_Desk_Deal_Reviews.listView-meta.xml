@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Price_Desk_Deal_Reviews</fullName>
+    <booleanFilter>(1 AND 2 AND 3) OR (3 AND (4 OR 5) AND 6)</booleanFilter>
+    <columns>NAME</columns>
+    <columns>Sales_Region__c</columns>
+    <columns>Deal_Level__c</columns>
+    <columns>Primary_Product_Line__c</columns>
+    <columns>Deal_Type__c</columns>
+    <columns>ACV_Annual_Contract_Value__c</columns>
+    <columns>Opportunity__c</columns>
+    <columns>CREATED_DATE</columns>
+    <columns>Account_Segment_Formula__c</columns>
+    <columns>Schedule_A__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Red_Flag__c</field>
+        <operation>equals</operation>
+        <value>1</value>
+    </filters>
+    <filters>
+        <field>Price_Desk_Approved_Date__c</field>
+        <operation>equals</operation>
+    </filters>
+    <filters>
+        <field>Status__c</field>
+        <operation>equals</operation>
+        <value>Pending</value>
+    </filters>
+    <filters>
+        <field>L1_Approver__c</field>
+        <operation>equals</operation>
+        <value>Price Desk</value>
+    </filters>
+    <filters>
+        <field>L1_Approver_Backup__c</field>
+        <operation>equals</operation>
+        <value>Price Desk</value>
+    </filters>
+    <filters>
+        <field>L1_Approved_Date__c</field>
+        <operation>equals</operation>
+    </filters>
+    <label>Price Desk Deal Reviews</label>
+    <sharedTo>
+        <group>Price_Desk_Approval</group>
+    </sharedTo>
+</ListView>

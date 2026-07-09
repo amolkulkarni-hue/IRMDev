@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Healthcare_Account_Storing_Rec_Required</fullName>
+    <active>true</active>
+    <description>Requires the picklist field for Healthcare Account Storing Records under certain conditions:
+Primary Service Line: RM
+Second Service Line: RM
+Deal Type: [NOT EQUAL TO] Upsell</description>
+    <errorConditionFormula>AND(
+LEFT($Profile.Name,3) &lt;&gt; &quot;IME&quot;, 
+OR(
+ISPICKVAL(NCSP_Service_Line__c,&apos;RM&apos;),
+ISPICKVAL(Second_Service_Line__c,&apos;RM&apos;)),
+ISBLANK(TEXT(HealthcareAccountStoringPatientRecords__c)),
+NOT(ISPICKVAL( Deal_Type__c , &quot;Upsell&quot;)),
+(ISCHANGED(NCSP_Service_Line__c) || ISCHANGED(Second_Service_Line__c) || ISCHANGED(Deal_Type__c) || ISCHANGED(HealthcareAccountStoringPatientRecords__c))
+)</errorConditionFormula>
+    <errorDisplayField>HealthcareAccountStoringPatientRecords__c</errorDisplayField>
+    <errorMessage>Please identify if this RM Deal is for a Healthcare Account Storing Patient Records.</errorMessage>
+</ValidationRule>

@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>62.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <name>Assign_Null_Value_Email_Signature_Field</name>
+        <label>Assign Null Value Email Signature Field</label>
+        <locationX>50</locationX>
+        <locationY>395</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Email_Signature_Support_Survey__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Case_Email_Batch</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Gitlab #29064  if Case Description is Start With &quot;Agent is offline&quot; and Case Owner Equal to Automated Process (00580000001ylFjAAI) then Case Owner field updated to NAS Quebec Queue (00G2H000003wZS9UAM) and Owner Name field Update to Automated Process (00580000001ylFjAAI).</description>
+        <name>Case_owner_to_NASQuebec</name>
+        <label>Case owner to NASQuebec</label>
+        <locationX>50</locationX>
+        <locationY>995</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.OwnerId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>00G2H000003wZS9UAM</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Owner_Name__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>00580000001ylFjAAI</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <description>Gitlab #29064  if Case Status is Equal to Reopened and Email Archived Equal to True  then Email Archived field updated to False.</description>
+        <name>Uncheck_Email_Archived_Flag</name>
+        <label>Uncheck Email Archived Flag</label>
+        <locationX>50</locationX>
+        <locationY>695</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Emails_Archived__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_case_owner_to_NAS_Quebec</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <description>Gitlab #29064  if Case Status is Equal to Reopened and Email Archived Equal to True  then Email Archived field updated to False.</description>
+        <name>Case_Email_Batch</name>
+        <label>Case Email Batch</label>
+        <locationX>182</locationX>
+        <locationY>587</locationY>
+        <defaultConnector>
+            <targetReference>Update_case_owner_to_NAS_Quebec</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Case_is_reopened</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Reopened</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Emails_Archived__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Uncheck_Email_Archived_Flag</targetReference>
+            </connector>
+            <label>Case is reopened</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Added this decision as part of Gitlab - #29396. So, when case is closed this will empty the rich text email signature merge field on case.</description>
+        <name>Check_if_Case_is_Closed_or_Resolved</name>
+        <label>Check if Case is Closed or Resolved</label>
+        <locationX>182</locationX>
+        <locationY>287</locationY>
+        <defaultConnector>
+            <targetReference>Case_Email_Batch</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes</name>
+            <conditionLogic>(1 OR 2 OR 3 OR 4 OR 5 OR 6 OR 7 OR 8 OR 9 OR 10 OR 12) AND 11</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Closed</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Resolved</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Cancelled</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Complete</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Duplicate</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Inactive</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Non Conversion</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Recall Acct Sent to Closure</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Sent to AM</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Customer Unresponsive</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Email_Signature_Support_Survey__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.ContactId</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_Null_Value_Email_Signature_Field</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Gitlab #29064  if Case Description is Start With &quot;Agent is offline&quot; and Case Owner Equal to Automated Process (00580000001ylFjAAI) then Case Owner field updated to NAS Quebec Queue (00G2H000003wZS9UAM) and Owner Name field Update to Automated Process (00580000001ylFjAAI).</description>
+        <name>Update_case_owner_to_NAS_Quebec</name>
+        <label>Update case owner to NAS Quebec</label>
+        <locationX>182</locationX>
+        <locationY>887</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Agent_is_offline</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Description</leftValueReference>
+                <operator>StartsWith</operator>
+                <rightValue>
+                    <stringValue>Agent is offline</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.OwnerId</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>00580000001ylFjAAI</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Case_owner_to_NASQuebec</targetReference>
+            </connector>
+            <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+            <label>Agent is offline</label>
+        </rules>
+    </decisions>
+    <description>Gitlab #29064 this flow have been created as part of process builder conversion but this can be used for all before create &amp; update case scenarios.
+Process Builder Converted to flow are Case Email Batch &amp; Update case owner to NAS Quebec.</description>
+    <environments>Default</environments>
+    <interviewLabel>Case Before Create &amp; Update Flow {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Case Before Create &amp; Update Flow</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>56</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Check_if_Case_is_Closed_or_Resolved</targetReference>
+        </connector>
+        <object>Case</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Active</status>
+    <variables>
+        <description>Single Case Record To Update</description>
+        <name>SingleCaseRecordToUpdate</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Case</objectType>
+    </variables>
+</Flow>

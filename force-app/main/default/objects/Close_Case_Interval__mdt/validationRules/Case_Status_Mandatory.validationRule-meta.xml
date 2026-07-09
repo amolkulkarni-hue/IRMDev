@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Case_Status_Mandatory</fullName>
+    <active>true</active>
+    <description>Case Status field cannot be blank</description>
+    <errorConditionFormula>ISBLANK(CaseStatus__c)</errorConditionFormula>
+    <errorDisplayField>CaseStatus__c</errorDisplayField>
+    <errorMessage>Case Status field cannot be blank</errorMessage>
+</ValidationRule>

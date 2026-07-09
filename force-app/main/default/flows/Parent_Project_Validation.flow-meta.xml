@@ -1,0 +1,758 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>60.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <customErrors>
+        <name>Billing_Type_Error</name>
+        <label>Billing Type Error</label>
+        <locationX>1106</locationX>
+        <locationY>503</locationY>
+        <customErrorMessages>
+            <errorMessage>A stand-alone project must have a Billing Type of &apos;Itemized&apos;</errorMessage>
+            <fieldSelection>pse__Parent_Project__c</fieldSelection>
+            <isFieldError>true</isFieldError>
+        </customErrorMessages>
+    </customErrors>
+    <customErrors>
+        <name>Copy_1_of_Billing_Type_Error</name>
+        <label>Copy 1 of Billing Type Error</label>
+        <locationX>3482</locationX>
+        <locationY>503</locationY>
+        <customErrorMessages>
+            <errorMessage>A stand-alone project must have a Billing Type of &apos;Itemized&apos;</errorMessage>
+            <fieldSelection>pse__Parent_Project__c</fieldSelection>
+            <isFieldError>true</isFieldError>
+        </customErrorMessages>
+    </customErrors>
+    <customErrors>
+        <name>Copy_1_of_Currency_Error</name>
+        <label>Copy 1 of Currency Error</label>
+        <locationX>2954</locationX>
+        <locationY>503</locationY>
+        <customErrorMessages>
+            <errorMessage>A Parent project must have the same Currency as the stand-alone project to be selected as a parent project</errorMessage>
+            <fieldSelection>pse__Parent_Project__c</fieldSelection>
+            <isFieldError>true</isFieldError>
+        </customErrorMessages>
+    </customErrors>
+    <customErrors>
+        <name>Copy_1_of_Is_Parent_Error</name>
+        <label>Copy 1 of Is Parent Error</label>
+        <locationX>2690</locationX>
+        <locationY>503</locationY>
+        <customErrorMessages>
+            <errorMessage>A Parent Project must have the &apos;Is Parent Project&apos; checked</errorMessage>
+            <fieldSelection>pse__Parent_Project__c</fieldSelection>
+            <isFieldError>true</isFieldError>
+        </customErrorMessages>
+    </customErrors>
+    <customErrors>
+        <name>Copy_1_of_Opp_Error</name>
+        <label>Copy 1 of Opp Error</label>
+        <locationX>2426</locationX>
+        <locationY>503</locationY>
+        <customErrorMessages>
+            <errorMessage>A Parent project must have the same Opportunity as the stand-alone project to be selected as a parent project</errorMessage>
+            <fieldSelection>pse__Parent_Project__c</fieldSelection>
+            <isFieldError>true</isFieldError>
+        </customErrorMessages>
+    </customErrors>
+    <customErrors>
+        <name>Copy_1_of_Project_Status_Error</name>
+        <label>Copy 1 of Project Status Error</label>
+        <locationX>3218</locationX>
+        <locationY>503</locationY>
+        <customErrorMessages>
+            <errorMessage>A Parent project must have a Status of &apos;Active&apos; or &apos;On Hold&apos; to be selected as a parent project</errorMessage>
+            <fieldSelection>pse__Parent_Project__c</fieldSelection>
+            <isFieldError>true</isFieldError>
+        </customErrorMessages>
+    </customErrors>
+    <customErrors>
+        <name>Copy_1_of_Stage_Error</name>
+        <label>Copy 1 of Stage Error</label>
+        <locationX>3746</locationX>
+        <locationY>503</locationY>
+        <customErrorMessages>
+            <errorMessage>This Parent Project cannot be selected because stage is beyond Internal Review. To add new child to the Parent Project, please click Reset Awaiting Signature button on the Parent Project.</errorMessage>
+            <fieldSelection>pse__Parent_Project__c</fieldSelection>
+            <isFieldError>true</isFieldError>
+        </customErrorMessages>
+    </customErrors>
+    <customErrors>
+        <name>Currency_Error</name>
+        <label>Currency Error</label>
+        <locationX>578</locationX>
+        <locationY>503</locationY>
+        <customErrorMessages>
+            <errorMessage>A Parent project must have the same Currency as the stand-alone project to be selected as a parent project</errorMessage>
+            <fieldSelection>pse__Parent_Project__c</fieldSelection>
+            <isFieldError>true</isFieldError>
+        </customErrorMessages>
+    </customErrors>
+    <customErrors>
+        <name>Is_Parent_Error</name>
+        <label>Is Parent Error</label>
+        <locationX>314</locationX>
+        <locationY>503</locationY>
+        <customErrorMessages>
+            <errorMessage>A Parent Project must have the &apos;Is Parent Project&apos; checked</errorMessage>
+            <fieldSelection>pse__Parent_Project__c</fieldSelection>
+            <isFieldError>true</isFieldError>
+        </customErrorMessages>
+    </customErrors>
+    <customErrors>
+        <name>Opp_Error</name>
+        <label>Opp Error</label>
+        <locationX>50</locationX>
+        <locationY>503</locationY>
+        <customErrorMessages>
+            <errorMessage>A Parent project must have the same Opportunity as the stand-alone project to be selected as a parent project</errorMessage>
+            <fieldSelection>pse__Parent_Project__c</fieldSelection>
+            <isFieldError>true</isFieldError>
+        </customErrorMessages>
+    </customErrors>
+    <customErrors>
+        <name>Project_can_t_be_canceled_when_Billing_events_are_generated</name>
+        <label>Project can&apos;t be canceled when Billing events are generated</label>
+        <locationX>4802</locationX>
+        <locationY>611</locationY>
+        <customErrorMessages>
+            <errorMessage>A project with completed work cannot be cancelled. All Billing Events must be invoiced and completed. At that time the project can then be updated with an Actual End Date and the Stage will then go to Completed.</errorMessage>
+            <fieldSelection>Cancelled_Reason__c</fieldSelection>
+            <isFieldError>true</isFieldError>
+        </customErrorMessages>
+    </customErrors>
+    <customErrors>
+        <name>Project_Status_Error</name>
+        <label>Project Status Error</label>
+        <locationX>842</locationX>
+        <locationY>503</locationY>
+        <customErrorMessages>
+            <errorMessage>A Parent project must have a Status of &apos;Active&apos; or &apos;On Hold&apos; to be selected as a parent project</errorMessage>
+            <fieldSelection>pse__Parent_Project__c</fieldSelection>
+            <isFieldError>true</isFieldError>
+        </customErrorMessages>
+    </customErrors>
+    <customErrors>
+        <name>Stage_Error</name>
+        <label>Stage Error</label>
+        <locationX>1370</locationX>
+        <locationY>503</locationY>
+        <customErrorMessages>
+            <errorMessage>This Parent Project cannot be selected because stage is beyond Internal Review. To add new child to the Parent Project, please click Reset Awaiting Signature button on the Parent Project.</errorMessage>
+            <fieldSelection>pse__Parent_Project__c</fieldSelection>
+            <isFieldError>true</isFieldError>
+        </customErrorMessages>
+    </customErrors>
+    <customErrors>
+        <name>Stage_Error1</name>
+        <label>Stage Error</label>
+        <locationX>1898</locationX>
+        <locationY>503</locationY>
+        <customErrorMessages>
+            <errorMessage>You can&apos;t remove this Parent as the stage is beyond Internal Review, please click Reset Awaiting Signature button on the Parent Project</errorMessage>
+            <fieldSelection>pse__Parent_Project__c</fieldSelection>
+            <isFieldError>true</isFieldError>
+        </customErrorMessages>
+    </customErrors>
+    <customErrors>
+        <name>Sub_Region_Error</name>
+        <label>Sub Region Error</label>
+        <locationX>4274</locationX>
+        <locationY>611</locationY>
+        <customErrorMessages>
+            <errorMessage>Please update the Sub Region on the Child Project where the Billing Country is the United States</errorMessage>
+            <isFieldError>false</isFieldError>
+        </customErrorMessages>
+    </customErrors>
+    <decisions>
+        <name>Billing_Events_Generated</name>
+        <label>Billing Events Generated</label>
+        <locationX>4934</locationX>
+        <locationY>503</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>True</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Billing_Events.Id</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Project_can_t_be_canceled_when_Billing_events_are_generated</targetReference>
+            </connector>
+            <label>True</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_the_stage_to_Remove_Parent</name>
+        <label>Check the stage to Remove Parent</label>
+        <locationX>2030</locationX>
+        <locationY>395</locationY>
+        <defaultConnectorLabel>Before Awaiting Signature</defaultConnectorLabel>
+        <rules>
+            <name>Beyond_Internal_Review</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.pse__Stage__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Intake</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.pse__Stage__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>SOW Creation</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.pse__Stage__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Internal Review</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Stage_Error1</targetReference>
+            </connector>
+            <label>Beyond Internal Review</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Conditions</name>
+        <label>Conditions</label>
+        <locationX>842</locationX>
+        <locationY>395</locationY>
+        <defaultConnectorLabel>Matching</defaultConnectorLabel>
+        <rules>
+            <name>Opp_Not_Matching</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.pse__Opportunity__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>$Record.pse__Parent_Project__r.pse__Opportunity__c</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Opp_Error</targetReference>
+            </connector>
+            <label>Opp Not Matching</label>
+        </rules>
+        <rules>
+            <name>Is_Parent_Project_False</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.pse__Parent_Project__r.Is_Parent_Project__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Is_Parent_Error</targetReference>
+            </connector>
+            <label>Is Parent Project False</label>
+        </rules>
+        <rules>
+            <name>Currency_Not_Matching</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.CurrencyIsoCode</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>$Record.pse__Parent_Project__r.CurrencyIsoCode</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Currency_Error</targetReference>
+            </connector>
+            <label>Currency Not Matching</label>
+        </rules>
+        <rules>
+            <name>Status_Is_Not_Active_or_On_Hold</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.pse__Parent_Project__r.pse__Project_Status__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Active</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.pse__Parent_Project__r.pse__Project_Status__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>On Hold</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Project_Status_Error</targetReference>
+            </connector>
+            <label>Status Is Not Active or On Hold</label>
+        </rules>
+        <rules>
+            <name>Billing_Type_Is_Not_Itemized</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.pse__Billing_Type__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>$Record.pse__Parent_Project__r.pse__Billing_Type__c</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Billing_Type_Error</targetReference>
+            </connector>
+            <label>Billing Type Is Not Itemized</label>
+        </rules>
+        <rules>
+            <name>Stage_Check</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.pse__Parent_Project__r.pse__Stage__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Intake</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.pse__Parent_Project__r.pse__Stage__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>SOW Creation</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.pse__Parent_Project__r.pse__Stage__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Internal Review</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Stage_Error</targetReference>
+            </connector>
+            <label>Stage Check</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Copy_1_of_Conditions</name>
+        <label>Copy 1 of Conditions</label>
+        <locationX>3218</locationX>
+        <locationY>395</locationY>
+        <defaultConnectorLabel>Matching</defaultConnectorLabel>
+        <rules>
+            <name>Copy_1_of_Opp_Not_Matching</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.pse__Opportunity__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>$Record.pse__Parent_Project__r.pse__Opportunity__c</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Copy_1_of_Opp_Error</targetReference>
+            </connector>
+            <label>Copy 1 of Opp Not Matching</label>
+        </rules>
+        <rules>
+            <name>Copy_1_of_Is_Parent_Project_False</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.pse__Parent_Project__r.Is_Parent_Project__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Copy_1_of_Is_Parent_Error</targetReference>
+            </connector>
+            <label>Copy 1 of Is Parent Project False</label>
+        </rules>
+        <rules>
+            <name>Copy_1_of_Currency_Not_Matching</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.CurrencyIsoCode</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>$Record.pse__Parent_Project__r.CurrencyIsoCode</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Copy_1_of_Currency_Error</targetReference>
+            </connector>
+            <label>Copy 1 of Currency Not Matching</label>
+        </rules>
+        <rules>
+            <name>Copy_1_of_Status_Is_Not_Active_or_On_Hold</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.pse__Parent_Project__r.pse__Project_Status__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Active</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.pse__Parent_Project__r.pse__Project_Status__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>On Hold</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Copy_1_of_Project_Status_Error</targetReference>
+            </connector>
+            <label>Copy 1 of Status Is Not Active or On Hold</label>
+        </rules>
+        <rules>
+            <name>Copy_1_of_Billing_Type_Is_Not_Itemized</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.pse__Billing_Type__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>$Record.pse__Parent_Project__r.pse__Billing_Type__c</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Copy_1_of_Billing_Type_Error</targetReference>
+            </connector>
+            <label>Copy 1 of Billing Type Is Not Itemized</label>
+        </rules>
+        <rules>
+            <name>Stage_Check_Beyond</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.pse__Parent_Project__r.pse__Stage__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Intake</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.pse__Parent_Project__r.pse__Stage__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>SOW Creation</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.pse__Parent_Project__r.pse__Stage__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Internal Review</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Copy_1_of_Stage_Error</targetReference>
+            </connector>
+            <label>Stage Check Beyond</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Parent_Project_Is_Updated</name>
+        <label>Parent Project Is Updated To</label>
+        <locationX>3086</locationX>
+        <locationY>287</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Null_To_Value</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record__Prior.pse__Parent_Project__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.pse__Parent_Project__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.pse__Parent_Project__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Conditions</targetReference>
+            </connector>
+            <label>Null To Value</label>
+        </rules>
+        <rules>
+            <name>Value_to_Null</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.pse__Parent_Project__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record__Prior.pse__Parent_Project__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.pse__Parent_Project__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Check_the_stage_to_Remove_Parent</targetReference>
+            </connector>
+            <label>Value to Null</label>
+        </rules>
+        <rules>
+            <name>Value_to_Value</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record__Prior.pse__Parent_Project__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.pse__Parent_Project__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.pse__Parent_Project__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Copy_1_of_Conditions</targetReference>
+            </connector>
+            <label>Value to Value</label>
+        </rules>
+        <rules>
+            <name>Parent_Project_Sub_Region</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Is_Parent_Project__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.IRM_Approved__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.IRM_Approved__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Childs_with_No_Sub_Region</targetReference>
+            </connector>
+            <label>Parent Project Sub Region</label>
+        </rules>
+        <rules>
+            <name>Project_cant_be_canceled_wen_in_progress</name>
+            <conditionLogic>(1 OR 5 OR 6) AND 2 AND 3 AND 4</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.pse__Stage__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>In Progress</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Is_Parent_Project__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Cancelled_Reason__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Cancelled_Reason__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.pse__Stage__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Billing Audit</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.pse__Stage__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Awaiting Invoice</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Billing_Events</targetReference>
+            </connector>
+            <label>Project cant be canceled wen in progress</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Sub_Region_is_Blank_On_Child</name>
+        <label>Sub Region is Blank On Child</label>
+        <locationX>4406</locationX>
+        <locationY>503</locationY>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Yes</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Childs_with_No_Sub_Region</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Sub_Region_Error</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <environments>Default</environments>
+    <interviewLabel>Parent Project Validation {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Parent Project Validation</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <name>Childs_with_No_Sub_Region</name>
+        <label>Childs with No Sub Region</label>
+        <locationX>4406</locationX>
+        <locationY>395</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Sub_Region_is_Blank_On_Child</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>pse__Parent_Project__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Billing_Country__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>United States</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Sub_Region__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>pse__Project_Status__c</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>Cancelled</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>pse__Proj__c</object>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>Billing_Country__c</queriedFields>
+        <sortField>Id</sortField>
+        <sortOrder>Asc</sortOrder>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_Billing_Events</name>
+        <label>Get Billing Events</label>
+        <locationX>4934</locationX>
+        <locationY>395</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Billing_Events_Generated</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>pse__Project__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>pse__Billing_Event__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <start>
+        <locationX>2960</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Parent_Project_Is_Updated</targetReference>
+        </connector>
+        <object>pse__Proj__c</object>
+        <recordTriggerType>Update</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

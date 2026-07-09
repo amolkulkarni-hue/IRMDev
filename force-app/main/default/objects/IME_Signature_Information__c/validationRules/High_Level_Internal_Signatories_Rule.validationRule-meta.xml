@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>High_Level_Internal_Signatories_Rule</fullName>
+    <active>true</active>
+    <errorConditionFormula>IF(OR(ISPICKVAL(IME_Contract__r.Contract_Type__c,&quot;IM Non Standard&quot;), ISPICKVAL(IME_Contract__r.Contract_Type__c,&quot;Customer&quot;)),  NOT(TEXT(IME_Internal_Signatories__c) ==&quot;High Level Signatory&quot;),false)</errorConditionFormula>
+    <errorDisplayField>IME_Internal_Signatories__c</errorDisplayField>
+    <errorMessage>For ’IM Non-Standard’ or ’Customer’ contracts Internal Signatories need to be ’High Level Signatory’.</errorMessage>
+</ValidationRule>

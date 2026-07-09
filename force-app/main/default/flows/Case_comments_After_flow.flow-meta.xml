@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <description>Post to Chatter when Case Comment is added by portal User</description>
+        <name>Post_to_Chatter_that_Case_Comment_is_added</name>
+        <label>Post to Chatter that Case Comment is added</label>
+        <locationX>50</locationX>
+        <locationY>647</locationY>
+        <actionName>chatterPost</actionName>
+        <actionType>chatterPost</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>text</name>
+            <value>
+                <stringValue>@[{!$Record.Parent.OwnerId}] A new case comment has been added by a portal user.</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>subjectNameOrId</name>
+            <value>
+                <elementReference>$Record.Parent.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>chatterPost</nameSegment>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
+    <actionCalls>
+        <description>Post to Chatter when Case Comment is added by external User</description>
+        <name>Post_to_Chatter_that_Case_Comment_is_added_to_Queue</name>
+        <label>Post to Chatter that Case Comment is added</label>
+        <locationX>314</locationX>
+        <locationY>647</locationY>
+        <actionName>chatterPost</actionName>
+        <actionType>chatterPost</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>text</name>
+            <value>
+                <stringValue> A new case comment has been added by a portal user.</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>subjectNameOrId</name>
+            <value>
+                <elementReference>$Record.Parent.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>chatterPost</nameSegment>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
+    <apiVersion>59.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <decisions>
+        <description>1- Check if the portal user has added the case comment and the case owner is user.
+2- Check if the portal user has added the case comment and the case owner is Queue.</description>
+        <name>Check_Case_Owner_is_User_or_Queue</name>
+        <label>Check Case Owner is User or Queue</label>
+        <locationX>314</locationX>
+        <locationY>539</locationY>
+        <defaultConnectorLabel>Default</defaultConnectorLabel>
+        <rules>
+            <name>isUser</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>get_User_Details</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>get_User_Details.Profile.Name</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Customer Community Plus Login Customer</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.CreatedById</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>get_User_Details.Id</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Parent.OwnerId</leftValueReference>
+                <operator>StartsWith</operator>
+                <rightValue>
+                    <stringValue>005</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Post_to_Chatter_that_Case_Comment_is_added</targetReference>
+            </connector>
+            <label>1- isUser</label>
+        </rules>
+        <rules>
+            <name>isQueue</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>get_User_Details</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>get_User_Details.Profile.Name</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Customer Community Plus Login Customer</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.CreatedById</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>get_User_Details.Id</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Parent.OwnerId</leftValueReference>
+                <operator>StartsWith</operator>
+                <rightValue>
+                    <stringValue>00G</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Post_to_Chatter_that_Case_Comment_is_added_to_Queue</targetReference>
+            </connector>
+            <label>2- isQueue</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>check if the case contact is available then only it should post the chatter</description>
+        <name>CheckContactAvailable</name>
+        <label>CheckContactAvailable</label>
+        <locationX>578</locationX>
+        <locationY>323</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>contactAvailable</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Parent.Contact.Id</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>get_User_Details</targetReference>
+            </connector>
+            <label>contactAvailable</label>
+        </rules>
+    </decisions>
+    <description>Authenticated Community Enable Agents To Receive Notifications From Customer Updates -19899</description>
+    <environments>Default</environments>
+    <interviewLabel>Case comments After flow {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Case comments After flow</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <description>Fetch the case contact info from user object</description>
+        <name>get_User_Details</name>
+        <label>get  portal User Details</label>
+        <locationX>314</locationX>
+        <locationY>431</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Check_Case_Owner_is_User_or_Queue</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Email</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Parent.Contact.Email</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>IsPortalEnabled</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>User</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <start>
+        <locationX>452</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>CheckContactAvailable</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>ParentId</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <object>CaseComment</object>
+        <recordTriggerType>Create</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <processMetadataValues>
+            <name>textJson</name>
+            <value>
+                <stringValue>{&quot;mentions&quot;:[],&quot;message&quot;:&quot;Attention  @[{![Lead].OwnerId}] and @[0F934000000D0NM] :  {![Lead].FirstName} {![Lead].LastName} is an existing lead that recently showed interest in Data Center services. Please work together to identify ideal follow-up next steps.&quot;}</stringValue>
+            </value>
+        </processMetadataValues>
+        <name>myRule_1_A1</name>
+        <label>Data Center Sales</label>
+        <locationX>100</locationX>
+        <locationY>200</locationY>
+        <actionName>chatterPost</actionName>
+        <actionType>chatterPost</actionType>
+        <inputParameters>
+            <name>text</name>
+            <value>
+                <stringValue>Attention  @[{!myVariable_current.OwnerId}] and @[0F934000000D0NM] :  {!myVariable_current.FirstName} {!myVariable_current.LastName} is an existing lead that recently showed interest in Data Center services. Please work together to identify ideal follow-up next steps.</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>type</name>
+        </inputParameters>
+        <inputParameters>
+            <name>subjectNameOrId</name>
+            <value>
+                <elementReference>myVariable_current.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>chatterPost</nameSegment>
+    </actionCalls>
+    <apiVersion>49.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <name>myVariable_waitStartTimeAssignment</name>
+        <label>myVariable_waitStartTimeAssignment</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>myVariable_waitStartTimeVariable</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Flow.CurrentDateTime</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>myDecision</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <processMetadataValues>
+            <name>index</name>
+            <value>
+                <numberValue>0.0</numberValue>
+            </value>
+        </processMetadataValues>
+        <name>myDecision</name>
+        <label>myDecision</label>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>default</defaultConnectorLabel>
+        <rules>
+            <name>myRule_1</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>formula_myRule_1</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>myRule_1_A1</targetReference>
+            </connector>
+            <label>Interested: Data Center</label>
+        </rules>
+    </decisions>
+    <description>Chatter notification sent to the Lead Owner and to a Data Center Sales consisting of the product group managers when an existing Lead is modified.</description>
+    <formulas>
+        <processMetadataValues>
+            <name>originalFormula</name>
+            <value>
+                <stringValue>(
+(([Lead].Interest_Data_Centers__c = True) &amp;&amp;  ISCHANGED([Lead].Interest_Data_Centers__c) || ISPICKVAL([Lead].Product_Interest__c, &apos;Data Centers&apos;) &amp;&amp; ISCHANGED([Lead].Product_Interest__c )  || (([Lead].Interest_Data_Centers__c = True) &amp;&amp; ISPICKVAL([Lead].Product_Interest__c, &apos;Data Centers&apos;))) 
+&amp;&amp; (Datevalue([Lead].CreatedDate ) &lt;&gt;  Datevalue(NOW()) ) 
+&amp;&amp;  NOT(ISNULL([Lead].OwnerId)) 
+&amp;&amp;  BEGINS([Lead].OwnerId, &apos;005&apos;)
+&amp;&amp;  ISCHANGED([Lead].Interest_Data_Centers__c) 
+)</stringValue>
+            </value>
+        </processMetadataValues>
+        <name>formula_myRule_1</name>
+        <dataType>Boolean</dataType>
+        <expression>(
+(({!myVariable_current.Interest_Data_Centers__c} = True) &amp;&amp;  ISCHANGED({!myVariable_current.Interest_Data_Centers__c}) || ISPICKVAL({!myVariable_current.Product_Interest__c}, &apos;Data Centers&apos;) &amp;&amp; ISCHANGED({!myVariable_current.Product_Interest__c} )  || (({!myVariable_current.Interest_Data_Centers__c} = True) &amp;&amp; ISPICKVAL({!myVariable_current.Product_Interest__c}, &apos;Data Centers&apos;))) 
+&amp;&amp; (Datevalue({!myVariable_current.CreatedDate} ) &lt;&gt;  Datevalue(NOW()) ) 
+&amp;&amp;  NOT(ISNULL({!myVariable_current.OwnerId})) 
+&amp;&amp;  BEGINS({!myVariable_current.OwnerId}, &apos;005&apos;)
+&amp;&amp;  ISCHANGED({!myVariable_current.Interest_Data_Centers__c}) 
+)</expression>
+    </formulas>
+    <interviewLabel>Data_Center_Lead_Notification2-3_InterviewLabel</interviewLabel>
+    <label>Data Center Lead Notification</label>
+    <processMetadataValues>
+        <name>ObjectType</name>
+        <value>
+            <stringValue>Lead</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>ObjectVariable</name>
+        <value>
+            <elementReference>myVariable_current</elementReference>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OldObjectVariable</name>
+        <value>
+            <elementReference>myVariable_old</elementReference>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>TriggerType</name>
+        <value>
+            <stringValue>onAllChanges</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>Workflow</processType>
+    <startElementReference>myVariable_waitStartTimeAssignment</startElementReference>
+    <status>Obsolete</status>
+    <variables>
+        <name>myVariable_current</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+        <objectType>Lead</objectType>
+    </variables>
+    <variables>
+        <name>myVariable_old</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Lead</objectType>
+    </variables>
+    <variables>
+        <name>myVariable_waitStartTimeVariable</name>
+        <dataType>DateTime</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <elementReference>$Flow.CurrentDateTime</elementReference>
+        </value>
+    </variables>
+</Flow>

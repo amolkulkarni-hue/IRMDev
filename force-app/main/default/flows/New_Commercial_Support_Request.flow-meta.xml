@@ -1,0 +1,751 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>New_record_created_GCCS_Support</name>
+        <label>New record created (GCCS Support )</label>
+        <locationX>50</locationX>
+        <locationY>755</locationY>
+        <actionName>Sales_Support_Request__c.New_record_created_GCCS_support</actionName>
+        <actionType>emailAlert</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>Sales_Support_Request__c.New_record_created_GCCS_support</nameSegment>
+        <offset>0</offset>
+    </actionCalls>
+    <actionCalls>
+        <description>Sales_Support_Request__c.New_record_created_sales_support</description>
+        <name>Opportunity_Support_Queue_Notification</name>
+        <label>Opportunity Support Queue Notification</label>
+        <locationX>578</locationX>
+        <locationY>755</locationY>
+        <actionName>Sales_Support_Request__c.New_record_created_sales_support</actionName>
+        <actionType>emailAlert</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>Sales_Support_Request__c.New_record_created_sales_support</nameSegment>
+    </actionCalls>
+    <actionCalls>
+        <description>Sales_Support_Request__c.New_record_created_sales_support</description>
+        <name>Proposal_Request_Notification</name>
+        <label>Proposal Request Notification</label>
+        <locationX>1106</locationX>
+        <locationY>755</locationY>
+        <actionName>Sales_Support_Request__c.New_record_created_sales_support</actionName>
+        <actionType>emailAlert</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>Sales_Support_Request__c.New_record_created_sales_support</nameSegment>
+        <offset>0</offset>
+    </actionCalls>
+    <actionCalls>
+        <description>Sales_Support_Request__c.Proposal_Services_Queue_Notification</description>
+        <name>Proposal_Services_Queue_Notification</name>
+        <label>Proposal Services Queue Notification</label>
+        <locationX>842</locationX>
+        <locationY>755</locationY>
+        <actionName>Sales_Support_Request__c.Proposal_Services_Queue_Notification</actionName>
+        <actionType>emailAlert</actionType>
+        <connector>
+            <targetReference>Sales_Support_Request_Record_Type_Developer_Name</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>Sales_Support_Request__c.Proposal_Services_Queue_Notification</nameSegment>
+    </actionCalls>
+    <apiVersion>58.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <name>Store_Booking_Status</name>
+        <label>Store Booking Status</label>
+        <locationX>2250</locationX>
+        <locationY>647</locationY>
+        <assignmentItems>
+            <assignToReference>varBookingStatus</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Booking_Verification__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Loop_Through_Each_Commercial_Support_Req</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <name>Check_Booking_Verification_Status</name>
+        <label>Check Booking Verification Status</label>
+        <locationX>2074</locationX>
+        <locationY>431</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>If_Booking_Verification_is_Approved</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>BookingVerficationValueCheck</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Booking_Verification__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Pass</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Opportunity_Booking_Verification_Value_to_Pass</targetReference>
+            </connector>
+            <label>If Booking Verification is Approved</label>
+        </rules>
+        <rules>
+            <name>If_Booking_Verification_Is_Rejected</name>
+            <conditionLogic>1 AND (2 OR 3 OR 4)</conditionLogic>
+            <conditions>
+                <leftValueReference>BookingVerficationValueCheck</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Booking_Verification__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Reject</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Booking_Verification__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Booking_Verification__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Hold-Pending Correction</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Support_Requests</targetReference>
+            </connector>
+            <label>If Booking Verification Is Rejected or Hold-Pending Correction</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_If_Any_Passed_Booking</name>
+        <label>Check If Any Passed Booking Verification Is There</label>
+        <locationX>2470</locationX>
+        <locationY>863</locationY>
+        <defaultConnector>
+            <targetReference>Loop_Through_Each_Commercial_Support_Req</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>If_there_is_an_Approved_Record</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Loop_Through_Each_Commercial_Support_Req.Booking_Verification__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Pass</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Copy_1_of_Update_Opportunity_Booking_Verification_Value_to_Pass</targetReference>
+            </connector>
+            <label>If there is an Approved Record</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Determine_if_Record_is_New_or_Modified</name>
+        <label>Determine if Record is New or Modified</label>
+        <locationX>1392</locationX>
+        <locationY>323</locationY>
+        <defaultConnector>
+            <targetReference>Check_Booking_Verification_Status</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>If_the_Record_Is_New</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>isNew</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Select_the_Record_Type</targetReference>
+            </connector>
+            <label>If the Record Is New</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Decides which Record Type request is being created on</description>
+        <name>Select_the_Record_Type</name>
+        <label>Select the Record Type</label>
+        <locationX>710</locationX>
+        <locationY>431</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Global_Commercial_Contracts_Support</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.RecordType.Name</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Global Commercial Contracts Support</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Global_Commercial_Contract_Support_Queue</targetReference>
+            </connector>
+            <label>Global Commercial Contracts Support</label>
+        </rules>
+        <rules>
+            <name>Opportunity_support_with_deal_validation</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.RecordType.Name</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Opportunity Support</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Request_Type__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Deal Validation</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Deal_Validation_NA_queue_details</targetReference>
+            </connector>
+            <label>Opportunity support with deal validation</label>
+        </rules>
+        <rules>
+            <name>Opportunity_Support</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.RecordType.Name</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Opportunity Support</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Opportunity_Support_Queue</targetReference>
+            </connector>
+            <label>Opportunity Support</label>
+        </rules>
+        <rules>
+            <name>Proposal_Management</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.RecordType.Name</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Proposal Management</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Proposal_Services_Queue</targetReference>
+            </connector>
+            <label>Proposal Management</label>
+        </rules>
+        <rules>
+            <name>Proposal_Request</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.RecordType.Name</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Proposal Request</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Opportunity_Support_Queue_1</targetReference>
+            </connector>
+            <label>Proposal Request</label>
+        </rules>
+    </decisions>
+    <description>Runs whenever a new Record is created on any of the four Record types on Commercial Support Request
+Field Update: Assigns New Global Commercial Contract Support Requests to Global Commercial Contract Support Queue
+                      Assigns New Opportunity Support Requests to Opportunity Support Queue
+                      Assigns New Proposal Management Requests to Proposal Service Queue
+                      Assigns New Proposal Requests to Opportunity Support Queue
+Email Alert: New Record Created
+                   GCCS Queue Notification (Only for Global commercial Support Requests)
+Merged with the Create commercial request Flow
+(Please refer to the gitlab user story #18103 for more details)
+
+#20818 Whenever Commercial Support Request is created with Record type as Opportunity Support and Request type as Deal validation Update the owner as Deal Validation (NA) Queue
+#35820 : Commercial Support Request: Email triggers for new and assigned GCCS requests
+#36191: Commercial Support Request: Email triggers for new and assigned GCCS requests - PLNI0016782 (REMOVED EMAIL ALERT GCCS QUEUE NOTIFICATION)</description>
+    <environments>Default</environments>
+    <formulas>
+        <description>To Check if Booking Verification Field Value Has Changed.</description>
+        <name>BookingVerficationValueCheck</name>
+        <dataType>Boolean</dataType>
+        <expression>ISCHANGED({!$Record.Booking_Verification__c})</expression>
+    </formulas>
+    <formulas>
+        <name>isNew</name>
+        <dataType>Boolean</dataType>
+        <expression>ISNEW()</expression>
+    </formulas>
+    <formulas>
+        <name>OpportunityId</name>
+        <dataType>String</dataType>
+        <expression>{!$Record.Related_Opportunity__r.Id}</expression>
+    </formulas>
+    <interviewLabel>New Commercial Support Request {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>New Commercial Support Request</label>
+    <loops>
+        <name>Loop_Through_Each_Commercial_Support_Req</name>
+        <label>Loop Through Each Commercial Support Req</label>
+        <locationX>2250</locationX>
+        <locationY>755</locationY>
+        <collectionReference>Get_Support_Requests</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>Check_If_Any_Passed_Booking</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>Update_Opportunity_Booking_Verification_Value_to_Reject</targetReference>
+        </noMoreValuesConnector>
+    </loops>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordCreates>
+        <description>Merged from &apos;Create commercial request&apos; flow
+Creates a new Commercial Support Request in Opportunity support queue</description>
+        <name>New_Sales_Request</name>
+        <label>New Sales Request</label>
+        <locationX>842</locationX>
+        <locationY>971</locationY>
+        <inputAssignments>
+            <field>Description__c</field>
+            <value>
+                <elementReference>$Record.Description__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Name</field>
+            <value>
+                <elementReference>$Record.Name</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>RecordTypeId</field>
+            <value>
+                <elementReference>Sales_Support_Request_Record_Type_Developer_Name.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Related_Opportunity__c</field>
+            <value>
+                <elementReference>$Record.Related_Opportunity__r.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Sales_Support_Status__c</field>
+            <value>
+                <stringValue>New</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Task_Type__c</field>
+            <value>
+                <stringValue>RFQ/RFP/Tender</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Sales_Support_Request__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
+    <recordLookups>
+        <description>Fetch the details of Deal Validation(NA) queue</description>
+        <name>Get_Deal_Validation_NA_queue_details</name>
+        <label>Get Deal Validation(NA) queue details</label>
+        <locationX>314</locationX>
+        <locationY>539</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Update_owner_to_Deal_Validation_NA_queue</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Deal_Validation_NA</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Type</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Queue</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Group</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <description>Fetches the Queue Global Commercial Contract Support</description>
+        <name>Get_Global_Commercial_Contract_Support_Queue</name>
+        <label>Get Global Commercial Contract Support Queue</label>
+        <locationX>50</locationX>
+        <locationY>539</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Update_Owner_to_Get_Global_Commercial_Contract_Support_Queue</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Type</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Queue</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Global_Commercial_Contract_Support_Queue</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Group</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <description>Fetches the Queue Opportunity Support</description>
+        <name>Get_Opportunity_Support_Queue</name>
+        <label>Get Opportunity Support Queue</label>
+        <locationX>578</locationX>
+        <locationY>539</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Update_Owner_to_Opportunity_Support_Queue</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Type</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Queue</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Opportunity_Support_Queue</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Group</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <description>Fetches the Queue Opportunity Support</description>
+        <name>Get_Opportunity_Support_Queue_1</name>
+        <label>Get Opportunity Support Queue</label>
+        <locationX>1106</locationX>
+        <locationY>539</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Update_Owner_to_Opportunity_Support_Queue_1</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Type</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Queue</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Opportunity_Support_Queue</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Group</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <description>Fetches the Queue Proposal Service</description>
+        <name>Get_Proposal_Services_Queue</name>
+        <label>Get Proposal Services Queue</label>
+        <locationX>842</locationX>
+        <locationY>539</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Update_Owner_to_Proposal_Services_Queue</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Type</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Queue</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Proposal_Services_Queue</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Group</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_Support_Requests</name>
+        <label>Get Support Requests</label>
+        <locationX>2250</locationX>
+        <locationY>539</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Store_Booking_Status</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Related_Opportunity__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>OpportunityId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>Sales_Support_Request__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <description>Get the Record type ID of Opportunity Support</description>
+        <name>Sales_Support_Request_Record_Type_Developer_Name</name>
+        <label>Sales Support Request Record Type Developer Name</label>
+        <locationX>842</locationX>
+        <locationY>863</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>New_Sales_Request</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Sales_Support_Request</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>RecordType</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordUpdates>
+        <name>Copy_1_of_Update_Opportunity_Booking_Verification_Value_to_Pass</name>
+        <label>Copy 1 of Update Opportunity Booking Verification Value to Pass</label>
+        <locationX>2338</locationX>
+        <locationY>971</locationY>
+        <inputAssignments>
+            <field>Deal_Validation__c</field>
+            <value>
+                <stringValue>Pass</stringValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record.Related_Opportunity__r</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Update_Opportunity_Booking_Verification_Value_to_Pass</name>
+        <label>Update Opportunity Booking Verification Value to Pass</label>
+        <locationX>1634</locationX>
+        <locationY>539</locationY>
+        <inputAssignments>
+            <field>Deal_Validation__c</field>
+            <value>
+                <stringValue>Pass</stringValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record.Related_Opportunity__r</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Update_Opportunity_Booking_Verification_Value_to_Reject</name>
+        <label>Update Opportunity Booking Verification Value to Reject</label>
+        <locationX>2250</locationX>
+        <locationY>1355</locationY>
+        <inputAssignments>
+            <field>Deal_Validation__c</field>
+            <value>
+                <elementReference>varBookingStatus</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record.Related_Opportunity__r</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <description>Update Commercial Support request owner to Deal Validation(NA) queue when record type is Opportunity Support and Request Type as Deal Validation</description>
+        <name>Update_owner_to_Deal_Validation_NA_queue</name>
+        <label>Update owner to Deal Validation(NA) queue</label>
+        <locationX>314</locationX>
+        <locationY>647</locationY>
+        <inputAssignments>
+            <field>OwnerId</field>
+            <value>
+                <elementReference>Get_Deal_Validation_NA_queue_details.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <description>Assigns new sales support request to Global Commercial Support Queue</description>
+        <name>Update_Owner_to_Get_Global_Commercial_Contract_Support_Queue</name>
+        <label>Update Owner to Get Global Commercial Contract Support Queue</label>
+        <locationX>50</locationX>
+        <locationY>647</locationY>
+        <connector>
+            <targetReference>New_record_created_GCCS_Support</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>OwnerId</field>
+            <value>
+                <elementReference>Get_Global_Commercial_Contract_Support_Queue.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <description>Assigns new sales support request to Opportunity Support Queue</description>
+        <name>Update_Owner_to_Opportunity_Support_Queue</name>
+        <label>Update Owner to Opportunity Support Queue</label>
+        <locationX>578</locationX>
+        <locationY>647</locationY>
+        <connector>
+            <targetReference>Opportunity_Support_Queue_Notification</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>OwnerId</field>
+            <value>
+                <elementReference>Get_Opportunity_Support_Queue.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <description>Assigns new sales support request to Opportunity Support Queue</description>
+        <name>Update_Owner_to_Opportunity_Support_Queue_1</name>
+        <label>Update Owner to Opportunity Support Queue</label>
+        <locationX>1106</locationX>
+        <locationY>647</locationY>
+        <connector>
+            <targetReference>Proposal_Request_Notification</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>OwnerId</field>
+            <value>
+                <elementReference>Get_Opportunity_Support_Queue_1.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <description>Assigns new sales support request to Proposal Services Queue</description>
+        <name>Update_Owner_to_Proposal_Services_Queue</name>
+        <label>Update Owner to  Proposal Services Queue</label>
+        <locationX>842</locationX>
+        <locationY>647</locationY>
+        <connector>
+            <targetReference>Proposal_Services_Queue_Notification</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>OwnerId</field>
+            <value>
+                <elementReference>Get_Proposal_Services_Queue.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>1266</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Determine_if_Record_is_New_or_Modified</targetReference>
+        </connector>
+        <filterLogic>or</filterLogic>
+        <filters>
+            <field>RecordTypeId</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Booking_Verification__c</field>
+            <operator>IsChanged</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <object>Sales_Support_Request__c</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+    <variables>
+        <name>varBookingStatus</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>

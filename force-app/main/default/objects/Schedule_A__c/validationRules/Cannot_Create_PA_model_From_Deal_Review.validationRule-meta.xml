@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Cannot_Create_PA_model_From_Deal_Review</fullName>
+    <active>true</active>
+    <description>Users are not able to create Pa model when Reference field is blank</description>
+    <errorConditionFormula>ISBLANK(Reference__c)</errorConditionFormula>
+    <errorMessage>You are not allowed to create a PA model here. Please use the standard PA model upload process.</errorMessage>
+</ValidationRule>

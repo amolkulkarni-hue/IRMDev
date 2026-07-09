@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>QTB_Restrict_Duplicate_Records</fullName>
+    <active>true</active>
+    <description>#QTB-30- Its is used to check creation duplicate records for particular product and account</description>
+    <errorConditionFormula>AND(NOT($Setup.Metadata_Activation_Settings__c.Disable_VR__c &amp;&amp;
+OR(
+ISBLANK($Setup.Metadata_Activation_Settings__c.SObject_API_Name__c),
+CONTAINS($Setup.Metadata_Activation_Settings__c.SObject_API_Name__c, &apos;QTB_Product_Billing_Discount__c&apos;)
+)),QTB_Overlapping_Dates__c = True)</errorConditionFormula>
+    <errorMessage>Active Duplicate Data  Available</errorMessage>
+</ValidationRule>

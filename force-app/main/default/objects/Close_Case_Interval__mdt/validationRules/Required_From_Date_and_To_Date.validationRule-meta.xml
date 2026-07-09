@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Required_From_Date_and_To_Date</fullName>
+    <active>true</active>
+    <description>If check box is true then from date and to date are required</description>
+    <errorConditionFormula>BetweenDates__c  = true   &amp;&amp;  (ISBLANK( FromDate__c )  ||   ISBLANK(  ToDate__c  ))</errorConditionFormula>
+    <errorMessage>If BetweenDates is checked then From Date and To Date cannot be blank</errorMessage>
+</ValidationRule>

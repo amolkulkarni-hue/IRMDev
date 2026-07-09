@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>62.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <name>Case_Owner_to_NCSP_FIFO</name>
+        <label>Case Owner to NCSP FIFO</label>
+        <locationX>50</locationX>
+        <locationY>503</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.OwnerId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_id_of_NCSP_FIFO_First_in_First_out.Id</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <decisions>
+        <name>Check_id_of_NCSP_FIFO_First_in_First_out</name>
+        <label>Check Record of NCSP FIFO (First in First out) exist</label>
+        <locationX>182</locationX>
+        <locationY>395</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Check_Record_id_Exit</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_id_of_NCSP_FIFO_First_in_First_out</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Case_Owner_to_NCSP_FIFO</targetReference>
+            </connector>
+            <label>Check Record Exist</label>
+        </rules>
+    </decisions>
+    <description>Converted from workflow &apos;O2I Tech Services Case to NCSP&apos;
+
+All Tech Services Cases should go to NCSP directly if they are not part of IMGS Approval. (Those will get routed to IMGS first through separate workflow,) Update: Adding Department Adds to this workflow.</description>
+    <environments>Default</environments>
+    <interviewLabel>O2I Tech Services Case to NCSP {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>O2I Tech Services Case to NCSP</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <name>Get_id_of_NCSP_FIFO_First_in_First_out</name>
+        <label>Get id of NCSP FIFO (First in First out)</label>
+        <locationX>182</locationX>
+        <locationY>287</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Check_id_of_NCSP_FIFO_First_in_First_out</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Type</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Queue</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>NCSP_FIFO_First_in_First_out</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Group</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <start>
+        <locationX>56</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Get_id_of_NCSP_FIFO_First_in_First_out</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>RecordType_Name__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>NCSP: Tech Services New Customer Setup</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>IMGS_Opportunity_Approval_Status__c</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>IMGS Pricing Approved</stringValue>
+            </value>
+        </filters>
+        <object>Case</object>
+        <recordTriggerType>Create</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Duplicate_Source__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>Marks the source record that created the duplicate Deal Review</description>
+    <inlineHelpText>Marks the source record that created the duplicate Deal Review</inlineHelpText>
+    <label>Previously Approved Deal Review</label>
+    <lookupFilter>
+        <active>true</active>
+        <booleanFilter>((5 AND 6) OR 1) AND 2 AND 3 AND 4 AND 7</booleanFilter>
+        <filterItems>
+            <field>Deal_Review__c.Account__c</field>
+            <operation>equals</operation>
+            <valueField>$Source.Account__c</valueField>
+        </filterItems>
+        <filterItems>
+            <field>Deal_Review__c.Status__c</field>
+            <operation>equals</operation>
+            <value>Approved</value>
+        </filterItems>
+        <filterItems>
+            <field>Deal_Review__c.Schedule_A__c</field>
+            <operation>notEqual</operation>
+            <value></value>
+        </filterItems>
+        <filterItems>
+            <field>Deal_Review__c.Duplicate__c</field>
+            <operation>notEqual</operation>
+            <value>True</value>
+        </filterItems>
+        <filterItems>
+            <field>Deal_Review__c.IMGA_Account__c</field>
+            <operation>notEqual</operation>
+            <value></value>
+        </filterItems>
+        <filterItems>
+            <field>Deal_Review__c.IMGA_Account__c</field>
+            <operation>equals</operation>
+            <valueField>$Source.IMGA_Account__c</valueField>
+        </filterItems>
+        <filterItems>
+            <field>Deal_Review__c.Deal_Review_Expired__c</field>
+            <operation>notEqual</operation>
+            <value>True</value>
+        </filterItems>
+        <isOptional>false</isOptional>
+    </lookupFilter>
+    <referenceTo>Deal_Review__c</referenceTo>
+    <relationshipLabel>Deal Review Sources</relationshipLabel>
+    <relationshipName>Deal_Reviews_Source</relationshipName>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

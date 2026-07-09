@@ -1,0 +1,610 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>59.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <name>Check_and_assign_approved_DR</name>
+        <label>Check and assign approved DR</label>
+        <locationX>1238</locationX>
+        <locationY>719</locationY>
+        <assignmentItems>
+            <assignToReference>ApprovedFlag</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>ApprovedDRRecord</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>DR_loop</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>DR_loop</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Count_DR_records</name>
+        <label>Count DR records</label>
+        <locationX>1150</locationX>
+        <locationY>395</locationY>
+        <assignmentItems>
+            <assignToReference>DealReviewsCount</assignToReference>
+            <operator>AssignCount</operator>
+            <value>
+                <elementReference>DRcollection</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>DR_loop</targetReference>
+        </connector>
+    </assignments>
+    <customErrors>
+        <name>Deal_Review_Error</name>
+        <label>Deal Review Error</label>
+        <locationX>1634</locationX>
+        <locationY>1403</locationY>
+        <customErrorMessages>
+            <errorMessage>{!$Label.Deal_Review_Opty_Stage5_Error}</errorMessage>
+            <isFieldError>false</isFieldError>
+        </customErrorMessages>
+    </customErrors>
+    <customErrors>
+        <name>Stage_4_Error_Message_Display</name>
+        <label>Stage 4 Error Message Display</label>
+        <locationX>666</locationX>
+        <locationY>1403</locationY>
+        <customErrorMessages>
+            <errorMessage>{!$Label.Deal_Review_Opty_Stage4_Error}</errorMessage>
+            <isFieldError>false</isFieldError>
+        </customErrorMessages>
+    </customErrors>
+    <decisions>
+        <name>Check_approved_DR</name>
+        <label>Check approved DR</label>
+        <locationX>1370</locationX>
+        <locationY>611</locationY>
+        <defaultConnector>
+            <targetReference>DR_loop</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>status_approved</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>DR_loop.Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Approved</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>DR_loop.Deal_Review_Expired__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Check_and_assign_approved_DR</targetReference>
+            </connector>
+            <label>status approved</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_For_Region_Wise_Min_ACV</name>
+        <label>Check For Region Wise Min ACV</label>
+        <locationX>666</locationX>
+        <locationY>1103</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Set_1</name>
+            <conditionLogic>1 AND 2</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Billing_Country__r.Region__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>$Label.Deal_Review_MENAT_Region</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>USDAmount</leftValueReference>
+                <operator>GreaterThanOrEqualTo</operator>
+                <rightValue>
+                    <elementReference>Set_1_Min_ACV_Value_from_Custom_Label</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Stage_4_Error_Message_Display</targetReference>
+            </connector>
+            <label>Set 1</label>
+        </rules>
+        <rules>
+            <name>Set_2</name>
+            <conditionLogic>1 AND 2</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Billing_Country__r.Region__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>$Label.Deal_Review_India_Region</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>USDAmount</leftValueReference>
+                <operator>GreaterThanOrEqualTo</operator>
+                <rightValue>
+                    <elementReference>Set_2_Min_ACV_Value_from_Custom_Label</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Stage_4_Error_Message_Display</targetReference>
+            </connector>
+            <label>Set 2</label>
+        </rules>
+        <rules>
+            <name>Set_3</name>
+            <conditionLogic>(1 OR 2) AND 3</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Billing_Country__r.Region__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>$Label.Deal_Review_Asia_Pacific_Region</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Billing_Country__r.Region__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>$Label.Deal_Review_Latin_America_Region</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>USDAmount</leftValueReference>
+                <operator>GreaterThanOrEqualTo</operator>
+                <rightValue>
+                    <elementReference>Set_3_Min_ACV_Value_from_Custom_Label</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Stage_4_Error_Message_Display</targetReference>
+            </connector>
+            <label>Set 3</label>
+        </rules>
+        <rules>
+            <name>Set_4</name>
+            <conditionLogic>(1 OR 2) AND 3</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Billing_Country__r.Region__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>$Label.Deal_Review_North_America_Region</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Billing_Country__r.Region__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>$Label.Deal_Review_Europe_Region</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>USDAmount</leftValueReference>
+                <operator>GreaterThanOrEqualTo</operator>
+                <rightValue>
+                    <elementReference>Set_4_Min_ACV_Value_from_Custom_Label</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Stage_4_Error_Message_Display</targetReference>
+            </connector>
+            <label>Set 4</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Check the Deal review count on opportunity</description>
+        <name>Checking_for_Non_Expired_Approved_DR</name>
+        <label>Checking for Non Expired Approved DR</label>
+        <locationX>1150</locationX>
+        <locationY>995</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>There_exists_Non_Expired_Approved_DR</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>ApprovedDRRecord</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>DealReviewsCount</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <numberValue>1.0</numberValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.StageName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>5 - Signed/PO in</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Opportunity_Record</targetReference>
+            </connector>
+            <label>There exists such a record</label>
+        </rules>
+        <rules>
+            <name>Stage_4_Validation</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>ApprovedFlag</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.StageName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>4 - Negotiate</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Check_For_Region_Wise_Min_ACV</targetReference>
+            </connector>
+            <label>Stage 4 Validation</label>
+        </rules>
+        <rules>
+            <name>For_Stage_5_there_exists_No_DR_or_exists_more_than_1_DR_record_for_Stage_5</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>DealReviewsCount</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <numberValue>1.0</numberValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.StageName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>5 - Signed/PO in</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Deal_Review_Accepted__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Stage_5_Check_For_Region_Wise_Min_ACV</targetReference>
+            </connector>
+            <label>For Stage 5 there exists No DR (or) exists more than 1 DR record for Stage 5</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Stage_5_Check_For_Region_Wise_Min_ACV</name>
+        <label>Check For Region Wise Min ACV</label>
+        <locationX>1634</locationX>
+        <locationY>1103</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Set_1_Stage_5</name>
+            <conditionLogic>1 AND 2</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Billing_Country__r.Region__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>$Label.Deal_Review_MENAT_Region</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>USDAmount</leftValueReference>
+                <operator>GreaterThanOrEqualTo</operator>
+                <rightValue>
+                    <elementReference>Set_1_Min_ACV_Value_from_Custom_Label</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Deal_Review_Error</targetReference>
+            </connector>
+            <label>Set 1</label>
+        </rules>
+        <rules>
+            <name>Set_2_Stage_5</name>
+            <conditionLogic>1 AND 2</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Billing_Country__r.Region__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>$Label.Deal_Review_India_Region</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>USDAmount</leftValueReference>
+                <operator>GreaterThanOrEqualTo</operator>
+                <rightValue>
+                    <elementReference>Set_2_Min_ACV_Value_from_Custom_Label</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Deal_Review_Error</targetReference>
+            </connector>
+            <label>Set 2</label>
+        </rules>
+        <rules>
+            <name>Set_3_Stage_5</name>
+            <conditionLogic>(1 OR 2) AND 3</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Billing_Country__r.Region__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>$Label.Deal_Review_Asia_Pacific_Region</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Billing_Country__r.Region__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>$Label.Deal_Review_Latin_America_Region</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>USDAmount</leftValueReference>
+                <operator>GreaterThanOrEqualTo</operator>
+                <rightValue>
+                    <elementReference>Set_3_Min_ACV_Value_from_Custom_Label</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Deal_Review_Error</targetReference>
+            </connector>
+            <label>Set 3</label>
+        </rules>
+        <rules>
+            <name>Set_4_Stage_5</name>
+            <conditionLogic>(1 OR 2) AND 3</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Billing_Country__r.Region__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>$Label.Deal_Review_North_America_Region</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Billing_Country__r.Region__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>$Label.Deal_Review_Europe_Region</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>USDAmount</leftValueReference>
+                <operator>GreaterThanOrEqualTo</operator>
+                <rightValue>
+                    <elementReference>Set_4_Min_ACV_Value_from_Custom_Label</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Deal_Review_Error</targetReference>
+            </connector>
+            <label>Set 4</label>
+        </rules>
+    </decisions>
+    <description>As part of US#33314 added custom error messages in Custom Labels for Stage 4 and Stage 4 error messages</description>
+    <environments>Default</environments>
+    <formulas>
+        <name>Set_1_Min_ACV_Value_from_Custom_Label</name>
+        <dataType>Number</dataType>
+        <expression>VALUE({!$Label.Deal_Review_Min_ACV_For_Set_1_Regions})</expression>
+        <scale>2</scale>
+    </formulas>
+    <formulas>
+        <name>Set_2_Min_ACV_Value_from_Custom_Label</name>
+        <dataType>Number</dataType>
+        <expression>VALUE({!$Label.Deal_Review_Min_ACV_For_Set_2_Regions})</expression>
+        <scale>2</scale>
+    </formulas>
+    <formulas>
+        <name>Set_3_Min_ACV_Value_from_Custom_Label</name>
+        <dataType>Number</dataType>
+        <expression>VALUE({!$Label.Deal_Review_Min_ACV_For_Set_3_Regions})</expression>
+        <scale>2</scale>
+    </formulas>
+    <formulas>
+        <name>Set_4_Min_ACV_Value_from_Custom_Label</name>
+        <dataType>Number</dataType>
+        <expression>VALUE({!$Label.Deal_Review_Min_ACV_For_Set_4_Regions})</expression>
+        <scale>2</scale>
+    </formulas>
+    <formulas>
+        <name>USDAmount</name>
+        <dataType>Number</dataType>
+        <expression>{!$Record.Amount}/CURRENCYRATE(TEXT({!$Record.CurrencyIsoCode}))</expression>
+        <scale>2</scale>
+    </formulas>
+    <interviewLabel>Deal Review Accepted Update and Error Message Display {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Deal Review Accepted Update and Error Message Display</label>
+    <loops>
+        <name>DR_loop</name>
+        <label>DR loop</label>
+        <locationX>1150</locationX>
+        <locationY>503</locationY>
+        <collectionReference>DRcollection</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>Check_approved_DR</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>Checking_for_Non_Expired_Approved_DR</targetReference>
+        </noMoreValuesConnector>
+    </loops>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <description>Getting all the Deal Review records associated to the opportunity</description>
+        <name>Get_total_Deal_review_Records_of_Opportunity</name>
+        <label>Get total  Deal review Records of Opportunity</label>
+        <locationX>1150</locationX>
+        <locationY>287</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Count_DR_records</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Opportunity__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </filters>
+        <object>Deal_Review__c</object>
+        <outputReference>DRcollection</outputReference>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>Status__c</queriedFields>
+        <queriedFields>CreatedDate</queriedFields>
+        <queriedFields>Deal_Review_Expired__c</queriedFields>
+        <sortField>CreatedDate</sortField>
+        <sortOrder>Desc</sortOrder>
+    </recordLookups>
+    <recordUpdates>
+        <description>Update the Deal Review Accepted field on opportunity</description>
+        <name>Update_Opportunity_Record</name>
+        <label>Update Opportunity Record</label>
+        <locationX>50</locationX>
+        <locationY>1103</locationY>
+        <inputAssignments>
+            <field>Deal_Review_Accepted__c</field>
+            <value>
+                <elementReference>ApprovedDRRecord.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>1024</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Get_total_Deal_review_Records_of_Opportunity</targetReference>
+        </connector>
+        <filterFormula>AND(
+NOT({!$Setup.Metadata_Activation_Settings__c.Disable_VR__c} &amp;&amp; OR(ISBLANK({!$Setup.Metadata_Activation_Settings__c.SObject_API_Name__c}),
+CONTAINS({!$Setup.Metadata_Activation_Settings__c.SObject_API_Name__c}, &apos;Opportunity&apos;))),
+{!$Record.OwnerId} !={!$Label.IMExpress_Opp_Owner},
+OR(
+	ISPICKVAL({!$Record.StageName}, &apos;5 - Signed/PO in&apos;),
+       AND
+       ( 
+         ISPICKVAL({!$Record.StageName}, &apos;4 - Negotiate&apos;),
+         DATEVALUE({!$Record.CreatedDate}) &gt;= DATEVALUE({!$Label.Opty_Createddate_Stage_4_or_5_Validation})
+         )       
+),
+OR
+(
+ISPICKVAL({!$Record.Type}, &apos;Up-Sell/Lift&apos;),
+ISPICKVAL({!$Record.Type}, &apos;New Deal&apos;),
+ISPICKVAL({!$Record.Type}, &apos;Renewal&apos;),
+ISPICKVAL({!$Record.Type}, &apos;Framework&apos;)
+),
+ISBLANK({!$Record.Deal_Review_Accepted__c}),
+OR
+(
+ISPICKVAL({!$Record.Billing_Country__r.Region__c},&apos;North America&apos;),
+AND
+(
+ISPICKVAL({!$Record.Billing_Country__r.Region__c},&apos;Europe&apos;),
+DATEVALUE({!$Record.CreatedDate}) &gt;= DATEVALUE({!$Label.Opp_Created_Date_Europe})
+),
+AND
+(
+NOT(ISPICKVAL({!$Record.Billing_Country__r.Region__c},&apos;North America&apos;)),
+NOT(ISPICKVAL({!$Record.Billing_Country__r.Region__c},&apos;Europe&apos;)),
+DATEVALUE({!$Record.CreatedDate}) &gt;= DATEVALUE({!$Label.Opportunity_Created_Date})
+)
+),
+CONTAINS({!$Record.RecordType.DeveloperName},&quot;Standard_Opportunity&quot;)
+)</filterFormula>
+        <object>Opportunity</object>
+        <recordTriggerType>Update</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Active</status>
+    <variables>
+        <name>ApprovedDRRecord</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Deal_Review__c</objectType>
+    </variables>
+    <variables>
+        <name>ApprovedFlag</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </variables>
+    <variables>
+        <name>currentItem_Filter_and_Get_the_Approved_Deal_Record_ID_0</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Deal_Review__c</objectType>
+    </variables>
+    <variables>
+        <name>DealId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>DealReviewsCount</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <scale>0</scale>
+        <value>
+            <numberValue>0.0</numberValue>
+        </value>
+    </variables>
+    <variables>
+        <name>DRcollection</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Deal_Review__c</objectType>
+    </variables>
+</Flow>

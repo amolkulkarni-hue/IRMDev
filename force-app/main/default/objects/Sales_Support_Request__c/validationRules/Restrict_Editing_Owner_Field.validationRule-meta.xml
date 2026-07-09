@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Restrict_Editing_Owner_Field</fullName>
+    <active>false</active>
+    <description>If Users does not belong to profile IM_Proposal_Services , restrict them from editing the owner field of record type Proposal_Management_Request</description>
+    <errorConditionFormula>AND(
+$RecordType.DeveloperName = &quot;Proposal_Management_Request&quot;, ISCHANGED( OwnerId ), 
+ AND($Profile.Name  &lt;&gt; &quot;IM_Proposal_Services&quot; ,$Profile.Name  &lt;&gt; &quot;IM_Custom Sys Admin&quot; , $Profile.Name  &lt;&gt; &quot;System Administrator&quot; 
+))</errorConditionFormula>
+    <errorDisplayField>OwnerId</errorDisplayField>
+    <errorMessage>You do not have the permission to change the owner of this Record.</errorMessage>
+</ValidationRule>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Exception_Rate_Mandatory</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(ISBLANK(Exception_Rate__c),NOT( ISNEW() ))</errorConditionFormula>
+    <errorDisplayField>Exception_Rate__c</errorDisplayField>
+    <errorMessage>Complete this field</errorMessage>
+</ValidationRule>

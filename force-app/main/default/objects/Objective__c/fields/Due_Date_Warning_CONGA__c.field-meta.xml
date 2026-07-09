@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Due_Date_Warning_CONGA__c</fullName>
+    <externalId>false</externalId>
+    <formula>IF( 
+ISPICKVAL( Status__c , &quot;Completed&quot;) = False &amp;&amp; Due_Date__c &lt; TODAY(), &quot;http://free-121d5f44d20-121d603d1c5-121ee2b8103.force.com/img/msg_icons/error24.png&quot;, 
+IF( 
+ISPICKVAL( Status__c , &quot;Completed&quot;) = False &amp;&amp; Due_Date__c -TODAY() &lt;=14, &quot;http://free-121d5f44d20-121d603d1c5-121ee2b8103.force.com/img/msg_icons/warning24.png&quot;, &quot;&quot; ) 
+
+)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Due Date Warning (CONGA)</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <description>Calls Update_Type_on_Country_Parent_and_IMGA flow to update TYpe on IMGA Accounts</description>
+        <name>Update_Type_on_IMGA</name>
+        <label>Update Type on IMGA</label>
+        <locationX>176</locationX>
+        <locationY>252</locationY>
+        <actionName>IMGA_Type_Update</actionName>
+        <actionType>batchJobAction</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <nameSegment>IMGA_Type_Update</nameSegment>
+        <offset>0</offset>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
+    <apiVersion>62.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <description>#26453: This scheduled Flow calls the Batch Job which further calls Update_Type_on_Country_Parent_and_IMGA flow
+Note: This flow is made to run only once in order to Update the Type on existing records</description>
+    <environments>Default</environments>
+    <interviewLabel>Update Type of Country Parent and IMGA Scheduler {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Update Type of Country Parent and IMGA Scheduler</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Update_Type_on_IMGA</targetReference>
+        </connector>
+        <schedule>
+            <frequency>Once</frequency>
+            <startDate>2025-01-13</startDate>
+            <startTime>04:00:00.000Z</startTime>
+        </schedule>
+        <triggerType>Scheduled</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

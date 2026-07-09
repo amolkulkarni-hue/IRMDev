@@ -1,0 +1,428 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>62.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <description>Marks imga Account Type to Active</description>
+        <name>Type_is_Active</name>
+        <label>Type is Active</label>
+        <locationX>50</locationX>
+        <locationY>1187</locationY>
+        <assignmentItems>
+            <assignToReference>Get_IMGA_Account_Details.Type</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Active</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_Type_of_IMGA_Account</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Marks IMGA Account Type to Inactive</description>
+        <name>Type_is_Inactive</name>
+        <label>Type is Inactive</label>
+        <locationX>578</locationX>
+        <locationY>1187</locationY>
+        <assignmentItems>
+            <assignToReference>Get_IMGA_Account_Details.Type</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Inactive</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_Type_of_IMGA_Account</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Update Type to Prospect</description>
+        <name>Type_is_Prospect</name>
+        <label>Type is Prospect</label>
+        <locationX>314</locationX>
+        <locationY>1187</locationY>
+        <assignmentItems>
+            <assignToReference>Get_IMGA_Account_Details.Type</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Prospect</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_Type_of_IMGA_Account</targetReference>
+        </connector>
+    </assignments>
+    <collectionProcessors>
+        <description>Filter Active Country Parent Accounts under the IMGA Account</description>
+        <name>FIlter_Active_Country_Parent_Accounts</name>
+        <elementSubtype>FilterCollectionProcessor</elementSubtype>
+        <label>FIlter Active Country Parent Accounts</label>
+        <locationX>446</locationX>
+        <locationY>755</locationY>
+        <assignNextValueToReference>currentItem_FIlter_Active_Country_Parent_Accounts</assignNextValueToReference>
+        <collectionProcessorType>FilterCollectionProcessor</collectionProcessorType>
+        <collectionReference>Get_Country_Parent_Accounts</collectionReference>
+        <conditionLogic>and</conditionLogic>
+        <conditions>
+            <leftValueReference>currentItem_FIlter_Active_Country_Parent_Accounts.Type</leftValueReference>
+            <operator>EqualTo</operator>
+            <rightValue>
+                <stringValue>Active</stringValue>
+            </rightValue>
+        </conditions>
+        <connector>
+            <targetReference>Filter_Prospect_Country_Parent_Accounts</targetReference>
+        </connector>
+    </collectionProcessors>
+    <collectionProcessors>
+        <name>Filter_Inactive_Country_Parent_Account</name>
+        <elementSubtype>FilterCollectionProcessor</elementSubtype>
+        <label>Filter Inactive Country Parent Account</label>
+        <locationX>446</locationX>
+        <locationY>971</locationY>
+        <assignNextValueToReference>currentItem_Filter_Inactive_Country_Parent_Account</assignNextValueToReference>
+        <collectionProcessorType>FilterCollectionProcessor</collectionProcessorType>
+        <collectionReference>Get_Country_Parent_Accounts</collectionReference>
+        <conditionLogic>and</conditionLogic>
+        <conditions>
+            <leftValueReference>currentItem_Filter_Inactive_Country_Parent_Account.Type</leftValueReference>
+            <operator>EqualTo</operator>
+            <rightValue>
+                <stringValue>Inactive</stringValue>
+            </rightValue>
+        </conditions>
+        <connector>
+            <targetReference>Are_there_any_Active_Accounts</targetReference>
+        </connector>
+    </collectionProcessors>
+    <collectionProcessors>
+        <description>Filter all Prospect Country Parent Accounts under the IMGA</description>
+        <name>Filter_Prospect_Country_Parent_Accounts</name>
+        <elementSubtype>FilterCollectionProcessor</elementSubtype>
+        <label>Filter Prospect Country Parent Accounts</label>
+        <locationX>446</locationX>
+        <locationY>863</locationY>
+        <assignNextValueToReference>currentItem_Filter_Prospect_Country_Parent_Accounts</assignNextValueToReference>
+        <collectionProcessorType>FilterCollectionProcessor</collectionProcessorType>
+        <collectionReference>Get_Country_Parent_Accounts</collectionReference>
+        <conditionLogic>and</conditionLogic>
+        <conditions>
+            <leftValueReference>currentItem_Filter_Prospect_Country_Parent_Accounts.Type</leftValueReference>
+            <operator>EqualTo</operator>
+            <rightValue>
+                <stringValue>Prospect</stringValue>
+            </rightValue>
+        </conditions>
+        <connector>
+            <targetReference>Filter_Inactive_Country_Parent_Account</targetReference>
+        </connector>
+    </collectionProcessors>
+    <decisions>
+        <description>If there is at least 1 Active  Country Parent, IMGA Account&apos;s Type is updated to Active else
+If there is any Prospect Country Parent, IMGA Account&apos;s Type is updated to Prospect else
+Update Type to Inactive</description>
+        <name>Are_there_any_Active_Accounts</name>
+        <label>Are there any Active Accounts?</label>
+        <locationX>446</locationX>
+        <locationY>1079</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Active</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>FIlter_Active_Country_Parent_Accounts</leftValueReference>
+                <operator>IsEmpty</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_IMGA_Account_Details.Type</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Active</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Type_is_Active</targetReference>
+            </connector>
+            <label>Yes_Active</label>
+        </rules>
+        <rules>
+            <name>All_Prospect</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Filter_Prospect_Country_Parent_Accounts</leftValueReference>
+                <operator>IsEmpty</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_IMGA_Account_Details.Type</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Prospect</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>FIlter_Active_Country_Parent_Accounts</leftValueReference>
+                <operator>IsEmpty</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Filter_Inactive_Country_Parent_Account</leftValueReference>
+                <operator>IsEmpty</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Type_is_Prospect</targetReference>
+            </connector>
+            <label>All Prospect</label>
+        </rules>
+        <rules>
+            <name>No_Active_and_Prospect_Child_Accounts</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>FIlter_Active_Country_Parent_Accounts</leftValueReference>
+                <operator>IsEmpty</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_IMGA_Account_Details.Type</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Inactive</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Filter_Inactive_Country_Parent_Account</leftValueReference>
+                <operator>IsEmpty</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Type_is_Inactive</targetReference>
+            </connector>
+            <label>No Active and Prospect Child Accounts</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Checks if there are child Accounts under the IMGA Account or not.
+If yes runs path Yes else runs Default Outcome</description>
+        <name>Are_there_any_Child_Accounts_under_IMGA</name>
+        <label>Are there any Child Accounts under IMGA?</label>
+        <locationX>776</locationX>
+        <locationY>647</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Country_Parent_Accounts</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>FIlter_Active_Country_Parent_Accounts</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Checks the Type of IMGA Account. If its Sanctioned/Partner flow ends</description>
+        <name>Is_IMGA_Account_Sanctioned_Partner</name>
+        <label>Is IMGA Account Sanctioned/Partner?</label>
+        <locationX>1073</locationX>
+        <locationY>431</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Not_Sanctioned_Partner</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_IMGA_Account_Details.Type</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Sanctioned (Do Not Contact)</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_IMGA_Account_Details.Type</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Partner</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_IMGA_Account_Details</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Country_Parent_Accounts</targetReference>
+            </connector>
+            <label>Not Sanctioned/Partner</label>
+        </rules>
+    </decisions>
+    <description>#Gitlab Story: 26453
+This flow Updates Type on IMGA Account
+If there is at least one Active Country Parent then IMGA Type is marked as Active,  else
+If there is at least one Prospect Country Parent , then IMGA Type is marked as Prospect else
+IMGA Account Type is marked as Inactive.
+Note: Flow is excluded to run for Sanctioned and Partner IMGA Accounts
+
+Gitlab Story #36371
+Updated logic to populate type on Country parent and IMGA Account.</description>
+    <environments>Default</environments>
+    <interviewLabel>Populate Type on IMGA Accounts {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Populate Type on IMGA Accounts</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <description>Get all the Country Parent Accounts Under the IMGA Account</description>
+        <name>Get_Country_Parent_Accounts</name>
+        <label>Get Country Parent Accounts</label>
+        <locationX>776</locationX>
+        <locationY>539</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Are_there_any_Child_Accounts_under_IMGA</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>IM_Hierarchy_Level__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Country Parent</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>ParentId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.ParentId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>Account</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <description>Fetches the IMGA Account details of the triggered Country Parent Account</description>
+        <name>Get_IMGA_Account_Details</name>
+        <label>Get IMGA Account Details</label>
+        <locationX>1073</locationX>
+        <locationY>323</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Is_IMGA_Account_Sanctioned_Partner</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.ParentId</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>IM_Hierarchy_Level__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>IM Group (IMGA)</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Account</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordUpdates>
+        <description>Update Type on IMGA Account
+- If there are any Active Country Parent Accounts update Type on IMGA to Active else
+- If there are any Prospect Country Parent Accounts update Type of IMGA to Prospect else
+- Update Account Type to Inactive</description>
+        <name>Update_Type_of_IMGA_Account</name>
+        <label>Update Type of IMGA Account</label>
+        <locationX>446</locationX>
+        <locationY>1379</locationY>
+        <inputReference>Get_IMGA_Account_Details</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>947</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Get_IMGA_Account_Details</targetReference>
+        </connector>
+        <filterFormula>AND(
+ISCHANGED({!$Record.Type}),
+ISPICKVAL({!$Record.IM_Hierarchy_Level__c}, &apos;Country Parent&apos;),
+NOT(ISPICKVAL({!$Record.Parent.Type},&apos;Sanctioned (Do Not Contact)&apos;)),
+NOT(ISPICKVAL({!$Record.Parent.Type},&apos;Partner&apos;)),
+NOT(ISBLANK({!$Record.ParentId}))
+)</filterFormula>
+        <object>Account</object>
+        <recordTriggerType>Update</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+    <variables>
+        <name>currentItem_FIlter_Active_Country_Parent_Accounts</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Account</objectType>
+    </variables>
+    <variables>
+        <name>currentItem_Filter_Inactive_Country_Parent_Account</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Account</objectType>
+    </variables>
+    <variables>
+        <name>currentItem_Filter_Prospect_Country_Parent_Accounts</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Account</objectType>
+    </variables>
+    <variables>
+        <name>IMGAAccountID</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>

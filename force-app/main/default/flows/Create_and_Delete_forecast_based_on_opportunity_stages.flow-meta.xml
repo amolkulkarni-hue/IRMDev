@@ -1,0 +1,469 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>54.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <name>Add_to_Collections</name>
+        <label>Add to Collections</label>
+        <locationX>1547</locationX>
+        <locationY>592</locationY>
+        <assignmentItems>
+            <assignToReference>billingForecastRecordsCollection</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>billingForecastRecord</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_Term_Counter</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Create_record_forecast_Variable</name>
+        <label>Create record forecast Variable</label>
+        <locationX>1108</locationX>
+        <locationY>592</locationY>
+        <assignmentItems>
+            <assignToReference>billingForecastRecord.Forecast_Opportunity__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>billingForecastRecord.Sales_Billing_Estimate__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <numberValue>0.0</numberValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>billingForecastRecord.Forecast_Revenue_Date__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Var_ForecastRevnueDate_Formula</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Add_to_Collections</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Update_Term_Counter</name>
+        <label>Update Term Counter</label>
+        <locationX>1547</locationX>
+        <locationY>280</locationY>
+        <assignmentItems>
+            <assignToReference>termCounter</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <numberValue>1.0</numberValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Have_We_Met_Term_Limit</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <description>We check the conditions of stage, login profile, and amount</description>
+        <name>check_conditions_on_stage_profile_and_amount</name>
+        <label>check conditions on stage profile and amount</label>
+        <locationX>576</locationX>
+        <locationY>18</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>stage_profile_and_amount_condition_true</name>
+            <conditionLogic>1 AND 2 AND 3 AND 4</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.StageName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>4 - Negotiate</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>TotalAnnualAmountInUSD</leftValueReference>
+                <operator>GreaterThanOrEqualTo</operator>
+                <rightValue>
+                    <numberValue>25000.0</numberValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Type</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Renewal</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record__Prior.StageName</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>5 - Signed/PO in</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>get_forecast_Records_at_stage_at_5</targetReference>
+            </connector>
+            <label>stage profile and amount condition true</label>
+        </rules>
+        <rules>
+            <name>Stagechange_4</name>
+            <conditionLogic>(1 OR 2 OR 3) AND (4 OR 5)</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.StageName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>3 - Solution Agreed</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.StageName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>2 - Solution Developed</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.StageName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>1 - Qualification</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record__Prior.StageName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>4 - Negotiate</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record__Prior.StageName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>5 - Signed/PO in</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Forecast_Records_at_stage_less_than_5</targetReference>
+            </connector>
+            <label>Stagechange&lt;4</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>check_exist_forecast_Records</name>
+        <label>check exist forecast Records</label>
+        <locationX>575</locationX>
+        <locationY>600</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>forecast_records_exists</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Forecast_Records_at_stage_less_than_5</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Delete_forecast_Records</targetReference>
+            </connector>
+            <label>forecast records exists</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>For each path the flow can take, create an outcome. For each outcome, specify the conditions that must be met for the flow to take that path</description>
+        <name>Has_Existing_Revenue_Forecasting_Records</name>
+        <label>Has Existing Revenue Forecasting Records</label>
+        <locationX>1096</locationX>
+        <locationY>16</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>True</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>get_forecast_Records_at_stage_at_5</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_existing_records</targetReference>
+            </connector>
+            <label>True</label>
+        </rules>
+        <rules>
+            <name>False</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>get_forecast_Records_at_stage_at_5</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Have_We_Met_Term_Limit</targetReference>
+            </connector>
+            <label>False</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Have_We_Met_Term_Limit</name>
+        <label>Have We Met Term Limit</label>
+        <locationX>1097</locationX>
+        <locationY>266</locationY>
+        <defaultConnector>
+            <targetReference>Create_Billing_Forecast_Records</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Term Count EQ Term</defaultConnectorLabel>
+        <rules>
+            <name>Term_Counter_LT_Term</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>termCounter</leftValueReference>
+                <operator>LessThan</operator>
+                <rightValue>
+                    <elementReference>Var_NoOfBillingMonthCounter</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Create_record_forecast_Variable</targetReference>
+            </connector>
+            <label>Term Counter LT Term</label>
+        </rules>
+    </decisions>
+    <description>#14831-CRM Platform | SPIKE Book to Bill: Update B2B to exclude only &quot;Renewal&quot; Deal Types in New Model VRs/Triggers/Automation</description>
+    <environments>Default</environments>
+    <formulas>
+        <name>TotalAnnualAmountInUSD</name>
+        <dataType>Currency</dataType>
+        <expression>{!$Record.Amount}/{!Get_Currency_Conversion_Rate.ConversionRate}</expression>
+        <scale>2</scale>
+    </formulas>
+    <formulas>
+        <name>Var_ForecastRevnueDate_Formula</name>
+        <dataType>Date</dataType>
+        <expression>IF(DAY( {!$Record.IM_Booked_Date__c} ) &lt; 16, 
+        IF( (MONTH({!$Record.IM_Booked_Date__c} ) + {!termCounter}) &gt; 12,
+              DATE( YEAR({!$Record.IM_Booked_Date__c} )  +1 ,((MONTH({!$Record.IM_Booked_Date__c} ) + {!termCounter}) - 12),1),
+              IF((MONTH({!$Record.IM_Booked_Date__c} ) + {!termCounter}) &lt; 12, 
+                      DATE( YEAR({!$Record.IM_Booked_Date__c} ),MONTH({!$Record.IM_Booked_Date__c} ) + {!termCounter},1) , 
+                      DATE( YEAR({!$Record.IM_Booked_Date__c} ),12,1)) ), 
+         IF( ((MONTH({!$Record.IM_Booked_Date__c} ) +1) + {!termCounter}) &gt; 12 , 
+               DATE(YEAR({!$Record.IM_Booked_Date__c} )  +1,((MONTH({!$Record.IM_Booked_Date__c} ) +1) + {!termCounter}) - 12 ,1) , 
+                IF(((MONTH({!$Record.IM_Booked_Date__c} ) +1) + {!termCounter}) &lt; 12,
+					DATE(YEAR({!$Record.IM_Booked_Date__c}),(MONTH({!$Record.IM_Booked_Date__c})+1)+{!termCounter},1),
+					DATE(YEAR({!$Record.IM_Booked_Date__c}),12,1)) )  
+)</expression>
+    </formulas>
+    <formulas>
+        <description>It will store the number of billing month records</description>
+        <name>Var_NoOfBillingMonthCounter</name>
+        <dataType>Number</dataType>
+        <expression>VALUE(TEXT( {!$Record.No_of_Forecast_Billing_Month__c}  ) )</expression>
+        <scale>0</scale>
+    </formulas>
+    <interviewLabel>Create and Delete forecast based on opportunity stages {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Create and Delete forecast based on opportunity stages</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordCreates>
+        <name>Create_Billing_Forecast_Records</name>
+        <label>Create Billing Forecast Records</label>
+        <locationX>1348</locationX>
+        <locationY>14</locationY>
+        <inputReference>billingForecastRecordsCollection</inputReference>
+    </recordCreates>
+    <recordDeletes>
+        <name>Delete_existing_records</name>
+        <label>Delete existing records</label>
+        <locationX>909</locationX>
+        <locationY>443</locationY>
+        <connector>
+            <targetReference>Have_We_Met_Term_Limit</targetReference>
+        </connector>
+        <inputReference>Get_existing_records</inputReference>
+    </recordDeletes>
+    <recordDeletes>
+        <description>delete all the forecast records when opportunity stage is &lt; 5</description>
+        <name>Delete_forecast_Records</name>
+        <label>Delete forecast Records</label>
+        <locationX>949</locationX>
+        <locationY>595</locationY>
+        <inputReference>Get_Forecast_Records_at_stage_less_than_5</inputReference>
+    </recordDeletes>
+    <recordLookups>
+        <name>Get_Currency_Conversion_Rate</name>
+        <label>Get Currency Conversion Rate</label>
+        <locationX>339</locationX>
+        <locationY>16</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>check_conditions_on_stage_profile_and_amount</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>IsoCode</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.CurrencyIsoCode</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>CurrencyType</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_existing_records</name>
+        <label>Get existing records</label>
+        <locationX>906</locationX>
+        <locationY>162</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Delete_existing_records</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Forecast_Opportunity__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>Sales_Revenue_Forecast__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <description>get forecast records associated with opportunity</description>
+        <name>get_forecast_Records_at_stage_at_5</name>
+        <label>get forecast Records at stage at 4</label>
+        <locationX>834</locationX>
+        <locationY>17</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Has_Existing_Revenue_Forecasting_Records</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Forecast_Opportunity__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Sales_Revenue_Forecast__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <description>retrieving the existing forecast records</description>
+        <name>Get_Forecast_Records_at_stage_less_than_5</name>
+        <label>Get Forecast Records at stage less than 4</label>
+        <locationX>585</locationX>
+        <locationY>273</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>check_exist_forecast_Records</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Forecast_Opportunity__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>Sales_Revenue_Forecast__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <start>
+        <locationX>10</locationX>
+        <locationY>32</locationY>
+        <connector>
+            <targetReference>Get_Currency_Conversion_Rate</targetReference>
+        </connector>
+        <filterLogic>or</filterLogic>
+        <filters>
+            <field>StageName</field>
+            <operator>IsChanged</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>No_of_Forecast_Billing_Month__c</field>
+            <operator>IsChanged</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>IM_Booked_Date__c</field>
+            <operator>IsChanged</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <object>Opportunity</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+    <variables>
+        <name>billingForecastRecord</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Sales_Revenue_Forecast__c</objectType>
+    </variables>
+    <variables>
+        <name>billingForecastRecordsCollection</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Sales_Revenue_Forecast__c</objectType>
+    </variables>
+    <variables>
+        <name>recordId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>termCounter</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <scale>2</scale>
+        <value>
+            <numberValue>0.0</numberValue>
+        </value>
+    </variables>
+</Flow>

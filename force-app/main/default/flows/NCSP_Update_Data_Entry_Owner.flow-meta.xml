@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>61.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <decisions>
+        <description>Added OutCome : Data Entry Owner Not Null. Gitlab : #25723</description>
+        <name>Data_Entry_Owner_Check</name>
+        <label>Data Entry Owner Check</label>
+        <locationX>182</locationX>
+        <locationY>287</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Data_Entry_Owner_Not_Null</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Data_Entry_Owner__c</leftValueReference>
+                <operator>EqualTo</operator>
+            </conditions>
+            <connector>
+                <targetReference>Get_Data_Entry_Date_Members_Custom_Setting</targetReference>
+            </connector>
+            <label>Data Entry Owner Not Null</label>
+        </rules>
+    </decisions>
+    <description>If the case owner exists in the &quot;Data Entry Date Member&quot; custom setting, update the &quot;Data Entry Owner&quot; field. Gitlab :#25723</description>
+    <environments>Default</environments>
+    <interviewLabel>NCSP Update Data Entry Owner {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>NCSP Update Data Entry Owner</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <description>Get userId from Data Entry Date Members Custom Setting. Gitlab :#25723</description>
+        <name>Get_Data_Entry_Date_Members_Custom_Setting</name>
+        <label>Get Data Entry Date Members Custom Setting</label>
+        <locationX>50</locationX>
+        <locationY>395</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Update_Data_Entry_Owner</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>UserID__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Owner:User.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Data_Entry_Date_Members__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordUpdates>
+        <description>If the case owner exists in the &quot;Data Entry Date Member&quot; custom setting, update the &quot;Data Entry Owner&quot; field. Gitlab :#25723</description>
+        <name>Update_Data_Entry_Owner</name>
+        <label>Update Data Entry Owner</label>
+        <locationX>50</locationX>
+        <locationY>503</locationY>
+        <inputAssignments>
+            <field>Data_Entry_Owner__c</field>
+            <value>
+                <elementReference>Get_Data_Entry_Date_Members_Custom_Setting.UserID__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>56</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Data_Entry_Owner_Check</targetReference>
+        </connector>
+        <filterFormula>OR({!$Record.RecordType.DeveloperName}=&apos;NCSP_DP_Onboarding_team&apos;,
+{!$Record.RecordType.DeveloperName}=&apos;NCSP_New_Customer_Setup&apos;,
+{!$Record.RecordType.DeveloperName}=&apos;NCSP_Upsell&apos;,
+{!$Record.RecordType.DeveloperName}=&apos;NCSP_SKP_New_customer_setup&apos;,
+{!$Record.RecordType.DeveloperName}=&apos;NCSP_DMS&apos;,
+{!$Record.RecordType.DeveloperName}=&apos;NCSP_Tech_Services_New_Customer_Setup&apos;,
+{!$Record.RecordType.DeveloperName}=&apos;NCSP_SKP_Department_Add_Only&apos;)</filterFormula>
+        <object>Case</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

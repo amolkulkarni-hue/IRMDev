@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>58.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <decisions>
+        <name>myRule_1</name>
+        <label>Current Sequence Name changed</label>
+        <locationX>575</locationX>
+        <locationY>371</locationY>
+        <defaultConnector>
+            <targetReference>myRule_5</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>FALSE_Current Sequence Name changed</defaultConnectorLabel>
+        <rules>
+            <name>TRUE_myRule_1</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Outreach_Current_Sequence_Name__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Outreach_Current_Sequence_Name__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>myRule_1_A1</targetReference>
+            </connector>
+            <label>TRUE_Current Sequence Name changed</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>myRule_5</name>
+        <label>Current Sequence Name is blanked out</label>
+        <locationX>905</locationX>
+        <locationY>479</locationY>
+        <defaultConnectorLabel>FALSE_Current Sequence Name is blanked out</defaultConnectorLabel>
+        <rules>
+            <name>TRUE_myRule_5</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Outreach_Current_Sequence_Name__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Outreach_Current_Sequence_Name__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Outreach_Date_Added_to_Sequence__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>myRule_5_A1</targetReference>
+            </connector>
+            <label>TRUE_Current Sequence Name is blanked out</label>
+        </rules>
+    </decisions>
+    <description>Migrated from the Outreach Fill/Update Date Added to Sequence process using multiple criteria.
+Fills in the &apos;Date Added to Sequence&apos; field when Current Sequence name is changed/filled in</description>
+    <environments>Default</environments>
+    <formulas>
+        <name>formula_2_myRule_1_A1_4404106818</name>
+        <dataType>Date</dataType>
+        <expression>TODAY()</expression>
+    </formulas>
+    <formulas>
+        <name>formula_3_myRule_5_A1_9244150401</name>
+        <dataType>Date</dataType>
+        <expression>null</expression>
+    </formulas>
+    <label>Outreach Fill/Update Date Added to Sequence_1</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <name>myRule_1_A1</name>
+        <label>Update Date Added to Sequence</label>
+        <locationX>245</locationX>
+        <locationY>479</locationY>
+        <inputAssignments>
+            <field>Outreach_Date_Added_to_Sequence__c</field>
+            <value>
+                <elementReference>formula_2_myRule_1_A1_4404106818</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>myRule_5_A1</name>
+        <label>Update Date Added to Sequence to Blank</label>
+        <locationX>773</locationX>
+        <locationY>587</locationY>
+        <inputAssignments>
+            <field>Outreach_Date_Added_to_Sequence__c</field>
+            <value>
+                <elementReference>formula_3_myRule_5_A1_9244150401</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>449</locationX>
+        <locationY>48</locationY>
+        <connector>
+            <targetReference>myRule_1</targetReference>
+        </connector>
+        <object>Contact</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

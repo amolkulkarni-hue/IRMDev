@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IME_Verify_Hierarchy</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(IME_SC_Contact__r.Account.IM_IMGA__c &lt;&gt;  IME_SC_Customer_Account__r.IM_Account__r.IM_IMGA__c,  IME_SC_Contact__r.Account.Country_Parent_Formula__c &lt;&gt;  IME_SC_Customer_Account__r.IM_Account__r.Country_Parent_Formula__c )</errorConditionFormula>
+    <errorMessage>Please select a contact and a Customer Account in the same hierarchy.</errorMessage>
+</ValidationRule>

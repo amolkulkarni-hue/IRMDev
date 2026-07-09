@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <description>Invocable method to update custom setting USAGE_RATING_PROCESS</description>
+        <name>Change_Usage_Rating</name>
+        <label>Change Usage Rating</label>
+        <locationX>502</locationX>
+        <locationY>26</locationY>
+        <actionName>QTB_ChangeUsageRating</actionName>
+        <actionType>apex</actionType>
+        <inputParameters>
+            <name>processType</name>
+            <value>
+                <elementReference>processType</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>QTB_ChangeUsageRating</nameSegment>
+    </actionCalls>
+    <apiVersion>49.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <description>Changes custom setting blng__BillingConfig__c.getInstance(&apos;USAGE_RATING_PROCESS&apos;). Input should be On Trigger or By Process</description>
+    <interviewLabel>QTB_Change_Usage_Rating {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>QTB_Change_Usage_Rating</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>50</locationX>
+        <locationY>50</locationY>
+        <connector>
+            <targetReference>Change_Usage_Rating</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <variables>
+        <description>Process type to rate usage (updates custom setting).  Values are: On Trigger or By Process</description>
+        <name>processType</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <stringValue>By Process</stringValue>
+        </value>
+    </variables>
+</Flow>

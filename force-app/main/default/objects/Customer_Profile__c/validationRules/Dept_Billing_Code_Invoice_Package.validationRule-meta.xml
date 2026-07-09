@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Dept_Billing_Code_Invoice_Package</fullName>
+    <active>true</active>
+    <description>Restrictions for Dept. Billing Codes with certain Invoice Packages.  With Invoice Package 2 or 3 selected, Department Billing Code must be &quot;0-Not Dept Billed&quot;.  If Invoice Package 1 is selected, the Department Billing Code must be &quot;0-Not Dept Billed&quot;.</description>
+    <errorConditionFormula>(ISPICKVAL(Department_Billing_Code__c, &quot;0-Not Dept Billed&quot;) &amp;&amp; (ISPICKVAL(Invoice_Package__c, &quot;Invoice Package 2&quot;) || ISPICKVAL(Invoice_Package__c, &quot;Invoice Package 3&quot;))) || 
+(ISPICKVAL(Invoice_Package__c, &quot;Invoice Package 1&quot;) &amp;&amp; NOT(ISPICKVAL(Department_Billing_Code__c, &quot;0-Not Dept Billed&quot;)) &amp;&amp; NOT(ISPICKVAL(Department_Billing_Code__c, &quot;&quot;)))</errorConditionFormula>
+    <errorDisplayField>Department_Billing_Code__c</errorDisplayField>
+    <errorMessage>The Department Billing Code and Invoice Package selected is not valid. &apos;Invoice Package 1&apos; can only be used with &apos;0-Not Dept Billed&apos; and Invoice Package 2 and 3 cannot be used in conjunction with &apos;0-Not Dept Billed&apos;.</errorMessage>
+</ValidationRule>

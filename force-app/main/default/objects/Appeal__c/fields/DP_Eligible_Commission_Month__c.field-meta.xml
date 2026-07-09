@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>DP_Eligible_Commission_Month__c</fullName>
+    <externalId>false</externalId>
+    <formula>IF( 
+AND( 
+Eligible_Commission_Date__c &gt; DATE(2013, 1, 2) , 
+Eligible_Commission_Date__c &lt;= DATE(2013, 2, 1)) , 
+&quot;January 13&quot;, 
+IF( 
+AND( 
+Eligible_Commission_Date__c &gt; DATE(2013, 2, 1) , 
+Eligible_Commission_Date__c &lt;= DATE(2013, 3, 1) ), 
+&quot;February 13&quot;, 
+IF( 
+AND( 
+Eligible_Commission_Date__c &gt; DATE(2013, 3, 1) , 
+Eligible_Commission_Date__c &lt;= DATE(2013, 4, 1)) , 
+&quot;March 13&quot;, 
+IF( 
+AND( 
+Eligible_Commission_Date__c &gt; DATE(2013, 4, 1) , 
+Eligible_Commission_Date__c &lt;= DATE(2013, 5, 1)) , 
+&quot;April 13&quot;, 
+IF( 
+AND( 
+Eligible_Commission_Date__c &gt; DATE(2013, 5, 1) , 
+Eligible_Commission_Date__c &lt;= DATE(2013, 6, 3) ), 
+&quot;May 13&quot;, 
+IF( 
+AND( 
+Eligible_Commission_Date__c &gt; DATE(2013, 6, 2) , 
+Eligible_Commission_Date__c &lt;= DATE(2013, 7, 1)) , 
+&quot;June 13&quot;, 
+IF( 
+AND( 
+Eligible_Commission_Date__c &gt; DATE(2013, 7, 1) , 
+Eligible_Commission_Date__c &lt;= DATE(2013, 8, 1)) , 
+&quot;July 13&quot;, 
+IF( 
+AND( 
+Eligible_Commission_Date__c &gt; DATE(2013, 8, 1) , 
+Eligible_Commission_Date__c &lt;= DATE(2013, 9, 3)) , 
+&quot;August 13&quot;, 
+IF( 
+AND( 
+Eligible_Commission_Date__c &gt; DATE(2013, 9, 3) , 
+Eligible_Commission_Date__c &lt;= DATE(2013, 10, 1)) , 
+&quot;September 13&quot;, 
+IF( 
+AND( 
+Eligible_Commission_Date__c &gt; DATE(2013, 10, 1) , 
+Eligible_Commission_Date__c &lt;= DATE(2013, 11, 1)) , 
+&quot;October 13&quot;, 
+IF( 
+AND( 
+Eligible_Commission_Date__c &gt; DATE(2013, 11, 1) , 
+Eligible_Commission_Date__c &lt;= DATE(2013, 12, 3)) , 
+&quot;November 13&quot;, 
+IF( 
+AND( 
+Eligible_Commission_Date__c &gt; DATE(2013, 12, 3) , 
+Eligible_Commission_Date__c &lt;= DATE(2014, 1, 1)) , 
+&quot;December 12&quot;, 
+
+&quot;Date not specified&quot; 
+))))))))))))</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>DP Eligible Commission Month</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

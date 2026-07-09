@@ -1,0 +1,344 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <apiVersion>61.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <description>Adding single to collection</description>
+        <name>Assignment_Collection</name>
+        <label>Assignment Collection</label>
+        <locationX>270</locationX>
+        <locationY>458</locationY>
+        <assignmentItems>
+            <assignToReference>OrderCollection</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>OrderSingle</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Loop_Repeater</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Assign caseRecordId, Order Number, Quantity , Order Type and Manual Order Reason from the screen inputs</description>
+        <name>AssignSingleVar</name>
+        <label>AssignSingleVar</label>
+        <locationX>270</locationX>
+        <locationY>350</locationY>
+        <assignmentItems>
+            <assignToReference>OrderSingle.Case__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>OrderSingle.Name</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Loop_Repeater.Order_Number</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>OrderSingle.Order_Type__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Loop_Repeater.Order_Type</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>OrderSingle.Manual_Order_Reason__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Loop_Repeater.Manual_Order_Reason</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>OrderSingle.Quantity__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Loop_Repeater.Quantity</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Assignment_Collection</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <description>To Check Order Details are created or not</description>
+        <name>To_check_order_details</name>
+        <label>To check order details</label>
+        <locationX>182</locationX>
+        <locationY>758</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Orders_created</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>OrderCollection</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>SC_Success_Screen</targetReference>
+            </connector>
+            <label>Orders created</label>
+        </rules>
+    </decisions>
+    <description>To capture the order number, order type, manual order reason and quantity for each order placed for customers
+#24128, This screen flow is placed under the &apos;Order Details&apos; tab of the  Case Record Page and IME_Service_Case_Page (Global orders case).</description>
+    <dynamicChoiceSets>
+        <description>Manual order reason from the Order details</description>
+        <name>ManualOrderReasonChoice</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>Manual_Order_Reason__c</picklistField>
+        <picklistObject>Order_Detail__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>OrderTypeChoice</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>Order_Type__c</picklistField>
+        <picklistObject>Order_Detail__c</picklistObject>
+    </dynamicChoiceSets>
+    <environments>Default</environments>
+    <interviewLabel>Order Details {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Order Details</label>
+    <loops>
+        <description>To Loop the Order details records from the Repeater Component</description>
+        <name>Loop_Repeater</name>
+        <label>Loop Repeater</label>
+        <locationX>182</locationX>
+        <locationY>242</locationY>
+        <collectionReference>OrdersRepeter.AllItems</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>AssignSingleVar</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>Create_Order</targetReference>
+        </noMoreValuesConnector>
+    </loops>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>Flow</processType>
+    <recordCreates>
+        <description>Create Order Details From the Screen Inputs</description>
+        <name>Create_Order</name>
+        <label>Create Order</label>
+        <locationX>182</locationX>
+        <locationY>650</locationY>
+        <connector>
+            <targetReference>To_check_order_details</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>scr_faultScreen</targetReference>
+        </faultConnector>
+        <inputReference>OrderCollection</inputReference>
+    </recordCreates>
+    <screens>
+        <description>Screen to capture the Order Number, Quantity, Order Type and manual Order Reason for the Order Details</description>
+        <name>Orders</name>
+        <label>Orders</label>
+        <locationX>182</locationX>
+        <locationY>134</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Loop_Repeater</targetReference>
+        </connector>
+        <fields>
+            <name>OrdersRepeter</name>
+            <fieldType>Repeater</fieldType>
+            <fields>
+                <name>Order_Number</name>
+                <dataType>String</dataType>
+                <fieldText>Order Number</fieldText>
+                <fieldType>InputField</fieldType>
+                <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+                <isRequired>true</isRequired>
+                <styleProperties>
+                    <verticalAlignment>
+                        <stringValue>top</stringValue>
+                    </verticalAlignment>
+                    <width>
+                        <stringValue>12</stringValue>
+                    </width>
+                </styleProperties>
+            </fields>
+            <fields>
+                <name>Quantity</name>
+                <dataType>Number</dataType>
+                <defaultValue>
+                    <numberValue>1.0</numberValue>
+                </defaultValue>
+                <fieldText>Quantity</fieldText>
+                <fieldType>InputField</fieldType>
+                <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+                <isRequired>true</isRequired>
+                <scale>0</scale>
+                <styleProperties>
+                    <verticalAlignment>
+                        <stringValue>top</stringValue>
+                    </verticalAlignment>
+                    <width>
+                        <stringValue>12</stringValue>
+                    </width>
+                </styleProperties>
+                <validationRule>
+                    <errorMessage>&lt;p&gt;Please enter a quantity that is greater than 0 and does not exceed 999&lt;/p&gt;</errorMessage>
+                    <formulaExpression>AND({!OrdersRepeter.AllItems[$EachItem].Quantity} &gt;0 ,
+LEN(TEXT({!OrdersRepeter.AllItems[$EachItem].Quantity})) &lt;= 3)</formulaExpression>
+                </validationRule>
+            </fields>
+            <fields>
+                <name>Order_Type</name>
+                <choiceReferences>OrderTypeChoice</choiceReferences>
+                <dataType>String</dataType>
+                <fieldText>Order Type</fieldText>
+                <fieldType>DropdownBox</fieldType>
+                <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+                <isRequired>true</isRequired>
+                <styleProperties>
+                    <verticalAlignment>
+                        <stringValue>top</stringValue>
+                    </verticalAlignment>
+                    <width>
+                        <stringValue>12</stringValue>
+                    </width>
+                </styleProperties>
+            </fields>
+            <fields>
+                <name>Manual_Order_Reason</name>
+                <choiceReferences>ManualOrderReasonChoice</choiceReferences>
+                <dataType>String</dataType>
+                <fieldText>Manual Order Reason</fieldText>
+                <fieldType>DropdownBox</fieldType>
+                <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+                <isRequired>true</isRequired>
+                <styleProperties>
+                    <verticalAlignment>
+                        <stringValue>top</stringValue>
+                    </verticalAlignment>
+                    <width>
+                        <stringValue>12</stringValue>
+                    </width>
+                </styleProperties>
+            </fields>
+            <isRequired>false</isRequired>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
+        </fields>
+        <helpText>&lt;p&gt;If you placed multiple order types, use the &quot;Add&quot; option to add them&lt;/p&gt;</helpText>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>SC_Success_Screen</name>
+        <label>Success Screen</label>
+        <locationX>50</locationX>
+        <locationY>866</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>scr_SuccessMsgScreen</name>
+            <fieldText>&lt;p&gt;Order Detail(s) has been created successfully&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <description>To display errors</description>
+        <name>scr_faultScreen</name>
+        <label>Fault Screen</label>
+        <locationX>578</locationX>
+        <locationY>758</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>txt_ErrorMessage</name>
+            <fieldText>&lt;p&gt;{!$Flow.FaultMessage}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <start>
+        <locationX>56</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Orders</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <variables>
+        <name>OrderCollection</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Order_Detail__c</objectType>
+    </variables>
+    <variables>
+        <name>OrderSingle</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Order_Detail__c</objectType>
+    </variables>
+    <variables>
+        <name>recordId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>

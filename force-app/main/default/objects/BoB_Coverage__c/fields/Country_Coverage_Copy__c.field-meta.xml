@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Country_Coverage_Copy__c</fullName>
+    <externalId>false</externalId>
+    <formula>IF ( ISPICKVAL(Country_Coverage__c, &quot;United States&quot;), &quot;United States&quot;, 
+IF ( ISPICKVAL(Country_Coverage__c, &quot;Canada&quot;), &quot;Canada&quot;, 
+IF ( ISPICKVAL(Country_Coverage__c, &quot;North America&quot;), &quot;United States, Canada&quot;, NULL)))</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Country Coverage</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

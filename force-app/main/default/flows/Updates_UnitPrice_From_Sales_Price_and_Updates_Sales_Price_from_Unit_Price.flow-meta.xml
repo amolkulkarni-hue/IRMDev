@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>60.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <decisions>
+        <name>UnitpriceChanges</name>
+        <label>UnitpriceChanges</label>
+        <locationX>502</locationX>
+        <locationY>407</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Unit_Price_and_Salesprice_are_Changed</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.UnitPrice</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Unit_Price__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Sales_price_from_Unit_Price_v2</targetReference>
+            </connector>
+            <label>Unit Price and Salesprice are Changed</label>
+        </rules>
+        <rules>
+            <name>Salesprice_is_Changed_but_not_Unit_Price</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Unit_Price__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.UnitPrice</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Updates_Unit_Price_From_Sales_Price</targetReference>
+            </connector>
+            <label>Salesprice is Changed but not Unit Price</label>
+        </rules>
+        <rules>
+            <name>Unit_Price_is_Changed_but_not_Salesprice</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.UnitPrice</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Unit_Price__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Updates_Sales_Price_from_Unit_Price</targetReference>
+            </connector>
+            <label>Unit Price is Changed but not Salesprice</label>
+        </rules>
+    </decisions>
+    <description>Migrated from the: Updates Unit Price From Sales Price ,Updates Sales Price from Unit Price and Updates Sales Price from Unit Price v2 workflow rules</description>
+    <environments>Default</environments>
+    <formulas>
+        <name>UpdatesSalesPriceFormula</name>
+        <dataType>Currency</dataType>
+        <expression>IF( ISPICKVAL( $Record.PricebookEntry.Product2.IM_Revenue_Type__c , &quot;Recurring&quot;) , $Record.Unit_Price__c * 12, $Record.Unit_Price__c )</expression>
+        <scale>2</scale>
+    </formulas>
+    <formulas>
+        <name>UpdatesSalesPricefromUnitPriceFormula</name>
+        <dataType>Currency</dataType>
+        <expression>IF( ISPICKVAL( $Record.PricebookEntry.Product2.IM_Revenue_Type__c , &quot;Recurring&quot;) , $Record.Unit_Price__c * 12, $Record.Unit_Price__c )</expression>
+        <scale>2</scale>
+    </formulas>
+    <formulas>
+        <name>UpdatesUnitPriceFormula</name>
+        <dataType>Currency</dataType>
+        <expression>IF( ISPICKVAL( $Record.PricebookEntry.Product2.IM_Revenue_Type__c , &quot;Recurring&quot;) , $Record.UnitPrice / 12, $Record.UnitPrice )</expression>
+        <scale>2</scale>
+    </formulas>
+    <interviewLabel>Updates UnitPrice From Sales Price and Updates Sales Price from Unit Price {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Updates UnitPrice From Sales Price and Updates Sales Price from Unit Price</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <name>Update_Sales_price_from_Unit_Price_v2</name>
+        <label>Update Sales price from Unit Price v2</label>
+        <locationX>206</locationX>
+        <locationY>591</locationY>
+        <inputAssignments>
+            <field>UnitPrice</field>
+            <value>
+                <elementReference>UpdatesSalesPriceFormula</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Updates_Sales_Price_from_Unit_Price</name>
+        <label>Updates Sales Price from Unit Price</label>
+        <locationX>510</locationX>
+        <locationY>685</locationY>
+        <inputAssignments>
+            <field>UnitPrice</field>
+            <value>
+                <elementReference>UpdatesSalesPricefromUnitPriceFormula</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Updates_Unit_Price_From_Sales_Price</name>
+        <label>Updates Unit Price From Sales Price</label>
+        <locationX>759</locationX>
+        <locationY>608</locationY>
+        <inputAssignments>
+            <field>Unit_Price__c</field>
+            <value>
+                <elementReference>UpdatesUnitPriceFormula</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>373</locationX>
+        <locationY>48</locationY>
+        <connector>
+            <targetReference>UnitpriceChanges</targetReference>
+        </connector>
+        <object>OpportunityLineItem</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

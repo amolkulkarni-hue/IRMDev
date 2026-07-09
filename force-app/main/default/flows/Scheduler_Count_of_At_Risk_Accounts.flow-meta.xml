@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <description>#29594: Executes Batch Job to Update Count of At-Risk Accounts</description>
+        <name>Update_Count_of_At_Risk_Accounts</name>
+        <label>Update Count of At-Risk Accounts</label>
+        <locationX>176</locationX>
+        <locationY>252</locationY>
+        <actionName>Count_At_Risk_Accounts</actionName>
+        <actionType>batchJobAction</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <nameSegment>Count_At_Risk_Accounts</nameSegment>
+        <offset>0</offset>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
+    <apiVersion>63.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <description>#29594: Schedules Count At-Risk Accounts Batch Job daily to filter the At-Risk Sales Site Accounts and further pass the IDs to auto-launch flow - &apos;Count At-Risk Sales Site Accounts&apos;</description>
+    <environments>Default</environments>
+    <interviewLabel>Scheduler Count of At-Risk Accounts {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Scheduler Count of At-Risk Accounts</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Update_Count_of_At_Risk_Accounts</targetReference>
+        </connector>
+        <schedule>
+            <frequency>Weekly</frequency>
+            <startDate>2025-04-28</startDate>
+            <startTime>23:00:00.000Z</startTime>
+        </schedule>
+        <triggerType>Scheduled</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

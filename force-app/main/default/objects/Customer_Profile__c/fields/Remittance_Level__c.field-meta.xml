@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Remittance_Level__c</fullName>
+    <label>Remittance Level</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>Invoice_Package__c</controllingField>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>0-Electronic</fullName>
+                <default>false</default>
+                <label>0-Electronic</label>
+            </value>
+            <value>
+                <fullName>1-Customer</fullName>
+                <default>false</default>
+                <label>1-Customer</label>
+            </value>
+            <value>
+                <fullName>2-Reporting Division</fullName>
+                <default>false</default>
+                <label>2-Reporting Division</label>
+            </value>
+            <value>
+                <fullName>3-Division/Department</fullName>
+                <default>false</default>
+                <label>3-Division/Department</label>
+            </value>
+            <value>
+                <fullName>4-Enterprise</fullName>
+                <default>false</default>
+                <label>4-Enterprise</label>
+            </value>
+            <value>
+                <fullName>5-Division</fullName>
+                <default>false</default>
+                <label>5-Division</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Invoice Package 1</controllingFieldValue>
+            <controllingFieldValue>Invoice Package 2</controllingFieldValue>
+            <valueName>1-Customer</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Invoice Package 3</controllingFieldValue>
+            <valueName>3-Division/Department</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Invoice Package 4</controllingFieldValue>
+            <valueName>4-Enterprise</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Invoice Package 5</controllingFieldValue>
+            <valueName>5-Division</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

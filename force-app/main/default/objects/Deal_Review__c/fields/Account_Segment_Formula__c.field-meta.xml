@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Account_Segment_Formula__c</fullName>
+    <externalId>false</externalId>
+    <formula>IF( 
+ISBLANK(Account__r.Account_Segment_Formula__c),
+&quot;Unassigned&quot;,
+Account__r.Account_Segment_Formula__c
+)</formula>
+    <label>Account Segment</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

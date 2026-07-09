@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>My_Requests_SSR</fullName>
+    <columns>Request_Number__c</columns>
+    <columns>NAME</columns>
+    <columns>Parent_Sales_Support_Request__c</columns>
+    <columns>Owner_Full_Name__c</columns>
+    <columns>Sales_Rep__c</columns>
+    <columns>Status__c</columns>
+    <columns>Task_Type__c</columns>
+    <columns>Sub_Type__c</columns>
+    <columns>CREATED_DATE</columns>
+    <columns>Closed_Date__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>CREATEDBY_USER</field>
+        <operation>equals</operation>
+        <value>Carla Fernandes</value>
+    </filters>
+    <filters>
+        <field>Task_Type__c</field>
+        <operation>equals</operation>
+        <value>Account Info/Reporting</value>
+    </filters>
+    <filters>
+        <field>CREATED_DATE</field>
+        <operation>greaterOrEqual</operation>
+        <value>1/1/2021 12:00 AM</value>
+    </filters>
+    <label>My Requests</label>
+</ListView>

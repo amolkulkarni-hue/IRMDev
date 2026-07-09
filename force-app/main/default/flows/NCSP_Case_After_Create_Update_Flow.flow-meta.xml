@@ -1,0 +1,408 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>62.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <decisions>
+        <description>Check Custom Settings(Date_On_Boarder_CSA_users__c) records related to Case Owner
+1) If Case Owner is &apos;Date On Boarder CSA Assigned User&apos; then update &apos;NCSP Owner New&apos; = NCSP CSA
+2) If Case Owner is not a &apos;Date On Boarder CSA Assigned User&apos; but any other user then update &apos;NCSP Owner New&apos; = User
+3) If Case Owner is a queue then update &apos;NCSP Owner New&apos; = Queue</description>
+        <name>Check_Custom_Settings</name>
+        <label>Check Custom Settings</label>
+        <locationX>600</locationX>
+        <locationY>431</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Check_if_Case_Onwer_is_Date_On_Boarder_CSA_User</name>
+            <conditionLogic>(1 AND 3) OR (1 AND 2 AND NOT(3))</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Date_On_Boarder_CSA_Users</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Open_Tasks__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>ISNEW</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Field_NCSP_Owner_new</targetReference>
+            </connector>
+            <label>1- Check if Case Onwer is &apos;Date On Boarder CSA User&apos;</label>
+        </rules>
+        <rules>
+            <name>Case_Owner_is_a_User_but_not_Date_On_Boarder_CSA_User</name>
+            <conditionLogic>(1 AND 2 AND 4) OR (1 AND 2 AND 3 AND NOT(4))</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Date_On_Boarder_CSA_Users</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.OwnerId</leftValueReference>
+                <operator>StartsWith</operator>
+                <rightValue>
+                    <stringValue>005</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Open_Tasks__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>ISNEW</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Field_NCSP_Owner_new_to_User</targetReference>
+            </connector>
+            <label>2- Case Owner is a User but not &quot;Date On Boarder CSA User&quot;</label>
+        </rules>
+        <rules>
+            <name>X3_Case_Owner_is_a_Queue</name>
+            <conditionLogic>(1 AND 2 AND 4) OR (1 AND 2 AND 3 AND NOT(4))</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Date_On_Boarder_CSA_Users</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.OwnerId</leftValueReference>
+                <operator>StartsWith</operator>
+                <rightValue>
+                    <stringValue>00G</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Open_Tasks__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>ISNEW</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Field_NCSP_Owner_new_to_Queue</targetReference>
+            </connector>
+            <label>3- Case Owner is a Queue</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Update NCSP fields(NCSP_Owner_new__c, NCSP_Start_Date_Set__c, Date_On_Boarder_CSA_Assigned__c) when checking all the given fields:
+Date On Boarder CSA Assigned, Initial Welcome Call Date &amp; Parent Case ID</description>
+        <name>Update_NCSP_fields</name>
+        <label>Update NCSP fields</label>
+        <locationX>182</locationX>
+        <locationY>647</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Update_fields</name>
+            <conditionLogic>(1 AND 2 AND 3 AND 4 AND (5 OR 6 OR 7 OR 8 OR 9 OR 10)) OR ((9 OR 10 OR 11) AND 2 AND 1 AND 4)</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Date_On_Boarder_CSA_Assigned__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Date_Welcome_Call_Attempt_1__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.ParentId</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.IsClosed</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.RecordType.DeveloperName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>NCSP_DP_Onboarding_team</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.RecordType.DeveloperName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>NCSP_SKP_New_customer_setup</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.RecordType.DeveloperName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>NCSP_DMS</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.RecordType.DeveloperName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>NCSP_Tech_Services_New_Customer_Setup</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.RecordType.DeveloperName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>NCSP_Upsell</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.RecordType.DeveloperName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>NCSP_New_Customer_Setup</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.RecordType.DeveloperName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>NCSP_SKP_Department_Add_Only</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Fields_NCSP_Start_Date_Set_Date_On_Boarder_CSA_Assigned</targetReference>
+            </connector>
+            <label>Update fields</label>
+        </rules>
+    </decisions>
+    <description>This flow is to update NCSP fields &apos;NCSP Owner&apos;, &apos;NCSP Start Date Set&apos; and &apos;Date on Boarder CSA Assigned&apos; when Case Owner is Date On Boarder CSA Assigned User. For reference, check user story #27066 on Gitlab
+Updated flow to After flow as before flow some scenarios were failing. For reference, check user story #27362 on Gitlab
+This flow will work only if the case is not closed.#28040
+Updated the flow to update Date on Boarder CSA Assigned for Omni Cases. #30646</description>
+    <environments>Default</environments>
+    <formulas>
+        <name>ISNEW</name>
+        <dataType>Boolean</dataType>
+        <expression>ISNEW()</expression>
+    </formulas>
+    <interviewLabel>NCSP Case - After Create&amp;Update Flow {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>NCSP Case - After Create&amp;Update Flow</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <description>Get &quot;Date On Boarder CSA Users&quot;  from Custom Settings matching with the Case Owner ID</description>
+        <name>Get_Date_On_Boarder_CSA_Users</name>
+        <label>Get Date On Boarder CSA Users</label>
+        <locationX>600</locationX>
+        <locationY>323</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Check_Custom_Settings</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>UserId__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.OwnerId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Date_On_Boarder_CSA_users__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordUpdates>
+        <description>Update Field &quot;NCSP_Owner_new&quot;</description>
+        <name>Update_Field_NCSP_Owner_new</name>
+        <label>Update Field &quot;NCSP_Owner_new&quot;</label>
+        <locationX>182</locationX>
+        <locationY>539</locationY>
+        <connector>
+            <targetReference>Update_NCSP_fields</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>NCSP_Owner_new__c</field>
+            <value>
+                <elementReference>NCSP_Owner_new</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <description>Update Field &quot;NCSP_Owner_new&quot; to &apos;Queue&apos;</description>
+        <name>Update_Field_NCSP_Owner_new_to_Queue</name>
+        <label>Update Field &quot;NCSP_Owner_new&quot; to &apos;Queue&apos;</label>
+        <locationX>754</locationX>
+        <locationY>539</locationY>
+        <inputAssignments>
+            <field>NCSP_Owner_new__c</field>
+            <value>
+                <stringValue>Queue</stringValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <description>Update Field &quot;NCSP_Owner_new&quot; to &apos;User&apos;</description>
+        <name>Update_Field_NCSP_Owner_new_to_User</name>
+        <label>Update Field &quot;NCSP_Owner_new&quot; to &apos;User&apos;</label>
+        <locationX>490</locationX>
+        <locationY>539</locationY>
+        <inputAssignments>
+            <field>NCSP_Owner_new__c</field>
+            <value>
+                <stringValue>User</stringValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <description>Update Fields &quot;NCSP Start Date Set&quot; &amp; &quot;Date On Boarder CSA Assigned&quot;</description>
+        <name>Update_Fields_NCSP_Start_Date_Set_Date_On_Boarder_CSA_Assigned</name>
+        <label>Update Fields &quot;NCSP Start Date Set&quot; &amp; &quot;Date On Boarder CSA Assigned&quot;</label>
+        <locationX>50</locationX>
+        <locationY>755</locationY>
+        <inputAssignments>
+            <field>Date_On_Boarder_CSA_Assigned__c</field>
+            <value>
+                <elementReference>$Flow.CurrentDateTime</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>NCSP_Start_Date_Set__c</field>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>474</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Get_Date_On_Boarder_CSA_Users</targetReference>
+        </connector>
+        <filterLogic>(1 OR 2 OR 3 OR 4 OR 5 OR 6 OR 7) AND 8</filterLogic>
+        <filters>
+            <field>RecordType_Name__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>NCSP: SKP Department Add Only</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>RecordType_Name__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>NCSP: Upsell</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>RecordType_Name__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>NCSP: New Customer Setup</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>RecordType_Name__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>NCSP: DP New Customer Setup</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>RecordType_Name__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>NCSP: SKP New Customer Setup</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>RecordType_Name__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>NCSP: DMS</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>RecordType_Name__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>NCSP: Tech Services New Customer Setup</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>IsClosed</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <object>Case</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+    <triggerOrder>1010</triggerOrder>
+    <variables>
+        <name>NCSP_Owner_new</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <stringValue>NCSP CSA</stringValue>
+        </value>
+    </variables>
+</Flow>

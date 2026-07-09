@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>At_Risk_Score__c</fullName>
+    <description>This is the account weighted risk score. It takes into account all risk at the CID level and summarizes this information at the IMGA level. 
+0-6: Low Risk 
+7-9: Medium Risk 
+10: High Risk</description>
+    <externalId>false</externalId>
+    <formula>IMGA_Account__r.At_Risk_Score__c</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <inlineHelpText>This is the account weighted risk score.</inlineHelpText>
+    <label>Risk Score</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>0</scale>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

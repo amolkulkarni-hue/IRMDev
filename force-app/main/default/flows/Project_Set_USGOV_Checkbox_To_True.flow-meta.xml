@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>64.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <decisions>
+        <name>Check_Account_Segment_on_Account</name>
+        <label>Check Account Segment on Account</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Account_Segment_USGS</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.pse__Account__r.Account_Segment__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>USGS</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_USGOV_Check_To_True</targetReference>
+            </connector>
+            <label>Account Segment - USGS</label>
+        </rules>
+        <rules>
+            <name>Account_Segment_NOT_USGS</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.pse__Account__r.Account_Segment__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>USGS</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_USGOV_Check_To_False</targetReference>
+            </connector>
+            <label>Account Segment - NOT USGS</label>
+        </rules>
+    </decisions>
+    <environments>Default</environments>
+    <interviewLabel>Project - Set USGOV Checkbox To True {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Project - Set USGOV Checkbox To True</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <name>Set_USGOV_Check_To_False</name>
+        <label>Set USGOV Check To False</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <inputAssignments>
+            <field>USGOV_Check__c</field>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Set_USGOV_Check_To_True</name>
+        <label>Set USGOV Check To True</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <inputAssignments>
+            <field>USGOV_Check__c</field>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Check_Account_Segment_on_Account</targetReference>
+        </connector>
+        <filterFormula>OR(ISNEW() , ISCHANGED({!$Record.pse__Account__c}))</filterFormula>
+        <object>pse__Proj__c</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Obsolete</status>
+</Flow>

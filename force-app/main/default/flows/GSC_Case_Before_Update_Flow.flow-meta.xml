@@ -1,0 +1,473 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>56.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <description>Updates the Status to Customer - On Hold when Pending reason is Customer Response</description>
+        <name>Status_Change_to_Customer_On_Hold</name>
+        <label>Status Change to Customer - On Hold</label>
+        <locationX>578</locationX>
+        <locationY>395</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Customer - On Hold</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <description>Update the status to On Hold - Internal when Pending reason is Internal Response or Supervisor</description>
+        <name>Status_Change_to_On_Hold_Internal</name>
+        <label>Status Change to On Hold - Internal</label>
+        <locationX>842</locationX>
+        <locationY>395</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Internal - On Hold</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <description>Update the status to Resolved when Root Cause is NOT = Non adherence to process by IM  OR When Root Cause = Non adherence to process by IM and Root Cause Department and Root Cause Owner = True</description>
+        <name>Status_Change_to_Resolved</name>
+        <label>Status Change to Resolved</label>
+        <locationX>1106</locationX>
+        <locationY>395</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Resolved</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>Status_Update_to_Assigned</name>
+        <label>Status Update to Assigned</label>
+        <locationX>50</locationX>
+        <locationY>395</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Assigned</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <description>Update the Case Status to Cancelled when the field Reparent Email Messages is set to True i.e. In case of Duplicate Cases</description>
+        <name>Status_Update_to_Cancelled</name>
+        <label>Status Update to Cancelled</label>
+        <locationX>1634</locationX>
+        <locationY>395</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Cancelled</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <description>Update the status field to In Progress</description>
+        <name>Status_Update_to_In_Progress</name>
+        <label>Status Update to In Progress</label>
+        <locationX>314</locationX>
+        <locationY>395</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>In Progress</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <description>Update the status field to In Progress when Pending Reason is removed.</description>
+        <name>Status_Update_to_In_Progress_when_Pending_Reason_is_removed</name>
+        <label>Status Update to In Progress when Pending Reason is removed</label>
+        <locationX>1370</locationX>
+        <locationY>395</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>In Progress</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_Remove_Follow_up_Fields_to_Null</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Update/Remove Follow-up Fields to Null when Pending Reason is removed</description>
+        <name>Update_Remove_Follow_up_Fields_to_Null</name>
+        <label>Update/Remove Follow-up Fields to Null</label>
+        <locationX>1370</locationX>
+        <locationY>503</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Follow_up_Date__c</assignToReference>
+            <operator>Assign</operator>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.GSC_Follow_up_Department__c</assignToReference>
+            <operator>Assign</operator>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.GSC_Follow_up_Owner__c</assignToReference>
+            <operator>Assign</operator>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.GSC_Case_Team_Member__c</assignToReference>
+            <operator>Assign</operator>
+        </assignmentItems>
+    </assignments>
+    <decisions>
+        <description>Epic &amp;1008 Global Service Case Status field Update
+Update Status to Assigned , modified the logic as when the case status is New , the previous case owner is Queue and the current owner is User then the status update to Assign. - #24410
+Updated rule for record type &quot;CAC Executive Escalations&quot;. For ref, check user story #27570 on Gitlab</description>
+        <name>Global_Service_Case_Status_Update</name>
+        <label>Global Service Case Status Update</label>
+        <locationX>974</locationX>
+        <locationY>287</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Update_Status_to_Assigned</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>New</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Owner:User.Id</leftValueReference>
+                <operator>StartsWith</operator>
+                <rightValue>
+                    <stringValue>005</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record__Prior.OwnerId</leftValueReference>
+                <operator>StartsWith</operator>
+                <rightValue>
+                    <stringValue>00G</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.RecordType.Name</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Global Service Case</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Status_Update_to_Assigned</targetReference>
+            </connector>
+            <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+            <label>Update Status to Assigned</label>
+        </rules>
+        <rules>
+            <name>Update_Status_to_In_Progress</name>
+            <conditionLogic>1 AND 2 AND 3 AND 4 AND 5 AND 6 AND 7</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.RecordType.DeveloperName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Global_Service_Case</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Customer_ID__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Owner:User.Id</leftValueReference>
+                <operator>StartsWith</operator>
+                <rightValue>
+                    <stringValue>005</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Waiting for Agent</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.GSC_Category__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.GSC_Sub_Category__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.RecordType.Name</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Global Service Case</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Status_Update_to_In_Progress</targetReference>
+            </connector>
+            <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+            <label>Update Status to In Progress</label>
+        </rules>
+        <rules>
+            <name>Update_Status_to_On_Hold_Customer</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.NAS_Pending_Reason__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Customer Response</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.RecordType.Name</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Global Service Case</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Status_Change_to_Customer_On_Hold</targetReference>
+            </connector>
+            <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+            <label>Update Status to On-Hold Customer</label>
+        </rules>
+        <rules>
+            <name>Update_Status_to_On_Hold_Internal</name>
+            <conditionLogic>(1 OR 2) AND 3</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.NAS_Pending_Reason__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Internal Response</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.NAS_Pending_Reason__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Supervisor</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.RecordType.Name</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Global Service Case</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Status_Change_to_On_Hold_Internal</targetReference>
+            </connector>
+            <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+            <label>Update Status to On- Hold Internal</label>
+        </rules>
+        <rules>
+            <name>Update_Status_to_Resolved</name>
+            <conditionLogic>(1  AND 5 AND 6) OR( 2 AND (3 OR 4) AND 5 AND 6 )</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.GSC_Root_Cause__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Non adherence to process by IM</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.GSC_Root_Cause__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Non adherence to process by IM</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.GSC_Root_Cause_Department__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.GSC_Root_Cause_Owner__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.GSC_Root_Cause__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.RecordType.Name</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Global Service Case</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Status_Change_to_Resolved</targetReference>
+            </connector>
+            <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+            <label>Update Status to Resolved</label>
+        </rules>
+        <rules>
+            <name>Update_Status_to_In_Progress_when_pending_reason_is_removed</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.NAS_Pending_Reason__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.NAS_Pending_Reason__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.RecordType.Name</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Global Service Case</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Status_Update_to_In_Progress_when_Pending_Reason_is_removed</targetReference>
+            </connector>
+            <label>Update Status to In Progress when pending reason is removed</label>
+        </rules>
+        <rules>
+            <name>Cancel_the_Duplicate_Case</name>
+            <conditionLogic>1 AND 2 AND (3 OR 4) AND (5 OR 6)</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.NAS_Reparent_Email_Messages__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.ParentId</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.NAS_Reparent_Email_Messages__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.ParentId</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.RecordType.Name</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Global Service Case</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.RecordType.Name</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>CAC Executive Escalations</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Status_Update_to_Cancelled</targetReference>
+            </connector>
+            <label>Cancel the Duplicate Case</label>
+        </rules>
+    </decisions>
+    <description>Epic #1008 Global Service Case
+Updated (Reparent Email messaging- Cancel the Duplicate case) rule for record type &quot;CAC Executive Escalations&quot;. For ref, check user story #27570 on Gitlab</description>
+    <environments>Default</environments>
+    <interviewLabel>GSC Case - Before Update Flow {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>GSC Case - Before Update Flow</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>848</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Global_Service_Case_Status_Update</targetReference>
+        </connector>
+        <filterLogic>1 AND (2 OR 3)</filterLogic>
+        <filters>
+            <field>IsClosed</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>RecordType_Name__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Global Service Case</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>RecordType_Name__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>CAC Executive Escalations</stringValue>
+            </value>
+        </filters>
+        <object>Case</object>
+        <recordTriggerType>Update</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

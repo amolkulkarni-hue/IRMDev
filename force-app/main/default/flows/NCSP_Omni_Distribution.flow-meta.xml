@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>61.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <name>Assign_NCSP_FIFO_DMS</name>
+        <label>Assign NCSP FIFO DMS</label>
+        <locationX>1106</locationX>
+        <locationY>431</locationY>
+        <assignmentItems>
+            <assignToReference>txtVarNCSpTeam</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>NCSP FIFO DMS</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_Case</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_NCSP_FIFO_OTS</name>
+        <label>Assign NCSP FIFO OTS</label>
+        <locationX>578</locationX>
+        <locationY>431</locationY>
+        <assignmentItems>
+            <assignToReference>txtVarNCSpTeam</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>NCSP FIFO OTS</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_Case</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_NCSP_FIFO_RM</name>
+        <label>Assign NCSP FIFO RM</label>
+        <locationX>50</locationX>
+        <locationY>431</locationY>
+        <assignmentItems>
+            <assignToReference>txtVarNCSpTeam</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>NCSP FIFO RM</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_Case</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_NCSP_FIFO_SHRED</name>
+        <label>Assign NCSP FIFO SHRED</label>
+        <locationX>314</locationX>
+        <locationY>431</locationY>
+        <assignmentItems>
+            <assignToReference>txtVarNCSpTeam</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>NCSP FIFO SHRED</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_Case</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>NCSP_FIFO_ALM</name>
+        <label>NCSP FIFO ALM</label>
+        <locationX>842</locationX>
+        <locationY>431</locationY>
+        <assignmentItems>
+            <assignToReference>txtVarNCSpTeam</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>NCSP FIFO ALM</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_Case</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <description>Checking the service line to update the NCSP FIFO Team , which is used in skill based routing rule</description>
+        <name>Service_Line_Check</name>
+        <label>Service Line Check</label>
+        <locationX>710</locationX>
+        <locationY>323</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>RM</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.NCSP_Service_line__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Accutrac</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.NCSP_Service_line__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Geological Core</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.NCSP_Service_line__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>RM</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.NCSP_Service_line__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>RM/Shred</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.NCSP_Service_line__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>RM Pathology</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.NCSP_Service_line__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Vault Climate Control</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_NCSP_FIFO_RM</targetReference>
+            </connector>
+            <label>RM</label>
+        </rules>
+        <rules>
+            <name>SHRED</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.NCSP_Service_line__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Shred</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_NCSP_FIFO_SHRED</targetReference>
+            </connector>
+            <label>SHRED</label>
+        </rules>
+        <rules>
+            <name>OTS</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.NCSP_Service_line__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>One Time Shred</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_NCSP_FIFO_OTS</targetReference>
+            </connector>
+            <label>OTS</label>
+        </rules>
+        <rules>
+            <name>ALM</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.NCSP_Service_line__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Cloud Archive</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.NCSP_Service_line__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Data Center</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.NCSP_Service_line__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>DB&amp;R</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.NCSP_Service_line__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>SITAD</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>NCSP_FIFO_ALM</targetReference>
+            </connector>
+            <label>ALM</label>
+        </rules>
+        <rules>
+            <name>DMS</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.NCSP_Service_line__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>DMS</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.NCSP_Service_line__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>DRCMI</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_NCSP_FIFO_DMS</targetReference>
+            </connector>
+            <label>DMS</label>
+        </rules>
+    </decisions>
+    <description>Gitlab # 22165, #26419 NCSP FIFO Skill based routing based on NCSP service line  and NCSP team
+Pushing cases to the NCSP FIFO omni distribution queue and adding value to the  pick list (NCSP Team) which is used in Skill based routing rule</description>
+    <environments>Default</environments>
+    <interviewLabel>NCSP Omni Distribution {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>NCSP Omni Distribution</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <description>Updating the case with NCSP FIFO Team and Route to the  NCSP FIFO Omni Distribution Queue</description>
+        <name>Update_Case</name>
+        <label>Update Case</label>
+        <locationX>710</locationX>
+        <locationY>623</locationY>
+        <inputAssignments>
+            <field>NCSP_Team__c</field>
+            <value>
+                <elementReference>txtVarNCSpTeam</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>OwnerId</field>
+            <value>
+                <elementReference>$Label.NCSP_FIFO_Omni_Distribution_Queue_18Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>584</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Service_Line_Check</targetReference>
+        </connector>
+        <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+        <filterFormula>AND (OR(
+{!$Record.RecordType.DeveloperName} = &quot;NCSP_DMS&quot;,
+{!$Record.RecordType.DeveloperName} = &quot;NCSP_DP_Onboarding_team&quot;,
+{!$Record.RecordType.DeveloperName} = &quot;NCSP_SKP_Department_Add_Only&quot;,
+{!$Record.RecordType.DeveloperName} = &quot;NCSP_SKP_New_customer_setup&quot;,
+{!$Record.RecordType.DeveloperName} = &quot;NCSP_Tech_Services_New_Customer_Setup&quot;,
+{!$Record.RecordType.DeveloperName} = &quot;NCSP_Upsell&quot;),
+{!$Record.OwnerId} = &quot;00G800000023qdXEAQ&quot;,
+OR(TEXT({!$Record.NCSP_Service_line__c})=&quot;Accutrac&quot;,TEXT({!$Record.NCSP_Service_line__c})=&quot;Cloud Archive&quot;,TEXT({!$Record.NCSP_Service_line__c})=&quot;Data Center&quot;,TEXT({!$Record.NCSP_Service_line__c})=&quot;DB&amp;R&quot;,TEXT({!$Record.NCSP_Service_line__c})=&quot;DMS&quot;,TEXT({!$Record.NCSP_Service_line__c})=&quot;DRCMI&quot;,TEXT({!$Record.NCSP_Service_line__c})=&quot;Geological Core&quot;,TEXT({!$Record.NCSP_Service_line__c})=&quot;One Time Shred&quot;,TEXT({!$Record.NCSP_Service_line__c})=&quot;RM&quot;,TEXT({!$Record.NCSP_Service_line__c})=&quot;RM/Shred&quot;,TEXT({!$Record.NCSP_Service_line__c})=&quot;RM Pathology&quot;,TEXT({!$Record.NCSP_Service_line__c})=&quot;Shred&quot;,TEXT({!$Record.NCSP_Service_line__c})=&quot;SITAD&quot;,TEXT({!$Record.NCSP_Service_line__c})=&quot;Vault Climate Control&quot;)
+)</filterFormula>
+        <object>Case</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+    <triggerOrder>1200</triggerOrder>
+    <variables>
+        <description>Variable to add the the NCSP Team value to be updated , NCSP team pick list is mapped for skill based routing</description>
+        <name>txtVarNCSpTeam</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>

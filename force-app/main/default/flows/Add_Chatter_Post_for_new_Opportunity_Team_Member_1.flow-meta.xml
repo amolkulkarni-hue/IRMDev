@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>59.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <description>Migrated from the Add Chatter Post for new Opportunity Team Member process using NoCriteriaforOppMember criteria.
+This process builder triggers on the Opportunity Team Member object anytime a new member is added. It invokes the flow “Send Notification to new Opportunity Team Members”, sending the Opportunity team member, opportunity id and opportunity record type info to be used by the flow.</description>
+    <environments>Default</environments>
+    <interviewLabel>Add Chatter Post for new Opportunity Team Member {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Add Chatter Post for new Opportunity Team Member</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>myRule_1_A1</targetReference>
+        </connector>
+        <filterFormula>NOT(CONTAINS({!$Label.OpportunityTeamMember_NoChatter_Profiles},{!$Profile.Id}) )</filterFormula>
+        <object>OpportunityTeamMember</object>
+        <recordTriggerType>Create</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+    <subflows>
+        <name>myRule_1_A1</name>
+        <label>TriggerOppPostFlow</label>
+        <locationX>176</locationX>
+        <locationY>323</locationY>
+        <flowName>Send_Notification_to_new_Opportunity_Team_Members</flowName>
+        <inputAssignments>
+            <name>Sov_OpportunityTeamMember</name>
+            <value>
+                <elementReference>$Record</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>Sov_OpportunityId</name>
+            <value>
+                <elementReference>$Record.Opportunity</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>Var_OppRecordTypeName</name>
+            <value>
+                <elementReference>$Record.Opportunity.RecordType.Name</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+</Flow>

@@ -1,0 +1,523 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>62.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <name>Assign_Split_Percent</name>
+        <label>Assign Split Percent</label>
+        <locationX>50</locationX>
+        <locationY>1187</locationY>
+        <assignmentItems>
+            <assignToReference>ExistingOverlay.SplitPercentage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <numberValue>100.0</numberValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>ExistingOverlay.Auto_create__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_Existing_Overlay</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Store the Existing Overlay</description>
+        <name>Existing_Overlay</name>
+        <label>Existing Overlay</label>
+        <locationX>314</locationX>
+        <locationY>971</locationY>
+        <assignmentItems>
+            <assignToReference>ExistingOverlay</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_overlay_split</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Check_Percentage</targetReference>
+        </connector>
+    </assignments>
+    <customErrors>
+        <name>Failed_to_create</name>
+        <label>Failed to create</label>
+        <locationX>1722</locationX>
+        <locationY>2129</locationY>
+        <customErrorMessages>
+            <errorMessage>Add Global Managing Director as Overlay Split Owner flow failed to create Overlay Split record. Please check existing Split records. Users may only be allocated a total of 100% on a single Opportunity. More Details: {!$Flow.FaultMessage}</errorMessage>
+            <isFieldError>false</isFieldError>
+        </customErrorMessages>
+    </customErrors>
+    <customErrors>
+        <description>Error message when flow fails to create OTM</description>
+        <name>Failed_to_Create_OTM</name>
+        <label>Failed to Create</label>
+        <locationX>1458</locationX>
+        <locationY>2237</locationY>
+        <customErrorMessages>
+            <errorMessage>Create Global Managing Director as Overlay Split Owner flow failed to create Opportunity Team Member record. Please check existing OTM records. More Details: {!$Flow.FaultMessage}</errorMessage>
+            <isFieldError>false</isFieldError>
+        </customErrorMessages>
+    </customErrors>
+    <customErrors>
+        <name>Failed_to_Update</name>
+        <label>Failed to Update</label>
+        <locationX>314</locationX>
+        <locationY>1403</locationY>
+        <customErrorMessages>
+            <errorMessage>Add Global Managing Director as Overlay Split Owner flow failed to Update Overlay Split record. Please check existing Split records. Users may only be allocated a total of 100% on a single Opportunity. More Details:  {!$Flow.FaultMessage}</errorMessage>
+            <isFieldError>false</isFieldError>
+        </customErrorMessages>
+    </customErrors>
+    <decisions>
+        <description>Checks if Overlay Split record already exists on Opportunity.
+Executes Yes Outcome; If overlay already exist and checks the percentage and updates to 100 
+Executes Default Outcome: If overlay does not exist and creates a Overlay Split with Current Global Managing Director</description>
+        <name>Check_if_Overlay_already_Exists</name>
+        <label>Check if Overlay already Exists</label>
+        <locationX>578</locationX>
+        <locationY>863</locationY>
+        <defaultConnector>
+            <targetReference>Create_Overlay</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Exist</name>
+            <conditionLogic>1</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_overlay_split</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Existing_Overlay</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Checks if Percentage &lt; 100 or Auto Create is not set as True</description>
+        <name>Check_Percentage</name>
+        <label>Check Percentage</label>
+        <locationX>314</locationX>
+        <locationY>1079</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Perfect_match</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>ExistingOverlay.SplitPercentage</leftValueReference>
+                <operator>LessThan</operator>
+                <rightValue>
+                    <numberValue>100.0</numberValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>ExistingOverlay.Auto_create__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_Split_Percent</targetReference>
+            </connector>
+            <label>Matched_percent&lt;100</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Checks if this record already went through this process and GMD exist or not. If exist, ends the flow else runs Default outcome</description>
+        <name>Is_GMD_part_of_Opportunity_Team</name>
+        <label>Is GMD part of Opportunity Team?</label>
+        <locationX>182</locationX>
+        <locationY>647</locationY>
+        <defaultConnector>
+            <targetReference>Get_overlay_split</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes_GMD_already_present</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Fetch_Opportunity_Team_Members</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>Yes_GMD already present</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Checks if IMGA Account is global or not.
+If yes executes Yes_global path else ends the flow</description>
+        <name>Is_IMGA_Account_Global</name>
+        <label>Is IMGA Account Global?</label>
+        <locationX>1337</locationX>
+        <locationY>323</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Global</name>
+            <conditionLogic>1 AND 2 AND 3 AND 4</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Account.Parent.Parent.Global_Account__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Account.Parent.Parent.Program_Designation__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Global Account</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Account.Parent.Parent.IM_Hierarchy_Level__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>IM Group (IMGA)</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Account.Global_IMGA_Owner__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>New_or_Account_Change</targetReference>
+            </connector>
+            <label>Yes_Global</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Checks if flow is triggered due to New Opportunity creation or Account update</description>
+        <name>New_or_Account_Change</name>
+        <label>New or Account Change</label>
+        <locationX>688</locationX>
+        <locationY>431</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Available</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>ISNEW</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Fetch_Opportunity_Team_Members</targetReference>
+            </connector>
+            <label>Available_AccountChange</label>
+        </rules>
+        <rules>
+            <name>Available_new_Oppty</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GlobalManagingDirector</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>ISNEW</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Create_Overlay</targetReference>
+            </connector>
+            <label>Available_new Oppty</label>
+        </rules>
+    </decisions>
+    <description>#Gitlab Story: 26499
+Creates Overlay Split record on Opportunity whenever a new Opportunity is created or Account is changed with Owner as Account Global Managing Director and Percentage as 100.
+Overlay Split record related to previous Account is deleted in case of Account change.
+
+#Gitlab story: 27988
+Modified flow to trigger only if sales site Account has Global Managing Director and IMGA Account has Global Industries marked as True and Program Designation as Global Account
+Removed the logic of the flow which deletes the Overlay Split record of previous Account
+
+#Gitlab Story: 33087
+Modified flow to create OTM and Overlay split only if previous Account is not a Global Account.</description>
+    <environments>Default</environments>
+    <formulas>
+        <name>GlobalManagingDirector</name>
+        <dataType>String</dataType>
+        <expression>{!$Record.Account.Global_IMGA_Owner__c}</expression>
+    </formulas>
+    <formulas>
+        <name>ISNEW</name>
+        <dataType>Boolean</dataType>
+        <expression>ISNEW()</expression>
+    </formulas>
+    <interviewLabel>Add Global Managing Director as Overlay Split {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Add Global Managing Director as Overlay Split</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordCreates>
+        <description>Create Opportunity Team Member record with role as GMD</description>
+        <name>Create_OTM</name>
+        <label>Create OTM</label>
+        <locationX>688</locationX>
+        <locationY>2129</locationY>
+        <faultConnector>
+            <targetReference>Failed_to_Create_OTM</targetReference>
+        </faultConnector>
+        <inputAssignments>
+            <field>Auto_Create__c</field>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>OpportunityAccessLevel</field>
+            <value>
+                <stringValue>Edit</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>OpportunityId</field>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>TeamMemberRole</field>
+            <value>
+                <stringValue>MD</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>UserId</field>
+            <value>
+                <elementReference>GlobalManagingDirector</elementReference>
+            </value>
+        </inputAssignments>
+        <object>OpportunityTeamMember</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
+    <recordCreates>
+        <description>Creates an Overlay Split record with percentage as 100, Split owner as Account&apos;s Global Managing Director(Global_IMGA_Owner__c)</description>
+        <name>Create_Overlay</name>
+        <label>Create Overlay</label>
+        <locationX>688</locationX>
+        <locationY>2021</locationY>
+        <connector>
+            <targetReference>Create_OTM</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Failed_to_create</targetReference>
+        </faultConnector>
+        <inputAssignments>
+            <field>Auto_create__c</field>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>OpportunityId</field>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>SplitOwnerId</field>
+            <value>
+                <elementReference>GlobalManagingDirector</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>SplitPercentage</field>
+            <value>
+                <numberValue>100.0</numberValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>SplitTypeId</field>
+            <value>
+                <elementReference>$Label.Opportunity_Split_Overlay_RecordTypeID</elementReference>
+            </value>
+        </inputAssignments>
+        <object>OpportunitySplit</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
+    <recordLookups>
+        <description>Fetch the Opportunity Team Member record with Role as GMD and created by this flow(Auto_create as True)</description>
+        <name>Fetch_Opportunity_Team_Members</name>
+        <label>Fetch Opportunity Team Members</label>
+        <locationX>182</locationX>
+        <locationY>539</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Is_GMD_part_of_Opportunity_Team</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>TeamMemberRole</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>MD</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Auto_Create__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>OpportunityId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>OpportunityTeamMember</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <description>Fetch the overlay split record with user as GMD</description>
+        <name>Get_overlay_split</name>
+        <label>Get overlay split</label>
+        <locationX>578</locationX>
+        <locationY>755</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Check_if_Overlay_already_Exists</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>OpportunityId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>SplitTypeId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Label.Opportunity_Split_Overlay_RecordTypeID</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>SplitOwnerId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>GlobalManagingDirector</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>OpportunitySplit</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordUpdates>
+        <description>Updates Existing Opportunity split</description>
+        <name>Update_Existing_Overlay</name>
+        <label>Update Existing Overlay</label>
+        <locationX>50</locationX>
+        <locationY>1295</locationY>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Create_OTM</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Failed_to_Update</targetReference>
+        </faultConnector>
+        <inputReference>ExistingOverlay</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>1211</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Is_IMGA_Account_Global</targetReference>
+        </connector>
+        <filterFormula>AND(
+{!$Record.OwnerId}!={!$Record.Account.Global_IMGA_Owner__c},
+OR(
+     ISNEW(),
+     ISCHANGED({!$Record.AccountId})
+	),
+NOT({!$Record.IsClosed}),
+OR(
+     {!$Record.RecordType.DeveloperName}= &apos;IMLA_Standard_Opportunity&apos;,
+     {!$Record.RecordType.DeveloperName}= &apos;Standard_Opportunity&apos;,
+     {!$Record.RecordType.DeveloperName}= &apos;IMAP_Standard_Opportunity&apos;,
+     {!$Record.RecordType.DeveloperName}= &apos;IME_Standard_Opportunity&apos;
+	 )
+)</filterFormula>
+        <object>Opportunity</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+    <variables>
+        <name>AccountChange</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </variables>
+    <variables>
+        <name>ExistingOverlay</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>OpportunitySplit</objectType>
+    </variables>
+    <variables>
+        <description>OTM record for GMD</description>
+        <name>GMD_OTM</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>OpportunityTeamMember</objectType>
+    </variables>
+    <variables>
+        <name>OverlaySplit</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>OpportunitySplit</objectType>
+    </variables>
+</Flow>

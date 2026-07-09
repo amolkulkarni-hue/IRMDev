@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>QTB_PriceTierBreakdownValue</fullName>
+    <active>true</active>
+    <description>#SFCPQBLG-1025- PRICE tier value cannot be &lt;= zero</description>
+    <errorConditionFormula>AND(NOT($Setup.Metadata_Activation_Settings__c.Disable_VR__c &amp;&amp; OR(ISBLANK($Setup.Metadata_Activation_Settings__c.SObject_API_Name__c), CONTAINS($Setup.Metadata_Activation_Settings__c.SObject_API_Name__c, &apos;QTB_WorkOrderTiers__c&apos;))),  QTB_First_Tier_Breakpoint__c &lt;=0 )</errorConditionFormula>
+    <errorDisplayField>QTB_First_Tier_Breakpoint__c</errorDisplayField>
+    <errorMessage>Value cannot be less than or equal to Zero</errorMessage>
+</ValidationRule>

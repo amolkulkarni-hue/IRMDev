@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>QTB_Check_for_same_currency_to_and_from</fullName>
+    <active>true</active>
+    <description>#QTB-24 Validation rule to throw a error when currency to and currency fields have same value</description>
+    <errorConditionFormula>AND(IF( TEXT( QTB_Currency_From__c )== TEXT( QTB_Currency_To__c ) ,true,false),NOT($Setup.Metadata_Activation_Settings__c.Disable_VR__c &amp;&amp; OR(ISBLANK($Setup.Metadata_Activation_Settings__c.SObject_API_Name__c), CONTAINS($Setup.Metadata_Activation_Settings__c.SObject_API_Name__c, &apos;QTB_Foreign_Exchange__c&apos;))))</errorConditionFormula>
+    <errorMessage>Currency To and Currency From cannot have same value</errorMessage>
+</ValidationRule>

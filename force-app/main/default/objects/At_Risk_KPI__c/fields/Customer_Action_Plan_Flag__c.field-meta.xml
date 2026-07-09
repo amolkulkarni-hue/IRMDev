@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Customer_Action_Plan_Flag__c</fullName>
+    <formula>/*AND($User.CARA_CAP_User__c,
+	OR(
+		AND(At_Risk_Assessor__r.Id = $User.Id,
+		   (isblank(Customer_Account__r.IM_IMGA__c))),
+		$User.CARA_CAP_Assessor__c))*/
+null</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Customer Action Plan Flag To Be Deleted</label>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

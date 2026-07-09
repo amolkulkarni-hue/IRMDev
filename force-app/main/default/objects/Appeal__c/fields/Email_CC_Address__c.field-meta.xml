@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Email_CC_Address__c</fullName>
+    <externalId>false</externalId>
+    <formula>CASE( Sales_District__c , 
+&quot;Atlantic&quot;, &quot;atlanticcommissions@ironmountain.com&quot;, 
+&quot;Northern/Canada&quot;, &quot;NCANcommissions@ironmountain.com&quot;, 
+&quot;Southern&quot;, &quot;southerncommissions@ironmountain.com&quot;, 
+&quot;Southwest&quot;, &quot;southwestcommission@ironmountain.com&quot;, 
+&quot;sean.oriley@ironmountain.com&quot; 
+)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Email CC Address</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Enforce_NCSP_team_choices_for_Source_Sys</fullName>
+    <active>true</active>
+    <description>Ensure that NCSP cannot select anything other than SKP NA and SB NA</description>
+    <errorConditionFormula>AND(OR($Profile.Name = &apos;AS NCSP Coordinator&apos;,$Profile.Name = &apos;AS NCSP CSA&apos;,$Profile.Name = &apos;AS NCSP Management&apos;),NOT(ISPICKVAL(Source_System__c, &quot;SKP NA&quot;)),NOT(ISPICKVAL(Source_System__c, &quot;SB NA&quot;)))</errorConditionFormula>
+    <errorDisplayField>Source_System__c</errorDisplayField>
+    <errorMessage>If you are NCSP you are limited to only selecting SB NA or SKP NA from Source System picklist field.  Please correct field before saving.</errorMessage>
+</ValidationRule>

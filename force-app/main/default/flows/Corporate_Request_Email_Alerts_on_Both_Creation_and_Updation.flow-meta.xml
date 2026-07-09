@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>All_Other_Record_Types_Creation_Alert</name>
+        <label>All Other Record Types Creation Alert</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <actionName>Corporate_Request__c.Corporate_Request_All_other_Record_Types_Created</actionName>
+        <actionType>emailAlert</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>Corporate_Request__c.Corporate_Request_All_other_Record_Types_Created</nameSegment>
+        <offset>0</offset>
+    </actionCalls>
+    <actionCalls>
+        <name>Assigned_to_User_Alert</name>
+        <label>Assigned to User Alert</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <actionName>Corporate_Request__c.Corporate_Request_Any_Record_Type_assigned_to_a_user</actionName>
+        <actionType>emailAlert</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>Corporate_Request__c.Corporate_Request_Any_Record_Type_assigned_to_a_user</nameSegment>
+        <offset>0</offset>
+    </actionCalls>
+    <actionCalls>
+        <name>Legal_Customer_Related_Contracts</name>
+        <label>Legal Customer Related Contracts/Amendments</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <actionName>Corporate_Request__c.Corporate_Request_Legal_Customer_Related_Contracts_Amendments_Created</actionName>
+        <actionType>emailAlert</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>Corporate_Request__c.Corporate_Request_Legal_Customer_Related_Contracts_Amendments_Created</nameSegment>
+        <offset>0</offset>
+    </actionCalls>
+    <actionCalls>
+        <name>Legal_Litigation</name>
+        <label>Legal Litigation</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <actionName>Corporate_Request__c.Corporate_Request_Legal_Litigation_Dispute_Incident_Created</actionName>
+        <actionType>emailAlert</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>Corporate_Request__c.Corporate_Request_Legal_Litigation_Dispute_Incident_Created</nameSegment>
+        <offset>0</offset>
+    </actionCalls>
+    <actionCalls>
+        <name>Status_Changed_Alert</name>
+        <label>Status Changed Alert</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <actionName>Corporate_Request__c.Corporate_Request_Status_Updates</actionName>
+        <actionType>emailAlert</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>Corporate_Request__c.Corporate_Request_Status_Updates</nameSegment>
+        <offset>0</offset>
+    </actionCalls>
+    <apiVersion>66.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <decisions>
+        <description>ISNEW_Legal: Customer Related (Contracts/Amendments) - Sends Email of Contracts/Amendments while creation
+ISNEW_Legal: Litigation/Dispute/Incident - Sends Email of Litigation/Dispute while creation
+ISNEW_All Other Record Types - Sends Email of Other Record Types while creation
+ISCHANGED Status - Sends Email of Status Change
+ISCHANGED Owner - Sends Email of Owner Change only prior value is in Queue</description>
+        <name>Send_Email_Alerts_accordingly</name>
+        <label>Send Email Alerts accordingly</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>ISNEW_Legal_Customer_Related_Contracts_Amendments</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>NewRecord</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.RecordType.DeveloperName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Legal_Customer_Contract</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Legal_Customer_Related_Contracts</targetReference>
+            </connector>
+            <label>ISNEW_Legal: Customer Related (Contracts/Amendments)</label>
+        </rules>
+        <rules>
+            <name>ISNEW_Legal_Litigation_Dispute_Incident</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>NewRecord</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.RecordType.DeveloperName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Legal_Litigation_Dispute_Incident</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Legal_Litigation</targetReference>
+            </connector>
+            <label>ISNEW_Legal: Litigation/Dispute/Incident</label>
+        </rules>
+        <rules>
+            <name>ISNEW_All_Other_Record_Types</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>NewRecord</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.RecordType.DeveloperName</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Legal_Litigation_Dispute_Incident</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.RecordType.DeveloperName</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Legal_Customer_Contract</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>All_Other_Record_Types_Creation_Alert</targetReference>
+            </connector>
+            <label>ISNEW_All Other Record Types</label>
+        </rules>
+        <rules>
+            <name>ISCHANGED_Status</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Status__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Status_Changed</targetReference>
+            </connector>
+            <label>ISCHANGED Status</label>
+        </rules>
+        <rules>
+            <name>ISCHANGED_Owner</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.OwnerId</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record__Prior.OwnerId</leftValueReference>
+                <operator>StartsWith</operator>
+                <rightValue>
+                    <stringValue>00G</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assigned_to_User_Alert</targetReference>
+            </connector>
+            <label>ISCHANGED Owner</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Yes - Sends Email of Status Change only on when the requestor is not the request owner
+No - End</description>
+        <name>Status_Changed</name>
+        <label>Status Changed?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Yes</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Owner:User.Email</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>$Record.Requestor_s_Email__c</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Status_Changed_Alert</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <description>35854 - Corporate Requests: Update Email Template notifications for Owner &amp; Creator - PLNI0014767
+36286 - Corporate Requests: Update Email Template notifications for Owner &amp; Creator - PLNI0014767- New update - Send Status Update Emails only on Owner&apos;s Email not equals to Requestor&apos;s Email</description>
+    <environments>Default</environments>
+    <formulas>
+        <name>NewRecord</name>
+        <dataType>Boolean</dataType>
+        <expression>ISNEW()</expression>
+    </formulas>
+    <interviewLabel>Corporate Request: Email Alerts on Both Creation and Updation {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Corporate Request: Email Alerts on Both Creation and Updation</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Send_Email_Alerts_accordingly</targetReference>
+        </connector>
+        <filterFormula>OR(
+ISNEW(),
+AND(ISCHANGED({!$Record.OwnerId}),LEFT({!$Record__Prior.OwnerId}, 3) = &quot;00G&quot;),
+AND(ISCHANGED({!$Record.Status__c}),{!$Record.Owner:User.Email}&lt;&gt;{!$Record.Requestor_s_Email__c}))</filterFormula>
+        <object>Corporate_Request__c</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

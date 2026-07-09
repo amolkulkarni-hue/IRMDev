@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <description>Sales_Support_Request__c.Assigned_Task_Email</description>
+        <name>Assigned_Task_Email</name>
+        <label>Assigned Task Email</label>
+        <locationX>842</locationX>
+        <locationY>431</locationY>
+        <actionName>Sales_Support_Request__c.Assigned_Task_Email</actionName>
+        <actionType>emailAlert</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>Sales_Support_Request__c.Assigned_Task_Email</nameSegment>
+    </actionCalls>
+    <actionCalls>
+        <name>Assigned_Task_GCCS_Req_Email</name>
+        <label>Assigned Task GCCS Req Email</label>
+        <locationX>1106</locationX>
+        <locationY>431</locationY>
+        <actionName>Sales_Support_Request__c.Assigned_Task_Email_for_GCCS_Req</actionName>
+        <actionType>emailAlert</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>Sales_Support_Request__c.Assigned_Task_Email_for_GCCS_Req</nameSegment>
+        <offset>0</offset>
+    </actionCalls>
+    <actionCalls>
+        <description>Sales_Support_Request__c.Sales_Support_Closed_Email</description>
+        <name>Sales_Support_Closed_Email</name>
+        <label>Sales Support Closed Email</label>
+        <locationX>578</locationX>
+        <locationY>539</locationY>
+        <actionName>Sales_Support_Request__c.Sales_Support_Closed_Email</actionName>
+        <actionType>emailAlert</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>Sales_Support_Request__c.Sales_Support_Closed_Email</nameSegment>
+    </actionCalls>
+    <apiVersion>59.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <decisions>
+        <description>For Opportunity Support Record Type no emails should be there but Closed date field should be updated. (Gitlab story ##22650)</description>
+        <name>Closed_Request_for_Opportunity_Support</name>
+        <label>Closed Request for Opportunity Support</label>
+        <locationX>182</locationX>
+        <locationY>431</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Closed_Request</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Closed</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Closed_Date1</targetReference>
+            </connector>
+            <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+            <label>Request is Closed</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Opportunity Support Request: If the Request is in &apos;Opportunity Support&apos; Record Type. Following emails should not be sent. (Gitlab story #18403)
+Request is closed: Sends an alert to the sales rep when a request is closed
+Task Assigned: Email Alert: Assigned Task Email</description>
+        <name>Request_is_Assigned_or_Closed</name>
+        <label>Request is Assigned or Closed</label>
+        <locationX>776</locationX>
+        <locationY>323</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Opportunity_Support_Request</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.RecordType.Name</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Opportunity Support</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Closed_Request_for_Opportunity_Support</targetReference>
+            </connector>
+            <label>Opportunity Support Request</label>
+        </rules>
+        <rules>
+            <name>Request_is_Closed</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Closed</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Closed_Date</targetReference>
+            </connector>
+            <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+            <label>Request is Closed</label>
+        </rules>
+        <rules>
+            <name>Task_Assigned</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Assigned_Date__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Task_Type__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>BoB Coverage Change</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Status__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Closed</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.RecordType.Name</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Global Commercial Contracts Support</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assigned_Task_Email</targetReference>
+            </connector>
+            <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+            <label>Task Assigned</label>
+        </rules>
+        <rules>
+            <name>Task_Assigned_GCCS_Request</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Assigned_Date__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Task_Type__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>BoB Coverage Change</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Status__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Closed</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.RecordType.Name</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Global Commercial Contracts Support</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assigned_Task_GCCS_Req_Email</targetReference>
+            </connector>
+            <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+            <label>Task Assigned GCCS Request</label>
+        </rules>
+    </decisions>
+    <description>Migrated from the: Task Assigned and Request is Closed workflow rule
+Workflow rule description: Task Assigned: Email Alert: Assigned Task Email
+                                            Request is Closed: Sends an alert to the sales rep when a request is closed.
+(Gitlab users story #18103 for your reference)
+
+#35820 : Commercial Support Request: Email triggers for new and assigned GCCS requests.
+#36340 : PROD FIX - Commercial Support Request: Email triggers for assigned GCCS requests - (Only once email is triggered when its assigned)</description>
+    <environments>Default</environments>
+    <formulas>
+        <name>Closed_Date_Formula</name>
+        <dataType>DateTime</dataType>
+        <expression>NOW()</expression>
+    </formulas>
+    <interviewLabel>Task Assigned and Request is Closed {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Task Assigned and Request is Closed</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <description>Updates the closed date with current date and time</description>
+        <name>Update_Closed_Date</name>
+        <label>Update Closed Date</label>
+        <locationX>578</locationX>
+        <locationY>431</locationY>
+        <connector>
+            <targetReference>Sales_Support_Closed_Email</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>Closed_Date__c</field>
+            <value>
+                <elementReference>Closed_Date_Formula</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <description>Update the Closed Date field with current date and time., whenever Status is marked as &apos;Closed&apos;</description>
+        <name>Update_Closed_Date1</name>
+        <label>Update Closed Date</label>
+        <locationX>50</locationX>
+        <locationY>539</locationY>
+        <inputAssignments>
+            <field>Closed_Date__c</field>
+            <value>
+                <elementReference>Closed_Date_Formula</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>650</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Request_is_Assigned_or_Closed</targetReference>
+        </connector>
+        <filterLogic>1 OR (2 AND 3)</filterLogic>
+        <filters>
+            <field>Status__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Closed</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Assigned_Date__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Task_Type__c</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>BoB Coverage Change</stringValue>
+            </value>
+        </filters>
+        <object>Sales_Support_Request__c</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

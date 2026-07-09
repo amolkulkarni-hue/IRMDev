@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>62.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <customErrors>
+        <description>Throw Custom Error</description>
+        <name>Throw_Custom_Error</name>
+        <label>Throw Custom Error</label>
+        <locationX>314</locationX>
+        <locationY>539</locationY>
+        <customErrorMessages>
+            <errorMessage>The following error occurred while trying to update the associated opportunity record: {!ErrorMessage}</errorMessage>
+            <isFieldError>false</isFieldError>
+        </customErrorMessages>
+    </customErrors>
+    <decisions>
+        <description>Check if the Case Owners are Queues (NCSP FIFO (First in First out) , Data Entry)
+#33765: Added IMGS Queue</description>
+        <name>Check_Case_Owners</name>
+        <label>Check Case Owners</label>
+        <locationX>314</locationX>
+        <locationY>323</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Owner_Check</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Owner:Group.DeveloperName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>NCSP_FIFO_First_in_First_out</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Owner:Group.DeveloperName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Data_Entry</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Owner:Group.DeveloperName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>IMGS_Queue</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_related_Opportunity_Field</targetReference>
+            </connector>
+            <label>Owner Check</label>
+        </rules>
+    </decisions>
+    <description>This flow is to update Case related Opportunity&apos;s fields when Oppty is added to case. For reference, check user story #27072 on Gitlab
+#33765: Modified the flow to update NCSP status as Sent to NCSP for Cases with Owner as IMGS Queue</description>
+    <environments>Default</environments>
+    <formulas>
+        <name>ErrorMessage</name>
+        <dataType>String</dataType>
+        <expression>IF(
+    CONTAINS({!$Flow.FaultMessage}, &quot;FIELD_CUSTOM_VALIDATION_EXCEPTION&quot;),
+    TRIM(
+        LEFT(
+            MID(
+                {!$Flow.FaultMessage},
+                FIND(&quot;FIELD_CUSTOM_VALIDATION_EXCEPTION&quot;, {!$Flow.FaultMessage}) + LEN(&quot;FIELD_CUSTOM_VALIDATION_EXCEPTION&quot;) + 1,
+                LEN({!$Flow.FaultMessage})
+            ),
+            FIND(&quot;You can look up ExceptionCode values&quot;, 
+                MID(
+                    {!$Flow.FaultMessage},
+                    FIND(&quot;FIELD_CUSTOM_VALIDATION_EXCEPTION&quot;, {!$Flow.FaultMessage}) + LEN(&quot;FIELD_CUSTOM_VALIDATION_EXCEPTION&quot;) + 1,
+                    LEN({!$Flow.FaultMessage})
+                ) &amp; &quot;You can look up ExceptionCode values&quot;) - 1
+        )
+    ),
+    &quot;&quot;
+)</expression>
+    </formulas>
+    <interviewLabel>Case After Insert - Update Oppty Field {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Case After Insert - Update Oppty Field</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <description>Update related Opportunity Field &apos;NCSP Status&apos; to &apos;Sent to NCSP&apos;</description>
+        <name>Update_related_Opportunity_Field</name>
+        <label>Update related Opportunity Field</label>
+        <locationX>50</locationX>
+        <locationY>431</locationY>
+        <faultConnector>
+            <targetReference>Throw_Custom_Error</targetReference>
+        </faultConnector>
+        <inputAssignments>
+            <field>NCSP_Status__c</field>
+            <value>
+                <stringValue>Sent to NCSP</stringValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record.NCSP_Opportunity__r</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>188</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Check_Case_Owners</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>RecordType_Name__c</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>IME SC Case</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>RecordType_Name__c</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>IME SC Case Resolved</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>NCSP_Opportunity__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>OwnerId</field>
+            <operator>StartsWith</operator>
+            <value>
+                <stringValue>00G</stringValue>
+            </value>
+        </filters>
+        <object>Case</object>
+        <recordTriggerType>Create</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

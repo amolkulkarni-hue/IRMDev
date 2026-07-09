@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Recalled_Lock_Record</fullName>
+    <active>true</active>
+    <description>Recalled Deal Reviews are locked from further edits</description>
+    <errorConditionFormula>ISPICKVAL(Status__c, &apos;Recalled&apos;)</errorConditionFormula>
+    <errorMessage>This record has been Recalled, please create a new Deal Review to proceed</errorMessage>
+</ValidationRule>

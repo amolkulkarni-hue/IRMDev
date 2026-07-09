@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>60.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <description>Error is thrown if user is not assigned with relevant permission set</description>
+        <name>Account_Id_Can_not_be_edited</name>
+        <label>Account Id Can not be edited</label>
+        <locationX>50</locationX>
+        <locationY>995</locationY>
+        <assignmentItems>
+            <assignToReference>FinalError</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>AccountIdError</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Errors_occurred</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Error is thrown if user is not assigned with relevant permission set</description>
+        <name>Error</name>
+        <label>Error</label>
+        <locationX>50</locationX>
+        <locationY>395</locationY>
+        <assignmentItems>
+            <assignToReference>FinalError</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>ErrorMsg</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>FinalError</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>BlankLine</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Check_GSA_Field_Edit</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Error is thrown if user is not assigned with relevant permission set</description>
+        <name>GSA_SLED_Public_Sector_Error</name>
+        <label>GSA/SLED/Public Sector Error</label>
+        <locationX>50</locationX>
+        <locationY>695</locationY>
+        <assignmentItems>
+            <assignToReference>FinalError</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>GSAError</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>FinalError</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>BlankLine</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Check_if</targetReference>
+        </connector>
+    </assignments>
+    <constants>
+        <name>Blank</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue></stringValue>
+        </value>
+    </constants>
+    <customErrors>
+        <name>Display_the_error</name>
+        <label>Display the error</label>
+        <locationX>50</locationX>
+        <locationY>1295</locationY>
+        <customErrorMessages>
+            <errorMessage>{!FinalError}</errorMessage>
+            <isFieldError>false</isFieldError>
+        </customErrorMessages>
+    </customErrors>
+    <decisions>
+        <description>Checks if Primary Product Line field is changed by user or not and the User is bypassed if  &quot;Edit Primary Product Line in Late Stage Opp&quot; permission is assigned</description>
+        <name>Check_Changed_Values</name>
+        <label>Check Changed Values</label>
+        <locationX>182</locationX>
+        <locationY>287</locationY>
+        <defaultConnector>
+            <targetReference>Check_GSA_Field_Edit</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Is_Primary_Product_Line_Changed</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Primary_Product_Line__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Permission.Edit_Primary_Product_Line_in_Late_Stage_Opp</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Error</targetReference>
+            </connector>
+            <label>Is Primary Product Line Changed?</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Checks if GSA field is changed by user or not and the User is bypassed if  &quot;Edit  GSA Eligibility in Late Stage Opp&quot; permission is assigned</description>
+        <name>Check_GSA_Field_Edit</name>
+        <label>Check GSA Field Edit</label>
+        <locationX>182</locationX>
+        <locationY>587</locationY>
+        <defaultConnector>
+            <targetReference>Check_if</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Is_GSA_SLED_Public_Sector_Eligibility_field_Changed</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.GSA_Eligibility__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Permission.Edit_GSA_Eligibility_in_Late_Stage_Opp</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>GSA_SLED_Public_Sector_Error</targetReference>
+            </connector>
+            <label>Is GSA/SLED/Public Sector Eligibility field Changed?</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Checks if Account field is changed by user or not and the User is bypassed if  &quot;Edit Account in Late Stage Opp&quot; permission is assigned</description>
+        <name>Check_if</name>
+        <label>Check Account Name Field Edit</label>
+        <locationX>182</locationX>
+        <locationY>887</locationY>
+        <defaultConnector>
+            <targetReference>Errors_occurred</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Is_Account_Name_Changed</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.AccountId</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Permission.Edit_Account_in_Late_Stage_Opp</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Account_Id_Can_not_be_edited</targetReference>
+            </connector>
+            <label>Is Account Name Changed?</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Errors_occurred</name>
+        <label>Errors occurred?</label>
+        <locationX>182</locationX>
+        <locationY>1187</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>Error</leftValueReference>
+                <operator>WasVisited</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>GSA_SLED_Public_Sector_Error</leftValueReference>
+                <operator>WasVisited</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Account_Id_Can_not_be_edited</leftValueReference>
+                <operator>WasVisited</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Display_the_error</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <description>#21307: We are in the process of updating the opportunity record in order to lock certain fields and functionality from seller edit/add in Stage 5, 6 and 7. There are additional fields/functionality that need to be locked down from editing/adding: Primary Product Line ,GSA,  Account Name fields
+#24480:  Excluding flow to run for CPQ  Sales and Billing Opportunities</description>
+    <environments>Default</environments>
+    <interviewLabel>Opportunity Validation {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Opportunity Validation</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>56</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Check_Changed_Values</targetReference>
+        </connector>
+        <filterFormula>AND(
+AND(
+    OR(ISPICKVAL({!$Record.StageName},&apos;5 - Signed/PO in&apos;),
+        ISPICKVAL({!$Record.StageName},&apos;6 - Setup&apos;),
+        ISPICKVAL({!$Record.StageName},&apos;7 - Closed&apos;) 
+        ) ,
+    NOT(ISPICKVAL({!$Record__Prior.StageName},&apos;4 - Negotiate&apos;))
+),
+OR(
+    ISCHANGED({!$Record.Primary_Product_Line__c}) ,
+    ISCHANGED({!$Record.GSA_Eligibility__c}),
+    ISCHANGED({!$Record.AccountId})
+    ),
+OR(
+{!$Record.RecordType.DeveloperName}=&apos;Standard_Opportunity&apos;,
+{!$Record.RecordType.DeveloperName}=&apos;IMLA_Standard_Opportunity&apos;,
+{!$Record.RecordType.DeveloperName}=&apos;IME_Standard_Opportunity&apos;,
+{!$Record.RecordType.DeveloperName}=&apos;IMAP_Standard_Opportunity&apos;
+)
+)</filterFormula>
+        <object>Opportunity</object>
+        <recordTriggerType>Update</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Active</status>
+    <textTemplates>
+        <name>AccountIdError</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>You cannot edit the Account Name once an Opportunity has been Won. Need help? Contact your Sales Operations Business Partner.</text>
+    </textTemplates>
+    <textTemplates>
+        <name>BlankLine</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>&lt;br&gt;&lt;br&gt;</text>
+    </textTemplates>
+    <textTemplates>
+        <name>EditPrimaryproductlinepermissionset</name>
+        <isViewedAsPlainText>false</isViewedAsPlainText>
+        <text>&lt;p&gt;&lt;span style=&quot;font-size: 11.36px; font-family: Arial, Helvetica, sans-serif; color: rgb(0, 0, 0);&quot;&gt;Edit_Primary_Product_Line_in_Late_Stage_Opp&lt;/span&gt;&lt;/p&gt;</text>
+    </textTemplates>
+    <textTemplates>
+        <name>ErrorMsg</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>You cannot edit the Primary Product Line once an Opportunity has been Won. Need help? Contact your Sales Operations Business Partner.</text>
+    </textTemplates>
+    <textTemplates>
+        <name>GSAError</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>You cannot edit the GSA/SLED/Public Sector Eligibility  once an Opportunity has been Won. Need help? Contact your Sales Operations Business Partner.</text>
+    </textTemplates>
+    <variables>
+        <name>FinalError</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>

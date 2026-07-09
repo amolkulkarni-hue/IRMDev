@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>TotalAmount__c</fullName>
+    <description>This field is used by Emptoris integration to calculate the the top 5 customer accounts, by adding PY and CY total amounts.</description>
+    <formula>NA_CY_YTD_TOTAL__c  +  NA_PY_Full_Year_TOTAL__c</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <inlineHelpText>This field is used by Emptoris integration to calculate the the top 5 customer accounts, by adding PY and CY total amounts.</inlineHelpText>
+    <label>Total Amount</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>2</scale>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Currency</type>
+</CustomField>

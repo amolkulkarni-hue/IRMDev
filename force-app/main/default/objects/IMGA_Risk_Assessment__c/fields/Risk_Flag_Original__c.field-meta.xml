@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Risk_Flag_Original__c</fullName>
+    <externalId>false</externalId>
+    <formula>IF(
+	AND( Risk_Score_Original__c  &gt;=10
+	),
+IMAGE(&quot;/img/msg_icons/error16.png&quot;,&quot;High Risk&quot;) &amp;&quot; View &quot;&amp; HYPERLINK(&quot;/00O80000005Kfhl?pv0=&quot; &amp;   IMGA_Account__r.Name  , &quot;Customer Ids by Risk&quot;),
+
+IF(
+	AND(	Risk_Score_Original__c  &lt;10,
+		Risk_Score_Original__c  &gt;=7
+	),
+IMAGE(&quot;/img/msg_icons/warning16.png&quot;,&quot;Medium Risk&quot;) &amp;&quot; View &quot;&amp; HYPERLINK(&quot;/00O80000005Kfhl?pv0=&quot; &amp;  IMGA_Account__r.Name  , &quot;Customer Ids by Risk&quot;),
+
+IF(
+	AND(	Risk_Score_Original__c  &lt;7,
+		Risk_Score_Original__c  &gt;=1
+	),
+IMAGE(&quot;/img/msg_icons/confirm16.png&quot;,&quot;Low Risk&quot;) &amp;&quot; View &quot;&amp; HYPERLINK(&quot;/00O80000005Kfhl?pv0=&quot; &amp;  IMGA_Account__r.Name  , &quot;Customer Ids by Risk&quot;),
+&quot;None&quot;)))</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Risk Flag</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

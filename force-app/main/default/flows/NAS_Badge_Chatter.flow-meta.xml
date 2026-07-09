@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <processMetadataValues>
+            <name>apexSelection</name>
+            <value>
+                <stringValue>Post to Chatter</stringValue>
+            </value>
+        </processMetadataValues>
+        <name>myRule_1_A1</name>
+        <label>Post To Chatter</label>
+        <locationX>100</locationX>
+        <locationY>200</locationY>
+        <actionName>NAS_PostToChatterAction</actionName>
+        <actionType>apex</actionType>
+        <inputParameters>
+            <processMetadataValues>
+                <name>dataType</name>
+                <value>
+                    <stringValue>String</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>isRequired</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideLabel</name>
+                <value>
+                    <stringValue>Message</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>maxOccurs</name>
+                <value>
+                    <numberValue>0.0</numberValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>objectType</name>
+                <value>
+                    <stringValue></stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>rightHandSideType</name>
+                <value>
+                    <stringValue>Formula</stringValue>
+                </value>
+            </processMetadataValues>
+            <name>message</name>
+            <value>
+                <elementReference>formula_2_myRule_1_A1_4637331876</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <processMetadataValues>
+                <name>dataType</name>
+                <value>
+                    <stringValue>ID</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>isRequired</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideLabel</name>
+                <value>
+                    <stringValue>Subject Id</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>maxOccurs</name>
+                <value>
+                    <numberValue>0.0</numberValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>objectType</name>
+                <value>
+                    <stringValue></stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>rightHandSideType</name>
+                <value>
+                    <stringValue>Reference</stringValue>
+                </value>
+            </processMetadataValues>
+            <name>subjectId</name>
+            <value>
+                <elementReference>myVariable_current.User__r.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>NAS_PostToChatterAction</nameSegment>
+    </actionCalls>
+    <apiVersion>49.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <decisions>
+        <processMetadataValues>
+            <name>index</name>
+            <value>
+                <numberValue>0.0</numberValue>
+            </value>
+        </processMetadataValues>
+        <name>myDecision</name>
+        <label>myDecision</label>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>default</defaultConnectorLabel>
+        <rules>
+            <name>myRule_1</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>formula_myRule_1</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>myRule_1_A1</targetReference>
+            </connector>
+            <label>Badge Creation</label>
+        </rules>
+    </decisions>
+    <description>Creates Chatter Post for New Badge Assignments [http://smukov.github.io/blog/2018/08/11/Post-to-Chatter-from-Process-Builder-with-hyperlinks-to-records/ ]</description>
+    <formulas>
+        <processMetadataValues>
+            <name>originalFormula</name>
+            <value>
+                <stringValue>    &apos; &lt;p&gt;Congratulations, You have just been awarded a shiny new Badge!&lt;/p&gt;&apos;
+&amp; &apos; &lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;b&gt;{&apos; &amp; [Badge_Assignments__c].Badge__c &amp; &apos;}&lt;/b&gt;&lt;/p&gt;&apos;
+&amp; &apos; &lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;p&gt;&apos; &amp; [Badge_Assignments__c].Comments__c &amp; &apos; &lt;/p&gt;&apos;
+&amp; &apos; &lt;p&gt;For more details check out:&lt;/p&gt;&apos;
+&amp; &apos; &lt;p&gt; Your Profile  {&apos; &amp; [Badge_Assignments__c].User__c.Id &amp; &apos;}&lt;/p&gt;&apos;
+&amp; &apos; &lt;p&gt; Your Badge Assignment  {&apos; &amp; [Badge_Assignments__c].Id &amp; &apos;}&lt;/p&gt;&apos;
+&amp; &apos; &lt;p&gt;Awesome job.&lt;/p&gt;&apos;</stringValue>
+            </value>
+        </processMetadataValues>
+        <name>formula_2_myRule_1_A1_4637331876</name>
+        <dataType>String</dataType>
+        <expression>    &apos; &lt;p&gt;Congratulations, You have just been awarded a shiny new Badge!&lt;/p&gt;&apos;
+&amp; &apos; &lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;b&gt;{&apos; &amp; {!myVariable_current.Badge__c} &amp; &apos;}&lt;/b&gt;&lt;/p&gt;&apos;
+&amp; &apos; &lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;p&gt;&apos; &amp; {!myVariable_current.Comments__c} &amp; &apos; &lt;/p&gt;&apos;
+&amp; &apos; &lt;p&gt;For more details check out:&lt;/p&gt;&apos;
+&amp; &apos; &lt;p&gt; Your Profile  {&apos; &amp; {!myVariable_current.User__r.Id} &amp; &apos;}&lt;/p&gt;&apos;
+&amp; &apos; &lt;p&gt; Your Badge Assignment  {&apos; &amp; {!myVariable_current.Id} &amp; &apos;}&lt;/p&gt;&apos;
+&amp; &apos; &lt;p&gt;Awesome job.&lt;/p&gt;&apos;</expression>
+    </formulas>
+    <formulas>
+        <processMetadataValues>
+            <name>originalFormula</name>
+            <value>
+                <stringValue>1 = 1</stringValue>
+            </value>
+        </processMetadataValues>
+        <name>formula_myRule_1</name>
+        <dataType>Boolean</dataType>
+        <expression>1 = 1</expression>
+    </formulas>
+    <interviewLabel>NAS_Badge_Chatter-44_InterviewLabel</interviewLabel>
+    <label>NAS Badge Chatter</label>
+    <processMetadataValues>
+        <name>ObjectType</name>
+        <value>
+            <stringValue>Badge_Assignments__c</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>ObjectVariable</name>
+        <value>
+            <elementReference>myVariable_current</elementReference>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OldObjectVariable</name>
+        <value>
+            <elementReference>myVariable_old</elementReference>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>TriggerType</name>
+        <value>
+            <stringValue>onCreateOnly</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>Workflow</processType>
+    <startElementReference>myDecision</startElementReference>
+    <status>Obsolete</status>
+    <variables>
+        <name>myVariable_current</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+        <objectType>Badge_Assignments__c</objectType>
+    </variables>
+    <variables>
+        <name>myVariable_old</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Badge_Assignments__c</objectType>
+    </variables>
+</Flow>

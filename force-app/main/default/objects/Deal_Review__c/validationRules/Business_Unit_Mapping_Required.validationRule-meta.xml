@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Business_Unit_Mapping_Required</fullName>
+    <active>true</active>
+    <description>Added it as a part of story #36540 : Stop creating deal review record if Business unit is null.</description>
+    <errorConditionFormula>ISBLANK(Business_Unit__c)</errorConditionFormula>
+    <errorMessage>The Business Unit related to your Opportunity cannot be determined. Please review the Primary Product Line for accuracy.</errorMessage>
+</ValidationRule>

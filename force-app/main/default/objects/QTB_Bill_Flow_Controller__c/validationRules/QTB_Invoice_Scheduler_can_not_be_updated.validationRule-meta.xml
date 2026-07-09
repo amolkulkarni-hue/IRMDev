@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>QTB_Invoice_Scheduler_can_not_be_updated</fullName>
+    <active>true</active>
+    <description>#GITLAB:5038 --&gt; To throw an error while updating the invoice scheduler if post bill or pre bill is checked.</description>
+    <errorConditionFormula>AND(NOT($Setup.Metadata_Activation_Settings__c.Disable_VR__c &amp;&amp;
+OR(ISBLANK($Setup.Metadata_Activation_Settings__c.SObject_API_Name__c),
+CONTAINS($Setup.Metadata_Activation_Settings__c.SObject_API_Name__c, &apos;QTB_Bill_Flow_Controller__c&apos;))),
+ ISCHANGED( Invoice_Scheduler__c ), OR( Execute_Post_Bill_Run__c = TRUE, Execute_Pre_Bill_Run__c = TRUE)  )</errorConditionFormula>
+    <errorMessage>Invoice Scheduler Can not be updated once Pre Bill or Post Bill Checked</errorMessage>
+</ValidationRule>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Rush_Transport_not_numerical</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND( NOT( Unknown_Pricing__c = True), Rush_Transport__c &lt;&gt;&quot;-&quot;, NOT(ISNUMBER( Rush_Transport__c )))</errorConditionFormula>
+    <errorDisplayField>Rush_Transport__c</errorDisplayField>
+    <errorMessage>Only numerical characters, periods (.) and dashes (-) are valid in the pricing fields.</errorMessage>
+</ValidationRule>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>No_Null_or_Blank_Picklists</fullName>
+    <active>true</active>
+    <errorConditionFormula>OR(ISBLANK(TEXT(  Field_Type_1__c )),ISBLANK(TEXT(  Field_Type_2__c )),ISBLANK(TEXT(  Field_Type_3__c )),ISBLANK(TEXT(  Letter_0__c )),ISBLANK(TEXT(  Letter_1__c )),ISBLANK(TEXT(  Letter_2__c )),ISBLANK(TEXT(  Letter_3__c )),ISBLANK(TEXT(  Trigger__c )),ISBLANK(TEXT(  Business_Function__c )))</errorConditionFormula>
+    <errorMessage>All picklists require data.</errorMessage>
+</ValidationRule>

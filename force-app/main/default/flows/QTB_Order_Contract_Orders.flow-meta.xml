@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>55.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <decisions>
+        <name>Check_for_Primary_Product_Line</name>
+        <label>Check for Primary Product Line</label>
+        <locationX>528</locationX>
+        <locationY>361</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Check_Warehouse_and_Logistics</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Opportunity.Primary_Product_Line__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Warehouse and Logistics</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Contract_Order</targetReference>
+            </connector>
+            <label>Check Warehouse and Logistics</label>
+        </rules>
+        <rules>
+            <name>Billing_Order</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.RecordType.Name</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Billing Order</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.QTB_DM_Source_System_Name__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>SITAD</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Contract_Order</targetReference>
+            </connector>
+            <label>Billing Order</label>
+        </rules>
+    </decisions>
+    <environments>Default</environments>
+    <interviewLabel>QTB Order Contract Orders {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>QTB Order Contract Orders</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <name>Contract_Order</name>
+        <label>Contract Order</label>
+        <locationX>773</locationX>
+        <locationY>364</locationY>
+        <inputAssignments>
+            <field>SBQQ__Contracted__c</field>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>410</locationX>
+        <locationY>48</locationY>
+        <object>Order</object>
+        <recordTriggerType>Update</recordTriggerType>
+        <scheduledPaths>
+            <name>Wait_to_Activate</name>
+            <connector>
+                <targetReference>Check_for_Primary_Product_Line</targetReference>
+            </connector>
+            <label>Wait to Activate</label>
+            <offsetNumber>1</offsetNumber>
+            <offsetUnit>Minutes</offsetUnit>
+            <recordField>ActivatedDate</recordField>
+            <timeSource>RecordField</timeSource>
+        </scheduledPaths>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

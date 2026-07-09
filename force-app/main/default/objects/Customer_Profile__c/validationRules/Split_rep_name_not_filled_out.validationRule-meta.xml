@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Split_rep_name_not_filled_out</fullName>
+    <active>true</active>
+    <description>Catches the user from entering in a percentage for a split rep, but not entering in the name of the split rep.</description>
+    <errorConditionFormula>and( Not(ISBLANK( Split_Rep_percent__c)), ISBLANK( Split_Commission_Rep__c ))</errorConditionFormula>
+    <errorMessage>Please enter a name for the Split Commission Rep</errorMessage>
+</ValidationRule>

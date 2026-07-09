@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <description>Appeal__c.Accepted_Alert</description>
+        <name>Accepted_Alert</name>
+        <label>Accepted Alert</label>
+        <locationX>1106</locationX>
+        <locationY>539</locationY>
+        <actionName>Appeal__c.Accepted_Alert</actionName>
+        <actionType>emailAlert</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>Appeal__c.Accepted_Alert</nameSegment>
+    </actionCalls>
+    <actionCalls>
+        <description>Appeal__c.Acknowledge_Email_Alert</description>
+        <name>Acknowledge_Email_Alert</name>
+        <label>Acknowledge Email Alert</label>
+        <locationX>50</locationX>
+        <locationY>431</locationY>
+        <actionName>Appeal__c.Acknowledge_Email_Alert</actionName>
+        <actionType>emailAlert</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>Appeal__c.Acknowledge_Email_Alert</nameSegment>
+    </actionCalls>
+    <actionCalls>
+        <description>Appeal__c.Acknowledge_Email_Alert</description>
+        <name>Acknowledge_Email_Alert_1</name>
+        <label>Acknowledge Email Alert</label>
+        <locationX>314</locationX>
+        <locationY>539</locationY>
+        <actionName>Appeal__c.Acknowledge_Email_Alert</actionName>
+        <actionType>emailAlert</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>Appeal__c.Acknowledge_Email_Alert</nameSegment>
+    </actionCalls>
+    <actionCalls>
+        <description>Appeal__c.Already_Being_Processed_Alert</description>
+        <name>Already_Being_Processed_Alert</name>
+        <label>Already Being Processed Alert</label>
+        <locationX>842</locationX>
+        <locationY>539</locationY>
+        <actionName>Appeal__c.Already_Being_Processed_Alert</actionName>
+        <actionType>emailAlert</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>Appeal__c.Already_Being_Processed_Alert</nameSegment>
+    </actionCalls>
+    <actionCalls>
+        <description>Appeal__c.Denied_Alert</description>
+        <name>Denied_Alert</name>
+        <label>Denied Alert</label>
+        <locationX>1370</locationX>
+        <locationY>539</locationY>
+        <actionName>Appeal__c.Denied_Alert</actionName>
+        <actionType>emailAlert</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>Appeal__c.Denied_Alert</nameSegment>
+    </actionCalls>
+    <actionCalls>
+        <description>Appeal__c.Info_Request_Alert</description>
+        <name>Info_Request_Alert</name>
+        <label>Info Request Alert</label>
+        <locationX>578</locationX>
+        <locationY>539</locationY>
+        <actionName>Appeal__c.Info_Request_Alert</actionName>
+        <actionType>emailAlert</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>Appeal__c.Info_Request_Alert</nameSegment>
+    </actionCalls>
+    <apiVersion>60.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <decisions>
+        <description>Update the field or sends out an email notification based on the appeal stage</description>
+        <name>Appeal_Stage_Change</name>
+        <label>Appeal Stage Change</label>
+        <locationX>974</locationX>
+        <locationY>431</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Acknowledge_Receipt_Update</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Appeal_Stage__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Acknowledge receipt</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Acknowledge_Email_Alert_1</targetReference>
+            </connector>
+            <label>Acknowledge Receipt Update</label>
+        </rules>
+        <rules>
+            <name>Request_More_Info_Update</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Appeal_Stage__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Request more information</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Info_Request_Alert</targetReference>
+            </connector>
+            <label>Request More Info Update</label>
+        </rules>
+        <rules>
+            <name>Already_Being_Processed_Update</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Appeal_Stage__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Already being processed</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Already_Being_Processed_Alert</targetReference>
+            </connector>
+            <label>Already Being Processed Update</label>
+        </rules>
+        <rules>
+            <name>Accepted_Update</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Appeal_Stage__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Accepted</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Accepted_Alert</targetReference>
+            </connector>
+            <label>Accepted Update</label>
+        </rules>
+        <rules>
+            <name>Denied_Update</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Appeal_Stage__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Denied</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Denied_Alert</targetReference>
+            </connector>
+            <label>Denied Update</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Checks if the record is new or the appeal stage is updated. If the appeal stage = acknowledge, checks if the commision rep of finance rep has been assigned</description>
+        <name>Created_or_Updated</name>
+        <label>Created or Updated</label>
+        <locationX>974</locationX>
+        <locationY>323</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Created</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>New</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Acknowledge_Email_Alert</targetReference>
+            </connector>
+            <label>Created</label>
+        </rules>
+        <rules>
+            <name>Current_Stage_Entered_Date</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Appeal_Stage__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Appeal_Stage_Change</targetReference>
+            </connector>
+            <label>Current Stage Entered Date</label>
+        </rules>
+    </decisions>
+    <description>Sends an Email Alert to Commission Appeal owner for Acknowledge receipt, Request more information, Already Being Processed, Accepted and Denied stage.
+(Gitlab story #21002 for reference)</description>
+    <environments>Default</environments>
+    <formulas>
+        <name>New</name>
+        <dataType>Boolean</dataType>
+        <expression>ISNEW()</expression>
+    </formulas>
+    <formulas>
+        <description>Fetches the current time</description>
+        <name>Now</name>
+        <dataType>DateTime</dataType>
+        <expression>Now()</expression>
+    </formulas>
+    <formulas>
+        <name>SubmissionCounter</name>
+        <dataType>Number</dataType>
+        <expression>{!$Record.Appeal_Submission_Attempts__c} + 1</expression>
+        <scale>2</scale>
+    </formulas>
+    <formulas>
+        <name>Today</name>
+        <dataType>Date</dataType>
+        <expression>TODAY()</expression>
+    </formulas>
+    <interviewLabel>Commission Appeals Stage Update Email Alert {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Commission Appeals Stage Update Email Alert</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>848</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Created_or_Updated</targetReference>
+        </connector>
+        <filterFormula>OR( ISNEW(), ISCHANGED( {!$Record.Appeal_Stage__c} ))</filterFormula>
+        <object>Appeal__c</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Override_Potential_Volume_Tape__c</fullName>
+    <externalId>false</externalId>
+    <formula>IF( 
+	AND( 
+		NOT(ISBLANK( Override_Existing_IM_Volume_Tape__c )), 
+		NOT(ISBLANK( Override_Overall_Customer_Vol_Tape__c )) 
+	), 
+	 Override_Overall_Customer_Vol_Tape__c  -  Override_Existing_IM_Volume_Tape__c , 
+
+IF( 
+	AND( 
+		ISBLANK( Override_Existing_IM_Volume_Tape__c ), 
+		NOT(ISBLANK( Override_Overall_Customer_Vol_Tape__c )) 
+	), 
+	 Override_Overall_Customer_Vol_Tape__c  -  IM_Quantity_Tape__c , 
+
+IF( 
+	AND( 
+		NOT(ISBLANK( Override_Existing_IM_Volume_Tape__c )), 
+		ISBLANK( Override_Overall_Customer_Vol_Tape__c ) 
+	), 
+	Profiled_Quantity_Tape__c -  Override_Existing_IM_Volume_Tape__c , NULL 
+) 
+) 
+)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <inlineHelpText>The updated difference between the total amount of overall customer tape volume and what tape volume IM has (It’s calculated for you) based on rep edits.</inlineHelpText>
+    <label>Override - Potential Volume – Tape</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>2</scale>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

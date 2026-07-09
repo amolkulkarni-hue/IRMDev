@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>External_Counsel_Required</fullName>
+    <active>true</active>
+    <description>When a user with legal profile changes the status from new to other status ,external counsel required field should have a value in it.Created as part of gitlab#36369</description>
+    <errorConditionFormula>AND
+(($Profile.Name == &apos;Legal&apos;),(ISCHANGED( Status__c )), 
+ISBLANK(TEXT( External_Counsel_Required__c )  ) )</errorConditionFormula>
+    <errorDisplayField>External_Counsel_Required__c</errorDisplayField>
+    <errorMessage>Please indicate if External Counsel is Required for this Request</errorMessage>
+</ValidationRule>

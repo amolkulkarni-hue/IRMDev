@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Customer_ID_for_Inventory_Transfer__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>filtered look up to the customer account table for North America - SKP only</description>
+    <inlineHelpText>Enter the existing Customer Account the inventory is being transferred to.</inlineHelpText>
+    <label>Customer ID for Inventory Transfer</label>
+    <lookupFilter>
+        <active>true</active>
+        <booleanFilter>2 AND ((1 AND 5) OR (3 AND 4))</booleanFilter>
+        <filterItems>
+            <field>IM_Customer_Account__c.Source_System__c</field>
+            <operation>equals</operation>
+            <value>SKP NA</value>
+        </filterItems>
+        <filterItems>
+            <field>IM_Customer_Account__c.IM_Status__c</field>
+            <operation>equals</operation>
+            <value>Active</value>
+        </filterItems>
+        <filterItems>
+            <field>IM_Customer_Account__c.Source_System__c</field>
+            <operation>equals</operation>
+            <value>SKP Europe</value>
+        </filterItems>
+        <filterItems>
+            <field>$Profile.Name</field>
+            <operation>contains</operation>
+            <value>IME</value>
+        </filterItems>
+        <filterItems>
+            <field>$Profile.Name</field>
+            <operation>notContain</operation>
+            <value>IME</value>
+        </filterItems>
+        <infoMessage>This lookup will only return active North America or IME Customer Accounts from SKP</infoMessage>
+        <isOptional>false</isOptional>
+    </lookupFilter>
+    <referenceTo>IM_Customer_Account__c</referenceTo>
+    <relationshipLabel>Customer Profile (Customer ID for Inventory Transfer)</relationshipLabel>
+    <relationshipName>Customer_Profile1</relationshipName>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

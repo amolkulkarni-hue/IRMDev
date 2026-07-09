@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>64.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <description>Assign Translated Name</description>
+        <name>Assign_Translated_Name</name>
+        <label>Assign Translated Name</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.QTB_Translated_Billing_Country__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Loop_through_Accounts_for_Translated_name.QTB_Translated_Country_Name__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_the_Translated_Country_name</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>No Action</description>
+        <name>Default_Country_name</name>
+        <label>Default Country name</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.QTB_Translated_Billing_Country__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.BillingCountry</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_Default_Country</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>No Assignment</description>
+        <name>No_Assignment</name>
+        <label>No Assignment</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.QTB_Translated_Billing_Country__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.BillingCountry</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_to_Billing_Country_name</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <description>Check for Translated name</description>
+        <name>Check_for_Translated_name</name>
+        <label>Check for Translated name</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Translated_name_required</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.BillingCountry</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>Loop_through_Accounts_for_Translated_name.QTB_Country__c</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.QTB_Language__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>Loop_through_Accounts_for_Translated_name.QTB_Language__c</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_Translated_Name</targetReference>
+            </connector>
+            <label>Translated name</label>
+        </rules>
+        <rules>
+            <name>Translated_name_not_available</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.BillingCountry</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>Loop_through_Accounts_for_Translated_name.QTB_Country__c</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.QTB_Language__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>Loop_through_Accounts_for_Translated_name.QTB_Language__c</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>No_Assignment</targetReference>
+            </connector>
+            <label>Translated name not available</label>
+        </rules>
+    </decisions>
+    <description>Billing Country translated based on language selected on Account and translation defined in Metadata (QTB Country Name Translations) else it will show the selected Billing Country</description>
+    <environments>Default</environments>
+    <interviewLabel>QTB Billing Country Name Translation {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>QTB Billing Country Name Translation</label>
+    <loops>
+        <description>Looping through Accounts for Translated name</description>
+        <name>Loop_through_Accounts_for_Translated_name</name>
+        <label>Loop through Accounts for Translated name</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <collectionReference>Get_Billing_Country_Translated_Value</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>Check_for_Translated_name</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>Default_Country_name</targetReference>
+        </noMoreValuesConnector>
+    </loops>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <description>Get Billing Country Translated Value from &apos;QTB Country Name Translations&apos; Custom Metadata based on Account&apos;s Billing Country &amp; Language combination</description>
+        <name>Get_Billing_Country_Translated_Value</name>
+        <label>Get Billing Country Translated Value</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Loop_through_Accounts_for_Translated_name</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>QTB_Country__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.BillingCountry</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>QTB_Language__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.QTB_Language__c</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>QTB_Country_Name_Translation__mdt</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordUpdates>
+        <name>Update_Default_Country</name>
+        <label>Update Default Country</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <inputAssignments>
+            <field>QTB_Translated_Billing_Country__c</field>
+            <value>
+                <elementReference>$Record.BillingCountry</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <description>Update the Translated Country name</description>
+        <name>Update_the_Translated_Country_name</name>
+        <label>Update the Translated Country name</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <inputAssignments>
+            <field>QTB_Translated_Billing_Country__c</field>
+            <value>
+                <elementReference>Loop_through_Accounts_for_Translated_name.QTB_Translated_Country_Name__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <description>Update to Billing Country name</description>
+        <name>Update_to_Billing_Country_name</name>
+        <label>Update to Billing Country name</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <inputAssignments>
+            <field>QTB_Translated_Billing_Country__c</field>
+            <value>
+                <elementReference>$Record.BillingCountry</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Get_Billing_Country_Translated_Value</targetReference>
+        </connector>
+        <filterLogic>or</filterLogic>
+        <filters>
+            <field>BillingCountry</field>
+            <operator>IsChanged</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>QTB_Language__c</field>
+            <operator>IsChanged</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <object>Account</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Active</status>
+    <variables>
+        <name>translatedcountryname</name>
+        <dataType>String</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>Translated Country Name</description>
+        <name>translatedcountrynamesingle</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>

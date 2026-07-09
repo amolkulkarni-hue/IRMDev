@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>UnknownPricing_value_in_price_fields</fullName>
+    <active>true</active>
+    <description>Unknown pricing cannot be selected if there is a value in any of the price fields. It prompts user to enter values or a dash ( - ) in remaining fields.</description>
+    <errorConditionFormula>IF(Unknown_Pricing__c = True,
+ IF(OR(
+   AND(NOT(ISBLANK( Retrieval_File__c )), NOT(Retrieval_File__c = &quot;-&quot;)),
+   AND(NOT(ISBLANK( Retrieval_Box__c )), NOT(Retrieval_Box__c = &quot;-&quot;)),
+   AND(NOT(ISBLANK( Permanent_Withdrawal__c )), NOT(Permanent_Withdrawal__c = &quot;-&quot;)),
+   AND(NOT(ISBLANK( Std_Journey_Charge__c )), NOT(Std_Journey_Charge__c = &quot;-&quot;)),
+   AND(NOT(ISBLANK( Handling_Charge__c )), NOT(Handling_Charge__c = &quot;-&quot;)),
+   AND(NOT(ISBLANK( Rush_Transport__c )), NOT(Rush_Transport__c = &quot;-&quot;)),
+   AND(NOT(ISBLANK( Minimum_Storage_Charge__c )), NOT(Minimum_Storage_Charge__c = &quot;-&quot;)),
+   AND(NOT(ISBLANK( Admin_Fee__c )), NOT(Admin_Fee__c = &quot;-&quot;))
+ ),
+ TRUE,
+ FALSE
+ ),
+FALSE
+)</errorConditionFormula>
+    <errorDisplayField>Unknown_Pricing__c</errorDisplayField>
+    <errorMessage>Unknown Pricing cannot be selected if one or more pricing fields contain a value.  Please either uncheck Unknown Pricing or remove the values from the pricing fields.</errorMessage>
+</ValidationRule>

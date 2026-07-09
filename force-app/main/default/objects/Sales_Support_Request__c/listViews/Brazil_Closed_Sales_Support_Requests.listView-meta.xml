@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Brazil_Closed_Sales_Support_Requests</fullName>
+    <columns>Request_Number__c</columns>
+    <columns>Owner_Full_Name__c</columns>
+    <columns>NAME</columns>
+    <columns>Status__c</columns>
+    <columns>Estimated_Complete_Date__c</columns>
+    <columns>Task_Type__c</columns>
+    <columns>Sub_Type__c</columns>
+    <columns>CREATED_DATE</columns>
+    <columns>Closed_Date__c</columns>
+    <columns>Parent_Sales_Support_Request__c</columns>
+    <columns>Sales_Rep__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Requestor_s_Country__c</field>
+        <operation>equals</operation>
+        <value>Brazil</value>
+    </filters>
+    <label>Brazil Closed Sales Support Requests</label>
+    <sharedTo>
+        <group>IMLA_Sales_Support</group>
+        <role>IMLA</role>
+        <role>IMLAAdmin</role>
+    </sharedTo>
+</ListView>

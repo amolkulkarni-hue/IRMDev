@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>GI_Accounts_Support_Queue</fullName>
+    <columns>Affected_Account_IMGA__c</columns>
+    <columns>NAME</columns>
+    <columns>Status__c</columns>
+    <columns>Requestor_s_Name__c</columns>
+    <columns>Request_Number__c</columns>
+    <columns>Date_Submitted_2__c</columns>
+    <columns>Estimated_Complete_Date__c</columns>
+    <filterScope>Queue</filterScope>
+    <filters>
+        <field>Status__c</field>
+        <operation>equals</operation>
+        <value>New,In Progress</value>
+    </filters>
+    <label>GI Accounts Support Queue</label>
+    <queue>GSAP_Support_Queue</queue>
+</ListView>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Enforce_Proper_Procedure</fullName>
+    <active>true</active>
+    <description>stops users from using the +New Record feature from the Opportunity layout</description>
+    <errorConditionFormula>IF(Utility__c = TRUE, TRUE, FALSE)</errorConditionFormula>
+    <errorMessage>This is an invalid method to create a Deal Review.
+Please use the &quot;New Deal Review&quot; button on the Opportunity page</errorMessage>
+</ValidationRule>

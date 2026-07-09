@@ -1,0 +1,625 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <description>Create Task &apos;Welcome Call Attempt&apos;</description>
+        <name>Create_Task_Welcome_Call_Attempt</name>
+        <label>Create Task &apos;Welcome Call Attempt&apos;</label>
+        <locationX>1370</locationX>
+        <locationY>528</locationY>
+        <actionName>NewTask</actionName>
+        <actionType>quickAction</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>OwnerId</name>
+            <value>
+                <elementReference>Get_Cases_records.OwnerId</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>contextId</name>
+            <value>
+                <elementReference>Get_Cases_records.Id</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>WhatId</name>
+            <value>
+                <elementReference>Get_Cases_records.Id</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>Subject</name>
+            <value>
+                <stringValue>^^$$## NCSP - Task Automation- Welcome Call</stringValue>
+            </value>
+        </inputParameters>
+        <nameSegment>NewTask</nameSegment>
+    </actionCalls>
+    <apiVersion>57.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <decisions>
+        <description>1) NCSP Welcome Call Counter.(For reference, check user story #13407)
+2) NCSP Update Welcome Call Counter &amp; Date Initial Welcome Call Field. (For reference, check user story #13407)
+3) NCSP Update Initial Supply Order Date Field. (For reference, check user story #13404)
+4) NCSP Update Service Order Date Field. (For reference, check user story #13404)</description>
+        <name>Task_After_Update</name>
+        <label>Task After Update</label>
+        <locationX>578</locationX>
+        <locationY>408</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>NCSP_Update_Welcome_Call_Counter</name>
+            <conditionLogic>(1 AND 2 AND 3 AND (9 OR 10) AND (4 OR 5 OR 6 OR 7 OR 8))</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Cases_record_related_to_Task</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Completed</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Cases_record_related_to_Task.Date_Welcome_Call_Attempt_1__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Cases_record_related_to_Task.RecordType_Name__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>NCSP: DMS</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Cases_record_related_to_Task.RecordType_Name__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>NCSP: DP New Customer Setup</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Cases_record_related_to_Task.RecordType_Name__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>NCSP: SKP Department Add Only</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Cases_record_related_to_Task.RecordType_Name__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>NCSP: SKP New Customer Setup</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Cases_record_related_to_Task.RecordType_Name__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>NCSP: Upsell</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Subject</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Welcome Call Attempt</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Subject</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Welcome Call Attempt 1</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_NCSP_Welcome_Call_counter_on_the_Case</targetReference>
+            </connector>
+            <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+            <label>NCSP Update Welcome Call Counter</label>
+        </rules>
+        <rules>
+            <name>NCSP_Update_Welcome_Call_Counter_Date_Initial_Welcome_Call_Field</name>
+            <conditionLogic>(1 AND 2 AND 3 AND (9 OR 10) AND (4 OR 5 OR 6 OR 7 OR 8 ))</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Completed</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Cases_record_related_to_Task</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Cases_record_related_to_Task.Date_Welcome_Call_Attempt_1__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Cases_record_related_to_Task.RecordType_Name__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>NCSP: DMS</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Cases_record_related_to_Task.RecordType_Name__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>NCSP: DP New Customer Setup</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Cases_record_related_to_Task.RecordType_Name__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>NCSP: SKP Department Add Only</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Cases_record_related_to_Task.RecordType_Name__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>NCSP: SKP New Customer Setup</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Cases_record_related_to_Task.RecordType_Name__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>NCSP: Upsell</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Subject</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Welcome Call Attempt</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Subject</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Welcome Call Attempt 1</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_NCSP_Date_Initial_Welcome_Call_and_Counter</targetReference>
+            </connector>
+            <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+            <label>NCSP Update Welcome Call Counter &amp; Date Initial Welcome Call Field</label>
+        </rules>
+        <rules>
+            <name>NCSP_Update_Initial_Supply_Order_Date</name>
+            <conditionLogic>1 AND 2 AND 3 AND (4 OR 5 OR 6 OR 7 OR 8)</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Completed</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Cases_record_related_to_Task</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Subject</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Place Supply Order</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Cases_record_related_to_Task.RecordType_Name__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>NCSP: DMS</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Cases_record_related_to_Task.RecordType_Name__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>NCSP: DP New Customer Setup</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Cases_record_related_to_Task.RecordType_Name__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>NCSP: SKP Department Add Only</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Cases_record_related_to_Task.RecordType_Name__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>NCSP: SKP New Customer Setup</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Cases_record_related_to_Task.RecordType_Name__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>NCSP: Upsell</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_NCSP_Initial_Supply_Order_Date</targetReference>
+            </connector>
+            <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+            <label>NCSP Update Initial Supply Order Date</label>
+        </rules>
+        <rules>
+            <name>NCSP_Update</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Completed</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Subject</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Place Service Order</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Cases_record_related_to_Task</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Cases_record_related_to_Task.RecordType_Name__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>NCSP: DMS</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_NCSP_Service_Order_Date</targetReference>
+            </connector>
+            <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+            <label>NCSP Update Service Order Date</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>1) NCSP &apos;Welcome Call Attempt&apos; Task needs to be triggered if the &apos;Date Welcome Call Completed&apos; is null.(For reference, check user story #13814)</description>
+        <name>Task_Scheduled_After_Update</name>
+        <label>Task Scheduled After Update</label>
+        <locationX>1502</locationX>
+        <locationY>408</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>NCSP_Trigger_Welcome_Call_Attempt_Task</name>
+            <conditionLogic>1 AND 2 AND 3 AND (9 OR 11) AND 10 AND (4 OR 5 OR 6 OR 7 OR 8)</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Cases_records</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Cases_records.Date_welcome_call_completed__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Cases_records.IsClosed</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Cases_records.RecordType_Name__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>NCSP: DMS</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Cases_records.RecordType_Name__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>NCSP: DP New Customer Setup</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Cases_records.RecordType_Name__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>NCSP: SKP Department Add Only</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Cases_records.RecordType_Name__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>NCSP: SKP New Customer Setup</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Cases_records.RecordType_Name__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>NCSP: Upsell</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Subject</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Welcome Call Attempt</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Completed</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Subject</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Welcome Call Attempt 1</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Create_Task_Welcome_Call_Attempt</targetReference>
+            </connector>
+            <label>NCSP Trigger Welcome Call Attempt Task</label>
+        </rules>
+    </decisions>
+    <description>This flow is to update the &apos;Welcome Call Attempt&apos; Counter(field: Total Welcome Call Completed on Case object) and update field &apos;Date Initial Welcome Call&apos; on the NCSP Record Types when the Task like &apos;Welcome Call Attempt %&apos; gets completed.
+For reference, check the user story #13407 on Gitlab
+NCSP Updates Completing Task Auto Fills Associated Date Field NCSP case record types
+For reference, check the user story #13404 &amp; #13814 on Gitlab</description>
+    <environments>Default</environments>
+    <formulas>
+        <name>WelcomeCallAttemptCount</name>
+        <dataType>Number</dataType>
+        <expression>IF(ISNULL({!Get_Cases_record_related_to_Task.TotalWelcomeCallAttempts__c}), NULLVALUE({!Get_Cases_record_related_to_Task.TotalWelcomeCallAttempts__c}, 1) , ({!Get_Cases_record_related_to_Task.TotalWelcomeCallAttempts__c}+1))</expression>
+        <scale>0</scale>
+    </formulas>
+    <interviewLabel>Task After Update Flow for Record Type: Case Type {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Task After Update Flow for Record Type: Case Type</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <description>Fetch the Case record that is related to Task</description>
+        <name>Get_Cases_record_related_to_Task</name>
+        <label>Get Cases record related to Task</label>
+        <locationX>578</locationX>
+        <locationY>288</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Task_After_Update</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.WhatId</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>IsClosed</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Case</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <description>Fetch the Case record that is related to Task</description>
+        <name>Get_Cases_records</name>
+        <label>Get Cases records</label>
+        <locationX>1502</locationX>
+        <locationY>288</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Task_Scheduled_After_Update</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.WhatId</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>IsClosed</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Case</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordUpdates>
+        <description>Update the Date Initial Welcome Call field and counter(field: Total Welcome Call Completed) on the Case when Welcome Call Attempt Task gets completed</description>
+        <name>Update_NCSP_Date_Initial_Welcome_Call_and_Counter</name>
+        <label>Update NCSP Date Initial Welcome Call and Counter</label>
+        <locationX>314</locationX>
+        <locationY>528</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.WhatId</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Date_Welcome_Call_Attempt_1__c</field>
+            <value>
+                <elementReference>$Record.CompletedDateTime</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>TotalWelcomeCallAttempts__c</field>
+            <value>
+                <elementReference>WelcomeCallAttemptCount</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
+    </recordUpdates>
+    <recordUpdates>
+        <description>Update the Initial Supply Order Date on the Case when &apos;Place Supply Order&apos; Task gets completed</description>
+        <name>Update_NCSP_Initial_Supply_Order_Date</name>
+        <label>Update NCSP Initial Supply Order Date</label>
+        <locationX>578</locationX>
+        <locationY>528</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.WhatId</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Initial_Supply_Order_Date__c</field>
+            <value>
+                <elementReference>$Record.CompletedDateTime</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
+    </recordUpdates>
+    <recordUpdates>
+        <description>Update the Service Order Date on the Case when &apos;Place Service Order&apos; Task gets completed</description>
+        <name>Update_NCSP_Service_Order_Date</name>
+        <label>Update NCSP Service Order Date</label>
+        <locationX>842</locationX>
+        <locationY>528</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.WhatId</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Service_Order_Date__c</field>
+            <value>
+                <elementReference>$Record.CompletedDateTime</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
+    </recordUpdates>
+    <recordUpdates>
+        <description>Update the counter (field: Total Welcome Call Completed) on the Case when Welcome Call Attempt Task gets completed</description>
+        <name>Update_NCSP_Welcome_Call_counter_on_the_Case</name>
+        <label>Update NCSP Welcome Call counter on the Case</label>
+        <locationX>50</locationX>
+        <locationY>528</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.WhatId</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>TotalWelcomeCallAttempts__c</field>
+            <value>
+                <elementReference>WelcomeCallAttemptCount</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
+    </recordUpdates>
+    <start>
+        <locationX>914</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Get_Cases_record_related_to_Task</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>WhatIDObject__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>500</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Status</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Completed</stringValue>
+            </value>
+        </filters>
+        <object>Task</object>
+        <recordTriggerType>Update</recordTriggerType>
+        <scheduledPaths>
+            <name>Run_After_12_Hours</name>
+            <connector>
+                <targetReference>Get_Cases_records</targetReference>
+            </connector>
+            <label>Run After 12 Hours</label>
+            <offsetNumber>12</offsetNumber>
+            <offsetUnit>Hours</offsetUnit>
+            <recordField>CompletedDateTime</recordField>
+            <timeSource>RecordField</timeSource>
+        </scheduledPaths>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IME_CompetitorAlreadyExist</fullName>
+    <active>true</active>
+    <description>The user is not able to select No/Unknown Competitor if he has already created an Opportunity Competitor</description>
+    <errorConditionFormula>OR(
+AND(ISNEW(),Opportunity__r.IME_Nb_Competitor__c&gt;0,ISPICKVAL(Competitor__c, &quot;-No/Unknown Competitor-&quot;)),
+AND(
+Opportunity__r.IME_Nb_Competitor__c&gt;1,ISPICKVAL(Competitor__c, &quot;-No/Unknown Competitor-&quot;)
+)
+)</errorConditionFormula>
+    <errorDisplayField>Competitor__c</errorDisplayField>
+    <errorMessage>A competitor has already been created for this opportunity, you cannot select this value. Please review your selection.</errorMessage>
+</ValidationRule>

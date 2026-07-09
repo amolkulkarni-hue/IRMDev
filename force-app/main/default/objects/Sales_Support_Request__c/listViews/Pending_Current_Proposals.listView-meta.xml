@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Pending_Current_Proposals</fullName>
+    <columns>OWNER.FIRST_NAME</columns>
+    <columns>NAME</columns>
+    <columns>Date_Submitted__c</columns>
+    <columns>Due_Date__c</columns>
+    <columns>What_is_the_probability_that_we_can_win__c</columns>
+    <columns>Request_Status__c</columns>
+    <columns>Opportunity_Type__c</columns>
+    <columns>Total_Annual_Amount__c</columns>
+    <columns>CREATEDBY_USER</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>RECORDTYPE</field>
+        <operation>equals</operation>
+        <value>Sales_Support_Request__c.Proposal_Management_Request,Sales_Support_Request__c.Proposal_Request</value>
+    </filters>
+    <filters>
+        <field>Request_Status__c</field>
+        <operation>equals</operation>
+        <value>Assigned,In process,In Progress,Pending approval,Pending with Legal,Qualifying,Waiting for Info</value>
+    </filters>
+    <label>Pending-Current Proposals</label>
+</ListView>

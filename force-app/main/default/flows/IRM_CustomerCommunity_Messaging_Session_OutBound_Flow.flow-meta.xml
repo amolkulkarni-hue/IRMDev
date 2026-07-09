@@ -1,0 +1,392 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <description>This is to check if the users in the queue are available or not. The output will provide the number of users online.</description>
+        <name>Check_Agent_Availbility</name>
+        <label>Check Agent Availbility</label>
+        <locationX>727</locationX>
+        <locationY>398</locationY>
+        <actionName>checkAvailabilityForRouting</actionName>
+        <actionType>checkAvailabilityForRouting</actionType>
+        <connector>
+            <targetReference>Is_Agent_Available</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>serviceChannelId</name>
+            <value>
+                <stringValue>0N9Hr000000g0QnKAI</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>routingType</name>
+            <value>
+                <stringValue>QueueBased</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>serviceChannelDevName</name>
+            <value>
+                <stringValue>sfdc_livemessage</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>serviceChannelLabel</name>
+            <value>
+                <stringValue>Messaging</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>queueId</name>
+            <value>
+                <elementReference>VarQueueId</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>queueLabel</name>
+        </inputParameters>
+        <inputParameters>
+            <name>isQueueVariable</name>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>skillOption</name>
+        </inputParameters>
+        <inputParameters>
+            <name>skillRequirementsResourceItem</name>
+        </inputParameters>
+        <inputParameters>
+            <name>agentId</name>
+        </inputParameters>
+        <inputParameters>
+            <name>agentLabel</name>
+        </inputParameters>
+        <inputParameters>
+            <name>selectedOutputs</name>
+            <value>
+                <stringValue>GET_ALL</stringValue>
+            </value>
+        </inputParameters>
+        <nameSegment>checkAvailabilityForRouting</nameSegment>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
+    <actionCalls>
+        <description>Routes all messages from the enhanced bot to an Agent who are in the Queue and in online.</description>
+        <name>Routing_to_Agent</name>
+        <label>Routing to Agent</label>
+        <locationX>595</locationX>
+        <locationY>614</locationY>
+        <actionName>routeWork</actionName>
+        <actionType>routeWork</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>recordId</name>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>serviceChannelId</name>
+            <value>
+                <stringValue>0N9Hr000000g0QnKAI</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>serviceChannelLabel</name>
+            <value>
+                <stringValue>Messaging</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>serviceChannelDevName</name>
+            <value>
+                <stringValue>sfdc_livemessage</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>routingType</name>
+            <value>
+                <stringValue>QueueBased</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>routingConfigId</name>
+        </inputParameters>
+        <inputParameters>
+            <name>routingConfigLabel</name>
+        </inputParameters>
+        <inputParameters>
+            <name>queueId</name>
+            <value>
+                <elementReference>VarQueueId</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>agentId</name>
+        </inputParameters>
+        <inputParameters>
+            <name>agentLabel</name>
+        </inputParameters>
+        <inputParameters>
+            <name>queueLabel</name>
+        </inputParameters>
+        <inputParameters>
+            <name>skillOption</name>
+        </inputParameters>
+        <inputParameters>
+            <name>skillRequirementsResourceItem</name>
+        </inputParameters>
+        <inputParameters>
+            <name>botId</name>
+        </inputParameters>
+        <inputParameters>
+            <name>botLabel</name>
+        </inputParameters>
+        <inputParameters>
+            <name>isQueueVariable</name>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputParameters>
+        <nameSegment>routeWork</nameSegment>
+    </actionCalls>
+    <apiVersion>59.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <decisions>
+        <description>To ensure that at least one active agent is present in the queue, the system will route to that agent if available. If no agents are present, the bot will display a message indicating that no agents are visible.</description>
+        <name>Is_Agent_Available</name>
+        <label>Is Agent Available</label>
+        <locationX>895</locationX>
+        <locationY>491</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Check_Agent_Availbility.onlineAgentsCount</leftValueReference>
+                <operator>GreaterThanOrEqualTo</operator>
+                <rightValue>
+                    <numberValue>1.0</numberValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Routing_to_Agent</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <description>This flow will be called from the bot. When the customer wants to connect with an agent, it will route to the respective agents if the agent is online. Based on language selection, it will route to the queue.
++ Latam + UKI + India  + Ironmountain.com Conditions
+#24473 - Updated the Case origin Formula and Chat Queues for APAC region.</description>
+    <environments>Default</environments>
+    <formulas>
+        <description>Utilized for queue routing.</description>
+        <name>varQueue</name>
+        <dataType>String</dataType>
+        <expression>IF(
+    AND(
+        ISBLANK({!varCustomerWantsToChat}),
+        {!varChannelName} = &quot;IronMountainWebsite Messaging Channel&quot;
+    ),
+    &quot;Chat_Agents_Sales_and_Marketing_Queue&quot;,
+    IF(
+        AND(
+            {!varChannelName} = &quot;IronMountainWebsite Messaging Channel&quot;,
+            OR(
+               {!varSelectedLanguage} = &quot;English&quot;,
+                {!varSelectedLanguage} = &quot;English (US)&quot;
+            )
+        ),
+        &quot;Chat_Agents_Service_Team_Queue&quot;,
+        IF(
+            AND(
+               {!varChannelName} = &quot;IronMountainWebsite Messaging Channel&quot;,
+                {!varSelectedLanguage} = &quot;French&quot;
+            ),
+            &quot;NAS_Quebec_Chat&quot;,
+            CASE(
+               {!varSelectedLanguage},
+                &quot;English&quot;,
+                CASE(
+                    {!varCustomerType},
+                    &quot;Guest&quot;, &quot;IRM_Customer_Community_Chat_Queue&quot;,
+                    &quot;Authenticated&quot;, &quot;NAS_IMCSS_chat&quot;,
+                    &quot;IRM_Customer_Community_Chat_Queue&quot;
+                ),
+                &quot;French&quot;, 
+                CASE(
+                    {!varCustomerType},
+                    &quot;Guest&quot;, &quot;NAS_Quebec_Chat&quot;,
+                    &quot;Authenticated&quot;, &quot;NAS_Quebec_Chat&quot;,
+                    &quot;NAS_Quebec_Chat&quot;
+                ),
+                &quot;Colombia&quot;,&quot;IMLA_COL_Service_Chat&quot;,
+                &quot;Argentina&quot;,&quot;IMLA_ARG_Service_Chat&quot;,
+                &quot;Brazil&quot;,&quot;IMLA_BRA_Service_Chat&quot;,
+                &quot;Mexico&quot;,&quot;IMLA_MEX_Service_Chat&quot;,
+                &quot;Peru&quot;,&quot;IMLA_PER_Service_Chat&quot;,
+                &quot;Chile&quot;,&quot;IMLA_CHL_Service_Chat&quot;,
+                &quot;English (UK)&quot;, &quot;UKI_IMConnect&quot;,
+                &quot;English (IN)&quot;, &quot;India_Chat_queue&quot;,
+                 &quot;English (PH)&quot;, &quot;PHL_Chat&quot;,
+		  &quot;English (SG)&quot;, &quot;SGP_Chat&quot;,
+		  &quot;English (MY)&quot;, &quot;MYS_Chat&quot;,
+                &quot;&quot;
+            )
+        )
+    )
+)</expression>
+    </formulas>
+    <interviewLabel>IRM Customer Community - Messaging Session - {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>IRM CustomerCommunity-Messaging Session-Outbound Flow</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>RoutingFlow</processType>
+    <recordLookups>
+        <description>To get the messaging session records.</description>
+        <name>Get_Messaging_Session_Records</name>
+        <label>Get Messaging Session Records</label>
+        <locationX>727</locationX>
+        <locationY>182</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>GetQueueId</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <object>MessagingSession</object>
+        <outputAssignments>
+            <assignToReference>varChannelName</assignToReference>
+            <field>ChannelName</field>
+        </outputAssignments>
+        <outputAssignments>
+            <assignToReference>varCustomerWantsToChat</assignToReference>
+            <field>Customer_Wants_to_Chat__c</field>
+        </outputAssignments>
+        <outputAssignments>
+            <assignToReference>varCustomerType</assignToReference>
+            <field>Customer_type__c</field>
+        </outputAssignments>
+        <outputAssignments>
+            <assignToReference>varSelectedLanguage</assignToReference>
+            <field>Language_Selector__c</field>
+        </outputAssignments>
+    </recordLookups>
+    <recordLookups>
+        <description>To route messaging sessions to respective agents present in the queue, we are using this QueueID.</description>
+        <name>GetQueueId</name>
+        <label>GetQueueId</label>
+        <locationX>727</locationX>
+        <locationY>290</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Check_Agent_Availbility</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>varQueue</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Type</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Queue</stringValue>
+            </value>
+        </filters>
+        <object>Group</object>
+        <outputAssignments>
+            <assignToReference>VarQueueId</assignToReference>
+            <field>Id</field>
+        </outputAssignments>
+    </recordLookups>
+    <start>
+        <locationX>601</locationX>
+        <locationY>48</locationY>
+        <connector>
+            <targetReference>Get_Messaging_Session_Records</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <variables>
+        <name>estimatedtime</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+        <scale>0</scale>
+    </variables>
+    <variables>
+        <name>recordId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>To retrieve channel name from the messaging sessions.</description>
+        <name>varChannelName</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>To retrieve the Customer Type from the messaging sessions.</description>
+        <name>varCustomerType</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>To retrieve the Customer wants to Chat value from the messaging sessions.</description>
+        <name>varCustomerWantsToChat</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>VarQueueId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>To retrieve the language selected from the messaging sessions.</description>
+        <name>varSelectedLanguage</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>

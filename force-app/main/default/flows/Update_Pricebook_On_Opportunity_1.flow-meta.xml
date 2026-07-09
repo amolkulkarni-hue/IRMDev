@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>60.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <decisions>
+        <name>Decision_1</name>
+        <label>Check For Opportunity Account Division</label>
+        <locationX>182</locationX>
+        <locationY>323</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Check_For_Opportunity_Account_Division</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Metadata_Activation_Setting</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>myRule_1_A1</targetReference>
+            </connector>
+            <label>Check For Opportunity Account Division</label>
+        </rules>
+    </decisions>
+    <description>Migrated from the Update Pricebook On Opportunity process using Check For Opportunity Account Division criteria.
+This is PB is used to update NA, LA, AP and Eur on to the opportunity pricebook id based on the Account division and Product Group IM Account Division.</description>
+    <environments>Default</environments>
+    <formulas>
+        <name>Metadata_Activation_Setting</name>
+        <dataType>Boolean</dataType>
+        <expression>AND(NOT($Setup.Metadata_Activation_Settings__c.Disable_PB__c &amp;&amp;
+OR(ISBLANK($Setup.Metadata_Activation_Settings__c.SObject_API_Name__c), CONTAINS($Setup.Metadata_Activation_Settings__c.SObject_API_Name__c,&apos;Opportunity&apos;))),
+OR(ISNEW(),ISCHANGED({!$Record.Account_Division_Display__c}
+),ISCHANGED({!$Record.CurrencyIsoCode} ),ISCHANGED({!$Record.RecordTypeId} )),
+NOT(ISBLANK({!$Record.Account_Division_Display__c})),
+{!$Record.RecordType.DeveloperName&lt;&gt;$Label.QTB_OpportunityRecordType_Sales} 
+)</expression>
+    </formulas>
+    <interviewLabel>Update Pricebook On Opportunity {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Update Pricebook On Opportunity</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>56</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Decision_1</targetReference>
+        </connector>
+        <object>Opportunity</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+    <subflows>
+        <name>myRule_1_A1</name>
+        <label>Calling Flows</label>
+        <locationX>50</locationX>
+        <locationY>431</locationY>
+        <flowName>IM_Pricebook_Stamping_on_Opportunity</flowName>
+        <inputAssignments>
+            <name>vpricebookdivision</name>
+            <value>
+                <elementReference>$Record.Account_Division_Display__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>vopptyID</name>
+            <value>
+                <elementReference>$Record.Opportunity_ID__c</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+</Flow>

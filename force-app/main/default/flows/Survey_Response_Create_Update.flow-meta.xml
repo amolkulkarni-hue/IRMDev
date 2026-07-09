@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>62.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <decisions>
+        <description>#27717 Checking whether IP Address is Available or Not?</description>
+        <name>Is_IP_Address_Available</name>
+        <label>Is IP Address Available?</label>
+        <locationX>182</locationX>
+        <locationY>323</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>IP_Address_Present</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.IpAddress</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.InvitationId</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Survey_Invitation</targetReference>
+            </connector>
+            <label>IP Address Present?</label>
+        </rules>
+    </decisions>
+    <description>GitLab #27717 To capture the IP Address of Customer Who is Providing the Survey Response to store in Survey Invitation for Reporting,</description>
+    <environments>Default</environments>
+    <interviewLabel>Survey Response {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Survey Response Create &amp; Update</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <description>Capturing the IP Address from Survey Response</description>
+        <name>Update_Survey_Invitation</name>
+        <label>Update Survey Invitation</label>
+        <locationX>50</locationX>
+        <locationY>431</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.InvitationId</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>IP_Address__c</field>
+            <value>
+                <elementReference>$Record.IpAddress</elementReference>
+            </value>
+        </inputAssignments>
+        <object>SurveyInvitation</object>
+    </recordUpdates>
+    <start>
+        <locationX>56</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Is_IP_Address_Available</targetReference>
+        </connector>
+        <object>SurveyResponse</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

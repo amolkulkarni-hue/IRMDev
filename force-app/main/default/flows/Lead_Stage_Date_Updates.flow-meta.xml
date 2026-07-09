@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>59.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <decisions>
+        <name>LeadStageDateUpdates</name>
+        <label>LeadStageDateUpdates</label>
+        <locationX>564</locationX>
+        <locationY>390</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Lead_Stage_Date_Updates_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Stageischanged0</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Lead_Stage_0_Update</targetReference>
+            </connector>
+            <label>Lead Stage Date Updates 0</label>
+        </rules>
+        <rules>
+            <name>Lead_Stage_Date_Updates_1</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Stageischanged1</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Lead_Stage_1_Update</targetReference>
+            </connector>
+            <label>Lead Stage Date Updates 1</label>
+        </rules>
+        <rules>
+            <name>Lead_Stage_Date_Updates_2</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Stageischanged2</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Lead_Stage_2_Update</targetReference>
+            </connector>
+            <label>Lead Stage Date Updates 2</label>
+        </rules>
+        <rules>
+            <name>Lead_Stage_Date_Updates_3</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Stageischanged3</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Lead_Stage_3_Update</targetReference>
+            </connector>
+            <label>Lead Stage Date Updates 3</label>
+        </rules>
+    </decisions>
+    <description>Converted from below workflows :
+Lead Stage Date Updates0
+Lead Stage Date Updates1
+Lead Stage Date Updates2
+Lead Stage Date Updates3</description>
+    <environments>Default</environments>
+    <formulas>
+        <name>Stageischanged0</name>
+        <dataType>Boolean</dataType>
+        <expression>OR(      And(    ISCHANGED({!$Record.IM_Lead_Stage__c}),    ISPICKVAL( {!$Record.IM_Lead_Stage__c}, &quot;0-Suspect&quot;)    )  ,    And(      ISPICKVAL( {!$Record.IM_Lead_Stage__c}, &quot;0-Suspect&quot;),      isnull({!$Record.Stage_0_Entered_Date__c} )      ) )</expression>
+    </formulas>
+    <formulas>
+        <name>Stageischanged1</name>
+        <dataType>Boolean</dataType>
+        <expression>OR(      And(    ISCHANGED({!$Record.IM_Lead_Stage__c}),    ISPICKVAL( {!$Record.IM_Lead_Stage__c}, &quot;1-Inquiry&quot;)    )  ,    And(      ISPICKVAL( {!$Record.IM_Lead_Stage__c}, &quot;1-Inquiry&quot;),      isnull( {!$Record.IM_Stage_1_Entered_Date__c}  )      ) )</expression>
+    </formulas>
+    <formulas>
+        <name>Stageischanged2</name>
+        <dataType>Boolean</dataType>
+        <expression>OR( And( ISCHANGED({!$Record.IM_Lead_Stage__c}), ISPICKVAL( {!$Record.IM_Lead_Stage__c}, &quot;2-Marketing Qual&quot;) ) , And( ISPICKVAL( {!$Record.IM_Lead_Stage__c}, &quot;2-Marketing Qual&quot;), isnull( {!$Record.IM_Stage_2_Entered_Date__c} ) ) )</expression>
+    </formulas>
+    <formulas>
+        <name>Stageischanged3</name>
+        <dataType>Boolean</dataType>
+        <expression>OR( And( ISCHANGED({!$Record.IM_Lead_Stage__c}), ISPICKVAL( {!$Record.IM_Lead_Stage__c}, &quot;3-Sales Accepted&quot;) ) , And( ISPICKVAL( {!$Record.IM_Lead_Stage__c}, &quot;3-Sales Accepted&quot;), isnull( {!$Record.IM_Stage_3_Entered_Date__c} ) ) )</expression>
+    </formulas>
+    <formulas>
+        <name>Stageischanged4</name>
+        <dataType>Boolean</dataType>
+        <expression>OR( And( ISCHANGED({!$Record.IM_Lead_Stage__c}), ISPICKVAL( {!$Record.IM_Lead_Stage__c}, &quot;4-Sales Qual&quot;) ) , And( ISPICKVAL( {!$Record.IM_Lead_Stage__c}, &quot;4-Sales Qual&quot;), isnull( {!$Record.IM_Stage_4_Entered_Date__c} ) ) )</expression>
+    </formulas>
+    <formulas>
+        <name>UpdateTodaysDate</name>
+        <dataType>Date</dataType>
+        <expression>Today()</expression>
+    </formulas>
+    <interviewLabel>Lead Stage Date Updates0 {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Lead Stage Date Updates</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <name>Lead_Stage_0_Update</name>
+        <label>Lead Stage 0 Update</label>
+        <locationX>787</locationX>
+        <locationY>686</locationY>
+        <inputAssignments>
+            <field>IM_X0_Suspect_Reached__c</field>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Stage_0_Entered_Date__c</field>
+            <value>
+                <elementReference>UpdateTodaysDate</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Lead_Stage_1_Update</name>
+        <label>Lead Stage 1 Update</label>
+        <locationX>183</locationX>
+        <locationY>617</locationY>
+        <inputAssignments>
+            <field>IM_Stage_1_Entered_Date__c</field>
+            <value>
+                <elementReference>UpdateTodaysDate</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>IM_X1_Inquiry_Reached__c</field>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Lead_Stage_2_Update</name>
+        <label>Lead Stage 2 Update</label>
+        <locationX>590</locationX>
+        <locationY>744</locationY>
+        <inputAssignments>
+            <field>IM_Stage_2_Entered_Date__c</field>
+            <value>
+                <elementReference>UpdateTodaysDate</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>IM_X2_Marketing_Qual_Reached__c</field>
+            <value>
+                <elementReference>Stageischanged2</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Lead_Stage_3_Update</name>
+        <label>Lead Stage 3 Update</label>
+        <locationX>416</locationX>
+        <locationY>699</locationY>
+        <inputAssignments>
+            <field>IM_Stage_3_Entered_Date__c</field>
+            <value>
+                <elementReference>UpdateTodaysDate</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>IM_X3_Sales_Accepted_Reached__c</field>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>449</locationX>
+        <locationY>48</locationY>
+        <connector>
+            <targetReference>LeadStageDateUpdates</targetReference>
+        </connector>
+        <object>Lead</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

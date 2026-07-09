@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>59.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <description>Migrated from the Oppty Split - Push Member to Opportunity Split Field process using Split Created criteria.
+Push Opportunity Split team member to the Opportunity Split fields</description>
+    <environments>Default</environments>
+    <interviewLabel>Oppty Split - Push Member to Opportunity Split Field {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Oppty Split - Push Member to Opportunity SplitField</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>373</locationX>
+        <locationY>48</locationY>
+        <connector>
+            <targetReference>myRule_1_A1</targetReference>
+        </connector>
+        <filterFormula>AND(NOT({!$Setup.Metadata_Activation_Settings__c.Disable_PB__c} &amp;&amp; OR(ISBLANK({!$Setup.Metadata_Activation_Settings__c.SObject_API_Name__c}), CONTAINS({!$Setup.Metadata_Activation_Settings__c.SObject_API_Name__c}, &apos;OpportunitySplit&apos;))))</filterFormula>
+        <object>OpportunitySplit</object>
+        <recordTriggerType>Create</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+    <subflows>
+        <name>myRule_1_A1</name>
+        <label>Update Split Commission 1</label>
+        <locationX>499</locationX>
+        <locationY>371</locationY>
+        <flowName>Assign_Split_Reps_to_Opportunities</flowName>
+        <inputAssignments>
+            <name>Split_ID</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+</Flow>

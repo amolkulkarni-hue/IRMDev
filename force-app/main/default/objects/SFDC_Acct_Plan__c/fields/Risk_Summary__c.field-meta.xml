@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Risk_Summary__c</fullName>
+    <description>RED : When points are 7+ pts.
+YELLOW : When points are between 4-6 pts.
+GREEN : When points are between 0-3 pts.
+Fields :
+Risk : 4pts
+Low Volume of New Inventory Levels : 1pt
+Low Activity Levels : 1pt
+Little Current Opportunity Pipeline : 1pt
+Significant (Trigger) Event : 1pt
+Poor Contact Levels : 1pt
+Poor Relationship Quality : 1pt
+Low Perception of IM Value : 1pt</description>
+    <externalId>false</externalId>
+    <formula>IF((IF(Risk__c = TRUE, 4, 0) + IF(New_Inventory_Levels__c = TRUE, 1, 0) + IF(Activity_Levels__c = TRUE, 1, 0) + IF(Current_Opportunity_Pipeline__c = TRUE, 1, 0) + IF(Significant_trigger_Events__c = TRUE, 1, 0) + IF(Contact_Levels__c = TRUE, 1, 0) + IF(Relationship_Quality__c = TRUE, 1, 0) + IF(Perception_of_IM_Value__c = TRUE, 1, 0) ) &gt;= 7, IMAGE(&quot;/servlet/servlet.FileDownload?file=0153400000296St&quot;, &quot;Red&quot;,36, 36), IF(AND((IF(Risk__c = TRUE, 4, 0) + IF(New_Inventory_Levels__c = TRUE, 1, 0) + IF(Activity_Levels__c = TRUE, 1, 0) + IF(Current_Opportunity_Pipeline__c = TRUE, 1, 0) + IF(Significant_trigger_Events__c = TRUE, 1, 0) + IF(Contact_Levels__c = TRUE, 1, 0) + IF(Relationship_Quality__c = TRUE, 1, 0) + IF(Perception_of_IM_Value__c = TRUE, 1, 0) ) &gt;= 4 ,(IF(Risk__c = TRUE, 4, 0) + IF(New_Inventory_Levels__c = TRUE, 1, 0) + IF(Activity_Levels__c = TRUE, 1, 0) + IF(Current_Opportunity_Pipeline__c = TRUE, 1, 0) + IF(Significant_trigger_Events__c = TRUE, 1, 0) + IF(Contact_Levels__c = TRUE, 1, 0) + IF(Relationship_Quality__c = TRUE, 1, 0) + IF(Perception_of_IM_Value__c = TRUE, 1, 0) ) &lt;=6),IMAGE(&quot;/servlet/servlet.FileDownload?file=0153400000296Sy&quot;, &quot;Yellow&quot;,30, 30),IMAGE(&quot;/servlet/servlet.FileDownload?file=0153400000296Sj&quot;, &quot;Green&quot;,30, 40)))</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Risk Summary</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

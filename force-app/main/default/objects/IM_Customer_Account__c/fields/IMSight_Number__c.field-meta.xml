@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IMSight_Number__c</fullName>
+    <description>Formula field to auto populate IMSight number based on Source System, Owning District, Customer Id</description>
+    <externalId>false</externalId>
+    <formula>CASE( Source_System__c , 
+&apos;Netsuite&apos;,&apos;DIGI&apos;, 
+&apos;SB NA&apos;,&apos;25&apos;, 
+&apos;Jaguar&apos;, &apos;26&apos;, 
+&apos;SKP NA&apos;, &apos;15&apos;, 
+&apos;ESS&apos;, &apos;ESS&apos;, 
+&apos;GDS&apos;, &apos;GDS&apos;, 
+&apos;TOBAS&apos;, &apos;TOBAS&apos;, 
+&apos;SKP Europe&apos; , &apos;SKPE&apos;, 
+&apos;ARCVMS Europe&apos;, &apos;ARVE&apos;, 
+&apos;Other Europe&apos;, &apos;OTHE&apos;, 
+&apos;IMAPIS&apos;, &apos;IMAP&apos;, 
+&apos;SB IMLA&apos;, &apos;SBLA&apos;, 
+&apos;SKP IMLA&apos;, &apos;SKPL&apos;, 
+&apos;Other IMLA&apos;, &apos;OTHL&apos;, 
+&apos;Documenta COL&apos;, &apos;DOCO&apos;, 
+&apos;Error: Unknown Source System Code&apos; 
+) &amp; &quot;.&quot; &amp;  IM_District_Branch_Id__c  &amp; &quot;.&quot; &amp; Name</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>IMSight Number</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

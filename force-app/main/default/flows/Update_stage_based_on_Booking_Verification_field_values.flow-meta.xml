@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>63.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <decisions>
+        <name>Check_Booking_Verification_field_Value</name>
+        <label>Check Booking Verification field Value</label>
+        <locationX>314</locationX>
+        <locationY>287</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>If_Booking_Verification_field_Value_is_Pass</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Deal_Validation__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Pass</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_stage_from_Stage_5_to_Stage_6</targetReference>
+            </connector>
+            <label>If Booking Verification field Value is Pass</label>
+        </rules>
+        <rules>
+            <name>If_Booking_Verification_field_Value_is_Reject</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Deal_Validation__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Reject</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_stage_from_Stage_5_to_Stage_4</targetReference>
+            </connector>
+            <label>If Booking Verification field Value is Reject</label>
+        </rules>
+    </decisions>
+    <description>#29018 :- Booking Verification: Expand Booking Verification process to Spain - RITM0952461</description>
+    <environments>Default</environments>
+    <interviewLabel>Update stage based on booking {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Update stage based on Booking Verification field values</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <name>Update_stage_from_Stage_5_to_Stage_4</name>
+        <label>Update stage from Stage 5 to Stage 4</label>
+        <locationX>314</locationX>
+        <locationY>395</locationY>
+        <inputAssignments>
+            <field>StageName</field>
+            <value>
+                <stringValue>4 - Negotiate</stringValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Update_stage_from_Stage_5_to_Stage_6</name>
+        <label>Update stage from Stage 5 to  Stage 6</label>
+        <locationX>50</locationX>
+        <locationY>395</locationY>
+        <inputAssignments>
+            <field>StageName</field>
+            <value>
+                <stringValue>6 - Setup</stringValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>188</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Check_Booking_Verification_field_Value</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>StageName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>5 - Signed/PO in</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Deal_Validation__c</field>
+            <operator>IsChanged</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <object>Opportunity</object>
+        <recordTriggerType>Update</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Obsolete</status>
+</Flow>

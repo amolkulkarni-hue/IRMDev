@@ -1,0 +1,644 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <description>Calling Apex class &quot;GSCFollowUpDate&quot; to calculate the follow up dates using the Holidays/Weekends/Business Hours</description>
+        <name>Calculate_Follow_up_Date</name>
+        <label>Calculate Follow up Date</label>
+        <locationX>1898</locationX>
+        <locationY>539</locationY>
+        <actionName>GSCFollowUpDate</actionName>
+        <actionType>apex</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>country</name>
+            <value>
+                <elementReference>$Record.IME_SC_Country__c</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>pendingReason</name>
+            <value>
+                <elementReference>$Record.NAS_Pending_Reason__c</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>recordId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>GSCFollowUpDate</nameSegment>
+    </actionCalls>
+    <actionCalls>
+        <name>Post_to_Chatter_that_Child_Case_is_resolved</name>
+        <label>Post to Chatter that Child Case is resolved</label>
+        <locationX>578</locationX>
+        <locationY>431</locationY>
+        <actionName>chatterPost</actionName>
+        <actionType>chatterPost</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>text</name>
+            <value>
+                <stringValue>@[{!$Record.Parent.OwnerId}] {!ChatterNotification}</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>subjectNameOrId</name>
+            <value>
+                <elementReference>$Record.ParentId</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>chatterPost</nameSegment>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
+    <actionCalls>
+        <name>Post_to_Parent_Case_s_Chatter_that_Child_Case_is_resolved</name>
+        <label>Post to Parent Case&apos;s Chatter that Child Case is resolved/cancelled</label>
+        <locationX>50</locationX>
+        <locationY>647</locationY>
+        <actionName>chatterPost</actionName>
+        <actionType>chatterPost</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>text</name>
+            <value>
+                <stringValue>@[{!$Record.Parent.OwnerId}] A duplicate case {!$Record.CaseNumber} has been cancelled and the emails reparented to your case.</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>subjectNameOrId</name>
+            <value>
+                <elementReference>$Record.ParentId</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>chatterPost</nameSegment>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
+    <actionCalls>
+        <name>Post_to_Parent_Case_s_Chatter_that_Child_Case_is_resolved_Cancelled</name>
+        <label>Post to Parent Case&apos;s Chatter that Child Case is resolved/Cancelled</label>
+        <locationX>314</locationX>
+        <locationY>647</locationY>
+        <actionName>chatterPost</actionName>
+        <actionType>chatterPost</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>text</name>
+            <value>
+                <stringValue>A duplicate case {!$Record.CaseNumber} has been cancelled and the emails reparented to your case.</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>subjectNameOrId</name>
+            <value>
+                <elementReference>$Record.ParentId</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>chatterPost</nameSegment>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
+    <actionCalls>
+        <name>Reparent_Email_Messages2</name>
+        <label>Reparent Email Messages</label>
+        <locationX>182</locationX>
+        <locationY>431</locationY>
+        <actionName>NAS_ReparentEmailMessages</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Check_if_Parent_Case_Owner_is_User</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>caseIdList</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>NAS_ReparentEmailMessages</nameSegment>
+    </actionCalls>
+    <actionCalls>
+        <description>Send Closure Email Notification</description>
+        <name>Send_Closure_Email_Notification2</name>
+        <label>Send Closure Email Notification</label>
+        <locationX>1370</locationX>
+        <locationY>431</locationY>
+        <actionName>SendEmailUsingTemplate</actionName>
+        <actionType>apex</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>contactId</name>
+            <value>
+                <elementReference>$Record.Contact.Id</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>country</name>
+            <value>
+                <elementReference>$Record.IME_SC_Country__c</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>origin</name>
+            <value>
+                <elementReference>$Record.Origin</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>recordID</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>recordTypeName</name>
+            <value>
+                <elementReference>$Record.RecordType_Name__c</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>toAddress</name>
+            <value>
+                <elementReference>$Record.Contact.Email</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>type</name>
+            <value>
+                <stringValue>Closed</stringValue>
+            </value>
+        </inputParameters>
+        <nameSegment>SendEmailUsingTemplate</nameSegment>
+    </actionCalls>
+    <apiVersion>57.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <decisions>
+        <description>Check if Country is present on Case</description>
+        <name>Check_if_Country_is_present_on_Case</name>
+        <label>Check if Country is present on Case</label>
+        <locationX>2030</locationX>
+        <locationY>431</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Country_Check</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.IME_SC_Country__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Calculate_Follow_up_Date</targetReference>
+            </connector>
+            <label>Country Check</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_if_Parent_Case_Owner_is_User</name>
+        <label>Check if Parent Case Owner is User</label>
+        <locationX>182</locationX>
+        <locationY>539</locationY>
+        <defaultConnector>
+            <targetReference>Post_to_Parent_Case_s_Chatter_that_Child_Case_is_resolved_Cancelled</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>For Queue</defaultConnectorLabel>
+        <rules>
+            <name>For_User</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Parent.OwnerId</leftValueReference>
+                <operator>StartsWith</operator>
+                <rightValue>
+                    <stringValue>005</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Post_to_Parent_Case_s_Chatter_that_Child_Case_is_resolved</targetReference>
+            </connector>
+            <label>For User</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>1) Added Chatter Post Notification for Parent Case Owner. For reference, check user story #24384 on Gitlab
+Updated rule for record type &quot;CAC Executive Escalations&quot;. For ref, check user story #27570 on Gitlab
+8) Update the Follow up Dates based on the pending Reason using the Business Hours, Holidays and Weekends. 
+Updated rule for record type &quot;CAC Executive Escalations&quot;. For ref, check user story #27573 on Gitlab
+9) Extended the reopen counter functionality for &quot;CAC Executive Escalation&quot; Record Type. #27569</description>
+        <name>Global_Service_Case_Updates</name>
+        <label>Global Service Case Updates</label>
+        <locationX>1304</locationX>
+        <locationY>323</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Reparent_Email_Messages</name>
+            <conditionLogic>1 AND 2 AND (3 OR 4) AND (5 OR 6)</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.NAS_Reparent_Email_Messages__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.ParentId</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.NAS_Reparent_Email_Messages__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.ParentId</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.RecordType_Name__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Global Service Case</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.RecordType_Name__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>CAC Executive Escalations</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Reparent_Email_Messages2</targetReference>
+            </connector>
+            <label>1 - Reparent Email Messages</label>
+        </rules>
+        <rules>
+            <name>Email_Notification_for_Parent_Case_Owner</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.RecordType_Name__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Global Service Case</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Resolved</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.ParentId</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Post_to_Chatter_that_Child_Case_is_resolved</targetReference>
+            </connector>
+            <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+            <label>2 - Email Notification for Parent Case Owner</label>
+        </rules>
+        <rules>
+            <name>Update_Status_to_Waiting_for_Agent</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.RecordType_Name__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Global Service Case</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Owner:Group.Id</leftValueReference>
+                <operator>StartsWith</operator>
+                <rightValue>
+                    <stringValue>00G</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Assigned</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Customer_ID__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.GSC_Category__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.GSC_Sub_Category__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Status_to_Waiting_for_Agent2</targetReference>
+            </connector>
+            <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+            <label>4 - Update Status to Waiting for Agent</label>
+        </rules>
+        <rules>
+            <name>Update_Reopened_Counter</name>
+            <conditionLogic>(1 OR 3) AND 2</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.RecordType_Name__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Global Service Case</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Reopened</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.RecordType.DeveloperName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>CAC_Executive_Escalations</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Reopened_Counter2</targetReference>
+            </connector>
+            <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+            <label>5 - Update Reopened Counter</label>
+        </rules>
+        <rules>
+            <name>Send_Closure_Email_Notification</name>
+            <conditionLogic>1 AND (2 OR 3) AND 4</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.IME_SC_Send_Closure_Email__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Resolved</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Customer Unresponsive</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.RecordType_Name__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Global Service Case</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Send_Closure_Email_Notification2</targetReference>
+            </connector>
+            <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+            <label>6 - Send Closure Email Notification</label>
+        </rules>
+        <rules>
+            <name>Update_Country_when_Case_Origin_is_changed</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Origin</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.RecordType_Name__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Global Service Case</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Metadata_Settings</targetReference>
+            </connector>
+            <label>7 - Update Country when Case Origin is changed</label>
+        </rules>
+        <rules>
+            <name>X8_Update_Follow_Up_Dates</name>
+            <conditionLogic>(1 OR 6) AND (2 OR 3 OR 4) AND 5 AND 7</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.RecordType_Name__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Global Service Case</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.NAS_Pending_Reason__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Internal Response</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.NAS_Pending_Reason__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Supervisor</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.NAS_Pending_Reason__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Customer Response</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Follow_up_Date__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.RecordType_Name__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>CAC Executive Escalations</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.NAS_Pending_Reason__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Check_if_Country_is_present_on_Case</targetReference>
+            </connector>
+            <label>8 - Update Follow Up Dates</label>
+        </rules>
+    </decisions>
+    <description>Epic #1008 Global Service Case
+To update the Follow Up Dates on Global Service Case when the pending reason is updated. For reference, check user story #22253  on Gitlab.
+Updated (Update follow-up date) rule for record type &quot;CAC Executive Escalations&quot;. For ref, check user story #27573 on Gitlab
+Updated (Reparent Email Message) rule for record type &quot;CAC Executive Escalations&quot;. For ref, check user story #27570 on Gitlab
+Extended the reopen counter functionality for &quot;CAC Executive Escalation&quot; Record Type. #27569</description>
+    <environments>Default</environments>
+    <formulas>
+        <name>ChatterNotification</name>
+        <dataType>String</dataType>
+        <expression>&apos;#&apos;+{!$Record.Parent.CaseNumber} +&apos;- #&apos;+ {!$Record.CaseNumber} +&apos; has been resolved.&apos;</expression>
+    </formulas>
+    <formulas>
+        <name>Email_Template_Name</name>
+        <dataType>String</dataType>
+        <expression>&apos;GSC Closure Order &apos;+ TEXT({!$Record.IME_SC_Country__c})+&apos; Email Template&apos;</expression>
+    </formulas>
+    <formulas>
+        <description>Calculate the Reopened Counter when the Case is getting Reopened</description>
+        <name>Reopened_Count</name>
+        <dataType>Number</dataType>
+        <expression>IF(ISNULL({!$Record.GSC_Reopened_Counter__c}), NULLVALUE({!$Record.GSC_Reopened_Counter__c}, 1) , ({!$Record.GSC_Reopened_Counter__c}+1))</expression>
+        <scale>0</scale>
+    </formulas>
+    <interviewLabel>GSC Case - After Update Flow {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>GSC Case - After Update Flow</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <name>Get_Metadata_Settings</name>
+        <label>Get Metadata Settings</label>
+        <locationX>1634</locationX>
+        <locationY>431</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Update_Country</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>GSC_Case_Origin__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Origin</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>GSC_Case_Country_Closure_Email__mdt</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordUpdates>
+        <description>Update Country based on the Case Origin</description>
+        <name>Update_Country</name>
+        <label>Update Country</label>
+        <locationX>1634</locationX>
+        <locationY>539</locationY>
+        <inputAssignments>
+            <field>IME_SC_Country__c</field>
+            <value>
+                <elementReference>Get_Metadata_Settings.GSC_Country__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Update_Reopened_Counter2</name>
+        <label>Update Reopened Counter</label>
+        <locationX>1106</locationX>
+        <locationY>431</locationY>
+        <inputAssignments>
+            <field>GSC_Reopened_Counter__c</field>
+            <value>
+                <elementReference>Reopened_Count</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Update_Status_to_Waiting_for_Agent2</name>
+        <label>Update Status to Waiting for Agent</label>
+        <locationX>842</locationX>
+        <locationY>431</locationY>
+        <inputAssignments>
+            <field>Status</field>
+            <value>
+                <stringValue>Waiting for Agent</stringValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>1178</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Global_Service_Case_Updates</targetReference>
+        </connector>
+        <filterLogic>or</filterLogic>
+        <filters>
+            <field>RecordType_Name__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Global Service Case</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>RecordType_Name__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>CAC Executive Escalations</stringValue>
+            </value>
+        </filters>
+        <object>Case</object>
+        <recordTriggerType>Update</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+    <triggerOrder>300</triggerOrder>
+</Flow>

@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>64.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <name>Update_Closed_Date_to_Blank</name>
+        <label>Update Closed Date to Blank</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Closed_Date__c</assignToReference>
+            <operator>Assign</operator>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <description>Update Closed Date field to Today&apos;s Date</description>
+        <name>Update_Closed_Date_to_Today</name>
+        <label>Update Closed Date to Today</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Closed_Date__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Today_DateTime</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <decisions>
+        <name>Check_if_Closed_Date_is_Exist</name>
+        <label>Check if Closed Date is Exist</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Yes</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Closed_Date__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Closed_Date_to_Blank</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Status_Change</name>
+        <label>Status Change</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Check_if_Closed_Date_is_Exist</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Not of Completed/Rejected/Abandoned</defaultConnectorLabel>
+        <rules>
+            <name>Closed_Rejected_Abandoned</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Completed</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Rejected</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Abandon</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Closed_Date_to_Today</targetReference>
+            </connector>
+            <label>Completed / Rejected / Abandoned</label>
+        </rules>
+    </decisions>
+    <description>#33224 - Corporate Request: Automate Close Date when Status is updated to &apos;Closed&apos;
+#34450 - Corporate Request: Add new Status picklist values &amp; Update Close Date automation</description>
+    <environments>Default</environments>
+    <formulas>
+        <name>Today_DateTime</name>
+        <dataType>DateTime</dataType>
+        <expression>NOW()</expression>
+    </formulas>
+    <interviewLabel>Update Closed Date Status Closed {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Update Closed Date Status Completed/Abandoned/Rejected</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Status_Change</targetReference>
+        </connector>
+        <filterFormula>AND(ISCHANGED({!$Record.Status__c}),
+OR(
+AND(ISNULL({!$Record.Closed_Date__c}),OR(ISPICKVAL({!$Record.Status__c}, &apos;Completed&apos;),ISPICKVAL({!$Record.Status__c}, &apos;Rejected&apos;),ISPICKVAL({!$Record.Status__c}, &apos;Abandon&apos;))),
+AND(NOT(ISNULL({!$Record.Closed_Date__c})),
+NOT(OR(ISPICKVAL({!$Record.Status__c}, &apos;Completed&apos;),ISPICKVAL({!$Record.Status__c}, &apos;Rejected&apos;),ISPICKVAL({!$Record.Status__c}, &apos;Abandon&apos;))))))</filterFormula>
+        <object>Corporate_Request__c</object>
+        <recordTriggerType>Update</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

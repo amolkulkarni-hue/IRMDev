@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Pipeline_Target_CM__c</fullName>
+    <description>This is an automated field that calculates the target owner&apos;s current month pipeline target amount based on the amount entered in the current month target field.</description>
+    <formula>CASE(
+MONTH( TODAY() ),
+1, Pipeline_Target_Jan__c,
+2, Pipeline_Target_Feb__c,
+3, Pipeline_Target_Mar__c,
+4, Pipeline_Target_Apr__c,
+5, Pipeline_Target_May__c,
+6, Pipeline_Target_Jun__c,
+7, Pipeline_Target_Jul__c,
+8, Pipeline_Target_Aug__c,
+9, Pipeline_Target_Sep__c,
+10, Pipeline_Target_Oct__c,
+11, Pipeline_Target_Nov__c,
+12, Pipeline_Target_Dec__c,
+0
+)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Pipeline Target (CM)</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>2</scale>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Currency</type>
+</CustomField>

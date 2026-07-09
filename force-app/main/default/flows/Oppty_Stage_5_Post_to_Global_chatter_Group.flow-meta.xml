@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>60.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <description>Migrated from the Oppty Stage 5 - Post to Global chatter Group process using Reached Stage 5 criteria.</description>
+    <environments>Default</environments>
+    <label>Oppty Stage 5 - Post to Global chatter Group</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>myRule_1_A1</targetReference>
+        </connector>
+        <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+        <filterFormula>(ISPICKVAL({!$Record.StageName},&apos;5 - Signed/PO in&apos;))</filterFormula>
+        <object>Opportunity</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Draft</status>
+    <subflows>
+        <name>myRule_1_A1</name>
+        <label>Invoke Flow</label>
+        <locationX>176</locationX>
+        <locationY>323</locationY>
+        <flowName>Oppty_Stage_5_Global_Chatter_Post</flowName>
+        <inputAssignments>
+            <name>GlobalAccountName</name>
+            <value>
+                <elementReference>$Record.Account.IM_IMGA_Indexed__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>OppId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+</Flow>

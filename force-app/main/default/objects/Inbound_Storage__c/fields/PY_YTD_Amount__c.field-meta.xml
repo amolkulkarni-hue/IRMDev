@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>PY_YTD_Amount__c</fullName>
+    <formula>/*Commented Custom Label as part of Gitlab #25402*/
+IF(
+VALUE(Storage_Year__c) = VALUE($Label.Current_Commission_Year)-1 
+&amp;&amp;
+Storage_Month__c &lt;= VALUE(/*$Label.BoB_M2_End_Period*/null), Total_Revenue__c, 0
+)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>PY YTD Amount</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>2</scale>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Currency</type>
+</CustomField>

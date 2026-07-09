@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>65.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <customErrors>
+        <description>Display the error massage when opportunity contact roles are having role as &apos;Created by People.ai&apos;.</description>
+        <name>Created_by_People_ai_Role_Block</name>
+        <label>&apos;Created by People.ai&apos; Role Block</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <customErrorMessages>
+            <errorMessage>To enter this Stage, an opportunity must have at least one Contact Name with a valid opportunity Role.</errorMessage>
+            <isFieldError>false</isFieldError>
+        </customErrorMessages>
+    </customErrors>
+    <decisions>
+        <description>Verifying the presence of &apos;Created by People.ai&apos; contact roles within the opportunity.</description>
+        <name>Check_for_Created_by_People_ai_Contact_Roles</name>
+        <label>Check for &apos;Created by People.ai&apos; Contact Roles</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>No &quot;Created by People.ai&quot; Contact Role Found within the opportunity.</defaultConnectorLabel>
+        <rules>
+            <name>Created_by_People_ai_Exists</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Contact_Roles</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Created_by_People_ai_Role_Block</targetReference>
+            </connector>
+            <label>&apos;Created by People.ai&apos; Exists</label>
+        </rules>
+    </decisions>
+    <description>34285 : Opportunity: Contact Roles where Role = &apos;People.ai Identified&apos; must be updated to something else before Stage 4 - PLNI0014179</description>
+    <environments>Default</environments>
+    <interviewLabel>Opportunity Contact Role Validation {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Opportunity Contact Role Validation</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <description>Retrieve the contact role associated with the current opportunity.</description>
+        <name>Get_Contact_Roles</name>
+        <label>Get Contact Roles</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Check_for_Created_by_People_ai_Contact_Roles</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>OpportunityId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Role</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Created by People.ai</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>OpportunityContactRole</object>
+        <queriedFields>Id</queriedFields>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <start>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Get_Contact_Roles</targetReference>
+        </connector>
+        <filterFormula>AND(
+ISCHANGED({!$Record.StageName}),
+OR(
+/* Condition 1 :  Opportunity is moving into Stage 4 or 5 */
+ISPICKVAL({!$Record.StageName}, &quot;4 - Negotiate&quot;),
+ISPICKVAL({!$Record.StageName}, &quot;5 - Signed/PO in&quot;),
+/* Condition 2 : Opportunity is moving to Lost from any stage except Stage 1 */
+AND(
+ISPICKVAL({!$Record.StageName}, &quot;Lost&quot;),
+NOT(ISPICKVAL(PRIORVALUE({!$Record.StageName}), &quot;1 - Qualification&quot;))
+)
+)
+)</filterFormula>
+        <object>Opportunity</object>
+        <recordTriggerType>Update</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

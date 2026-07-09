@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Include_in_Storage_YTD__c</fullName>
+    <externalId>false</externalId>
+    <formula>IF (MONTH(Storage_Date__c) &lt;= VALUE($Label.Current_End_Cube_Period) , &quot;Include&quot; , &quot;Exclude&quot;)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Include in Storage YTD</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

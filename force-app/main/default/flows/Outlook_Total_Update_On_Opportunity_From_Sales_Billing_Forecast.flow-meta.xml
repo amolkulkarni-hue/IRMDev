@@ -1,0 +1,571 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>57.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <description>As the SBF Line is of Current Month and Actual Billings data is available add Actual Billings to Outlook Total</description>
+        <name>Actual_Billing_has_a_value_in_Current_SBF_Line</name>
+        <label>Actual Billing has a value in Current SBF Line</label>
+        <locationX>1496</locationX>
+        <locationY>1190</locationY>
+        <assignmentItems>
+            <assignToReference>Var_Outlook_Total</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>Loop_Through_Opp_Related_SBFs.Actual_Billings__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Loop_Through_Opp_Related_SBFs</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Add Actual Billing to Outlook Total</description>
+        <name>Actual_Billing_has_a_Value_in_Past_SBF_Lines</name>
+        <label>Actual Billing has a Value in Past SBF Lines</label>
+        <locationX>1232</locationX>
+        <locationY>1190</locationY>
+        <assignmentItems>
+            <assignToReference>Var_Outlook_Total</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>Loop_Through_Opp_Related_SBFs.Actual_Billings__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Loop_Through_Opp_Related_SBFs</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>To update Outlook Total on opportunity and reset the Outlook Total Variable.</description>
+        <name>Assign_Outlook_Total_to_Opportunity</name>
+        <label>Assign Outlook Total to Opportunity</label>
+        <locationX>1144</locationX>
+        <locationY>1466</locationY>
+        <assignmentItems>
+            <assignToReference>Loop_Through_All_Opps.Outlook_Total__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Var_Outlook_Total</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Var_Outlook_Total</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <numberValue>0.0</numberValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>To_Update_Opps</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>As looping through SBFs and getting Parent Opps, for each iteration Get Records will overwrites existing Parent Opps with new iteration.  So, assign the Opps to new collection.</description>
+        <name>Assign_Parent_Opps_to_Local_Collection_Variable</name>
+        <label>Assign Parent Opps to Local Collection Variable</label>
+        <locationX>264</locationX>
+        <locationY>242</locationY>
+        <assignmentItems>
+            <assignToReference>Var_All_Parent_Opp_Ids_List</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>Loop_Through_Received_SBFs.Forecast_Opportunity__r.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Loop_Through_Received_SBFs</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Stores the Forecast Billing Date of current SBF Line</description>
+        <name>Forecast_Billing_date_of_each_SBF</name>
+        <label>Forecast Billing date of each SBF</label>
+        <locationX>1628</locationX>
+        <locationY>974</locationY>
+        <assignmentItems>
+            <assignToReference>ForecastBillingDate</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Loop_Through_Opp_Related_SBFs.Forecast_Revenue_Date__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Check_SBF_date</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>To Update opportunities, assign each opportunity to a collection variable.</description>
+        <name>To_Update_Opps</name>
+        <label>To Update Opps</label>
+        <locationX>1144</locationX>
+        <locationY>1574</locationY>
+        <assignmentItems>
+            <assignToReference>List_Of_Opps_To_Update</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>Loop_Through_All_Opps</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Loop_Through_All_Opps</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>As SBF is of Future or Current Line with no Actual Billing add Updated Billing Outlook to Outlook Total</description>
+        <name>Update_Billing_Outlook_in_Future_SBF_lines_or_in_Current_SBF_lines</name>
+        <label>Update Billing Outlook in Future SBF lines or in Current SBF lines</label>
+        <locationX>1760</locationX>
+        <locationY>1190</locationY>
+        <assignmentItems>
+            <assignToReference>Var_Outlook_Total</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>Loop_Through_Opp_Related_SBFs.Updated_Billing_Outlook__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Loop_Through_Opp_Related_SBFs</targetReference>
+        </connector>
+    </assignments>
+    <collectionProcessors>
+        <description>Map of all opportunities and related SBF records</description>
+        <name>Opportunity_and_SBFs_Map</name>
+        <elementSubtype>FilterCollectionProcessor</elementSubtype>
+        <label>Opportunity and SBFs Map</label>
+        <locationX>1144</locationX>
+        <locationY>758</locationY>
+        <assignNextValueToReference>currentItem_Opportunity_and_SBFs_Map</assignNextValueToReference>
+        <collectionProcessorType>FilterCollectionProcessor</collectionProcessorType>
+        <collectionReference>Get_All_SBFs</collectionReference>
+        <conditionLogic>and</conditionLogic>
+        <conditions>
+            <leftValueReference>currentItem_Opportunity_and_SBFs_Map.Forecast_Opportunity__c</leftValueReference>
+            <operator>EqualTo</operator>
+            <rightValue>
+                <elementReference>Loop_Through_All_Opps.Id</elementReference>
+            </rightValue>
+        </conditions>
+        <connector>
+            <targetReference>Loop_Through_Opp_Related_SBFs</targetReference>
+        </connector>
+    </collectionProcessors>
+    <decisions>
+        <description>Verify the state of Forecast Billing Date.
+If the Forecast Billing Date is in the Past based on Current Month : Past Outcome is Executed and Actual Billing Value is added to Var_Outlook_Total variable. Past having delay reason conditions which allows in forecast total is None or Internal - Billing in Research.
+If the Forecast Billing Date is in the Current Year and Current Month and has Actual Billings : Current Outcome is Executed where Actual Billings is added to Var_Outlook_Total variable. Current having delay reasons which allows in forecast total is None or Internal - Billing in Research.
+If the Forecast Billing Date is in Future or Actual Billings is not available for Current Month&apos;s SBF Line: Future is Executed where Update Billing Outlook is added to Var_Outlook_Total variable. Future don&apos;t have any delay reason conditions, it allows all the delay reasons or None.</description>
+        <name>Check_SBF_date</name>
+        <label>Check SBF date</label>
+        <locationX>1628</locationX>
+        <locationY>1082</locationY>
+        <defaultConnector>
+            <targetReference>Loop_Through_Opp_Related_SBFs</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Past</name>
+            <conditionLogic>((1 AND 4 AND 7) OR (2 AND 3 AND 4 AND 7)) OR ((1 AND 5 AND 6 AND 7) OR (2 AND 3 AND 5 AND 6 AND 7))</conditionLogic>
+            <conditions>
+                <leftValueReference>Year_Of_ForecastBillingDate</leftValueReference>
+                <operator>LessThan</operator>
+                <rightValue>
+                    <elementReference>Var_CurrentYear</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Year_Of_ForecastBillingDate</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>Var_CurrentYear</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Month_of_ForecastBillingDate</leftValueReference>
+                <operator>LessThan</operator>
+                <rightValue>
+                    <elementReference>Var_CurrentMonth</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Loop_Through_Opp_Related_SBFs.Delay_Reasons_B2B_Billing_Outlook__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Loop_Through_Opp_Related_SBFs.Delay_Reasons_B2B_Billing_Outlook__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Loop_Through_Opp_Related_SBFs.Delay_Reasons_B2B_Billing_Outlook__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Internal - Billing in Research</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Loop_Through_Opp_Related_SBFs.Actual_Billings__c</leftValueReference>
+                <operator>GreaterThan</operator>
+                <rightValue>
+                    <numberValue>0.0</numberValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Actual_Billing_has_a_Value_in_Past_SBF_Lines</targetReference>
+            </connector>
+            <label>Past</label>
+        </rules>
+        <rules>
+            <name>Current</name>
+            <conditionLogic>(1 AND 2 AND 3 AND 4) OR (1 AND 2 AND 3 AND 5 AND 6)</conditionLogic>
+            <conditions>
+                <leftValueReference>Loop_Through_Opp_Related_SBFs.Actual_Billings__c</leftValueReference>
+                <operator>GreaterThan</operator>
+                <rightValue>
+                    <numberValue>0.0</numberValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Year_Of_ForecastBillingDate</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>Var_CurrentYear</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Month_of_ForecastBillingDate</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>Var_CurrentMonth</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Loop_Through_Opp_Related_SBFs.Delay_Reasons_B2B_Billing_Outlook__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Loop_Through_Opp_Related_SBFs.Delay_Reasons_B2B_Billing_Outlook__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Loop_Through_Opp_Related_SBFs.Delay_Reasons_B2B_Billing_Outlook__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Internal - Billing in Research</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Actual_Billing_has_a_value_in_Current_SBF_Line</targetReference>
+            </connector>
+            <label>Current</label>
+        </rules>
+        <rules>
+            <name>Future_Current_Past_Updated_Billing_Outlook</name>
+            <conditionLogic>(1 OR (2 AND 3)) OR (2 AND 4 AND 5) OR ((6 AND 5) OR (2 AND 7 AND 5)) OR (8 AND 2 AND 4 AND 9) OR ((8 AND 6 AND 9) OR (8 AND 2 AND 7 AND 9))</conditionLogic>
+            <conditions>
+                <leftValueReference>Year_Of_ForecastBillingDate</leftValueReference>
+                <operator>GreaterThan</operator>
+                <rightValue>
+                    <elementReference>Var_CurrentYear</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Year_Of_ForecastBillingDate</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>Var_CurrentYear</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Month_of_ForecastBillingDate</leftValueReference>
+                <operator>GreaterThan</operator>
+                <rightValue>
+                    <elementReference>Var_CurrentMonth</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Month_of_ForecastBillingDate</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>Var_CurrentMonth</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Loop_Through_Opp_Related_SBFs.Delay_Reasons_B2B_Billing_Outlook__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Year_Of_ForecastBillingDate</leftValueReference>
+                <operator>LessThan</operator>
+                <rightValue>
+                    <elementReference>Var_CurrentYear</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Month_of_ForecastBillingDate</leftValueReference>
+                <operator>LessThan</operator>
+                <rightValue>
+                    <elementReference>Var_CurrentMonth</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Loop_Through_Opp_Related_SBFs.Delay_Reasons_B2B_Billing_Outlook__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Loop_Through_Opp_Related_SBFs.Delay_Reasons_B2B_Billing_Outlook__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Internal - Billing in Research</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Billing_Outlook_in_Future_SBF_lines_or_in_Current_SBF_lines</targetReference>
+            </connector>
+            <label>Future / Current / Past_Updated_Billing_Outlook</label>
+        </rules>
+    </decisions>
+    <description>Story #15080 : Outlook Total = Sum of the lines (Per line, bring in; Past month&apos;s Actual Billings OR Updated Billing Outlook if Actual Billings = 0 OR null if Actual Billings = 0 &amp; has Delayed Reason + Current month&apos;s Actual Billings OR Updated Billing Outlook if Actual Billings = 0 OR null if Actual Billings = 0 &amp; has Delayed Reason + all future month&apos;s Updated Billing Outlook)
+
+This is a common flow for updating Outlook Total field on Opportunity.  Calculate Outlook Total, based on Updated Billing Outlook, Actual Billing and Delay Reason  form related Sales Billing Forecast Object records.
+
+#20469: Updated Outlook Total field logic:
+Outlook Total (Forecast Total)= Sum of the lines (Per line, bring in Past lines Actual Billing,
+                                                                                 Current line&apos;s Actual Billing or Updated Billing Outlook
+                                                                                 Future line&apos;s Updated Billing Outlook)
+Past/ Current / Future is decided based on Current Month and not Date.
+
+#28560 - Updated Outlook Total logic
+Outlook Total (Forecast Total)= Sum of the lines (Per line, bring in Past lines Actual Billing or Updated Billing Outlook,
+                                                                                 Current line&apos;s Actual Billing or Updated Billing Outlook
+                                                                                 Future line&apos;s Updated Billing Outlook)
+Including in Outlook Total, that have a delay reason EXCEPT when the delay reason = &apos;Internal Billing Research&apos;</description>
+    <environments>Default</environments>
+    <formulas>
+        <description>Stores the Month of Forecast Billing Date for each SBF Line</description>
+        <name>Month_of_ForecastBillingDate</name>
+        <dataType>Number</dataType>
+        <expression>MONTH({!ForecastBillingDate})</expression>
+        <scale>0</scale>
+    </formulas>
+    <formulas>
+        <description>Stores the Current Month</description>
+        <name>Var_CurrentMonth</name>
+        <dataType>Number</dataType>
+        <expression>MONTH(TODAY())</expression>
+        <scale>0</scale>
+    </formulas>
+    <formulas>
+        <description>Stores the current Year</description>
+        <name>Var_CurrentYear</name>
+        <dataType>Number</dataType>
+        <expression>YEAR(TODAY())</expression>
+        <scale>0</scale>
+    </formulas>
+    <formulas>
+        <description>Stores the Year of Forecast Billing Date for each iteration</description>
+        <name>Year_Of_ForecastBillingDate</name>
+        <dataType>Number</dataType>
+        <expression>YEAR({!ForecastBillingDate})</expression>
+        <scale>0</scale>
+    </formulas>
+    <interviewLabel>Outlook Total Update On Opportunity From Sales Billing Forecast {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Outlook Total Update On Opportunity From Sales Billing Forecast</label>
+    <loops>
+        <description>Loop through All Opps and create a map of Opp and related SBF records.</description>
+        <name>Loop_Through_All_Opps</name>
+        <label>Loop Through All Opps</label>
+        <locationX>176</locationX>
+        <locationY>650</locationY>
+        <collectionReference>Get_Parent_Opps</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>Opportunity_and_SBFs_Map</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>Update_Opportunities</targetReference>
+        </noMoreValuesConnector>
+    </loops>
+    <loops>
+        <description>Loop through all SBFs which are related to each Opportunity from the Opportunity and SBFs Map.</description>
+        <name>Loop_Through_Opp_Related_SBFs</name>
+        <label>Loop Through Opp Related SBFs</label>
+        <locationX>1144</locationX>
+        <locationY>866</locationY>
+        <collectionReference>Opportunity_and_SBFs_Map</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>Forecast_Billing_date_of_each_SBF</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>Assign_Outlook_Total_to_Opportunity</targetReference>
+        </noMoreValuesConnector>
+    </loops>
+    <loops>
+        <description>Loop through the SBFs which are passed to this flow from Parent flows.  Get All Related Opportunities and related SBF Records.</description>
+        <name>Loop_Through_Received_SBFs</name>
+        <label>Loop Through Received SBFs</label>
+        <locationX>176</locationX>
+        <locationY>134</locationY>
+        <collectionReference>Var_Received_SBFs_Collection</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>Assign_Parent_Opps_to_Local_Collection_Variable</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>Get_Parent_Opps</targetReference>
+        </noMoreValuesConnector>
+    </loops>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <description>Get all SBF records related to the fetched opportunities.</description>
+        <name>Get_All_SBFs</name>
+        <label>Get All SBFs</label>
+        <locationX>176</locationX>
+        <locationY>542</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Loop_Through_All_Opps</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Forecast_Opportunity__c</field>
+            <operator>In</operator>
+            <value>
+                <elementReference>Var_All_Parent_Opp_Ids_List</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>Sales_Revenue_Forecast__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <description>To Updated Outlook Total, fetch all parent opps.</description>
+        <name>Get_Parent_Opps</name>
+        <label>Get Parent Opps</label>
+        <locationX>176</locationX>
+        <locationY>434</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Get_All_SBFs</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>In</operator>
+            <value>
+                <elementReference>Var_All_Parent_Opp_Ids_List</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>Opportunity</object>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>Outlook_Total__c</queriedFields>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordUpdates>
+        <description>Update all opportunities with Outlook Total</description>
+        <name>Update_Opportunities</name>
+        <label>Update Opportunities</label>
+        <locationX>176</locationX>
+        <locationY>1766</locationY>
+        <inputReference>List_Of_Opps_To_Update</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Loop_Through_Received_SBFs</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <variables>
+        <name>currentItem_Opportunity_and_SBFs_Map</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Sales_Revenue_Forecast__c</objectType>
+    </variables>
+    <variables>
+        <description>This variable stores the Forecast Billing Date of current iterating SBF Line</description>
+        <name>ForecastBillingDate</name>
+        <dataType>Date</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>Contains all opportunities to update</description>
+        <name>List_Of_Opps_To_Update</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Opportunity</objectType>
+    </variables>
+    <variables>
+        <description>Store all Opps Ids, then use this Variable to get all Parent Opps.</description>
+        <name>Var_All_Parent_Opp_Ids_List</name>
+        <dataType>String</dataType>
+        <isCollection>true</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>Use this Variable to update Parent Opp&apos;s Outlook Total</description>
+        <name>Var_Outlook_Total</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <scale>2</scale>
+        <value>
+            <numberValue>0.0</numberValue>
+        </value>
+    </variables>
+    <variables>
+        <description>Holds all the SBF Records, which are received from the Parent flows.</description>
+        <name>Var_Received_SBFs_Collection</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Sales_Revenue_Forecast__c</objectType>
+    </variables>
+</Flow>

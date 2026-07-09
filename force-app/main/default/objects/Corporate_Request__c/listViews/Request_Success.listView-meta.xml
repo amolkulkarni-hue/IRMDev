@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Request_Success</fullName>
+    <columns>NAME</columns>
+    <columns>Requestor_s_Name__c</columns>
+    <columns>Request_Number__c</columns>
+    <columns>CREATEDBY_USER</columns>
+    <columns>OWNER.FIRST_NAME</columns>
+    <columns>Status__c</columns>
+    <columns>Requestor_s_IM_Division__c</columns>
+    <columns>CREATED_DATE</columns>
+    <columns>LAST_UPDATE</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>CREATEDBY_USER</field>
+        <operation>contains</operation>
+        <value>Gislaine,Diego Silva,Jessica Karoline,Kelly Rodrigues,Thays,Sarah,Thamiris,Sandra,Poliane,Alexandre,Brenda,Jacilene,Gleici,Fernanda Santos,Beatriz Ribeiro,Claudia,Cristiane,Célia</value>
+    </filters>
+    <filters>
+        <field>Status__c</field>
+        <operation>notEqual</operation>
+        <value>Closed</value>
+    </filters>
+    <filters>
+        <field>Requestor_s_Country__c</field>
+        <operation>equals</operation>
+        <value>Brazil</value>
+    </filters>
+    <label>Request_Success</label>
+</ListView>

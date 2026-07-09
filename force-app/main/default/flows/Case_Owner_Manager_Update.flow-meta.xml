@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>58.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <decisions>
+        <description>1. New case creation scenario - update the Manger fields if owner is a user and the manager is not null
+2. Case update scenario - Owner changed and the new owner is a user not a queue  - OR the owner is not changed but manager is changed from user record (at least this update for an edit on case)
+3. If the owner is a queue - create or update scenario</description>
+        <name>Global_Service_case_update</name>
+        <label>Global Service case update</label>
+        <locationX>710</locationX>
+        <locationY>287</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>For_new_case</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>CheckNewCase</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.OwnerId</leftValueReference>
+                <operator>StartsWith</operator>
+                <rightValue>
+                    <stringValue>005</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Owner:User.ManagerId</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Owner_s_Manager_and_Owner_s_Manager_Manager</targetReference>
+            </connector>
+            <label>1- For new case</label>
+        </rules>
+        <rules>
+            <name>For_Existing_case</name>
+            <conditionLogic>(1 AND 2) OR (1 AND  3)</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.OwnerId</leftValueReference>
+                <operator>StartsWith</operator>
+                <rightValue>
+                    <stringValue>005</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.OwnerId</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.IME_SC_Owner_Manager__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>$Record.Owner:User.ManagerId</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Owner_Manager_Check</targetReference>
+            </connector>
+            <label>2- For Existing case</label>
+        </rules>
+        <rules>
+            <name>For_case_who_s_owner_is_Queue</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.OwnerId</leftValueReference>
+                <operator>StartsWith</operator>
+                <rightValue>
+                    <stringValue>00G</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.IME_SC_Owner_Manager__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Managers_name_as_blank</targetReference>
+            </connector>
+            <label>3- For case who&apos;s owner is Queue</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Checking if Owner Manager is blank or not</description>
+        <name>Owner_Manager_Check</name>
+        <label>Owner Manager Check</label>
+        <locationX>578</locationX>
+        <locationY>395</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Check_if_Owner_Manager_is_not_blank</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Owner:User.ManagerId</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Manager_and_OwnerManager_s_Manager</targetReference>
+            </connector>
+            <label>1-Check if Owner Manager is not blank</label>
+        </rules>
+        <rules>
+            <name>Check_if_Owners_manager_is_blank</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Owner:User.ManagerId</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Managers_fields_as_blank</targetReference>
+            </connector>
+            <label>2- Check if Owners manager is blank</label>
+        </rules>
+    </decisions>
+    <description>This flow updates the fields IME_SC_Owner_Manager__c and IME_SC_Manager_of_Manager_OwnerId__c to the case owner&apos;s manager and case owner managers&apos; manager respectively  #16378 - Keeping this on after flow as case assignment rule will not be considered in before flow and we are working on case owner.
+#27471 : Included this functionality for NCSP record types, CLAS record types and Global Orders cases
+#28035: Updated flow to before flow as after flow some scenarios were failing.</description>
+    <environments>Default</environments>
+    <formulas>
+        <description>To check if case is newly created</description>
+        <name>CheckNewCase</name>
+        <dataType>Boolean</dataType>
+        <expression>ISNEW()</expression>
+    </formulas>
+    <interviewLabel>Case Owner Manager Update {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Case Owner Manager Update</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <name>Update_Manager_and_OwnerManager_s_Manager</name>
+        <label>Update Manager and OwnerManager&apos;s Manager</label>
+        <locationX>314</locationX>
+        <locationY>503</locationY>
+        <inputAssignments>
+            <field>IME_SC_Manager_of_Manager_OwnerId__c</field>
+            <value>
+                <elementReference>$Record.Owner:User.Manager.ManagerId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>IME_SC_Owner_Manager__c</field>
+            <value>
+                <elementReference>$Record.Owner:User.ManagerId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Update_Managers_fields_as_blank</name>
+        <label>Update Managers fields as blank</label>
+        <locationX>578</locationX>
+        <locationY>503</locationY>
+        <inputAssignments>
+            <field>IME_SC_Manager_of_Manager_OwnerId__c</field>
+        </inputAssignments>
+        <inputAssignments>
+            <field>IME_SC_Owner_Manager__c</field>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <description>If case owner is queue then update the managers name as blank</description>
+        <name>Update_Managers_name_as_blank</name>
+        <label>Update Managers name as blank</label>
+        <locationX>1106</locationX>
+        <locationY>395</locationY>
+        <inputAssignments>
+            <field>IME_SC_Manager_of_Manager_OwnerId__c</field>
+        </inputAssignments>
+        <inputAssignments>
+            <field>IME_SC_Owner_Manager__c</field>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Update_Owner_s_Manager_and_Owner_s_Manager_Manager</name>
+        <label>Update Owner&apos;s Manager and Owner&apos;s Manager Manager</label>
+        <locationX>50</locationX>
+        <locationY>395</locationY>
+        <inputAssignments>
+            <field>IME_SC_Manager_of_Manager_OwnerId__c</field>
+            <value>
+                <elementReference>$Record.Owner:User.Manager.ManagerId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>IME_SC_Owner_Manager__c</field>
+            <value>
+                <elementReference>$Record.Owner:User.ManagerId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>584</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Global_Service_case_update</targetReference>
+        </connector>
+        <filterLogic>or</filterLogic>
+        <filters>
+            <field>RecordType_Name__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Global Service Case</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>RecordType_Name__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>NCSP: DMS</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>RecordType_Name__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>NCSP: DP New Customer Setup</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>RecordType_Name__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>NCSP: SKP Department Add Only</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>RecordType_Name__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>NCSP: SKP New Customer Setup</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>RecordType_Name__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>NCSP: Tech Services New Customer Setup</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>RecordType_Name__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>NCSP: Upsell</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>RecordType_Name__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>NCSP: New Customer Setup</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>RecordType_Name__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>NCSP Renewal</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>RecordType_Name__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>CLAS – Data Management</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>RecordType_Name__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>CLAS - RM</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>RecordType_Name__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>CLAS - Shred</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>RecordType_Name__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Global Orders</stringValue>
+            </value>
+        </filters>
+        <object>Case</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

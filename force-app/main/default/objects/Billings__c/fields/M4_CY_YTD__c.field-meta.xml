@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>M4_CY_YTD__c</fullName>
+    <formula>AND( 
+MONTH(Invoice_Date__c) &lt;= VALUE(null), 
+YEAR(Invoice_Date__c) = VALUE(null) 
+)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>M4 CY YTD</label>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Supplies_Needed_DBR_Section</fullName>
+    <active>true</active>
+    <description>On the Supplies Needed - DB&amp;R section, if &quot;Consolidated Invoices&quot; checkbox is TRUE, we need to require the &quot;Customer ID for Consolidated Billing&quot; field</description>
+    <errorConditionFormula>AND(DB_R_Consolidated_Invoices__c = True,  Customer_ID_for_Consolidated_Billing__c = NULL)</errorConditionFormula>
+    <errorMessage>Because &quot;Consolidated Invoices&quot; has been checked, you must fill out the &quot;Customer ID for Consolidated Billing&quot; field</errorMessage>
+</ValidationRule>

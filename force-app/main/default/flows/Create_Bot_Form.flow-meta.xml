@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>62.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <description>This flow is used in the Astra Bot to create a Bot Form Record. -#25625</description>
+    <environments>Default</environments>
+    <interviewLabel>Create Bot Form {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Create Bot Form</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordCreates>
+        <description>Create a BotForm Record</description>
+        <name>Create_Bot_Form</name>
+        <label>Create Bot Form</label>
+        <locationX>176</locationX>
+        <locationY>242</locationY>
+        <assignRecordIdToReference>varT_BotFormId</assignRecordIdToReference>
+        <inputAssignments>
+            <field>Anything_else_you_d_like_us_to_know__c</field>
+            <value>
+                <elementReference>varT_CustomerComments</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Customer_ID__c</field>
+            <value>
+                <elementReference>varT_CustomerId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Department_ID__c</field>
+            <value>
+                <elementReference>varT_DepartmentId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Division_ID__c</field>
+            <value>
+                <elementReference>varT_DivisionId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Messaging_Session__c</field>
+            <value>
+                <elementReference>Get_Messaging_Session.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Order_Number__c</field>
+            <value>
+                <elementReference>varT_OrderNumber</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Bot_Forms__c</object>
+    </recordCreates>
+    <recordLookups>
+        <description>To get the Messaging session record</description>
+        <name>Get_Messaging_Session</name>
+        <label>Get Messaging Session</label>
+        <locationX>176</locationX>
+        <locationY>134</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Create_Bot_Form</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>varT_RoutableId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>MessagingSession</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Get_Messaging_Session</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <variables>
+        <description>To store the BotForm Record Id and using in the bot.</description>
+        <name>varT_BotFormId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <description>to store the Customer Comments</description>
+        <name>varT_CustomerComments</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>To store the CustomerId value</description>
+        <name>varT_CustomerId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>To store the department id value.</description>
+        <name>varT_DepartmentId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>To store the division id value</description>
+        <name>varT_DivisionId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>To store the OrderNumber value.</description>
+        <name>varT_OrderNumber</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>To store the Messaging Session Id</description>
+        <name>varT_RoutableId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>

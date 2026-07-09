@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ALM_Deal_Desk_Sales_Support_Request</fullName>
+    <booleanFilter>1 OR 2 OR 3</booleanFilter>
+    <columns>Date_Submitted__c</columns>
+    <columns>NAME</columns>
+    <columns>Related_Opportunity__c</columns>
+    <columns>Sales_Rep__c</columns>
+    <columns>Request_Number__c</columns>
+    <filterScope>Queue</filterScope>
+    <filters>
+        <field>NAME</field>
+        <operation>contains</operation>
+        <value>Deal Desk</value>
+    </filters>
+    <filters>
+        <field>Task_Type__c</field>
+        <operation>equals</operation>
+        <value>ALM - Deal Desk,ALM Deal Support,DBU - Deal Desk,RIM - Deal Desk</value>
+    </filters>
+    <filters>
+        <field>Request_Type__c</field>
+        <operation>equals</operation>
+        <value>ALM - Deal Desk,RIM - Deal Desk,DBU - Deal Desk</value>
+    </filters>
+    <label>Deal Desk</label>
+    <queue>ALM_Deal_Desk</queue>
+    <sharedTo>
+        <allInternalUsers></allInternalUsers>
+    </sharedTo>
+</ListView>

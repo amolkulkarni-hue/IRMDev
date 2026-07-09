@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Bookings_Target_CM__c</fullName>
+    <description>This is an automated field that calculates the target owner&apos;s current month bookings target amount based on the value
+entered in the current month target field.</description>
+    <formula>CASE(
+MONTH( TODAY() ),
+1, Bookings_Target_Jan__c,
+2, Bookings_Target_Feb__c,
+3, Bookings_Target_Mar__c,
+4, Bookings_Target_Apr__c,
+5, Bookings_Target_May__c,
+6, Bookings_Target_Jun__c,
+7, Bookings_Target_Jul__c,
+8, Bookings_Target_Aug__c,
+9, Bookings_Target_Sep__c,
+10, Bookings_Target_Oct__c,
+11, Bookings_Target_Nov__c,
+12, Bookings_Target_Dec__c,
+0
+)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Bookings Target (CM)</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>2</scale>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Currency</type>
+</CustomField>

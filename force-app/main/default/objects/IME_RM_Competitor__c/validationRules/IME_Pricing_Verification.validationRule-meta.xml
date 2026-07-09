@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IME_Pricing_Verification</fullName>
+    <active>true</active>
+    <description>Pricing information for a competitor must be filled.</description>
+    <errorConditionFormula>AND( Retrieval_File__c =&quot;&quot;, Retrieval_Box__c =&quot;&quot;,  Std_Journey_Charge__c =&quot;&quot;, IMEStorage_Price_per_Unit__c =&quot;&quot;,  Permanent_Withdrawal__c =&quot;&quot;,  Handling_Charge__c =&quot;&quot;,  Rush_Transport__c =&quot;&quot;,  Minimum_Storage_Charge__c =&quot;&quot;,  Admin_Fee__c =&quot;&quot;, NOT(Unknown_Pricing__c))</errorConditionFormula>
+    <errorMessage>Please enter price information (Retrieval Box, Retrieval File, Permanent Withdrawal, Standard Journey Charge, Rush Transport, Minimum Storage Charge, Admin Fee and/or Storage Price (per Unit)) or check the Unknown Pricing checkbox.</errorMessage>
+</ValidationRule>

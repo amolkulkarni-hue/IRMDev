@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>QTB_BillingAccount__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <label>Billing Account</label>
+    <lookupFilter>
+        <active>true</active>
+        <filterItems>
+            <field>Account.QTB_Account_Record_Type__c</field>
+            <operation>equals</operation>
+            <value>Billing Account</value>
+        </filterItems>
+        <isOptional>false</isOptional>
+    </lookupFilter>
+    <referenceTo>Account</referenceTo>
+    <relationshipLabel>Sales Billing Account Relations (Billing Account)</relationshipLabel>
+    <relationshipName>Sales_Billing_Account_Relations1</relationshipName>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

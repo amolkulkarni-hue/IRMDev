@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>60.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <decisions>
+        <description>Checks if Deal validation process is enabled for the Opportunity Billing Country or not</description>
+        <name>Is_Deal_Validation_enabled</name>
+        <label>Is Deal Validation enabled?</label>
+        <locationX>182</locationX>
+        <locationY>395</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Deal_Validation_Countries</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Clear_Deal_Validation_field</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <description>Clear Deal Validation field if previously its marked as Rejected on an Opportunity when moving to Stage 5 
+#21386 #31590</description>
+    <environments>Default</environments>
+    <interviewLabel>Clear Deal Validation before moving to Stage 5 {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Clear Deal Validation before moving to Stage 5</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <description>Fetch the details of Custom Countries data called Deal Validation Countries to identify whether Deal Validation process is enabled for the record which triggered this flow.
+
+CustomMetadata:Deal Validation Country = Opportunity.Billing Country Name
+CustomMetadata:Deal Validation Country.Valid = True</description>
+        <name>Get_Deal_Validation_Countries</name>
+        <label>Get Deal Validation Countries</label>
+        <locationX>182</locationX>
+        <locationY>287</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Is_Deal_Validation_enabled</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Label</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Billing_Country__r.Name</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Valid__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Deal_Validation_Record_Types__mdt</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordUpdates>
+        <description>Clears Deal Validation field</description>
+        <name>Clear_Deal_Validation_field</name>
+        <label>Clear Deal Validation field</label>
+        <locationX>50</locationX>
+        <locationY>503</locationY>
+        <inputAssignments>
+            <field>Deal_Validation__c</field>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>56</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Get_Deal_Validation_Countries</targetReference>
+        </connector>
+        <filterFormula>AND(
+OR(
+{!$Record.RecordType.DeveloperName}= &apos;IMLA_Standard_Opportunity&apos;,
+{!$Record.RecordType.DeveloperName}= &apos;Standard_Opportunity&apos;,
+{!$Record.RecordType.DeveloperName}= &apos;IMAP_Standard_Opportunity&apos;,
+{!$Record.RecordType.DeveloperName}= &apos;IME_Standard_Opportunity&apos;),
+ISCHANGED({!$Record.StageName}),
+ISPICKVAL({!$Record.StageName},&apos;5 - Signed/PO in&apos;),
+ISPICKVAL({!$Record.Deal_Validation__c},&apos;Reject&apos;))</filterFormula>
+        <object>Opportunity</object>
+        <recordTriggerType>Update</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Active</status>
+    <textTemplates>
+        <name>Errormessage</name>
+        <isViewedAsPlainText>false</isViewedAsPlainText>
+        <text>&lt;p&gt;Flow failed to Update the Opportunity.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Error Details&lt;/strong&gt; :&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;{!$Flow.FaultMessage}&lt;/p&gt;</text>
+    </textTemplates>
+</Flow>

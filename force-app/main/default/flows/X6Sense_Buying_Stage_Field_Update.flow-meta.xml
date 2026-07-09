@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>61.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <description>When a Opportunity record is created below 3 new fields should pull the value from the related account fields, accordingly
+a)6Sense Buying Stage - ALM
+b)6Sense Buying Stage - Digital
+c)6Sense Buying Stage - RM</description>
+    <environments>Default</environments>
+    <interviewLabel>6Sense Buying Stage Field Update {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>6Sense Buying Stage Field Update</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <name>Update_6Sense_Buying_Stage_field</name>
+        <label>Update 6Sense Buying Stage field</label>
+        <locationX>176</locationX>
+        <locationY>287</locationY>
+        <inputAssignments>
+            <field>X6Sense_Buying_Stage_ALM__c</field>
+            <value>
+                <elementReference>$Record.Account.X6Sense_Buying_Stage_ALM__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>X6Sense_Buying_Stage_Digital__c</field>
+            <value>
+                <elementReference>$Record.Account.X6Sense_Buying_Stage_Digital__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>X6Sense_Buying_Stage_RM__c</field>
+            <value>
+                <elementReference>$Record.Account.X6Sense_Buying_Stage_RM__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Update_6Sense_Buying_Stage_field</targetReference>
+        </connector>
+        <filterFormula>AND({!$Record.AccountId}&lt;&gt;&apos;&apos; , OR({!$Record.Account.X6Sense_Buying_Stage_ALM__c} &lt;&gt;&apos;&apos;,{!$Record.Account.X6Sense_Buying_Stage_Digital__c} &lt;&gt;&apos;&apos; , {!$Record.Account.X6Sense_Buying_Stage_RM__c} &lt;&gt;&apos;&apos; ))</filterFormula>
+        <object>Opportunity</object>
+        <recordTriggerType>Create</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Obsolete</status>
+</Flow>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>INTL_Account_Plans_to_Country_Parent</fullName>
+    <active>true</active>
+    <description>This would restrict the account/account plan relation to the Country Parent account.</description>
+    <errorConditionFormula>AND(  RecordTypeId = &quot;01280000000UNny&quot;, NOT(ISPICKVAL( Account__r.IM_Hierarchy_Level__c , &quot;Country Parent&quot;))
+
+)</errorConditionFormula>
+    <errorDisplayField>Account__c</errorDisplayField>
+    <errorMessage>You can only create an Account Plan for an Account which has a hierarchy of Country Parent</errorMessage>
+</ValidationRule>

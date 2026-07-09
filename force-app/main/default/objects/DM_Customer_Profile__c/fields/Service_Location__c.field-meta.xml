@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Service_Location__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <inlineHelpText>Enter in service location using the filtered lookup. It is filtered to show only service locations that have a Source System ID = ODSP. You can remove this filter if it does not apply. Once you save the record, the address fields automatically populate</inlineHelpText>
+    <label>Service Location</label>
+    <lookupFilter>
+        <active>true</active>
+        <filterItems>
+            <field>Service_Location__c.Source_System_Id__c</field>
+            <operation>equals</operation>
+            <value>ODSP</value>
+        </filterItems>
+        <isOptional>true</isOptional>
+    </lookupFilter>
+    <referenceTo>Service_Location__c</referenceTo>
+    <relationshipLabel>DM Customer Profiles</relationshipLabel>
+    <relationshipName>DM_Customer_Profiles</relationshipName>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

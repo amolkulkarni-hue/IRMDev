@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Complete_Assessment__c</fullName>
+    <externalId>false</externalId>
+    <formula>/*IF( 
+NOT(ISPICKVAL( At_Risk_Status__c , &quot;Complete&quot;)), 
+
+IF( $User.Id = At_Risk_Assessor__r.Id , 
+
+HYPERLINK( 
+&quot;apex/RiskAssessmentNewKPI?id=&quot; &amp; Id, 
+IMAGE( 
+&quot;/resource/1384782479000/Update_Button&quot;, 
+&quot;Complete&quot; 
+), &quot;_self&quot; 
+) 
+,&quot;You are not the At Risk Assessor&quot; 
+), 
+
+HYPERLINK( 
+&quot;apex/RiskAssessmentNewKPI?id=&quot; &amp; Id, 
+IMAGE( 
+&quot;/resource/1384782479000/Update_Button&quot;, 
+&quot;Complete&quot; 
+), &quot;_self&quot; 
+) 
+)*/
+null</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Complete Assessment To Be Deleted</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

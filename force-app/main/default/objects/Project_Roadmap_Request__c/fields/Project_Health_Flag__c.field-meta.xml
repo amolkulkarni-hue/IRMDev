@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Project_Health_Flag__c</fullName>
+    <externalId>false</externalId>
+    <formula>IF( 
+ISPICKVAL( Project_Health__c , &quot;Red - Significant Obstacles or Problems&quot;), IMAGE(&quot;/img/msg_icons/error16.png&quot;, &quot;Red&quot;), 
+IF(
+ISPICKVAL( Project_Health__c , &quot;Yellow - Raise Concern&quot;), IMAGE(&quot;/img/msg_icons/warning16.png&quot;, &quot;Yellow&quot;),
+IF(
+ISPICKVAL( Project_Health__c , &quot;Green - No Issues&quot;), IMAGE(&quot;/img/msg_icons/confirm16.png&quot;, &quot;Green&quot;), 
+
+
+ &quot;&quot;)
+
+)
+)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Project Health Flag</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>60.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <decisions>
+        <name>check_the_IM_Revenue_Id_c_value</name>
+        <label>check the IM_Revenue_Id__c value</label>
+        <locationX>314</locationX>
+        <locationY>323</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Check_Revenue_Type_Core_c_value</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Revenue_Type_Core__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue></stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>isNewRecord</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Product_Revenue_Type_Field_Update</targetReference>
+            </connector>
+            <label>Check Revenue_Type_Core__c value</label>
+        </rules>
+        <rules>
+            <name>Check_IM_Revenue_Id_c_value</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>IMRevenueIdNumberValue</leftValueReference>
+                <operator>GreaterThan</operator>
+                <rightValue>
+                    <numberValue>0.0</numberValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Revenue_Id_Editable_Field</targetReference>
+            </connector>
+            <label>Check IM_Revenue_Id__c value</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>For_Update_Records_Condtion</name>
+        <label>For Update Records Condtion</label>
+        <locationX>50</locationX>
+        <locationY>539</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Check_IM_Revenue_Id_c_value_for_new_record</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>IMRevenueIdNumberValue</leftValueReference>
+                <operator>GreaterThan</operator>
+                <rightValue>
+                    <numberValue>0.0</numberValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Revenue_Id_Editable_Field</targetReference>
+            </connector>
+            <label>Check IM_Revenue_Id__c value for new record</label>
+        </rules>
+    </decisions>
+    <description>This is created as part of workflow to flow conversion 
+Combined 2 workflows into one flow Revenue ID &amp; Product Revenue Type workflow
+
+Product Revenue Type workflow rule
+Populates the Product Revenue Type field on the Opportunity Product.  This allows the revenue type to be used in Roll Up Summary fields.</description>
+    <environments>Default</environments>
+    <formulas>
+        <description>to get the value of IM_Revenue_Id__c as number</description>
+        <name>IMRevenueIdNumberValue</name>
+        <dataType>Number</dataType>
+        <expression>VALUE({!$Record.IM_Revenue_Id__c})</expression>
+        <scale>0</scale>
+    </formulas>
+    <formulas>
+        <name>isNewRecord</name>
+        <dataType>Boolean</dataType>
+        <expression>ISNEW()</expression>
+    </formulas>
+    <interviewLabel>Product Revenue Type {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Revenue ID &amp; Product Revenue Type workflow</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <name>Product_Revenue_Type_Field_Update</name>
+        <label>Product Revenue Type Field Update</label>
+        <locationX>50</locationX>
+        <locationY>431</locationY>
+        <connector>
+            <targetReference>For_Update_Records_Condtion</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>Product_Revenue_Type__c</field>
+            <value>
+                <elementReference>$Record.Revenue_Type_Core__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <description>update Revenue_ID_Editable__c field value to that of IM_Revenue_Id__c</description>
+        <name>Update_Revenue_Id_Editable_Field</name>
+        <label>Update Revenue Id Editable Field</label>
+        <locationX>314</locationX>
+        <locationY>923</locationY>
+        <inputAssignments>
+            <field>Revenue_ID_Editable__c</field>
+            <value>
+                <elementReference>$Record.IM_Revenue_Id__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>188</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>check_the_IM_Revenue_Id_c_value</targetReference>
+        </connector>
+        <object>OpportunityLineItem</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

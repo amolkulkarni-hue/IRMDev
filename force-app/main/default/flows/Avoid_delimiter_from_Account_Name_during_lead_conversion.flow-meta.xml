@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>63.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <description>Gitlab #30528  if Account Name contains | Delimiter then replace it from the account name.</description>
+        <name>Replace_Delimiter_from_Account_Name</name>
+        <label>Replace Delimiter from Account Name</label>
+        <locationX>176</locationX>
+        <locationY>287</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Name</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>ReplaceDelimiter</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <description>Gitlab #30528  if Account Name contains | Delimiter then replace it from the account name.</description>
+    <environments>Default</environments>
+    <formulas>
+        <name>ReplaceDelimiter</name>
+        <dataType>String</dataType>
+        <expression>SUBSTITUTE({!$Record.Name}, &apos;|&apos;, &apos;&apos;)</expression>
+    </formulas>
+    <interviewLabel>Avoid delimiter from Account Name during lead conversion {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Avoid delimiter from Account Name during lead conversion</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Replace_Delimiter_from_Account_Name</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Name</field>
+            <operator>Contains</operator>
+            <value>
+                <stringValue>|</stringValue>
+            </value>
+        </filters>
+        <object>Account</object>
+        <recordTriggerType>Create</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

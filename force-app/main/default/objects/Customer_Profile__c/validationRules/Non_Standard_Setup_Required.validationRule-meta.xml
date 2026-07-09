@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Non_Standard_Setup_Required</fullName>
+    <active>true</active>
+    <description>Requires the picklist field for Standard Setup under certain conditions:
+Primary Service Line: DB&amp;R, One Time Shred, RM, Shred, RM Pathology, Vault Climate Control
+Second Service Line: RM, Shred, One Time Shred
+Deal Type: New Deal, New Service Line</description>
+    <errorConditionFormula>AND(
+OR(
+ISPICKVAL(NCSP_Service_Line__c,&apos;DB&amp;R&apos;),
+ISPICKVAL(NCSP_Service_Line__c,&apos;RM&apos;),
+ISPICKVAL(Second_Service_Line__c,&apos;RM&apos;),
+ISPICKVAL(NCSP_Service_Line__c,&apos;Shred&apos;),
+ISPICKVAL(Second_Service_Line__c,&apos;Shred&apos;),
+ISPICKVAL(NCSP_Service_Line__c,&apos;One Time Shred&apos;),
+ISPICKVAL(Second_Service_Line__c,&apos;One Time Shred&apos;),
+ISPICKVAL(NCSP_Service_Line__c,&apos;RM Pathology&apos;),
+ISPICKVAL(NCSP_Service_Line__c,&apos;Vault Climate Control&apos;)),
+ISBLANK(TEXT(Non_Standard_Setup__c)),
+(ISPICKVAL( Deal_Type__c , &quot;New Deal&quot;) || ISPICKVAL(Deal_Type__c, &quot;New Service Line&quot;)),
+(ISCHANGED(NCSP_Service_Line__c) || ISCHANGED(Second_Service_Line__c) || ISCHANGED(Deal_Type__c) || ISCHANGED(Non_Standard_Setup__c))
+
+)</errorConditionFormula>
+    <errorDisplayField>Non_Standard_Setup__c</errorDisplayField>
+    <errorMessage>Please identify if booking requires a Standard Setup.</errorMessage>
+</ValidationRule>

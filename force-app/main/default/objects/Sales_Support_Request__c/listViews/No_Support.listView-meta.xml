@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>No_Support</fullName>
+    <columns>Due_Date__c</columns>
+    <columns>NAME</columns>
+    <columns>Opportunity_Type__c</columns>
+    <columns>Related_Opportunity__c</columns>
+    <columns>Request_Status__c</columns>
+    <columns>Request_Type__c</columns>
+    <columns>Not_Supported_Comments__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Request_Status__c</field>
+        <operation>equals</operation>
+        <value>Not Supported</value>
+    </filters>
+    <filters>
+        <field>Due_Date__c</field>
+        <operation>greaterOrEqual</operation>
+        <value>12/1/2022</value>
+    </filters>
+    <filters>
+        <field>RECORDTYPE</field>
+        <operation>equals</operation>
+        <value>Sales_Support_Request__c.Proposal_Management_Request,Sales_Support_Request__c.Proposal_Request</value>
+    </filters>
+    <label>No Support</label>
+</ListView>

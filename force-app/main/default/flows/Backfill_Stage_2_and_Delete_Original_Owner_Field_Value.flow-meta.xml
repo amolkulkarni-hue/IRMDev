@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>59.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <decisions>
+        <name>Decision</name>
+        <label>Decision</label>
+        <locationX>557</locationX>
+        <locationY>405</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Backfill_Stage_2</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.IsConverted</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.IM_Stage_2_Entered_Date__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_IM_X2_Marketing_Qual_Reached_c_IM_Stage_2_Entered_Date_c</targetReference>
+            </connector>
+            <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+            <label>Backfill Stage 2</label>
+        </rules>
+        <rules>
+            <name>Backfill_Stage_2_not_Converted</name>
+            <conditionLogic>1 AND 2</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.IM_Lead_Stage__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>3-Sales Accepted</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.IM_X2_Marketing_Qual_Reached__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_2_Marketing_Qual_Reached_Stage_2_Entered_Date</targetReference>
+            </connector>
+            <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+            <label>Backfill Stage 2 - not Converted</label>
+        </rules>
+        <rules>
+            <name>Delete_Original_Owner_Value</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetOriginalOwnerFieldValue</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Delete_Original_Owner_FIeld_Value</targetReference>
+            </connector>
+            <label>Delete Original Owner  Value</label>
+        </rules>
+    </decisions>
+    <description>Converted from below workflows :
+Backfill Stage 2
+Backfill Stage 2 - not Converted
+Delete Original Owner Field Value</description>
+    <environments>Default</environments>
+    <formulas>
+        <name>GetOriginalOwnerFieldValue</name>
+        <dataType>Boolean</dataType>
+        <expression>AND(  NOT(BEGINS(PRIORVALUE({!$Record.OwnerId}), &apos;00G&apos;) ) ,  BEGINS({!$Record.OwnerId}, &apos;00G&apos;) ,  
+ OR(  CONTAINS($Label.OLO_Delete_Profiles  , $User.ProfileId ) ,  
+ CONTAINS(  $Label.OLO_Delete_Profiles_User ,  $User.ProfileId ) &amp;&amp; 
+ ( CONTAINS( $Label.OLO_Delete_Profiles , {!$Record.IM_Original_Lead_Owner__r.ProfileId} )
+ || Contains(  $Label.OLO_Delete_Profiles_User , {!$Record.IM_Original_Lead_Owner__r.ProfileId}) ) ,   
+ NOT(CONTAINS(  $Label.OLO_Delete_Profiles ,  $User.ProfileId )) 
+ &amp;&amp; NOT(CONTAINS($Label.OLO_Delete_Profiles_User ,  $User.ProfileId ))
+ &amp;&amp; CONTAINS( $Label.OLO_Delete_Profiles , {!$Record.IM_Original_Lead_Owner__r.ProfileId}) ) )</expression>
+    </formulas>
+    <formulas>
+        <name>UpdateTodayDate</name>
+        <dataType>Date</dataType>
+        <expression>TODAY ()</expression>
+    </formulas>
+    <interviewLabel>Backfill Stage 2 and {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Backfill Stage 2 and Delete Original Owner Field Value</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <name>Delete_Original_Owner_FIeld_Value</name>
+        <label>Delete Original Owner FIeld Value</label>
+        <locationX>850</locationX>
+        <locationY>474</locationY>
+        <inputAssignments>
+            <field>IM_Original_Lead_Owner__c</field>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Update_2_Marketing_Qual_Reached_Stage_2_Entered_Date</name>
+        <label>Update 2-Marketing Qual - Reached/Stage 2 Entered Date</label>
+        <locationX>374</locationX>
+        <locationY>467</locationY>
+        <inputAssignments>
+            <field>IM_Stage_2_Entered_Date__c</field>
+            <value>
+                <elementReference>UpdateTodayDate</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>IM_X2_Marketing_Qual_Reached__c</field>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Update_IM_X2_Marketing_Qual_Reached_c_IM_Stage_2_Entered_Date_c</name>
+        <label>Update IM_X2_Marketing_Qual_Reached__c/IM_Stage_2_Entered_Date__c</label>
+        <locationX>566</locationX>
+        <locationY>582</locationY>
+        <inputAssignments>
+            <field>IM_Stage_2_Entered_Date__c</field>
+            <value>
+                <elementReference>UpdateTodayDate</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>IM_X2_Marketing_Qual_Reached__c</field>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>449</locationX>
+        <locationY>48</locationY>
+        <connector>
+            <targetReference>Decision</targetReference>
+        </connector>
+        <object>Lead</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebLink xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IME_Billing_for_Excluded_Bill_Codes</fullName>
+    <availability>online</availability>
+    <displayType>link</displayType>
+    <linkType>javascript</linkType>
+    <masterLabel>M2 Billing for Excluded Bill Codes</masterLabel>
+    <openType>onClickJavaScript</openType>
+    <protected>false</protected>
+    <url>{!REQUIRESCRIPT(&quot;/soap/ajax/15.0/connection.js&quot;)} 
+{!REQUIRESCRIPT(&quot;/soap/ajax/15.0/apex.js&quot;)} 
+var currencycode = sforce.connection.query(&quot;select id,DefaultCurrencyIsoCode from User where id=&apos;{!$User.Id}&apos;&quot;); 
+//alert(currencycode.records.DefaultCurrencyIsoCode); 
+if(currencycode.records.DefaultCurrencyIsoCode== &apos;EUR&apos;){ 
+var rep = &apos;/00O34000005etjp?pv0={!BoB_Coverage__c.Country_Parent_ID_Report__c}&amp;pv1={!BoB_Coverage__c.Account__c}&apos;; 
+parent.location.href =rep; 
+}else{ 
+var rep1 = &apos;/00O340000064qcT?pv0={!BoB_Coverage__c.Country_Parent_ID_Report__c}&amp;pv1={!BoB_Coverage__c.Account__c}&apos;; 
+parent.location.href =rep1; 
+
+}</url>
+</WebLink>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>49.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <description>Validate Flow State checks for Assessor/User&apos;s Flow State on IMGA Risk Assessment or At Risk KPI, if Flow State is found returns all category data and Flow_State__c.RecordId.
+If Flow State cannot be found for the User/Assessor Flow Screen Settings are retrieved and User is prompted to Accept/Reject risk. If risk is rejected user is  prompted to enter a reject reason and updates appropriate assessment record. If risk is accepted flow state is created, appropriate assessment is updated, and risk categories are determined.
+
+Changed the dynamic choice for the at risk status list filter criteria.</description>
+    <label>Validate Flow State</label>
+    <processType>Flow</processType>
+    <status>Draft</status>
+</Flow>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>M2_Quota_Jul__c</fullName>
+    <formula>IF(AND( 
+
+7 &gt;= YTD_Quota_Start_Period__c, 7 &lt;= YTD_Quota_End_Period__c ), 
+
+PY_Monthly_Average_M2_Quota__c , 0)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>M2 Quota Jul</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>2</scale>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Currency</type>
+</CustomField>

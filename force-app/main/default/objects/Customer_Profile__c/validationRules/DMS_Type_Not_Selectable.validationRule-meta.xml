@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>DMS_Type_Not_Selectable</fullName>
+    <active>true</active>
+    <description>Does not allow for DMS Type to be selected unless DMS is the Service Line</description>
+    <errorConditionFormula>AND(
+NOT(ISBLANK(TEXT(DMS_Type__c))),
+NOT(
+  OR(
+ISPICKVAL(NCSP_Service_Line__c,&apos;DMS&apos;), 
+ISPICKVAL( Second_Service_Line__c ,&apos;DMS&apos;))
+       )
+)</errorConditionFormula>
+    <errorDisplayField>DMS_Type__c</errorDisplayField>
+    <errorMessage>DMS Service Line cannot be selected unless NCSP Service Line is set to DMS.</errorMessage>
+</ValidationRule>

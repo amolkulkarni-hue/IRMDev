@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <description>Calls Workflow Service Batch Job which further calls the autolaunched flow Stamps Opportunity Age_v2 to stamp the Booking Closeness value into Booked in Past 2 Years field</description>
+        <name>Update_Booked_in_Past_2_Years</name>
+        <label>Update Booked in Past 2 Years</label>
+        <locationX>176</locationX>
+        <locationY>252</locationY>
+        <actionName>Opportunity_Bookings_Closeness_Update</actionName>
+        <actionType>batchJobAction</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <nameSegment>Opportunity_Bookings_Closeness_Update</nameSegment>
+        <offset>0</offset>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
+    <apiVersion>62.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <description>#26453: This Schedule Job is created to update the Booked in past 2 Years field on existing Opportunities
+#28200: In order to copy the data from Booing Closeness field to Booked in Past 2 Years on Opportunities that cross CloseDate above 2 Yrs everyday</description>
+    <environments>Default</environments>
+    <interviewLabel>Updates Opportunity Age Scheduler {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Updates Opportunity Age Scheduler</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Update_Booked_in_Past_2_Years</targetReference>
+        </connector>
+        <schedule>
+            <frequency>Daily</frequency>
+            <startDate>2024-12-19</startDate>
+            <startTime>00:00:00.000Z</startTime>
+        </schedule>
+        <triggerType>Scheduled</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

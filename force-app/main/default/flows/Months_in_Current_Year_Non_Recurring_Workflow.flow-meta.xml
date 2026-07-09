@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>60.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <description>Months in Current Year - Non Recurring, Field Update</description>
+        <name>Months_in_Current_Year_Non_Recurring</name>
+        <label>Months in Current Year - Non Recurring</label>
+        <locationX>176</locationX>
+        <locationY>287</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Months_in_Current_Year_Non_Recurring__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <numberValue>12.0</numberValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <environments>Default</environments>
+    <interviewLabel>Months in Current Year - Non Recurring Workflow {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Months in Current Year - Non Recurring Workflow</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Months_in_Current_Year_Non_Recurring</targetReference>
+        </connector>
+        <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+        <filterFormula>AND(ISPICKVAL({!$Record.PricebookEntry.Product2.IM_Revenue_Type__c}, &apos;Non-recurring&apos;),YEAR(IF(TEXT({!$Record.Opportunity.Owner_Link__r.Sales_Segment__c}) = &apos;Digital&apos; ,  {!$Record.Opportunity.CloseDate} , {!$Record.Opportunity.IM_Booked_Date__c})) = YEAR( TODAY() ))</filterFormula>
+        <object>OpportunityLineItem</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

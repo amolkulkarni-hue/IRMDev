@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebLink xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Generate_Executive_Brief</fullName>
+    <availability>online</availability>
+    <displayType>button</displayType>
+    <linkType>javascript</linkType>
+    <masterLabel>Generate Executive Brief</masterLabel>
+    <openType>onClickJavaScript</openType>
+    <protected>false</protected>
+    <url>var RelAcc = escape(&quot;{!Executive_Brief__c.Related_Account__c}&quot;);
+if(RelAcc != &apos;&apos;) {
+
+window.open(&apos;https://composer.congamerge.com?sessionId={!API.Session_ID}&amp;serverUrl={!API.Partner_Server_URL_290}&amp;Id={!Executive_Brief__c.Id}&amp;ReportID=[AccountPlan]00O34000006ecOe?pv0=&apos;+RelAcc+&apos;&amp;ReportID=[Pipeline]00O34000006ecOf?pv0=&apos;+RelAcc+&apos; &amp;TemplateID=a1l34000007javm&amp;OFN=Executive+Brief+for+&apos;+RelAcc+&apos; &amp;DS7=3&amp;LGAttachOption=2&apos;);
+
+}
+else {
+alert(&apos;Related Account field is Mandatory&apos;);
+}</url>
+</WebLink>

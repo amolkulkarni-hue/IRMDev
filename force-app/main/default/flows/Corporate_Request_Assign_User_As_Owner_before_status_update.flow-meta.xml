@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>64.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <description>This captures &apos;Status Prior value&apos; requires in email templates flow &apos;Corporate Request: Email Alerts on Both Creation and Updation&apos; to show in Emails.</description>
+        <name>Capture_Status_Prior_Value</name>
+        <label>Capture Status Prior Value</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Status_Prior__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record__Prior.Status__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Check_if_Owner_is_in_Oueue</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Updates current date/time to &apos;Last Status Update&apos; field</description>
+        <name>Update_Last_Status_Change_to_Current_Date_Time</name>
+        <label>Update Last Status Change to Current Date/Time</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Last_Status_Change__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Today_Date_Time</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <description>Assigning Owner as Running User</description>
+        <name>Update_Owner_as_Running_User</name>
+        <label>Update Owner as Running User</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.OwnerId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$User.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_Last_Status_Change_to_Current_Date_Time</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <description>If Owner is in Queue and status not with New and On Hold, 
+     Yes - then updates Owner as Running User and Updates &apos;Last Status Change&apos; to current date/time
+     No - Captures Last modified date/time of status field</description>
+        <name>Check_if_Owner_is_in_Oueue</name>
+        <label>Check if Owner is in Queue</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Update_Last_Status_Change_to_Current_Date_Time</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Yes</name>
+            <conditionLogic>1 AND NOT(2 OR 3)</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.OwnerId</leftValueReference>
+                <operator>StartsWith</operator>
+                <rightValue>
+                    <stringValue>00G</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>New</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>On Hold</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Owner_as_Running_User</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <description>33223 : Corporate Request: Require requests to be assigned to an owner before the status can be updated - RITM1130609
+33715 : Corporate Request: &quot;On Hold&quot; Requests to not require an Owner - PLNI0013794
+34493: Corporate Request: Automatically update Owner when Status is updated and Queue Owner is still present
+34910: Corporate Request: New &quot;Last Status Change&quot; field to support time bucket reporting
+35854: Capturing Status Prior value to use in Email Templates</description>
+    <environments>Default</environments>
+    <formulas>
+        <name>Today_Date_Time</name>
+        <dataType>DateTime</dataType>
+        <expression>NOW()</expression>
+    </formulas>
+    <interviewLabel>Corporate Request : Assign User As Owner before status update {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Corporate Request : Assign Running User As Owner and also capture date/time when status update</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Capture_Status_Prior_Value</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Status__c</field>
+            <operator>IsChanged</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <object>Corporate_Request__c</object>
+        <recordTriggerType>Update</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

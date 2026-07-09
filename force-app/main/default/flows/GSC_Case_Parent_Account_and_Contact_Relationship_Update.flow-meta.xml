@@ -1,0 +1,777 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>62.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <customErrors>
+        <description>Validation error message if any DML error occurred while adding billing account to case</description>
+        <name>Billing_Account_Error</name>
+        <label>Billing Account Error</label>
+        <locationX>842</locationX>
+        <locationY>755</locationY>
+        <customErrorMessages>
+            <errorMessage>Error occurred while adding billing account to case and while updating case account to the parent of billing account . Please find error Details : {!$Flow.FaultMessage}</errorMessage>
+            <isFieldError>false</isFieldError>
+        </customErrorMessages>
+    </customErrors>
+    <customErrors>
+        <description>Validation error message if any DML error occurred while adding Customer account to case</description>
+        <name>Customer_Account_Error</name>
+        <label>Customer Account Error</label>
+        <locationX>2954</locationX>
+        <locationY>755</locationY>
+        <customErrorMessages>
+            <errorMessage>Error occurred while adding Customer account to case and while updating case account to the parent of customer account . Please find error Details : {!$Flow.FaultMessage}</errorMessage>
+            <isFieldError>false</isFieldError>
+        </customErrorMessages>
+    </customErrors>
+    <customErrors>
+        <description>Validation error if any DML issue</description>
+        <name>Error_Account_Contact_Relation</name>
+        <label>Error Account Contact Relation</label>
+        <locationX>1766</locationX>
+        <locationY>1595</locationY>
+        <customErrorMessages>
+            <errorMessage>Hi this error is due to  - {!$Flow.FaultMessage} . Please contact to System Admin !!</errorMessage>
+            <isFieldError>false</isFieldError>
+        </customErrorMessages>
+    </customErrors>
+    <customErrors>
+        <description>This error is if Operational account&apos;s Grand parent is not Sales Account</description>
+        <name>Error_Grand_Parent_is_not_Sales_Account</name>
+        <label>Error- Grand Parent is not Sales Account</label>
+        <locationX>1634</locationX>
+        <locationY>647</locationY>
+        <customErrorMessages>
+            <errorMessage>No Sales Account found for this Operational Account .
+Please update the Operational Account or enter Customer Account.</errorMessage>
+            <fieldSelection>GSC_Operational_Account__c</fieldSelection>
+            <isFieldError>true</isFieldError>
+        </customErrorMessages>
+    </customErrors>
+    <customErrors>
+        <description>This error is if billing account&apos;s parent is not updated</description>
+        <name>Error_Parent_is_missing</name>
+        <label>Error- Parent is missing</label>
+        <locationX>50</locationX>
+        <locationY>647</locationY>
+        <customErrorMessages>
+            <errorMessage>Parent Account of entered Billing Account is missing.
+Please update the same first or enter customer Account.</errorMessage>
+            <fieldSelection>GSC_Billing_Account__c</fieldSelection>
+            <isFieldError>true</isFieldError>
+        </customErrorMessages>
+    </customErrors>
+    <customErrors>
+        <description>This error is if billing account&apos;s parent is not Sales Account</description>
+        <name>Error_Parent_is_not_Sales_Account</name>
+        <label>Error- Parent is not Sales Account</label>
+        <locationX>314</locationX>
+        <locationY>647</locationY>
+        <customErrorMessages>
+            <errorMessage>Parent Account of entered Billing Account is not Sales Account.
+Please update the same first or enter customer Account.</errorMessage>
+            <fieldSelection>GSC_Billing_Account__c</fieldSelection>
+            <isFieldError>true</isFieldError>
+        </customErrorMessages>
+    </customErrors>
+    <customErrors>
+        <description>This error is if Operational account&apos;s Grand parent or Parent is not updated.</description>
+        <name>Error_Parent_or_Grandparent_is_missing</name>
+        <label>Error- Parent or Grandparent is missing</label>
+        <locationX>1370</locationX>
+        <locationY>647</locationY>
+        <customErrorMessages>
+            <errorMessage>No Sales Account present for this Operational Account.
+Please update the Operational Account or enter Customer Account.</errorMessage>
+            <fieldSelection>GSC_Operational_Account__c</fieldSelection>
+            <isFieldError>true</isFieldError>
+        </customErrorMessages>
+    </customErrors>
+    <customErrors>
+        <description>It will come when the Contact Id is missing while updating Operational Account/Customer Account on case</description>
+        <name>GO_Error_Contact_missing</name>
+        <label>GO Error- Contact missing</label>
+        <locationX>4010</locationX>
+        <locationY>539</locationY>
+        <customErrorMessages>
+            <errorMessage>Contact is required for adding Operational Account/Customer ID.</errorMessage>
+            <fieldSelection>ContactId</fieldSelection>
+            <isFieldError>true</isFieldError>
+        </customErrorMessages>
+    </customErrors>
+    <customErrors>
+        <description>It will come when the Contact Id is missing while updating Operational Account/Billing Account/Customer Account on case</description>
+        <name>GSC_Error_Contact_missing</name>
+        <label>GSC Error- Contact missing</label>
+        <locationX>3746</locationX>
+        <locationY>539</locationY>
+        <customErrorMessages>
+            <errorMessage>Contact is required for adding Operational Account/Billing Account/Customer ID.</errorMessage>
+            <fieldSelection>ContactId</fieldSelection>
+            <isFieldError>true</isFieldError>
+        </customErrorMessages>
+    </customErrors>
+    <customErrors>
+        <description>Validation error message if any DML error occurred while adding operational account to case</description>
+        <name>Operational_Account_Error</name>
+        <label>Operational Account Error</label>
+        <locationX>2162</locationX>
+        <locationY>755</locationY>
+        <customErrorMessages>
+            <errorMessage>Error occurred while adding operational account to case and while updating case account to the grand parent of operational account . Please find error Details : {!$Flow.FaultMessage}</errorMessage>
+            <isFieldError>false</isFieldError>
+        </customErrorMessages>
+    </customErrors>
+    <decisions>
+        <name>Checking_Record_Type</name>
+        <label>Checking Record Type</label>
+        <locationX>4010</locationX>
+        <locationY>431</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>is_Global_Service_Case</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.RecordType.DeveloperName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Global_Service_Case</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>GSC_Error_Contact_missing</targetReference>
+            </connector>
+            <label>is Global Service Case</label>
+        </rules>
+        <rules>
+            <name>is_Global_orders</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.RecordType.DeveloperName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Global_Orders</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>GO_Error_Contact_missing</targetReference>
+            </connector>
+            <label>is Global orders</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Checking if contact present on case , primary account of case contact is same as parent of billing or grandparent of operational account
+As part of Gitlab #29521 - Updated Outcome to exclude IM Employee from setting up Account Contact Relation
+As part of Gitlab #29933 -  updated outcome to exclude Global orders from setting up Account Contact Relationship by adding Global service case in condition.</description>
+        <name>Contact_Account_Directly_Related</name>
+        <label>Contact &amp; Account Directly Related ?</label>
+        <locationX>2030</locationX>
+        <locationY>1163</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Not_Directly_Related</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Contact.AccountId</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>$Record.AccountId</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.ContactId</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Is_IM_Employee__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.RecordType.DeveloperName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Global_Service_Case</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Parent.RecordType.DeveloperName</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>NAS_Recurring_Support_Case</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Account_Contact_Relation</targetReference>
+            </connector>
+            <label>Not Directly Related</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>It will check if any existing related account  exists</description>
+        <name>Is_Account_Contact_Relation_Exists</name>
+        <label>Is Account Contact Relation Exists ?</label>
+        <locationX>1766</locationX>
+        <locationY>1379</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>No</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Account_Contact_Relation</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Create_Account_Contact_Relationship</targetReference>
+            </connector>
+            <label>No</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Decision checking Billing Account added to case or Operational Account is added to case 
+Gitlab #29271 . CustomerID outcome Added to the decision.</description>
+        <name>Is_Billing_Or_Operational</name>
+        <label>Is Billing Or Operational Or CustomerID ?</label>
+        <locationX>2030</locationX>
+        <locationY>431</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Billing_Account</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.GSC_Billing_Account__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.RecordType.DeveloperName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Global_Service_Case</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Is_Billing_Parent_Valid</targetReference>
+            </connector>
+            <label>Billing Account</label>
+        </rules>
+        <rules>
+            <name>Operational_Account</name>
+            <conditionLogic>1 AND (2 OR 3)</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.GSC_Operational_Account__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.RecordType.DeveloperName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Global_Service_Case</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.RecordType.DeveloperName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Global_Orders</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Is_Operational_Parent_Valid</targetReference>
+            </connector>
+            <label>Operational Account</label>
+        </rules>
+        <rules>
+            <name>CustomerID</name>
+            <conditionLogic>1 AND (2 OR 3)</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Customer_ID__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.RecordType.DeveloperName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Global_Service_Case</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.RecordType.DeveloperName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Global_Orders</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Is_CustomerId_Parent_Valid</targetReference>
+            </connector>
+            <label>CustomerID</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>It will check if billing account&apos;s parent is present and If present then is it sales account or not.
+As part of Gitlab #29521 - Updated logic for Outcome &quot;Invalid - Billing Non Sales Parent&quot; &amp; &quot;Valid - Billing Account&quot; to check for Hierarchy Level of Account</description>
+        <name>Is_Billing_Parent_Valid</name>
+        <label>Is Billing Parent Valid  ?</label>
+        <locationX>578</locationX>
+        <locationY>539</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Invalid_Orphan_Billing</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.GSC_Billing_Account__r.ParentId</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Error_Parent_is_missing</targetReference>
+            </connector>
+            <label>Invalid - Orphan Billing</label>
+        </rules>
+        <rules>
+            <name>Invalid_Billing_Non_Sales_Parent</name>
+            <conditionLogic>1 AND (2 OR 3)</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.GSC_Billing_Account__r.ParentId</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.GSC_Billing_Account__r.Parent.RecordType.DeveloperName</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Standard_Account</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.GSC_Billing_Account__r.Parent.IM_Hierarchy_Level__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Sales (Site)</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Error_Parent_is_not_Sales_Account</targetReference>
+            </connector>
+            <label>Invalid - Billing Non Sales Parent</label>
+        </rules>
+        <rules>
+            <name>Valid_Billing_Account</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.GSC_Billing_Account__r.ParentId</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.GSC_Billing_Account__r.Parent.RecordType.DeveloperName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Standard_Account</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.GSC_Billing_Account__r.Parent.IM_Hierarchy_Level__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Sales (Site)</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Case_Billing_Account</targetReference>
+            </connector>
+            <label>Valid - Billing Account</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>It will check if contact is present on case while adding Billing / Operational Account
+As part of Gitlab #29521 - Updated flow to include Account update for IM Employee and excluded IM Employee from Contact Validation
+#29307 : Update on(No - Contact Not Exists):   by-pass this outcome for child cases of NAS Recurring Support Cases
+#29662 : Bypassed this custom error(Outcome &apos;(No - Contact Not Exists)&apos;) for Cases getting created from SKP Communicator (with Origin &apos;Communicator&apos;) and for IM Connect Cases with user id for user &apos;imc.api.only@ironmountain.com&apos;</description>
+        <name>Is_Contact_Exists</name>
+        <label>Is Contact Exists?</label>
+        <locationX>3284</locationX>
+        <locationY>323</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Contact_Exists</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.ContactId</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Is_IM_Employee__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Is_Billing_Or_Operational</targetReference>
+            </connector>
+            <label>Yes - Contact Exists</label>
+        </rules>
+        <rules>
+            <name>No_Contact_Not_Exists</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.ContactId</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Is_IM_Employee__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Parent.RecordType.DeveloperName</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>NAS_Recurring_Support_Case</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Origin</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>$Label.GSC_SKP_Communicator_Case_Origin</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$User.Id</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>$Label.GSC_IMC_API_User_Id</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Checking_Record_Type</targetReference>
+            </connector>
+            <label>No - Contact Not Exists</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Gitlab #29271 .It will check if Customer Account&apos;s parent is present and If present then is it sales account or not.</description>
+        <name>Is_CustomerId_Parent_Valid</name>
+        <label>Is CustomerId Parent Valid?</label>
+        <locationX>2954</locationX>
+        <locationY>539</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Valid_Customer_Account</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Customer_ID__r.IM_Account__r.Name</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Case_Account_based_on_CustomerID</targetReference>
+            </connector>
+            <label>Valid - Customer Account</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Decision checking Operational Account&apos; Parent and Grandparent is Present. If present , Is Sales Account?
+As part of Gitlab #29521 - Updated logic for Outcome &quot;Invalid - Operational Grand Parent Non Sales&quot; &amp; &quot;Valid Operational Account&quot; to check for Hierarchy Level of Account</description>
+        <name>Is_Operational_Parent_Valid</name>
+        <label>Is Operational Parent Valid?</label>
+        <locationX>1898</locationX>
+        <locationY>539</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Invalid_Orphan_Operational</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.GSC_Operational_Account__r.ParentId</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.GSC_Operational_Account__r.Parent.ParentId</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Error_Parent_or_Grandparent_is_missing</targetReference>
+            </connector>
+            <label>Invalid - Orphan Operational</label>
+        </rules>
+        <rules>
+            <name>Invalid_Operational_Grand_Parent_Non_Sales</name>
+            <conditionLogic>1 AND (2 OR 3)</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.GSC_Operational_Account__r.Parent.ParentId</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.GSC_Operational_Account__r.Parent.Parent.RecordType.DeveloperName</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Standard_Account</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.GSC_Operational_Account__r.Parent.Parent.IM_Hierarchy_Level__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Sales (Site)</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Error_Grand_Parent_is_not_Sales_Account</targetReference>
+            </connector>
+            <label>Invalid - Operational Grand Parent Non Sales</label>
+        </rules>
+        <rules>
+            <name>Valid_Operational_Account</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.GSC_Operational_Account__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.GSC_Operational_Account__r.Parent.Parent.RecordType.DeveloperName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Standard_Account</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.GSC_Operational_Account__r.Parent.Parent.IM_Hierarchy_Level__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Sales (Site)</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Case_Operational_Account</targetReference>
+            </connector>
+            <label>Valid Operational Account</label>
+        </rules>
+    </decisions>
+    <description>#29307  - updated the flow to bypass GSC cases that have a parent case record type of NAS_Recurring_Support_Case and are created by the NAS Recurring Case Generator scheduled job.
+GitLab US #27260 - Flow will update case account as the sales account (parent of billing account ,Customer Account  or grandparent of operational account) for global service case and establishes account contact relationship with case contact and sales account 
+Gitlab.#29271 updated flow to consider customer iD.
+Gitlab #29521 - Updated flow to include Account update for IM Employee and excluded IM Employee from Contact Validation
+Gitlab #29662 : Bypassed custom error(Contact is required) for Cases getting created from SKP Communicator (with Origin &apos;Communicator&apos;) and for IM Connect Cases with user id for user &apos;imc.api.only@ironmountain.com&apos;
+Gitlab #29933 : updated the flow to include Global Orders Record Type: 
+GitLab:#31329 : Updated this flow in Decision(Contact_Account_Directly_Related to bypass the GSC child cases of  NAS Recurring Support Case.</description>
+    <environments>Default</environments>
+    <interviewLabel>GSC Case Parent Account and Contact Relationship Update {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>GSC Case Parent Account and Contact Relationship Update</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordCreates>
+        <description>Create relationship between contact and Account</description>
+        <name>Create_Account_Contact_Relationship</name>
+        <label>Create Account Contact Relationship</label>
+        <locationX>1502</locationX>
+        <locationY>1487</locationY>
+        <faultConnector>
+            <targetReference>Error_Account_Contact_Relation</targetReference>
+        </faultConnector>
+        <inputAssignments>
+            <field>AccountId</field>
+            <value>
+                <elementReference>$Record.AccountId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>ContactId</field>
+            <value>
+                <elementReference>$Record.ContactId</elementReference>
+            </value>
+        </inputAssignments>
+        <object>AccountContactRelation</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
+    <recordLookups>
+        <description>Querying account contact relationship object to check if contact is related to account</description>
+        <name>Get_Account_Contact_Relation</name>
+        <label>Get Account Contact Relation</label>
+        <locationX>1766</locationX>
+        <locationY>1271</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Is_Account_Contact_Relation_Exists</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>ContactId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.ContactId</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>AccountId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.AccountId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>AccountContactRelation</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordUpdates>
+        <description>Gitlab #29271 .Updating Case.AccountID as Customer account parent .</description>
+        <name>Update_Case_Account_based_on_CustomerID</name>
+        <label>Update Case -Account based on CustomerID</label>
+        <locationX>2690</locationX>
+        <locationY>647</locationY>
+        <connector>
+            <targetReference>Contact_Account_Directly_Related</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Customer_Account_Error</targetReference>
+        </faultConnector>
+        <inputAssignments>
+            <field>AccountId</field>
+            <value>
+                <elementReference>$Record.Customer_ID__r.IM_Account__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <description>Updating Case.AccountID as Billing account parent (Generally this should be the sales account)</description>
+        <name>Update_Case_Billing_Account</name>
+        <label>Update Case - Billing Account</label>
+        <locationX>578</locationX>
+        <locationY>647</locationY>
+        <connector>
+            <targetReference>Contact_Account_Directly_Related</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Billing_Account_Error</targetReference>
+        </faultConnector>
+        <inputAssignments>
+            <field>AccountId</field>
+            <value>
+                <elementReference>$Record.GSC_Billing_Account__r.ParentId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <description>Updating Case.AccountID as Operational Account Parent (Generally this should be the sales account)</description>
+        <name>Update_Case_Operational_Account</name>
+        <label>Update Case - Operational Account</label>
+        <locationX>1898</locationX>
+        <locationY>647</locationY>
+        <connector>
+            <targetReference>Contact_Account_Directly_Related</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Operational_Account_Error</targetReference>
+        </faultConnector>
+        <inputAssignments>
+            <field>AccountId</field>
+            <value>
+                <elementReference>$Record.GSC_Operational_Account__r.Parent.ParentId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>3158</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Is_Contact_Exists</targetReference>
+        </connector>
+        <filterFormula>OR(
+AND({!$Record.RecordType.DeveloperName} = &apos;Global_Service_Case&apos;, OR(
+AND (ISNEW(),
+OR(NOT(ISBLANK({!$Record.GSC_Billing_Account__c})),NOT(ISBLANK({!$Record.GSC_Operational_Account__c})),NOT(ISBLANK(({!$Record.Customer_ID__c}))))),
+OR (ISCHANGED({!$Record.GSC_Billing_Account__c}),ISCHANGED({!$Record.GSC_Operational_Account__c}),ISCHANGED({!$Record.Customer_ID__c})))
+),
+AND({!$Record.RecordType.DeveloperName} = &apos;Global_Orders&apos;, OR(
+AND (ISNEW(),
+OR(NOT(ISBLANK({!$Record.GSC_Operational_Account__c})),NOT(ISBLANK(({!$Record.Customer_ID__c})))
+)),
+OR (ISCHANGED({!$Record.GSC_Operational_Account__c}),ISCHANGED({!$Record.Customer_ID__c})))
+)
+)</filterFormula>
+        <object>Case</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+    <variables>
+        <name>VarT_CurrentParentID</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>VarT_ParentAccount</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>

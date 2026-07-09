@@ -1,0 +1,590 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>60.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <description>DMS only has RM configuration irrespective of one case or multiple cases - If NCSP service line is DMS RM app value is true and Secure Shred app value is false.</description>
+        <name>DMS_Assign_Application_Configuration</name>
+        <label>DMS Assign Application Configuration</label>
+        <locationX>50</locationX>
+        <locationY>539</locationY>
+        <assignmentItems>
+            <assignToReference>RMApplication</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SecureShredApplication</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>IMC_CUSTOMER_USER_MULESOFT</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Assigning RM as True</description>
+        <name>Multi_Case_RM_Assignment</name>
+        <label>Multi Case RM Assignment</label>
+        <locationX>314</locationX>
+        <locationY>863</locationY>
+        <assignmentItems>
+            <assignToReference>RMApplication</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Check_Secondary_Case_Service_line</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Assigning Secure Shred app value true</description>
+        <name>Multi_Case_Secure_Shred_Assignment</name>
+        <label>Multi Case Secure Shred Assignment</label>
+        <locationX>578</locationX>
+        <locationY>863</locationY>
+        <assignmentItems>
+            <assignToReference>SecureShredApplication</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Check_Secondary_Case_Service_line</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>RM app true and Secure shred False scenario</description>
+        <name>RM_True_Single_Case</name>
+        <label>RM True - Single Case</label>
+        <locationX>1018</locationX>
+        <locationY>863</locationY>
+        <assignmentItems>
+            <assignToReference>RMApplication</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SecureShredApplication</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>IMC_CUSTOMER_USER_MULESOFT</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Rm app value true</description>
+        <name>Secondary_RM_Assignment</name>
+        <label>Secondary RM Assignment</label>
+        <locationX>314</locationX>
+        <locationY>1163</locationY>
+        <assignmentItems>
+            <assignToReference>RMApplication</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>IMC_CUSTOMER_USER_MULESOFT</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Secure shred app value to true</description>
+        <name>Secondary_Secure_shred_Assignment</name>
+        <label>Secondary Secure shred Assignment</label>
+        <locationX>578</locationX>
+        <locationY>1163</locationY>
+        <assignmentItems>
+            <assignToReference>SecureShredApplication</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>IMC_CUSTOMER_USER_MULESOFT</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>RM app false and Secure shred true scenario</description>
+        <name>Secure_Shred_True_Single_Case</name>
+        <label>Secure Shred True - Single Case</label>
+        <locationX>1282</locationX>
+        <locationY>863</locationY>
+        <assignmentItems>
+            <assignToReference>RMApplication</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SecureShredApplication</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>IMC_CUSTOMER_USER_MULESOFT</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <description>If the primary Case service line is RM or One Time Shred then RM app value is true
+If the primary Case service line is Shred then Secure Shred app value is true</description>
+        <name>Check_Primary_Case_Service_Line</name>
+        <label>Check Primary Case Service Line</label>
+        <locationX>578</locationX>
+        <locationY>755</locationY>
+        <defaultConnector>
+            <targetReference>Check_Secondary_Case_Service_line</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Primary_Case_RM_or_OTS</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.NCSP_Service_line__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>RM</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.NCSP_Service_line__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>One Time Shred</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Multi_Case_RM_Assignment</targetReference>
+            </connector>
+            <label>Primary Case RM or OTS</label>
+        </rules>
+        <rules>
+            <name>Primary_Case_Shred</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.NCSP_Service_line__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Shred</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Multi_Case_Secure_Shred_Assignment</targetReference>
+            </connector>
+            <label>Primary Case Shred</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Checking if a secondary case is present or not</description>
+        <name>Check_Secondary_Case</name>
+        <label>Check Secondary Case</label>
+        <locationX>930</locationX>
+        <locationY>647</locationY>
+        <defaultConnector>
+            <targetReference>Single_Case_RM_Secure_Shred_App_Config</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No Secondary Case</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Secondary_Case_Available</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>SecondaryServiceLineVar</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Check_Primary_Case_Service_Line</targetReference>
+            </connector>
+            <label>Yes- Secondary Case Available</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>If the secondary Case service line is RM or DMS or  One Time Shred then RM app value is true
+If the secondary Case service line is Shred then Secure Shred app value is true</description>
+        <name>Check_Secondary_Case_Service_line</name>
+        <label>Check Secondary Case  Service line</label>
+        <locationX>578</locationX>
+        <locationY>1055</locationY>
+        <defaultConnector>
+            <targetReference>IMC_CUSTOMER_USER_MULESOFT</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Secondary_Case_RM_or_OTS_or_DMS</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>SecondaryServiceLineVar</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>RM</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>SecondaryServiceLineVar</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>One Time Shred</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>SecondaryServiceLineVar</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>DMS</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Secondary_RM_Assignment</targetReference>
+            </connector>
+            <label>Secondary Case - RM or OTS or DMS</label>
+        </rules>
+        <rules>
+            <name>Secondary_Case_Shred</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>SecondaryServiceLineVar</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Shred</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Secondary_Secure_shred_Assignment</targetReference>
+            </connector>
+            <label>Secondary Case - Shred</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>DMS only has RM configuration irrespective of one case or multiple cases - If NCSP service line is DMS RM app value is true and Secure Shred app value is false. If Service line is not DMS need to check the secondary service line (two cases will be generated for secondary service line with same customer profile)</description>
+        <name>Check_Service_line</name>
+        <label>Check Service line</label>
+        <locationX>490</locationX>
+        <locationY>431</locationY>
+        <defaultConnector>
+            <targetReference>Get_Secondary_Case</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>NOT DMS</defaultConnectorLabel>
+        <rules>
+            <name>DMS</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.NCSP_Service_line__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>DMS</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>DMS_Assign_Application_Configuration</targetReference>
+            </connector>
+            <label>DMS</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Entry Criteria for Calling IM Connect - When customer Id is updated on Case with record type NCSP SKP New Customer Set up</description>
+        <name>Decision_for_IMC_customer</name>
+        <label>Decision for IMC customer</label>
+        <locationX>1150</locationX>
+        <locationY>323</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Call_IM_Connect</name>
+            <conditionLogic>(1 OR 4) AND 2 AND 3</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.RecordType.DeveloperName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>NCSP_SKP_New_Customer_Setup</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Customer_ID__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Customer_ID__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.RecordType.DeveloperName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>NCSP_DMS</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Check_Service_line</targetReference>
+            </connector>
+            <label>Call IM Connect</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Logic to populate RM , and Secure Shred application configuration based on NCSP service line if there is no secondary case associated with the customer profile.</description>
+        <name>Single_Case_RM_Secure_Shred_App_Config</name>
+        <label>Single Case RM &amp; Secure Shred App Config</label>
+        <locationX>1282</locationX>
+        <locationY>755</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>RM_Single_Case</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.NCSP_Service_line__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>RM</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>RM_True_Single_Case</targetReference>
+            </connector>
+            <label>RM Single Case</label>
+        </rules>
+        <rules>
+            <name>Secure_Shred_Single_Case</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.NCSP_Service_line__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Shred</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Secure_Shred_True_Single_Case</targetReference>
+            </connector>
+            <label>Secure Shred Single Case</label>
+        </rules>
+    </decisions>
+    <description>This one is for creating the customer and user in the IMC and Mulesoft is using this flow
+As per Gitlab #33477, adding check country = USA or Canada. As only for these countries platform events should create.</description>
+    <environments>Default</environments>
+    <interviewLabel>IMC_CUSTOMER_USER_MULESOFT_FLOW {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>IMC_CUSTOMER_USER_MULESOFT_FLOW</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordCreates>
+        <description>Setup customer and user in IMC and this is using in mulesoft</description>
+        <name>IMC_CUSTOMER_USER_MULESOFT</name>
+        <label>IMC_CUSTOMER_USER_MULESOFT</label>
+        <locationX>490</locationX>
+        <locationY>1523</locationY>
+        <inputAssignments>
+            <field>Billing_Division__c</field>
+            <value>
+                <elementReference>$Record.Billing_Division__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>ContactEmail__c</field>
+            <value>
+                <elementReference>$Record.ContactEmail</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Country__c</field>
+            <value>
+                <elementReference>$Record.Country__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Customer_ID__c</field>
+            <value>
+                <elementReference>$Record.Customer_ID__r.Name</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Customer_Name__c</field>
+            <value>
+                <elementReference>$Record.Customer_Name__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Department_name__c</field>
+            <value>
+                <elementReference>$Record.Department_ID__r.Name</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Division__c</field>
+            <value>
+                <elementReference>$Record.Division_ID__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Division_name__c</field>
+            <value>
+                <elementReference>$Record.Division_ID__r.Name</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>IM_Division__c</field>
+            <value>
+                <elementReference>$Record.IM_Division__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>NCSP_Service_line__c</field>
+            <value>
+                <elementReference>$Record.NCSP_Service_line__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>PO_Required__c</field>
+            <value>
+                <elementReference>$Record.PO_Required__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>RM_Applciation__c</field>
+            <value>
+                <elementReference>RMApplication</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Secure_Shred_Application__c</field>
+            <value>
+                <elementReference>SecureShredApplication</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>case_Id__c</field>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <object>IMC_CUSTOMER_USER_SETUP__e</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
+    <recordLookups>
+        <description>Querying cases to check if there is a secondary case associated with the customer profile - Secondary service line selection in NCSP wizard will generate two cases</description>
+        <name>Get_Secondary_Case</name>
+        <label>Get Secondary Case</label>
+        <locationX>930</locationX>
+        <locationY>539</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Check_Secondary_Case</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Customer_Profile__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Customer_Profile__c</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Id</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </filters>
+        <object>Case</object>
+        <outputAssignments>
+            <assignToReference>SecondaryServiceLineVar</assignToReference>
+            <field>NCSP_Service_line__c</field>
+        </outputAssignments>
+    </recordLookups>
+    <start>
+        <locationX>1024</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Decision_for_IMC_customer</targetReference>
+        </connector>
+        <filterLogic>or</filterLogic>
+        <filters>
+            <field>Country__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>USA</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Country__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Canada</stringValue>
+            </value>
+        </filters>
+        <object>Case</object>
+        <recordTriggerType>Update</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+    <variables>
+        <description>Variable to store values for RM application , values are derived from NCSP service line 
+NCSP Service line is RM or DMS or One Time Shred then RM application configuration in IMC is True/YES</description>
+        <name>RMApplication</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </variables>
+    <variables>
+        <description>Varible to store the service line of the secondary case generated</description>
+        <name>SecondaryServiceLineVar</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>Variable to store values for SecureShred application configuration , values are derived from NCSP service line. 
+NCSP Service line is Shred then Secure Shred application configuration in IMC is True/YES</description>
+        <name>SecureShredApplication</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </variables>
+</Flow>

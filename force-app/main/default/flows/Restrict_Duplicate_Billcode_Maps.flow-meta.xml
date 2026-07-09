@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>58.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <decisions>
+        <description>Validate if the entered PA Model Billcode(Follower_Product__c) is already mapped or not to another SF Product</description>
+        <name>Are_there_any_Billcode_Maps_with_entered_Billcode</name>
+        <label>Are there any Billcode Maps with entered Billcode</label>
+        <locationX>692</locationX>
+        <locationY>534</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_all_the_Billcode_Maps_with_entered_PA_Model_Billcode</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Mark_the_Billcode_Map_as_Duplicate</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+        <rules>
+            <name>No</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_all_the_Billcode_Maps_with_entered_PA_Model_Billcode</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>No</label>
+        </rules>
+    </decisions>
+    <description>Gitlab: #16917
+
+- The purpose of this flow is to restrict the users form creating duplicate Billcode Maps . 
+- PA Model Billcode(Follower_product__c) should be mapped to only 1 SF product code(Leader_product__c). 
+- If user tries to enter an already used PA Model Billcode then the record will be flagged as duplicate and then a validation gets fired which stops the creation of the record.</description>
+    <environments>Default</environments>
+    <interviewLabel>Restrict Duplicate Billcode Maps {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Restrict Duplicate Billcode Maps</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <description>Fetch all the Billcode Map records that match with the user entered PA Model Billcode(API: Follower_product
+__c) value</description>
+        <name>Get_all_the_Billcode_Maps_with_entered_PA_Model_Billcode</name>
+        <label>Get all the Billcode Maps with entered PA Model Billcode</label>
+        <locationX>701</locationX>
+        <locationY>358</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Are_there_any_Billcode_Maps_with_entered_Billcode</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Follower_Product__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Follower_Product__c</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>Leader_Follower_Mapping__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordUpdates>
+        <description>Mark this record as Duplicate so that validation rule gets fired and restricts the user from creating duplicate records</description>
+        <name>Mark_the_Billcode_Map_as_Duplicate</name>
+        <label>Mark the Billcode Map as Duplicate</label>
+        <locationX>882</locationX>
+        <locationY>532</locationY>
+        <inputAssignments>
+            <field>isDuplicate__c</field>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>575</locationX>
+        <locationY>50</locationY>
+        <connector>
+            <targetReference>Get_all_the_Billcode_Maps_with_entered_PA_Model_Billcode</targetReference>
+        </connector>
+        <filterFormula>OR(ISNEW(),ISCHANGED({!$Record.Follower_Product__c}))</filterFormula>
+        <object>Leader_Follower_Mapping__c</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

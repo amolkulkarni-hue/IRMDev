@@ -1,0 +1,357 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>61.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <description>Assigning the occurrenceofCommaCollectionVariable  value to 0</description>
+        <name>Assign</name>
+        <label>Assign</label>
+        <locationX>616</locationX>
+        <locationY>719</locationY>
+        <assignmentItems>
+            <assignToReference>OccurrenceofCommaCollectionVariable</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <numberValue>0.0</numberValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Loop_through_occurrenceofCommaCollectionVariable</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Assigning the second legal Entity after comma Seperator</description>
+        <name>Assign_false</name>
+        <label>Assign false</label>
+        <locationX>968</locationX>
+        <locationY>1043</locationY>
+        <assignmentItems>
+            <assignToReference>RecordCollectionVariable</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>SplitVariable</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>OccurrenceofCommaCollectionVariable</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>occurrenceofCommaVariable</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Loop_1.QTB_Legal_Entity_Number__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>recordSubstituteVariable</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Loop_through_occurrenceofCommaCollectionVariable</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Assigning the Value of Legal Entity Number before , comma Seperator</description>
+        <name>Assign_True</name>
+        <label>Assign True</label>
+        <locationX>704</locationX>
+        <locationY>1043</locationY>
+        <assignmentItems>
+            <assignToReference>RecordCollectionVariable</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>Loop_1.QTB_Legal_Entity_Number__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Loop_through_occurrenceofCommaCollectionVariable</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Assigning Text value of legal Entity Number</description>
+        <name>Converting_the_Double_to_Text_record_legal_Entity_number</name>
+        <label>Converting the Double to Text record legal Entity number</label>
+        <locationX>748</locationX>
+        <locationY>503</locationY>
+        <assignmentItems>
+            <assignToReference>StoreTextvalueofLegalEntiryNumber</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>ForConvertingtheDoubleValuetoText</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Contains_Comma_Seperator_or_Not_in_legal_Entity_number_from_metadata</targetReference>
+        </connector>
+    </assignments>
+    <customErrors>
+        <name>Custom_Error_Message_1</name>
+        <label>Custom Error Message 1</label>
+        <locationX>616</locationX>
+        <locationY>1511</locationY>
+        <connector>
+            <targetReference>Loop_1</targetReference>
+        </connector>
+        <customErrorMessages>
+            <errorMessage>Please select correct combination of Invoice Batch and Legal Entity.</errorMessage>
+            <isFieldError>false</isFieldError>
+        </customErrorMessages>
+    </customErrors>
+    <decisions>
+        <description>Checking whether the Comma Seperator is present or not in given Metadata record</description>
+        <name>Contains_Comma_Seperator_or_Not_in_legal_Entity_number_from_metadata</name>
+        <label>Contains Comma Seperator or Not in legal Entity number from metadata</label>
+        <locationX>748</locationX>
+        <locationY>611</locationY>
+        <defaultConnector>
+            <targetReference>Decision_1</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Legal_Entity_Number_Contains_Serpator</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Loop_1.QTB_Legal_Entity_Number__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>,</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign</targetReference>
+            </connector>
+            <label>Legal Entity Number Contains Serpator</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Decision_1</name>
+        <label>Decision 1</label>
+        <locationX>748</locationX>
+        <locationY>1403</locationY>
+        <defaultConnector>
+            <targetReference>Loop_1</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Outcome_1_of_Decision_1</name>
+            <conditionLogic>2 AND ((1 AND NOT(4)) OR 3 OR (4 AND NOT(5)))</conditionLogic>
+            <conditions>
+                <leftValueReference>Loop_1.QTB_Legal_Entity_Number__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>StoreTextvalueofLegalEntiryNumber</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Loop_1.QTB_Legal_Entity_Number__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Loop_1.QTB_Country__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>$Record.QTB_Legal_Entity__r.blng__Country__c</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>RecordCollectionVariable</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>RecordCollectionVariable</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <elementReference>StoreTextvalueofLegalEntiryNumber</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Custom_Error_Message_1</targetReference>
+            </connector>
+            <label>Outcome 1 of Decision 1</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Checking of End of Comma occurrence</description>
+        <name>End_of_comma_occurrence</name>
+        <label>End of comma occurrence</label>
+        <locationX>836</locationX>
+        <locationY>935</locationY>
+        <defaultConnector>
+            <targetReference>Assign_false</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>False</defaultConnectorLabel>
+        <rules>
+            <name>True</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>occurrenceofCommaVariable</leftValueReference>
+                <operator>LessThanOrEqualTo</operator>
+                <rightValue>
+                    <numberValue>0.0</numberValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_True</targetReference>
+            </connector>
+            <label>True</label>
+        </rules>
+    </decisions>
+    <description>Throw Validation when Invoice Batch and Legal Entity Diff</description>
+    <environments>Default</environments>
+    <formulas>
+        <description>For Converting the Double Value to Text of Invocie scheduler legal Entity Number</description>
+        <name>ForConvertingtheDoubleValuetoText</name>
+        <dataType>String</dataType>
+        <expression>TEXT({!$Record.QTB_Legal_Entity__r.QTB_Legal_Entity_Number__c})</expression>
+    </formulas>
+    <formulas>
+        <description>occurrence o fComma Variable</description>
+        <name>occurrenceofCommaVariable</name>
+        <dataType>Number</dataType>
+        <expression>LEN({!Loop_1.QTB_Legal_Entity_Number__c}) - LEN(SUBSTITUTE(LOWER({!Loop_1.QTB_Legal_Entity_Number__c}),&quot;,&quot;,&quot;&quot;))</expression>
+        <scale>0</scale>
+    </formulas>
+    <formulas>
+        <description>record Substitute Variable</description>
+        <name>recordSubstituteVariable</name>
+        <dataType>String</dataType>
+        <expression>RIGHT({!Loop_1.QTB_Legal_Entity_Number__c}, LEN({!Loop_1.QTB_Legal_Entity_Number__c}) - FIND(&apos;,&apos;, {!Loop_1.QTB_Legal_Entity_Number__c}))</expression>
+    </formulas>
+    <formulas>
+        <description>Split Variable</description>
+        <name>SplitVariable</name>
+        <dataType>String</dataType>
+        <expression>LEFT({!Loop_1.QTB_Legal_Entity_Number__c}, FIND(&apos;,&apos;, {!Loop_1.QTB_Legal_Entity_Number__c})-1)</expression>
+    </formulas>
+    <interviewLabel>Throw Validation when Invoice Batch and Legal Entity Diff {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Throw Validation when Invoice Batch and Legal Entity Diff</label>
+    <loops>
+        <name>Loop_1</name>
+        <label>Loop 1</label>
+        <locationX>176</locationX>
+        <locationY>395</locationY>
+        <collectionReference>Get_Invoice_Batch_by_Bill_Cycle_Metadata_Records</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>Converting_the_Double_to_Text_record_legal_Entity_number</targetReference>
+        </nextValueConnector>
+    </loops>
+    <loops>
+        <description>Looping the Collection variable which we added the Number values</description>
+        <name>Loop_through_occurrenceofCommaCollectionVariable</name>
+        <label>Loop through occurrenceofCommaCollectionVariable</label>
+        <locationX>616</locationX>
+        <locationY>827</locationY>
+        <collectionReference>OccurrenceofCommaCollectionVariable</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>End_of_comma_occurrence</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>Decision_1</targetReference>
+        </noMoreValuesConnector>
+    </loops>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <description>Get all MetadaRecords</description>
+        <name>Get_Invoice_Batch_by_Bill_Cycle_Metadata_Records</name>
+        <label>Get Invoice Batch by Bill Cycle Metadata Records</label>
+        <locationX>176</locationX>
+        <locationY>287</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Loop_1</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>QTB_Invoice_Batch__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.blng__InvoiceBatches__c</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>QTB_Invoice_Batch_by_Bill_Cycle__mdt</object>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>QTB_Bill_Cycle_Day__c</queriedFields>
+        <queriedFields>QTB_Country__c</queriedFields>
+        <queriedFields>QTB_Invoice_Batch__c</queriedFields>
+        <queriedFields>QTB_Legal_Entity_Number__c</queriedFields>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Get_Invoice_Batch_by_Bill_Cycle_Metadata_Records</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>blng__InvoiceBatches__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>QTB_Legal_Entity__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <object>blng__InvoiceScheduler__c</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Active</status>
+    <variables>
+        <description>Occurrence of Comma Collection Variable</description>
+        <name>OccurrenceofCommaCollectionVariable</name>
+        <dataType>Number</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <scale>2</scale>
+    </variables>
+    <variables>
+        <description>Record Collection Variable</description>
+        <name>RecordCollectionVariable</name>
+        <dataType>String</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>Store Text value of LegalEntiryNumber</description>
+        <name>StoreTextvalueofLegalEntiryNumber</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>

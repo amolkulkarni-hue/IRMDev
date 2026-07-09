@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>MainNavigationItemParentValidation</fullName>
+    <active>true</active>
+    <errorConditionFormula>RecordType.DeveloperName == &apos;Main_Navigation_Item&apos; &amp;&amp;
+Parent_EEC__c != null &amp;&amp;
+Parent_EEC__r.RecordType.DeveloperName != &apos;Main_Navigation&apos; &amp;&amp;
+Parent_EEC__r.RecordType.DeveloperName != &apos;Main_Navigation_Item&apos;</errorConditionFormula>
+    <errorDisplayField>Parent_EEC__c</errorDisplayField>
+    <errorMessage>A Main Navigation Item record can only be associated with a Main Navigation record or another Main Navigation Item record.</errorMessage>
+</ValidationRule>

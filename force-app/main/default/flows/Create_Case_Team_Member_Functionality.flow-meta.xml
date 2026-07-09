@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>62.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <decisions>
+        <description>Gitlab#25946
+Create a Case Team Member with edit access for the case owner. IM_Customer_Data_Management_CDM record type was part of the &quot;IMNA_updateInternalCaseTeam &quot; trigger and the IM_Employees_Support_Case record type was part of the &quot;CaseObject&quot; trigger.</description>
+        <name>Record_Type_Check</name>
+        <label>Record Type Check</label>
+        <locationX>314</locationX>
+        <locationY>323</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>CaseTeam_Member_With_Edit_Access</name>
+            <conditionLogic>( 1 OR 3 ) AND  2</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.RecordType.DeveloperName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>IM_Customer_Data_Management_CDM</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.OwnerId</leftValueReference>
+                <operator>StartsWith</operator>
+                <rightValue>
+                    <stringValue>005</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.RecordType.DeveloperName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>IM_Employees_Support_Case</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Create_Case_Team_Member</targetReference>
+            </connector>
+            <label>CaseTeam Member With Edit Access</label>
+        </rules>
+    </decisions>
+    <description>Gitlab#25946
+Create a Case Team Member with edit access for the case owner . This functionality was part of these Apex triggers IMNA_updateInternalCaseTeam ,CaseObject.</description>
+    <environments>Default</environments>
+    <interviewLabel>Create Case Team Member Functionality {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Create Case Team Member Functionality</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordCreates>
+        <description>On Insert create Case Team Member for Case owner with Edit Access .Gitlab#25946</description>
+        <name>Create_Case_Team_Member</name>
+        <label>Create Case Team Member</label>
+        <locationX>50</locationX>
+        <locationY>431</locationY>
+        <faultConnector>
+            <targetReference>Log_Exception_Create_CaseTeamMember</targetReference>
+        </faultConnector>
+        <inputAssignments>
+            <field>MemberId</field>
+            <value>
+                <elementReference>$Record.OwnerId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>ParentId</field>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>TeamRoleId</field>
+            <value>
+                <stringValue>0B780000000PAyBCAW</stringValue>
+            </value>
+        </inputAssignments>
+        <object>CaseTeamMember</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
+    <recordCreates>
+        <description>Creating an exception record to track errors.</description>
+        <name>Log_Exception_Create_CaseTeamMember</name>
+        <label>Log Exception</label>
+        <locationX>314</locationX>
+        <locationY>539</locationY>
+        <inputAssignments>
+            <field>Error_Message__c</field>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Exception_Type__c</field>
+            <value>
+                <stringValue>DML</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Flow_Name__c</field>
+            <value>
+                <stringValue>Create Case Team Member Functionality(Create_Case_Team_Member_Functionality)</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Originating_Org__c</field>
+            <value>
+                <stringValue>Core</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Record_ID__c</field>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Stack_Trace__c</field>
+            <value>
+                <stringValue>Create Case Team member - On Insert create case team member for case owner with edit access - Error occurred</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Exception_Log__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
+    <start>
+        <locationX>188</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Record_Type_Check</targetReference>
+        </connector>
+        <filterFormula>OR({!$Record.RecordType.DeveloperName}=&apos;IM_Customer_Data_Management_CDM&apos;,
+{!$Record.RecordType.DeveloperName}=&apos;IM_Employees_Support_Case&apos;)</filterFormula>
+        <object>Case</object>
+        <recordTriggerType>Create</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

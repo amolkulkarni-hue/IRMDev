@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IMGA__c</fullName>
+    <description>Check if flow is run on Account/IMGA or Customer Account/CARA
+If IMGA Account is checked then we are working on Account (IMGA Risk Assessment).
+If IMGA Account is unchecked then we are working on Customer Account (At Risk KPI).</description>
+    <formula>if(
+    or(
+        isblank(
+            IMGA_Risk_Assessment__c
+        ),
+        isblank(
+            Account__c
+        )
+    ),
+    False,
+    True
+)</formula>
+    <inlineHelpText>If IMGA Account is checked then we are working on Account (IMGA Risk Assessment).
+If IMGA Account is unchecked then we are working on Customer Account (At Risk KPI).</inlineHelpText>
+    <label>IMGA</label>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

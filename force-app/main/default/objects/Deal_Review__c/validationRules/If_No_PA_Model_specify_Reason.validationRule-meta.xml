@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>If_No_PA_Model_specify_Reason</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+ No_PA_Model_Required__c  = True,
+  ISPICKVAL( Reason_for_No_PA_Model__c , &quot;&quot;) 
+)</errorConditionFormula>
+    <errorDisplayField>Reason_for_No_PA_Model__c</errorDisplayField>
+    <errorMessage>Please specify a value for &quot;Reason for No PA Model&quot;</errorMessage>
+</ValidationRule>

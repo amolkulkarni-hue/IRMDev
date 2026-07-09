@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>QTB_Rule_for_multiple_shred_records</fullName>
+    <active>true</active>
+    <description>#SFCPQBLG-162: To restrict user from creating more than one shred record on a quote</description>
+    <errorConditionFormula>AND(NOT($Setup.Metadata_Activation_Settings__c.Disable_VR__c &amp;&amp;
+OR(ISBLANK($Setup.Metadata_Activation_Settings__c.SObject_API_Name__c),
+CONTAINS($Setup.Metadata_Activation_Settings__c.SObject_API_Name__c, &apos;QTB_Shred_Profile__c&apos;))),
+ISNEW(),
+QTB_Quote__r.QTB_Shred_Profile_Count__c &gt;0 )</errorConditionFormula>
+    <errorMessage>You can not create more than one Shred Profile Record on a Quote</errorMessage>
+</ValidationRule>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Email_Notification_Task_Creation</name>
+        <label>Task.Email_Notification_Task_Creation</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <actionName>Task.Email_Notification_Task_Creation</actionName>
+        <actionType>emailAlert</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>Task.Email_Notification_Task_Creation</nameSegment>
+    </actionCalls>
+    <apiVersion>58.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <description>Migrated from the: Task Email Notification workflow rule
+Workflow rule description: This email notification is for sending alert to user when new task created on them using UI.&quot;</description>
+    <label>Task Email Notification</label>
+    <migratedFromWorkflowRuleName>Task Email Notification</migratedFromWorkflowRuleName>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Email_Notification_Task_Creation</targetReference>
+        </connector>
+        <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+        <filterFormula>AND( {!$Record.CreatedById} &lt;&gt; {!$Record.OwnerId},
+{!$Record.CreatedById} &lt;&gt; &apos;005800000070163&apos;, /* Eloqua 10 */
+{!$Record.CreatedById} &lt;&gt; &apos;00580000001vyu4&apos;, /* Eloqua */
+{!$Record.CreatedById} &lt;&gt; &apos;0052H00000DYXvU&apos;, /*Outreach Integration*/
+{!$Record.CreatedById} &lt;&gt; &apos;0052H00000CLvmM&apos;, /*Gong Integration User*/
+{!$Record.CreatedById} &lt;&gt; &apos;0052H00000CMh0k&apos;, /*People.ai Integration*/
+DATEVALUE({!$Record.CreatedDate}) = TODAY(),
+{!$Record.RecordTypeId}=&apos;01280000000UK7J&apos;
+/*,RecordType.DeveloperName=&apos;Global Sales Task&apos;*/)</filterFormula>
+        <object>Task</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

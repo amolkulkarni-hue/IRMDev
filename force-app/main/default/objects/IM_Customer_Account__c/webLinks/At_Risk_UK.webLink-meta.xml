@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebLink xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>At_Risk_UK</fullName>
+    <availability>online</availability>
+    <description>Standard page button to run AtRisk/RedAlert UK flow.Once the user is complete with the AtRisk/RedAlert page, it will generate a new AtRisk/RedAlert record,but navigate the user back to the Customer Account page.</description>
+    <displayType>button</displayType>
+    <encodingKey>UTF-8</encodingKey>
+    <linkType>url</linkType>
+    <masterLabel>At Risk (UK)</masterLabel>
+    <openType>replace</openType>
+    <protected>false</protected>
+    <url>/flow/At_Risk_Red_Alert_UK_CustomerAccount?vCustomerAccountNameFromRecord={! IM_Customer_Account__c.Name}&amp;vCustomerAccountID={!IM_Customer_Account__c.Id}&amp;vCAIsCountryParent={!IM_Customer_Account__c.IM_Account__c}&amp;retURL={!IM_Customer_Account__c.Id}</url>
+</WebLink>

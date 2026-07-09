@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>QTB_Product_ID__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>#SFCPQBLG-1025 lookup to products</description>
+    <label>Product ID</label>
+    <lookupFilter>
+        <active>true</active>
+        <filterItems>
+            <field>Product2.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Global Sales Product</value>
+        </filterItems>
+        <filterItems>
+            <field>Product2.SBQQ__ChargeType__c</field>
+            <operation>equals</operation>
+            <value>Recurring</value>
+        </filterItems>
+        <filterItems>
+            <field>Product2.SBQQ__HasConsumptionSchedule__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </filterItems>
+        <isOptional>false</isOptional>
+    </lookupFilter>
+    <referenceTo>Product2</referenceTo>
+    <relationshipLabel>Work Order Tiers</relationshipLabel>
+    <relationshipName>Work_Order_Tiers</relationshipName>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

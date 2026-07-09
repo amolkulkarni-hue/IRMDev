@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Restrict_Duplicate_Billcode_Maps</fullName>
+    <active>true</active>
+    <description>Gitlab: #16917
+
+Restrict user from creating duplicate Bill code Maps with same PA Model Billcode</description>
+    <errorConditionFormula>isDuplicate__c</errorConditionFormula>
+    <errorDisplayField>Follower_Product__c</errorDisplayField>
+    <errorMessage>This PA Model Billcode Product is already mapped to a SF Product Code. Please try again with a different Product Code or update the existing record.</errorMessage>
+</ValidationRule>

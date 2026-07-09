@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>YTD_Target_PW__c</fullName>
+    <externalId>false</externalId>
+    <formula>Case(YTD_End_Period__c, 
+1, PW_Target_Jan__c, 
+2, PW_Target_Jan__c + PW_Target_Feb__c, 
+3, PW_Target_Jan__c + PW_Target_Feb__c + PW_Target_Mar__c, 
+4, PW_Target_Jan__c + PW_Target_Feb__c + PW_Target_Mar__c + PW_Target_Apr__c, 
+5, PW_Target_Jan__c + PW_Target_Feb__c + PW_Target_Mar__c + PW_Target_Apr__c + PW_Target_May__c, 
+6, PW_Target_Jan__c + PW_Target_Feb__c + PW_Target_Mar__c + PW_Target_Apr__c + PW_Target_May__c + PW_Target_June__c, 
+7, PW_Target_Jan__c + PW_Target_Feb__c + PW_Target_Mar__c + PW_Target_Apr__c + PW_Target_May__c + PW_Target_June__c + PW_Target_July__c, 
+8, PW_Target_Jan__c + PW_Target_Feb__c + PW_Target_Mar__c + PW_Target_Apr__c + PW_Target_May__c + PW_Target_June__c + PW_Target_July__c + PW_Target_Aug__c, 
+9, PW_Target_Jan__c + PW_Target_Feb__c + PW_Target_Mar__c + PW_Target_Apr__c + PW_Target_May__c + PW_Target_June__c + PW_Target_July__c + PW_Target_Aug__c + PW_Target_Sept__c, 
+10, PW_Target_Jan__c + PW_Target_Feb__c + PW_Target_Mar__c + PW_Target_Apr__c + PW_Target_May__c + PW_Target_June__c + PW_Target_July__c + PW_Target_Aug__c + PW_Target_Sept__c + PW_Target_Oct__c, 
+11, PW_Target_Jan__c + PW_Target_Feb__c + PW_Target_Mar__c + PW_Target_Apr__c + PW_Target_May__c + PW_Target_June__c + PW_Target_July__c + PW_Target_Aug__c + PW_Target_Sept__c + PW_Target_Oct__c + PW_Target_Nov__c, 
+12, PW_Target_Jan__c + PW_Target_Feb__c + PW_Target_Mar__c + PW_Target_Apr__c + PW_Target_May__c + PW_Target_June__c + PW_Target_July__c + PW_Target_Aug__c + PW_Target_Sept__c + PW_Target_Oct__c + PW_Target_Nov__c + PW_Target_Dec__c, 
+0 
+)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>YTD Target PW</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>2</scale>
+    <trackTrending>false</trackTrending>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

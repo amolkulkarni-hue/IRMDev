@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>QTB_Can_not_Uncheck_Pre_Bill_Checkbox</fullName>
+    <active>true</active>
+    <description>#GITLAB--&gt;5038  : Can&apos;t uncheck the pre bill checkbox once it is checked.</description>
+    <errorConditionFormula>AND(NOT($Setup.Metadata_Activation_Settings__c.Disable_VR__c &amp;&amp;
+OR(ISBLANK($Setup.Metadata_Activation_Settings__c.SObject_API_Name__c),
+CONTAINS($Setup.Metadata_Activation_Settings__c.SObject_API_Name__c, &apos;QTB_Bill_Flow_Controller__c&apos;))),
+ ISCHANGED(Execute_Pre_Bill_Run__c), PRIORVALUE(Execute_Pre_Bill_Run__c)= True)</errorConditionFormula>
+    <errorMessage>Execute Pre Bill Checkbox can not be unchecked once it is checked.</errorMessage>
+</ValidationRule>

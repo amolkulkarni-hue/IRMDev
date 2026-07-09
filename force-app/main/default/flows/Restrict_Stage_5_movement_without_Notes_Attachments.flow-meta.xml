@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>61.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <customErrors>
+        <description>#24445 Make Notes &amp; Attachments mandatory when moving to Stage 5</description>
+        <name>Error</name>
+        <label>Error</label>
+        <locationX>50</locationX>
+        <locationY>503</locationY>
+        <customErrorMessages>
+            <errorMessage>Please upload at least one attachment before moving to Stage 5.</errorMessage>
+            <isFieldError>false</isFieldError>
+        </customErrorMessages>
+    </customErrors>
+    <decisions>
+        <description>#24445 Make Notes &amp; Attachments mandatory when moving to Stage 5.</description>
+        <name>Has_Attachments</name>
+        <label>Has Attachments?</label>
+        <locationX>182</locationX>
+        <locationY>395</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>NO</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Attachments</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Error</targetReference>
+            </connector>
+            <label>NO</label>
+        </rules>
+    </decisions>
+    <description>#24445 Make Notes &amp; Attachments mandatory when moving to Stage 5.
+#33297 Add bypass to Opp VRs to support manual, bulk ecomm Opp creation - PRJTASK0017641</description>
+    <environments>Default</environments>
+    <interviewLabel>Restrict {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Restrict Stage 5 movement without Notes&amp;Attachments</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <description>#24445 Make Notes &amp; Attachments mandatory when moving to Stage 5.</description>
+        <name>Get_Attachments</name>
+        <label>Get Attachments</label>
+        <locationX>182</locationX>
+        <locationY>287</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Has_Attachments</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>LinkedEntityId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>ContentDocumentLink</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <start>
+        <locationX>56</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Get_Attachments</targetReference>
+        </connector>
+        <filterFormula>AND(
+ISCHANGED({!$Record.StageName}),
+ISPICKVAL({!$Record.StageName}, &apos;5 - Signed/PO in&apos;),
+ISCHANGED({!$Record.IsClosed}),
+CASESAFEID({!$Label.IMExpress_Opp_Owner})!={!$Record.OwnerId}
+
+)</filterFormula>
+        <object>Opportunity</object>
+        <recordTriggerType>Update</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

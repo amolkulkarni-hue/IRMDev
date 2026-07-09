@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>59.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <decisions>
+        <description>Checking Record Type</description>
+        <name>Checking_Record_Type</name>
+        <label>Checking Record Type</label>
+        <locationX>182</locationX>
+        <locationY>431</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Is_NCSP_SKP_New_Customer_Setup</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.RecordTypeId</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>Get_Record_Type_ID.Id</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>NCSP_Case_Billtrust_Conga_Event</targetReference>
+            </connector>
+            <label>Is NCSP: SKP New Customer Setup</label>
+        </rules>
+    </decisions>
+    <description>This flow triggers the the NCSP_Case_To_Mulesoft_Billtrust_And_Conga_Event platform event every time a case record is updated and meets the specified condition requirements which is subscribed by MuleSoft application.
+
+Conditions:
+
+1. Customer_ID__c is changed and is not null.
+2. NCSP_Opportunity_Type__c equals &quot;New Deal&quot;.
+3. Status equals &quot;New&quot; or &quot;Contract Review&quot;.
+4. Billing_Country__c equals &quot;USA&quot; OR &quot;Canada&quot;.
+5. Billing_Contact__c is not null.
+6. Billing_Contact_Email__c is not null.
+7. NCSP_Service_Line__c can be either &quot;RM&quot;, &quot;Shred&quot;, or &quot;One Time Shred&quot;.</description>
+    <environments>Default</environments>
+    <interviewLabel>SF_Case_To_MuleSoft_Flow {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>NCSP_Case_To_Mulesoft_Billtrust_And_Conga_Flow</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordCreates>
+        <name>NCSP_Case_Billtrust_Conga_Event</name>
+        <label>NCSP_Case_Billtrust_Conga_Event</label>
+        <locationX>50</locationX>
+        <locationY>539</locationY>
+        <inputAssignments>
+            <field>Autopay_Required__c</field>
+            <value>
+                <elementReference>$Record.Autopay_Agreed__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Billing_Contact_Email__c</field>
+            <value>
+                <elementReference>$Record.Billing_Contact_Email__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Billing_Contact_First_Name__c</field>
+            <value>
+                <elementReference>$Record.Billing_Contact__r.FirstName</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Billing_Contact_Last_Name__c</field>
+            <value>
+                <elementReference>$Record.Billing_Contact__r.LastName</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Billing_Country__c</field>
+            <value>
+                <elementReference>$Record.Billing_Country__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Case_ID__c</field>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Customer_Account__c</field>
+            <value>
+                <elementReference>$Record.Customer_ID__r.Name</elementReference>
+            </value>
+        </inputAssignments>
+        <object>NCSP_Case_Billtrust_Conga_Event__e</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
+    <recordLookups>
+        <description>Get Record Type ID of NCSP: SKP New Customer Setup</description>
+        <name>Get_Record_Type_ID</name>
+        <label>Get Record Type ID</label>
+        <locationX>182</locationX>
+        <locationY>323</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Checking_Record_Type</targetReference>
+        </connector>
+        <filterLogic>1 AND 2</filterLogic>
+        <filters>
+            <field>SobjectType</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Case</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>NCSP_SKP_New_customer_setup</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>RecordType</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <start>
+        <locationX>56</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Get_Record_Type_ID</targetReference>
+        </connector>
+        <filterLogic>1 AND 11 AND 2 AND (3 OR 12) AND (4 OR 5) AND 6 AND 7 AND (8 OR 9 OR 10)</filterLogic>
+        <filters>
+            <field>Customer_ID__c</field>
+            <operator>IsChanged</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>NCSP_Opportunity_Type__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>New Deal</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Status</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>New</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Billing_Country__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>USA</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Billing_Country__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Canada</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Billing_Contact__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Billing_Contact_Email__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>NCSP_Service_line__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>RM</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>NCSP_Service_line__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Shred</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>NCSP_Service_line__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>One Time Shred</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Customer_ID__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Status</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Contract Review</stringValue>
+            </value>
+        </filters>
+        <object>Case</object>
+        <recordTriggerType>Update</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+    <triggerOrder>1180</triggerOrder>
+</Flow>
