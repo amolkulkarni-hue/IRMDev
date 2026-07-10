@@ -108,6 +108,43 @@
             <label>stage profile and amount condition true</label>
         </rules>
         <rules>
+            <description>New (v2) stage-naming scheme equivalent of "stage_profile_and_amount_condition_true", for Standard Opportunity Sales Path stages Qualification/Solutioning/Negotiation/Booking Verification.</description>
+            <name>stage_profile_and_amount_condition_true_NewScheme</name>
+            <conditionLogic>1 AND 2 AND 3 AND 4</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.StageName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Negotiation</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>TotalAnnualAmountInUSD</leftValueReference>
+                <operator>GreaterThanOrEqualTo</operator>
+                <rightValue>
+                    <numberValue>25000.0</numberValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Type</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Renewal</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record__Prior.StageName</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Booking Verification</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>get_forecast_Records_at_stage_at_5</targetReference>
+            </connector>
+            <label>stage profile and amount condition true (new scheme)</label>
+        </rules>
+        <rules>
             <name>Stagechange_4</name>
             <conditionLogic>(1 OR 2 OR 3) AND (4 OR 5)</conditionLogic>
             <conditions>
@@ -149,6 +186,43 @@
                 <targetReference>Get_Forecast_Records_at_stage_less_than_5</targetReference>
             </connector>
             <label>Stagechange&lt;4</label>
+        </rules>
+        <rules>
+            <description>New (v2) stage-naming scheme equivalent of "Stagechange_4", for Standard Opportunity Sales Path stages Qualification/Solutioning/Negotiation/Booking Verification.</description>
+            <name>Stagechange_4_NewScheme</name>
+            <conditionLogic>(1 OR 2) AND (3 OR 4)</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.StageName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Qualification</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.StageName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Solutioning</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record__Prior.StageName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Negotiation</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record__Prior.StageName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Booking Verification</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Forecast_Records_at_stage_less_than_5</targetReference>
+            </connector>
+            <label>Stagechange&lt;4 (new scheme)</label>
         </rules>
     </decisions>
     <decisions>
