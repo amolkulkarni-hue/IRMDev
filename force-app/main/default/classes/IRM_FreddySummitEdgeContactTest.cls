@@ -78,10 +78,12 @@ private class IRM_FreddySummitEdgeContactTest {
             Test.stopTest();
         }
 
+        System.assertEquals(true, isAvailableToFreddy,
+            'Contact.CRM_Contact record type should be available to Freddy.');
         System.assert(c.Id != null,
             'Apex DML let the insert through with RecordTypeId=CRM_Contact even though the ' +
             'live UI blocks the same action for Freddy — Apex insert does not enforce the ' +
-            'UI-layer record-type-visibility check that useRecordTypeCheck=1 enforces. ' +
-            'isAvailable() reported: ' + isAvailableToFreddy);
+            'UI-layer useRecordTypeCheck gate. This confirms record-type visibility is not ' +
+            'the cause of the live UI failure; a browser-session-specific factor is.');
     }
 }
