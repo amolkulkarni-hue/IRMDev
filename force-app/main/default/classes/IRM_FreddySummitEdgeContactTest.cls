@@ -51,4 +51,37 @@ private class IRM_FreddySummitEdgeContactTest {
         System.assertEquals('Summit Edge', inserted.Account.Name,
             'Contact.Account.Name should be Summit Edge. Got: ' + inserted.Account.Name);
     }
+
+    // Mirrors the Lightning "New Contact" action from the Account related list, which the
+    // live UI blocks for Freddy with "The requested resource does not exist" (recordTypeId
+    // matches Contact.CRM_Contact, the same one the failing browser URL used).
+    @IsTest
+    static void test_freddy_recordTypeAvailabilityMatchesLiveUIBehavior() {
+        User freddy = getFreddy();
+        Id summitEdgeId = [SELECT Id FROM Account WHERE Name = 'Summit Edge' LIMIT 1].Id;
+        Id crmContactRTId = Schema.SObjectType.Contact.getRecordTypeInfosByDeveloperName()
+            .get('CRM_Contact').getRecordTypeId();
+
+        Boolean isAvailableToFreddy;
+        Contact c;
+        System.runAs(freddy) {
+            isAvailableToFreddy = Schema.SObjectType.Contact.getRecordTypeInfosByDeveloperName()
+                .get('CRM_Contact').isAvailable();
+
+            c = new Contact(
+                FirstName = 'Demo', LastName = 'SummitEdgeContactRT',
+                AccountId = summitEdgeId, RecordTypeId = crmContactRTId
+            );
+
+            Test.startTest();
+            insert c;
+            Test.stopTest();
+        }
+
+        System.assert(c.Id != null,
+            'Apex DML let the insert through with RecordTypeId=CRM_Contact even though the ' +
+            'live UI blocks the same action for Freddy — Apex insert does not enforce the ' +
+            'UI-layer record-type-visibility check that useRecordTypeCheck=1 enforces. ' +
+            'isAvailable() reported: ' + isAvailableToFreddy);
+    }
 }
