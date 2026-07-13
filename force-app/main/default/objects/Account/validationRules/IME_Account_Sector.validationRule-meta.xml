@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IME_Account_Sector</fullName>
+    <active>false</active>
+    <description>All Accounts under the Country Parent should have the same IM Country Code and IM Sector as the Country Parent.&quot;</description>
+    <errorConditionFormula>AND(
+$Profile.Name &lt;&gt; &quot;System Administrator&quot;, 
+$Profile.Name &lt;&gt; &quot;IME_Custom Sys Admin&quot;,
+$Profile.Name &lt;&gt; &quot;IM_Custom Sys Admin&quot;,
+
+NOT(ISBLANK(ParentId)),
+
+OR( ISPICKVAL( Division , &quot;Europe&quot;), ISPICKVAL(Division , &quot;Latin America&quot;), ISPICKVAL(Division , 
+&quot;Asia Pacific&quot;) ),  
+
+TEXT(IM_Hierarchy_Level__c)  &lt;&gt; &quot;Country Parent&quot;,
+
+OR(TEXT(IM_Country_Code__c) &lt;&gt; TEXT(Parent.IM_Country_Code__c),
+TEXT(IM_Sector__c) &lt;&gt; TEXT(Parent.IM_Sector__c)) 
+)</errorConditionFormula>
+    <errorMessage>All Accounts under the Country Parent should have the same &quot;IM Country Code&quot; and &quot;IM Sector&quot; as the Country Parent.</errorMessage>
+</ValidationRule>

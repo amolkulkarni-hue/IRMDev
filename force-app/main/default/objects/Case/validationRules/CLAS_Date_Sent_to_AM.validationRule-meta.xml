@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CLAS_Date_Sent_to_AM</fullName>
+    <active>true</active>
+    <description>Ensures Date Sent to AM field is populated when the account manager is populated</description>
+    <errorConditionFormula>AND(
+OR(
+$RecordType.Name = &apos;CLAS - Shred&apos;,
+$RecordType.Name = &apos;CLAS – Data Management&apos;,
+RecordType.DeveloperName = &apos;Retention_RM&apos;),
+NOT(ISBLANK(Account_Manager__c)),
+ISBLANK(Date_Sent_to_AM__c))</errorConditionFormula>
+    <errorDisplayField>Date_Sent_to_AM__c</errorDisplayField>
+    <errorMessage>Date Sent to AM needs to be populated for Account Manager field</errorMessage>
+</ValidationRule>

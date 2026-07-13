@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IME_SC_ValidateOnHold</fullName>
+    <active>true</active>
+    <description>This rule is fired when value of status is not changed from &quot;In progress&quot; to &quot;On Hold - Customer&quot; or &quot;On Hold - Internal&quot; .</description>
+    <errorConditionFormula>AND ( NOT(ISCHANGED( IME_SC_Owner_Manager__c )), 
+NOT(ISCHANGED( IME_SC_Manager_of_Manager_OwnerId__c )),
+$RecordType.Name = &quot;IME SC Case&quot; ,
+OR(
+  AND(ISNEW(), 
+    OR(ISPICKVAL( Status, &quot;On Hold - Internal&quot;) , ISPICKVAL(Status, &quot;On Hold - Customer&quot;) )),
+  AND(ISCHANGED( Status), 
+    NOT(ISPICKVAL(PRIORVALUE( Status ), &quot;In Progress&quot;)), 
+    OR(ISPICKVAL( Status, &quot;On Hold - Internal&quot;) , ISPICKVAL(Status, &quot;On Hold - Customer&quot;) ) )))</errorConditionFormula>
+    <errorDisplayField>Status</errorDisplayField>
+    <errorMessage>&quot;On Hold – Internal&quot; or &quot;On Hold - Customer&quot; can be changed from &quot;In Progress&quot;.</errorMessage>
+</ValidationRule>

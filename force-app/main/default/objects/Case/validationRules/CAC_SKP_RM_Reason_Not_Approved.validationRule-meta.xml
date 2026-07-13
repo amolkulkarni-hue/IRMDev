@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CAC_SKP_RM_Reason_Not_Approved</fullName>
+    <active>true</active>
+    <description>Reason Not approved&apos; to be required if &apos;Customer Approved has a value of &quot;No&quot;</description>
+    <errorConditionFormula>AND(
+				$RecordType.Name = &quot;CLAS - RM&quot;,
+				ISPICKVAL(Customer_approved_Cost_Summary__c	, &quot;No&quot;),
+				ISPICKVAL(Reason_Not_Approved__c	, &quot;&quot;))</errorConditionFormula>
+    <errorMessage>Reason Not Approved is required when Customer Approved Cost Summary has value of &quot;No&quot;</errorMessage>
+</ValidationRule>

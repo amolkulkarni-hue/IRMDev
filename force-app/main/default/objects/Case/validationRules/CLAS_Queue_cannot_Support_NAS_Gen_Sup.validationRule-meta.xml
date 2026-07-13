@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CLAS_Queue_cannot_Support_NAS_Gen_Sup</fullName>
+    <active>true</active>
+    <description>Does not allow NAS General Support Case Record types to be in CLAS queue</description>
+    <errorConditionFormula>AND($RecordType.Name = &quot;NAS General Support Case&quot;,
+				Owner:Queue.Name = &quot;CLAS Queue&quot;)</errorConditionFormula>
+    <errorMessage>Must change case to CLAS record type before adding to the CLAS Queue</errorMessage>
+</ValidationRule>

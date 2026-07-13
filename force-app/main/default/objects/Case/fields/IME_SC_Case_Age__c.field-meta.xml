@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IME_SC_Case_Age__c</fullName>
+    <externalId>false</externalId>
+    <formula>IF(  RecordType_Name__c = &apos;Global Service Case&apos;, (IF(IsClosed ,
+Text(FLOOR(ClosedDate - CreatedDate)) &amp;&quot; &quot;&amp;&quot;day(s)&quot;&amp;&quot; &quot;&amp;Text(FLOOR(MOD( (ClosedDate - CreatedDate) * 24 ,24))) &amp;&quot; &quot;&amp;&quot;hrs&quot;&amp;&quot; &quot;&amp;Text( FLOOR(MOD(((ClosedDate - CreatedDate) * 24)*60 ,60)))&amp;&quot; &quot;&amp;&quot;min&quot;, Text(FLOOR(NOW() - CreatedDate)) &amp;&quot; &quot;&amp;&quot;day(s)&quot;&amp;&quot; &quot;&amp;Text(FLOOR(MOD( (NOW() - CreatedDate) * 24 ,24))) &amp;&quot; &quot;&amp;&quot;hrs&quot;&amp;&quot; &quot;&amp;Text( FLOOR(MOD(((NOW() - CreatedDate) * 24)*60 ,60)))&amp;&quot; &quot;&amp;&quot;min&quot;))
+,(IF( NOT( ISNULL( IME_SC_Resolved_Date__c ) ) , 
+Text(FLOOR(IME_SC_Resolved_Date__c - CreatedDate)) &amp;&quot; &quot;&amp;&quot;day(s)&quot;&amp;&quot; &quot;&amp;Text(FLOOR(MOD( (IME_SC_Resolved_Date__c - CreatedDate) * 24 ,24))) &amp;&quot; &quot;&amp;&quot;hrs&quot;&amp;&quot; &quot;&amp;Text( FLOOR(MOD(((IME_SC_Resolved_Date__c - CreatedDate) * 24)*60 ,60)))&amp;&quot; &quot;&amp;&quot;min&quot;, Text(FLOOR(NOW() - CreatedDate)) &amp;&quot; &quot;&amp;&quot;day(s)&quot;&amp;&quot; &quot;&amp;Text(FLOOR(MOD( (NOW() - CreatedDate) * 24 ,24))) &amp;&quot; &quot;&amp;&quot;hrs&quot;&amp;&quot; &quot;&amp;Text( FLOOR(MOD(((NOW() - CreatedDate) * 24)*60 ,60)))&amp;&quot; &quot;&amp;&quot;min&quot;))
+)</formula>
+    <label>Case Age</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

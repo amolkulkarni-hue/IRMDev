@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Format_and_Placeholder_Block</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+    NOT($Permission.Bypass_Lead_Validation),
+    NOT(ISBLANK(Phone)),
+    OR(
+        NOT(
+            REGEX(
+                Phone,
+                &quot;^\\+?[0-9\\s\\-\\.\\(\\)xX#]{6,30}$&quot;
+            )
+        ),
+        CONTAINS(LOWER(Phone), &quot;xxxx&quot;),
+        CONTAINS(LOWER(Phone), &quot;0000&quot;),
+        CONTAINS(LOWER(Phone), &quot;1111&quot;),
+        CONTAINS(LOWER(Phone), &quot;9999&quot;),
+        CONTAINS(LOWER(Phone), &quot;unknown&quot;),
+        CONTAINS(LOWER(Phone), &quot;none&quot;),
+        CONTAINS(LOWER(Phone), &quot;n/a&quot;),
+        CONTAINS(LOWER(Phone), &quot;test&quot;),
+        REGEX(Phone, &quot;^[\\s\\-\\.\\(\\)]+$&quot;)
+    )
+)</errorConditionFormula>
+    <errorDisplayField>Phone</errorDisplayField>
+    <errorMessage>The phone number entered is not valid or appears to be a placeholder. Please enter a real phone number. International format is preferred (e.g., +1 617 555 1234 or +44 20 7946 0958).</errorMessage>
+</ValidationRule>

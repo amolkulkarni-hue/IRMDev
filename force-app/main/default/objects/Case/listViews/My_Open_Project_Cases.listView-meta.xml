@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>My_Open_Project_Cases</fullName>
+    <columns>CASES.CASE_NUMBER</columns>
+    <columns>CASES.SUBJECT</columns>
+    <columns>Case_Category__c</columns>
+    <columns>Case_Sub_Category__c</columns>
+    <columns>Development_Status__c</columns>
+    <columns>Target_Prod_Deployment_Date__c</columns>
+    <filterScope>Mine</filterScope>
+    <filters>
+        <field>CASES.RECORDTYPE</field>
+        <operation>equals</operation>
+        <value>Case.Sales_Tools_Project_Case</value>
+    </filters>
+    <filters>
+        <field>CASES.CLOSED</field>
+        <operation>equals</operation>
+        <value>0</value>
+    </filters>
+    <filters>
+        <field>CASES.STATUS</field>
+        <operation>notEqual</operation>
+        <value>On Hold</value>
+    </filters>
+    <label>My Open Project Cases</label>
+    <language>en_US</language>
+    <sharedTo></sharedTo>
+</ListView>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>dnb_exclude_company__c</fullName>
+    <description>Prevent D&amp;B data from being associated with Billing and operational accounts.
+This formula field should evaluate the Account&apos;s record type. If the Account&apos;s record type is either &quot;Billing Account&quot; or &quot;Operational Account&quot;, the formula field should evaluate to TRUE (checked). For all other Account record types, the formula field should evaluate to FALSE (unchecked).</description>
+    <formula>IF(ISPICKVAL(IM_Hierarchy_Level__c, &apos;Operational Account&apos;),true, IF( ISPICKVAL(IM_Hierarchy_Level__c, &apos;Billing Account&apos;), true,IF( ISPICKVAL(IM_Hierarchy_Level__c, &apos;&apos;), true, false)))</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <inlineHelpText>Prevent D&amp;B data from being associated with Billing and operational accounts.</inlineHelpText>
+    <label>Exclude from D&amp;B Connect</label>
+    <trackHistory>false</trackHistory>
+    <type>Checkbox</type>
+</CustomField>

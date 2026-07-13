@@ -1,0 +1,208 @@
+{
+  "appPageId" : "f0c590c7-a247-479b-bb7f-e164da29928d",
+  "componentName" : "siteforce:dynamicLayout",
+  "dataProviders" : [ ],
+  "id" : "ecfa85c2-ea96-423b-beb6-58fb24728e8f",
+  "label" : "My orders",
+  "regions" : [ {
+    "components" : [ {
+      "componentAttributes" : {
+        "background" : "background: rgba(0,0,0,0)",
+        "backgroundOverlay" : "rgba(0,0,0,0.5)",
+        "contentAreaWidth" : 100,
+        "sectionConfig" : {
+          "UUID" : "93330f77-3d99-416d-9b84-10d17b59ae10",
+          "columns" : [ {
+            "UUID" : "1193f9fb-5286-4a1b-a68e-c4ddbc9b453d",
+            "columnKey" : "1",
+            "columnName" : "Column 1",
+            "columnWidth" : "12",
+            "seedComponents" : [ ]
+          } ]
+        },
+        "sectionHeight" : 300
+      },
+      "componentName" : "forceCommunity:section",
+      "id" : "93330f77-3d99-416d-9b84-10d17b59ae10",
+      "regions" : [ {
+        "components" : [ {
+          "componentAttributes" : {
+            "richTextValue" : "<div style=\"margin-left:auto;margin-right:auto;\">\n    <div class=\"pageHeadings\">\n        <div class=\"pageHeadingsTitle\">My orders</div>\n        <div class=\"pageHeadingsSubTitle\">View details of your most recent orders below</div>\n    </div>\n</div>"
+          },
+          "componentName" : "forceCommunity:htmlBlock",
+          "id" : "bc4844fe-bc24-44b7-abc6-fd68c5455e9c",
+          "renderPriority" : "NEUTRAL",
+          "renditionMap" : {
+            "de" : "3853228f-63a5-42ea-bc43-4300d9cddbb5",
+            "es" : "8ea57ebe-3790-4295-9f3e-1452005b7cda",
+            "fr" : "36836242-7490-4b97-a391-070c56aa8b41"
+          },
+          "renditions" : [ {
+            "id" : "36836242-7490-4b97-a391-070c56aa8b41",
+            "renditionValue" : {
+              "componentAttributes" : {
+                "richTextValue" : "<div style=\"margin-left:auto;margin-right:auto;\">\n    <div class=\"pageHeadings\">\n        <div class=\"pageHeadingsTitle\">Mes commandes</div>\n        <div class=\"pageHeadingsSubTitle\">Consultez les détails de vos commandes les plus récentes ci-dessous</div>\n    </div>\n</div>"
+              }
+            },
+            "type" : "renditionComponent"
+          }, {
+            "id" : "3853228f-63a5-42ea-bc43-4300d9cddbb5",
+            "renditionValue" : {
+              "componentAttributes" : {
+                "richTextValue" : "<div style=\"margin-left:auto;margin-right:auto;\">\n    <div class=\"pageHeadings\">\n        <div class=\"pageHeadingsTitle\">Meine Bestellungen</div>\n        <div class=\"pageHeadingsSubTitle\">Unten finden Sie die Details Ihrer letzten Bestellungen.</div>\n    </div>\n</div>"
+              }
+            },
+            "type" : "renditionComponent"
+          }, {
+            "id" : "8ea57ebe-3790-4295-9f3e-1452005b7cda",
+            "renditionValue" : {
+              "componentAttributes" : {
+                "richTextValue" : "<div style=\"margin-left:auto;margin-right:auto;\">\n    <div class=\"pageHeadings\">\n        <div class=\"pageHeadingsTitle\">Mis pedidos</div>\n        <div class=\"pageHeadingsSubTitle\">Vea a continuación los detalles de sus pedidos más recientes </div>\n    </div>\n</div>"
+              }
+            },
+            "type" : "renditionComponent"
+          } ],
+          "type" : "component"
+        }, {
+          "componentAttributes" : {
+            "INVOICESORTDATEFIELD" : "invoice_date",
+            "ORDERSORTDATEFIELD" : "deliveryDateTime",
+            "displayRightButton" : false,
+            "emptyMessage" : "You don't have any recent orders.",
+            "filterByLabel" : "Filter by service date range",
+            "jsonConfiguration" : "[ { \"label\": \"Customer ID\", \"fieldName\": \"customerId\", \"sortable\": \"true\" }, { \"label\": \"Order Number\", \"fieldName\": \"orderNumber\", \"sortable\": \"true\" }, { \"label\": \"Requested Date\", \"fieldName\": \"requestDateTime\", \"type\": \"date\", \"sortable\": \"true\", \"typeAttributes\": { \"day\": \"numeric\", \"month\": \"short\", \"year\": \"numeric\" } }, { \"label\": \"Service Date\", \"fieldName\": \"deliveryDateTime\", \"sortable\": \"true\", \"type\": \"date\", \"typeAttributes\": { \"day\": \"numeric\", \"month\": \"short\", \"year\": \"numeric\" } }, { \"label\": \"Order Status\", \"fieldName\": \"orderStatus\", \"sortable\": \"true\" }, { \"label\": \"Department ID\", \"fieldName\": \"departmentId\", \"sortable\": \"true\" }, { \"label\": \"Division ID\", \"fieldName\": \"divisionId\", \"sortable\": \"true\" } ]",
+            "leftButtonLabelAndLink" : "New Order Request,/irmesa/s/contactsupport",
+            "noSearchResultsFoundMessageLabel" : "That didn't return any results. Try again.",
+            "recordsToRetrieve" : "Orders",
+            "rightButtonLabelAndLink" : "View more,/irmesa/s/my-orders",
+            "searchLabel" : "Search",
+            "searchPlaceholder" : "My recent orders",
+            "showFullTable" : true
+          },
+          "componentName" : "c:nf_invoicesWindow",
+          "id" : "31e539cb-57e1-4fc4-8399-530d5c743f20",
+          "renderPriority" : "NEUTRAL",
+          "renditionMap" : {
+            "de" : "7a928343-7e07-4904-aa48-7b73844d1192",
+            "es" : "5c9adb12-8b01-4c13-8d41-57bdfc34a82d",
+            "fr" : "9d0d5d1a-bfa4-4896-b27a-da6484c3bace"
+          },
+          "renditions" : [ {
+            "id" : "9d0d5d1a-bfa4-4896-b27a-da6484c3bace",
+            "renditionValue" : {
+              "componentAttributes" : {
+                "emptyMessage" : "Vous n'avez aucune commande récente.",
+                "filterByLabel" : "Filtrer par plage de dates de service",
+                "jsonConfiguration" : "[   {     \"label\": \"ID client\",     \"fieldName\": \"customerId\",     \"sortable\": \"true\"   },   {     \"label\": \"Numéro de commande\",     \"fieldName\": \"orderNumber\",     \"sortable\": \"true\"   },   {     \"label\": \"Date demandée\",     \"fieldName\": \"requestDateTime\",     \"type\": \"date\",     \"sortable\": \"true\",     \"typeAttributes\": {       \"day\": \"numeric\",       \"month\": \"short\",       \"year\": \"numeric\"     }   },   {     \"label\": \"Date de service\",     \"fieldName\": \"deliveryDateTime\",     \"sortable\": \"true\",     \"type\": \"date\",     \"typeAttributes\": {       \"day\": \"numeric\",       \"month\": \"short\",       \"year\": \"numeric\"     }   },   {     \"label\": \"Statut de la commande\",     \"fieldName\": \"orderStatus\",     \"sortable\": \"true\"   },   {     \"label\": \"Numéro de département\",     \"fieldName\": \"departmentId\",     \"sortable\": \"true\"   },   {     \"label\": \"ID de division\",     \"fieldName\": \"divisionId\",     \"sortable\": \"true\"   } ]",
+                "leftButtonLabelAndLink" : "Nouvelle demande de commande,/irmesa/s/contactsupport",
+                "noSearchResultsFoundMessageLabel" : "Cela n'a donné aucun résultat. Réessayez.",
+                "rightButtonLabelAndLink" : "Voir plus,/irmesa/s/my-orders",
+                "searchLabel" : "Recherche",
+                "searchPlaceholder" : "Mes commandes récentes"
+              }
+            },
+            "type" : "renditionComponent"
+          }, {
+            "id" : "7a928343-7e07-4904-aa48-7b73844d1192",
+            "renditionValue" : {
+              "componentAttributes" : {
+                "emptyMessage" : "Sie haben keine aktuellen Bestellungen.",
+                "filterByLabel" : "Filtern nach Service-Zeitraum",
+                "jsonConfiguration" : "[   {     \"label\": \"Kundenidentifikation\",     \"fieldName\": \"customerId\",     \"sortable\": \"true\"   },   {     \"label\": \"Bestellnummer\",     \"fieldName\": \"orderNumber\",     \"sortable\": \"true\"   },   {     \"label\": \"Wunschtermin\",     \"fieldName\": \"requestDateTime\",     \"type\": \"date\",     \"sortable\": \"true\",     \"typeAttributes\": {       \"day\": \"numeric\",       \"month\": \"short\",       \"year\": \"numeric\"     }   },   {     \"label\": \"Datum der Zustellung\",     \"fieldName\": \"deliveryDateTime\",     \"sortable\": \"true\",     \"type\": \"date\",     \"typeAttributes\": {       \"day\": \"numeric\",       \"month\": \"short\",       \"year\": \"numeric\"     }   },   {     \"label\": \"Bestellstatus\",     \"fieldName\": \"orderStatus\",     \"sortable\": \"true\"   },   {     \"label\": \"Abteilungs-ID\",     \"fieldName\": \"departmentId\",     \"sortable\": \"true\"   },   {     \"label\": \"Abteilungsidentifikation\",     \"fieldName\": \"divisionId\",     \"sortable\": \"true\"   } ]",
+                "leftButtonLabelAndLink" : "Neue Bestellanfrage,/irmesa/s/contactsupport",
+                "noSearchResultsFoundMessageLabel" : "Es liegen keine Ergebnisse vor. Versuchen Sie es erneut.",
+                "rightButtonLabelAndLink" : "Mehr anzeigen,/irmesa/s/my-orders",
+                "searchLabel" : "Suchen",
+                "searchPlaceholder" : "Meine letzten Bestellungen"
+              }
+            },
+            "type" : "renditionComponent"
+          }, {
+            "id" : "5c9adb12-8b01-4c13-8d41-57bdfc34a82d",
+            "renditionValue" : {
+              "componentAttributes" : {
+                "emptyMessage" : "No tienes ningún pedido reciente.",
+                "filterByLabel" : "Filtrar por rango de fechas de servicio",
+                "jsonConfiguration" : "[   {     \"label\": \"Identificación del cliente\",     \"fieldName\": \"customerId\",     \"sortable\": \"true\"   },   {     \"label\": \"Número de orden\",     \"fieldName\": \"orderNumber\",     \"sortable\": \"true\"   },   {     \"label\": \"Fecha solicitada\",     \"fieldName\": \"requestDateTime\",     \"type\": \"date\",     \"sortable\": \"true\",     \"typeAttributes\": {       \"day\": \"numeric\",       \"month\": \"short\",       \"year\": \"numeric\"     }   },   {     \"label\": \"Fecha de servicio\",     \"fieldName\": \"deliveryDateTime\",     \"sortable\": \"true\",     \"type\": \"date\",     \"typeAttributes\": {       \"day\": \"numeric\",       \"month\": \"short\",       \"year\": \"numeric\"     }   },   {     \"label\": \"Estado del pedido\",     \"fieldName\": \"orderStatus\",     \"sortable\": \"true\"   },   {     \"label\": \"Identificación del departamento\",     \"fieldName\": \"departmentId\",     \"sortable\": \"true\"   },   {     \"label\": \"Identificación de la división\",     \"fieldName\": \"divisionId\",     \"sortable\": \"true\"   } ]",
+                "leftButtonLabelAndLink" : "Solicitud de nuevo pedido,/irmesa/s/contactsupport",
+                "noSearchResultsFoundMessageLabel" : "No se han obtenido resultados. Inténtalo de nuevo.",
+                "rightButtonLabelAndLink" : "Ver más,/irmesa/s/my-orders",
+                "searchLabel" : "Buscar",
+                "searchPlaceholder" : "Mis pedidos recientes"
+              }
+            },
+            "type" : "renditionComponent"
+          } ],
+          "type" : "component"
+        }, {
+          "componentAttributes" : {
+            "richTextValue" : "<div class=\"cust-banner\" style=\"margin-left:auto;margin-right:auto;\">\n    <div class=\"pageHeadings\">\n        <div class=\"pageHeadingsTitle\">Can't find what you're looking for?</div>\n        <div class=\"pageHeadingsSubTitle\">Log in to your Orders Portal to view your full order history and details.</div>\n        <div class=\"cust-button-grp\">\n        <div class=\"cust-button\"><a href=\" https://www.ironmountainconnect.com/\">Log in to Iron Mountain Connect</a></div>\n         <div class=\"cust-button\"><a href=\"https://www3.securesync.com/\">Log in to SecureSync</a></div>\n        </div>\n    </div>\n</div>"
+          },
+          "componentName" : "forceCommunity:htmlBlock",
+          "id" : "86b27c24-4a1e-4b03-9b8c-e2c66ea79370",
+          "renderPriority" : "NEUTRAL",
+          "renditionMap" : {
+            "de" : "8d0d0013-2353-4858-9f35-a38af5f5916d",
+            "es" : "ba3c22f7-f894-4d2e-81fe-f17176017700",
+            "fr" : "72ab8824-337c-42e8-a446-eca5f0c32d09"
+          },
+          "renditions" : [ {
+            "id" : "72ab8824-337c-42e8-a446-eca5f0c32d09",
+            "renditionValue" : {
+              "componentAttributes" : {
+                "richTextValue" : "<div class=\"cust-banner\" style=\"margin-left:auto;margin-right:auto;\">\n    <div class=\"pageHeadings\">\n        <div class=\"pageHeadingsTitle\">Vous ne trouvez pas ce que vous cherchez ?</div>\n        <div class=\"pageHeadingsSubTitle\">Connectez-vous à votre portail de commandes pour afficher l'historique complet et les détails de vos commandes.</div>\n        <div class=\"cust-button-grp\">\n        <div class=\"cust-button\"><a href=\"https://www.ironmountainconnect.com\">Iron Mountain Connect</a></div>\n         <div class=\"cust-button\"><a href=\"https://www.securesync.co.uk/login.aspx\">SecureSync</a></div>\n         <div class=\"cust-button\"><a href=\"https://arc.ironmountain.fr/Xarc\">XARC</a></div>\n         <!--<div class=\"cust-button\"><a href=\"www.ironmountain.com/\">Button4</a></div>-->\n        </div></div></div>"
+              }
+            },
+            "type" : "renditionComponent"
+          }, {
+            "id" : "8d0d0013-2353-4858-9f35-a38af5f5916d",
+            "renditionValue" : {
+              "componentAttributes" : {
+                "richTextValue" : "<div class=\"cust-banner\" style=\"margin-left:auto;margin-right:auto;\">\n    <div class=\"pageHeadings\">\n        <div class=\"pageHeadingsTitle\">Sie finden nicht, wonach Sie suchen?</div>\n        <div class=\"pageHeadingsSubTitle\">Melden Sie sich bei Ihrem Bestellportal an, um Ihren vollständigen Bestellverlauf und die Details anzuzeigen.</div>\n        <div class=\"cust-button-grp\">\n        <div class=\"cust-button\"><a href=\"https://www.ironmountainconnect.com\">Iron Mountain Connect</a></div>\n         <div class=\"cust-button\"><a href=\"https://www.securesync.co.uk/login.aspx\">SecureSync</a></div>\n        </div>\n    </div>\n</div>"
+              }
+            },
+            "type" : "renditionComponent"
+          }, {
+            "id" : "ba3c22f7-f894-4d2e-81fe-f17176017700",
+            "renditionValue" : {
+              "componentAttributes" : {
+                "richTextValue" : "<div class=\"cust-banner\" style=\"margin-left:auto;margin-right:auto;\">\n    <div class=\"pageHeadings\">\n        <div class=\"pageHeadingsTitle\">¿No encuentras lo que buscas?</div>\n        <div class=\"pageHeadingsSubTitle\">Inicie sesión en su Portal de pedidos para ver su historial completo de pedidos y sus detalles.</div>\n        <div class=\"cust-button-grp\">\n        <div class=\"cust-button\"><a href=\"https://www.ironmountainconnect.com\">Iron Mountain Connect</a></div>\n         <div class=\"cust-button\"><a href=\"https://www.securesync.co.uk/login.aspx\">SecureSync</a></div>\n        </div>\n    </div>\n</div>"
+              }
+            },
+            "type" : "renditionComponent"
+          } ],
+          "type" : "component"
+        } ],
+        "id" : "1193f9fb-5286-4a1b-a68e-c4ddbc9b453d",
+        "regionLabel" : "Column 1",
+        "regionName" : "1",
+        "renditionMap" : { },
+        "type" : "region"
+      } ],
+      "renderPriority" : "NEUTRAL",
+      "renditionMap" : { },
+      "type" : "component"
+    } ],
+    "id" : "cbcb8e2c-9cc2-41e6-80ac-8a300bf06826",
+    "regionName" : "content",
+    "type" : "region"
+  }, {
+    "components" : [ {
+      "componentAttributes" : {
+        "customHeadTags" : "",
+        "description" : "",
+        "title" : "My orders"
+      },
+      "componentName" : "forceCommunity:seoAssistant",
+      "id" : "e11059dc-f99b-497f-b00d-d65617347e9c",
+      "renditionMap" : { },
+      "type" : "component"
+    } ],
+    "id" : "9e6de016-73b8-4f02-87b3-0424cb605237",
+    "regionName" : "sfdcHiddenRegion",
+    "type" : "region"
+  } ],
+  "themeLayoutType" : "NKFwniTevseiLgcT9DPLmiMXBtO2S0",
+  "type" : "view",
+  "viewType" : "custom-my-orders"
+}

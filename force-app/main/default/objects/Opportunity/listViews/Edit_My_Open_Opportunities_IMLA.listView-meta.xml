@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Edit_My_Open_Opportunities_IMLA</fullName>
+    <columns>OPPORTUNITY.NAME</columns>
+    <columns>ACCOUNT.NAME</columns>
+    <columns>OPPORTUNITY.TYPE</columns>
+    <columns>OPPORTUNITY.FORECAST_CATEGORY</columns>
+    <columns>OPPORTUNITY.PROBABILITY</columns>
+    <columns>Contract_Term__c</columns>
+    <columns>Total_Contract_Value_TCV__c</columns>
+    <columns>OPPORTUNITY.CLOSE_DATE</columns>
+    <columns>IM_Booked_Date__c</columns>
+    <columns>OPPORTUNITY.NEXT_STEP</columns>
+    <filterScope>Mine</filterScope>
+    <filters>
+        <field>OPPORTUNITY.RECORDTYPE</field>
+        <operation>equals</operation>
+        <value>Opportunity.IMLA_Standard_Opportunity</value>
+    </filters>
+    <filters>
+        <field>OPPORTUNITY.CLOSED</field>
+        <operation>equals</operation>
+        <value>0</value>
+    </filters>
+    <label>Edit My Open IMLA Standard Opportunities</label>
+    <sharedTo>
+        <group>IMLAAllUsers</group>
+    </sharedTo>
+</ListView>

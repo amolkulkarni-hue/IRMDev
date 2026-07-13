@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Contract_Term_Required_in_stage4</fullName>
+    <active>false</active>
+    <description>13028:TCV | Opportunity: Separate VRs</description>
+    <errorConditionFormula>AND
+(
+NOT($Setup.Metadata_Activation_Settings__c.Disable_VR__c &amp;&amp; OR(ISBLANK($Setup.Metadata_Activation_Settings__c.SObject_API_Name__c),
+CONTAINS($Setup.Metadata_Activation_Settings__c.SObject_API_Name__c, &apos;Opportunity&apos;))),
+
+$Profile.Name &lt;&gt; &apos;IM_Sales_IMTN&apos;,
+OR(ISBLANK(Contract_Term_months__c),Contract_Term_months__c&lt;=0),
+ISPICKVAL(StageName, &apos;4 - Negotiate&apos;)
+)</errorConditionFormula>
+    <errorDisplayField>Contract_Term_months__c</errorDisplayField>
+    <errorMessage>Please fill in a valid Contract Term(months) before  moving to Stage 4</errorMessage>
+</ValidationRule>

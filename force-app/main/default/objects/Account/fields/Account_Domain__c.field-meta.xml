@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Account_Domain__c</fullName>
+    <externalId>false</externalId>
+    <formula>IF(FIND(&apos;/&apos;,SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(Website, &apos;http://&apos;, NULL), &apos;https://&apos;, NULL), &apos;www.&apos;, NULL))&gt;0,LEFT(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(Website, &apos;http://&apos;, NULL), &apos;https://&apos;, NULL), &apos;www.&apos;, NULL),FIND(&apos;/&apos;,SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(Website, &apos;http://&apos;, NULL), &apos;https://&apos;, NULL), &apos;www.&apos;, NULL))-1),SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(Website, &apos;http://&apos;, NULL), &apos;https://&apos;, NULL), &apos;www.&apos;, NULL))</formula>
+    <label>Account Domain</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

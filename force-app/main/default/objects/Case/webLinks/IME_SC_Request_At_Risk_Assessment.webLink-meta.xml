@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebLink xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IME_SC_Request_At_Risk_Assessment</fullName>
+    <availability>online</availability>
+    <displayType>button</displayType>
+    <linkType>javascript</linkType>
+    <masterLabel>Request At Risk Assessment</masterLabel>
+    <openType>onClickJavaScript</openType>
+    <protected>false</protected>
+    <url>//      * Name: Request At Risk Assessment
+//      * Description: Implements Risk Assessment process
+//       * Copyright: HCL Technologies
+//       * Author: Priyamvada Singh
+//       * Modification Log: Created:5-April-2012
+
+
+
+
+
+{!REQUIRESCRIPT(&quot;/soap/ajax/24.0/connection.js&quot;)} 
+
+var isFlagChecked = &apos;{!Case.IME_SC_Customer_At_Risk__c}&apos;; 
+
+var atRiskStatus = &apos;{!Case.IME_SC_Customer_At_Risk_Status__c}&apos;; 
+var arrCase = []; 
+var errors = []; 
+var Case_New = new sforce.SObject(&quot;Case&quot;); 
+var url = parent.location.href; 
+var Id_str =  &apos;{!Case.Id}&apos;;
+
+var assignment_qry = &quot;select id from AssignmentRule where SobjectType = &apos;Case&apos; and Active = true limit 1&quot;;
+var Assignment_Qry_Result = sforce.connection.query(assignment_qry);
+
+
+var qry = &quot;select Id,name from RecordType where Name =&apos;IM Employees Support Case&apos; and SobjectType = &apos;Case&apos;&quot;;
+var result = [] ;
+result =  sforce.connection.retrieve(&quot;IME_SC_Customer_At_Risk__c,ContactId,IME_SC_Customer_AccountId__c&quot;, &quot;Case&quot;,  [&apos;{!Case.Id}&apos;]);
+
+
+
+var  rt = sforce.connection.query(qry);
+var res = rt.getArray(&quot;records&quot;);
+
+var recordtypeId = res[0].Id;
+
+if(isFlagChecked == 1) 
+{ 
+     alert(&apos;{!$Label.IME_SC_At_Risk_Assessment_alert}&apos;);
+} 
+else 
+{ 
+
+if(atRiskStatus == &quot;At Risk&quot; || atRiskStatus == &quot;Notified&quot; || atRiskStatus == &quot;Terminated&quot; || atRiskStatus == &quot;Exit in Progress&quot;) 
+{ 
+
+
+var iChoice = confirm(&apos;{!$Label.IME_SC_Risk_assessment_confirm}&apos;);
+      if(iChoice) 
+       { 
+
+    if(result[0].ContactId == null )
+    {
+          alert(&apos;{!$Label.IME_SC_Contact_Not_Present}&apos;);
+    }
+
+         else
+         {
+            CreateNewCase(recordtypeId);
+            
+            result[0].IME_SC_Customer_At_Risk__c = true;
+             
+           var error = sforce.connection.update(result);
+          if(error &amp;&amp; error.length)
+          {
+                var numFailed = 0; 
+               var numSucceeded = 0; 
+                var errors = [];
+
+               for (var i = 0; i &lt; error.length; i++)
+               {
+                                  var res= error[i];
+
+                         if(res &amp;&amp; res.success == &apos;true&apos;)
+                         {
+                                numSucceeded++;
+                         }
+                         else
+                         {
+                                   var es = res.getArray(&quot;errors&quot;);
+
+                                   if(es.length &gt; 0)
+                                   {
+                                           errors.push(es[0].message); 
+                                   }
+
+                                   numFailed++; 
+
+                         }
+
+  
+               }
+
+               if (numFailed &gt; 0)
+              { 
+                   alert(&quot;Failed: &quot; + numFailed + &quot;\nSucceeded: &quot; + numSucceeded + &quot; \n Due to: &quot; + errors.join(&quot;\n&quot;)); 
+              }
+            else 
+             { 
+
+                 var str_Query_NewCase =  &quot;select CaseNumber from Case where ParentId =&apos;&quot; + Id_str + &quot;&apos;&quot;;
+
+                 var CaseNum;
+                 CaseNum = sforce.connection.query(str_Query_NewCase);
+
+                 var records = CaseNum.getArray(&quot;records&quot;);
+                 if (records.length &gt; 0)
+                 {
+                      var id = records[0].CaseNumber;
+  
+                       alert(&apos;New case#  &apos; + id + &apos; {!$Label.IME_SC_NEW_CASE}&apos;);
+                }
+
+                 window.location.reload();
+                
+              }
+       }
+
+   }
+      
+      }
+
+     else
+      {
+            // parent.location.href = url; 
+      }
+ 
+
+}
+
+else if(atRiskStatus == &quot;Not At Risk&quot; || atRiskStatus == &quot;Salvaged&quot; || atRiskStatus == &quot;Retained&quot; || atRiskStatus == &quot;Unknown&quot;) 
+{ 
+
+                if(result[0].ContactId == null )
+               {
+                     alert(&apos;{!$Label.IME_SC_Contact_Not_Present}&apos;);
+               }
+
+               else
+              {
+ 
+               CreateNewCase(recordtypeId);
+               result[0].IME_SC_Customer_At_Risk__c = true;
+               sforce.connection.update(result);
+  
+ 
+                var str_Query_NewCase =  &quot;select CaseNumber from Case where ParentId =&apos;&quot; + Id_str + &quot;&apos;&quot;;
+
+                 var CaseNum;
+                 CaseNum = sforce.connection.query(str_Query_NewCase);
+
+                 var records = CaseNum.getArray(&quot;records&quot;);
+                 if (records.length &gt; 0)
+                 {
+                      var id = records[0].CaseNumber;
+  
+                       alert(&apos;New case# &apos; + id + &apos; {!$Label.IME_SC_NEW_CASE}&apos;);
+                }
+
+                 window.location.reload();
+
+               }
+}
+
+else
+{
+  
+        if(result[0].IME_SC_Customer_AccountId__c == null)
+       {
+            
+                   alert(&apos;{!$Label.IME_SC_Cust_Acc_Not_Present}&apos;);
+       }   
+
+       else
+       {      
+           alert(&apos;{!$Label.IME_SC_At_Risk_Assessment_alert2}&apos;);
+       }
+}
+
+
+
+
+}
+
+
+
+
+function CreateNewCase(recordtypeId)
+{
+              var Case_New = new sforce.SObject(&quot;Case&quot;); 
+              Case_New.Origin = &quot;Internal&quot;; 
+              Case_New.Status = &quot;New&quot;;
+              Case_New.ContactId = &apos;{!Case.ContactId}&apos;;
+             Case_New.RecordTypeId  =  recordtypeId;
+             Case_New.Related_To__c = &quot;Customer Account/Client Code&quot;; 
+              Case_New.Issue__c = &quot;Request at Risk Assessment&quot;; 
+              Case_New.ParentId =  &apos;{!Case.Id}&apos;;
+               Case_New.IM_Division__c = &apos;{!Case.IM_Division__c}&apos;;
+               Case_New.IME_SC_Country__c = &apos;{!Case.IME_SC_Country__c}&apos;;
+              Case_New.Country__c = &apos;{!Case.IME_SC_Country__c}&apos;;
+               Case_New.Priority = &quot;Medium&quot; ;
+               Case_New.AccountId = &apos;{!Case.AccountId}&apos;;
+               Case_New.IME_SC_Customer_AccountId__c = &apos;{!Case.IME_SC_Customer_AccountIdId__c}&apos;;  
+               Case_New.Customer_ID__c = &apos;{!Case.IME_SC_Customer_AccountIdId__c}&apos;;  
+               Case_New.Subject =  &apos;{!$Label.IME_SC_Label_RetentionCaseSubject}&apos;;   
+               Case_New.Description = &apos;{!$Label.IME_SC_Label_RetentionCaseDescription}&apos;;
+
+                   sforce.connection.assignmentRuleHeader = {} ;  
+                  sforce.connection.assignmentRuleHeader.useDefaultRule = &quot;true&quot;;  
+                 //sforce.connection.EmailHeader.triggerUserEmail = true;
+                  sforce.connection.emailHeader =  { triggerUserEmail : true};
+                arrCase.push(Case_New); 
+
+                var result_Case = sforce.connection.create(arrCase);
+
+              if(result_Case &amp;&amp; result_Case.length)
+              {
+                var numFailed = 0; 
+               var numSucceeded = 0; 
+                var errors = [];
+
+               for (var i = 0; i &lt; result_Case.length; i++)
+               {
+                        var res= result_Case[i];
+
+                         if(res &amp;&amp; res.success == &apos;true&apos;)
+                         {
+                                numSucceeded++;
+                         }
+                         else
+                         {
+                                   var es = res.getArray(&quot;errors&quot;);
+
+                                   if(es.length &gt; 0)
+                                   {
+                                           errors.push(es[0].message); 
+                                   }
+
+                                   numFailed++; 
+
+                         }
+
+  
+               }
+
+               if (numFailed &gt; 0)
+              { 
+                   alert(&quot;Failed: &quot; + numFailed + &quot;\nSucceeded: &quot; + numSucceeded + &quot; \n Due to: &quot; + errors.join(&quot;\n&quot;)); 
+              }
+            else 
+             { 
+                     // alert(&apos;Successful&apos;);
+              }
+    
+         }
+ 
+}</url>
+</WebLink>

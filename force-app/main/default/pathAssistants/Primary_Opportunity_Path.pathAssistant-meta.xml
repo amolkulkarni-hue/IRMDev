@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PathAssistant xmlns="http://soap.sforce.com/2006/04/metadata">
+    <active>true</active>
+    <entityName>Opportunity</entityName>
+    <fieldName>StageName</fieldName>
+    <masterLabel>Primary Opportunity Path</masterLabel>
+    <pathAssistantSteps>
+        <info>&lt;p&gt;Ensure all deal details, approvals, and documentation are accurate and complete for booking.&lt;/p&gt;</info>
+        <picklistValueName>Booking Verification</picklistValueName>
+    </pathAssistantSteps>
+    <pathAssistantSteps>
+        <info>&lt;p&gt;Confirm successful closure, reinforce customer confidence, and ensure readiness for onboarding or value realization.&lt;/p&gt;</info>
+        <picklistValueName>Closing</picklistValueName>
+    </pathAssistantSteps>
+    <pathAssistantSteps>
+        <info>&lt;p&gt;Finalize commercial terms, resolve objections, and reach alignment with all stakeholders to secure deal commitment.&lt;/p&gt;</info>
+        <picklistValueName>Negotiation</picklistValueName>
+    </pathAssistantSteps>
+    <pathAssistantSteps>
+        <fieldNames>AccountId</fieldNames>
+        <fieldNames>Name</fieldNames>
+        <fieldNames>OwnerId</fieldNames>
+        <info>&lt;p&gt;Focus on clearly validating the customer’s problem, confirming basic qualification (budget, stakeholders, timeline), and ensuring there is mutual interest to move forward.&lt;/p&gt;</info>
+        <picklistValueName>Qualification</picklistValueName>
+    </pathAssistantSteps>
+    <pathAssistantSteps>
+        <info>&lt;p&gt;Prepare for delivery by confirming handoff readiness, implementation details, and internal alignment.&lt;/p&gt;</info>
+        <picklistValueName>Setup</picklistValueName>
+    </pathAssistantSteps>
+    <pathAssistantSteps>
+        <info>&lt;p&gt;Collaborate internally to design a feasible solution, align on pricing, and ensure the customer is ready to review a formal proposal.&lt;/p&gt;</info>
+        <picklistValueName>Solutioning</picklistValueName>
+    </pathAssistantSteps>
+    <recordTypeName>Standard_Opportunity_Record_type</recordTypeName>
+</PathAssistant>

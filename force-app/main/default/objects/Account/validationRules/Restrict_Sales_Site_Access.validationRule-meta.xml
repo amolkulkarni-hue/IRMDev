@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Restrict_Sales_Site_Access</fullName>
+    <active>true</active>
+    <description>#27543 : Account Coverage fields are not allowed to edit on Sales Site Account
+#34421: Added AMD and RIM SDE
+#34453 : Account: Update Account Segmentation for &apos;26 GTM - PLNI0014642
+#34498: Sector field can only be updated when Hierarchy Level = IMGA</description>
+    <errorConditionFormula>AND(
+NOT($Setup.Metadata_Activation_Settings__c.Disable_VR__c &amp;&amp; OR(ISBLANK($Setup.Metadata_Activation_Settings__c.SObject_API_Name__c),
+CONTAINS($Setup.Metadata_Activation_Settings__c.SObject_API_Name__c, &apos;Account&apos;))),
+
+OR(
+AND(
+ISPICKVAL(IM_Hierarchy_Level__c,&apos;Sales (Site)&apos;),
+ISNEW(),
+OR(
+NOT(ISBLANK(Tele_CDE__c)),
+NOT(ISBLANK(Information_Governance_Rep__c)),
+NOT(ISBLANK(DMS_Owner__c)),
+NOT(ISBLANK(DM_Cloud_Sales_Rep__c)),
+NOT(ISBLANK(Primary_BDE__c)),
+NOT(ISBLANK(Enterprise_ISR__c)),
+NOT(ISBLANK(Primary_Local_Market_Rep_1__c)),
+NOT(ISBLANK(Data_Centre_Owner__c)),
+NOT(ISBLANK(Library_Services_BDE__c)),
+NOT(ISBLANK(IM_Territories__c)),
+NOT(ISBLANK(AMD__c)),
+NOT(ISBLANK(RIM_SDE__c)),
+NOT(ISBLANK(Text(Sector__c))),
+Strategic_Account__c,
+NOT(ISBLANK(WL_Owner__c))
+)
+),
+AND(
+ISPICKVAL(IM_Hierarchy_Level__c,&apos;Sales (Site)&apos;),
+OR(
+ISCHANGED(Tele_CDE__c),
+ISCHANGED(Information_Governance_Rep__c),
+ISCHANGED(DMS_Owner__c),
+ISCHANGED(DM_Cloud_Sales_Rep__c),
+ISCHANGED(Primary_BDE__c),
+ISCHANGED(Enterprise_ISR__c),
+ISCHANGED(Primary_Local_Market_Rep_1__c),
+ISCHANGED(Data_Centre_Owner__c),
+ISCHANGED(Library_Services_BDE__c),
+ISCHANGED(IM_Territories__c),
+ISCHANGED(AMD__c),
+ISCHANGED(RIM_SDE__c),
+ISCHANGED(Sector__c),
+PRIORVALUE(Strategic_Account__c)!= Strategic_Account__c,
+ISCHANGED(WL_Owner__c)
+)
+),
+/* ---Block Sector on Create of CP Account---*/
+AND(
+ISPICKVAL(IM_Hierarchy_Level__c,&apos;Country Parent&apos;),
+ Industry_Override__c = False,
+ISNEW(),
+NOT(ISBLANK(Text(Sector__c)))
+),
+/* ---Block Sector on Edit of CP Account---*/
+AND(
+ISPICKVAL(IM_Hierarchy_Level__c,&apos;Country Parent&apos;),
+ Industry_Override__c = False,
+ISCHANGED(Sector__c)
+)
+),
+$User.UITheme &lt;&gt;&apos;Theme2&apos;,
+$User.UITheme &lt;&gt; &apos;Theme3&apos;
+)</errorConditionFormula>
+    <errorMessage>Account Coverage, Segmentation &amp; Territory fields can only be set at the IMGA or Country Parent Account</errorMessage>
+</ValidationRule>

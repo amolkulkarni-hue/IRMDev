@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CLAS_Require_Contact_and_Auth_User</fullName>
+    <active>true</active>
+    <description>Requires the Contact Name and Auth User Field for all CLAS and Retention Record Types</description>
+    <errorConditionFormula>AND(
+$Profile.Name = &apos;IM_Custom Sys Admin&apos;,
+$Profile.Name = &apos;IM_Custom Sys Admin with ModifyAll&apos;,
+OR(
+$RecordType.Name = &apos;CLAS - Shred&apos;,
+$RecordType.Name = &apos;CLAS – Data Management&apos;,
+$RecordType.Name = &apos;CLAS - RM&apos;,
+RecordType.DeveloperName = &apos;Retention_RM&apos;, RecordType.DeveloperName = &apos;Retention_SH&apos;), 
+
+OR(
+ISBLANK( ContactId ), 
+ISPICKVAL(Authorized_User__c,&quot;&quot;	))
+
+)</errorConditionFormula>
+    <errorMessage>Contact Name and Authorized User are required fields when creating a CLAS or Retention case</errorMessage>
+</ValidationRule>

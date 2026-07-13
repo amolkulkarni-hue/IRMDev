@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Sync_fields__c</fullName>
+    <description>#28092: Flag to determine the change in Account  Fields to copy down data from Parent to CHild Accounts</description>
+    <formula>IF(
+OR(
+Account_Segment_Formula__c!=TEXT(Account_Segment__c),
+Account_Sub_Segment_Formula__c!=TEXT(Account_Sub_Segment__c)
+),True,False)</formula>
+    <label>Sync fields</label>
+    <trackHistory>false</trackHistory>
+    <type>Checkbox</type>
+</CustomField>

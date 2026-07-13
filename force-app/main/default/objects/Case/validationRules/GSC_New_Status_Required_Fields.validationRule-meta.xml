@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>GSC_New_Status_Required_Fields</fullName>
+    <active>false</active>
+    <description>This rule primarily restricts agents from manually creating cases without the following mandatory fields: Contact or internal employee check,Customer ID,Country, Category,andSub-Category.#23902Added new profile for exception #27569#27260#29271#29931</description>
+    <errorConditionFormula>AND(
+ISNEW(), 	
+$RecordType.Name = &apos;Global Service Case&apos;,
+ISPICKVAL(Status, &quot;New&quot; ),
+NOT(
+OR(
+ISPICKVAL(Channel__c, &quot;Voice&quot; ),
+ISPICKVAL(Channel__c, &quot;WhatsApp&quot; ),
+$Profile.Name = &apos;IM_Custom Sys Admin&apos;,
+$Profile.Name = &apos;Customer Community Plus Login Customer&apos;,
+$Profile.Name = &apos;Customer Support Center Profile&apos;,
+$Profile.Name = &apos;UKI Customer Support Center Profile&apos;,
+$Profile.Name = &apos;Customer Information Form Profile&apos;,
+$Profile.Name = &apos;Iron Mountain Partner Connect Profile&apos;,
+$Profile.Name = &apos;Latam Customer Support Center Profile&apos;,
+$Profile.Name = &apos;India Customer Support Center Profile&apos;,
+$Profile.Name = &apos;Iron Mountain Customer Support Community Profile&apos;,
+$Profile.Name = &apos;Legal Intake Corporate Requests Profile&apos;,
+$Profile.Name = &apos;Coro User Service Profile&apos;,
+$Profile.Name = &apos;Customer References Profile&apos;,
+$Profile.Name = &apos;Iron Mountain Public community Profile&apos;,
+$Profile.Name = &apos;Minimum Access - API Only Integrations&apos;,
+$Profile.Name = &apos;Salesforce API Only System Integrations&apos;,
+$Profile.Name = &apos;NAS_IMC API Only&apos;,
+$User.Id =&apos;00580000001ylFj&apos;,
+$User.Id =&apos;0053400000C2UBB&apos;,
+$User.Id =&apos;0052H00000CMKwD&apos;,
+$User.Id =&apos;00534000009uVnW&apos;,
+$User.Id =&apos;005Hr00000EOyd6&apos;,
+$User.Id =&apos;0052H00000BxW3Y&apos;
+				
+)
+),
+OR(
+
+ISPICKVAL(IME_SC_Country__c , &quot;&quot; ),
+ISPICKVAL(GSC_Category__c , &quot;&quot; ),
+ISPICKVAL(GSC_Sub_Category__c , &quot;&quot; ),
+AND(ISBLANK(Customer_ID__c),ISBLANK(GSC_Billing_Account__c),ISBLANK(GSC_Operational_Account__c)),
+AND(
+ISBLANK( ContactId ),
+Is_IM_Employee__c = False
+)
+)
+)</errorConditionFormula>
+    <errorMessage>Country, Category, Sub Category, Customer ID/Billing Account/Operational Account  and (Contact Name or Is IM Employee checked) are required</errorMessage>
+</ValidationRule>

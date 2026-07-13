@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Initial_Welcome_Call_Date</fullName>
+    <active>true</active>
+    <description>Initial Welcome Call Date must be today&apos;s date. It cannot be in the Past or the Future. For reference, check user story #26355 on Gitlab.</description>
+    <errorConditionFormula>((RecordType_Name__c = &quot;NCSP: SKP New Customer Setup&quot;) ||
+(RecordType_Name__c = &quot;NCSP: SKP Department Add Only&quot;) ||
+(RecordType_Name__c = &quot;NCSP: DP New Customer Setup&quot;) ||
+(RecordType_Name__c = &quot;NCSP: DMS&quot;) ||
+(RecordType_Name__c = &quot;NCSP: New Customer Setup&quot;) ||
+(RecordType_Name__c = &quot;NCSP: Tech Services New Customer Setup&quot;) 
+)&amp;&amp;
+OR(
+	(
+	NOT(ISCHANGED(Open_Tasks__c)) &amp;&amp;
+	ISCHANGED(Date_Welcome_Call_Attempt_1__c) &amp;&amp;
+	NOT(ISBLANK(Date_Welcome_Call_Attempt_1__c)) &amp;&amp;
+	DATEVALUE(Date_Welcome_Call_Attempt_1__c) != TODAY() &amp;&amp;
+	(
+	  ISBLANK(PRIORVALUE(Date_Welcome_Call_Attempt_1__c)) ||
+	  DATEVALUE(Date_Welcome_Call_Attempt_1__c) != DATEVALUE(PRIORVALUE(Date_Welcome_Call_Attempt_1__c))
+	)
+	),
+    (	
+	ISNEW() &amp;&amp;
+	NOT(ISBLANK(Date_Welcome_Call_Attempt_1__c)) &amp;&amp;
+	DATEVALUE(Date_Welcome_Call_Attempt_1__c) != TODAY() 
+	) 
+)</errorConditionFormula>
+    <errorDisplayField>Date_Welcome_Call_Attempt_1__c</errorDisplayField>
+    <errorMessage>Initial Welcome Call Date must be today&apos;s date. It cannot be in the Past or the Future.</errorMessage>
+</ValidationRule>

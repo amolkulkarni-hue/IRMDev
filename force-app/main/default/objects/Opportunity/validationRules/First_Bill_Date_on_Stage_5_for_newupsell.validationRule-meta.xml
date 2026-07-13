@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>First_Bill_Date_on_Stage_5_for_newupsell</fullName>
+    <active>false</active>
+    <description>FBD field is Required to enter Stage 4 for all New and Upsell deals with a value greater than or equal to $25kUSD</description>
+    <errorConditionFormula>AND(
+ISPICKVAL(StageName, &apos;4 - Negotiate&apos;),
+OR(ISPICKVAL( Type , &apos;Up-Sell&apos;), ISPICKVAL(Type, &apos;New Deal&apos;)),
+Total_Booked_Amount__c &gt; 25000,
+OR(IM_Booked_Date__c &lt; today(),ISBLANK(IM_Booked_Date__c))
+)</errorConditionFormula>
+    <errorMessage>The First Bill Date is mandatory to enter Stage 4 for all New and Upsell deals with a value greater than or equal to $25kUSD</errorMessage>
+</ValidationRule>

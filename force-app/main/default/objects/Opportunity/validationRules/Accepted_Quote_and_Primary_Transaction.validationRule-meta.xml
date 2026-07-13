@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Accepted_Quote_and_Primary_Transaction</fullName>
+    <active>false</active>
+    <description>Accepted Quote &amp; Primary Transaction must match. These fields may be populated by a Logik flow.</description>
+    <errorConditionFormula>AND(ISCHANGED(LGK__PrimaryTransactionId__c)=TRUE,
+NOT(ISNULL(Deal_Review_Accepted__c)), 
+LGK__PrimaryTransactionId__c != Deal_Review_Accepted__c)</errorConditionFormula>
+    <errorMessage>The Accepted Quote must match the Primary Transaction</errorMessage>
+</ValidationRule>

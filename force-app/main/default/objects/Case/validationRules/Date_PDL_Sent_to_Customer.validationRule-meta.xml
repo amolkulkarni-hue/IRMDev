@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Date_PDL_Sent_to_Customer</fullName>
+    <active>true</active>
+    <description>Date PDL Sent to Customer must be current. It cannot be in the Past or Future date. For reference, check user story #26355 on Gitlab.</description>
+    <errorConditionFormula>(RecordType_Name__c = &quot;CLAS - RM&quot;) &amp;&amp;
+OR(
+	(
+	NOT(ISCHANGED(Open_Tasks__c)) &amp;&amp;
+	ISCHANGED(Date_PDL_Sent_to_Customer__c) &amp;&amp;
+	NOT(ISBLANK(Date_PDL_Sent_to_Customer__c)) &amp;&amp;
+	DATEVALUE(Date_PDL_Sent_to_Customer__c) != TODAY() &amp;&amp;
+	(
+	  ISBLANK(PRIORVALUE(Date_PDL_Sent_to_Customer__c)) ||
+	  DATEVALUE(Date_PDL_Sent_to_Customer__c) != DATEVALUE(PRIORVALUE(Date_PDL_Sent_to_Customer__c))
+	)
+	),
+    (	
+	ISNEW() &amp;&amp;
+	NOT(ISBLANK(Date_PDL_Sent_to_Customer__c)) &amp;&amp;
+	DATEVALUE(Date_PDL_Sent_to_Customer__c) != TODAY() 
+	) 
+)</errorConditionFormula>
+    <errorDisplayField>Date_PDL_Sent_to_Customer__c</errorDisplayField>
+    <errorMessage>Date PDL Sent to Customer must be current. It cannot be in the Past or Future date.</errorMessage>
+</ValidationRule>

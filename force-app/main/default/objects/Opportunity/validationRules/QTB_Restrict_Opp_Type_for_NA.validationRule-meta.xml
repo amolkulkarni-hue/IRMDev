@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>QTB_Restrict_Opp_Type_for_NA</fullName>
+    <active>false</active>
+    <description>Request from sales ops to hide the opportunity types that will not be used by NA at Go Live. Amendments, upsells, etc will not be used.</description>
+    <errorConditionFormula>AND(
+AND(
+OR(
+$Setup.Metadata_Activation_Settings__c.SObject_API_Name__c = &apos;Opportunity&apos;,
+$Setup.Metadata_Activation_Settings__c.SObject_API_Name__c = &apos;&apos;
+),
+NOT($Setup.Metadata_Activation_Settings__c.Disable_VR__c)
+),
+AND(
+$RecordType.DeveloperName = &apos;CPQ_Sales_Opportunity&apos;,
+NOT(ISPICKVAL(Type, &apos;New Deal&apos;)),
+OR(Billing_Country__r.Name = &apos;Canada&apos;,Billing_Country__r.Name = &apos;United States&apos;)
+)
+)</errorConditionFormula>
+    <errorDisplayField>Type</errorDisplayField>
+    <errorMessage>Opportunity can be created only for Type - New Deal</errorMessage>
+</ValidationRule>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NAS_CloseCase_OrderNumberReq</fullName>
+    <active>true</active>
+    <description>#18512: Contact field required to close global orders case.</description>
+    <errorConditionFormula>$RecordType.Name = &apos;Global Orders&apos; &amp;&amp; ISPICKVAL(Status, &apos;Closed&apos;) &amp;&amp; OR(
+ISBLANK(ContactId),
+ISBLANK(NAS_Order_Number__c)
+)</errorConditionFormula>
+    <errorDisplayField>CAC_of_Calls_Prior_to_Escalation__c</errorDisplayField>
+    <errorMessage>Order Number and Contact are required to close the case</errorMessage>
+</ValidationRule>

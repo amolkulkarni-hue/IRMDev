@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Won_Opportunities_moved_back_to_Open</fullName>
+    <active>true</active>
+    <description>#21200- making the Validation rule applicable for all profiles 
+#22087- Added bypass logic
+#24480-Making Applicable for all Record type</description>
+    <errorConditionFormula>AND( 
+ ISCHANGED( StageName ), 
+ 
+OR(
+ ISPICKVAL(PRIORVALUE(StageName),&apos;5 - Signed/PO in&apos;),
+ ISPICKVAL(PRIORVALUE(StageName),&apos;6 - Setup&apos;), 
+ ISPICKVAL(PRIORVALUE(StageName),&apos;7 - Closed&apos;)
+ ), 
+
+ NOT(
+   OR(
+ ISPICKVAL(StageName, &apos;6 - Setup&apos;),
+ ISPICKVAL(StageName, &apos;Lost&apos;),
+ ISPICKVAL(StageName, &apos;7 - Closed&apos;),
+ ISPICKVAL(StageName,&apos;5 - Signed/PO in&apos;)
+    )
+ ),
+
+ $Profile.Name &lt;&gt; &apos;IM_Custom Sys Admin&apos;,
+ $Profile.Name &lt;&gt; &apos;System Administrator&apos;,
+ 
+NOT($Permission.Update_Stage_of_Closed_Opportunities),
+NOT($Permission.VR_Bypass_Permission)
+)</errorConditionFormula>
+    <errorDisplayField>StageName</errorDisplayField>
+    <errorMessage>An Opportunity that&apos;s already won cannot be re-opened. Need help? Contact your Sales Operations Business Partner.</errorMessage>
+</ValidationRule>

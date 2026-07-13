@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IME_SC_ValidateRequiredFields_3</fullName>
+    <active>true</active>
+    <description>If Case.Status is (“Validated” or “Assigned” or “InProgress” or &quot;Closed&quot; ) and Case.Category is (“Order Enquiry” or “Create a new Order”) then below fields are required : Customer Account</description>
+    <errorConditionFormula>AND(NOT($Setup.Custom_Sys_Admin_profiles_exclude__c.Skip_validation_rule__c),NOT(ISCHANGED( IME_SC_Owner_Manager__c )),NOT( CONTAINS(Subject,&quot;CX Survey&quot;)),
+NOT(ISCHANGED( IME_SC_Manager_of_Manager_OwnerId__c )),$RecordType.Name = &quot;IME SC Case&quot; ,
+ISBLANK (IME_SC_Customer_AccountId__c ),AND(
+OR(
+ISPICKVAL( IME_SC_Category__c , &quot;Order Enquiry&quot;),ISPICKVAL(IME_SC_Category__c, &quot;Create a new Order&quot;),ISPICKVAL( IME_SC_Category__c ,&quot;Amendment of customer details&quot;),ISPICKVAL( IME_SC_Category__c , &quot;Authorised User Requests&quot;),ISPICKVAL( IME_SC_Category__c , &quot;Billing &amp; Invoice Issues&quot;),ISPICKVAL( IME_SC_Category__c ,&quot;Complaints&quot;),ISPICKVAL( IME_SC_Category__c ,&quot;Contract Issues&quot;),ISPICKVAL( IME_SC_Category__c , &quot;Energy (UK)&quot;),ISPICKVAL( IME_SC_Category__c , &quot;General Enquiry&quot;),ISPICKVAL( IME_SC_Category__c , &quot;Online system support&quot;),ISPICKVAL( IME_SC_Category__c , &quot;Relationship Management&quot;),ISPICKVAL( IME_SC_Category__c , &quot;Reporting&quot;),ISPICKVAL( IME_SC_Category__c , &quot;Manual Billing (UK)&quot;),ISPICKVAL( IME_SC_Category__c , &quot;Billing Maintenance (UK)&quot;),ISPICKVAL( IME_SC_Category__c , &quot;Service Order Adjustment (UK)&quot;),ISPICKVAL( IME_SC_Category__c , &quot;Standard Billing Scheduled (UK)&quot;),ISPICKVAL( IME_SC_Category__c , &quot;Non Standard Billing (UK)&quot;),ISPICKVAL( IME_SC_Category__c , &quot;SKP invoices (DEU)&quot;),ISPICKVAL( IME_SC_Category__c , &quot;SBE invoices (DEU)&quot;),ISPICKVAL( IME_SC_Category__c , &quot;Manual invoices (DEU)&quot;),ISPICKVAL( IME_SC_Category__c , &quot;DMS invoices (DEU)&quot;)),OR (ISPICKVAL( Status , &quot;Validated&quot;) ,ISPICKVAL( Status , &quot;Assigned&quot;) ,ISPICKVAL( Status , &quot;Closed&quot;) ,ISPICKVAL( Status , &quot;In Progress&quot;))))</errorConditionFormula>
+    <errorDisplayField>IME_SC_Customer_AccountId__c</errorDisplayField>
+    <errorMessage>Please enter the mandatory field : Customer Account</errorMessage>
+</ValidationRule>

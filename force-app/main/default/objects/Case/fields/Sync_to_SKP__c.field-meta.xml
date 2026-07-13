@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Sync_to_SKP__c</fullName>
+    <externalId>false</externalId>
+    <formula>IF( 
+ISPICKVAL(Contract_Status__c,&quot;Accepted&quot;), 
+IF( 
+AND( 
+NOT(ISBLANK(SKP_Customer_Sync_Date__c)), 
+NOT(ISBLANK(SKP_Contract_Sync_Date__c)) 
+), 
+&quot;This Contract has already been Synced&quot;, 
+(HYPERLINK( 
+&quot;/apex/SKPIntegrationWizard?id=&quot;+Id, 
+IMAGE(&quot;/resource/1433164220000/Sync_to_SKP&quot;, 
+&quot;Sync to SKP&quot;) 
+, &quot;_self&quot;))), 
+&quot;This Contract is not Accepted&quot;)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Sync to SKP</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

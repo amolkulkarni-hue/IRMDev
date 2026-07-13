@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebLink xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Remove_From_Forecast</fullName>
+    <availability>online</availability>
+    <displayType>button</displayType>
+    <linkType>javascript</linkType>
+    <masterLabel>Remove From Forecast</masterLabel>
+    <openType>onClickJavaScript</openType>
+    <protected>false</protected>
+    <url>if({!Opportunity.IM_Commit_to_Forecast__c}==0){
+alert(&apos;Opportunity has not yet been added to forecast.&apos;);
+}
+else{
+window.location.href=&quot;/apex/OpportunityUncommit?oppId={!Opportunity.Id}&quot;;
+}</url>
+</WebLink>

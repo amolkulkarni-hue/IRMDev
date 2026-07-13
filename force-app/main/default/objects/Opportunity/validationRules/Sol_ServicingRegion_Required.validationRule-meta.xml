@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Sol_ServicingRegion_Required</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+  NOT(Bypass_Validation__c),
+  ISCHANGED(StageName),
+  ISPICKVAL(PRIORVALUE(StageName), &apos;Solutioning&apos;),
+  ISPICKVAL(StageName, &apos;Negotiation&apos;),
+  ISPICKVAL(IM_Servicing_Region__c, &apos;&apos;)
+)</errorConditionFormula>
+    <errorMessage>Servicing District/Market must be selected before moving this Opportunity from Solutioning to Negotiation.</errorMessage>
+</ValidationRule>

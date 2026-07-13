@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IMBookedDate_Not_Before_Today_CloseDate</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+    NOT(Bypass_Validation__c),
+    NOT(ISBLANK(IM_Booked_Date__c)),
+    OR(
+        IM_Booked_Date__c &lt; TODAY(),
+        IM_Booked_Date__c &lt; CloseDate
+    )
+)</errorConditionFormula>
+    <errorDisplayField>IM_Booked_Date__c</errorDisplayField>
+    <errorMessage>First Bill Date cannot be in the past or prior to the Close Date.</errorMessage>
+</ValidationRule>

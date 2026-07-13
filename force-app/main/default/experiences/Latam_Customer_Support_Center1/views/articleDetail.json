@@ -1,0 +1,308 @@
+{
+  "appPageId" : "efac131e-0e5a-426e-883b-867446d43e6b",
+  "componentName" : "siteforce:sldsTwoCol84Layout",
+  "dataProviders" : [ ],
+  "id" : "ca1b737a-5fa7-4181-a94a-5db48046fc2c",
+  "label" : "Article Detail",
+  "regions" : [ {
+    "id" : "865c7067-88a9-4f8f-a170-b3040d6fd515",
+    "regionName" : "header",
+    "type" : "region"
+  }, {
+    "components" : [ {
+      "componentAttributes" : {
+        "enableVoting" : true,
+        "recordId" : "{!recordId}",
+        "showTitleInArticleHeader" : true,
+        "showTopicPills" : true,
+        "urlName" : "{!urlName}"
+      },
+      "componentName" : "selfService:singleArticleView",
+      "id" : "61872e08-9e44-467b-bde2-4739030e318e",
+      "renderPriority" : "NEUTRAL",
+      "renditionMap" : {
+        "es_ar" : "f59eae2e-8abe-4c76-8df1-2659c02f23f3",
+        "es_co" : "454d1e40-6ca1-4cf6-846e-fbef7769123b",
+        "pt_br" : "79272d12-6109-4b5f-80b1-3857414d31c3"
+      },
+      "renditions" : [ {
+        "id" : "454d1e40-6ca1-4cf6-846e-fbef7769123b",
+        "renditionValue" : {
+          "componentAttributes" : { }
+        },
+        "type" : "renditionComponent"
+      }, {
+        "id" : "79272d12-6109-4b5f-80b1-3857414d31c3",
+        "renditionValue" : {
+          "componentAttributes" : { }
+        },
+        "type" : "renditionComponent"
+      }, {
+        "id" : "f59eae2e-8abe-4c76-8df1-2659c02f23f3",
+        "renditionValue" : {
+          "componentAttributes" : { }
+        },
+        "type" : "renditionComponent"
+      } ],
+      "type" : "component"
+    }, {
+      "componentAttributes" : {
+        "label_choice_no" : "No",
+        "label_choice_yes" : "Sí",
+        "message_ask" : "¿Le resultó útil este artículo?",
+        "message_thankyou" : "¡Gracias por tu voz!"
+      },
+      "componentName" : "c:guestArticleVote",
+      "id" : "7444ebf0-b123-4882-b4c6-d580572873d8",
+      "renderPriority" : "NEUTRAL",
+      "renditionMap" : {
+        "es_ar" : "c96e4213-53e7-415f-8e8d-962a01c16380",
+        "es_co" : "2ab311a4-c22f-442c-a4d9-758ec64b6d68",
+        "pt_br" : "2e7e59d3-26c7-45dd-8917-e3d0cd5dbee0"
+      },
+      "renditions" : [ {
+        "id" : "2ab311a4-c22f-442c-a4d9-758ec64b6d68",
+        "renditionValue" : {
+          "componentAttributes" : {
+            "label_choice_no" : "No",
+            "label_choice_yes" : "Yes",
+            "message_ask" : "Was this article helpful?",
+            "message_thankyou" : "Thank you for your voice!"
+          }
+        },
+        "type" : "renditionComponent"
+      }, {
+        "id" : "2e7e59d3-26c7-45dd-8917-e3d0cd5dbee0",
+        "renditionValue" : {
+          "componentAttributes" : {
+            "label_choice_no" : "Não",
+            "label_choice_yes" : "Sim",
+            "message_ask" : "Esse artigo foi útil?",
+            "message_thankyou" : "Obrigado pela sua voz!"
+          }
+        },
+        "type" : "renditionComponent"
+      }, {
+        "id" : "c96e4213-53e7-415f-8e8d-962a01c16380",
+        "renditionValue" : {
+          "componentAttributes" : {
+            "label_choice_no" : "No",
+            "label_choice_yes" : "Sí",
+            "message_ask" : "¿Le resultó útil este artículo?",
+            "message_thankyou" : "¡Gracias por tu voz!"
+          }
+        },
+        "type" : "renditionComponent"
+      } ],
+      "type" : "component"
+    } ],
+    "id" : "00b4b00f-4026-4716-bfac-4679c7c45fcc",
+    "regionName" : "content",
+    "type" : "region"
+  }, {
+    "components" : [ {
+      "componentAttributes" : {
+        "numberOfItems" : 5,
+        "showViewCounts" : true,
+        "title" : "Artículos relacionados"
+      },
+      "componentName" : "selfService:similarArticles42",
+      "id" : "a7c1bf89-dd4f-4fa2-a67e-8a928a43457c",
+      "renderPriority" : "NEUTRAL",
+      "renditionMap" : {
+        "es_ar" : "107e540e-8757-4191-a793-5d3aae801608",
+        "es_co" : "08134d51-db4a-49e2-9605-d700a74ae813",
+        "pt_br" : "8bd5cfc5-1adf-45d7-9e3c-3745fa611c87"
+      },
+      "renditions" : [ {
+        "id" : "08134d51-db4a-49e2-9605-d700a74ae813",
+        "renditionValue" : {
+          "componentAttributes" : {
+            "title" : "Related Articles"
+          }
+        },
+        "type" : "renditionComponent"
+      }, {
+        "id" : "8bd5cfc5-1adf-45d7-9e3c-3745fa611c87",
+        "renditionValue" : {
+          "componentAttributes" : {
+            "title" : "Artigos relacionados"
+          }
+        },
+        "type" : "renditionComponent"
+      }, {
+        "id" : "107e540e-8757-4191-a793-5d3aae801608",
+        "renditionValue" : {
+          "componentAttributes" : {
+            "title" : "Artículos relacionados"
+          }
+        },
+        "type" : "renditionComponent"
+      } ],
+      "type" : "component"
+    } ],
+    "id" : "5a299a51-6c2f-44bb-a691-470f17734eff",
+    "regionName" : "sidebar",
+    "type" : "region"
+  }, {
+    "components" : [ {
+      "componentAttributes" : {
+        "richTextValue" : "<p style=\"text-align: center;\">&nbsp;&nbsp;<span style=\"color: rgb(0, 0, 0);\">¿Tiene alguna pregunta adicional?</span></p>"
+      },
+      "componentName" : "forceCommunity:richTextInline",
+      "id" : "e8180783-9d56-4a41-86d6-4c2d17043386",
+      "renderPriority" : "NEUTRAL",
+      "renditionMap" : {
+        "es_ar" : "a178dbcd-1d60-4122-9bbc-f9d588dc6590",
+        "es_cl" : "64ab032a-c84d-4686-a1c0-91f8e547ed47",
+        "es_co" : "1f3cae1a-c416-4fca-bff1-efed8f2c6c16",
+        "es_mx" : "d34e216c-4ba5-4fee-85b4-02184f9048aa",
+        "pt_br" : "013d4b1a-35bb-4eed-b589-8e39484d155d"
+      },
+      "renditions" : [ {
+        "id" : "1f3cae1a-c416-4fca-bff1-efed8f2c6c16",
+        "renditionValue" : {
+          "componentAttributes" : {
+            "richTextValue" : "<p style=\"text-align: center;\">Have more questions?</p>"
+          }
+        },
+        "type" : "renditionComponent"
+      }, {
+        "id" : "013d4b1a-35bb-4eed-b589-8e39484d155d",
+        "renditionValue" : {
+          "componentAttributes" : {
+            "richTextValue" : "<p style=\"text-align: center;\"><span style=\"color: rgb(0, 0, 0);\">Tem mais perguntas?</span></p>"
+          }
+        },
+        "type" : "renditionComponent"
+      }, {
+        "id" : "a178dbcd-1d60-4122-9bbc-f9d588dc6590",
+        "renditionValue" : {
+          "componentAttributes" : {
+            "richTextValue" : "<p style=\"text-align: center;\"><span style=\"color: rgb(0, 0, 0);\">¿Tiene alguna pregunta adicional?</span></p>"
+          }
+        },
+        "type" : "renditionComponent"
+      }, {
+        "id" : "d34e216c-4ba5-4fee-85b4-02184f9048aa",
+        "renditionValue" : {
+          "componentAttributes" : {
+            "richTextValue" : "<p style=\"text-align: center;\"><span style=\"color: rgb(0, 0, 0);\">¿Tiene mas preguntas?</span></p>"
+          }
+        },
+        "type" : "renditionComponent"
+      }, {
+        "id" : "64ab032a-c84d-4686-a1c0-91f8e547ed47",
+        "renditionValue" : {
+          "componentAttributes" : {
+            "richTextValue" : "<p style=\"text-align: center;\">&nbsp;&nbsp;<span style=\"color: rgb(0, 0, 0);\">¿Tiene mas preguntas?</span></p>"
+          }
+        },
+        "type" : "renditionComponent"
+      } ],
+      "type" : "component"
+    }, {
+      "componentAttributes" : {
+        "buttonAlignment" : "center",
+        "buttonBgColor" : "",
+        "buttonBgHoverColor" : "",
+        "buttonBorderColor" : "",
+        "buttonMaxWidth" : 16,
+        "buttonRadius" : 0,
+        "buttonTextColor" : "",
+        "buttonTextHoverColor" : "",
+        "label" : "Soporte de contacto"
+      },
+      "componentName" : "forceCommunity:contactSupportButton",
+      "id" : "3d107474-a1a5-401a-8eba-9bf9940fee59",
+      "renderPriority" : "NEUTRAL",
+      "renditionMap" : {
+        "es_ar" : "5f647030-4122-41ab-b2c3-dc84ed19d8e0",
+        "es_co" : "afffd498-b133-4cd3-80c7-669ccb5a7877",
+        "pt_br" : "4fa22329-df19-48ea-95e9-d9726072c147"
+      },
+      "renditions" : [ {
+        "id" : "afffd498-b133-4cd3-80c7-669ccb5a7877",
+        "renditionValue" : {
+          "componentAttributes" : {
+            "label" : "Contact Support"
+          }
+        },
+        "type" : "renditionComponent"
+      }, {
+        "id" : "4fa22329-df19-48ea-95e9-d9726072c147",
+        "renditionValue" : {
+          "componentAttributes" : {
+            "label" : "Contato para suporte"
+          }
+        },
+        "type" : "renditionComponent"
+      }, {
+        "id" : "5f647030-4122-41ab-b2c3-dc84ed19d8e0",
+        "renditionValue" : {
+          "componentAttributes" : {
+            "label" : "Soporte de contacto"
+          }
+        },
+        "type" : "renditionComponent"
+      } ],
+      "type" : "component"
+    } ],
+    "id" : "cf628b42-238f-4325-9ed6-8181e557577e",
+    "regionName" : "footer",
+    "type" : "region"
+  }, {
+    "components" : [ {
+      "componentAttributes" : {
+        "customHeadTags" : "",
+        "description" : "{!Record.Summary}",
+        "title" : "{!Record._Title}"
+      },
+      "componentName" : "forceCommunity:seoAssistant",
+      "id" : "b8cdc471-d50b-475c-b86f-82604d75d629",
+      "renditionMap" : {
+        "es_ar" : "9b989454-5ba9-4e2f-a18a-f9adf24d2b07",
+        "es_co" : "8c43464f-4e6d-4dbc-8351-44325310b06e",
+        "pt_br" : "cfb08aa2-75ac-4afe-9ee6-1420c59a0274"
+      },
+      "renditions" : [ {
+        "id" : "8c43464f-4e6d-4dbc-8351-44325310b06e",
+        "renditionValue" : {
+          "componentAttributes" : {
+            "customHeadTags" : "",
+            "description" : "{!Record.Summary}",
+            "title" : "{!Record._Title}"
+          }
+        },
+        "type" : "renditionComponent"
+      }, {
+        "id" : "cfb08aa2-75ac-4afe-9ee6-1420c59a0274",
+        "renditionValue" : {
+          "componentAttributes" : {
+            "customHeadTags" : "",
+            "description" : "{!Record.Summary}",
+            "title" : "{!Record._Title}"
+          }
+        },
+        "type" : "renditionComponent"
+      }, {
+        "id" : "9b989454-5ba9-4e2f-a18a-f9adf24d2b07",
+        "renditionValue" : {
+          "componentAttributes" : {
+            "customHeadTags" : "",
+            "description" : "{!Record.Summary}",
+            "title" : "{!Record._Title}"
+          }
+        },
+        "type" : "renditionComponent"
+      } ],
+      "type" : "component"
+    } ],
+    "id" : "f62b9a6b-4ce4-4f2a-9d4e-a3296f8ce78d",
+    "regionName" : "sfdcHiddenRegion",
+    "type" : "region"
+  } ],
+  "themeLayoutType" : "Inner",
+  "type" : "view",
+  "viewType" : "article"
+}

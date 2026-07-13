@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IME_SC_Case_CaseCause_reqd_for_Non_Order</fullName>
+    <active>true</active>
+    <description>If a CS rep attempts to close a ‘Non-order’ Case without selecting a value from the Case Cause picklist, an error message should be given</description>
+    <errorConditionFormula>AND( NOT(ISCHANGED( IME_SC_Owner_Manager__c )), 
+NOT(ISCHANGED( IME_SC_Manager_of_Manager_OwnerId__c )), 
+$User.ProfileId  &lt;&gt; &quot;00e80000001OOVl&quot;,
+RecordTypeId  = &quot;01280000000UGoY&quot;,   
+ISPICKVAL(IME_SC_Request_Type__c, &quot;Non-order&quot;), 
+ISPICKVAL(Status, &quot;Closed&quot;),
+ISPICKVAL(IME_SC_Case_Cause__c,&quot;&quot;)
+)</errorConditionFormula>
+    <errorDisplayField>IME_SC_Case_Cause__c</errorDisplayField>
+    <errorMessage>All non-order CS Cases require a Case Cause value. Please select an appropriate value from the picklist.</errorMessage>
+</ValidationRule>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Date_Loyalty_Specialist_Assigned</fullName>
+    <active>true</active>
+    <description>Date Loyalty Specialist Assigned cannot be in the Past or the Future. For reference, check user story #26355 on Gitlab.</description>
+    <errorConditionFormula>((RecordType_Name__c = &quot;Retention RM&quot;) || (RecordType_Name__c = &quot;Retention SH&quot;)) &amp;&amp;
+NOT(ISCHANGED(Open_Tasks__c)) &amp;&amp;
+ISCHANGED(Date_Loyalty_Specialist_Assigned__c) &amp;&amp;
+NOT(ISBLANK(Date_Loyalty_Specialist_Assigned__c)) &amp;&amp;
+Date_Loyalty_Specialist_Assigned__c != TODAY() &amp;&amp;
+(
+  ISBLANK(PRIORVALUE(Date_Loyalty_Specialist_Assigned__c)) ||
+  Date_Loyalty_Specialist_Assigned__c != PRIORVALUE(Date_Loyalty_Specialist_Assigned__c)
+)</errorConditionFormula>
+    <errorDisplayField>Date_Loyalty_Specialist_Assigned__c</errorDisplayField>
+    <errorMessage>Date Loyalty Specialist Assigned cannot be in the Past or the Future.</errorMessage>
+</ValidationRule>

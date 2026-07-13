@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CAC_Retention_Inv_Amount_Inv_Number</fullName>
+    <active>true</active>
+    <description>Invoice Number, Invoice Amount, Open AR Amount are required when the Date Invoice Created is present.</description>
+    <errorConditionFormula>$RecordType.Name = &apos;CLAS - RM&apos;   
+&amp;&amp; (NOT(  ISBLANK(  Date_Invoice_Created__c  ))  
+&amp;&amp; ( ISBLANK(   Invoice_Amount__c ) || 
+ISBLANK( Invoice_Number__c) || ISBLANK(  Open_AR_Amount__c )))</errorConditionFormula>
+    <errorMessage>Invoice Number, Invoice Amount, and Open AR Amount are required when the Date Invoice Created is present.</errorMessage>
+</ValidationRule>

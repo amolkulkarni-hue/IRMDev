@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IME_SC_ValidateManualPast</fullName>
+    <active>true</active>
+    <description>If anyone update cut off time without selecting cut off time Manual(selected other than manual).</description>
+    <errorConditionFormula>AND(NOT(ISCHANGED( IME_SC_Owner_Manager__c )), 
+NOT(ISCHANGED( IME_SC_Manager_of_Manager_OwnerId__c )), 
+$RecordType.Name = &quot;IME SC Case&quot;,
+ISPICKVAL (IME_SC_Validation_Rule__c, &apos;Cut off Time Passed&apos; ) )</errorConditionFormula>
+    <errorDisplayField>End_Time_Cutoff_SLA__c</errorDisplayField>
+    <errorMessage>Entered Cut off Time cannot be in past</errorMessage>
+</ValidationRule>

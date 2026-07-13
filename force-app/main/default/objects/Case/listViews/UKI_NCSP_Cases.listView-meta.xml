@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>UKI_NCSP_Cases</fullName>
+    <booleanFilter>1 AND (2 or 3) and 4</booleanFilter>
+    <columns>CASES.CASE_NUMBER</columns>
+    <columns>OWNER_NAME</columns>
+    <columns>ACCOUNT.NAME</columns>
+    <columns>CASES.SUBJECT</columns>
+    <columns>CASES.STATUS</columns>
+    <columns>CASES.PRIORITY</columns>
+    <columns>CASES.CREATED_DATE</columns>
+    <columns>CASES.LAST_UPDATE_DATE_ONLY</columns>
+    <division>*</division>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Country__c</field>
+        <operation>notEqual</operation>
+        <value>USA,Canada,Other</value>
+    </filters>
+    <filters>
+        <field>CASES.RECORDTYPE</field>
+        <operation>equals</operation>
+        <value>Case.NCSP_DMS,Case.NCSP_DP_Onboarding_team,Case.NCSP_SKP_Department_Add_Only</value>
+    </filters>
+    <filters>
+        <field>CASES.RECORDTYPE</field>
+        <operation>equals</operation>
+        <value>Case.NCSP_SKP_New_customer_setup,Case.NCSP_Upsell,Case.NCSP_New_Customer_Setup</value>
+    </filters>
+    <filters>
+        <field>CASES.STATUS</field>
+        <operation>notEqual</operation>
+        <value>Cancelled,Closed,Duplicate</value>
+    </filters>
+    <label>UKI NCSP Cases</label>
+    <language>en_US</language>
+    <sharedTo>
+        <group>IME_UKI_Data_Governance</group>
+    </sharedTo>
+</ListView>

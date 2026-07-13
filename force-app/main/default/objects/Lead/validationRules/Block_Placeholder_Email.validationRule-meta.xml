@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Block_Placeholder_Email</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+    NOT($Permission.Bypass_Lead_Validation),
+    NOT(ISBLANK(Email)),
+    OR(
+        CONTAINS(LOWER(Email), &quot;xxxx&quot;),
+        CONTAINS(LOWER(Email), &quot;0000&quot;),
+        CONTAINS(LOWER(Email), &quot;1111&quot;),
+        CONTAINS(LOWER(Email), &quot;noemail&quot;),
+        CONTAINS(LOWER(Email), &quot;no-email&quot;),
+        CONTAINS(LOWER(Email), &quot;noreply&quot;),
+        CONTAINS(LOWER(Email), &quot;no-reply&quot;),
+        CONTAINS(LOWER(Email), &quot;unknown&quot;),
+        CONTAINS(LOWER(Email), &quot;test@test&quot;),
+        CONTAINS(LOWER(Email), &quot;none@&quot;),
+        CONTAINS(LOWER(Email), &quot;na@&quot;),
+        REGEX(LOWER(Email), &quot;^[x]+@.&quot;),
+        REGEX(LOWER(Email), &quot;^[0]+@.&quot;)
+    )
+)</errorConditionFormula>
+    <errorDisplayField>Email</errorDisplayField>
+    <errorMessage>The email address entered appears to be a placeholder. Please enter the prospect&apos;s actual email address.</errorMessage>
+</ValidationRule>

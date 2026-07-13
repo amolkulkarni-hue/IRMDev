@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebLink xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IME_Close_Case</fullName>
+    <availability>online</availability>
+    <description>Custom Close Case button to have default &quot;Closed&quot; in Status on the Close Case page</description>
+    <displayType>button</displayType>
+    <linkType>javascript</linkType>
+    <masterLabel>Close Case</masterLabel>
+    <openType>onClickJavaScript</openType>
+    <protected>false</protected>
+    <url>if (typeof(srcUp) == &apos;function&apos;) {
+    srcSelf(&apos;{!Case.Id}/s?retURL=%2F{!Case.Id}&amp;cas7=Closed&apos;);
+} else { 
+window.parent.location=&apos;/{!Case.Id}/s?retURL=%2F{!Case.Id}&amp;cas7=Closed&apos;; 
+}</url>
+</WebLink>

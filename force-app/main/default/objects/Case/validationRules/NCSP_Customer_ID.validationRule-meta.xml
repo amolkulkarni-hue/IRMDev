@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NCSP_Customer_ID</fullName>
+    <active>true</active>
+    <description>Customer ID is required and must be related to the Case&apos;s Account in SFDC for certain Cases. (Excludes Customer ID A5000 and A7000)</description>
+    <errorConditionFormula>(($RecordType.Name == &apos;NCSP: SKP New Customer Setup&apos;  ||$RecordType.Name == &apos;NCSP: Tech Services New Customer Setup&apos; || $RecordType.Name == &apos;NCSP: DMS&apos;) &amp;&amp; NOT(ISBLANK( Setup_Complete_Date__c) ) &amp;&amp; ISBLANK(Customer_ID__c)) 
+|| 
+( ($RecordType.Name == &apos;Issue&apos; || $RecordType.Name == &apos;Task&apos; ||  $RecordType.Name == &apos;Task Request&apos; ) &amp;&amp; Not(isblank(Customer_ID__c)) &amp;&amp; Not(isblank( Account.Id )) &amp;&amp; Customer_ID__r.IM_Account__r.Id &lt;&gt; Account.Id )</errorConditionFormula>
+    <errorDisplayField>Customer_ID__c</errorDisplayField>
+    <errorMessage>Customer ID is required and must be related to the Case&apos;s Account in SFDC except for NCSP which can be related to the IMGA.</errorMessage>
+</ValidationRule>

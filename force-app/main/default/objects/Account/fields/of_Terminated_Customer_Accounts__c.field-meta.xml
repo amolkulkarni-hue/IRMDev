@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>of_Terminated_Customer_Accounts__c</fullName>
+    <description>number of Customer Accounts that have terminated with risk impact</description>
+    <label># of Terminated Customer Accounts</label>
+    <summaryFilterItems>
+        <field>IM_Customer_Account__c.Risk_Status__c</field>
+        <operation>equals</operation>
+        <value>Terminated</value>
+    </summaryFilterItems>
+    <summaryFilterItems>
+        <field>IM_Customer_Account__c.Termination_Impact__c</field>
+        <operation>notEqual</operation>
+        <value>Terminated- No Risk</value>
+    </summaryFilterItems>
+    <summaryForeignKey>IM_Customer_Account__c.IM_Account__c</summaryForeignKey>
+    <summaryOperation>count</summaryOperation>
+    <trackHistory>false</trackHistory>
+    <type>Summary</type>
+</CustomField>

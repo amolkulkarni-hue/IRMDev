@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>PRM_My_Expiring_Opportunities_Partner</fullName>
+    <columns>ACCOUNT.NAME</columns>
+    <columns>OPPORTUNITY.NAME</columns>
+    <columns>OPPORTUNITY.STAGE_NAME</columns>
+    <columns>Partner_Deal_Expiration_Date__c</columns>
+    <columns>OPPORTUNITY.AMOUNT</columns>
+    <columns>IM_Booked_Date__c</columns>
+    <columns>CORE.USERS.FULL_NAME</columns>
+    <division>*</division>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Partner_Deal_Expiration_Date__c</field>
+        <operation>equals</operation>
+        <value>NEXT_N_DAYS:30</value>
+    </filters>
+    <label>My Expiring Opportunities</label>
+    <language>en_US</language>
+    <sharedTo>
+        <allPartnerUsers></allPartnerUsers>
+    </sharedTo>
+</ListView>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Cases_with_QA</fullName>
+    <columns>OWNER_NAME</columns>
+    <columns>Case_Assigned_To__c</columns>
+    <columns>CASES.CASE_NUMBER</columns>
+    <columns>CASES.SUBJECT</columns>
+    <columns>CASES.PRIORITY</columns>
+    <columns>Target_Prod_Deployment_Date__c</columns>
+    <columns>Development_Status__c</columns>
+    <columns>CASES.STATUS</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>CASES.RECORDTYPE</field>
+        <operation>equals</operation>
+        <value>Case.Sales_Tools_Project_Case</value>
+    </filters>
+    <filters>
+        <field>Development_Status__c</field>
+        <operation>equals</operation>
+        <value>6. Assigned to QA</value>
+    </filters>
+    <filters>
+        <field>CASES.STATUS</field>
+        <operation>notEqual</operation>
+        <value>Cancelled,On Hold</value>
+    </filters>
+    <label>#Cases with QA</label>
+    <language>en_US</language>
+    <sharedTo>
+        <group>IMS_Admins</group>
+        <role>IRONMTNADMIN</role>
+    </sharedTo>
+</ListView>

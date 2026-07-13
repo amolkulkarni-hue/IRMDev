@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IM_GUDUNS_Name_Formula__c</fullName>
+    <description>This formula will get the value of the Name of the record itself if it has no parent or is GUD-level account. Otherwise will traverse up the hierarchy until it reaches the GUD-level account, and will get the Name from it.</description>
+    <externalId>false</externalId>
+    <formula>/* If This Record is GUD-Level Then use Name field from this Record itself */ 
+If (TEXT( IM_Hierarchy_Level__c )==&apos;Country Parent&apos; , Name, 
+
+/* Else If No Parent AND This Record is NOT GUD-Level Then use BLANK*/ 
+If(LEN(ParentId)==0 &amp;&amp; TEXT( IM_Hierarchy_Level__c )!=&apos;Country Parent&apos; , &apos;&apos;, 
+
+/*Else If immediate parent is GUD-Level, get Name from parent*/ 
+If (TEXT( Parent.IM_Hierarchy_Level__c )==&apos;Country Parent&apos; , Parent.Name, 
+
+
+/*Else If second parent is GUD-Level, get Name from parent*/ 
+If (TEXT( Parent.Parent.IM_Hierarchy_Level__c )==&apos;Country Parent&apos; , Parent.Parent.Name, 
+
+/*Else If third parent is GUD-Level, get Name from parent*/ 
+If (TEXT( Parent.Parent.Parent.IM_Hierarchy_Level__c )==&apos;Country Parent&apos; , Parent.Parent.Parent.Name, 
+
+/*Else If fourth parent is GUD-Level, get Name from parent*/ 
+If (TEXT( Parent.Parent.Parent.Parent.IM_Hierarchy_Level__c )==&apos;Country Parent&apos; , 
+Parent.Parent.Parent.Parent.Name, 
+/*Else If fifth parent is GUD-Level, get Name from parent*/ 
+If (TEXT( Parent.Parent.Parent.Parent.Parent.IM_Hierarchy_Level__c )==&apos;Country Parent&apos; , 
+Parent.Parent.Parent.Parent.Parent.Name, 
+
+/*Else (when reached up five levels, if no GUD-level parent found - then put blank.*/ 
+&apos;&apos; )))))))</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>GUD Name (Formula)</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

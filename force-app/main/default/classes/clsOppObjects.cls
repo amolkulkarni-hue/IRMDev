@@ -258,9 +258,9 @@ public class clsOppObjects {
 
                 Upsell_Customer_ID__c=lstStrParams[12],
                 IM_Up_Sell_Detail__c=lstStrParams[13],
-                IM_Unit_of_Measure__c=lstStrParams[14],        
+                IM_Unit_of_Measure__c=lstStrParams[14]);       
                 //Inside_Sales_Owner__c =  lstStrParams[15]
-                Account_Plan__c = lstStrParams[19],Primary_Product_Line__c=lstStrParams[21]);
+                //Account_Plan__c = lstStrParams[19],Primary_Product_Line__c=lstStrParams[21]
                  
                /*#16915 if(bVal==true)
                     updateopp.Bundle__c=lstStrParams[16];

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IMBookedDate_Exceeds_CloseDate_Plus_12mo</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+     NOT(Bypass_Validation__c),
+    NOT(ISBLANK(IM_Booked_Date__c)),
+    IM_Booked_Date__c &gt; ADDMONTHS(CloseDate, 12)
+)</errorConditionFormula>
+    <errorDisplayField>IM_Booked_Date__c</errorDisplayField>
+    <errorMessage>The anticipated First Bill Date must be within 12 months of the Close Date.</errorMessage>
+</ValidationRule>

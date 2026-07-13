@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>QTB_Make_Currency_Read_Only</fullName>
+    <active>true</active>
+    <description>#SFCPQBLG-648 Billing Account Currency should be uneditable after Billing Account Creation.  As Per GitLab #23708 Bypassing this validation for NA-SITAD Accounts.</description>
+    <errorConditionFormula>AND(NOT($Setup.Metadata_Activation_Settings__c.Disable_VR__c &amp;&amp; 
+OR(ISBLANK($Setup.Metadata_Activation_Settings__c.SObject_API_Name__c),CONTAINS($Setup.Metadata_Activation_Settings__c.SObject_API_Name__c, &apos;Account&apos;))),
+RecordType.DeveloperName = $Label.QTB_AccountRecordType_Billing,
+NOT(ISBLANK(TEXT(CurrencyIsoCode))), ISCHANGED(CurrencyIsoCode), (NOT((QTB_SITAD__c) &amp;&amp;  (ISPICKVAL( QTB_Legal_Entity_Country__c , &quot;United States&quot;)  || ISPICKVAL( QTB_Legal_Entity_Country__c , &quot;Canada&quot;) ))  ))</errorConditionFormula>
+    <errorDisplayField>CurrencyIsoCode</errorDisplayField>
+    <errorMessage>Billing Account Currency can not be modified.</errorMessage>
+</ValidationRule>

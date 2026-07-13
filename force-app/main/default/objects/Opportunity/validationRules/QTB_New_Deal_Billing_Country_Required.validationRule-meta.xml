@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>QTB_New_Deal_Billing_Country_Required</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(ISPICKVAL(Type, &quot;New Deal&quot;),ISPICKVAL( Primary_Product_Line__c , &quot;DM SITAD&quot;), ISBLANK( Billing_Country__c ), 
+NOT($Setup.OpportunityAttribution__c.BypassValidation__c ),
+NOT($Permission.VR_Bypass_Permission)
+)</errorConditionFormula>
+    <errorMessage>Billing country field is mandatory.</errorMessage>
+</ValidationRule>

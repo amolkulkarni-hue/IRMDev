@@ -1,0 +1,90 @@
+{
+  "appPageId" : "7e024fb9-9cea-452c-9152-dc5566ec182d",
+  "componentName" : "siteforce:dynamicLayout",
+  "dataProviders" : [ ],
+  "id" : "f89d2c73-77be-4c76-8fa6-a0797b009a1b",
+  "label" : "My cases",
+  "regions" : [ {
+    "components" : [ {
+      "componentAttributes" : {
+        "background" : "background: rgba(0,0,0,0)",
+        "backgroundOverlay" : "rgba(0,0,0,0.5)",
+        "contentAreaWidth" : 100,
+        "sectionConfig" : {
+          "UUID" : "a32e985a-80b3-4677-a028-734301c65d84",
+          "columns" : [ {
+            "UUID" : "a0f6e2f9-6d14-4f76-b243-afa9818b0f61",
+            "columnKey" : "1",
+            "columnName" : "Column 1",
+            "columnWidth" : "12",
+            "seedComponents" : [ ]
+          } ]
+        },
+        "sectionHeight" : 300
+      },
+      "componentName" : "forceCommunity:section",
+      "id" : "a32e985a-80b3-4677-a028-734301c65d84",
+      "regions" : [ {
+        "components" : [ {
+          "componentAttributes" : {
+            "richTextValue" : "<div class=\"pageHeadings\">\n    <div class=\"pageHeadingsTitle\">My cases</div>\n    <div class=\"pageHeadingsSubTitle\">View and manage your support cases below. Click on any case to view additional details.</div>\n</div>"
+          },
+          "componentName" : "forceCommunity:htmlBlock",
+          "id" : "744aa9f4-f771-47ab-99c4-525a64aea160",
+          "renderPriority" : "NEUTRAL",
+          "renditionMap" : {
+            "fr_ca" : "ed4e5650-1e3c-4bd1-bd8f-d9a54e863e83"
+          },
+          "renditions" : [ {
+            "id" : "ed4e5650-1e3c-4bd1-bd8f-d9a54e863e83",
+            "renditionValue" : {
+              "componentAttributes" : {
+                "richTextValue" : "<div class=\"pageHeadings\">\n    <div class=\"pageHeadingsTitle\">Mes cas</div>\n    <div class=\"pageHeadingsSubTitle\">Consultez et gérez vos demandes d'assistance ci-dessous. Cliquez sur n'importe quel cas pour afficher des détails supplémentaires.</div>\n</div>"
+              }
+            },
+            "type" : "renditionComponent"
+          } ],
+          "type" : "component"
+        }, {
+          "componentAttributes" : {
+            "requestedListView" : "Case_Home_Page_Paginated"
+          },
+          "componentName" : "c:nfListView",
+          "id" : "27c5904b-5a6c-4ca8-ae46-7fd968d60f8f",
+          "renderPriority" : "NEUTRAL",
+          "renditionMap" : { },
+          "type" : "component"
+        } ],
+        "id" : "a0f6e2f9-6d14-4f76-b243-afa9818b0f61",
+        "regionLabel" : "Column 1",
+        "regionName" : "1",
+        "renditionMap" : { },
+        "type" : "region"
+      } ],
+      "renderPriority" : "NEUTRAL",
+      "renditionMap" : { },
+      "type" : "component"
+    } ],
+    "id" : "db157a4d-a0b1-4cb4-8802-bdfc5926cab9",
+    "regionName" : "content",
+    "type" : "region"
+  }, {
+    "components" : [ {
+      "componentAttributes" : {
+        "customHeadTags" : "",
+        "description" : "",
+        "title" : "My cases"
+      },
+      "componentName" : "forceCommunity:seoAssistant",
+      "id" : "6dac2ffd-660e-446c-baf9-d2a162ab26da",
+      "renditionMap" : { },
+      "type" : "component"
+    } ],
+    "id" : "08965dc5-639f-4245-8b31-5690e9416872",
+    "regionName" : "sfdcHiddenRegion",
+    "type" : "region"
+  } ],
+  "themeLayoutType" : "5IS8MaShST5FYkZT9VO9eznWjK4uEX",
+  "type" : "view",
+  "viewType" : "custom-my-cases"
+}

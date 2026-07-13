@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CAC_Retention_Date_Sent_to_Ops_Req</fullName>
+    <active>true</active>
+    <description>Date Sent to Ops&apos; to be required if &apos;Acepted Rejected&apos; field has a value
+
+Edit:Case11637971 - Date Sent to Ops required only if &apos;Accepted Rejected&apos; field value is &apos;Rejected&apos;</description>
+    <errorConditionFormula>AND(
+RecordType.Name = &quot;CLAS – Data Management&quot;,
+NOT(ISBLANK(TEXT( Accepted_Rejected__c ))),
+TEXT( Accepted_Rejected__c ) = &apos;Rejected&apos;,
+ISBLANK( Date_Sent_to_Ops__c )
+)</errorConditionFormula>
+    <errorDisplayField>Date_Sent_to_Ops__c</errorDisplayField>
+    <errorMessage>&apos;Date Sent to Ops&apos; must have a value if &apos;Acepted Rejected&apos; is &apos;Rejected&apos;</errorMessage>
+</ValidationRule>

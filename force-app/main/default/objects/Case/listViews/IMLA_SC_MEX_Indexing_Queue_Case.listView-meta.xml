@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IMLA_SC_MEX_Indexing_Queue_Case</fullName>
+    <columns>CASES.CASE_NUMBER</columns>
+    <columns>IME_SC_Case_Email__c</columns>
+    <columns>CASES.SUBJECT</columns>
+    <columns>NAME</columns>
+    <columns>CASES.CREATED_DATE_DATE_ONLY</columns>
+    <filterScope>Queue</filterScope>
+    <label>IMLA SC MEX Indexing Queue</label>
+    <queue>IMLA_SC_MEX_Indexing_Queue</queue>
+    <sharedTo>
+        <group>IMLA_SC_MEX_Indexer_Group</group>
+        <role>IMLA_SC</role>
+        <role>IMLA_SC_MEX_CSM</role>
+        <role>IMLA_SC_MEX_NON_ORDER_CSR</role>
+        <role>IMLA_SC_MEX_NON_ORDER_CSTL</role>
+    </sharedTo>
+</ListView>

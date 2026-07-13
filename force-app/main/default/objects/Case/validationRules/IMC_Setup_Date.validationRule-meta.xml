@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IMC_Setup_Date</fullName>
+    <active>true</active>
+    <description>IMC Setup Date has to be today&apos;s date. It cannot be in the Past or the Future. For reference, check user story #26355 on Gitlab.</description>
+    <errorConditionFormula>((RecordType_Name__c = &quot;NCSP: SKP New Customer Setup&quot;) ||
+(RecordType_Name__c = &quot;NCSP: SKP Department Add Only&quot;) ||
+(RecordType_Name__c = &quot;NCSP: DP New Customer Setup&quot;) ||
+(RecordType_Name__c = &quot;NCSP: DMS&quot;) ||
+(RecordType_Name__c = &quot;NCSP: New Customer Setup&quot;) 
+)&amp;&amp;
+OR(
+	(
+	NOT(ISCHANGED(Open_Tasks__c)) &amp;&amp;
+	ISCHANGED(IMC_Setup_Date__c) &amp;&amp;
+	NOT(ISBLANK(IMC_Setup_Date__c)) &amp;&amp;
+	DATEVALUE(IMC_Setup_Date__c) != TODAY() &amp;&amp;
+	(
+	  ISBLANK(PRIORVALUE(IMC_Setup_Date__c)) ||
+	  DATEVALUE(IMC_Setup_Date__c) != DATEVALUE(PRIORVALUE(IMC_Setup_Date__c))
+	)
+	),
+    (	
+	ISNEW() &amp;&amp;
+	NOT(ISBLANK(IMC_Setup_Date__c)) &amp;&amp;
+	DATEVALUE(IMC_Setup_Date__c) != TODAY() 
+	) 
+)</errorConditionFormula>
+    <errorDisplayField>IMC_Setup_Date__c</errorDisplayField>
+    <errorMessage>IMC Setup Date has to be today&apos;s date. It cannot be in the Past or the Future.</errorMessage>
+</ValidationRule>

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Layout xmlns="http://soap.sforce.com/2006/04/metadata">
+    <excludeButtons>OpenSlackRecordChannel</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <feedLayout>
         <autocollapsePublisher>true</autocollapsePublisher>
@@ -93,6 +94,22 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Deal_Booked_Date__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Accepted_Quote_Test__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Bypass_Deal_Date_Lock__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Deal_Type__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Converted_Lead__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -389,6 +406,18 @@
     <relatedLists>
         <fields>NAME</fields>
         <fields>Account__c</fields>
+        <fields>IMGA__c</fields>
+        <fields>Opportunity_Type__c</fields>
+        <fields>Status__c</fields>
+        <fields>Pricing_Recommendations4__c</fields>
+        <fields>Pricing_Recommendations3__c</fields>
+        <fields>Pricing_Recommendations1__c</fields>
+        <fields>Pricing_Recommendations2__c</fields>
+        <relatedList>Schedule_A__c.Opportunity__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>Account__c</fields>
         <fields>ironclad__Workflow_Status__c</fields>
         <fields>CREATED_DATE</fields>
         <relatedList>ironclad__Ironclad_Workflow__c.Opportunity__c</relatedList>
@@ -406,7 +435,6 @@
     <relatedLists>
         <fields>NAME</fields>
         <fields>LGK__EditLink__c</fields>
-        <fields>Accepted__c</fields>
         <fields>LGK__Stage__c</fields>
         <fields>LGK__Id__c</fields>
         <relatedList>LGK__Transaction__c.LGK__OpportunityId__c</relatedList>

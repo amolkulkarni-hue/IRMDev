@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebLink xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Red_Alert</fullName>
+    <availability>online</availability>
+    <description>Standard page button to run AtRisk/RedAlert NA flow.Once the user is complete with the AtRisk/RedAlert page, it will generate a new AtRisk/RedAlert record,but navigate the user back to the account page.</description>
+    <displayType>button</displayType>
+    <encodingKey>UTF-8</encodingKey>
+    <linkType>url</linkType>
+    <masterLabel>Red Alert</masterLabel>
+    <openType>replace</openType>
+    <protected>false</protected>
+    <url>/flow/At_Risk_Red_Alert_NA?vAccountID={!Account.Id}&amp;vAccountName={!Account.IM_IMGA__c}&amp;vUserId={!User.Id}&amp;retURL={!Account.Id}</url>
+</WebLink>

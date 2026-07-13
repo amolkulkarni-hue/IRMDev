@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Forecast_Category_Validation_Rule</fullName>
+    <active>true</active>
+    <description>Validation rules to ensure Opportunity Forecast Category ‘Closed’ maps to Stages 5, 6 &amp; 7 only and ‘Omitted’ maps to Lost Stage</description>
+    <errorConditionFormula>OR(
+AND
+(
+  OR(
+        ISPICKVAL(StageName,&apos;5 - Signed/PO in&apos;),
+        ISPICKVAL(StageName,&apos;6 - Setup&apos;),
+        ISPICKVAL(StageName,&apos;7 - Closed&apos;)
+     ),
+  NOT(ISPICKVAL(ForecastCategoryName,&apos;Closed&apos;)),
+  NOT($Permission.VR_Bypass_Permission)
+),
+   AND(
+        ISPICKVAL(StageName,&apos;Lost&apos;),
+        NOT(ISPICKVAL(ForecastCategoryName,&apos;Omitted&apos;)),
+        NOT($Permission.VR_Bypass_Permission)
+       )
+)</errorConditionFormula>
+    <errorDisplayField>ForecastCategoryName</errorDisplayField>
+    <errorMessage>Moving to Stage 5/6/7 requires &apos;Closed&apos; in Forecast Category. Moving to Stage Lost requires &apos;Omitted&apos; in Forecast Category</errorMessage>
+</ValidationRule>

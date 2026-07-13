@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Cant_link_Oppty_to_Non_Sales_site_Acct</fullName>
+    <active>true</active>
+    <description>#19450 : Account Hierarchy: Opportunity should always be linked to an account where Hierarchy level is Sales (Site)
+#27029 : Adding bypass for upsells
+#20754: Removing bypass for Upsells</description>
+    <errorConditionFormula>AND(
+
+NOT($Setup.Metadata_Activation_Settings__c.Disable_VR__c &amp;&amp; OR(ISBLANK($Setup.Metadata_Activation_Settings__c.SObject_API_Name__c),
+CONTAINS($Setup.Metadata_Activation_Settings__c.SObject_API_Name__c, &apos;Opportunity&apos;))),
+
+OR(
+ISNEW(),
+ISCHANGED(AccountId)
+),
+AND(
+NOT(ISBLANK(TEXT(Account.IM_Hierarchy_Level__c))),
+NOT(ISPICKVAL(Account.IM_Hierarchy_Level__c ,&apos;Sales (Site)&apos;))
+),
+$RecordType.DeveloperName &lt;&gt; &apos;CPQ_Sales_Opportunity&apos;,
+$RecordType.DeveloperName &lt;&gt; &apos;CPQ_Billing_Opportunity&apos;,
+NOT($Permission.VR_Bypass_Permission)
+
+)</errorConditionFormula>
+    <errorDisplayField>AccountId</errorDisplayField>
+    <errorMessage>Please select a Sales (Site) Account for your Opportunity. Need help? Contact your Sales Operations Business Partner.</errorMessage>
+</ValidationRule>

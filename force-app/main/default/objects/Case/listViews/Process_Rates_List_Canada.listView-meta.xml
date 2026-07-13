@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Process_Rates_List_Canada</fullName>
+    <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 AND 6</booleanFilter>
+    <columns>Customer_Name__c</columns>
+    <columns>Customer_ID__c</columns>
+    <columns>IM_Market__c</columns>
+    <columns>NCSP_Opportunity__c</columns>
+    <columns>CASES.CASE_NUMBER</columns>
+    <columns>NCSP_Service_line__c</columns>
+    <columns>Contract_Type__c</columns>
+    <columns>NCSP_Upsell_Type__c</columns>
+    <columns>Date_Sent_to_Contracts_Admin__c</columns>
+    <columns>CASES.CREATED_DATE</columns>
+    <division>*</division>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>CASES.RECORDTYPE</field>
+        <operation>equals</operation>
+        <value>Case.NCSP_DMS,Case.NCSP_DP_Onboarding_team,Case.NCSP_SKP_New_customer_setup</value>
+    </filters>
+    <filters>
+        <field>Date_Sent_to_Contracts_Admin__c</field>
+        <operation>greaterThan</operation>
+        <value>10/31/2012 12:00 AM</value>
+    </filters>
+    <filters>
+        <field>CASES.STATUS</field>
+        <operation>notEqual</operation>
+        <value>Cancelled,Duplicate,Non Conversion</value>
+    </filters>
+    <filters>
+        <field>Contract_Status__c</field>
+        <operation>equals</operation>
+        <value>Accepted,Accepted with Follow up</value>
+    </filters>
+    <filters>
+        <field>Country__c</field>
+        <operation>equals</operation>
+        <value>Canada</value>
+    </filters>
+    <filters>
+        <field>Case_Assigned_To__c</field>
+        <operation>equals</operation>
+    </filters>
+    <label>Process Rate List (Canada)</label>
+    <language>en_US</language>
+    <sharedTo>
+        <group>ASNCSPCoordinatorsMgmt</group>
+        <group>ASOps</group>
+        <group>ContractAdmin</group>
+    </sharedTo>
+</ListView>

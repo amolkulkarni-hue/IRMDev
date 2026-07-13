@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>No_Parent_Account_Change</fullName>
+    <active>true</active>
+    <description>Prevent all users from modifying the No parent account, including admins.</description>
+    <errorConditionFormula>IF( OR ( Id = &apos;001Q000000AoN6D&apos;, Name = &apos;SYSTEM USE ONLY - DO NOT MODIFY - NoParentCustAcc&apos; ), OR ( ISCHANGED(Name), NOT( ISBLANK(ParentId) ) ), false)</errorConditionFormula>
+    <errorMessage>This account cannot be updated. Please check your change.</errorMessage>
+</ValidationRule>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>W_L_UKI1</fullName>
+    <columns>Opportunity_Owner_Full_Name__c</columns>
+    <columns>OPPORTUNITY.NAME</columns>
+    <columns>ACCOUNT.NAME</columns>
+    <columns>OPPORTUNITY.STAGE_NAME</columns>
+    <columns>OPPORTUNITY.CLOSE_DATE</columns>
+    <columns>OPPORTUNITY.AMOUNT</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Billing_Country__c</field>
+        <operation>equals</operation>
+        <value>United Kingdom,Ireland</value>
+    </filters>
+    <filters>
+        <field>Primary_Product_Line__c</field>
+        <operation>equals</operation>
+        <value>SBS Pallet Storage,Warehouse and Logistics</value>
+    </filters>
+    <filters>
+        <field>OPPORTUNITY.STAGE_NAME</field>
+        <operation>notEqual</operation>
+        <value>Lost</value>
+    </filters>
+    <filters>
+        <field>OPPORTUNITY.CLOSE_DATE</field>
+        <operation>greaterThan</operation>
+        <value>1/1/2024</value>
+    </filters>
+    <label>W&amp;L UKI</label>
+</ListView>

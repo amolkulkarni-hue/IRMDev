@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Information_Governance_Rep_Formula__c</fullName>
+    <description>This formula will traverse the Account hierarchy from (including) current record all the way to the top (up to 6 levels) and 
+will display the value of the &quot;Information Governance Rep&quot; field of the parent Account where IM_HIerarchy_Level__c field is 
+&quot;IM Group (IMGA)&quot;. If there is no such level parent in the hierarchy - will leave field blank.
+
+#26452 : Account Coverage: Relabel Primary BDE, Insight Owner and Entertainment Services Owner and Hide other retired &quot;Owner&quot; fields
+Digital Business Unit Solution Development Executive (SDE). - Set at the Country Parent and cascades down to the Sales Site.
+
+#26660: To copy data from Country Parent Account to Sales Site and this data is further used in AccountCoverageFieldsSync Apex job to update Lookup field(Information_Governance_Rep__c)
+#31465: Data should not be wiped off on Orphan Sales Site Accounts</description>
+    <externalId>false</externalId>
+    <formula>IF(
+/*If Account is Country Parent, stores Information_Governance_Rep__c value */
+ISPICKVAL(IM_Hierarchy_Level__c, &apos;Country Parent&apos;), Information_Governance_Rep__c ,
+IF(
+/*If Account is Sales site, stores Country Parent Account&apos;s Information_Governance_Rep__c by traversing one level up the hierarchy*/
+AND(ISPICKVAL(IM_Hierarchy_Level__c, &apos;Sales (Site)&apos;),NOT(ISBLANK(ParentId))), Parent.Information_Governance_Rep__c,Information_Governance_Rep__c))</formula>
+    <label>DBU SDE (Formula)</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

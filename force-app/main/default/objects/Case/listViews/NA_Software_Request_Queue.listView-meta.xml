@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NA_Software_Request_Queue</fullName>
+    <columns>CASES.CASE_NUMBER</columns>
+    <columns>Issue__c</columns>
+    <columns>CASES.SUBJECT</columns>
+    <columns>CASES.CREATED_DATE_DATE_ONLY</columns>
+    <columns>IM_Employee_Contact__c</columns>
+    <columns>CASES.STATUS</columns>
+    <filterScope>Queue</filterScope>
+    <filters>
+        <field>CASES.STATUS</field>
+        <operation>notEqual</operation>
+        <value>Closed,Cancelled</value>
+    </filters>
+    <label>NA Software Request Queue</label>
+    <language>en_US</language>
+    <queue>NA_Software_Request_Queue</queue>
+    <sharedTo>
+        <group>IMGASupport</group>
+    </sharedTo>
+</ListView>

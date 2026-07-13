@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Solution_Executive_Able_to_Update</fullName>
+    <active>true</active>
+    <description>#28714 able to update when account Hierarchy Level = &apos;Country Parent&apos;</description>
+    <errorConditionFormula>AND(
+NOT($Setup.Metadata_Activation_Settings__c.Disable_VR__c &amp;&amp; OR(ISBLANK($Setup.Metadata_Activation_Settings__c.SObject_API_Name__c),
+CONTAINS($Setup.Metadata_Activation_Settings__c.SObject_API_Name__c, &apos;Account&apos;))),
+
+ISCHANGED(Solution_Executive__c),
+OR(
+ISPICKVAL( IM_Hierarchy_Level__c , &quot;IM Group (IMGA)&quot;),
+ISPICKVAL( IM_Hierarchy_Level__c , &quot;Sales (Site)&quot;),
+ISPICKVAL( IM_Hierarchy_Level__c , &quot;Operational Account&quot;),
+ISPICKVAL( IM_Hierarchy_Level__c , &quot;Billing Account&quot;)
+),
+$User.UITheme &lt;&gt;&apos;Theme2&apos;,
+$User.UITheme &lt;&gt; &apos;Theme3&apos;
+)</errorConditionFormula>
+    <errorDisplayField>Solution_Executive__c</errorDisplayField>
+    <errorMessage>Solution Executive can only be updated on Country Parent Accounts</errorMessage>
+</ValidationRule>

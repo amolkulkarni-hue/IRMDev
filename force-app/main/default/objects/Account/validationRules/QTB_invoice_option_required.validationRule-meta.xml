@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>QTB_invoice_option_required</fullName>
+    <active>true</active>
+    <description>QTB-19--Invoice template preference</description>
+    <errorConditionFormula>AND(NOT($Setup.Metadata_Activation_Settings__c.Disable_VR__c &amp;&amp; OR(ISBLANK($Setup.Metadata_Activation_Settings__c.SObject_API_Name__c), CONTAINS($Setup.Metadata_Activation_Settings__c.SObject_API_Name__c, &apos;Account&apos;))), RecordType.DeveloperName = $Label.QTB_AccountRecordType_Billing , NOT (ISBLANK( ParentId )), ISBLANK( TEXT(QTB_Invoice_Delivery_Options__c)  ) )</errorConditionFormula>
+    <errorDisplayField>QTB_Invoice_Delivery_Options__c</errorDisplayField>
+    <errorMessage>Invoice delivery Option Required</errorMessage>
+</ValidationRule>

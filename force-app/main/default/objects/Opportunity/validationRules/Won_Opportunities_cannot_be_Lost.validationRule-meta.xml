@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Won_Opportunities_cannot_be_Lost</fullName>
+    <active>true</active>
+    <description>#21200 Making the VR applicable for all profiles except Admins</description>
+    <errorConditionFormula>AND( 
+ISCHANGED( StageName ), 
+
+OR( 
+ISPICKVAL(PRIORVALUE(StageName),&apos;5 - Signed/PO in&apos;),
+ISPICKVAL(PRIORVALUE(StageName),&apos;6 - Setup&apos;), 
+ISPICKVAL(PRIORVALUE(StageName),&apos;7 - Closed&apos;)),
+
+ISPICKVAL(StageName, &apos;Lost&apos;),
+
+$Profile.Name &lt;&gt; &apos;IM_Custom Sys Admin&apos;,
+$Profile.Name &lt;&gt; &apos;System Administrator&apos;,
+
+NOT( $Permission.Update_Stage_of_Closed_Opportunities ),
+NOT($Permission.VR_Bypass_Permission) 
+)</errorConditionFormula>
+    <errorDisplayField>StageName</errorDisplayField>
+    <errorMessage>The Opportunity cannot be moved to a different Stage. Need help? Contact your Sales Operations Business Partner.</errorMessage>
+</ValidationRule>

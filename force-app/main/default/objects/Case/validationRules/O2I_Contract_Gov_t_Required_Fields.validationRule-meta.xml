@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>O2I_Contract_Gov_t_Required_Fields</fullName>
+    <active>true</active>
+    <errorConditionFormula>ISPICKVAL(Case_Type__c, &quot;Government&quot;) &amp;&amp; ISPICKVAL( Country__c, &quot;USA&quot;) &amp;&amp; NOT(ISBLANK( Setup_Complete_Date__c)) &amp;&amp; (ISPICKVAL(Invoice_Delivery_Method_Gov_t_Only__c, &apos;&apos;) || ISPICKVAL(Customer_Account_Status_Gov_t_Only__c, &apos;&apos;) || ISPICKVAL(Federal_Department_Roll_Up_Gov_t_Only__c, &apos;&apos;))</errorConditionFormula>
+    <errorMessage>For US &apos;Government&apos; Case Types, you must complete the following fields:  Invoice Delivery Method (Gov&apos;t Only), Customer Account Status (Gov&apos;t Only), and 	 
+Federal Department Roll Up (Gov&apos;t Only) when the Upload to DRCI Complete Date is Entered.</errorMessage>
+</ValidationRule>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>GSC_Pending_Reason_Required</fullName>
+    <active>true</active>
+    <description>The field &apos;Pending Reason&apos; is required when Follow-up Date is selected. The epic for reference #1008. The rule updated for CAC Executive Escalations record type. For ref, check user story #27296 on Gitlab.</description>
+    <errorConditionFormula>AND(
+OR(RecordType_Name__c =&quot;Global Service Case&quot;,RecordType_Name__c =&quot;CAC Executive Escalations&quot;),
+NOT(ISNULL( Follow_up_Date__c )),
+ISPICKVAL( NAS_Pending_Reason__c , &quot;&quot; )
+)</errorConditionFormula>
+    <errorMessage>&apos;Pending Reason&apos; is required when Follow-up Date is selected.</errorMessage>
+</ValidationRule>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>QTB_City_Mandatory_for_Operational_Acct</fullName>
+    <active>true</active>
+    <description>Issue # 25285</description>
+    <errorConditionFormula>AND( ISBLANK(BillingCity),  RecordType.DeveloperName = &apos;Operational_Account&apos; )</errorConditionFormula>
+    <errorDisplayField>BillingCity</errorDisplayField>
+    <errorMessage>BillingCity is mandatory for Operational Account.</errorMessage>
+</ValidationRule>

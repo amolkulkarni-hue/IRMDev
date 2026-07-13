@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PathAssistant xmlns="http://soap.sforce.com/2006/04/metadata">
+    <active>true</active>
+    <entityName>Lead</entityName>
+    <fieldName>Status</fieldName>
+    <masterLabel>Primary Lead Path</masterLabel>
+    <pathAssistantSteps>
+        <info>&lt;p&gt;&lt;strong&gt;What to do:&lt;/strong&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Review lead details and leverage sales tools for insights&lt;/li&gt;&lt;li&gt;Add to a Gong Engage flow, send an outreach email, or make a call&lt;/li&gt;&lt;li&gt;Log all outreach activities in Salesforce&lt;/li&gt;&lt;li&gt;Update status to Contacted once a two-way interaction has occurred&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;strong&gt;Policy reminders:&lt;/strong&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Track Activity Count. Outreach attempts must be logged&lt;/li&gt;&lt;li&gt;Do not advance to Contacted without a confirmed two-way interaction&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;strong&gt;Key Fields: &lt;/strong&gt;Accepted Date | Phone | Mobile&lt;/p&gt;</info>
+        <picklistValueName>Accepted</picklistValueName>
+    </pathAssistantSteps>
+    <pathAssistantSteps>
+        <info>&lt;p&gt;&lt;strong&gt;What to do:&lt;/strong&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Qualify the lead using IRM qualification criteria&lt;/li&gt;&lt;li&gt;Confirm need, product/BU interest, budget, authority, and timeframe&lt;/li&gt;&lt;li&gt;Update status to Converted, Nurture, or Disqualified. Do not leave stalled in Contacted&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;strong&gt;Policy reminders:&lt;/strong&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Need Confirmed is mandatory before advancing&lt;/li&gt;&lt;li&gt;Next Step and Next Step Date are required&lt;/li&gt;&lt;li&gt;A confirmed two-way interaction is required to reach this status&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;strong&gt;Key Fields:&lt;/strong&gt;Field | Need Confirmed | Next Step| Next Step Date| Budget Identified&lt;/p&gt;</info>
+        <picklistValueName>Contacted</picklistValueName>
+    </pathAssistantSteps>
+    <pathAssistantSteps>
+        <info>&lt;p&gt;&lt;strong&gt;What to do:&lt;/strong&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Confirm the lead meets qualification criteria before converting.&lt;/li&gt;&lt;li&gt;Convert to an Account, Contact, and/or Opportunity as appropriate&lt;/li&gt;&lt;li&gt;Verify Role and full address are populated as these are required to convert&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;strong&gt;Policy reminders:&lt;/strong&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Street, City, State/Province, Zip/Postal Code, Country, and Contact Role are all required&lt;/li&gt;&lt;li&gt;Do not convert leads that do not meet qualification criteria. Instead, use Nurture or Disqualified&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;strong&gt;Key Fields: &lt;/strong&gt;Contact Role | Street | City| State/Province/County | Zip/Postal Code&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</info>
+        <picklistValueName>Converted</picklistValueName>
+    </pathAssistantSteps>
+    <pathAssistantSteps>
+        <info>&lt;p&gt;&lt;strong&gt;What to do:&lt;/strong&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Select the Disqualified Reason. This determines whether the lead enters a reactivation nurture or is permanently suppressed from all Marketing lists&lt;/li&gt;&lt;li&gt;Ensure the reason accurately reflects why the lead does not qualify&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;strong&gt;Policy reminders:&lt;/strong&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Disqualified Reason is required to save this status&lt;/li&gt;&lt;li&gt;Poor fit leads (wrong ICP, not aligned to services) may be permanently removed. Choose your reason carefully&lt;/li&gt;&lt;li&gt;This action returns the lead to Marketing for final disposition&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;strong&gt;Key Fields:&lt;/strong&gt; Disqualified Reason| Primary Product Interest| Need Confirmed| Budget Identified | Description&lt;/p&gt;</info>
+        <picklistValueName>Disqualified</picklistValueName>
+    </pathAssistantSteps>
+    <pathAssistantSteps>
+        <info>&lt;p&gt;&lt;strong&gt;What to do:&lt;/strong&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Review lead assignment and confirm it is a valid person/company- Confirm you are the right owner or escalate if misrouted&lt;/li&gt;&lt;li&gt;Accept the lead to commit to follow-up&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;strong&gt;Policy reminders:&lt;/strong&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Leads must not sit unworked in New&lt;/li&gt;&lt;li&gt;Accepting a lead requires Next Step and Next Step Date&lt;/li&gt;&lt;li&gt;Check Lead Score and Re-engaged Lead flag before accepting&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;strong&gt;Key Fields:&lt;/strong&gt;Lead Score | Primary Product Interest | Do Not Email / Do Not Call| Description&lt;/p&gt;</info>
+        <picklistValueName>New</picklistValueName>
+    </pathAssistantSteps>
+    <pathAssistantSteps>
+        <info>&lt;p&gt;&lt;strong&gt;What to do:&lt;/strong&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Select the Nurture Reason. This drives which Marketing campaign the lead is enrolled in&lt;/li&gt;&lt;li&gt;Ensure the lead record is complete and contact preferences are accurately set before returning to Marketing&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;strong&gt;Policy reminders:&lt;/strong&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Nurture Reason is required to save this status&lt;/li&gt;&lt;li&gt;Use Nurture when timing is wrong or the lead is unresponsive, not when the lead is a poor fit (use Disqualified)&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;strong&gt;Key Fields:&lt;/strong&gt; Nurture Reason| Primary Product Interest | Do Not Email | Description&lt;strong&gt; &lt;/strong&gt;&lt;/p&gt;</info>
+        <picklistValueName>Nurture</picklistValueName>
+    </pathAssistantSteps>
+    <recordTypeName>Primary_Lead</recordTypeName>
+</PathAssistant>

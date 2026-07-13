@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Date_Paperwork_Received</fullName>
+    <active>true</active>
+    <description>Date Paperwork Received cannot be a date in the Future. For reference, check user story #25718 on Gitlab</description>
+    <errorConditionFormula>IF((RecordType_Name__c = &quot;NCSP: SKP New Customer Setup&quot;) ||
+(RecordType_Name__c = &quot;NCSP: SKP Department Add Only&quot;) ||
+(RecordType_Name__c = &quot;NCSP: DP New Customer Setup&quot;) ||
+(RecordType_Name__c = &quot;NCSP: DMS&quot;) ||
+(RecordType_Name__c = &quot;NCSP: New Customer Setup&quot;) ||
+(RecordType_Name__c = &quot;NCSP: Upsell&quot;), 
+OR(
+	(
+	NOT(ISCHANGED(Open_Tasks__c)) &amp;&amp;
+	NOT(ISBLANK(Date_Contract_Signed__c)) &amp;&amp;
+	ISCHANGED(Date_Paperwork_Received__c ) &amp;&amp;
+	NOT(ISBLANK(Date_Paperwork_Received__c )) &amp;&amp;
+	DATEVALUE(Date_Paperwork_Received__c ) &gt; TODAY() &amp;&amp;
+	(
+	ISBLANK(PRIORVALUE(Date_Paperwork_Received__c )) ||
+	DATEVALUE(Date_Paperwork_Received__c ) != DATEVALUE(PRIORVALUE(Date_Paperwork_Received__c ))
+	)
+	),
+	(
+	ISNEW() &amp;&amp;
+	NOT(ISBLANK(Date_Paperwork_Received__c )) &amp;&amp;
+	DATEVALUE(Date_Paperwork_Received__c ) &gt; TODAY()
+	)
+), IF((RecordType_Name__c = &quot;NCSP: SKP Department Add Only&quot;),
+OR(
+	(
+	NOT(ISCHANGED(Open_Tasks__c)) &amp;&amp;
+	ISCHANGED(Date_Paperwork_Received__c ) &amp;&amp;
+	NOT(ISBLANK(Date_Paperwork_Received__c )) &amp;&amp;
+	DATEVALUE(Date_Paperwork_Received__c ) &gt; TODAY() &amp;&amp;
+	(
+	ISBLANK(PRIORVALUE(Date_Paperwork_Received__c )) ||
+	DATEVALUE(Date_Paperwork_Received__c ) != DATEVALUE(PRIORVALUE(Date_Paperwork_Received__c ))
+	)
+	),
+	(
+	ISNEW() &amp;&amp;
+	NOT(ISBLANK(Date_Paperwork_Received__c )) &amp;&amp;
+	DATEVALUE(Date_Paperwork_Received__c ) &gt; TODAY()
+	)
+), OR(
+	(
+	NOT(ISCHANGED(Open_Tasks__c)) &amp;&amp;
+	ISCHANGED(Date_Paperwork_Received__c ) &amp;&amp;
+	NOT(ISBLANK(Date_Paperwork_Received__c )) &amp;&amp;
+	DATEVALUE(Date_Paperwork_Received__c ) &gt; TODAY() &amp;&amp;
+	(
+	ISBLANK(PRIORVALUE(Date_Paperwork_Received__c )) ||
+	DATEVALUE(Date_Paperwork_Received__c ) != DATEVALUE(PRIORVALUE(Date_Paperwork_Received__c ))
+	)
+	),
+	(
+	ISNEW() &amp;&amp;
+	NOT(ISBLANK(Date_Paperwork_Received__c )) &amp;&amp;
+	DATEVALUE(Date_Paperwork_Received__c ) &gt; TODAY()
+	)
+) )
+ )</errorConditionFormula>
+    <errorDisplayField>Date_Paperwork_Received__c</errorDisplayField>
+    <errorMessage>Date Paperwork Received cannot be a date in the Future.</errorMessage>
+</ValidationRule>

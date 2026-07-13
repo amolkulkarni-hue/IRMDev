@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Date_Reviewed_NCSP</fullName>
+    <active>true</active>
+    <description>Date Reviewed - NCSP must be today&apos;s date. It cannot be in the Past or the Future. For reference, check user story #26355 on Gitlab.</description>
+    <errorConditionFormula>((RecordType_Name__c = &quot;NCSP: SKP New Customer Setup&quot;) ||
+(RecordType_Name__c = &quot;NCSP: SKP Department Add Only&quot;) ||
+(RecordType_Name__c = &quot;NCSP: DP New Customer Setup&quot;) ||
+(RecordType_Name__c = &quot;NCSP: DMS&quot;) ||
+(RecordType_Name__c = &quot;NCSP: New Customer Setup&quot;) ||
+(RecordType_Name__c = &quot;NCSP: Tech Services New Customer Setup&quot;)
+)&amp;&amp;
+OR(
+	(
+	NOT(ISCHANGED(Open_Tasks__c)) &amp;&amp;
+	ISCHANGED(Date_Reviewed_Ncsp__c ) &amp;&amp;
+	NOT(ISBLANK(Date_Reviewed_Ncsp__c )) &amp;&amp;
+	DATEVALUE(Date_Reviewed_Ncsp__c ) != TODAY() &amp;&amp;
+	(
+	  ISBLANK(PRIORVALUE(Date_Reviewed_Ncsp__c )) ||
+	  DATEVALUE(Date_Reviewed_Ncsp__c ) != DATEVALUE(PRIORVALUE(Date_Reviewed_Ncsp__c ))
+	)
+	),
+    (	
+	ISNEW() &amp;&amp;
+	NOT(ISBLANK(Date_Reviewed_Ncsp__c )) &amp;&amp;
+	DATEVALUE(Date_Reviewed_Ncsp__c ) != TODAY() 
+	) 
+)</errorConditionFormula>
+    <errorDisplayField>Date_Reviewed_Ncsp__c</errorDisplayField>
+    <errorMessage>Date Reviewed - NCSP must be today&apos;s date. It cannot be in the Past or the Future.</errorMessage>
+</ValidationRule>

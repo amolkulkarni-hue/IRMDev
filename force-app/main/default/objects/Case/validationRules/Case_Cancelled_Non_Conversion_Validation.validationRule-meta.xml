@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Case_Cancelled_Non_Conversion_Validation</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+OR($RecordType.Name == &apos;NCSP: SKP New Customer Setup&apos; , $RecordType.Name == &apos;NCSP: SKP Department Add Only&apos;,$RecordType.Name == &apos;NCSP: DP New Customer Setup&apos;, $RecordType.Name == &apos;NCSP: DMS&apos;, $RecordType.Name == &apos;NCSP: Tech Services New Customer Setup&apos;, $RecordType.Name == &apos;NCSP: Upsell&apos;, $RecordType.Name == &apos;NCSP: New Customer Setup&apos;),  
+OR (ISPICKVAL(Status, &apos;Cancelled&apos;) , ISPICKVAL(Status, &apos;Non Conversion&apos;)),   
+ ISBLANK(Non_Conversion_Reason__c) )</errorConditionFormula>
+    <errorDisplayField>Non_Conversion_Reason__c</errorDisplayField>
+    <errorMessage>Please enter the Case Cancelled/Non Conversion Description when updating the Case Status to Cancelled/Non Conversion</errorMessage>
+</ValidationRule>

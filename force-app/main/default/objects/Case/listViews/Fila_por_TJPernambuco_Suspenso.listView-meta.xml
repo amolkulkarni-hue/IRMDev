@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Fila_por_TJPernambuco_Suspenso</fullName>
+    <columns>CASES.CASE_NUMBER</columns>
+    <columns>IME_SC_Rush__c</columns>
+    <columns>IME_SC_Order_Id__c</columns>
+    <columns>IME_SC_Target_Operational_System_ID__c</columns>
+    <columns>CASES.SUBJECT</columns>
+    <columns>CASES.CREATED_DATE_DATE_ONLY</columns>
+    <columns>CASES.STATUS</columns>
+    <columns>IME_SC_CAc_Account__c</columns>
+    <columns>OWNER_NAME</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>IME_SC_Country__c</field>
+        <operation>equals</operation>
+        <value>Brazil</value>
+    </filters>
+    <filters>
+        <field>CASES.STATUS</field>
+        <operation>equals</operation>
+        <value>On Hold - Customer</value>
+    </filters>
+    <filters>
+        <field>Customer_ID__c</field>
+        <operation>equals</operation>
+        <value>DZ032</value>
+    </filters>
+    <label>Fila por TJPernambuco _Suspenso</label>
+    <sharedTo>
+        <group>AllUsers</group>
+    </sharedTo>
+</ListView>

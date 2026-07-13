@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CLAS_Total_Boxes_Non_Negative</fullName>
+    <active>true</active>
+    <description>Does not allow Total boxes field to contain a negative value</description>
+    <errorConditionFormula>Total_Boxes__c &lt; 0</errorConditionFormula>
+    <errorDisplayField>Total_Boxes__c</errorDisplayField>
+    <errorMessage>Cannot be a negative number.</errorMessage>
+</ValidationRule>

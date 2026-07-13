@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CAC_Date_Inventory_Status_Confirmed</fullName>
+    <active>true</active>
+    <description>Date Inventory Status Confirmed&apos; to be required if &apos;Inactive Request Sent to Contracts Admin&apos; has a value</description>
+    <errorConditionFormula>AND(
+				$RecordType.Name = &quot;CLAS - RM&quot;,
+				NOT(ISBLANK(Inactive_request_sent_to_Contracts_Admin__c)),	
+				ISBLANK(Date_Inventory_Status_Confirmed__c))</errorConditionFormula>
+    <errorMessage>Date Inventory Status Confirmed is required if Inactive Request Sent to Contracts Admin has a value</errorMessage>
+</ValidationRule>

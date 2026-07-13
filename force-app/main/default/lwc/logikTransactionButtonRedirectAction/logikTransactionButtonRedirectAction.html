@@ -1,0 +1,19 @@
+<template>
+    <div class={containerClass}>
+
+        <!-- Loading State -->
+        <template if:true={isLoading}>
+            <lightning-spinner 
+                alternative-text="Cargando" 
+                size="medium" 
+                variant="brand">
+            </lightning-spinner>
+            <div class="slds-text-align_center slds-m-top_xx-large">
+                <p class="slds-text-heading_small slds-text-color_weak slds-p-top_large">
+                    {statusMessage}
+                </p>
+            </div>
+        </template>
+
+    </div>
+</template>

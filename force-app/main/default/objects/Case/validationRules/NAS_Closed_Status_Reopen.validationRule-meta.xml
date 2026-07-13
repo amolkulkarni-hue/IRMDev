@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NAS_Closed_Status_Reopen</fullName>
+    <active>true</active>
+    <description>Only Admin users can change a Status from Closed</description>
+    <errorConditionFormula>AND( 
+   OR($RecordType.Name = &quot;NAS General Support Case&quot;, 
+      $RecordType.Name = &quot;NAS Recurring Support Case&quot;),
+ISCHANGED(Status), 
+ISPICKVAL(PRIORVALUE(Status), &quot;Closed&quot;), 
+$Profile.Name &lt;&gt; &quot;System Administrator&quot;
+)</errorConditionFormula>
+    <errorMessage>Closed Cases may not be Reopened.  Please create a new Child Case or contact support.</errorMessage>
+</ValidationRule>

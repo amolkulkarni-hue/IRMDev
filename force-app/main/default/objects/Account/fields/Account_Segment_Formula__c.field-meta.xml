@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Account_Segment_Formula__c</fullName>
+    <description>If the Account is tied to an IMGA, it will return that IMGA&apos;s Account Segment, otherwise it will return the Account Segment listed on the Account.
+#28092: If IMGA Account has Global Industries enabled, fetches IMGA&apos;s Account Segment else fetches Country Parent&apos;s Account segment</description>
+    <externalId>false</externalId>
+    <formula>/* 
+The values in Segment are copied down to the all Child Accounts (Country Parent,Sales Site) when IMGA Account has &apos;Global Industries&apos; checkbox marked True else data is copied from Country Parent to Sales Site*/
+
+IF(AND(
+       ISPICKVAL(IM_Hierarchy_Level__c,&apos;Sales (Site)&apos;),
+       ISPICKVAL(Parent.Parent.IM_Hierarchy_Level__c,&apos;IM Group (IMGA)&apos;),
+       Parent.Parent.Global_Account__c 
+       ),   TEXT(Parent.Parent.Account_Segment__c),
+    IF(AND(
+         ISPICKVAL(IM_Hierarchy_Level__c,&apos;Sales (Site)&apos;),
+         ISPICKVAL(Parent.IM_Hierarchy_Level__c,&apos;Country Parent&apos;)
+	 ),TEXT(Parent.Account_Segment__c),
+       IF(AND(
+              ISPICKVAL(IM_Hierarchy_Level__c,&apos;Country Parent&apos;),
+	      ISPICKVAL(Parent.IM_Hierarchy_Level__c,&apos;IM Group (IMGA)&apos;),
+	      Parent.Global_Account__c 
+	      ),TEXT(Parent.Account_Segment__c),TEXT(Account_Segment__c))))</formula>
+    <label>Account Segment</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

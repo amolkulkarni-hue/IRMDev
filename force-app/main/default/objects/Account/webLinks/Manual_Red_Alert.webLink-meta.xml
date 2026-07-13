@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebLink xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Manual_Red_Alert</fullName>
+    <availability>online</availability>
+    <description>Bluewolf - This button will navigate the user to ManualRiskAssessmentPage. Once the user is complete with the manual risk assessment page, it will generate a new risk assessment record and navigate the user to it. This is (1) of (3) available buttons.</description>
+    <displayType>button</displayType>
+    <linkType>javascript</linkType>
+    <masterLabel>Manual Red Alert</masterLabel>
+    <openType>onClickJavaScript</openType>
+    <protected>false</protected>
+    <url>/************************************************************************************
+Button   :  RedAlertFlag
+Developer:  Mickey Murphy, Blue Wolf Group LLC
+Created  :  June 27, 2013
+Modified :  July 10, 2013
+Objective:  This script sets [Account.At_Risk_Score__c] to 10.
+
+************************************************************************************/
+
+{!REQUIRESCRIPT(&quot;/soap/ajax/28.0/connection.js&quot;)}
+
+var accounts = [];
+var account  = new sforce.SObject(&quot;Account&quot;);
+
+account.At_Risk_Score__c = 10;
+account.Id = &quot;{!Account.Id}&quot;;
+account.Red_Alert_Flag__c = true;
+ 
+accounts.push (account); 
+result = sforce.connection.update(accounts); 
+window.top.location = &quot;/apex/ManualRiskAssessmentPage?id={!Account.Id}&quot;;</url>
+</WebLink>

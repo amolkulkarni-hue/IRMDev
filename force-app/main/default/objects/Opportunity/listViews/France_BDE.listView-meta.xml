@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>France_BDE</fullName>
+    <columns>OPPORTUNITY.NAME</columns>
+    <columns>ACCOUNT.NAME</columns>
+    <columns>OPPORTUNITY.STAGE_NAME</columns>
+    <columns>OPPORTUNITY.CLOSE_DATE</columns>
+    <columns>OPPORTUNITY.AMOUNT</columns>
+    <columns>CORE.USERS.ALIAS</columns>
+    <columns>OPPORTUNITY_SCORE</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>CORE.USERS.LAST_NAME</field>
+        <operation>equals</operation>
+        <value>virgona,beziaud,cadars,guerin,djanti,marret,elkabir,dohin,picard-gnaly</value>
+    </filters>
+    <filters>
+        <field>OPPORTUNITY.STAGE_NAME</field>
+        <operation>equals</operation>
+        <value>1 - Qualification,2 - Solution Developed,3 - Solution Agreed,4 - Negotiate,5 - Signed/PO in,6 - Setup,7 - Closed</value>
+    </filters>
+    <label>France BDE</label>
+    <language>en_US</language>
+    <sharedTo>
+        <role>ESA_FR_CD</role>
+        <role>ESA_FR_Sales_MM</role>
+        <role>ESA_FR_Sales_MM_Manager</role>
+    </sharedTo>
+</ListView>

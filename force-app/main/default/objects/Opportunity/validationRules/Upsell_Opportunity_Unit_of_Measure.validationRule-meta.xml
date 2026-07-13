@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Upsell_Opportunity_Unit_of_Measure</fullName>
+    <active>true</active>
+    <description>This Validation Rule will not trigger on Enterprise Opportunities.  The code in this description box will Trigger on ALL Record Types.
+
+
+AND(ISPICKVAL(Type,&quot;Up-Sell/Lift&quot;),ISPICKVAL(IM_Unit_of_Measure__c, &quot;&quot;))</description>
+    <errorConditionFormula>AND(NOT(RecordTypeId = &quot;01280000000BDec&quot;), AND(ISPICKVAL(Type,&quot;Up-Sell/Lift&quot;),ISPICKVAL(IM_Unit_of_Measure__c, &quot;&quot;)),
+NOT($Permission.VR_Bypass_Permission))</errorConditionFormula>
+    <errorDisplayField>IM_Unit_of_Measure__c</errorDisplayField>
+    <errorMessage>If Type is Up-Sell you must fill in the Unit of Measure</errorMessage>
+</ValidationRule>

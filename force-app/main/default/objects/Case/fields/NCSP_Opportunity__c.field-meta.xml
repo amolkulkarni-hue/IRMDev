@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NCSP_Opportunity__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>link to the opportunity that created this NCSP case for on boarding. Populated by an Apex trigger when the case is created</description>
+    <label>NCSP Opportunity</label>
+    <referenceTo>Opportunity</referenceTo>
+    <relationshipLabel>Cases (NCSP Opportunity)</relationshipLabel>
+    <relationshipName>Cases1</relationshipName>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

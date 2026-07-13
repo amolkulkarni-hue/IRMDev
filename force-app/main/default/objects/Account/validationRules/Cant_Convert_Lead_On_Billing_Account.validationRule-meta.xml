@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Cant_Convert_Lead_On_Billing_Account</fullName>
+    <active>true</active>
+    <description>#24080 : Account Hierarchy: Restrict Lead Conversions to Billing Accounts
+block the ability to create opportunities (manually) or convert a lead to an Billing Account.
+#26453: Added Metadata Activation Custom setting as bypass logic</description>
+    <errorConditionFormula>AND(
+NOT($Setup.Metadata_Activation_Settings__c.Disable_VR__c &amp;&amp; OR(ISBLANK($Setup.Metadata_Activation_Settings__c.SObject_API_Name__c),
+CONTAINS($Setup.Metadata_Activation_Settings__c.SObject_API_Name__c, &apos;Account&apos;))),
+
+Converted_From_Lead__c = &apos;Converted&apos;,
+OR(
+CONTAINS( TEXT( IM_Hierarchy_Level__c ) , &apos;Billing Account&apos;),
+CONTAINS(RecordType.DeveloperName,&apos;QTB_Billing_Account&apos; )
+)
+)</errorConditionFormula>
+    <errorMessage>You can not convert Lead to an Billing Account.</errorMessage>
+</ValidationRule>

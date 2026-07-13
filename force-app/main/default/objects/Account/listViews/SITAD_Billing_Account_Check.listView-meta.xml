@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>SITAD_Billing_Account_Check</fullName>
+    <columns>ACCOUNT.NAME</columns>
+    <columns>QTB_Customer_Number__c</columns>
+    <columns>PARENT_NAME</columns>
+    <columns>ACCOUNT.ADDRESS1_COUNTRY</columns>
+    <columns>QTB_Customer_District__c</columns>
+    <columns>QTB_AdHocOrder__c</columns>
+    <columns>QTB_SITAD__c</columns>
+    <columns>ACCOUNT.TYPE</columns>
+    <columns>ACCOUNT.CREATED_DATE</columns>
+    <columns>QTB_Bill_Cycle_Day__c</columns>
+    <columns>QTB_DM_Source_ID__c</columns>
+    <columns>DM_SourceSystem_Reference__c</columns>
+    <columns>QTB_Is_Program_Customer__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>ACCOUNT.RECORDTYPE</field>
+        <operation>equals</operation>
+        <value>Account.QTB_Billing_Account</value>
+    </filters>
+    <filters>
+        <field>QTB_SITAD__c</field>
+        <operation>equals</operation>
+        <value>1</value>
+    </filters>
+    <filters>
+        <field>QTB_Legal_Entity_Country__c</field>
+        <operation>equals</operation>
+        <value>Canada,United States</value>
+    </filters>
+    <label>SITAD Billing Account</label>
+</ListView>

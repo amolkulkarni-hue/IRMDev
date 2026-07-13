@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NCSP_Upsell_Supplies</fullName>
+    <active>true</active>
+    <description>Supply Order Number is required when Supplies Order Required is Yes and Initial Supply Order Date is Populated.</description>
+    <errorConditionFormula>AND(
+ISPICKVAL(Supplies_Order_Required__c,&apos;Yes&apos;),
+TEXT(Initial_Supply_Order_Date__c) !=&apos;&apos;,
+$RecordType.Name == &apos;NCSP: Upsell&apos;,
+NOT(ISPICKVAL(NCSP_Service_line__c,&apos;DB&amp;R&apos;)), 
+Supply_Order_Number__c==&apos;&apos;
+)</errorConditionFormula>
+    <errorMessage>Supply Order Number is required when Supplies Order Required is Yes and Initial Supply Order Date is Populated.</errorMessage>
+</ValidationRule>

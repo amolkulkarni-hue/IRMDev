@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NCSP_Rush_comments</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(OR( $RecordType.Name == &apos;NCSP: SKP New Customer Setup&apos;, $RecordType.Name == &apos;NCSP: SKP Department Add Only&apos;,  $RecordType.Name == &apos;NCSP: DP New Customer Setup&apos;,  $RecordType.Name == &apos;NCSP: DMS&apos;, $RecordType.Name == &apos;NCSP: Tech Services New Customer Setup&apos;, $RecordType.Name == &apos;NCSP: Upsell&apos;, $RecordType.Name == &apos;CLAS – Data Management&apos;,  $RecordType.Name == &apos;CLAS - RM&apos;,  $RecordType.Name == &apos;CLAS - Shred&apos; ),  Rush__c, ISBLANK(Rush_Comments__c))</errorConditionFormula>
+    <errorDisplayField>Rush_Comments__c</errorDisplayField>
+    <errorMessage>Rush Comments are required when Rush is checked.</errorMessage>
+</ValidationRule>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>GSC_Collections_Fields_Required</fullName>
+    <active>true</active>
+    <description>The fields &apos;Collections Account&apos; and &apos;Collections Segmentation&apos; should be required when Case Sub Category is Billing Dispute. The epic for reference #1008
+#13866 added a condition to bypass validation ie !(Origin=Public community Portal and Status=New)</description>
+    <errorConditionFormula>AND(ISPICKVAL(   GSC_Sub_Category__c   , &quot;Billing Dispute&quot;),
+RecordType_Name__c =&quot;Global Service Case&quot;,  
+OR(
+ISBLANK( GSC_Collections_Account__c ),
+ISPICKVAL( GSC_Collections_Segmentation__c,&quot;&quot; )
+),
+NOT(
+AND(
+ISPICKVAL(Origin,&quot;Public Community Portal&quot;),
+ISPICKVAL(Status,&quot;New&quot;)
+)
+)
+)</errorConditionFormula>
+    <errorMessage>&apos;Collections Account&apos; and &apos;Collections Segmentation&apos; are required when Case Sub Category is Billing Dispute</errorMessage>
+</ValidationRule>

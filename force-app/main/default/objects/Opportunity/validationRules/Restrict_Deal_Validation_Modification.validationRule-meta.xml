@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Restrict_Deal_Validation_Modification</fullName>
+    <active>true</active>
+    <description>Can not modify Deal Validation Field Value once an Opportunity is Won
+
+#21199
+#24480 -Making Applicable for all record type</description>
+    <errorConditionFormula>AND( ISCHANGED(   Deal_Validation__c   ),
+OR(
+ISPICKVAL(StageName, &apos;5 - Signed/PO in&apos;),
+ISPICKVAL(StageName, &apos;6 - Setup&apos;),
+ISPICKVAL(StageName, &apos;7 - Closed&apos;)),
+NOT(
+ISPICKVAL( PRIORVALUE(StageName), &apos;4 - Negotiate&apos;)
+),
+
+$Profile.Name &lt;&gt; &apos;System Administrator&apos;,
+$Profile.Name &lt;&gt; &apos;IM_Custom Sys Admin&apos;,
+
+NOT($Permission.Deal_Validation_Decision_Maker),
+NOT($Permission.VR_Bypass_Permission)
+
+)</errorConditionFormula>
+    <errorDisplayField>Deal_Validation__c</errorDisplayField>
+    <errorMessage>Deal Validation cannot be updated in Stage 5/6/7. Need help? Contact your Sales Operations Business Partner.</errorMessage>
+</ValidationRule>

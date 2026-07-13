@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Stage_5_Opportunity_Support_Spain</fullName>
+    <columns>OPPORTUNITY.STAGE_NAME</columns>
+    <columns>OPPORTUNITY.NAME</columns>
+    <columns>OPPORTUNITY.TYPE</columns>
+    <columns>ACCOUNT.NAME</columns>
+    <columns>OPPORTUNITY.CLOSE_DATE</columns>
+    <columns>OPPORTUNITY.AMOUNT</columns>
+    <columns>CORE.USERS.FULL_NAME</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Billing_Country__c</field>
+        <operation>equals</operation>
+        <value>Spain</value>
+    </filters>
+    <filters>
+        <field>IM_Stage_5_Entered_Date__c</field>
+        <operation>greaterOrEqual</operation>
+        <value>1/1/2024</value>
+    </filters>
+    <label>Stage 5 Opportunity Support Spain</label>
+    <sharedTo>
+        <roleAndSubordinatesInternal>ESA_Spain_CD</roleAndSubordinatesInternal>
+    </sharedTo>
+</ListView>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>QTB_Renewal_Notice_Date__c</fullName>
+    <description>Gitlab #-1375 Calculation Of Renewal Notice Date refers to date by which sales rep needs to notify customer of Renewal</description>
+    <formula>IF(AND(ISPICKVAL(Type ,&apos;Renewal&apos;),QTB_Opp_Record_Type__c=&apos;CPQ Sales Opportunity&apos;),
+( SBQQ__RenewedContract__r.EndDate- VALUE(text(QTB_Renewal_Notice_Period__c))),NULL)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Renewal Notice Date</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Date</type>
+</CustomField>

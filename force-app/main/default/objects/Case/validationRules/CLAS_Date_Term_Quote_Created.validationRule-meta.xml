@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CLAS_Date_Term_Quote_Created</fullName>
+    <active>true</active>
+    <description>Date Term Quote Created is required before moving to customer pay status and Date Invoice Details Package Sent field</description>
+    <errorConditionFormula>AND(
+				$RecordType.Name = &quot;CLAS - RM&quot;,
+				 isblank(Date_Worksheet_Created__c ),
+				not(isblank(Date_Invoice_Details_Package_Sent__c)))</errorConditionFormula>
+    <errorMessage>Date Term Quote Created is required before Date Invoice Details Package Sent is populated</errorMessage>
+</ValidationRule>

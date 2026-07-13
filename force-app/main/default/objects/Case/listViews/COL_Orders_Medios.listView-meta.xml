@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>COL_Orders_Medios</fullName>
+    <columns>CASES.CASE_NUMBER</columns>
+    <columns>NAME</columns>
+    <columns>CASES.SUBJECT</columns>
+    <columns>CASES.STATUS</columns>
+    <columns>CASES.PRIORITY</columns>
+    <columns>CORE.USERS.ALIAS</columns>
+    <filterScope>Queue</filterScope>
+    <filters>
+        <field>CASES.SUBJECT</field>
+        <operation>contains</operation>
+        <value>Cinta,cintas,medio,medios,Contenedor,contenedores</value>
+    </filters>
+    <label>COL Orders Medios</label>
+    <queue>GSC_COL_Orders</queue>
+    <sharedTo>
+        <role>IMLA_SC_COL_COORDINATOR_CSR</role>
+        <role>IMLA_SC_COL_COORDINATOR_CSTL</role>
+        <role>IMLA_SC_COL_CSM</role>
+        <role>IMLA_SC_COL_SENIOR_AGENTS_CSR</role>
+    </sharedTo>
+</ListView>

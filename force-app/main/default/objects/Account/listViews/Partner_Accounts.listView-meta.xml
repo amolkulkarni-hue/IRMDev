@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Partner_Accounts</fullName>
+    <columns>ACCOUNT.NAME</columns>
+    <columns>IM_IMGA_Indexed__c</columns>
+    <columns>IM_Hierarchy_Level__c</columns>
+    <columns>ACCOUNT.TYPE</columns>
+    <columns>ACCOUNT.ADDRESS1_CITY</columns>
+    <columns>ACCOUNT.ADDRESS1_STATE</columns>
+    <columns>ACCOUNT.ADDRESS1_COUNTRY</columns>
+    <columns>ACCOUNT.PHONE1</columns>
+    <columns>PARENT_NAME</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>IM_Partner_Flag__c</field>
+        <operation>equals</operation>
+        <value>1</value>
+    </filters>
+    <filters>
+        <field>ACCOUNT.NAME</field>
+        <operation>contains</operation>
+        <value>google</value>
+    </filters>
+    <label>Partner Accounts</label>
+    <sharedTo>
+        <group>AccutracURM</group>
+        <group>Commercial_Healthcare</group>
+        <group>DMSReportingGroup</group>
+        <group>Executive_Level_Dashboards_Access</group>
+    </sharedTo>
+</ListView>

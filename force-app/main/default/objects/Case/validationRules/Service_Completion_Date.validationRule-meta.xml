@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Service_Completion_Date</fullName>
+    <active>true</active>
+    <description>Service Completion Date cannot be a date in the Future. For reference, check user story #26355 on Gitlab.</description>
+    <errorConditionFormula>((RecordType_Name__c = &quot;NCSP: SKP New Customer Setup&quot;) ||
+(RecordType_Name__c = &quot;NCSP: SKP Department Add Only&quot;) ||
+(RecordType_Name__c = &quot;NCSP: DP New Customer Setup&quot;) ||
+(RecordType_Name__c = &quot;NCSP: DMS&quot;) ||
+(RecordType_Name__c = &quot;NCSP: Upsell&quot;) ||
+(RecordType_Name__c = &quot;NCSP: New Customer Setup&quot;) 
+)&amp;&amp;
+OR(
+	(
+	NOT(ISCHANGED(Open_Tasks__c)) &amp;&amp;
+	ISCHANGED(Service_Completion_Date__c) &amp;&amp;
+	NOT(ISBLANK(Service_Completion_Date__c)) &amp;&amp;
+	DATEVALUE(Service_Completion_Date__c) &gt; TODAY() &amp;&amp;
+	(
+	  ISBLANK(PRIORVALUE(Service_Completion_Date__c)) ||
+	  DATEVALUE(Service_Completion_Date__c) != DATEVALUE(PRIORVALUE(Service_Completion_Date__c))
+	)
+	),
+    (	
+	ISNEW() &amp;&amp;
+	NOT(ISBLANK(Service_Completion_Date__c)) &amp;&amp;
+	DATEVALUE(Service_Completion_Date__c) &gt; TODAY() 
+	) 
+)</errorConditionFormula>
+    <errorDisplayField>Service_Completion_Date__c</errorDisplayField>
+    <errorMessage>Service Completion Date cannot be a date in the Future.</errorMessage>
+</ValidationRule>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Qual_AddOn_Required</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+  NOT(Bypass_Validation__c),
+  ISCHANGED(StageName),
+  ISPICKVAL(PRIORVALUE(StageName), &apos;Qualification&apos;),
+  ISPICKVAL(StageName, &apos;Solutioning&apos;),
+  OR(
+    ISPICKVAL(Primary_Product_Line__c, &apos;Digital Solutions&apos;),
+    ISPICKVAL(Primary_Product_Line__c, &apos;Information Governance&apos;),
+    ISPICKVAL(Primary_Product_Line__c, &apos;Insight&apos;),
+    ISPICKVAL(Secondary_Product_Line__c, &apos;Digital Solutions&apos;),
+    ISPICKVAL(Secondary_Product_Line__c, &apos;Information Governance&apos;),
+    ISPICKVAL(Secondary_Product_Line__c, &apos;Insight&apos;)
+  ),
+  PICKLISTCOUNT(Add_On__c) = 0
+)</errorConditionFormula>
+    <errorDisplayField>Add_On__c</errorDisplayField>
+    <errorMessage>Add-On is required for Digital opportunities before advancing from Qualification.</errorMessage>
+</ValidationRule>

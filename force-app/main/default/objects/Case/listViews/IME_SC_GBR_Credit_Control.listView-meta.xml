@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IME_SC_GBR_Credit_Control</fullName>
+    <booleanFilter>1 AND 2 AND 3</booleanFilter>
+    <columns>CASES.CASE_NUMBER</columns>
+    <columns>ACCOUNT.NAME</columns>
+    <columns>NAME</columns>
+    <columns>IME_SC_Category__c</columns>
+    <columns>IME_SC_Sub_Category__c</columns>
+    <columns>CASES.SUBJECT</columns>
+    <columns>CASES.STATUS</columns>
+    <columns>CASES.PRIORITY</columns>
+    <columns>CASES.CREATED_DATE</columns>
+    <columns>CORE.USERS.ALIAS</columns>
+    <filterScope>Queue</filterScope>
+    <filters>
+        <field>CASES.RECORDTYPE</field>
+        <operation>equals</operation>
+        <value>Case.IME_SC_Case</value>
+    </filters>
+    <filters>
+        <field>IME_SC_Country__c</field>
+        <operation>equals</operation>
+        <value>United Kingdom,Ireland,Norway</value>
+    </filters>
+    <filters>
+        <field>IME_SC_Sub_Category__c</field>
+        <operation>notContain</operation>
+        <value>Credit / Service Order Adjustment</value>
+    </filters>
+    <label>IME SC GBR Credit Control</label>
+    <language>en_US</language>
+    <queue>IME_SC_GBR_Credit_Control_Queue</queue>
+    <sharedTo>
+        <group>IME_SC_GBR_Service_team_backup</group>
+        <group>IME_UKI_CS_Queues_Views_Access</group>
+        <roleAndSubordinates>IME_SC_GBR_CSM</roleAndSubordinates>
+        <roleAndSubordinates>IME_SC_GBR_CSR</roleAndSubordinates>
+        <roleAndSubordinates>IME_SC_GBR_CSTL</roleAndSubordinates>
+        <roleAndSubordinates>IME_SC_GBR_NORDICS_CED</roleAndSubordinates>
+    </sharedTo>
+</ListView>

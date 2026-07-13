@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSCP_Primary_Contract_Rejection</fullName>
+    <active>true</active>
+    <description>Require Primary Contract Rejection Reason when Contract Status moves to Rejected.</description>
+    <errorConditionFormula>($RecordType.Name == &apos;NCSP: SKP New Customer Setup&apos; || $RecordType.Name == &apos;NCSP: DP New Customer Setup&apos; || $RecordType.Name == &apos;NCSP: DMS&apos; ||
+$RecordType.Name == &apos;NCSP: Tech Services New Customer Setup&apos; || $RecordType.Name == &apos;NCSP: New Customer Setup&apos;) &amp;&amp; ISPICKVAL(Primary_Contract_Rejection_Reason__c,&apos;&apos;) &amp;&amp;
+ISPICKVAL(Contract_Status__c ,&apos;Rejected&apos;) &amp;&amp; (ISCHANGED(Contract_Status__c) || ISCHANGED(Primary_Contract_Rejection_Reason__c))</errorConditionFormula>
+    <errorDisplayField>Primary_Contract_Rejection_Reason__c</errorDisplayField>
+    <errorMessage>Please enter the Primary Contract Rejection Reason when the Contract Status is Rejected.</errorMessage>
+</ValidationRule>

@@ -11,7 +11,36 @@
             <assignToReference>$Record.Business_Unit__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>GetProduct_Interest_Business_Unit_Mapping_Metadata.Business_Unit__c</elementReference>
+                <elementReference>Get_Product_Interest_Business_Unit_Mapping_Metadata.Business_Unit__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Secondary_Product_Line_Populated</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_Business_Unit_2</name>
+        <label>Assign Business Unit 2</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Business_Unit_2__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Product_Interest_Business_Unit_Mapping_Metadata1.Business_Unit__c</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>Copy_1_of_Assign_Business_Unit_2</name>
+        <label>Copy 1 of Assign Business Unit 2</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Business_Unit_2__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue></stringValue>
             </value>
         </assignmentItems>
     </assignments>
@@ -24,6 +53,25 @@
             <assignToReference>$Record.Business_Unit__c</assignToReference>
             <operator>Assign</operator>
         </assignmentItems>
+        <connector>
+            <targetReference>Secondary_Product_Line_Populated</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Update_Business_Unit</name>
+        <label>Update Business Unit</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Business_Unit__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Secondary_Product_Line_Populated</targetReference>
+        </connector>
     </assignments>
     <decisions>
         <name>If_Record_is_found</name>
@@ -38,7 +86,7 @@
             <name>Yes</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>GetProduct_Interest_Business_Unit_Mapping_Metadata</leftValueReference>
+                <leftValueReference>Get_Product_Interest_Business_Unit_Mapping_Metadata</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
@@ -51,25 +99,53 @@
         </rules>
     </decisions>
     <decisions>
-        <name>Is_Actual_Product_Interest</name>
-        <label>Is Actual Product Interest ?</label>
+        <name>Primary_Product_Line_Populated</name>
+        <label>Primary Product Line Populated ?</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <defaultConnector>
+            <targetReference>Update_Business_Unit</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
         <rules>
-            <name>Not_Null</name>
+            <name>Yes1</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>$Record.Actual_Product_Interest__c</leftValueReference>
-                <operator>IsNull</operator>
+                <leftValueReference>$Record.Primary_Product_Line__c</leftValueReference>
+                <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>GetProduct_Interest_Business_Unit_Mapping_Metadata</targetReference>
+                <targetReference>Get_Product_Interest_Business_Unit_Mapping_Metadata</targetReference>
             </connector>
-            <label>Not Null</label>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Secondary_Product_Line_Populated</name>
+        <label>Secondary Product Line Populated?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Copy_1_of_Assign_Business_Unit_2</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes2</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Secondary_Product_Line__c</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Product_Interest_Business_Unit_Mapping_Metadata1</targetReference>
+            </connector>
+            <label>Yes</label>
         </rules>
     </decisions>
     <environments>Default</environments>
@@ -95,8 +171,8 @@
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
     <recordLookups>
-        <name>GetProduct_Interest_Business_Unit_Mapping_Metadata</name>
-        <label>GetProduct Interest Business Unit Mapping Metadata</label>
+        <name>Get_Product_Interest_Business_Unit_Mapping_Metadata</name>
+        <label>Get Product Interest Business Unit Mapping Metadata</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
@@ -105,10 +181,38 @@
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
-            <field>Product_Interest__c</field>
+            <field>Product_Line__c</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>$Record.Actual_Product_Interest__c</elementReference>
+                <elementReference>$Record.Primary_Product_Line__c</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Active__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Product_Interest_Business_Unit_Mapping__mdt</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_Product_Interest_Business_Unit_Mapping_Metadata1</name>
+        <label>Get Product Interest Business Unit Mapping Metadata</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Assign_Business_Unit_2</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Product_Line__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Secondary_Product_Line__c</elementReference>
             </value>
         </filters>
         <filters>
@@ -126,9 +230,9 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Is_Actual_Product_Interest</targetReference>
+            <targetReference>Primary_Product_Line_Populated</targetReference>
         </connector>
-        <filterFormula>(ISCHANGED({!$Record.Actual_Product_Interest__c}) || ISNEW())</filterFormula>
+        <filterFormula>(ISCHANGED({!$Record.Primary_Product_Line__c}) || ISCHANGED({!$Record.Secondary_Product_Line__c}) || ISNEW())</filterFormula>
         <object>Lead</object>
         <recordTriggerType>CreateAndUpdate</recordTriggerType>
         <triggerType>RecordBeforeSave</triggerType>

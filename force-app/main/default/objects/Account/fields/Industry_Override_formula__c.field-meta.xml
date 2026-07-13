@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Industry_Override_formula__c</fullName>
+    <description>34947 : To copy data from Country Parent Account to Sales Site and this data is further used in AccountCoverageFieldsSync Apex job to update checkbox field(Industry_Override__c)</description>
+    <formula>IF(
+/*If Account is Country Parent, stores Industry Override value */
+ISPICKVAL(IM_Hierarchy_Level__c, &apos;Country Parent&apos;), Industry_Override__c,
+IF(
+/*If Account is Sales site, stores Country Parent Account&apos;s Industry Override by traversing one level up the hierarchy*/
+AND(ISPICKVAL(IM_Hierarchy_Level__c, &apos;Sales (Site)&apos;),NOT(ISBLANK(ParentId))), Parent.Industry_Override__c,
+IF(
+/*If Account is Parent HQ, stores Country Parent Account&apos;s Industry Override by traversing one level up the hierarchy*/
+ISPICKVAL(IM_Hierarchy_Level__c, &apos;Parent HQ&apos;), Parent.Industry_Override__c,Industry_Override__c)))</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Industry Override formula</label>
+    <trackHistory>false</trackHistory>
+    <type>Checkbox</type>
+</CustomField>

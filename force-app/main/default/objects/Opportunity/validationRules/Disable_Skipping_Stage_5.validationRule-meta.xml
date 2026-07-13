@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Disable_Skipping_Stage_5</fullName>
+    <active>true</active>
+    <description>User is not allowed to skip stage 5 for standard opportunities.
+#24480-Making Applicable for all Record Type</description>
+    <errorConditionFormula>AND(
+OR(
+ISPICKVAL(PRIORVALUE(StageName), &apos;1 - Qualification&apos;),ISPICKVAL(PRIORVALUE(StageName), &apos;2 - Solution Developed&apos;),ISPICKVAL(PRIORVALUE(StageName), &apos;3 - Solution Agreed&apos;),ISPICKVAL(PRIORVALUE(StageName), &apos;4 - Negotiate&apos;)
+),
+OR(
+ISPICKVAL(StageName, &apos;6 - Setup&apos;),ISPICKVAL(StageName, &apos;7 - Closed&apos;)
+),
+NOT($Permission.VR_Bypass_Permission)
+)</errorConditionFormula>
+    <errorMessage>All opportunities must pass through Stage 5 before advancing to Stage 6 or 7</errorMessage>
+</ValidationRule>

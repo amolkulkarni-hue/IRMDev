@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Opportunities_Stages_6_or_7_restrictions</fullName>
+    <active>false</active>
+    <description>Once the Opportunity has reached Stages 6 or 7, Sales users cannot make further changes to the opportunity
+#21200- Deacting the VR</description>
+    <errorConditionFormula>((ISPICKVAL(StageName , &apos;7 - Closed&apos;) || ISPICKVAL(StageName , &apos;6 - Setup&apos;)) &amp;&amp; NOT(ISCHANGED(StageName))) 
+&amp;&amp; ($Profile.Name = &quot;IM_Sales&quot; || 
+$Profile.Name = &quot;IM_Sales_eSignature&quot; || 
+$Profile.Name = &quot;IM_Sales_Schedule_A&quot; || 
+$Profile.Name = &quot;IM_Account Manager&quot; || 
+$Profile.Name = &quot;IM_Account Manager Special&quot; || 
+$Profile.Name = &quot;IM_Account Manager_Temporary&quot;) &amp;&amp;
+NOT(ISCHANGED(IME_Nb_Competitor__c)) &amp;&amp;
+NOT(ISCHANGED(IME_Nb_NoUnknownCompetitor__c)) &amp;&amp;
+NOT(ISCHANGED(IME_Winning_Competitors__c))  &amp;&amp;
+NOT(ISCHANGED(IM_Has_Competitors__c)) &amp;&amp;
+(RecordTypeId = &quot;01280000000BDei&quot; || RecordTypeId = &quot;01280000000BDeh&quot;|| RecordTypeId = &quot;01280000000BDec&quot;) &amp;&amp; NOT($Permission.Edit_Opps_in_Stage_6 )</errorConditionFormula>
+    <errorMessage>You do not have permission to update an Opportunity once it has reached Stage 6 or 7.</errorMessage>
+</ValidationRule>

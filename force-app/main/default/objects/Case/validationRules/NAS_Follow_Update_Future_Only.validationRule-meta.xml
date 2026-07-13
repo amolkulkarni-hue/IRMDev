@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NAS_Follow_Update_Future_Only</fullName>
+    <active>true</active>
+    <description>Does not allow the follow up date to be added in the past.</description>
+    <errorConditionFormula>AND( 
+$RecordType.Name = &quot;NAS General Support Case&quot;, 
+$Profile.Name &lt;&gt; &apos;System Administrator&apos;, 
+$Profile.Name &lt;&gt; &apos;IM_Custom Sys Admin&apos;, 
+$Profile.Name &lt;&gt; &apos;IME_Custom Sys Admin&apos;, 
+Follow_up_Date__c &lt; NOW(), 
+ISPICKVAL(NAS_Root_Cause_Reason__c, &quot;&quot;), 
+or( 
+ISPICKVAL(Status, &quot;On Hold - Internal&quot;), 
+ISPICKVAL(Status, &quot;On Hold - Customer&quot;), 
+ISPICKVAL(Status, &quot;In Progress&quot;) 
+) 
+)</errorConditionFormula>
+    <errorMessage>Please set Follow Up Date to a future date.</errorMessage>
+</ValidationRule>

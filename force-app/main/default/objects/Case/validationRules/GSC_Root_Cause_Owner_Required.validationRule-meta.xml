@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>GSC_Root_Cause_Owner_Required</fullName>
+    <active>true</active>
+    <description>The field &apos;Root Cause Owner&apos; is required when Root Cause Department is selected. The epic for reference #1008</description>
+    <errorConditionFormula>AND(
+RecordType_Name__c =&quot;Global Service Case&quot;,
+OR((ISPICKVAL( GSC_Root_Cause_Department__c , &quot;Care&quot;)),
+(ISPICKVAL(GSC_Root_Cause_Department__c, &quot;Online System Support&quot;)),
+(ISPICKVAL(GSC_Root_Cause_Department__c, &quot;A2C&quot;))
+),
+ISPICKVAL( GSC_Root_Cause_Owner__c , &quot;&quot; )
+)</errorConditionFormula>
+    <errorMessage>&apos;Root Cause Owner&apos; is required when Root Cause Department is selected.</errorMessage>
+</ValidationRule>

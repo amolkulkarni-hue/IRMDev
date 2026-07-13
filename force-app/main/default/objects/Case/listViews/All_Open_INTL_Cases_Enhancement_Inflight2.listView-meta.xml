@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>All_Open_INTL_Cases_Enhancement_Inflight2</fullName>
+    <booleanFilter>1 AND 2 AND 3 AND (4 or 8) AND (5 or 6 or 7) AND 9</booleanFilter>
+    <columns>CASES.CASE_NUMBER</columns>
+    <columns>Case_Assigned_To__c</columns>
+    <columns>CASES.SUBJECT</columns>
+    <columns>CASES.STATUS</columns>
+    <columns>CASES.PRIORITY</columns>
+    <columns>Target_Prod_Deployment_Date__c</columns>
+    <columns>Development_Status__c</columns>
+    <columns>OWNER_NAME</columns>
+    <columns>IM_Employee_Contact__c</columns>
+    <columns>Related_To__c</columns>
+    <columns>Issue__c</columns>
+    <columns>CASES.CREATED_DATE</columns>
+    <columns>CASES.LAST_UPDATE</columns>
+    <columns>Requested_Due_Date__c</columns>
+    <division>*</division>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>CASES.CLOSED</field>
+        <operation>equals</operation>
+        <value>0</value>
+    </filters>
+    <filters>
+        <field>CASES.RECORDTYPE</field>
+        <operation>equals</operation>
+        <value>Case.IM_Employees_Support_Case,Case.Sales_Tools_Project_Case</value>
+    </filters>
+    <filters>
+        <field>IM_Division__c</field>
+        <operation>equals</operation>
+        <value>,IME,BPM,IMAP,IMLA,IMNA</value>
+    </filters>
+    <filters>
+        <field>Issue__c</field>
+        <operation>equals</operation>
+        <value>Enhancement</value>
+    </filters>
+    <filters>
+        <field>Target_Prod_Deployment_Date__c</field>
+        <operation>equals</operation>
+        <value>THIS_MONTH</value>
+    </filters>
+    <filters>
+        <field>Target_Prod_Deployment_Date__c</field>
+        <operation>equals</operation>
+        <value>NEXT_N_DAYS:300</value>
+    </filters>
+    <filters>
+        <field>Target_Prod_Deployment_Date__c</field>
+        <operation>equals</operation>
+        <value>LAST_MONTH</value>
+    </filters>
+    <filters>
+        <field>Case_Category__c</field>
+        <operation>equals</operation>
+        <value>Enhancement,Change Request</value>
+    </filters>
+    <filters>
+        <field>Case_Assigned_To__c</field>
+        <operation>notEqual</operation>
+        <value>Bradt Dockate,Nicole Cisz,Radhika Jagadam,Priti Zende</value>
+    </filters>
+    <label>All Open INTL Cases Enhancement Inflight</label>
+    <language>en_US</language>
+    <sharedTo>
+        <group>IMEAdmins</group>
+    </sharedTo>
+</ListView>

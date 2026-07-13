@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>UBS_SITAD_APAC</fullName>
+    <columns>OPPORTUNITY.NAME</columns>
+    <columns>ACCOUNT.NAME</columns>
+    <columns>OPPORTUNITY.TYPE</columns>
+    <columns>Record_ID_18_Digit__c</columns>
+    <columns>OPPORTUNITY.CLOSE_DATE</columns>
+    <columns>OPPORTUNITY.STAGE_NAME</columns>
+    <columns>OPPORTUNITY.AMOUNT</columns>
+    <columns>Billing_Country__c</columns>
+    <columns>CORE.USERS.FULL_NAME</columns>
+    <columns>Primary_Product_Line__c</columns>
+    <columns>IM_Up_Sell_Quantity__c</columns>
+    <columns>OPPORTUNITY_SCORE</columns>
+    <columns>TOP_INSIGHT</columns>
+    <columns>OPPORTUNITY.DIVISION</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>OPPORTUNITY.NAME</field>
+        <operation>contains</operation>
+        <value>UBS</value>
+    </filters>
+    <filters>
+        <field>OPPORTUNITY.STAGE_NAME</field>
+        <operation>notEqual</operation>
+        <value>Lost</value>
+    </filters>
+    <filters>
+        <field>OPPORTUNITY.CLOSE_DATE</field>
+        <operation>greaterThan</operation>
+        <value>1/1/2022</value>
+    </filters>
+    <filters>
+        <field>Billing_Country__c</field>
+        <operation>contains</operation>
+        <value>Singapore,Thailand,Indonesia,Malaysia,China,South Korea,Japan,Taiwan,India,Hong Kong,Macau</value>
+    </filters>
+    <filters>
+        <field>OPPORTUNITY.NAME</field>
+        <operation>notContain</operation>
+        <value>SUBSEA 7</value>
+    </filters>
+    <label>UBS - SITAD APAC</label>
+</ListView>

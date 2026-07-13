@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>TCV_Required_in_stage4_and_stage5</fullName>
+    <active>true</active>
+    <description>Created this Validation rule to mandate TCV field if contract term is above 12 in stage 4 and stage 5
+#13028 #13027</description>
+    <errorConditionFormula>AND
+(
+NOT($Setup.Metadata_Activation_Settings__c.Disable_VR__c &amp;&amp; OR(ISBLANK($Setup.Metadata_Activation_Settings__c.SObject_API_Name__c),
+CONTAINS($Setup.Metadata_Activation_Settings__c.SObject_API_Name__c, &apos;Opportunity&apos;))), 
+
+Contract_Term_months__c&gt;12,
+
+OR(
+ISBLANK(Total_Contract_Value_TCV__c),
+Total_Contract_Value_TCV__c&lt;1
+),
+
+!IsVRByPassed__c,
+
+OR(
+ISPICKVAL(StageName, &apos;4 - Negotiate&apos;),
+ISPICKVAL(StageName, &apos;5 - Signed/PO in&apos;)
+),
+
+$Profile.Name &lt;&gt; &apos;IM_Sales_IMTN&apos;,
+
+
+QTB_APIProcess__c = false,
+
+NOT($Permission.VR_Bypass_Permission)
+)</errorConditionFormula>
+    <errorDisplayField>Total_Contract_Value_TCV__c</errorDisplayField>
+    <errorMessage>Please enter a valid Total Contract Value(TCV)  before  moving to Stage 4 or Stage 5. Need help? Contact your Sales Operations Business Partner.</errorMessage>
+</ValidationRule>

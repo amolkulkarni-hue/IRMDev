@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Solution_Executive_Formula__c</fullName>
+    <description>#29298: To copy data from Country Parent Account to Sales Site and this data is further used in AccountCoverageFieldsSync Apex job to update Text field(Solution_Executive__c).
+#31465: Data should not be wiped off on Orphan Sales Site Accounts</description>
+    <externalId>false</externalId>
+    <formula>IF(
+/*If Account is Country Parent, stores Solution_Executive__c value */
+ISPICKVAL(IM_Hierarchy_Level__c, &apos;Country Parent&apos;), Solution_Executive__c ,
+IF(
+/*If Account is Sales site, stores Country Parent Account&apos;s Solution_Executive__c by traversing one level up the hierarchy*/
+AND(ISPICKVAL(IM_Hierarchy_Level__c, &apos;Sales (Site)&apos;),NOT(ISBLANK(ParentId))), Parent.Solution_Executive__c,Solution_Executive__c))</formula>
+    <label>Solution Executive (Formula)</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IMESC_VR_Case5</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND( $Profile.Name &lt;&gt; &quot;System Administrator&quot;,
+$Profile.Name &lt;&gt; &quot;IM_Custom Sys Admin&quot;,
+RecordType_Name__c = &apos;IM Employees Support Case&apos;,
+ISPICKVAL(Status, &apos;New&apos;),
+OR( ISPICKVAL(IM_Division__c, &apos;BPM&apos;),ISPICKVAL(IM_Division__c, &apos;IME&apos;)),
+OR( ISPICKVAL(Related_To__c, &apos;Security&apos;),ISPICKVAL(Related_To__c, &apos;Users&apos;),ISPICKVAL(Related_To__c, &apos;Territory Management&apos;),ISPICKVAL(Related_To__c, &apos;Workflow&apos;),ISPICKVAL(Related_To__c, &apos;Email Templates&apos;),ISPICKVAL(Related_To__c, &apos;Home Page&apos;)),
+OR(OR(ISPICKVAL(Issue__c, &apos;User&apos;),ISPICKVAL(Issue__c, &apos;Territory Change&apos;),ISPICKVAL(Issue__c, &quot;Can&apos;t Login&quot;),ISPICKVAL(Issue__c, &apos;Personal Tagging&apos;),ISPICKVAL(Issue__c, &apos;Delete Records&apos;),ISPICKVAL(Issue__c, &apos;Create/Import Records&apos;),ISPICKVAL(Issue__c, &apos;Case Team&apos;),ISPICKVAL(Issue__c, &apos;Access/Visibility/Sharing Rules&apos;),ISPICKVAL(Issue__c, &apos;Create/Deactivate User&apos;)), 
+AND(ISPICKVAL(Issue__c, &apos;Restore Archived Email Messages&apos;),
+OR(ISPICKVAL(IM_Division__c, &apos;IMAP&apos;),ISPICKVAL(IM_Division__c, &apos;IME&apos;)))))</errorConditionFormula>
+    <errorMessage>For Salesforce issues and user management, submit ticket via https://irm.service-now.com/sp (select Technology &gt; General &gt; Salesforce). For Salesforce enhancements, submit request via https://forms.gle/aZPk9oYNMBni1vwq9</errorMessage>
+</ValidationRule>

@@ -1,0 +1,282 @@
+{
+  "appPageId" : "3dcdb5ae-4ff8-4c20-a318-e81c2e4d116e",
+  "componentName" : "siteforce:dynamicLayout",
+  "dataProviders" : [ ],
+  "id" : "ebc1f052-7532-4226-9afe-4471eb246f67",
+  "label" : "My orders",
+  "regions" : [ {
+    "components" : [ {
+      "componentAttributes" : {
+        "background" : "background: rgba(0,0,0,0)",
+        "backgroundOverlay" : "rgba(0,0,0,0.5)",
+        "contentAreaWidth" : 100,
+        "sectionConfig" : {
+          "UUID" : "37e0e7bc-879d-4ce3-86c7-dda39358e1b8",
+          "columns" : [ {
+            "UUID" : "3ffe9860-5b34-446b-8779-7baededddce5",
+            "columnKey" : "1",
+            "columnName" : "Column 1",
+            "columnWidth" : "12",
+            "seedComponents" : [ ]
+          } ]
+        },
+        "sectionHeight" : 300
+      },
+      "componentName" : "forceCommunity:section",
+      "id" : "37e0e7bc-879d-4ce3-86c7-dda39358e1b8",
+      "regions" : [ {
+        "components" : [ {
+          "componentAttributes" : {
+            "richTextValue" : "<div style=\"margin-left:auto;margin-right:auto;\">\n    <div class=\"pageHeadings\">\n        <div class=\"pageHeadingsTitle\">My orders</div>\n        <div class=\"pageHeadingsSubTitle\">View details of your most recent orders below</div>\n    </div>\n</div>"
+          },
+          "componentName" : "forceCommunity:htmlBlock",
+          "id" : "d253a676-7fad-4c7a-9098-a45d99057362",
+          "renderPriority" : "NEUTRAL",
+          "renditionMap" : {
+            "in" : "d31decb7-438b-4426-bb36-635b13439a2d",
+            "ko" : "a6047925-a0b1-44d1-ad01-b94b76c5c4ff",
+            "th" : "ecadc1fd-f107-4ceb-a3ba-9c234b8c862a",
+            "zh_tw" : "a1035f25-6158-400a-a4bf-3556a6b0ee92"
+          },
+          "renditions" : [ {
+            "id" : "d31decb7-438b-4426-bb36-635b13439a2d",
+            "renditionValue" : {
+              "componentAttributes" : {
+                "richTextValue" : "<div style=\"margin-left:auto;margin-right:auto;\">\n    <div class=\"pageHeadings\">\n        <div class=\"pageHeadingsTitle\">Pesanan Saya</div>\n        <div class=\"pageHeadingsSubTitle\">Lihat detail pesanan terbaru Anda di bawah ini</div>\n    </div>\n</div>"
+              }
+            },
+            "type" : "renditionComponent"
+          }, {
+            "id" : "ecadc1fd-f107-4ceb-a3ba-9c234b8c862a",
+            "renditionValue" : {
+              "componentAttributes" : {
+                "richTextValue" : "<div style=\"margin-left:auto;margin-right:auto;\">\n    <div class=\"pageHeadings\">\n        <div class=\"pageHeadingsTitle\">คำสั่งซื้อของฉัน</div>\n        <div class=\"pageHeadingsSubTitle\">ดูรายละเอียดคำสั่งซื้อล่าสุดของคุณด้านล่าง</div>\n    </div>\n</div>"
+              }
+            },
+            "type" : "renditionComponent"
+          }, {
+            "id" : "a6047925-a0b1-44d1-ad01-b94b76c5c4ff",
+            "renditionValue" : {
+              "componentAttributes" : {
+                "richTextValue" : "<div style=\"margin-left:auto;margin-right:auto;\">\n    <div class=\"pageHeadings\">\n        <div class=\"pageHeadingsTitle\">나의 주문</div>\n        <div class=\"pageHeadingsSubTitle\">최신 주문 내역을 아래에서 확인하세요.</div>\n    </div>\n</div>"
+              }
+            },
+            "type" : "renditionComponent"
+          }, {
+            "id" : "a1035f25-6158-400a-a4bf-3556a6b0ee92",
+            "renditionValue" : {
+              "componentAttributes" : {
+                "richTextValue" : "<div style=\"margin-left:auto;margin-right:auto;\">\n    <div class=\"pageHeadings\">\n        <div class=\"pageHeadingsTitle\">我的訂單</div>\n        <div class=\"pageHeadingsSubTitle\">在下方檢視您最近訂單的詳細資料</div>\n    </div>\n</div>"
+              }
+            },
+            "type" : "renditionComponent"
+          } ],
+          "type" : "component"
+        }, {
+          "componentAttributes" : {
+            "INVOICESORTDATEFIELD" : "invoice_date",
+            "ORDERSORTDATEFIELD" : "deliveryDateTime",
+            "emptyMessage" : "You don't have any recent orders",
+            "endDateLabel" : "End Date",
+            "filterByLabel" : "Filter by service date range",
+            "jsonConfiguration" : "[   {     \"label\": \"L1 Account Code\",     \"fieldName\": \"customerId\",     \"sortable\": \"true\"   },   {     \"label\": \"Order Number\",     \"fieldName\": \"orderNumber\",     \"sortable\": \"true\"   },   {     \"label\": \"Requested Date\",     \"fieldName\": \"requestDateTime\",     \"type\": \"date\",     \"sortable\": \"true\",     \"typeAttributes\": {       \"day\": \"numeric\",       \"month\": \"short\",       \"year\": \"numeric\"     }   },   {     \"label\": \"Service Date\",     \"fieldName\": \"deliveryDateTime\",     \"sortable\": \"true\",     \"type\": \"date\",     \"typeAttributes\": {       \"day\": \"numeric\",       \"month\": \"short\",       \"year\": \"numeric\"     }   },   {     \"label\": \"Order Status\",     \"fieldName\": \"orderStatus\",     \"sortable\": \"true\"   },   {     \"label\": \"L3 Account Code\",     \"fieldName\": \"departmentId\",     \"sortable\": \"true\"   },   {     \"label\": \"L2 Account Code\",     \"fieldName\": \"divisionId\",     \"sortable\": \"true\"   } ]",
+            "noSearchResultsFoundMessageLabel" : "That didn't return any results. Try again.",
+            "recordsToRetrieve" : "Orders",
+            "searchLabel" : "Search",
+            "searchPlaceholder" : "....",
+            "showFullTable" : true,
+            "startDateLabel" : "Start Date"
+          },
+          "componentName" : "c:nf_invoicesWindow",
+          "id" : "83a95442-f490-4d40-866b-a36914c25bf4",
+          "renderPriority" : "NEUTRAL",
+          "renditionMap" : {
+            "en_ie" : "038c8502-551e-4b35-993d-e719f26eddf4",
+            "in" : "0bb1cc5d-6e3e-41a7-b1cc-a18d9ca58c9e",
+            "ko" : "2e9e8766-6cc6-488f-b2b5-dacea2d56ce8",
+            "th" : "3fe7b9bc-b793-4580-aa5c-01519cf90c20",
+            "zh_tw" : "b86d5aa6-e1bb-4c52-88b3-86e46661f9e1"
+          },
+          "renditions" : [ {
+            "id" : "0bb1cc5d-6e3e-41a7-b1cc-a18d9ca58c9e",
+            "renditionValue" : {
+              "componentAttributes" : {
+                "emptyMessage" : "Anda tidak memiliki pesanan terbaru.",
+                "endDateLabel" : "Tanggal Berakhir",
+                "filterByLabel" : "Tanggal Mulai (Bidang pemilihan tanggal untuk mulai dan selesai)",
+                "jsonConfiguration" : "[   {     \"label\": \"ID Pelanggan\",     \"fieldName\": \"customerId\",     \"sortable\": \"true\"   },   {     \"label\": \"Nomor Pesanan\",     \"fieldName\": \"orderNumber\",     \"sortable\": \"true\"   },   {     \"label\": \"Tanggal yang Diminta\",     \"fieldName\": \"requestDateTime\",     \"type\": \"date\",     \"sortable\": \"true\",     \"typeAttributes\": {       \"day\": \"numeric\",       \"month\": \"short\",       \"year\": \"numeric\"     }   },   {     \"label\": \"Tanggal Layanan\",     \"fieldName\": \"deliveryDateTime\",     \"sortable\": \"true\",     \"type\": \"date\",     \"typeAttributes\": {       \"day\": \"numeric\",       \"month\": \"short\",       \"year\": \"numeric\"     }   },   {     \"label\": \"Status Pesanan\",     \"fieldName\": \"orderStatus\",     \"sortable\": \"true\"   },   {     \"label\": \"ID Departemen\",     \"fieldName\": \"departmentId\",     \"sortable\": \"true\"   },   {     \"label\": \"ID Divisi\",     \"fieldName\": \"divisionId\",     \"sortable\": \"true\"   } ]",
+                "noSearchResultsFoundMessageLabel" : "Tidak ada hasil apa pun. Coba lagi.",
+                "searchLabel" : "Cari",
+                "startDateLabel" : "Tanggal Mulai"
+              }
+            },
+            "type" : "renditionComponent"
+          }, {
+            "id" : "3fe7b9bc-b793-4580-aa5c-01519cf90c20",
+            "renditionValue" : {
+              "componentAttributes" : {
+                "emptyMessage" : "คุณไม่มีคำสั่งซื้อล่าสุด",
+                "endDateLabel" : "วันที่สิ้นสุด",
+                "filterByLabel" : "กรองตามช่วงวันที่ให้บริการ",
+                "jsonConfiguration" : "[   {     \"label\": \"รหัสบัญชี L1\",     \"fieldName\": \"customerId\",     \"sortable\": \"true\"   },   {     \"label\": \"หมายเลขคำสั่งซื้อ\",     \"fieldName\": \"orderNumber\",     \"sortable\": \"true\"   },   {     \"label\": \"วันที่ร้องขอ\",     \"fieldName\": \"requestDateTime\",     \"type\": \"date\",     \"sortable\": \"true\",     \"typeAttributes\": {       \"day\": \"numeric\",       \"month\": \"short\",       \"year\": \"numeric\"     }   },   {     \"label\": \"วันที่บริการ\",     \"fieldName\": \"deliveryDateTime\",     \"sortable\": \"true\",     \"type\": \"date\",     \"typeAttributes\": {       \"day\": \"numeric\",       \"month\": \"short\",       \"year\": \"numeric\"     }   },   {     \"label\": \"สถานะคำสั่งซื้อ\",     \"fieldName\": \"orderStatus\",     \"sortable\": \"true\"   },   {     \"label\": \"รหัสบัญชี L2\",   \"fieldName\": \"departmentId\",     \"sortable\": \"true\"   },   {     \"label\": \"รหัสบัญชี L3\",     \"fieldName\": \"divisionId\",     \"sortable\": \"true\"   } ]",
+                "noSearchResultsFoundMessageLabel" : "ไม่พบผลลัพธ์ใด ๆ ลองอีกครั้ง.",
+                "searchLabel" : "การค้นหา",
+                "startDateLabel" : "วันที่เริ่มต้น"
+              }
+            },
+            "type" : "renditionComponent"
+          }, {
+            "id" : "2e9e8766-6cc6-488f-b2b5-dacea2d56ce8",
+            "renditionValue" : {
+              "componentAttributes" : {
+                "emptyMessage" : "최근 주문이 없습니다",
+                "endDateLabel" : "종료일",
+                "filterByLabel" : "시작 날짜(시작 및 종료에 대한 날짜 선택 필드)",
+                "jsonConfiguration" : "[   {     \"label\": \"Level 1 ID\",     \"fieldName\": \"customerId\",     \"sortable\": \"true\"   },   {     \"label\": \"주문 번호\",     \"fieldName\": \"orderNumber\",     \"sortable\": \"true\"   },   {     \"label\": \"요청 날짜\",     \"fieldName\": \"requestDateTime\",     \"type\": \"date\",     \"sortable\": \"true\",     \"typeAttributes\": {       \"day\": \"numeric\",       \"month\": \"short\",       \"year\": \"numeric\"     }   },   {     \"label\": \"서비스 날짜\",     \"fieldName\": \"deliveryDateTime\",     \"sortable\": \"true\",     \"type\": \"date\",     \"typeAttributes\": {       \"day\": \"numeric\",       \"month\": \"short\",       \"year\": \"numeric\"     }   },   {     \"label\": \"주문 상태\",     \"fieldName\": \"orderStatus\",     \"sortable\": \"true\"   },   {     \"label\": \"Level 2 ID\",     \"fieldName\": \"departmentId\",     \"sortable\": \"true\"   },   {     \"label\": \"Level 3 ID\",     \"fieldName\": \"divisionId\",     \"sortable\": \"true\"   } ]",
+                "noSearchResultsFoundMessageLabel" : "검색 결과가 없습니다. 다시 시도해 보세요",
+                "searchLabel" : "검색",
+                "startDateLabel" : "시작일"
+              }
+            },
+            "type" : "renditionComponent"
+          }, {
+            "id" : "b86d5aa6-e1bb-4c52-88b3-86e46661f9e1",
+            "renditionValue" : {
+              "componentAttributes" : {
+                "INVOICESORTDATEFIELD" : "invoice_date",
+                "ORDERSORTDATEFIELD" : "deliveryDateTime",
+                "emptyMessage" : "您沒有任何近期訂單。",
+                "filterByLabel" : "依服務日期範圍篩選",
+                "jsonConfiguration" : "[   {     \"label\": \"L1 帳戶代碼\",     \"fieldName\": \"customerId\",     \"sortable\": \"true\"   },   {     \"label\": \"訂單編號\",     \"fieldName\": \"orderNumber\",     \"sortable\": \"true\"   },   {     \"label\": \"要求日期\",     \"fieldName\": \"requestDateTime\",     \"type\": \"date\",     \"sortable\": \"true\",     \"typeAttributes\": {       \"day\": \"numeric\",       \"month\": \"short\",       \"year\": \"numeric\"     }   },   {     \"label\": \"服務日期\",     \"fieldName\": \"deliveryDateTime\",     \"sortable\": \"true\",     \"type\": \"date\",     \"typeAttributes\": {       \"day\": \"numeric\",       \"month\": \"short\",       \"year\": \"numeric\"     }   },   {     \"label\": \"訂單狀態\",     \"fieldName\": \"orderStatus\",     \"sortable\": \"true\"   },   {     \"label\": \"L2 帳戶代碼\",     \"fieldName\": \"departmentId\",     \"sortable\": \"true\"   },   {     \"label\": \"L3 帳戶代碼\",     \"fieldName\": \"divisionId\",     \"sortable\": \"true\"   } ]",
+                "noSearchResultsFoundMessageLabel" : "您沒有任何近期訂單。",
+                "recordsToRetrieve" : "Orders",
+                "searchLabel" : "搜尋",
+                "searchPlaceholder" : "....",
+                "startDateLabel" : "開始日期（開始和完成日期選擇欄位）"
+              }
+            },
+            "type" : "renditionComponent"
+          }, {
+            "id" : "038c8502-551e-4b35-993d-e719f26eddf4",
+            "renditionValue" : {
+              "componentAttributes" : {
+                "emptyMessage" : "You don't have any recent orders",
+                "endDateLabel" : "End Date",
+                "filterByLabel" : "Filter by service date range",
+                "jsonConfiguration" : "[   {     \"label\": \"Customer ID\",     \"fieldName\": \"customerId\",     \"sortable\": \"true\"   },   {     \"label\": \"Order Number\",     \"fieldName\": \"orderNumber\",     \"sortable\": \"true\"   },   {     \"label\": \"Requested Date\",     \"fieldName\": \"requestDateTime\",     \"type\": \"date\",     \"sortable\": \"true\",     \"typeAttributes\": {       \"day\": \"numeric\",       \"month\": \"short\",       \"year\": \"numeric\"     }   },   {     \"label\": \"Service Date\",     \"fieldName\": \"deliveryDateTime\",     \"sortable\": \"true\",     \"type\": \"date\",     \"typeAttributes\": {       \"day\": \"numeric\",       \"month\": \"short\",       \"year\": \"numeric\"     }   },   {     \"label\": \"Order Status\",     \"fieldName\": \"orderStatus\",     \"sortable\": \"true\"   },   {     \"label\": \"Department ID\",     \"fieldName\": \"departmentId\",     \"sortable\": \"true\"   },   {     \"label\": \"Division ID\",     \"fieldName\": \"divisionId\",     \"sortable\": \"true\"   } ]",
+                "noSearchResultsFoundMessageLabel" : "",
+                "searchLabel" : "Search",
+                "startDateLabel" : "Start Date"
+              }
+            },
+            "type" : "renditionComponent"
+          } ],
+          "type" : "component"
+        }, {
+          "componentAttributes" : {
+            "richTextValue" : "<div class=\"cust-banner\" style=\"margin-left:auto;margin-right:auto;\">\n    <div class=\"pageHeadings\">\n        <div class=\"pageHeadingsTitle\">Can't find what you're looking for?</div>\n        <div class=\"pageHeadingsSubTitle\">Log in to your Orders Portal to view your full order history and details.</div>\n        <div class=\"cust-button-grp\">\n         <div class=\"cust-button\"><a href=\"http://loginciam.ironmountain.com/\" target=\"_blank\">Log in to ReQuest Web</a></div>\n        </div>\n    </div>\n</div>"
+          },
+          "componentName" : "forceCommunity:htmlBlock",
+          "id" : "2de5eadf-ba6c-479a-be4f-aa519d718ca4",
+          "renderPriority" : "NEUTRAL",
+          "renditionMap" : {
+            "en_ie" : "e0915e4e-27b1-44ab-90f1-7907ebd29c48",
+            "en_ph" : "2664fa81-28ce-42fb-9051-259f3c8ca04a",
+            "en_sg" : "178dc9b4-831e-4dad-ad8f-2cd358c2a744",
+            "in" : "4a6b9e62-719e-4c0a-b1b0-a02551eac760",
+            "ko" : "29f8ba02-d442-4ab5-8c04-dfcf44cbac43",
+            "th" : "1f946e02-0345-4f66-af7f-399c6faf7a36",
+            "zh_tw" : "4ba895f2-c733-4f63-a193-16cb157d7b2f"
+          },
+          "renditions" : [ {
+            "id" : "178dc9b4-831e-4dad-ad8f-2cd358c2a744",
+            "renditionValue" : {
+              "componentAttributes" : {
+                "richTextValue" : "<div class=\"cust-banner\" style=\"margin-left:auto;margin-right:auto;\">\n    <div class=\"pageHeadings\">\n        <div class=\"pageHeadingsTitle\">Can't find what you're looking for?</div>\n        <div class=\"pageHeadingsSubTitle\">Log in to your Orders Portal to view your full order history and details.</div>\n        <div class=\"cust-button-grp\">\n         <div class=\"cust-button\"><a href=\"http://loginciam.ironmountain.com/\">Log in to ReQuest Web</a></div>\n         <div class=\"cust-button\"><a href=\"https://www3.securesync.com/\">Log in to SecureSync</a></div>\n         <div class=\"cust-button\"><a href=\"https://trsqlsg.ironmountain.com/DHSRMWeb\">Log in to TRSQL Web</a></div>\n        </div>\n    </div>\n</div>"
+              }
+            },
+            "type" : "renditionComponent"
+          }, {
+            "id" : "2664fa81-28ce-42fb-9051-259f3c8ca04a",
+            "renditionValue" : {
+              "componentAttributes" : {
+                "richTextValue" : "<div class=\"cust-banner\" style=\"margin-left:auto;margin-right:auto;\">\n    <div class=\"pageHeadings\">\n        <div class=\"pageHeadingsTitle\">Can't find what you're looking for?</div>\n        <div class=\"pageHeadingsSubTitle\">Log in to your Orders Portal to view your full order history and details.</div>\n        <div class=\"cust-button-grp\">\n         <div class=\"cust-button\"><a href=\"http://loginciam.ironmountain.com/\">Log in to ReQuest Web</a></div>\n        </div>\n    </div>\n</div>"
+              }
+            },
+            "type" : "renditionComponent"
+          }, {
+            "id" : "4a6b9e62-719e-4c0a-b1b0-a02551eac760",
+            "renditionValue" : {
+              "componentAttributes" : {
+                "richTextValue" : "<div class=\"cust-banner\" style=\"margin-left:auto;margin-right:auto;\">\n    <div class=\"pageHeadings\">\n        <div class=\"pageHeadingsTitle\">Tidak dapat menemukan apa yang Anda cari?</div>\n        <div class=\"pageHeadingsSubTitle\">Masuk ke Portal Pesanan untuk melihat riwayat pesanan lengkap dan detailnya.</div>\n        <div class=\"cust-button-grp\">\n         <div class=\"cust-button\"><a href=\"http://loginciam.ironmountain.com/\" target=\"_blank\">Masuk ke ReQuest Web</a></div>\n        </div>\n    </div>\n</div>"
+              }
+            },
+            "type" : "renditionComponent"
+          }, {
+            "id" : "1f946e02-0345-4f66-af7f-399c6faf7a36",
+            "renditionValue" : {
+              "componentAttributes" : {
+                "richTextValue" : "<div class=\"cust-banner\" style=\"margin-left:auto;margin-right:auto;\">\n    <div class=\"pageHeadings\">\n        <div class=\"pageHeadingsTitle\">หาสิ่งที่ต้องการไม่พบใช่ไหม</div>\n        <div class=\"pageHeadingsSubTitle\">เข้าสู่ระบบPortalคำสั่งซื้อ เพื่อดูประวัติคำสั่งซื้อและรายละเอียดทั้งหมดของคุณ</div>\n        <div class=\"cust-button-grp\">\n         <div class=\"cust-button\"><a href=\"http://loginciam.ironmountain.com/\" target=\"_blank\">เข้าสู่ระบบ ReQuest Web</a></div>\n        </div>\n    </div>\n</div>"
+              }
+            },
+            "type" : "renditionComponent"
+          }, {
+            "id" : "29f8ba02-d442-4ab5-8c04-dfcf44cbac43",
+            "renditionValue" : {
+              "componentAttributes" : {
+                "richTextValue" : "<div class=\"cust-banner\" style=\"margin-left:auto;margin-right:auto;\">\n    <div class=\"pageHeadings\">\n        <div class=\"pageHeadingsTitle\">찾으시는 주문 내역이 없나요?</div>\n        <div class=\"pageHeadingsSubTitle\">주문 포털에 로그인하여 전체 주문 내역과 세부 정보를 확인하세요.</div>\n        <div class=\"cust-button-grp\">\n         <div class=\"cust-button\"><a href=\"http://loginciam.ironmountain.com/\" target=\"_blank\">주문 포털(Request Web)로 로그인/ 로그인</a></div>\n        </div>\n    </div>\n</div>"
+              }
+            },
+            "type" : "renditionComponent"
+          }, {
+            "id" : "4ba895f2-c733-4f63-a193-16cb157d7b2f",
+            "renditionValue" : {
+              "componentAttributes" : {
+                "richTextValue" : "<div class=\"cust-banner\" style=\"margin-left:auto;margin-right:auto;\">\n    <div class=\"pageHeadings\">\n        <div class=\"pageHeadingsTitle\">找不到想要尋找的內容？</div>\n        <div class=\"pageHeadingsSubTitle\">登入訂單入口網站，檢視您的完整訂單記錄和詳細資料。</div>\n        <div class=\"cust-button-grp\">\n         <div class=\"cust-button\"><a href=\"http://loginciam.ironmountain.com/\" target=\"_blank\">登入 RequestWeb</a></div>\n        </div>\n    </div>\n</div>"
+              }
+            },
+            "type" : "renditionComponent"
+          }, {
+            "id" : "e0915e4e-27b1-44ab-90f1-7907ebd29c48",
+            "renditionValue" : {
+              "componentAttributes" : {
+                "richTextValue" : "<div class=\"cust-banner\" style=\"margin-left:auto;margin-right:auto;\">\n    <div class=\"pageHeadings\">\n        <div class=\"pageHeadingsTitle\">Can't find what you're looking for?</div>\n        <div class=\"pageHeadingsSubTitle\">Log in to your Orders Portal to view your full order history and details.</div>\n        <div class=\"cust-button-grp\">\n         <div class=\"cust-button\"><a href=\"http://loginciam.ironmountain.com/\" target=\"_blank\">Log in to ReQuest Web</a></div>\n        </div>\n    </div>\n</div>"
+              }
+            },
+            "type" : "renditionComponent"
+          } ],
+          "type" : "component"
+        } ],
+        "id" : "3ffe9860-5b34-446b-8779-7baededddce5",
+        "regionLabel" : "Column 1",
+        "regionName" : "1",
+        "renditionMap" : { },
+        "type" : "region"
+      } ],
+      "renderPriority" : "NEUTRAL",
+      "renditionMap" : { },
+      "type" : "component"
+    } ],
+    "id" : "072ec31c-c9c9-4072-8bc6-37d905a59a15",
+    "regionName" : "content",
+    "type" : "region"
+  }, {
+    "components" : [ {
+      "componentAttributes" : {
+        "customHeadTags" : "",
+        "description" : "",
+        "title" : "My orders"
+      },
+      "componentName" : "forceCommunity:seoAssistant",
+      "id" : "a412b4ea-ab36-4539-995e-a9617d574f24",
+      "renditionMap" : { },
+      "type" : "component"
+    } ],
+    "id" : "d05d5e49-6742-48e7-a019-38ebbc523a98",
+    "regionName" : "sfdcHiddenRegion",
+    "type" : "region"
+  } ],
+  "themeLayoutType" : "2yMXB5LOLv2kZzfQg2HA434AHrDBTx",
+  "type" : "view",
+  "viewType" : "custom-my-orders"
+}

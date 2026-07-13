@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Upsell_Opportunity_Detail_Rule</fullName>
+    <active>true</active>
+    <description>The validation rule excludes Enterprise Rec Type.  Listed here is if we want it to trigger for ALL rec types.
+
+#26453: Added Metadata Activation Custom setting as bypass logic</description>
+    <errorConditionFormula>AND(
+NOT($Setup.Metadata_Activation_Settings__c.Disable_VR__c &amp;&amp; OR(ISBLANK($Setup.Metadata_Activation_Settings__c.SObject_API_Name__c),
+CONTAINS($Setup.Metadata_Activation_Settings__c.SObject_API_Name__c, &apos;Opportunity&apos;))),
+
+ISPICKVAL(Type,&quot;Up-Sell/Lift&quot;),(LEN( IM_Up_Sell_Detail__c ) = 0),NOT( RecordTypeId  = &quot;01280000000BDec&quot;),
+NOT($Permission.VR_Bypass_Permission))</errorConditionFormula>
+    <errorDisplayField>IM_Up_Sell_Detail__c</errorDisplayField>
+    <errorMessage>If Type is Up-Sell, you must fill in the Up-Sell Detail</errorMessage>
+</ValidationRule>

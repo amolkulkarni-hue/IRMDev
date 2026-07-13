@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>SDT_Qualification_Reason__c</fullName>
+    <description>Qualification reasons include $3M TCV, multi-product / multi-country / non-standard opportunities, or any DXP involvement - #34290</description>
+    <label>SDT Qualification Reason</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>SDT_Qualified_Not_Qualified__c</controllingField>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>TCV</fullName>
+                <default>false</default>
+                <label>TCV</label>
+            </value>
+            <value>
+                <fullName>Complexity</fullName>
+                <default>false</default>
+                <label>Complexity</label>
+            </value>
+            <value>
+                <fullName>DXP</fullName>
+                <default>false</default>
+                <label>DXP</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Tagged for SDT support</controllingFieldValue>
+            <valueName>TCV</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Tagged for SDT support</controllingFieldValue>
+            <valueName>Complexity</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Tagged for SDT support</controllingFieldValue>
+            <valueName>DXP</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

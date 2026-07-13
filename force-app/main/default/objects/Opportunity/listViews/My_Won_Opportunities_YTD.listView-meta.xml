@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>My_Won_Opportunities_YTD</fullName>
+    <columns>OPPORTUNITY.NAME</columns>
+    <columns>ACCOUNT.NAME</columns>
+    <columns>OPPORTUNITY.TYPE</columns>
+    <columns>OPPORTUNITY.STAGE_NAME</columns>
+    <columns>OPPORTUNITY.AMOUNT</columns>
+    <columns>IM_Booked_Date__c</columns>
+    <columns>OPPORTUNITY.CLOSE_DATE</columns>
+    <columns>NCSP_Status__c</columns>
+    <filterScope>Mine</filterScope>
+    <filters>
+        <field>OPPORTUNITY.STAGE_NAME</field>
+        <operation>equals</operation>
+        <value>5 - Signed/PO in,6 - Setup,7 - Closed</value>
+    </filters>
+    <filters>
+        <field>OPPORTUNITY.TYPE</field>
+        <operation>equals</operation>
+        <value>New Deal,Up-Sell/Lift</value>
+    </filters>
+    <filters>
+        <field>NCSP_Status__c</field>
+        <operation>notEqual</operation>
+        <value>,Rejected</value>
+    </filters>
+    <label>My Won Opportunities YTD</label>
+    <language>en_US</language>
+    <sharedTo>
+        <group>NASales</group>
+    </sharedTo>
+</ListView>

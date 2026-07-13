@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Digital_Use_Case_Required</fullName>
+    <active>true</active>
+    <description>&quot;Digital Use Case&quot; is required when moving to Stage 2 and the Primary Product is Digital Solutions Gitlab #17099.</description>
+    <errorConditionFormula>AND(
+	NOT(ISPICKVAL(StageName, &quot;1 - Qualification&quot;)),
+	(OR(
+		ISPICKVAL(Primary_Product_Line__c,&quot;Digital Solutions&quot;),
+		ISPICKVAL(Primary_Product_Line__c,&quot;Insight&quot;),
+		ISPICKVAL(Primary_Product_Line__c,&quot;Information Governance&quot;)
+		)
+	),
+	OR(ISPICKVAL(InSight_Opportunities__c,&quot;&quot;),
+	ISBLANK(Digital_Deal_Archetype__c),
+	ISBLANK(Add_On__c)),
+	$Profile.Name &lt;&gt; &quot;System Administrator&quot;,
+	$Profile.Name &lt;&gt; &quot;IM_Custom Sys Admin&quot;,
+	$Profile.Name &lt;&gt; &quot;IM_Sales_IMTN&quot;,
+	$Profile.Name &lt;&gt; &quot;IME_Custom Sys Admin&quot;,
+	$Profile.Name &lt;&gt; &quot;IMLA_Custom Sys Admin&quot;,
+	NOT(OR($Setup.OpportunityAttribution__c.BypassValidation__c,
+	$Permission.Bypass_Opportunity_Validations, $Permission.VR_Bypass_Permission))
+)</errorConditionFormula>
+    <errorMessage>Digital Use Case, Add-On &amp; Digital Deal Archetype fields are required for the Primary Product Line selected.</errorMessage>
+</ValidationRule>

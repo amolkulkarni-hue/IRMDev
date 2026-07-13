@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IMAP_India_Onboarding_Team</fullName>
+    <columns>CASES.CASE_NUMBER</columns>
+    <columns>CASES.SUBJECT</columns>
+    <columns>ACCOUNT.NAME</columns>
+    <columns>NAME</columns>
+    <columns>CASES.STATUS</columns>
+    <columns>CASES.PRIORITY</columns>
+    <columns>CASES.CREATED_DATE</columns>
+    <columns>CORE.USERS.ALIAS</columns>
+    <filterScope>Queue</filterScope>
+    <filters>
+        <field>Issue__c</field>
+        <operation>equals</operation>
+        <value>Account Set Up,Request Contract</value>
+    </filters>
+    <filters>
+        <field>CASES.STATUS</field>
+        <operation>notEqual</operation>
+        <value>Closed,Complete,Cancelled</value>
+    </filters>
+    <label>IMAP India Onboarding</label>
+    <language>en_US</language>
+    <queue>IME_India</queue>
+    <sharedTo>
+        <group>IME_India_Admins</group>
+        <group>IME_India_Onboarding</group>
+    </sharedTo>
+</ListView>

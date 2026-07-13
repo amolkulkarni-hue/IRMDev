@@ -1,0 +1,396 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <alerts>
+        <fullName>Send_Email_Alert_to_Created_By_When_Deal_Review_Approved_or_Rejected</fullName>
+        <description>Send Email Alert to Created By When Deal Review Approved or Rejected</description>
+        <protected>false</protected>
+        <recipients>
+            <type>creator</type>
+        </recipients>
+        <senderAddress>noreply@ironmountain.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>unfiled$public/Deal_Review_Deal_has_been_approved_or_rejected</template>
+    </alerts>
+    <alerts>
+        <fullName>Send_Email_Reminder_to_EMEA_Price_Desk_Approver_When_Deal_Review_Pending_After_3</fullName>
+        <description>Send Email Reminder to EMEA Price Desk Approver When Deal Review Pending After 3 Days</description>
+        <protected>false</protected>
+        <recipients>
+            <field>EMEA_Price_Desk_Approver__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderAddress>noreply@ironmountain.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>unfiled$public/Deal_Review_Approval_Required_Reminder_Notification</template>
+    </alerts>
+    <alerts>
+        <fullName>Send_Email_Reminder_to_L1_Approver_When_Deal_Review_Pending_After_3_Days</fullName>
+        <description>Send Email Reminder to L1 Approver When Deal Review Pending After 3 Days</description>
+        <protected>false</protected>
+        <recipients>
+            <field>L1_Approver_Backup__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <recipients>
+            <field>L1_Approver__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderAddress>noreply@ironmountain.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>unfiled$public/Deal_Review_Approval_Required_Reminder_Notification</template>
+    </alerts>
+    <alerts>
+        <fullName>Send_Email_Reminder_to_L2Commercial_Approvers_When_Deal_Review_Pending_After_3_D</fullName>
+        <description>Send Email Reminder to L2Commercial Approvers When Deal Review Pending After 3 Days</description>
+        <protected>false</protected>
+        <recipients>
+            <field>L2_Commercial_Approver_Backup__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <recipients>
+            <field>L2_Commercial_Approver__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderAddress>noreply@ironmountain.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>unfiled$public/Deal_Review_Approval_Required_Reminder_Notification</template>
+    </alerts>
+    <alerts>
+        <fullName>Send_Email_Reminder_to_L2Finance_Approvers_When_Deal_Review_Pending_After_3_Days</fullName>
+        <description>Send Email Reminder to L2Finance Approvers When Deal Review Pending After 3 Days</description>
+        <protected>false</protected>
+        <recipients>
+            <field>L2_Finance_Approver_Backup__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <recipients>
+            <field>L2_Finance_Approver__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderAddress>noreply@ironmountain.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>unfiled$public/Deal_Review_Approval_Required_Reminder_Notification</template>
+    </alerts>
+    <alerts>
+        <fullName>Send_Email_Reminder_to_L3_ALM_Commercial_Approver_When_Deal_Review_Pending_72_Hr</fullName>
+        <description>Send Email Reminder to L3 ALM Commercial Approver When Deal Review Pending After 3 Days</description>
+        <protected>false</protected>
+        <recipients>
+            <field>L3_ALM_Commercial_Approver__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderAddress>noreply@ironmountain.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>unfiled$public/Deal_Review_Approval_Required_Reminder_Notification</template>
+    </alerts>
+    <alerts>
+        <fullName>Send_Email_Reminder_to_L3_ALM_Finance_Approver_When_Deal_Review_Pending_72_Hrs</fullName>
+        <description>Send Email Reminder to L3 ALM Finance Approver When Deal Review Pending After 3 Days</description>
+        <protected>false</protected>
+        <recipients>
+            <field>L3_ALM_Finance_Approver__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderAddress>noreply@ironmountain.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>unfiled$public/Deal_Review_Approval_Required_Reminder_Notification</template>
+    </alerts>
+    <alerts>
+        <fullName>Send_Email_Reminder_to_L3_EVP_Approver_When_Deal_Review_Pending_After_3_Days</fullName>
+        <description>Send Email Reminder to L3 EVP Approver When Deal Review Pending After 3 Days</description>
+        <protected>false</protected>
+        <recipients>
+            <field>L3_Global_RIM_EVP_Approver__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderAddress>noreply@ironmountain.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>unfiled$public/Deal_Review_Approval_Required_Reminder_Notification</template>
+    </alerts>
+    <alerts>
+        <fullName>Send_Email_Reminder_to_L3_GRO_CFO_Approver_When_Deal_Review_Pending_After_3_Days</fullName>
+        <description>Send Email Reminder to L3 GRO CFO Approver When Deal Review Pending After 3 Days</description>
+        <protected>false</protected>
+        <recipients>
+            <field>L3_GRO_CFO_Approver__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderAddress>noreply@ironmountain.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>unfiled$public/Deal_Review_Approval_Required_Reminder_Notification</template>
+    </alerts>
+    <alerts>
+        <fullName>Send_Email_Reminder_to_L3_Global_Product_Approver_When_Deal_Review_Pending_After</fullName>
+        <description>Send Email Reminder to L3 Global Product Approver When Deal Review Pending After 3 Days</description>
+        <protected>false</protected>
+        <recipients>
+            <field>L3_Global_Digital_Product_Approver__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderAddress>noreply@ironmountain.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>unfiled$public/Deal_Review_Approval_Required_Reminder_Notification</template>
+    </alerts>
+    <alerts>
+        <fullName>Send_Email_Reminder_to_Price_Desk_Approver_When_Deal_Review_Pending_After_3_Days</fullName>
+        <description>Send Email Reminder to Price Desk Approver When Deal Review Pending After 3 Days</description>
+        <protected>false</protected>
+        <recipients>
+            <field>Price_Desk_Approver__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderAddress>noreply@ironmountain.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>unfiled$public/Deal_Review_Approval_Required_Reminder_Notification</template>
+    </alerts>
+    <fieldUpdates>
+        <fullName>Mark_ORB_Required</fullName>
+        <field>ORB_Required__c</field>
+        <literalValue>1</literalValue>
+        <name>Mark ORB Required</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Set_Current_SLA_Date_to_After_3_Days</fullName>
+        <field>Current_SLA_Date__c</field>
+        <formula>NOW()+ VALUE($Label.Set_Time_For_Deal_Review_Reminder_Notification)/24</formula>
+        <name>Set Current SLA Date to After 3 Days</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Set_Current_SLA_Date_to_Created_3Days</fullName>
+        <field>Current_SLA_Date__c</field>
+        <formula>IF( Red_Flag__c ,Null,NOW()+ VALUE($Label.Set_Time_For_Deal_Review_Reminder_Notification)/24)</formula>
+        <name>Set Current SLA  Date to Created+3Days</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Set_Deal_Review_to_Approved</fullName>
+        <field>Status__c</field>
+        <literalValue>Approved</literalValue>
+        <name>Set Deal Review to Approved</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Set_Deal_Review_to_Approved_DL0</fullName>
+        <field>Status__c</field>
+        <literalValue>Approved</literalValue>
+        <name>Set Deal Review to Approved</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Set_Deal_Review_to_Recalled</fullName>
+        <field>Status__c</field>
+        <literalValue>Recalled</literalValue>
+        <name>Set Deal Review to Recalled</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Set_Deal_Review_to_Rejected</fullName>
+        <field>Status__c</field>
+        <literalValue>Rejected</literalValue>
+        <name>Set Deal Review to Rejected</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Set_EMEA_Price_Desk_Approved_Date</fullName>
+        <field>EMEA_Price_Desk_Approved_Date__c</field>
+        <formula>NOW()</formula>
+        <name>Set EMEA Price Desk Approved Date</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Set_GRO_CFO_Approved_Date</fullName>
+        <field>L3_GRO_CFO_Approved_Date__c</field>
+        <formula>NOW()</formula>
+        <name>Set GRO CFO Approved Date</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Set_Global_Digital_Product_Approved_Date</fullName>
+        <field>L3_Global_Digital_Product_Approved_Date__c</field>
+        <formula>NOW()</formula>
+        <name>Set Global Digital Product Approved Date</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Set_Global_RIM_EVP_Approved_Date</fullName>
+        <field>L3_Global_RIM_EVP_Approved_Date__c</field>
+        <formula>NOW()</formula>
+        <name>Set Global RIM EVP Approved Date</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Set_L1_Approved_Date</fullName>
+        <field>L1_Approved_Date__c</field>
+        <formula>NOW()</formula>
+        <name>Set L1 Approved Date</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Set_L2_Commercial_Approved_Date</fullName>
+        <field>L2_Commercial_Approved_Date__c</field>
+        <formula>NOW()</formula>
+        <name>Set L2 Commercial Approved Date`</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Set_L2_Finance_Approved_Date</fullName>
+        <field>L2_Finance_Approved_Date__c</field>
+        <formula>NOW()</formula>
+        <name>Set L2 Finance Approved Date`</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Set_L3_ALM_Commercial_Approved_Date</fullName>
+        <field>L3_ALM_Commercial_Approved_Date__c</field>
+        <formula>NOW()</formula>
+        <name>Set L3 ALM Commercial Approved Date</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Set_L3_ALM_Finance_Approved_Date</fullName>
+        <field>L3_ALM_Finance_Approved_Date__c</field>
+        <formula>NOW()</formula>
+        <name>Set L3 ALM Finance Approved Date</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Set_Price_Desk_Approved_Date</fullName>
+        <field>Price_Desk_Approved_Date__c</field>
+        <formula>NOW()</formula>
+        <name>Set Price Desk Approved Date</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Set_Record_Approved_Date</fullName>
+        <field>Deal_Review_Approved_Date__c</field>
+        <formula>NOW()</formula>
+        <name>Set Record Approved Date</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Set_Reminder_Action_on_EVP_Approver_Step</fullName>
+        <field>Reminder_Email__c</field>
+        <formula>IF(OR(ISPICKVAL(Primary_Product_Line__c,&quot;Digital Solutions&quot;),ISPICKVAL(Primary_Product_Line__c,&quot;Information Governance&quot;),ISPICKVAL(Primary_Product_Line__c,&quot;Insight&quot;)),&quot;Send&quot;,&quot;Not Send&quot;)</formula>
+        <name>Set Reminder Action on EVP Approver Step</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Set_Reminder_to_Send</fullName>
+        <field>Reminder_Email__c</field>
+        <formula>IF( Red_Flag__c ,&quot;Not Send&quot;,&quot;Send&quot;)</formula>
+        <name>Set Reminder to Send</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Set_Reminder_to_Send1</fullName>
+        <field>Reminder_Email__c</field>
+        <formula>&quot;Send&quot;</formula>
+        <name>Set Reminder to Send1</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Set_Status_to_Pending</fullName>
+        <field>Status__c</field>
+        <literalValue>Pending</literalValue>
+        <name>Set Status to Pending</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_L1_Approved_Date</fullName>
+        <field>L1_Approved_Date__c</field>
+        <formula>NOW()</formula>
+        <name>Update L1 Approved Date</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_L2_Commercial_Approved_Date</fullName>
+        <field>L2_Commercial_Approved_Date__c</field>
+        <formula>NOW()</formula>
+        <name>Update L2 Commercial Approved Date</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_L2_Financial_Approved_Date</fullName>
+        <field>L2_Finance_Approved_Date__c</field>
+        <formula>NOW()</formula>
+        <name>Update L2 Financial Approved Date</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+</Workflow>

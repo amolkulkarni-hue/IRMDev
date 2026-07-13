@@ -1,0 +1,2389 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ReportType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <baseObject>User</baseObject>
+    <category>other</category>
+    <deployed>true</deployed>
+    <description>Users with related Lead records (includes additional lookup fields for Converted Account, Converted Contact, and Converted Opportunity).</description>
+    <join>
+        <outerJoin>false</outerJoin>
+        <relationship>Lead$OwnerId</relationship>
+    </join>
+    <label>Users with Leads</label>
+    <sections>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride># of Users</displayNameOverride>
+            <field>of_Users__c</field>
+            <table>User</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Account</displayNameOverride>
+            <field>Account</field>
+            <table>User</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Active</displayNameOverride>
+            <field>IsActive</field>
+            <table>User</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Address</displayNameOverride>
+            <field>Address</field>
+            <table>User</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Alias</displayNameOverride>
+            <field>Alias</field>
+            <table>User</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Allow Forecasting</displayNameOverride>
+            <field>ForecastEnabled</field>
+            <table>User</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Mobile</displayNameOverride>
+            <field>MobilePhone</field>
+            <table>User</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>City</displayNameOverride>
+            <field>City</field>
+            <table>User</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Cluster</displayNameOverride>
+            <field>Cluster__c</field>
+            <table>User</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Commissions ID</displayNameOverride>
+            <field>Commission_ID__c</field>
+            <table>User</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Company Name</displayNameOverride>
+            <field>CompanyName</field>
+            <table>User</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Contact</displayNameOverride>
+            <field>Contact</field>
+            <table>User</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Cost Center</displayNameOverride>
+            <field>Cost_Center__c</field>
+            <table>User</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Country</displayNameOverride>
+            <field>Country</field>
+            <table>User</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Country</displayNameOverride>
+            <field>Country_reportingpurposes__c</field>
+            <table>User</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Created By</displayNameOverride>
+            <field>CreatedBy</field>
+            <table>User</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Created Date</displayNameOverride>
+            <field>CreatedDate</field>
+            <table>User</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Current Status</displayNameOverride>
+            <field>CurrentStatus</field>
+            <table>User</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Default Currency ISO Code</displayNameOverride>
+            <field>DefaultCurrencyIsoCode</field>
+            <table>User</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Default Division</displayNameOverride>
+            <field>DefaultDivision</field>
+            <table>User</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Department</displayNameOverride>
+            <field>Department</field>
+            <table>User</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Director</displayNameOverride>
+            <field>IM_RSM__c</field>
+            <table>User</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Director Email</displayNameOverride>
+            <field>Director_Email__c</field>
+            <table>User</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Director Employee Id</displayNameOverride>
+            <field>Director_Employee_Id__c</field>
+            <table>User</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Director Name</displayNameOverride>
+            <field>Director_Name__c</field>
+            <table>User</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Division</displayNameOverride>
+            <field>Division</field>
+            <table>User</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Email</displayNameOverride>
+            <field>Email</field>
+            <table>User</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Employee Number</displayNameOverride>
+            <field>EmployeeNumber</field>
+            <table>User</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Extension</displayNameOverride>
+            <field>Extension</field>
+            <table>User</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Fax</displayNameOverride>
+            <field>Fax</field>
+            <table>User</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>First Name</displayNameOverride>
+            <field>FirstName</field>
+            <table>User</table>
+        </columns>
+        <columns>
+            <checkedByDefault>true</checkedByDefault>
+            <displayNameOverride>Full Name</displayNameOverride>
+            <field>Name</field>
+            <table>User</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>IM Department</displayNameOverride>
+            <field>IM_Department__c</field>
+            <table>User</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>IS Seller</displayNameOverride>
+            <field>IM_Area__c</field>
+            <table>User</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Language</displayNameOverride>
+            <field>LanguageLocaleKey</field>
+            <table>User</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Last Login</displayNameOverride>
+            <field>LastLoginDate</field>
+            <table>User</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Last Modified By</displayNameOverride>
+            <field>LastModifiedBy</field>
+            <table>User</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Last Modified Date</displayNameOverride>
+            <field>LastModifiedDate</field>
+            <table>User</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Last Name</displayNameOverride>
+            <field>LastName</field>
+            <table>User</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Legacy Id</displayNameOverride>
+            <field>IM_External_Id__c</field>
+            <table>User</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Locale</displayNameOverride>
+            <field>LocaleSidKey</field>
+            <table>User</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Manager</displayNameOverride>
+            <field>Manager</field>
+            <table>User</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Phone</displayNameOverride>
+            <field>Phone</field>
+            <table>User</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Profile</displayNameOverride>
+            <field>Profile</field>
+            <table>User</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Region</displayNameOverride>
+            <field>Region__c</field>
+            <table>User</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Role</displayNameOverride>
+            <field>UserRole</field>
+            <table>User</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Role Start Date</displayNameOverride>
+            <field>IM_Start_Date__c</field>
+            <table>User</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Role Type</displayNameOverride>
+            <field>Role_Type__c</field>
+            <table>User</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Sales Division</displayNameOverride>
+            <field>Sales_Division__c</field>
+            <table>User</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Sales Enablement Manager</displayNameOverride>
+            <field>Sales_Enablement_Manager__c</field>
+            <table>User</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Sales Profile</displayNameOverride>
+            <field>Sales_ProfileIM__c</field>
+            <table>User</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Sales Segment</displayNameOverride>
+            <field>Sales_Segment__c</field>
+            <table>User</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Sales Sub-Segment</displayNameOverride>
+            <field>Sales_Sub_Segment__c</field>
+            <table>User</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Site__c</field>
+            <table>User</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>State/Province</displayNameOverride>
+            <field>State</field>
+            <table>User</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Street</displayNameOverride>
+            <field>Street</field>
+            <table>User</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>SVP</displayNameOverride>
+            <field>IM_SVP__c</field>
+            <table>User</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Time Zone</displayNameOverride>
+            <field>TimeZoneSidKey</field>
+            <table>User</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Title</displayNameOverride>
+            <field>Title</field>
+            <table>User</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>User ID</displayNameOverride>
+            <field>Id</field>
+            <table>User</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Username</displayNameOverride>
+            <field>Username</field>
+            <table>User</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>VP</displayNameOverride>
+            <field>IM_VP__c</field>
+            <table>User</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>VP Email</displayNameOverride>
+            <field>VP_Email__c</field>
+            <table>User</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>VP Employee Id</displayNameOverride>
+            <field>VP_Employee_Id__c</field>
+            <table>User</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>VP Name</displayNameOverride>
+            <field>VP_Name__c</field>
+            <table>User</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>WalkMe Segment</displayNameOverride>
+            <field>WalkMe_Segment__c</field>
+            <table>User</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Zip/Postal Code</displayNameOverride>
+            <field>PostalCode</field>
+            <table>User</table>
+        </columns>
+        <masterLabel>Users</masterLabel>
+    </sections>
+    <sections>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride># of Leads</displayNameOverride>
+            <field>of_Leads__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>0-Suspect - Reached</displayNameOverride>
+            <field>IM_X0_Suspect_Reached__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>1-Inquiry - Reached</displayNameOverride>
+            <field>IM_X1_Inquiry_Reached__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>2-Marketing Qual - Reached</displayNameOverride>
+            <field>IM_X2_Marketing_Qual_Reached__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>3-Sales Accepted - Reached</displayNameOverride>
+            <field>IM_X3_Sales_Accepted_Reached__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>4-Sales Qual - Reached</displayNameOverride>
+            <field>IM_X4_Sales_Qual_Reached__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Academic Title</displayNameOverride>
+            <field>IM_Academic_Title__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Accepted</displayNameOverride>
+            <field>Accepted__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Account</displayNameOverride>
+            <field>Account__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Account ID</displayNameOverride>
+            <field>Account__c.Id</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Account id</displayNameOverride>
+            <field>Account_id__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Account</displayNameOverride>
+            <field>Company</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Account Name</displayNameOverride>
+            <field>Account__c.Name</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Account Segment</displayNameOverride>
+            <field>Account__c.Account_Segment_Formula__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Account Sub-Segment</displayNameOverride>
+            <field>Account__c.Account_Sub_Segment_Formula__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Added to Engage Flow By</displayNameOverride>
+            <field>Gong__Current_Flow_User_Name__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Address</displayNameOverride>
+            <field>Address</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>AE/ISR (Account Owner)</displayNameOverride>
+            <field>Account__c.Primary_BDE__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>AE/ISR (Account Owner) : Director</displayNameOverride>
+            <field>Account__c.Primary_BDE__c.IM_RSM__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>AE/ISR (Account Owner) : VP</displayNameOverride>
+            <field>Account__c.Primary_BDE__c.IM_VP__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Annual Revenue</displayNameOverride>
+            <field>AnnualRevenue</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Authority</displayNameOverride>
+            <field>Authority__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Bandwidth</displayNameOverride>
+            <field>Bandwidth__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Billing Address</displayNameOverride>
+            <field>Account__c.BillingAddress</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Billing Address 2</displayNameOverride>
+            <field>Account__c.Billing_Address_2__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Billing City</displayNameOverride>
+            <field>Account__c.BillingCity</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Billing State/Province</displayNameOverride>
+            <field>Account__c.BillingState</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Billing Country</displayNameOverride>
+            <field>Account__c.BillingCountry</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Budget</displayNameOverride>
+            <field>Budget__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Budgeted Amount</displayNameOverride>
+            <field>Budgeted_Amount__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Channel Program – Customer Account ID</displayNameOverride>
+            <field>Channel_Program_Customer_Account_ID__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>City</displayNameOverride>
+            <field>City</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Contact id</displayNameOverride>
+            <field>Contact_id__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Converted</displayNameOverride>
+            <field>IsConverted</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Converted Account</displayNameOverride>
+            <field>ConvertedAccount</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Converted Contact</displayNameOverride>
+            <field>ConvertedContact</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Converted Date</displayNameOverride>
+            <field>ConvertedDate</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Converted Opportunity</displayNameOverride>
+            <field>ConvertedOpportunity</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Correlation Data</displayNameOverride>
+            <field>SFGA__Correlation_Data__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>CorrelationID</displayNameOverride>
+            <field>SFGA__CorrelationID__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Country</displayNameOverride>
+            <field>Country</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Create Date Rolling Month</displayNameOverride>
+            <field>Create_Date_Rolling_Month__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Created By</displayNameOverride>
+            <field>CreatedBy</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Created By : Active</displayNameOverride>
+            <field>CreatedBy.IsActive</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Created By : Director</displayNameOverride>
+            <field>CreatedBy.IM_RSM__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Created By: Role</displayNameOverride>
+            <field>CreatedBy.UserRole</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Created By: Role Type</displayNameOverride>
+            <field>CreatedBy.Role_Type__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Created By: Sales Segment</displayNameOverride>
+            <field>CreatedBy.Sales_Segment__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Created By: Sales Sub-Segment</displayNameOverride>
+            <field>CreatedBy.Sales_Sub_Segment__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Created By: Sales Division</displayNameOverride>
+            <field>CreatedBy.Sales_Division__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Created By: SVP</displayNameOverride>
+            <field>CreatedBy.IM_SVP__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Created By: VP</displayNameOverride>
+            <field>CreatedBy.IM_VP__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Created Date</displayNameOverride>
+            <field>CreatedDate</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Current DB&amp;R Solution</displayNameOverride>
+            <field>Current_DB_R_Solution__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Current Records Mgmt Solution</displayNameOverride>
+            <field>Current_Records_Mgmt_Solution__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Current Scanning Solution</displayNameOverride>
+            <field>Current_Scanning_Solution__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Current Shred Solution</displayNameOverride>
+            <field>Current_Shred_Solution__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Currently in Engage Flow</displayNameOverride>
+            <field>Gong__Actively_Being_in_a_Flow__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Date Added to Engage Flow</displayNameOverride>
+            <field>Gong__Added_to_Flow_Date__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Data Backup &amp; Recovery Details</displayNameOverride>
+            <field>Data_Backup_Recovery_Details__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Data Backup &amp; Recovery Vendor (Other)</displayNameOverride>
+            <field>Data_Backup_Recovery_Vendor_Other__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Date Last Scored</displayNameOverride>
+            <field>Date_Last_Scored__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Decision Making Process</displayNameOverride>
+            <field>Decision_Making_Process__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Describe Need</displayNameOverride>
+            <field>Describe_Need__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Description</displayNameOverride>
+            <field>Description</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Disposition</displayNameOverride>
+            <field>Disposition__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Disqualified Reason</displayNameOverride>
+            <field>IM_Disqualified_Reason__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Account: Division</displayNameOverride>
+            <field>Account__c.IME_Display_Division__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Division</displayNameOverride>
+            <field>IME_Display_Division__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Do Not Call</displayNameOverride>
+            <field>DoNotCall</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Do Not Mail</displayNameOverride>
+            <field>IM_Do_Not_Mail__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Driver Employee Id</displayNameOverride>
+            <field>HipVoice_Employee_Id__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>DUNS Number</displayNameOverride>
+            <field>DUNs_Number__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Email</displayNameOverride>
+            <field>Email</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Email Bounced Date</displayNameOverride>
+            <field>EmailBouncedDate</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Email Bounced Reason</displayNameOverride>
+            <field>EmailBouncedReason</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Do Not Email</displayNameOverride>
+            <field>HasOptedOutOfEmail</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Employee Size Range</displayNameOverride>
+            <field>IM_Number_of_Employees__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Engage Flow ID</displayNameOverride>
+            <field>Gong__Current_Flow_ID__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Engage Flow Name</displayNameOverride>
+            <field>Gong__Current_Flow_Name__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Engage Flow Owner</displayNameOverride>
+            <field>Gong__Engage_Flow_Owner__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Engage Flow Status</displayNameOverride>
+            <field>Gong__Flow_Status__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Engagement Level (People.ai)</displayNameOverride>
+            <field>peopleai__EngagementLevel__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Engage Step Attempt ID</displayNameOverride>
+            <field>Gong__Flow_Execution_ID__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Engage Step Number</displayNameOverride>
+            <field>Gong__Current_Flow_Step_Number__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Engage Step Completion Date</displayNameOverride>
+            <field>Gong__Current_Flow_Task_Due_Date__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Engage Step Type</displayNameOverride>
+            <field>Gong__Current_Flow_Step_Type__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Fax</displayNameOverride>
+            <field>Fax</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Do Not Fax</displayNameOverride>
+            <field>HasOptedOutOfFax</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>First Name</displayNameOverride>
+            <field>FirstName</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>true</checkedByDefault>
+            <displayNameOverride>Full Name</displayNameOverride>
+            <field>Name</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Functional Area</displayNameOverride>
+            <field>IM_Functional_Area__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Account: Global Industries</displayNameOverride>
+            <field>Account__c.Global_Account__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Account: Global Managing Director</displayNameOverride>
+            <field>Account__c.Global_IMGA_Owner__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Hot MQL Date</displayNameOverride>
+            <field>Hot_MQL_Date__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>How did you hear about us?</displayNameOverride>
+            <field>IM_How_Hear_About_Us__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>IM Affiliation</displayNameOverride>
+            <field>IM_Affiliation__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>IM Group (IMGA)</displayNameOverride>
+            <field>Account__c.IM_IMGA_Indexed__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>IME Lead Count</displayNameOverride>
+            <field>IME_Lead_Count__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>IMGA Name</displayNameOverride>
+            <field>IMGA_Group__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>IMGA (Lookup)</displayNameOverride>
+            <field>Account__c.IMGA_Lookup__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>IM Lead Type</displayNameOverride>
+            <field>IM_Lead_Type__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Industry</displayNameOverride>
+            <field>Industry</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Industry</displayNameOverride>
+            <field>IM_Industry__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Industry SIC Code</displayNameOverride>
+            <field>IM_Industry_SIC_Code__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>ISR A/R Date</displayNameOverride>
+            <field>ISR_A_R_Date__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Job Level</displayNameOverride>
+            <field>IM_Job_Level__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>L2R Status</displayNameOverride>
+            <field>L2R_Status__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Language Preference</displayNameOverride>
+            <field>IM_Language_Preference__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Last Activity</displayNameOverride>
+            <field>LastActivityDate</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Last Modified By</displayNameOverride>
+            <field>LastModifiedBy</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Last Modified Date</displayNameOverride>
+            <field>LastModifiedDate</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Last Name</displayNameOverride>
+            <field>LastName</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Last Non-Queue Owner</displayNameOverride>
+            <field>Last_Non_Queue_Owner__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Last Transfer Date</displayNameOverride>
+            <field>LastTransferDate</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Latitude</displayNameOverride>
+            <field>Latitude</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Lead Conversion Flag</displayNameOverride>
+            <field>IM_Lead_Conversion_Flag__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Lead Currency</displayNameOverride>
+            <field>CurrencyIsoCode</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Lead Division</displayNameOverride>
+            <field>Division</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Lead Duration</displayNameOverride>
+            <field>Lead_Duration__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Lead Full Name</displayNameOverride>
+            <field>Lead_Full_Name__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Lead ID</displayNameOverride>
+            <field>Id</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Lead Owner</displayNameOverride>
+            <field>Owner</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Lead Passed Date</displayNameOverride>
+            <field>Lead_Passed_Date__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Lead Record Type</displayNameOverride>
+            <field>RecordType</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Lead Score</displayNameOverride>
+            <field>IM_Lead_Score__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Lead Score</displayNameOverride>
+            <field>Lead_Score_Image__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Lead Source - Original</displayNameOverride>
+            <field>LeadSource</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Lead Source - Most Recent</displayNameOverride>
+            <field>IM_Lead_Source_Most_Recent__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Lead Source - Most Recent Details</displayNameOverride>
+            <field>IM_Lead_Source_Most_Recent_Details__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Lead Stage</displayNameOverride>
+            <field>IM_Lead_Stage__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Lead Status</displayNameOverride>
+            <field>Status</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Lead Status Last Change Date</displayNameOverride>
+            <field>Lead_Status_Last_Change_Date__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Lead Type</displayNameOverride>
+            <field>Lead_Type__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Legacy ID</displayNameOverride>
+            <field>IM_External_ID__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Longitude</displayNameOverride>
+            <field>Longitude</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Mobile</displayNameOverride>
+            <field>MobilePhone</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Most Recent Asset Downloaded</displayNameOverride>
+            <field>IM_Most_Recent_Asset_Downloaded__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Most Recent PPC - c1</displayNameOverride>
+            <field>IM_Most_Recent_PPC_c1__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Most Recent PPC - source</displayNameOverride>
+            <field>IM_Most_Recent_PPC_source__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Most Recent Sales Activity</displayNameOverride>
+            <field>Most_Recent_Sales_Activity__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Most Recent Search Engine</displayNameOverride>
+            <field>IM_Most_Recent_Search_Engine__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Most Recent Search Query</displayNameOverride>
+            <field>IM_Most_Recent_Search_Query__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Need</displayNameOverride>
+            <field>Need__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Need/Pain</displayNameOverride>
+            <field>Need_Pain__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Need Timeframe</displayNameOverride>
+            <field>Need_Timeframe__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>New Status Duration</displayNameOverride>
+            <field>New_Status_Duration__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>New Status Entered Date</displayNameOverride>
+            <field>New_Status_Entered_Date__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Verified No of Employees</displayNameOverride>
+            <field>NumberOfEmployees</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Number of Locations</displayNameOverride>
+            <field>Number_of_Locations__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Number of Servers</displayNameOverride>
+            <field>Number_of_Servers__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Nurture Track</displayNameOverride>
+            <field>Nurture_Track__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Off-Site Storage Use</displayNameOverride>
+            <field>Off_Site_Storage_Use__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Original Lead Owner</displayNameOverride>
+            <field>IM_Original_Lead_Owner__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Original Lead Owner Role</displayNameOverride>
+            <field>IM_Original_Lead_Owner_Role__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>OSR A/R Date</displayNameOverride>
+            <field>OSR_A_R_Date__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Owner Details</displayNameOverride>
+            <field>Owner_Details__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Owner Director Formula</displayNameOverride>
+            <field>Owner_Director_Formula__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Owner Email</displayNameOverride>
+            <field>Owner_Email__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Owner Role Change Count</displayNameOverride>
+            <field>Owner_Change_Count__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Owner Role Change Time Stamp</displayNameOverride>
+            <field>Owner_Change_Time_Stamp__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Owner Segment Formula</displayNameOverride>
+            <field>Owner_Segment_Formula__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Owner Sub-Segment Formula</displayNameOverride>
+            <field>Owner_Sub_Segment_Formula__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Owner Type</displayNameOverride>
+            <field>Owner_Type__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Pain Point</displayNameOverride>
+            <field>IM_Pain_Point__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Phone</displayNameOverride>
+            <field>Phone</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Preferred Contact Method</displayNameOverride>
+            <field>IM_Contact_Method__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Product Class</displayNameOverride>
+            <field>IM_Product_Class__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Most Recent Product Interest</displayNameOverride>
+            <field>Product_Interest__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Product Line</displayNameOverride>
+            <field>IM_Product_Line__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Quarter/Month</displayNameOverride>
+            <field>Quarter_Month__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Rating</displayNameOverride>
+            <field>Rating</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Reassign Lead</displayNameOverride>
+            <field>Reassign_Lead__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Records Mgmt Details</displayNameOverride>
+            <field>Records_Mgmt_Details__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Records Mgmt Vendor (Other)</displayNameOverride>
+            <field>Records_Mgmt_Vendor_Other__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Referred By</displayNameOverride>
+            <field>Referred_By__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Related Contact</displayNameOverride>
+            <field>Related_Contact__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Related Contact: Account Name</displayNameOverride>
+            <field>Related_Contact__c.Account</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Related Contact: Account Segment</displayNameOverride>
+            <field>Related_Contact__c.Account.Account_Segment_Formula__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Related Contact: Account Sub-Segment</displayNameOverride>
+            <field>Related_Contact__c.Account.Account_Sub_Segment_Formula__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Related Contact: Customer Success Manager</displayNameOverride>
+            <field>Related_Contact__c.Account.Tele_CDE__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Related Contact: Global Industries</displayNameOverride>
+            <field>Related_Contact__c.Account.Global_Account__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Global Managing Director</displayNameOverride>
+            <field>Related_Contact__c.Account.Global_IMGA_Owner__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Retention Requirements</displayNameOverride>
+            <field>Retention_Requirements__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Sales Division</displayNameOverride>
+            <field>Sales_Division__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Sales Event</displayNameOverride>
+            <field>IM_Sales_Event__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Sales Segment</displayNameOverride>
+            <field>Sales_Segment__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Sales Sub-Segment</displayNameOverride>
+            <field>Sales_Sub_Segment__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Sales Territory</displayNameOverride>
+            <field>Sales_Territory__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Salutation</displayNameOverride>
+            <field>Salutation</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Scan Details</displayNameOverride>
+            <field>Scan_Details__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Scanning Vendor (Other)</displayNameOverride>
+            <field>Scanning_Vendor_Other__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Server Backup PAIN</displayNameOverride>
+            <field>Server_Backup_PAIN__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Server Operating System</displayNameOverride>
+            <field>Server_Operating_System__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Shred Details</displayNameOverride>
+            <field>Shred_Details__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Shred Vendor (Other)</displayNameOverride>
+            <field>Shred_Vendor_Other__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Stage 0 Duration</displayNameOverride>
+            <field>Stage_0_Duration__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Stage 0 Entered Date</displayNameOverride>
+            <field>Stage_0_Entered_Date__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Stage 1 Duration</displayNameOverride>
+            <field>Stage_1_Duration__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Stage 1 Entered Date</displayNameOverride>
+            <field>IM_Stage_1_Entered_Date__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Stage 2 Duration</displayNameOverride>
+            <field>Stage_2_Duration__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Stage 2 Entered Date</displayNameOverride>
+            <field>IM_Stage_2_Entered_Date__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Stage 3 Duration</displayNameOverride>
+            <field>Stage_3_Duration__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Stage 3 Entered Date</displayNameOverride>
+            <field>IM_Stage_3_Entered_Date__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Stage 4 Duration</displayNameOverride>
+            <field>Stage_4_Duration__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Stage 4 Entered Date</displayNameOverride>
+            <field>IM_Stage_4_Entered_Date__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>State/Province/County</displayNameOverride>
+            <field>State</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Street</displayNameOverride>
+            <field>Street</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>SYSTEM - LS2 Lead Rating (1 week back)</displayNameOverride>
+            <field>SYSTEM_LS2_Lead_Rating_1_week_back__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>SYSTEM - LS2 Lead Rating (2 weeks back)</displayNameOverride>
+            <field>SYSTEM_LS2_Lead_Rating_2_weeks_back__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>SYSTEM - LS2 Lead Rating (3 weeks back)</displayNameOverride>
+            <field>SYSTEM_LS2_Lead_Rating_3_weeks_back__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>SYSTEM - LS2 Lead Rating (4 weeks back)</displayNameOverride>
+            <field>SYSTEM_LS2_Lead_Rating_4_weeks_back__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Time Frame</displayNameOverride>
+            <field>Time_Frame__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Time Frame Date</displayNameOverride>
+            <field>Time_Frame_Date__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Time Zone</displayNameOverride>
+            <field>IM_Time_Zone__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Title</displayNameOverride>
+            <field>Title</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Total Storage in GB</displayNameOverride>
+            <field>Total_Storage_in_GB__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Unique Lead</displayNameOverride>
+            <field>Unique_Lead__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Unread By Owner</displayNameOverride>
+            <field>IsUnreadByOwner</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Website</displayNameOverride>
+            <field>Website</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Web Source</displayNameOverride>
+            <field>SFGA__Web_Source__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>What&apos;s Being Shredded?</displayNameOverride>
+            <field>Whats_Being_Shredded__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>What&apos;s in the Box (Records Mgmt)?</displayNameOverride>
+            <field>Whats_in_the_Box_Records_Mgmt__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>What&apos;s in the Box (Scan)?</displayNameOverride>
+            <field>Whats_in_the_Box_Scan__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Who Changed Owner</displayNameOverride>
+            <field>Who_Changed_Owner__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Year</displayNameOverride>
+            <field>Year__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Account: Billing Zip/Postal Code</displayNameOverride>
+            <field>Account__c.BillingPostalCode</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Zip/Postal Code</displayNameOverride>
+            <field>PostalCode</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <masterLabel>Leads (Lead Owner)</masterLabel>
+    </sections>
+    <sections>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Converted Account: # of Accounts</displayNameOverride>
+            <field>ConvertedAccount.of_Accounts__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Converted Account: Account Division</displayNameOverride>
+            <field>ConvertedAccount.Division</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Converted Account: Account ID</displayNameOverride>
+            <field>ConvertedAccount.Id</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Converted Account: Account Name</displayNameOverride>
+            <field>ConvertedAccount.Name</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Converted Account: Account Segment</displayNameOverride>
+            <field>ConvertedAccount.Account_Segment_Formula__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Converted Account: Account Sub-Segment</displayNameOverride>
+            <field>ConvertedAccount.Account_Sub_Segment_Formula__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Converted Account: Billing Address</displayNameOverride>
+            <field>ConvertedAccount.BillingAddress</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Converted Account: Primary BDE</displayNameOverride>
+            <field>ConvertedAccount.Primary_BDE__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Converted Account: Billing Address 2</displayNameOverride>
+            <field>ConvertedAccount.Billing_Address_2__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Converted Account: Billing City</displayNameOverride>
+            <field>ConvertedAccount.BillingCity</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Converted Account: Billing Country</displayNameOverride>
+            <field>ConvertedAccount.BillingCountry</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Converted Account: Billing State/Province</displayNameOverride>
+            <field>ConvertedAccount.BillingState</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Converted Account: Billing Zip/Postal Code</displayNameOverride>
+            <field>ConvertedAccount.BillingPostalCode</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Converted Account: Created Date</displayNameOverride>
+            <field>ConvertedAccount.CreatedDate</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Converted Account: Created By</displayNameOverride>
+            <field>ConvertedAccount.CreatedBy</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Converted Account: Division</displayNameOverride>
+            <field>ConvertedAccount.IME_Display_Division__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Converted Account: Global Industries</displayNameOverride>
+            <field>ConvertedAccount.Global_Account__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Converted Account: Global Managing Director</displayNameOverride>
+            <field>ConvertedAccount.Global_IMGA_Owner__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Converted Account: IM Group (IMGA)</displayNameOverride>
+            <field>ConvertedAccount.IM_IMGA_Indexed__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Converted Account: IMGA (Lookup)</displayNameOverride>
+            <field>ConvertedAccount.IMGA_Lookup__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Converted Account: IMGA Owner</displayNameOverride>
+            <field>ConvertedAccount.IMGA_Owner__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <masterLabel>Converted Accounts</masterLabel>
+    </sections>
+    <sections>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Converted Contact: # of Contacts</displayNameOverride>
+            <field>ConvertedContact.of_Contacts__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Converted Contact: Account Name</displayNameOverride>
+            <field>ConvertedContact.Account</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Converted Contact: Contact Division</displayNameOverride>
+            <field>ConvertedContact.Division</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Converted Contact: Contact ID</displayNameOverride>
+            <field>ConvertedContact.Id</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Converted Contact: Created By</displayNameOverride>
+            <field>ConvertedContact.CreatedBy</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Converted Contact: Created Date</displayNameOverride>
+            <field>ConvertedContact.CreatedDate</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Converted Contact: Email</displayNameOverride>
+            <field>ConvertedContact.Email</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Converted Contact: Full Name</displayNameOverride>
+            <field>ConvertedContact.Name</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Converted Contact: Job Level</displayNameOverride>
+            <field>ConvertedContact.IM_Job_Level__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Converted Contact: Last Activity</displayNameOverride>
+            <field>ConvertedContact.LastActivityDate</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Converted Contact: Role</displayNameOverride>
+            <field>ConvertedContact.IM_Role__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Converted Contact: Title</displayNameOverride>
+            <field>ConvertedContact.Title</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <masterLabel>Converted Contacts</masterLabel>
+    </sections>
+    <sections>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Converted Opportunity: # of Opportunities</displayNameOverride>
+            <field>ConvertedOpportunity.of_Opportunities__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Converted Opportunity: Account Name</displayNameOverride>
+            <field>ConvertedOpportunity.Account</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Converted Opportunity: Age</displayNameOverride>
+            <field>ConvertedOpportunity.Opportunity_Age__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Converted Opportunity: Amount</displayNameOverride>
+            <field>ConvertedOpportunity.Amount</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Converted Opportunity: Billing Country</displayNameOverride>
+            <field>ConvertedOpportunity.Billing_Country__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Converted Opportunity: Booking Duration</displayNameOverride>
+            <field>ConvertedOpportunity.Booking_Duration__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Converted Opportunity: Closed</displayNameOverride>
+            <field>ConvertedOpportunity.IsClosed</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Converted Opportunity: Close Date</displayNameOverride>
+            <field>ConvertedOpportunity.CloseDate</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Converted Opportunity: ConvertedFromLead</displayNameOverride>
+            <field>ConvertedOpportunity.ConvertedFromLead__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Converted Opportunity: Created Date</displayNameOverride>
+            <field>ConvertedOpportunity.CreatedDate</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Converted Opportunity: Created By</displayNameOverride>
+            <field>ConvertedOpportunity.CreatedBy</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Converted Opportunity: Date Lost</displayNameOverride>
+            <field>ConvertedOpportunity.Date_Lost__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Converted Opportunity: Division</displayNameOverride>
+            <field>ConvertedOpportunity.Division</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Converted Opportunity: First Bill Date</displayNameOverride>
+            <field>ConvertedOpportunity.IM_Booked_Date__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Converted Opportunity: Forecast</displayNameOverride>
+            <field>ConvertedOpportunity.IM_Commit_to_Forecast__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Converted Opportunity: Forecast Category</displayNameOverride>
+            <field>ConvertedOpportunity.ForecastCategoryName</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Converted Opportunity: Has Line Item</displayNameOverride>
+            <field>ConvertedOpportunity.HasOpportunityLineItem</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Converted Opportunity: Has Opportunity Attribution</displayNameOverride>
+            <field>ConvertedOpportunity.Has_Marketing_Attribution__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Converted Opportunity: IMGA Name</displayNameOverride>
+            <field>ConvertedOpportunity.IMGA_Name__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Converted Opportunity: IMGA Owner</displayNameOverride>
+            <field>ConvertedOpportunity.IMGA_Owner__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Converted Opportunity: Last Activity</displayNameOverride>
+            <field>ConvertedOpportunity.LastActivityDate</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Converted Opportunity: Last Stage Change Date</displayNameOverride>
+            <field>ConvertedOpportunity.LastStageChangeDate</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Converted Opportunity: Last Modified Date</displayNameOverride>
+            <field>ConvertedOpportunity.LastModifiedDate</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Converted Opportunity: Last Modified By</displayNameOverride>
+            <field>ConvertedOpportunity.LastModifiedBy</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Converted Opportunity: Lead Source</displayNameOverride>
+            <field>ConvertedOpportunity.LeadSource</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Converted Opportunity: Lead Source - Most Recent</displayNameOverride>
+            <field>ConvertedOpportunity.Lead_Source_Most_Recent__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Converted Opportunity: M1 Revenue</displayNameOverride>
+            <field>ConvertedOpportunity.M1_Revenue__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Converted Opportunity: M3 Revenue</displayNameOverride>
+            <field>ConvertedOpportunity.M2_Revenue__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Converted Opportunity: M5 Revenue</displayNameOverride>
+            <field>ConvertedOpportunity.M5_Revenue__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Converted Opportunity: NCSP Status</displayNameOverride>
+            <field>ConvertedOpportunity.NCSP_Status__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Converted Opportunity: Next Step</displayNameOverride>
+            <field>ConvertedOpportunity.NextStep</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Converted Opportunity: Opportunity ID</displayNameOverride>
+            <field>ConvertedOpportunity.Id</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Converted Opportunity: Opportunity ID (18 Digit)</displayNameOverride>
+            <field>ConvertedOpportunity.Record_ID_18_Digit__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Converted Opportunity: Opportunity Name</displayNameOverride>
+            <field>ConvertedOpportunity.Name</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Converted Opportunity: Opportunity Owner</displayNameOverride>
+            <field>ConvertedOpportunity.Owner</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Converted Opportunity: Opportunity Score</displayNameOverride>
+            <field>ConvertedOpportunity.Opportunity_Score__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Converted Opportunity: Probability (%)</displayNameOverride>
+            <field>ConvertedOpportunity.Probability</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Converted Opportunity: Primary Product Line</displayNameOverride>
+            <field>ConvertedOpportunity.Primary_Product_Line__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Converted Opportunity: Primary Campaign Name</displayNameOverride>
+            <field>ConvertedOpportunity.Primary_Campaign_Name__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Converted Opportunity: Primary Campaign Source</displayNameOverride>
+            <field>ConvertedOpportunity.Campaign</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Converted Opportunity: Reason Lost</displayNameOverride>
+            <field>ConvertedOpportunity.IM_Reason_Lost__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Converted Opportunity: Reason Won</displayNameOverride>
+            <field>ConvertedOpportunity.IME_Reason_Won__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Converted Opportunity: Record Type</displayNameOverride>
+            <field>ConvertedOpportunity.RecordType</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Converted Opportunity: Sales Segment</displayNameOverride>
+            <field>ConvertedOpportunity.Sales_Segment__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Converted Opportunity: Sales Sub-Segment</displayNameOverride>
+            <field>ConvertedOpportunity.Sales_Sub_Segment__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Converted Opportunity: Stage</displayNameOverride>
+            <field>ConvertedOpportunity.StageName</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Converted Opportunity: Won</displayNameOverride>
+            <field>ConvertedOpportunity.IsWon</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <masterLabel>Converted Opportunities</masterLabel>
+    </sections>
+    <sections>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Stage_Sequence__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Nurture_Reason__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Business_Unit__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Role__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Lead_Identified_By__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>First_Contacted_Date_Time__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Time_to_First_Contact__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Accepted_Date_Time__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Time_to_Accept_Hours__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Next_Step__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Next_Step_Date__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Country__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Budget_Identified__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Authority_Confirmed__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Need_Confirmed__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Timeframe_Defined__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Company_Name__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Lead_Source_Details__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Primary_Product_Line__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Secondary_Product_Line__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Business_Unit_2__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Converted_Contact_Id__c</field>
+            <table>User.Lead$OwnerId</table>
+        </columns>
+        <masterLabel>Leads</masterLabel>
+    </sections>
+</ReportType>

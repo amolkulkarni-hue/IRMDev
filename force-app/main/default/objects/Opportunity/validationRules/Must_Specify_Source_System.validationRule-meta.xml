@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Must_Specify_Source_System</fullName>
+    <active>true</active>
+    <description>Must Specify Source System if Customer ID is entered against opportunity. IME Only</description>
+    <errorConditionFormula>AND(NOT(ISBLANK( Customer_Account_Number__c)), ISBLANK(TEXT( Source_System__c)), 
+RecordTypeId = &apos;01280000000UDKJ&apos; || RecordTypeId = &quot;01280000000UEMI&quot;|| RecordTypeId = &quot;01280000000UEfu&quot;,
+NOT($Permission.VR_Bypass_Permission))</errorConditionFormula>
+    <errorDisplayField>Source_System__c</errorDisplayField>
+    <errorMessage>Must Specify Source System if Customer ID is entered against opportunity.</errorMessage>
+</ValidationRule>

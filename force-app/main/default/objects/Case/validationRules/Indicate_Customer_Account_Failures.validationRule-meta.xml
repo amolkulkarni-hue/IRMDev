@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Indicate_Customer_Account_Failures</fullName>
+    <active>true</active>
+    <description>Indicate how if all of the customer accounts were impacted by a failed Audit</description>
+    <errorConditionFormula>ISPICKVAL(Audit_Status__c,&quot;Failed&quot;)&amp;&amp;
+ISPICKVAL(Error_impact_all_Customer_Accounts__c,&quot;&quot;)&amp;&amp;
+(RecordTypeId = &quot;01280000000UP5s&quot;)</errorConditionFormula>
+    <errorDisplayField>Error_impact_all_Customer_Accounts__c</errorDisplayField>
+    <errorMessage>You must indicate if the Error impacts all of the Customer Accounts</errorMessage>
+</ValidationRule>

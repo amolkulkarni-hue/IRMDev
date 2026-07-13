@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Power_User_Group_Approval</fullName>
+    <active>true</active>
+    <description>Development Status can not be greater than &apos;5.Pending Business Approval&apos; unless the Power User Group Approval Status is set to &apos;Approved&apos; or &apos;Exempt&apos;</description>
+    <errorConditionFormula>AND(
+OR(
+ISPICKVAL( Power_User_Group_Approval_Status__c ,&apos;1. Not Yet Submitted&apos;),
+ISPICKVAL( Power_User_Group_Approval_Status__c ,&apos;2. Pending Approval&apos;),
+ISPICKVAL( Power_User_Group_Approval_Status__c ,&apos;4. Flagged for Issue Resolution&apos;)), 
+OR(
+ISPICKVAL(Development_Status__c, &apos;6. Business Approved&apos; ), 
+ISPICKVAL(Development_Status__c, &apos;7. Assigned to Business Owner for QA&apos;),
+ISPICKVAL(Development_Status__c, &apos;8. Ready for UAT Deployment&apos;),
+ISPICKVAL(Development_Status__c, &apos;9. Assigned to IT for QA&apos;),
+ISPICKVAL(Development_Status__c, &apos;10. Pending Business Approval in UAT&apos; ),  ISPICKVAL(Development_Status__c, &apos;11. UAT On Hold&apos;),  
+ISPICKVAL(Development_Status__c, &apos;12. Pending Change Control Approval&apos;), 
+ISPICKVAL(Development_Status__c, &apos;13. Ready for Prod Deployment&apos;),
+ISPICKVAL(Development_Status__c, &apos;14. Released to Production&apos;)
+))</errorConditionFormula>
+    <errorDisplayField>Power_User_Group_Approval_Status__c</errorDisplayField>
+    <errorMessage>The Power User Group Approval Status must be set to &apos;Approved&apos; or &apos;Exempt&apos; in order to advance the Development Status higher than 5. Pending Business Approval.</errorMessage>
+</ValidationRule>

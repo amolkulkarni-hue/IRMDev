@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IME_SC_SubCategory_validation</fullName>
+    <active>true</active>
+    <description>if Sub-Category is Bad Survey Score, &apos;Complaint Code&apos; can&apos;t be empty</description>
+    <errorConditionFormula>AND(NOT(ISNEW()) ,  ISPICKVAL(Status, &apos;Closed&apos;),  OR(RecordType_Name__c =&apos;IME SC Case&apos;,RecordType_Name__c =&apos;IME SC Case Resolved&apos;), ISPICKVAL(Origin, &apos;IM_Survey&apos;),  ISPICKVAL(IME_SC_Sub_Category__c, &apos;Bad Survey Score&apos;),  ISPICKVAL(IME_SC_Complaint_Code__c, &apos;&apos;))</errorConditionFormula>
+    <errorDisplayField>IME_SC_Complaint_Code__c</errorDisplayField>
+    <errorMessage>Complaint Code cannot be empty when case sub category is Bad Survey Score</errorMessage>
+</ValidationRule>

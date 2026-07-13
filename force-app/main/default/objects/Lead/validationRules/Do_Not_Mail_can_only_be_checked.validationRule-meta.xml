@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Do_Not_Mail_can_only_be_checked</fullName>
+    <active>true</active>
+    <description>Do Not Mail can be checked but not unchecked</description>
+    <errorConditionFormula>AND( 
+PRIORVALUE ( IM_Do_Not_Mail__c ), ISCHANGED ( IM_Do_Not_Mail__c), 
+$Profile.Name &lt;&gt; &quot;System Administrator&quot;,
+$Profile.Name &lt;&gt; &quot;IM_Custom Sys Admin&quot;, 
+$Profile.Name &lt;&gt; &quot;IME_Custom Sys Admin&quot;, 
+$Profile.Name &lt;&gt; &quot;IME_In_Country_Admin&quot;, 
+$Profile.Name &lt;&gt; &quot;IME_Marketing&quot;,
+$Profile.Name &lt;&gt; &quot;IMAP_In_Country_Admin&quot;, 
+$Profile.Name &lt;&gt; &quot;IMAP_SC_In_Country_Admin+&quot; ,
+$Profile.Name &lt;&gt; &quot;IMLA_In_Country_Admin&quot;, 
+$Profile.Name &lt;&gt; &quot;IMLA_Custom Sys&quot;, 
+$Profile.Name &lt;&gt; &quot;IMLA_In_Country_Admin+&quot;,
+$Profile.Name &lt;&gt; &quot;IMLA_Marketing&quot;,
+$Profile.Name &lt;&gt; &quot;IME_SC_In_Country_Admin&quot;,
+$Profile.Name &lt;&gt; &quot;IMAP_SC_In_Country_Admin&quot;,
+$Profile.Name &lt;&gt; &quot;IM_Marketing&quot;, 
+$Profile.Name &lt;&gt; &quot;IM_API Only_Admin&quot;
+)</errorConditionFormula>
+    <errorDisplayField>IM_Do_Not_Mail__c</errorDisplayField>
+    <errorMessage>Insufficient privileges to un-check Do Not Mail</errorMessage>
+</ValidationRule>

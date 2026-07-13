@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>QTB_Remove_Tax_Exempt_or_Special_Tax</fullName>
+    <active>true</active>
+    <description>QTB-SFCPQBLG-481-----cannot set tax exempt   as yes &amp; special tax condition same time.</description>
+    <errorConditionFormula>AND(NOT($Setup.Metadata_Activation_Settings__c.Disable_VR__c &amp;&amp; OR(ISBLANK($Setup.Metadata_Activation_Settings__c.SObject_API_Name__c), CONTAINS($Setup.Metadata_Activation_Settings__c.SObject_API_Name__c, &apos;Account&apos;))), RecordType.DeveloperName = $Label.QTB_AccountRecordType_Billing , NOT (ISBLANK( ParentId )),ISPICKVAL( SBQQ__TaxExempt__c,&apos;Yes&apos; ),NOT(ISBLANK(TEXT(QTB_Special_Tax_Condition__c ))),NOT(ISPICKVAL( QTB_Special_Tax_Condition__c ,&apos;None&apos;) ))</errorConditionFormula>
+    <errorMessage>You cannot set Special Tax Condition &amp; Tax Exempt as &apos;Yes&apos; same time</errorMessage>
+</ValidationRule>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Prevent_Edit_on_Closed_Case</fullName>
+    <active>true</active>
+    <description>Prevents anyone from making an edit on a closed case (For Issues, task, cac, ncsp, and retention cases only)</description>
+    <errorConditionFormula>AND(OR(ispickval(Status, &quot;Closed&quot;),ispickval(Status, &quot;Complete&quot;),ispickval(Status, &quot;Cancelled&quot;),ispickval(Status, &quot;Duplicate&quot;),
+ispickval(Status, &quot;Inactive&quot;)),
+NOT(ISCHANGED(Status)), NOT(ISCHANGED(Open_Tasks__c)), NOT(ISCHANGED(Follow_Up_Required__c)),NOT(ISCHANGED(Survey__c)),
+OR($RecordType.Name = &quot;CLAS – Data Management&quot;,
+RecordType.DeveloperName = &quot;Retention_RM&quot;, RecordType.DeveloperName = &quot;Retention_SH&quot;,
+$RecordType.Name = &quot;NCSP: DMS&quot;, $RecordType.Name = &quot;NCSP: DP New Customer Setup&quot;, $RecordType.Name = &quot;NCSP: SKP Department Add Only&quot;,
+$RecordType.Name == &quot;NCSP: Tech Services New Customer Setup&quot;, $RecordType.Name == &quot;NCSP: Upsell&quot;, $RecordType.Name ==&quot;NCSP: New Customer Setup&quot;,
+$RecordType.Name == &apos;NCSP: SKP New Customer Setup&apos;,$RecordType.Name = &quot;Ad Hoc Report and Dashboard Request Cases&quot; ),
+$Profile.Name &lt;&gt; &quot;Contract Admin NA&quot;,$Profile.Name &lt;&gt; &quot;NAS Support Manager&quot;,$Profile.Name &lt;&gt; &quot;NAS Support Manager TCOP&quot;,
+$Profile.Name &lt;&gt; &quot;NAS Support Agent&quot;,$Profile.Name &lt;&gt; &quot;IM_Custom Sys Admin&quot;,$Profile.Name &lt;&gt; &quot;IM_Sales Ops Super User&quot;,
+$Profile.Name &lt;&gt; &quot;IME_Custom Sys Admin&quot;,$Profile.Name &lt;&gt; &quot;IME_Super_User&quot;
+)</errorConditionFormula>
+    <errorMessage>No edits can be made on a closed, complete, cancelled, inactive, or duplicate case. If you wish to make an edit please reopen the case by changing the status. Note: Only managers, coordinators, and administrators can reopen a case.</errorMessage>
+</ValidationRule>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IMLA_Competitor_Reqd_If_Vended</fullName>
+    <active>true</active>
+    <description>When “Vended” is selected in the &quot;Vended/Unvended&quot; field on IMLA opportunity, at least one competitor should be added to the opportunity.</description>
+    <errorConditionFormula>AND(
+$Profile.Name &lt;&gt; &quot;System Administrator&quot;,
+$Profile.Name &lt;&gt; &quot;IME_Custom Sys Admin&quot;,
+$Profile.Name &lt;&gt; &quot;IME_Super_User&quot;,
+$Profile.Name &lt;&gt; &quot;IM_Custom Sys Admin&quot;,
+IM_Has_Competitors__c = false,
+ISPICKVAL( IME_Vended_Unvended__c, &quot;Vended&quot;),
+RecordTypeId = &quot;01280000000UEfu&quot;,
+ISNEW() = False,
+ISCHANGED(IM_Number_of_Opty_Products__c)= false,
+ISCHANGED( Pricebook2Id) = false,
+NOT($Permission.VR_Bypass_Permission))</errorConditionFormula>
+    <errorMessage>Please add a Competitor.</errorMessage>
+</ValidationRule>

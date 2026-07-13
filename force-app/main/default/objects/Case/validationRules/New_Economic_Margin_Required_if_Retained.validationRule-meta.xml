@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>New_Economic_Margin_Required_if_Retained</fullName>
+    <active>true</active>
+    <description>New Economic Margin field is required if Retained field has a value of &quot;Yes&quot;</description>
+    <errorConditionFormula>AND(
+
+OR(RecordType.DeveloperName = &quot;Retention_RM&quot;,
+
+ RecordType.Name = &quot;CLAS – Data Management&quot;),
+
+ ISBLANK(New_Economic_Margin__c ),
+
+ ISPICKVAL(Retained__c,&quot;Yes&quot;)
+
+)</errorConditionFormula>
+    <errorMessage>New Economic Margin field is required if Retained field has a value of Yes</errorMessage>
+</ValidationRule>

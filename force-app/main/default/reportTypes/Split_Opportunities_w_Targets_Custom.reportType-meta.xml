@@ -1,0 +1,4123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ReportType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <baseObject>Opportunity</baseObject>
+    <category>opportunities</category>
+    <deployed>false</deployed>
+    <description>Opportunity and Opportunity Split record w Targets</description>
+    <join>
+        <outerJoin>false</outerJoin>
+        <relationship>OpportunitySplits</relationship>
+    </join>
+    <label>Split Opportunities w Targets (Custom)</label>
+    <sections>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride># of Accounts</displayNameOverride>
+            <field>Account.of_Accounts__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>of_Opportunities__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Vended__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Unvended__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>IM_X1_Qualification_Reached__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>IM_X2_Solution_Development_Reached__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>IM_X3_Propose_Reached__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>IM_X4_Negotiate_Reached__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>IM_X5_Signed_PO_in_Reached__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>IM_X6_Setup_Reached__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>IM_X7_Closed_Reached__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Account_At_Risk_Revenue__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Account Division</displayNameOverride>
+            <field>Account.Division</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Account ID</displayNameOverride>
+            <field>Account.Id</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Account: Industry</displayNameOverride>
+            <field>Account.Industry</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Account</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Account: Address</displayNameOverride>
+            <field>Account.BillingAddress</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride> Account: City</displayNameOverride>
+            <field>Account.BillingCity</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Account: Billing Country</displayNameOverride>
+            <field>Account.BillingCountry</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Account: State/Province</displayNameOverride>
+            <field>Account.BillingState</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Account: Zip/Postal Code</displayNameOverride>
+            <field>Account.BillingPostalCode</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Account: Global Industries</displayNameOverride>
+            <field>Account.Global_Account__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Account: Global Managing Director</displayNameOverride>
+            <field>Account.Global_IMGA_Owner__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Account: Hierarchy Level</displayNameOverride>
+            <field>Account.IM_Hierarchy_Level__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Account: IMGA (Lookup)</displayNameOverride>
+            <field>Account.IMGA_Lookup__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Account: Industry</displayNameOverride>
+            <field>Account.IM_Industry__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Account: Primary BDE</displayNameOverride>
+            <field>Account.Primary_BDE__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Account: Primary BDE: Active</displayNameOverride>
+            <field>Account.Primary_BDE__c.IsActive</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Account: Primary BDE: Role</displayNameOverride>
+            <field>Account.Primary_BDE__c.UserRole</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Account: Primary BDE: Sales Segment</displayNameOverride>
+            <field>Account.Primary_BDE__c.Sales_Segment__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Account: Primary BDE: Sales Sub-Segment</displayNameOverride>
+            <field>Account.Primary_BDE__c.Sales_Sub_Segment__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Account: Primary CDE</displayNameOverride>
+            <field>Account.Primary_CDE__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Account: Primary CDE: Active</displayNameOverride>
+            <field>Account.Primary_CDE__c.IsActive</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Account: Primary CDE: Role</displayNameOverride>
+            <field>Account.Primary_CDE__c.UserRole</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Account: Primary CDE: Sales Segment</displayNameOverride>
+            <field>Account.Primary_CDE__c.Sales_Segment__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Account: Primary CDE: Sales Sub-Segment</displayNameOverride>
+            <field>Account.Primary_CDE__c.Sales_Sub_Segment__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Account Quadrant</displayNameOverride>
+            <field>Account.Account_Quadrant_Formula__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Account Segment</displayNameOverride>
+            <field>Account.Account_Segment_Formula__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Total_W_L__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Total_IMES__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Total_RIM__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Account Sub-Segment</displayNameOverride>
+            <field>Account.Account_Sub_Segment_Formula__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Account: Type</displayNameOverride>
+            <field>Account.Type</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Active_Pipeline_Indicator_FORMULA__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>ALM_of_Total__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Total_Other__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>ALM SDE</displayNameOverride>
+            <field>Account.DMS_Owner__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Total_Digital__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Amount</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>sbaa__ApprovalStatus__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>sbaa__ApprovalStep__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>sbaa__Approver__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Outreach_Attributed_Finished_Sequences__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Authority_Contact__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Billing_Country__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Billing_Country_Code__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Booking_Duration__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Active_Pipeline__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>QTB_Billing_Country_Name__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Forecast_Gap__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Booked Date</displayNameOverride>
+            <field>Booking_Year__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Budget_Amount__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Bundle__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Bundle_Description__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>IM_Category__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>IsClosed</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>CloseDate</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>IM_Competitor__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>IM_Has_Competitors__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Contact</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Contact: Email</displayNameOverride>
+            <field>Contact.Email</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Contact: Job Level</displayNameOverride>
+            <field>Contact.IM_Job_Level__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Contact: Phone</displayNameOverride>
+            <field>Contact.Phone</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Contact: Role</displayNameOverride>
+            <field>Contact.IM_Role__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Contact: Title</displayNameOverride>
+            <field>Contact.Title</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Contract_Term_months__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>ConvertedFromLead__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>CreatedBy</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Created By: Active</displayNameOverride>
+            <field>CreatedBy.IsActive</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Created By: Country</displayNameOverride>
+            <field>CreatedBy.Country</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Created By: Director</displayNameOverride>
+            <field>CreatedBy.IM_RSM__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Created By: Manager</displayNameOverride>
+            <field>CreatedBy.Manager</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Created By: Previous Role</displayNameOverride>
+            <field>CreatedBy.Previous_Role__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Created By: Region</displayNameOverride>
+            <field>CreatedBy.Region__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Created By: Role</displayNameOverride>
+            <field>CreatedBy.UserRole</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Created By: Role Type</displayNameOverride>
+            <field>CreatedBy.Role_Type__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Created By: Sales Segment</displayNameOverride>
+            <field>CreatedBy.Sales_Segment__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Created By: Sales Sub-Segment</displayNameOverride>
+            <field>CreatedBy.Sales_Sub_Segment__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Created By: VP</displayNameOverride>
+            <field>CreatedBy.IM_VP__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>CreatedDate</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Cubic_Feet__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Customer_Account_Number__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Customer Success Manager</displayNameOverride>
+            <field>Account.Tele_CDE__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>CSM: Active</displayNameOverride>
+            <field>Account.Tele_CDE__c.IsActive</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>CSM: Manager</displayNameOverride>
+            <field>Account.Tele_CDE__c.Manager</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Date_Dead__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Date_Lost__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Days_at_Stage_5__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Dead_Entered__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>TSU__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Deal_Review_Accepted__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Deal_Size_Grouping__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Description</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Discovery_Opportunity__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Digital_of_Total__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>InSight_Opportunities__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Insight_Use_Case_Other__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Disposition__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>DMS_Exception__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>DMS_Overview_Progress_Notes__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>IM_Environment_Description__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Estimated_Revenue__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>ExpectedRevenue</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>IM_Booked_Date__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>First_Bill_Booked_Date__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>First_Bill_Date_Booked_Date__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>IM_Commit_to_Forecast__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>ForecastCategoryName</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Forecast Last Modified Date</displayNameOverride>
+            <field>IME_Forecast_last_Modified__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Full_Contract_Value__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Group_Purchasing_Organization_GPO__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>GSA_Eligibility__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>US_Federal_GSA_Pricing__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Has_ABM_Attribution__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>HasOpportunityLineItem</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Has_Marketing_Attribution__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>IM Group (IMGA)</displayNameOverride>
+            <field>Account.IM_IMGA_Indexed__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>IMGA_Name__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>IMGA_Owner__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>IMGA Owner Director</displayNameOverride>
+            <field>Account.IMGA_Owner_Director__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>IMGS_Approval_Status__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Imp_Assigned__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Implementation_Comment__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Implementation_Notes__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>LastActivityDate</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>LastModifiedBy</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>LastModifiedDate</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Outreach_Last_Touch_Sequence__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>LastStageChangeDate</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>LeadSource</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Lead_Source_Most_Recent__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>IM_Lead_Source_Most_Recent_Details__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>IM_External_Id__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>IM_Lost_Comments__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Lost_Entered__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Lost_Value__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>M1_Revenue__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>M2_Revenue__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>M5_Revenue__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>NCSP_Status__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Need_Pain__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>NextStep</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>IM_Number_of_Opty_Products__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Open_Value__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Age</displayNameOverride>
+            <field>Opportunity_Age__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>CurrencyIsoCode</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Division</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Id</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Opportunity_ID__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Record_ID_18_Digit__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>true</checkedByDefault>
+            <field>Name</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Owner</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Opportunity Owner: Active</displayNameOverride>
+            <field>Owner.IsActive</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Opportunity Owner: Director</displayNameOverride>
+            <field>Owner.IM_RSM__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Opportunity Owner: Manager</displayNameOverride>
+            <field>Owner.Manager</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Opportunity Owner: Previous Role</displayNameOverride>
+            <field>Owner.Previous_Role__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Opportunity Owner: Role</displayNameOverride>
+            <field>Owner.UserRole</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Owner_Role__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Opportunity Owner: Region</displayNameOverride>
+            <field>Owner.Region__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Opportunity Owner: User ID</displayNameOverride>
+            <field>Owner.PRM_User_ID__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Opportunity Owner: User ID</displayNameOverride>
+            <field>Owner.Id</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Opportunity Owner: VP</displayNameOverride>
+            <field>Owner.IM_VP__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Opportunity_Score__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Opportunity Owner: Sales Segment</displayNameOverride>
+            <field>Owner.Sales_Segment__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Opportunity Owner: Sales Sub-Segment</displayNameOverride>
+            <field>Owner.Sales_Sub_Segment__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>RecordType</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>IME_Opportunity_Review_Date__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Order_Completed__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>IM_Original_Lead_Owner__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>IM_Original_Lead_Owner_Role__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Originating_Org__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Owner_Email__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Owner_First_Name__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Owner_Last_Name__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Owner_Link__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Owner_Manager_Email__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>IM_Parent_Opportunity__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>IM_Parent_Opportunity_Target_Amount__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>IM_Pilot_End_Date__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>IM_Pilot_Stage__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>IM_Pilot_Start_Date__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Campaign</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>PrimaryPartnerAccount</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Primary_Product_Line__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>IsPrivate</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Probability</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>PushCount</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>TotalOpportunityQuantity</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Quarter_Month__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>IM_Reason_Lost__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>IME_Reason_Won__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Recurring_Revenue__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Region__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>pse__Region__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>IM_Response_Type__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>RIM_of_Total__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Sales_Division__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>IM_Sales_Event__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>SFDC_ID__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Sales_Segment__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Sales_Sub_Segment__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Sent_to_NCSP_Date__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Sent_to_NCSP_Service_Scheduled_Age__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Service_Completed_Entered_Date__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Service_Schedule_Date__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>IM_Servicing_Region__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Outreach_Sequence_Attributed__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Application_Specialist__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Solution_Desk_Specialist__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Solution Development Specialist: Active</displayNameOverride>
+            <field>Solution_Desk_Specialist__c.IsActive</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Solution Development Specialist: Manager</displayNameOverride>
+            <field>Solution_Desk_Specialist__c.Manager</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Solution Development Specialist: User ID</displayNameOverride>
+            <field>Solution_Desk_Specialist__c.Id</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Solution_Development_Rep__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Solution Sales Specialist: Active</displayNameOverride>
+            <field>Solution_Development_Rep__c.IsActive</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Solution Sales Specialist: Manager</displayNameOverride>
+            <field>Solution_Development_Rep__c.Manager</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Solution Sales Specialist: Role</displayNameOverride>
+            <field>Solution_Development_Rep__c.UserRole</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Solution Sales Specialist: User ID</displayNameOverride>
+            <field>Solution_Development_Rep__c.Id</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>SplitAmountCalculated</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Source_System__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>StageName</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>IM_Stage_1_Entered_Date__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>IM_Stage_2_Entered_Date__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>IM_Stage_3_Entered_Date__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>IM_Stage_4_Entered_Date__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>IM_Stage_5_Entered_Date__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>IM_Stage_6_Entered_Date__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>IM_Stage_7_Entered_Date__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>StageSortOrder</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Sub_Cluster__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>QTB_Submit_To_Booking__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Submit_For_Booking__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Submit_for_Booking_Send_to_NCSP__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>sbaa__SubmittedDate__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>sbaa__SubmittedUser__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>SV_Status__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>SV_Status_Last_Changed__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>SV_Status_Notes__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>SyncedQuote</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>IM_Technical_Summary__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Today_Formula__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Total_Archiving_and_Discovery_Revenue__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Total_Contract_Value_TCV__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Total_Consulting_Revenue__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Total_Data_Backup_and_Recovery_Revenue__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Total_DMS_Revenue__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Total_Professional_Services_Revenue__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Total_New_Storage_Volume__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Total_Records_Management_Revenue__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Total_RM_Storage_Revenue__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Total_Secure_Shredding_Revenue__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Total_Storage_Revenue_Received__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Total_Tape_Vaulting_Revenue__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Type</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>IM_Unit_of_Measure__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Upsell_Customer_ID__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>IM_Up_Sell_Detail__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Upsell_Instructions__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>IM_Up_Sell_Sold_To__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>IM_Up_Sell_Quantity__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Web_Source_Code__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Weighted_Forecast__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>IsWon</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Won_Value__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Year__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Forecast_Owner__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>SUBS_Days_To_Close__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Customer_Outcome_Predefined__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Deal_Review_Status__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>IM_Legal_Entity__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Eligible_for_Negotiation__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Eligible_for_Counterparty_Paper__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Primary_Product_Interest__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Business_Unit__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Lead_Identified_By__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Multi_BU_Flag__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Bid_Management__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Business_Unit_2__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Secondary_Product_Line__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Next_Step_Date__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Remarketing_Required__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Multi_Business_Unit__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Budget_Validated__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Decision_Process_Defined__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Impact_Consequences_Identified__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Business_Problem_Evidenced__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Is_Standard_or_High_Touch__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Is_Digital_Primary_Product_Line__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Is_Healthcare_Industry__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Is_Billing_Country_US_or_Canada__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Desired_Future_State__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Success_Criteria__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Business_Case_Justification__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Internal_Approvals_Received__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Solution_Approach_Validated__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Technical_Validation_Completed__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Fuel_Surcharge_Waiver__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Free_Storage_Period__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Deal_Close_Date_Locked__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Deal_Booked_Date__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Value_Hypothesis_Scope_Reviewed__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Accepted_Quote_Test__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Bypass_Deal_Date_Lock__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Deal_Type__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Win_Reason__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Opportunity_Fields_Locked__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Deal_Completed_Date__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Converted_Lead__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <masterLabel>Opportunities</masterLabel>
+    </sections>
+    <sections>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride># of Team Members</displayNameOverride>
+            <field>SplitOwner.of_Users__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>SplitAmount</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Closing_Director_New__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Closing Director: Active</displayNameOverride>
+            <field>Closing_Director_New__c.IsActive</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Closing Director: User ID</displayNameOverride>
+            <field>Closing_Director_New__c.Id</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Closing_Manager_New__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Closing_Manager_ID__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Closing Manager: Active</displayNameOverride>
+            <field>Closing_Manager_New__c.IsActive</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Closing Manager: User ID</displayNameOverride>
+            <field>Closing_Manager_New__c.Id</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Closing_Sales_Segment__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Closing_SVP_New__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Closing SVP: Active</displayNameOverride>
+            <field>Closing_SVP_New__c.IsActive</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Closing SVP: User ID</displayNameOverride>
+            <field>Closing_SVP_New__c.Id</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Closing_VP_New__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Closing VP: Active</displayNameOverride>
+            <field>Closing_VP_New__c.IsActive</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Closing VP: User ID</displayNameOverride>
+            <field>Closing_VP_New__c.Id</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>CreatedBy</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>CreatedDate</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>CurrencyIsoCode</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>ClDirector__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Division</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>IsSplit</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: IS Seller</displayNameOverride>
+            <field>SplitOwner.IM_Area__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>LastModifiedBy</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>LastModifiedDate</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>ClManager__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>ClManagerID__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>M1_Split_Amount__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>M3_Split_Amount__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>M5_Split_Amount__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>true</checkedByDefault>
+            <field>Name</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>SplitNote</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Id</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>SplitType</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Originating_Org__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>RIM_Split_Amount__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>SplitPercentage</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>ClSalesSegment__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>SplitOwnerID__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>W_L_Split_Amount__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>SVP__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>SplitOwner</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: User ID</displayNameOverride>
+            <field>SplitOwner.Id</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Active</displayNameOverride>
+            <field>SplitOwner.IsActive</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Cluster</displayNameOverride>
+            <field>SplitOwner.Cluster__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Commissions ID</displayNameOverride>
+            <field>SplitOwner.Commission_ID__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Country</displayNameOverride>
+            <field>SplitOwner.Country</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Director</displayNameOverride>
+            <field>SplitOwner.IM_RSM__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Director: Active</displayNameOverride>
+            <field>SplitOwner.IM_RSM__c.IsActive</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Other_Split_Amount__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>IMES_Split_Amount__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Director: User ID</displayNameOverride>
+            <field>SplitOwner.IM_RSM__c.Id</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Division</displayNameOverride>
+            <field>SplitOwner.Division</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Employee ID</displayNameOverride>
+            <field>SplitOwner.Employee_ID__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Employee Number</displayNameOverride>
+            <field>SplitOwner.EmployeeNumber</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: IM Department</displayNameOverride>
+            <field>SplitOwner.IM_Department__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Last Login</displayNameOverride>
+            <field>SplitOwner.LastLoginDate</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Manager</displayNameOverride>
+            <field>SplitOwner.Manager</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Manager: Active</displayNameOverride>
+            <field>SplitOwner.Manager.IsActive</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Manager: User ID</displayNameOverride>
+            <field>SplitOwner.Manager.Id</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Previous Role</displayNameOverride>
+            <field>SplitOwner.Previous_Role__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Region</displayNameOverride>
+            <field>SplitOwner.Region__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Role</displayNameOverride>
+            <field>SplitOwner.UserRole</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>ALM_Split_Amount__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Role Type</displayNameOverride>
+            <field>SplitOwner.Role_Type__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Sales Division</displayNameOverride>
+            <field>SplitOwner.Sales_Division__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Sales Segment</displayNameOverride>
+            <field>SplitOwner.Sales_Segment__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Sales Sub-Segment</displayNameOverride>
+            <field>SplitOwner.Sales_Sub_Segment__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Digital_Split_Amount__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: SVP</displayNameOverride>
+            <field>SplitOwner.SVP__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: SVP: Active</displayNameOverride>
+            <field>SplitOwner.SVP__c.IsActive</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: SVP: User ID</displayNameOverride>
+            <field>SplitOwner.SVP__c.Id</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: VP</displayNameOverride>
+            <field>SplitOwner.IM_VP__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: VP: Active</displayNameOverride>
+            <field>SplitOwner.IM_VP__c.IsActive</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: VP: User ID</displayNameOverride>
+            <field>SplitOwner.IM_VP__c.Id</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>UserUniqueToSplitType</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>VP__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <masterLabel>Opportunity Splits</masterLabel>
+    </sections>
+    <sections>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: SVP: M1 Bookings CM Goal</displayNameOverride>
+            <field>SplitOwner.SVP__c.M1_Bookings_CM_Goal_New__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: SVP: M1 Bookings CQ Goal</displayNameOverride>
+            <field>SplitOwner.SVP__c.M1_Bookings_CQ_Goal_New__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: SVP: M1 Bookings CY Goal Currency</displayNameOverride>
+            <field>SplitOwner.SVP__c.M1_Bookings_CY_Goal_Currency__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: SVP: M1 Bookings YTD Goal</displayNameOverride>
+            <field>SplitOwner.SVP__c.M1_Bookings_YTD_Goal__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: SVP: M1 Effective Start Period</displayNameOverride>
+            <field>SplitOwner.SVP__c.M1_Effective_Start_Period__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: SVP: M1 Effective End Period</displayNameOverride>
+            <field>SplitOwner.SVP__c.M1_Effective_End_Period__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: SVP: M1 Goal Jan</displayNameOverride>
+            <field>SplitOwner.SVP__c.M1_Goal_Jan__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: SVP: M1 Goal Feb</displayNameOverride>
+            <field>SplitOwner.SVP__c.M1_Goal_Feb__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: SVP: M1 Goal Mar</displayNameOverride>
+            <field>SplitOwner.SVP__c.M1_Goal_Mar__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: SVP: M1 Goal Apr</displayNameOverride>
+            <field>SplitOwner.SVP__c.M1_Goal_Apr__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: SVP: M1 Goal May</displayNameOverride>
+            <field>SplitOwner.SVP__c.M1_Goal_May__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: SVP: M1 Goal June</displayNameOverride>
+            <field>SplitOwner.SVP__c.M1_Goal_June__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: SVP: M1 Goal July</displayNameOverride>
+            <field>SplitOwner.SVP__c.M1_Goal_July__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: SVP: M1 Goal Aug</displayNameOverride>
+            <field>SplitOwner.SVP__c.M1_Goal_Aug__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: SVP: M1 Goal Sept</displayNameOverride>
+            <field>SplitOwner.SVP__c.M1_Goal_Sept__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: SVP: M1 Goal Oct</displayNameOverride>
+            <field>SplitOwner.SVP__c.M1_Goal_Oct__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: SVP: M1 Goal Nov</displayNameOverride>
+            <field>SplitOwner.SVP__c.M1_Goal_Nov__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: SVP: M1 Goal Dec</displayNameOverride>
+            <field>SplitOwner.SVP__c.M1_Goal_Dec__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: SVP: M1 Pipeline CY Goal</displayNameOverride>
+            <field>SplitOwner.SVP__c.M1_Pipeline_CY_Goal__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: SVP: M1 Weight</displayNameOverride>
+            <field>SplitOwner.SVP__c.M1_Bookings_CY_Adjustment__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: SVP: M1 YTD Goal Start Period</displayNameOverride>
+            <field>SplitOwner.SVP__c.M1_YTD_Goal_Start_Period__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: SVP: M1 YTD Goal End Period</displayNameOverride>
+            <field>SplitOwner.SVP__c.M1_YTD_Goal_End_Period__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: SVP: M3 Bookings CM Goal</displayNameOverride>
+            <field>SplitOwner.SVP__c.M3_Bookings_CM_Goal_New__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: SVP: M3 Bookings CQ Goal</displayNameOverride>
+            <field>SplitOwner.SVP__c.M3_Bookings_CQ_Goal_New__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: SVP: M3 Bookings CY Goal Currency</displayNameOverride>
+            <field>SplitOwner.SVP__c.M3_Bookings_CY_Goal_Currency__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: SVP: M3 Bookings YTD Goal</displayNameOverride>
+            <field>SplitOwner.SVP__c.M3_Bookings_YTD_Goal__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: SVP: M3 Effective Start Period</displayNameOverride>
+            <field>SplitOwner.SVP__c.M3_Effective_Start_Period__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: SVP: M3 Effective End Period</displayNameOverride>
+            <field>SplitOwner.SVP__c.M3_Effective_End_Period__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: SVP: M3 Goal Jan</displayNameOverride>
+            <field>SplitOwner.SVP__c.M3_Goal_Jan__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: SVP: M3 Goal Feb</displayNameOverride>
+            <field>SplitOwner.SVP__c.M3_Goal_Feb__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: SVP: M3 Goal Mar</displayNameOverride>
+            <field>SplitOwner.SVP__c.M3_Goal_Mar__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: SVP: M3 Goal Apr</displayNameOverride>
+            <field>SplitOwner.SVP__c.M3_Goal_Apr__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: SVP: M3 Goal May</displayNameOverride>
+            <field>SplitOwner.SVP__c.M3_Goal_May__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: SVP: M3 Goal June</displayNameOverride>
+            <field>SplitOwner.SVP__c.M3_Goal_June__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: SVP: M3 Goal July</displayNameOverride>
+            <field>SplitOwner.SVP__c.M3_Goal_July__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: SVP: M3 Goal Aug</displayNameOverride>
+            <field>SplitOwner.SVP__c.M3_Goal_Aug__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: SVP: M3 Goal Sept</displayNameOverride>
+            <field>SplitOwner.SVP__c.M3_Goal_Sept__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: SVP: M3 Goal Oct</displayNameOverride>
+            <field>SplitOwner.SVP__c.M3_Goal_Oct__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: SVP: M3 Goal Nov</displayNameOverride>
+            <field>SplitOwner.SVP__c.M3_Goal_Nov__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: SVP: M3 Goal Dec</displayNameOverride>
+            <field>SplitOwner.SVP__c.M3_Goal_Dec__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: SVP: M3 Pipeline CY Goal</displayNameOverride>
+            <field>SplitOwner.SVP__c.M3_Pipeline_CY_Goal__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: SVP: M3 Weight</displayNameOverride>
+            <field>SplitOwner.SVP__c.M3_Bookings_CY_Adjustment__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: SVP: M3 YTD Goal Start Period</displayNameOverride>
+            <field>SplitOwner.SVP__c.M3_YTD_Goal_Start_Period__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: SVP: M3 YTD Goal End Period</displayNameOverride>
+            <field>SplitOwner.SVP__c.M3_YTD_Goal_End_Period__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: SVP: M5 Bookings CM Goal</displayNameOverride>
+            <field>SplitOwner.SVP__c.M5_Bookings_CM_Goal__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: SVP: M5 Bookings CQ Goal</displayNameOverride>
+            <field>SplitOwner.SVP__c.M5_Bookings_CQ_Goal__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: SVP: M5 Bookings CY Goal Currency</displayNameOverride>
+            <field>SplitOwner.SVP__c.M5_Bookings_CY_Goal_Currency__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: SVP: M5 Bookings YTD Goal</displayNameOverride>
+            <field>SplitOwner.SVP__c.M5_Bookings_YTD_Goal__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: SVP: M5 Effective Start Period</displayNameOverride>
+            <field>SplitOwner.SVP__c.M5_Effective_Start_Period__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: SVP: M5 Effective End Period</displayNameOverride>
+            <field>SplitOwner.SVP__c.M5_Effective_End_Period__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: SVP: M5 Goal Jan</displayNameOverride>
+            <field>SplitOwner.SVP__c.M5_Goal_Jan__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: SVP: M5 Goal Feb</displayNameOverride>
+            <field>SplitOwner.SVP__c.M5_Goal_Feb__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: SVP: M5 Goal Mar</displayNameOverride>
+            <field>SplitOwner.SVP__c.M5_Goal_Mar__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: SVP: M5 Goal Apr</displayNameOverride>
+            <field>SplitOwner.SVP__c.M5_Goal_Apr__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: SVP: M5 Goal May</displayNameOverride>
+            <field>SplitOwner.SVP__c.M5_Goal_May__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: SVP: M5 Goal June</displayNameOverride>
+            <field>SplitOwner.SVP__c.M5_Goal_June__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: SVP: M5 Goal July</displayNameOverride>
+            <field>SplitOwner.SVP__c.M5_Goal_July__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: SVP: M5 Goal Aug</displayNameOverride>
+            <field>SplitOwner.SVP__c.M5_Goal_Aug__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: SVP: M5 Goal Sept</displayNameOverride>
+            <field>SplitOwner.SVP__c.M5_Goal_Sept__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: SVP: M5 Goal Oct</displayNameOverride>
+            <field>SplitOwner.SVP__c.M5_Goal_Oct__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: SVP: M5 Goal Nov</displayNameOverride>
+            <field>SplitOwner.SVP__c.M5_Goal_Nov__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: SVP: M5 Goal Dec</displayNameOverride>
+            <field>SplitOwner.SVP__c.M5_Goal_Dec__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: SVP: M5 Pipeline CY Goal</displayNameOverride>
+            <field>SplitOwner.SVP__c.M5_Pipeline_CY_Goal__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: SVP: M5 Weight</displayNameOverride>
+            <field>SplitOwner.SVP__c.M5_Bookings_CY_Adjustment__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: SVP: M5 YTD Goal Start Period</displayNameOverride>
+            <field>SplitOwner.SVP__c.M5_YTD_Goal_Start_Period__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: SVP: M5 YTD Goal End Period</displayNameOverride>
+            <field>SplitOwner.SVP__c.M5_YTD_Goal_End_Period__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: SVP: Plan Type</displayNameOverride>
+            <field>SplitOwner.SVP__c.Plan_Type__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <masterLabel>Team Member: SVP Quotas</masterLabel>
+    </sections>
+    <sections>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: VP: M1 Bookings CM Goal</displayNameOverride>
+            <field>SplitOwner.IM_VP__c.M1_Bookings_CM_Goal_New__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: VP: M1 Bookings CQ Goal</displayNameOverride>
+            <field>SplitOwner.IM_VP__c.M1_Bookings_CQ_Goal_New__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: VP: M1 Bookings CY Goal Currency</displayNameOverride>
+            <field>SplitOwner.IM_VP__c.M1_Bookings_CY_Goal_Currency__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: VP: M1 Bookings YTD Goal</displayNameOverride>
+            <field>SplitOwner.IM_VP__c.M1_Bookings_YTD_Goal__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: VP: M1 Effective Start Period</displayNameOverride>
+            <field>SplitOwner.IM_VP__c.M1_Effective_Start_Period__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: VP: M1 Effective End Period</displayNameOverride>
+            <field>SplitOwner.IM_VP__c.M1_Effective_End_Period__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: VP: M1 Goal Jan</displayNameOverride>
+            <field>SplitOwner.IM_VP__c.M1_Goal_Jan__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: VP: M1 Goal Feb</displayNameOverride>
+            <field>SplitOwner.IM_VP__c.M1_Goal_Feb__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: VP: M1 Goal Mar</displayNameOverride>
+            <field>SplitOwner.IM_VP__c.M1_Goal_Mar__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: VP: M1 Goal Apr</displayNameOverride>
+            <field>SplitOwner.IM_VP__c.M1_Goal_Apr__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: VP: M1 Goal May</displayNameOverride>
+            <field>SplitOwner.IM_VP__c.M1_Goal_May__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: VP: M1 Goal June</displayNameOverride>
+            <field>SplitOwner.IM_VP__c.M1_Goal_June__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: VP: M1 Goal July</displayNameOverride>
+            <field>SplitOwner.IM_VP__c.M1_Goal_July__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: VP: M1 Goal Aug</displayNameOverride>
+            <field>SplitOwner.IM_VP__c.M1_Goal_Aug__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: VP: M1 Goal Sept</displayNameOverride>
+            <field>SplitOwner.IM_VP__c.M1_Goal_Sept__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: VP: M1 Goal Oct</displayNameOverride>
+            <field>SplitOwner.IM_VP__c.M1_Goal_Oct__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: VP: M1 Goal Nov</displayNameOverride>
+            <field>SplitOwner.IM_VP__c.M1_Goal_Nov__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: VP: M1 Goal Dec</displayNameOverride>
+            <field>SplitOwner.IM_VP__c.M1_Goal_Dec__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: VP: M1 Pipeline CY Goal</displayNameOverride>
+            <field>SplitOwner.IM_VP__c.M1_Pipeline_CY_Goal__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: VP: M1 Weight</displayNameOverride>
+            <field>SplitOwner.IM_VP__c.M1_Bookings_CY_Adjustment__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: VP: M1 YTD Goal Start Period</displayNameOverride>
+            <field>SplitOwner.IM_VP__c.M1_YTD_Goal_Start_Period__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: VP: M1 YTD Goal End Period</displayNameOverride>
+            <field>SplitOwner.IM_VP__c.M1_YTD_Goal_End_Period__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: VP: M3 Bookings CM Goal</displayNameOverride>
+            <field>SplitOwner.IM_VP__c.M3_Bookings_CM_Goal_New__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: VP: M3 Bookings CQ Goal</displayNameOverride>
+            <field>SplitOwner.IM_VP__c.M3_Bookings_CQ_Goal_New__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: VP: M3 Bookings CY Goal Currency</displayNameOverride>
+            <field>SplitOwner.IM_VP__c.M3_Bookings_CY_Goal_Currency__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: VP: M3 Bookings YTD Goal</displayNameOverride>
+            <field>SplitOwner.IM_VP__c.M3_Bookings_YTD_Goal__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: VP: M3 Effective Start Period</displayNameOverride>
+            <field>SplitOwner.IM_VP__c.M3_Effective_Start_Period__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: VP: M3 Effective End Period</displayNameOverride>
+            <field>SplitOwner.IM_VP__c.M3_Effective_End_Period__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: VP: M3 Goal Jan</displayNameOverride>
+            <field>SplitOwner.IM_VP__c.M3_Goal_Jan__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: VP: M3 Goal Feb</displayNameOverride>
+            <field>SplitOwner.IM_VP__c.M3_Goal_Feb__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: VP: M3 Goal Mar</displayNameOverride>
+            <field>SplitOwner.IM_VP__c.M3_Goal_Mar__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: VP: M3 Goal Apr</displayNameOverride>
+            <field>SplitOwner.IM_VP__c.M3_Goal_Apr__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: VP: M3 Goal May</displayNameOverride>
+            <field>SplitOwner.IM_VP__c.M3_Goal_May__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: VP: M3 Goal June</displayNameOverride>
+            <field>SplitOwner.IM_VP__c.M3_Goal_June__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: VP: M3 Goal July</displayNameOverride>
+            <field>SplitOwner.IM_VP__c.M3_Goal_July__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: VP: M3 Goal Aug</displayNameOverride>
+            <field>SplitOwner.IM_VP__c.M3_Goal_Aug__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: VP: M3 Goal Sept</displayNameOverride>
+            <field>SplitOwner.IM_VP__c.M3_Goal_Sept__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: VP: M3 Goal Oct</displayNameOverride>
+            <field>SplitOwner.IM_VP__c.M3_Goal_Oct__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: VP: M3 Goal Nov</displayNameOverride>
+            <field>SplitOwner.IM_VP__c.M3_Goal_Nov__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: VP: M3 Goal Dec</displayNameOverride>
+            <field>SplitOwner.IM_VP__c.M3_Goal_Dec__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: VP: M3 Pipeline CY Goal</displayNameOverride>
+            <field>SplitOwner.IM_VP__c.M3_Pipeline_CY_Goal__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: VP: M3 Weight</displayNameOverride>
+            <field>SplitOwner.IM_VP__c.M3_Bookings_CY_Adjustment__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: VP: M3 YTD Goal Start Period</displayNameOverride>
+            <field>SplitOwner.IM_VP__c.M3_YTD_Goal_Start_Period__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: VP: M3 YTD Goal End Period</displayNameOverride>
+            <field>SplitOwner.IM_VP__c.M3_YTD_Goal_End_Period__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: VP: M5 Bookings CM Goal</displayNameOverride>
+            <field>SplitOwner.IM_VP__c.M5_Bookings_CM_Goal__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: VP: M5 Bookings CQ Goal</displayNameOverride>
+            <field>SplitOwner.IM_VP__c.M5_Bookings_CQ_Goal__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: VP: M5 Bookings CY Goal Currency</displayNameOverride>
+            <field>SplitOwner.IM_VP__c.M5_Bookings_CY_Goal_Currency__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: VP: M5 Bookings YTD Goal</displayNameOverride>
+            <field>SplitOwner.IM_VP__c.M5_Bookings_YTD_Goal__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: VP: M5 Effective Start Period</displayNameOverride>
+            <field>SplitOwner.IM_VP__c.M5_Effective_Start_Period__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: VP: M5 Effective End Period</displayNameOverride>
+            <field>SplitOwner.IM_VP__c.M5_Effective_End_Period__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: VP: M5 Goal Jan</displayNameOverride>
+            <field>SplitOwner.IM_VP__c.M5_Goal_Jan__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: VP: M5 Goal Feb</displayNameOverride>
+            <field>SplitOwner.IM_VP__c.M5_Goal_Feb__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: VP: M5 Goal Mar</displayNameOverride>
+            <field>SplitOwner.IM_VP__c.M5_Goal_Mar__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: VP: M5 Goal Apr</displayNameOverride>
+            <field>SplitOwner.IM_VP__c.M5_Goal_Apr__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: VP: M5 Goal May</displayNameOverride>
+            <field>SplitOwner.IM_VP__c.M5_Goal_May__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: VP: M5 Goal June</displayNameOverride>
+            <field>SplitOwner.IM_VP__c.M5_Goal_June__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: VP: M5 Goal July</displayNameOverride>
+            <field>SplitOwner.IM_VP__c.M5_Goal_July__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: VP: M5 Goal Aug</displayNameOverride>
+            <field>SplitOwner.IM_VP__c.M5_Goal_Aug__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: VP: M5 Goal Sept</displayNameOverride>
+            <field>SplitOwner.IM_VP__c.M5_Goal_Sept__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: VP: M5 Goal Oct</displayNameOverride>
+            <field>SplitOwner.IM_VP__c.M5_Goal_Oct__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: VP: M5 Goal Nov</displayNameOverride>
+            <field>SplitOwner.IM_VP__c.M5_Goal_Nov__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: VP: M5 Goal Dec</displayNameOverride>
+            <field>SplitOwner.IM_VP__c.M5_Goal_Dec__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: VP: M5 Pipeline CY Goal</displayNameOverride>
+            <field>SplitOwner.IM_VP__c.M5_Pipeline_CY_Goal__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: VP: M5 Weight</displayNameOverride>
+            <field>SplitOwner.IM_VP__c.M5_Bookings_CY_Adjustment__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: VP: M5 YTD Goal Start Period</displayNameOverride>
+            <field>SplitOwner.IM_VP__c.M5_YTD_Goal_Start_Period__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: VP: M5 YTD Goal End Period</displayNameOverride>
+            <field>SplitOwner.IM_VP__c.M5_YTD_Goal_End_Period__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: VP: Plan Type</displayNameOverride>
+            <field>SplitOwner.IM_VP__c.Plan_Type__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <masterLabel>Team Member: VP Quotas</masterLabel>
+    </sections>
+    <sections>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Director: M1 Bookings CM Goal</displayNameOverride>
+            <field>SplitOwner.IM_RSM__c.M1_Bookings_CM_Goal_New__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Director: M1 Bookings CQ Goal</displayNameOverride>
+            <field>SplitOwner.IM_RSM__c.M1_Bookings_CQ_Goal_New__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Director: M1 Bookings CY Goal Currency</displayNameOverride>
+            <field>SplitOwner.IM_RSM__c.M1_Bookings_CY_Goal_Currency__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Director: M1 Bookings YTD Goal</displayNameOverride>
+            <field>SplitOwner.IM_RSM__c.M1_Bookings_YTD_Goal__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Director: M1 Effective Start Period</displayNameOverride>
+            <field>SplitOwner.IM_RSM__c.M1_Effective_Start_Period__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Director: M1 Effective End Period</displayNameOverride>
+            <field>SplitOwner.IM_RSM__c.M1_Effective_End_Period__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Director: M1 Goal Jan</displayNameOverride>
+            <field>SplitOwner.IM_RSM__c.M1_Goal_Jan__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Director: M1 Goal Feb</displayNameOverride>
+            <field>SplitOwner.IM_RSM__c.M1_Goal_Feb__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Director: M1 Goal Mar</displayNameOverride>
+            <field>SplitOwner.IM_RSM__c.M1_Goal_Mar__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Director: M1 Goal Apr</displayNameOverride>
+            <field>SplitOwner.IM_RSM__c.M1_Goal_Apr__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Director: M1 Goal May</displayNameOverride>
+            <field>SplitOwner.IM_RSM__c.M1_Goal_May__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Director: M1 Goal June</displayNameOverride>
+            <field>SplitOwner.IM_RSM__c.M1_Goal_June__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Director: M1 Goal July</displayNameOverride>
+            <field>SplitOwner.IM_RSM__c.M1_Goal_July__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Director: M1 Goal Aug</displayNameOverride>
+            <field>SplitOwner.IM_RSM__c.M1_Goal_Aug__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Director: M1 Goal Sept</displayNameOverride>
+            <field>SplitOwner.IM_RSM__c.M1_Goal_Sept__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Director: M1 Goal Oct</displayNameOverride>
+            <field>SplitOwner.IM_RSM__c.M1_Goal_Oct__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Director: M1 Goal Nov</displayNameOverride>
+            <field>SplitOwner.IM_RSM__c.M1_Goal_Nov__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Director: M1 Goal Dec</displayNameOverride>
+            <field>SplitOwner.IM_RSM__c.M1_Goal_Dec__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Director: M1 Pipeline CY Goal</displayNameOverride>
+            <field>SplitOwner.IM_RSM__c.M1_Pipeline_CY_Goal__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Director: M1 Weight</displayNameOverride>
+            <field>SplitOwner.IM_RSM__c.M1_Bookings_CY_Adjustment__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Director: M1 YTD Goal Start Period</displayNameOverride>
+            <field>SplitOwner.IM_RSM__c.M1_YTD_Goal_Start_Period__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Director: M1 YTD Goal End Period</displayNameOverride>
+            <field>SplitOwner.IM_RSM__c.M1_YTD_Goal_End_Period__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Director: M3 Bookings CM Goal</displayNameOverride>
+            <field>SplitOwner.IM_RSM__c.M3_Bookings_CM_Goal_New__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Director: M3 Bookings CQ Goal</displayNameOverride>
+            <field>SplitOwner.IM_RSM__c.M3_Bookings_CQ_Goal_New__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Director: M3 Bookings CY Goal Currency</displayNameOverride>
+            <field>SplitOwner.IM_RSM__c.M3_Bookings_CY_Goal_Currency__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Director: M3 Bookings YTD Goal</displayNameOverride>
+            <field>SplitOwner.IM_RSM__c.M3_Bookings_YTD_Goal__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Director: M3 Effective Start Period</displayNameOverride>
+            <field>SplitOwner.IM_RSM__c.M3_Effective_Start_Period__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Director: M3 Effective End Period</displayNameOverride>
+            <field>SplitOwner.IM_RSM__c.M3_Effective_End_Period__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Director: M3 Goal Jan</displayNameOverride>
+            <field>SplitOwner.IM_RSM__c.M3_Goal_Jan__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Director: M3 Goal Feb</displayNameOverride>
+            <field>SplitOwner.IM_RSM__c.M3_Goal_Feb__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Director: M3 Goal Mar</displayNameOverride>
+            <field>SplitOwner.IM_RSM__c.M3_Goal_Mar__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Director: M3 Goal Apr</displayNameOverride>
+            <field>SplitOwner.IM_RSM__c.M3_Goal_Apr__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Director: M3 Goal May</displayNameOverride>
+            <field>SplitOwner.IM_RSM__c.M3_Goal_May__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Director: M3 Goal June</displayNameOverride>
+            <field>SplitOwner.IM_RSM__c.M3_Goal_June__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Director: M3 Goal July</displayNameOverride>
+            <field>SplitOwner.IM_RSM__c.M3_Goal_July__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Director: M3 Goal Aug</displayNameOverride>
+            <field>SplitOwner.IM_RSM__c.M3_Goal_Aug__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Director: M3 Goal Sept</displayNameOverride>
+            <field>SplitOwner.IM_RSM__c.M3_Goal_Sept__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Director: M3 Goal Oct</displayNameOverride>
+            <field>SplitOwner.IM_RSM__c.M3_Goal_Oct__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Director: M3 Goal Nov</displayNameOverride>
+            <field>SplitOwner.IM_RSM__c.M3_Goal_Nov__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Director: M3 Goal Dec</displayNameOverride>
+            <field>SplitOwner.IM_RSM__c.M3_Goal_Dec__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Director: M3 Pipeline CY Goal</displayNameOverride>
+            <field>SplitOwner.IM_RSM__c.M3_Pipeline_CY_Goal__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Director: M3 Weight</displayNameOverride>
+            <field>SplitOwner.IM_RSM__c.M3_Bookings_CY_Adjustment__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Director: M3 YTD Goal Start Period</displayNameOverride>
+            <field>SplitOwner.IM_RSM__c.M3_YTD_Goal_Start_Period__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Director: M3 YTD Goal End Period</displayNameOverride>
+            <field>SplitOwner.IM_RSM__c.M3_YTD_Goal_End_Period__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Director: M5 Bookings CM Goal</displayNameOverride>
+            <field>SplitOwner.IM_RSM__c.M5_Bookings_CM_Goal__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Director: M5 Bookings CQ Goal</displayNameOverride>
+            <field>SplitOwner.IM_RSM__c.M5_Bookings_CQ_Goal__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Director: M5 Bookings CY Goal Currency</displayNameOverride>
+            <field>SplitOwner.IM_RSM__c.M5_Bookings_CY_Goal_Currency__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Director: M5 Bookings YTD Goal</displayNameOverride>
+            <field>SplitOwner.IM_RSM__c.M5_Bookings_YTD_Goal__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Director: M5 Effective Start Period</displayNameOverride>
+            <field>SplitOwner.IM_RSM__c.M5_Effective_Start_Period__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Director: M5 Effective End Period</displayNameOverride>
+            <field>SplitOwner.IM_RSM__c.M5_Effective_End_Period__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Director: M5 Goal Jan</displayNameOverride>
+            <field>SplitOwner.IM_RSM__c.M5_Goal_Jan__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Director: M5 Goal Feb</displayNameOverride>
+            <field>SplitOwner.IM_RSM__c.M5_Goal_Feb__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Director: M5 Goal Mar</displayNameOverride>
+            <field>SplitOwner.IM_RSM__c.M5_Goal_Mar__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Director: M5 Goal Apr</displayNameOverride>
+            <field>SplitOwner.IM_RSM__c.M5_Goal_Apr__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Director: M5 Goal May</displayNameOverride>
+            <field>SplitOwner.IM_RSM__c.M5_Goal_May__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Director: M5 Goal June</displayNameOverride>
+            <field>SplitOwner.IM_RSM__c.M5_Goal_June__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Director: M5 Goal July</displayNameOverride>
+            <field>SplitOwner.IM_RSM__c.M5_Goal_July__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Director: M5 Goal Aug</displayNameOverride>
+            <field>SplitOwner.IM_RSM__c.M5_Goal_Aug__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Director: M5 Goal Sept</displayNameOverride>
+            <field>SplitOwner.IM_RSM__c.M5_Goal_Sept__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Director: M5 Goal Oct</displayNameOverride>
+            <field>SplitOwner.IM_RSM__c.M5_Goal_Oct__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Director: M5 Goal Nov</displayNameOverride>
+            <field>SplitOwner.IM_RSM__c.M5_Goal_Nov__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Director: M5 Goal Dec</displayNameOverride>
+            <field>SplitOwner.IM_RSM__c.M5_Goal_Dec__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Director: M5 Pipeline CY Goal</displayNameOverride>
+            <field>SplitOwner.IM_RSM__c.M5_Pipeline_CY_Goal__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Director: M5 Weight</displayNameOverride>
+            <field>SplitOwner.IM_RSM__c.M5_Bookings_CY_Adjustment__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Director: M5 YTD Goal Start Period</displayNameOverride>
+            <field>SplitOwner.IM_RSM__c.M5_YTD_Goal_Start_Period__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Director: M5 YTD Goal End Period</displayNameOverride>
+            <field>SplitOwner.IM_RSM__c.M5_YTD_Goal_End_Period__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Director: Plan Type</displayNameOverride>
+            <field>SplitOwner.IM_RSM__c.Plan_Type__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <masterLabel>Team Member: Director Quotas</masterLabel>
+    </sections>
+    <sections>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Manager: M1 Bookings CM Goal</displayNameOverride>
+            <field>SplitOwner.Manager.M1_Bookings_CM_Goal_New__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Manager: M1 Bookings CQ Goal</displayNameOverride>
+            <field>SplitOwner.Manager.M1_Bookings_CQ_Goal_New__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Manager: M1 Bookings CY Goal Currency</displayNameOverride>
+            <field>SplitOwner.Manager.M1_Bookings_CY_Goal_Currency__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Manager: M1 Bookings YTD Goal</displayNameOverride>
+            <field>SplitOwner.Manager.M1_Bookings_YTD_Goal__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Manager: M1 Effective Start Period</displayNameOverride>
+            <field>SplitOwner.Manager.M1_Effective_Start_Period__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Manager: M1 Effective End Period</displayNameOverride>
+            <field>SplitOwner.Manager.M1_Effective_End_Period__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Manager: M1 Goal Jan</displayNameOverride>
+            <field>SplitOwner.Manager.M1_Goal_Jan__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Manager: M1 Goal Feb</displayNameOverride>
+            <field>SplitOwner.Manager.M1_Goal_Feb__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Manager: M1 Goal Mar</displayNameOverride>
+            <field>SplitOwner.Manager.M1_Goal_Mar__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Manager: M1 Goal Apr</displayNameOverride>
+            <field>SplitOwner.Manager.M1_Goal_Apr__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Manager: M1 Goal May</displayNameOverride>
+            <field>SplitOwner.Manager.M1_Goal_May__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Manager: M1 Goal June</displayNameOverride>
+            <field>SplitOwner.Manager.M1_Goal_June__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Manager: M1 Goal July</displayNameOverride>
+            <field>SplitOwner.Manager.M1_Goal_July__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Manager: M1 Goal Aug</displayNameOverride>
+            <field>SplitOwner.Manager.M1_Goal_Aug__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Manager: M1 Goal Sept</displayNameOverride>
+            <field>SplitOwner.Manager.M1_Goal_Sept__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Manager: M1 Goal Oct</displayNameOverride>
+            <field>SplitOwner.Manager.M1_Goal_Oct__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Manager: M1 Goal Nov</displayNameOverride>
+            <field>SplitOwner.Manager.M1_Goal_Nov__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Manager: M1 Goal Dec</displayNameOverride>
+            <field>SplitOwner.Manager.M1_Goal_Dec__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Manager: M1 Pipeline CY Goal</displayNameOverride>
+            <field>SplitOwner.Manager.M1_Pipeline_CY_Goal__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Manager: M1 Weight</displayNameOverride>
+            <field>SplitOwner.Manager.M1_Bookings_CY_Adjustment__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Manager: M1 YTD Goal Start Period</displayNameOverride>
+            <field>SplitOwner.Manager.M1_YTD_Goal_Start_Period__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Manager: M1 YTD Goal End Period</displayNameOverride>
+            <field>SplitOwner.Manager.M1_YTD_Goal_End_Period__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Manager: M3 Bookings CM Goal</displayNameOverride>
+            <field>SplitOwner.Manager.M3_Bookings_CM_Goal_New__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Manager: M3 Bookings CQ Goal</displayNameOverride>
+            <field>SplitOwner.Manager.M3_Bookings_CQ_Goal_New__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Manager: M3 Bookings CY Goal Currency</displayNameOverride>
+            <field>SplitOwner.Manager.M3_Bookings_CY_Goal_Currency__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Manager: M3 Bookings YTD Goal</displayNameOverride>
+            <field>SplitOwner.Manager.M3_Bookings_YTD_Goal__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Manager: M3 Effective Start Period</displayNameOverride>
+            <field>SplitOwner.Manager.M3_Effective_Start_Period__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Manager: M3 Effective End Period</displayNameOverride>
+            <field>SplitOwner.Manager.M3_Effective_End_Period__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Manager: M3 Goal Jan</displayNameOverride>
+            <field>SplitOwner.Manager.M3_Goal_Jan__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Manager: M3 Goal Feb</displayNameOverride>
+            <field>SplitOwner.Manager.M3_Goal_Feb__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Manager: M3 Goal Mar</displayNameOverride>
+            <field>SplitOwner.Manager.M3_Goal_Mar__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Manager: M3 Goal Apr</displayNameOverride>
+            <field>SplitOwner.Manager.M3_Goal_Apr__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Manager: M3 Goal May</displayNameOverride>
+            <field>SplitOwner.Manager.M3_Goal_May__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Manager: M3 Goal June</displayNameOverride>
+            <field>SplitOwner.Manager.M3_Goal_June__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Manager: M3 Goal July</displayNameOverride>
+            <field>SplitOwner.Manager.M3_Goal_July__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Manager: M3 Goal Aug</displayNameOverride>
+            <field>SplitOwner.Manager.M3_Goal_Aug__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Manager: M3 Goal Sept</displayNameOverride>
+            <field>SplitOwner.Manager.M3_Goal_Sept__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Manager: M3 Goal Oct</displayNameOverride>
+            <field>SplitOwner.Manager.M3_Goal_Oct__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Manager: M3 Goal Nov</displayNameOverride>
+            <field>SplitOwner.Manager.M3_Goal_Nov__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Manager: M3 Goal Dec</displayNameOverride>
+            <field>SplitOwner.Manager.M3_Goal_Dec__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Manager: M3 Pipeline CY Goal</displayNameOverride>
+            <field>SplitOwner.Manager.M3_Pipeline_CY_Goal__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Manager: M3 Weight</displayNameOverride>
+            <field>SplitOwner.Manager.M3_Bookings_CY_Adjustment__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Manager: M3 YTD Goal Start Period</displayNameOverride>
+            <field>SplitOwner.Manager.M3_YTD_Goal_Start_Period__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Manager: M3 YTD Goal End Period</displayNameOverride>
+            <field>SplitOwner.Manager.M3_YTD_Goal_End_Period__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Manager: M5 Bookings CM Goal</displayNameOverride>
+            <field>SplitOwner.Manager.M5_Bookings_CM_Goal__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Manager: M5 Bookings CQ Goal</displayNameOverride>
+            <field>SplitOwner.Manager.M5_Bookings_CQ_Goal__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Manager: M5 Bookings CY Goal Currency</displayNameOverride>
+            <field>SplitOwner.Manager.M5_Bookings_CY_Goal_Currency__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Manager: M5 Bookings YTD Goal</displayNameOverride>
+            <field>SplitOwner.Manager.M5_Bookings_YTD_Goal__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Manager: M5 Effective Start Period</displayNameOverride>
+            <field>SplitOwner.Manager.M5_Effective_Start_Period__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Manager: M5 Effective End Period</displayNameOverride>
+            <field>SplitOwner.Manager.M5_Effective_End_Period__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Manager: M5 Goal Jan</displayNameOverride>
+            <field>SplitOwner.Manager.M5_Goal_Jan__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Manager: M5 Goal Feb</displayNameOverride>
+            <field>SplitOwner.Manager.M5_Goal_Feb__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Manager: M5 Goal Mar</displayNameOverride>
+            <field>SplitOwner.Manager.M5_Goal_Mar__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Manager: M5 Goal Apr</displayNameOverride>
+            <field>SplitOwner.Manager.M5_Goal_Apr__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Manager: M5 Goal May</displayNameOverride>
+            <field>SplitOwner.Manager.M5_Goal_May__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Manager: M5 Goal June</displayNameOverride>
+            <field>SplitOwner.Manager.M5_Goal_June__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Manager: M5 Goal July</displayNameOverride>
+            <field>SplitOwner.Manager.M5_Goal_July__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Manager: M5 Goal Aug</displayNameOverride>
+            <field>SplitOwner.Manager.M5_Goal_Aug__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Manager: M5 Goal Sept</displayNameOverride>
+            <field>SplitOwner.Manager.M5_Goal_Sept__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Manager: M5 Goal Oct</displayNameOverride>
+            <field>SplitOwner.Manager.M5_Goal_Oct__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Manager: M5 Goal Nov</displayNameOverride>
+            <field>SplitOwner.Manager.M5_Goal_Nov__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Manager: M5 Goal Dec</displayNameOverride>
+            <field>SplitOwner.Manager.M5_Goal_Dec__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Manager: M5 Pipeline CY Goal</displayNameOverride>
+            <field>SplitOwner.Manager.M5_Pipeline_CY_Goal__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Manager: M5 Weight</displayNameOverride>
+            <field>SplitOwner.Manager.M5_Bookings_CY_Adjustment__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Manager: M5 YTD Goal Start Period</displayNameOverride>
+            <field>SplitOwner.Manager.M5_YTD_Goal_Start_Period__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Manager: M5 YTD Goal End Period</displayNameOverride>
+            <field>SplitOwner.Manager.M5_YTD_Goal_End_Period__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Manager: Plan Type</displayNameOverride>
+            <field>SplitOwner.Manager.Plan_Type__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <masterLabel>Team Member: Manager Quotas</masterLabel>
+    </sections>
+    <sections>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: M1 Bookings CM Goal</displayNameOverride>
+            <field>SplitOwner.M1_Bookings_CM_Goal_New__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: M1 Bookings CQ Goal</displayNameOverride>
+            <field>SplitOwner.M1_Bookings_CQ_Goal_New__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: M1 Bookings CY Goal Currency</displayNameOverride>
+            <field>SplitOwner.M1_Bookings_CY_Goal_Currency__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: M1 Bookings YTD Goal</displayNameOverride>
+            <field>SplitOwner.M1_Bookings_YTD_Goal__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: M1 Effective Start Period</displayNameOverride>
+            <field>SplitOwner.M1_Effective_Start_Period__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: M1 Effective End Period</displayNameOverride>
+            <field>SplitOwner.M1_Effective_End_Period__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: M1 Goal Jan</displayNameOverride>
+            <field>SplitOwner.M1_Goal_Jan__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: M1 Goal Feb</displayNameOverride>
+            <field>SplitOwner.M1_Goal_Feb__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: M1 Goal Mar</displayNameOverride>
+            <field>SplitOwner.M1_Goal_Mar__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: M1 Goal Apr</displayNameOverride>
+            <field>SplitOwner.M1_Goal_Apr__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: M1 Goal May</displayNameOverride>
+            <field>SplitOwner.M1_Goal_May__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: M1 Goal June</displayNameOverride>
+            <field>SplitOwner.M1_Goal_June__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: M1 Goal July</displayNameOverride>
+            <field>SplitOwner.M1_Goal_July__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: M1 Goal Aug</displayNameOverride>
+            <field>SplitOwner.M1_Goal_Aug__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: M1 Goal Sept</displayNameOverride>
+            <field>SplitOwner.M1_Goal_Sept__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: M1 Goal Oct</displayNameOverride>
+            <field>SplitOwner.M1_Goal_Oct__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: M1 Goal Nov</displayNameOverride>
+            <field>SplitOwner.M1_Goal_Nov__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: M1 Goal Dec</displayNameOverride>
+            <field>SplitOwner.M1_Goal_Dec__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: M1 Pipeline CY Goal</displayNameOverride>
+            <field>SplitOwner.M1_Pipeline_CY_Goal__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: M1 Weight</displayNameOverride>
+            <field>SplitOwner.M1_Bookings_CY_Adjustment__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: M1 YTD Goal Start Period</displayNameOverride>
+            <field>SplitOwner.M1_YTD_Goal_Start_Period__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: M1 YTD Goal End Period</displayNameOverride>
+            <field>SplitOwner.M1_YTD_Goal_End_Period__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: M3 Bookings CM Goal</displayNameOverride>
+            <field>SplitOwner.M3_Bookings_CM_Goal_New__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: M3 Bookings CQ Goal</displayNameOverride>
+            <field>SplitOwner.M3_Bookings_CQ_Goal_New__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: M3 Bookings CY Goal Currency</displayNameOverride>
+            <field>SplitOwner.M3_Bookings_CY_Goal_Currency__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: M3 Bookings YTD Goal</displayNameOverride>
+            <field>SplitOwner.M3_Bookings_YTD_Goal__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: M3 Effective Start Period</displayNameOverride>
+            <field>SplitOwner.M3_Effective_Start_Period__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: M3 Effective End Period</displayNameOverride>
+            <field>SplitOwner.M3_Effective_End_Period__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: M3 Goal Jan</displayNameOverride>
+            <field>SplitOwner.M3_Goal_Jan__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: M3 Goal Feb</displayNameOverride>
+            <field>SplitOwner.M3_Goal_Feb__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: M3 Goal Mar</displayNameOverride>
+            <field>SplitOwner.M3_Goal_Mar__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: M3 Goal Apr</displayNameOverride>
+            <field>SplitOwner.M3_Goal_Apr__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: M3 Goal May</displayNameOverride>
+            <field>SplitOwner.M3_Goal_May__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: M3 Goal June</displayNameOverride>
+            <field>SplitOwner.M3_Goal_June__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: M3 Goal July</displayNameOverride>
+            <field>SplitOwner.M3_Goal_July__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: M3 Goal Aug</displayNameOverride>
+            <field>SplitOwner.M3_Goal_Aug__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: M3 Goal Sept</displayNameOverride>
+            <field>SplitOwner.M3_Goal_Sept__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: M3 Goal Oct</displayNameOverride>
+            <field>SplitOwner.M3_Goal_Oct__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: M3 Goal Nov</displayNameOverride>
+            <field>SplitOwner.M3_Goal_Nov__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: M3 Goal Dec</displayNameOverride>
+            <field>SplitOwner.M3_Goal_Dec__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: M3 Pipeline CY Goal</displayNameOverride>
+            <field>SplitOwner.M3_Pipeline_CY_Goal__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: M3 Weight</displayNameOverride>
+            <field>SplitOwner.M3_Bookings_CY_Adjustment__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: M3 YTD Goal Start Period</displayNameOverride>
+            <field>SplitOwner.M3_YTD_Goal_Start_Period__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: M3 YTD Goal End Period</displayNameOverride>
+            <field>SplitOwner.M3_YTD_Goal_End_Period__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: M5 Bookings CM Goal</displayNameOverride>
+            <field>SplitOwner.M5_Bookings_CM_Goal__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: M5 Bookings CQ Goal</displayNameOverride>
+            <field>SplitOwner.M5_Bookings_CQ_Goal__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: M5 Bookings CY Goal Currency</displayNameOverride>
+            <field>SplitOwner.M5_Bookings_CY_Goal_Currency__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: M5 Bookings YTD Goal</displayNameOverride>
+            <field>SplitOwner.M5_Bookings_YTD_Goal__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: M5 Effective Start Period</displayNameOverride>
+            <field>SplitOwner.M5_Effective_Start_Period__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: M5 Effective End Period</displayNameOverride>
+            <field>SplitOwner.M5_Effective_End_Period__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: M5 Goal Jan</displayNameOverride>
+            <field>SplitOwner.M5_Goal_Jan__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: M5 Goal Feb</displayNameOverride>
+            <field>SplitOwner.M5_Goal_Feb__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: M5 Goal Mar</displayNameOverride>
+            <field>SplitOwner.M5_Goal_Mar__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: M5 Goal Apr</displayNameOverride>
+            <field>SplitOwner.M5_Goal_Apr__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: M5 Goal May</displayNameOverride>
+            <field>SplitOwner.M5_Goal_May__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: M5 Goal June</displayNameOverride>
+            <field>SplitOwner.M5_Goal_June__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: M5 Goal July</displayNameOverride>
+            <field>SplitOwner.M5_Goal_July__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: M5 Goal Aug</displayNameOverride>
+            <field>SplitOwner.M5_Goal_Aug__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: M5 Goal Sept</displayNameOverride>
+            <field>SplitOwner.M5_Goal_Sept__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: M5 Goal Oct</displayNameOverride>
+            <field>SplitOwner.M5_Goal_Oct__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: M5 Goal Nov</displayNameOverride>
+            <field>SplitOwner.M5_Goal_Nov__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: M5 Goal Dec</displayNameOverride>
+            <field>SplitOwner.M5_Goal_Dec__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: M5 Pipeline CY Goal</displayNameOverride>
+            <field>SplitOwner.M5_Pipeline_CY_Goal__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: M5 Weight</displayNameOverride>
+            <field>SplitOwner.M5_Bookings_CY_Adjustment__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: M5 YTD Goal Start Period</displayNameOverride>
+            <field>SplitOwner.M5_YTD_Goal_Start_Period__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: M5 YTD Goal End Period</displayNameOverride>
+            <field>SplitOwner.M5_YTD_Goal_End_Period__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Team Member: Plan Type</displayNameOverride>
+            <field>SplitOwner.Plan_Type__c</field>
+            <table>Opportunity.OpportunitySplits</table>
+        </columns>
+        <masterLabel>Team Member Quotas</masterLabel>
+    </sections>
+</ReportType>

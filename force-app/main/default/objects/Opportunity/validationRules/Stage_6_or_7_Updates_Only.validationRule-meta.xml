@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Stage_6_or_7_Updates_Only</fullName>
+    <active>true</active>
+    <description>Stage 6/7 Updates field can editable only on stage 6 and 7 Gitlab#21303.</description>
+    <errorConditionFormula>OR(AND( ISNEW(),NOT(Stage_6_7_Updates__c = &apos;&apos;),
+     NOT($Permission.VR_Bypass_Permission) ),
+AND(
+ISCHANGED(Stage_6_7_Updates__c ) ,
+NOT(ISPICKVAL(StageName ,&apos;6 - Setup&apos;)),
+NOT(ISPICKVAL(StageName ,&apos;7 - Closed&apos;)),
+NOT($Permission.VR_Bypass_Permission)
+))</errorConditionFormula>
+    <errorDisplayField>Stage_6_7_Updates__c</errorDisplayField>
+    <errorMessage>This field can only be updated in Stage 6 or 7</errorMessage>
+</ValidationRule>

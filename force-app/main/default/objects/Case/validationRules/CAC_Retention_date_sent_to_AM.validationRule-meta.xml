@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CAC_Retention_date_sent_to_AM</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND ( 
+OR(
+$RecordType.Name = &apos;CLAS - Shred&apos;,
+$RecordType.Name = &apos;CLAS – Data Management&apos;,
+RecordType.DeveloperName = &apos;Retention_RM&apos;,
+RecordType.DeveloperName = &apos;Retention_SH&apos;),
+ISPICKVAL( Owning_Group__c,&apos;Assigned&apos;),
+ISBLANK(Date_Sent_to_AM__c))</errorConditionFormula>
+    <errorDisplayField>Date_Sent_to_AM__c</errorDisplayField>
+    <errorMessage>Date Sent to AM is required When Owning Group is Assigned</errorMessage>
+</ValidationRule>

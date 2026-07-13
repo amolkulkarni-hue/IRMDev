@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NAS_CustID_Acct_Required_InProgress</fullName>
+    <active>true</active>
+    <description>The Customer ID field and Account field on a case is required before the case moves to In Progress.</description>
+    <errorConditionFormula>AND(
+				$RecordType.Name = &quot;NAS General Support Case&quot;,
+				ISPICKVAL(Status, &quot;In Progress&quot;),
+				OR(
+				ISBLANK(AccountId),
+				ISBLank(Customer_ID__c)))</errorConditionFormula>
+    <errorMessage>Account and Customer ID fields are required for a case to be In Progress.</errorMessage>
+</ValidationRule>

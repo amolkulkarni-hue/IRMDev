@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>RIM_SDE_Formula__c</fullName>
+    <description>#34421: To copy data from Country Parent Account to Sales Site and this data is further used in AccountCoverageFieldsSync Apex job to update Lookup field(RIM_SDE__c)</description>
+    <externalId>false</externalId>
+    <formula>IF(
+/*If Account is Country Parent, stores RIM_SDE__c value */
+ISPICKVAL(IM_Hierarchy_Level__c, &apos;Country Parent&apos;), RIM_SDE__c,
+IF(
+/*If Account is Sales site, stores Country Parent Account&apos;s RIM_SDE__c by traversing one level up the hierarchy*/
+AND(ISPICKVAL(IM_Hierarchy_Level__c, &apos;Sales (Site)&apos;),NOT(ISBLANK(ParentId))), Parent.RIM_SDE__c,
+IF(
+/*If Account is Parent HQ, stores Country Parent Account&apos;s Primary_BDE__c by traversing one level up the hierarchy*/
+ISPICKVAL(IM_Hierarchy_Level__c, &apos;Parent HQ&apos;), Parent.RIM_SDE__c,RIM_SDE__c)))</formula>
+    <label>RIM SDE(Formula)</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

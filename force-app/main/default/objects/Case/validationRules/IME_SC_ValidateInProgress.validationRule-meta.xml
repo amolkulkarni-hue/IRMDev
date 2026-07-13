@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IME_SC_ValidateInProgress</fullName>
+    <active>true</active>
+    <description>This rule is fired when value of status is not changed from New , Validated , Assigned , On Hold - Internal and On Hold - Customer to &quot;In Progress&quot; .</description>
+    <errorConditionFormula>AND (NOT(ISCHANGED( IME_SC_Owner_Manager__c )), 
+NOT(ISCHANGED( IME_SC_Manager_of_Manager_OwnerId__c )), 
+$RecordType.Name = &quot;IME SC Case&quot; , ISCHANGED( Status ) ,NOT(OR(ISPICKVAL(PRIORVALUE( Status ), &quot;New&quot;) , ISPICKVAL(PRIORVALUE( Status ), &quot;Validated&quot;), ISPICKVAL(PRIORVALUE( Status ), &quot;Assigned&quot;),ISPICKVAL(PRIORVALUE( Status ), &quot;On Hold - Internal&quot;) , ISPICKVAL(PRIORVALUE( Status ), &quot;On Hold - Customer&quot;) )), ISPICKVAL( Status, &quot;In Progress&quot;) )</errorConditionFormula>
+    <errorDisplayField>Status</errorDisplayField>
+    <errorMessage>In Progress can be changed from New , Validated , Assigned , On Hold - Internal and On Hold - Customer.</errorMessage>
+</ValidationRule>

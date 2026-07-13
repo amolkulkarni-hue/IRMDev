@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Tele_CDE_Formula__c</fullName>
+    <description>#26660: To copy data from Country Parent Account to Sales Site and this data is further used in AccountCoverageFieldsSync Apex job to update Text field(Tele_CDE__c)
+#31465: Data should not be wiped off on Orphan Sales Site Accounts</description>
+    <externalId>false</externalId>
+    <formula>IF(
+/*If Account is Country Parent, stores Tele_CDE__c value */
+ISPICKVAL(IM_Hierarchy_Level__c, &apos;Country Parent&apos;), Tele_CDE__c ,
+IF(
+/*If Account is Sales site, stores Country Parent Account&apos;s Tele_CDE__c by traversing one level up the hierarchy*/
+AND(ISPICKVAL(IM_Hierarchy_Level__c, &apos;Sales (Site)&apos;),NOT(ISBLANK(ParentId))), Parent.Tele_CDE__c,Tele_CDE__c))</formula>
+    <label>Customer Success Manager (Formula)</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

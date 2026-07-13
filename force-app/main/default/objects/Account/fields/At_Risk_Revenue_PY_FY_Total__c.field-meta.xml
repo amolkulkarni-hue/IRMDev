@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>At_Risk_Revenue_PY_FY_Total__c</fullName>
+    <description>Summary of the Prior Year Total Billings from all Customer Accounts that are &quot;At Risk&quot;</description>
+    <inlineHelpText>Summary of the Prior Year Total Billings from all Customer Accounts that are &quot;At Risk&quot;</inlineHelpText>
+    <label>At Risk Revenue (PY Full Year Total)</label>
+    <summarizedField>IM_Customer_Account__c.NA_PY_Full_Year_TOTAL__c</summarizedField>
+    <summaryFilterItems>
+        <field>IM_Customer_Account__c.Risk_Status__c</field>
+        <operation>equals</operation>
+        <value>At Risk</value>
+    </summaryFilterItems>
+    <summaryForeignKey>IM_Customer_Account__c.IM_Account__c</summaryForeignKey>
+    <summaryOperation>sum</summaryOperation>
+    <trackHistory>false</trackHistory>
+    <type>Summary</type>
+</CustomField>

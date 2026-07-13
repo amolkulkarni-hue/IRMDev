@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NAS_Complexity_Weight</fullName>
+    <active>true</active>
+    <description>Ensures that the value of the complexity weight is only 1,2,3, or 4.</description>
+    <errorConditionFormula>AND($RecordType.Name = &quot;NAS General Support Case&quot;,
+	 	 NAS_Complexity_Weight__c &lt;&gt; 0,
+				NAS_Complexity_Weight__c &lt;&gt; 1,
+				NAS_Complexity_Weight__c &lt;&gt; 2,
+				NAS_Complexity_Weight__c &lt;&gt; 3,
+				NAS_Complexity_Weight__c &lt;&gt; 4)</errorConditionFormula>
+    <errorMessage>Complexity Weight field can only have following values: 1,2,3 or 4.</errorMessage>
+</ValidationRule>

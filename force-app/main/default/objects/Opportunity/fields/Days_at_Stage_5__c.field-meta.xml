@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Days_at_Stage_5__c</fullName>
+    <externalId>false</externalId>
+    <formula>IF( 
+      AND(
+                TEXT(StageName)=&quot;5 - Signed/PO in&quot;,
+                LEN(TEXT(NCSP_Status__c ))=0
+               ),
+         TODAY()- IM_Stage_5_Entered_Date__c, 
+         Sent_to_NCSP_Date__c -IM_Stage_5_Entered_Date__c
+      )</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Days at Stage 5</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>0</scale>
+    <trackHistory>false</trackHistory>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

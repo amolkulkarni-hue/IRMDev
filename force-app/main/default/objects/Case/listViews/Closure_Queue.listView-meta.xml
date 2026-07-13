@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Closure_Queue</fullName>
+    <columns>Rush__c</columns>
+    <columns>Date_Sent_to_CLAS__c</columns>
+    <columns>CASES.RECORDTYPE</columns>
+    <columns>CASES.STATUS</columns>
+    <columns>NAME</columns>
+    <columns>Customer_Name__c</columns>
+    <columns>Customer_ID__c</columns>
+    <columns>Market_Name__c</columns>
+    <columns>Country__c</columns>
+    <columns>CASES.SUBJECT</columns>
+    <columns>CASES.CASE_NUMBER</columns>
+    <columns>PARENT.CASE_NUMBER</columns>
+    <columns>OWNER_NAME</columns>
+    <columns>IME_SC_Case_Owner_Email__c</columns>
+    <filterScope>Queue</filterScope>
+    <label>Renewal Queue</label>
+    <queue>ClosureQueue</queue>
+    <sharedTo>
+        <group>ASCACRetentionCSA</group>
+        <group>ASCACRetentionCoordinatorsMgmt</group>
+        <group>ASCustomerProgramsHybrid</group>
+        <role>CLAS_Agent</role>
+        <roleAndSubordinatesInternal>ManagerNCSP</roleAndSubordinatesInternal>
+    </sharedTo>
+</ListView>

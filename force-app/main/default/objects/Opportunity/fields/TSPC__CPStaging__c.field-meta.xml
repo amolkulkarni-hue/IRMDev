@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>TSPC__CPStaging__c</fullName>
+    <deprecated>false</deprecated>
+    <description>CP Template Staging Behavior
+returns NULL if Staging disabled otherwise &apos;Idle&apos; or Template Behavior value</description>
+    <externalId>false</externalId>
+    <formula>If(
+  TSPC__CPDeal__r.TSPC__Template__r.TSPC__StageAP_Enabled__c,
+  BLANKVALUE(TEXT(TSPC__CPDeal__r.TSPC__Template__r.TSPC__StageAP_EventBehavior__c), &apos;Idle&apos;),
+  NULL
+)</formula>
+    <label>CP: Staging</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Stage_5_opportunities_Sathish_India</fullName>
+    <columns>OPPORTUNITY.NAME</columns>
+    <columns>ACCOUNT.NAME</columns>
+    <columns>OPPORTUNITY.STAGE_NAME</columns>
+    <columns>OPPORTUNITY.CLOSE_DATE</columns>
+    <columns>OPPORTUNITY.AMOUNT</columns>
+    <columns>CORE.USERS.ALIAS</columns>
+    <columns>OPPORTUNITY_SCORE</columns>
+    <columns>OPPORTUNITY.CREATED_DATE</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>OPPORTUNITY.STAGE_NAME</field>
+        <operation>equals</operation>
+        <value>5 - Signed/PO in</value>
+    </filters>
+    <filters>
+        <field>OPPORTUNITY.CREATED_DATE</field>
+        <operation>greaterThan</operation>
+        <value>5/1/2023 12:00 AM</value>
+    </filters>
+    <filters>
+        <field>OPPORTUNITY.CURRENCY_ISO_CODE</field>
+        <operation>equals</operation>
+        <value>INR</value>
+    </filters>
+    <label>Stage 5 opportunities - Sathish - India</label>
+    <sharedTo>
+        <roleAndSubordinatesInternal>IMAP_1_0_INDIA</roleAndSubordinatesInternal>
+    </sharedTo>
+</ListView>

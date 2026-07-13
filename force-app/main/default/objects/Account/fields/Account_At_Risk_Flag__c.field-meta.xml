@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Account_At_Risk_Flag__c</fullName>
+    <externalId>false</externalId>
+    <formula>IF(
+	AND(
+		ISPICKVAL(IM_Hierarchy_Level__c, &apos;IM Group (IMGA)&apos;),
+		At_Risk_Score__c &gt;=10
+	),
+	IMAGE(&quot;/img/msg_icons/error16.png&quot;,&quot;High Risk&quot;) &amp;&quot; View &quot;&amp; HYPERLINK(&quot;/00O80000005Kfhl?pv0=&quot; &amp; IM_IMGA_Indexed__c, &quot;Customer Ids by Risk&quot;),
+
+IF(
+	AND(
+		ISPICKVAL(IM_Hierarchy_Level__c, &apos;IM Group (IMGA)&apos;),
+		At_Risk_Score__c &lt;10,
+		At_Risk_Score__c &gt;=7
+	),
+	IMAGE(&quot;/img/msg_icons/warning16.png&quot;,&quot;Medium Risk&quot;) &amp;&quot; View &quot;&amp; HYPERLINK(&quot;/00O80000005Kfhl?pv0=&quot; &amp; IM_IMGA_Indexed__c, &quot;Customer Ids by Risk&quot;),
+
+IF(
+	AND(
+		ISPICKVAL(IM_Hierarchy_Level__c, &apos;IM Group (IMGA)&apos;),
+		At_Risk_Score__c &lt;7,
+		At_Risk_Score__c &gt;=1
+	),
+	IMAGE(&quot;/img/msg_icons/confirm16.png&quot;,&quot;Low Risk&quot;) &amp;&quot; View &quot;&amp; HYPERLINK(&quot;/00O80000005Kfhl?pv0=&quot; &amp; IM_IMGA_Indexed__c, &quot;Customer Ids by Risk&quot;),
+
+IF(
+	IMGA_Lookup__r.At_Risk_Score__c &gt;=10,
+	IMAGE(&quot;/img/msg_icons/error16.png&quot;,&quot;High Risk&quot;) &amp;&quot; View &quot;&amp; HYPERLINK(&quot;/00O80000005Kfhl?pv0=&quot; &amp; IM_IMGA_Indexed__c, &quot;Customer Ids by Risk&quot;),
+
+IF(
+	AND(
+		IMGA_Lookup__r.At_Risk_Score__c &lt;10,
+		IMGA_Lookup__r.At_Risk_Score__c &gt;=7),
+	IMAGE(&quot;/img/msg_icons/warning16.png&quot;,&quot;Medium Risk&quot;) &amp;&quot; View &quot;&amp; HYPERLINK(&quot;/00O80000005Kfhl?pv0=&quot; &amp; IM_IMGA_Indexed__c, &quot;Customer Ids by Risk&quot;),
+
+IF(
+	AND(
+		IMGA_Lookup__r.At_Risk_Score__c &lt;7,
+		IMGA_Lookup__r.At_Risk_Score__c &gt;=1),
+	IMAGE(&quot;/img/msg_icons/confirm16.png&quot;,&quot;Low Risk&quot;) &amp;&quot; View &quot;&amp; HYPERLINK(&quot;/00O80000005Kfhl?pv0=&quot; &amp; IM_IMGA_Indexed__c, &quot;Customer Ids by Risk&quot;),
+
+IF(
+	AND(
+		ISBLANK(IMGA_Lookup__c),
+		At_Risk_Score__c &gt;=10
+	),
+	IMAGE(&quot;/img/msg_icons/error16.png&quot;,&quot;High Risk&quot;) &amp;&quot; View &quot;&amp; HYPERLINK(&quot;/00O80000005KfjD?pv0=&quot; &amp; Id, &quot;Customer Ids by Risk&quot;),
+
+IF(
+	AND(
+		ISBLANK(IMGA_Lookup__c),
+		At_Risk_Score__c &lt;10,
+		At_Risk_Score__c &gt;=7
+	),
+	IMAGE(&quot;/img/msg_icons/warning16.png&quot;,&quot;Medium Risk&quot;) &amp;&quot; View &quot;&amp; HYPERLINK(&quot;/00O80000005KfjD?pv0=&quot; &amp; Id, &quot;Customer Ids by Risk&quot;),
+
+IF(
+	AND(
+		ISBLANK(IMGA_Lookup__c),
+		At_Risk_Score__c &lt;7,
+		At_Risk_Score__c &gt;=1
+	),
+	IMAGE(&quot;/img/msg_icons/confirm16.png&quot;,&quot;Low Risk&quot;) &amp;&quot; View &quot;&amp; HYPERLINK(&quot;/00O80000005KfjD?pv0=&quot; &amp; Id, &quot;Customer Ids by Risk&quot;),
+
+&quot;&quot;
+)
+)
+)
+)
+)
+)
+)
+)
+)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <inlineHelpText>A red flag = high risk 
+A yellow flag = medium risk 
+A green flag = low risk</inlineHelpText>
+    <label>Account At Risk Flag</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

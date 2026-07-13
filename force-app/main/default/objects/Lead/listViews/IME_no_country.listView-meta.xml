@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IME_no_country</fullName>
+    <columns>FULL_NAME</columns>
+    <columns>LEAD.COMPANY</columns>
+    <columns>LEAD.CITY</columns>
+    <columns>LEAD.ZIP</columns>
+    <columns>LEAD.EMAIL</columns>
+    <columns>LEAD.STATUS</columns>
+    <columns>IM_Lead_Stage__c</columns>
+    <columns>LEAD.LEAD_SOURCE</columns>
+    <columns>CREATEDBY_USER.ALIAS</columns>
+    <columns>LEAD.CREATED_DATE</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>LEAD.COUNTRY</field>
+        <operation>equals</operation>
+    </filters>
+    <filters>
+        <field>LEAD.RECORDTYPE</field>
+        <operation>equals</operation>
+        <value>Lead.IME_Lead</value>
+    </filters>
+    <filters>
+        <field>LEAD.STATUS</field>
+        <operation>notEqual</operation>
+        <value>Disqualified</value>
+    </filters>
+    <filters>
+        <field>LEAD.CREATED_DATE</field>
+        <operation>greaterOrEqual</operation>
+        <value>LAST_90_DAYS</value>
+    </filters>
+    <label>IME (no country)</label>
+    <language>en_US</language>
+    <sharedTo>
+        <group>IME_UK_Teleprospectors</group>
+        <role>IME_SC_GBR_CSM</role>
+        <role>IME_SC_GBR_CSM_Cred_Con</role>
+        <role>IME_SC_GBR_CSR</role>
+        <role>IME_SC_GBR_CSTL</role>
+        <role>IME_SC_GBR_NORDICS_CED</role>
+    </sharedTo>
+</ListView>

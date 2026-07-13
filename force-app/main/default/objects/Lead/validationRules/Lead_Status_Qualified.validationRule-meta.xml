@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Lead_Status_Qualified</fullName>
+    <active>false</active>
+    <description>To restrict Lead Status of &quot;Qualified&quot; to MDA
+Case#13007371</description>
+    <errorConditionFormula>AND(
+OR(
+ISCHANGED(Status),
+ISNEW() ),
+ISPICKVAL( Status , &quot;Qualified&quot;),
+$UserRole.Name &lt;&gt; &quot;IME Teleprospecting&quot;,
+$UserRole.Name &lt;&gt; &quot;IRON MTN ADMIN&quot;,
+$UserRole.Name &lt;&gt; &quot;ICR&quot;,
+$UserRole.Name &lt;&gt; &quot;MDA&quot;,
+$UserRole.Name &lt;&gt; &quot;Team Lead - Interaction Center&quot;
+)</errorConditionFormula>
+    <errorDisplayField>Status</errorDisplayField>
+    <errorMessage>&quot;Qualified&quot; status is reserved for marketing workflow automation. Select &quot;Accepted&quot; to further qualify, or convert lead to opportunity.</errorMessage>
+</ValidationRule>

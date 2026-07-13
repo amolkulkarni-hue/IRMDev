@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebLink xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Send_for_Signature_Lightning</fullName>
+    <availability>online</availability>
+    <description>This button is for Lightning - W-000489</description>
+    <displayType>button</displayType>
+    <encodingKey>UTF-8</encodingKey>
+    <hasMenubar>false</hasMenubar>
+    <hasScrollbars>true</hasScrollbars>
+    <hasToolbar>false</hasToolbar>
+    <height>600</height>
+    <isResizable>true</isResizable>
+    <linkType>url</linkType>
+    <masterLabel>Send for Signature</masterLabel>
+    <openType>newWindow</openType>
+    <position>none</position>
+    <protected>false</protected>
+    <showsLocation>false</showsLocation>
+    <showsStatus>false</showsStatus>
+    <url>{!IF(AND($User.dsfs__DSProSFUsername__c != null , $User.Docusign_Use_on_Case_Object__c == false) , URLFOR(&apos;/apex/SendForSignatureOnCase&apos;), URLFOR(&apos;/apex/dsfs__DocuSign_CreateEnvelope&apos;,null,[SourceID = Case.Id]))}</url>
+</WebLink>

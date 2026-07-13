@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IME_SC_DEU_Survey_Cases</fullName>
+    <columns>CASES.CASE_NUMBER</columns>
+    <columns>NAME</columns>
+    <columns>CASES.SUBJECT</columns>
+    <columns>CASES.STATUS</columns>
+    <columns>CASES.PRIORITY</columns>
+    <columns>CASES.CREATED_DATE</columns>
+    <columns>CORE.USERS.ALIAS</columns>
+    <filterScope>Queue</filterScope>
+    <filters>
+        <field>IME_SC_Sub_Category__c</field>
+        <operation>equals</operation>
+        <value>Bad Survey Score</value>
+    </filters>
+    <label>IME SC DEU Survey Cases</label>
+    <language>en_US</language>
+    <queue>IME_SC_DEU_Complaints_Queue</queue>
+    <sharedTo>
+        <group>IME_SC_DEU_Survey_Cases</group>
+    </sharedTo>
+</ListView>

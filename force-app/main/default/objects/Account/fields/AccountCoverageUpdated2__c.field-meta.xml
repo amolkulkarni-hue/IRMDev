@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>AccountCoverageUpdated2__c</fullName>
+    <description>Flag to determine the change in Account Coverage Fields
+#28690 Part 2 of Account Coverage fields
+#34421 Added RIM SDE and AMD
+#34498: Added Industry and Sector</description>
+    <formula>IF(OR(   
+         DM_Cloud_Sales_Rep_Formula__c!=DM_Cloud_Sales_Rep__c,
+	 Library_Services_BDE_Formula__c!=Library_Services_BDE__c,
+	 Enterprise_ISR_Formula__c!=Enterprise_ISR__c,
+	 Data_Centre_Owner_Formula__c!=Data_Centre_Owner__c,
+         Solution_Executive_Formula__c!=Solution_Executive__c,
+         AMD_Formula__c!=AMD__c,
+         RIM_SDE_Formula__c!=RIM_SDE__c,
+         Industry_Formula__c!=Text(IM_Industry__c),
+         Sector_Formula__c!=Text(Sector__c)
+  ),True,False)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>AccountCoverageUpdated2</label>
+    <trackHistory>false</trackHistory>
+    <type>Checkbox</type>
+</CustomField>

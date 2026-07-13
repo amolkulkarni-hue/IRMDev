@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Require_Deal_Close_Date</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+    NOT(Bypass_Validation__c),
+    OR( NOT(ISPICKVAL(StageName,&quot;Qualification&quot;)),
+        NOT(ISPICKVAL(StageName,&quot;Solutioning&quot;)),
+         NOT(ISPICKVAL(StageName,&quot;Negotiation&quot;))),
+    ISBLANK(CloseDate)
+)</errorConditionFormula>
+    <errorDisplayField>CloseDate</errorDisplayField>
+    <errorMessage>Deal Close Date is required while the deal is open.</errorMessage>
+</ValidationRule>

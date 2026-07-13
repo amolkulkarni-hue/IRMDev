@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>QTB_Opportunity_Billing_Country_USA</fullName>
+    <active>true</active>
+    <description>Prevents legacy picklist value &apos;USA&apos; to be selected. Prompts user to select &apos;United States&apos;</description>
+    <errorConditionFormula>AND(
+OR(Billing_Country__r.Name = &apos;USA&apos;, Billing_Country__r.Name = &apos;United States of America&apos;),
+NOT( $Setup.OpportunityAttribution__c.BypassValidation__c ),
+NOT($Permission.VR_Bypass_Permission)
+)</errorConditionFormula>
+    <errorMessage>Please select the active version (United States) of billing country. USA is no longer supported.</errorMessage>
+</ValidationRule>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>QTB_Billing_Account_Update_Validation</fullName>
+    <active>true</active>
+    <description>#SFCPQBLG 966 - Restrict sales user from editing a Billing Account</description>
+    <errorConditionFormula>AND(NOT($Setup.Metadata_Activation_Settings__c.Disable_VR__c &amp;&amp; OR(
+ISBLANK($Setup.Metadata_Activation_Settings__c.SObject_API_Name__c),CONTAINS(
+$Setup.Metadata_Activation_Settings__c.SObject_API_Name__c, &apos;Account&apos;))),
+RecordType.DeveloperName=$Label.QTB_AccountRecordType_Billing, NOT(QTB_FSO__c),
+NOT(ISNEW()),
+NOT(CONTAINS($Label.QTB_Edit_Billing_Account_Bypassed_Profiles,
+$Profile.Name)),NOT($Permission.QTB_Edit_Billing_Account))</errorConditionFormula>
+    <errorMessage>You do not have permission to edit billing accounts.</errorMessage>
+</ValidationRule>

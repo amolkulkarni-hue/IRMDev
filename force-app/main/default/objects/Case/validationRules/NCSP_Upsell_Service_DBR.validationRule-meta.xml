@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NCSP_Upsell_Service_DBR</fullName>
+    <active>true</active>
+    <description>Service Scheduled Date is required when Service Order Required is Yes, and Service Order Date is populated</description>
+    <errorConditionFormula>AND(
+TEXT( Service_Order_Date__c ) != &apos;&apos;,
+$RecordType.Name == &apos;NCSP: Upsell&apos;,
+ISPICKVAL( NCSP_Service_line__c , &apos;DB&amp;R&apos;) ,
+TEXT(Service_Schedule_Date__c) == &apos;&apos;
+)</errorConditionFormula>
+    <errorMessage>Service Scheduled Date is required when Service Order Required is Yes, and Service Order Date is populated</errorMessage>
+</ValidationRule>

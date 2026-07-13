@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Service_Line_CAC_Retention_Conversion__c</fullName>
+    <externalId>false</externalId>
+    <formula>CASE(Service_Line_CAC_Retention__c, 
+&quot;DP&quot;,&quot;DB&amp;R&quot;,
+&quot;SHRED&quot;,&quot;Shred&quot;,
+&quot;RM&quot;,&quot;RM&quot;,
+&quot;Service_Line_CAC_Retention__c&quot;
+)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Service Line (CAC/Retention) Conversion</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

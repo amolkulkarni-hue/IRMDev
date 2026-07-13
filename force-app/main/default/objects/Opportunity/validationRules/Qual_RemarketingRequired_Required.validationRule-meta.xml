@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Qual_RemarketingRequired_Required</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+  NOT(Bypass_Validation__c),
+  ISCHANGED(StageName),
+  ISPICKVAL(PRIORVALUE(StageName), &apos;Qualification&apos;),
+  ISPICKVAL(StageName, &apos;Solutioning&apos;),
+  OR(
+    ISPICKVAL(Primary_Product_Line__c, &apos;ALM&apos;),
+    ISPICKVAL(Secondary_Product_Line__c, &apos;ALM&apos;)
+  ),
+  OR(
+    ISPICKVAL(Type, &apos;New Deal&apos;),
+    ISPICKVAL(Type, &apos;Upsell&apos;),
+    ISPICKVAL(Type, &apos;Framework&apos;)
+  ),
+  ISPICKVAL(Remarketing_Required__c, &apos;&apos;)
+)</errorConditionFormula>
+    <errorDisplayField>Remarketing_Required__c</errorDisplayField>
+    <errorMessage>Remarketing Required must be specified for ALM opportunities before advancing from Qualification.</errorMessage>
+</ValidationRule>

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebLink xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Create_Standard_Contract_UK</fullName>
+    <availability>online</availability>
+    <displayType>button</displayType>
+    <linkType>javascript</linkType>
+    <masterLabel>Create Standard Contract (UKI)</masterLabel>
+    <openType>onClickJavaScript</openType>
+    <protected>false</protected>
+    <url>{!REQUIRESCRIPT(&quot;/soap/ajax/30.0/connection.js&quot;)} 
+{!REQUIRESCRIPT(&quot;/soap/ajax/30.0/apex.js&quot;)} 
+
+
+var Contract = sforce.connection.query(&quot;SELECT id,Status,Standard_Contract__c from contract where id =&apos;{!Opportunity.IME_ContractId__c}&apos; limit 1&quot;); 
+
+ContractInfo = Contract.getArray(&quot;records&quot;); 
+var ContractStatus;
+var StandardContract; 
+var createContract=false;
+var cancelContract=false;
+
+if(ContractInfo[0] != null){ 
+    ContractStatus= ContractInfo[0].Status; 
+    StandardContract = ContractInfo[0].Standard_Contract__c;
+} 
+if(ContractStatus==&apos;Activated&apos;)
+{ 
+    alert(&quot;There is an active contract already linked to this Opportunity&quot;); 
+}
+else if((&apos;{!Opportunity.Billing_Country__c}&apos; != &apos;United Kingdom&apos;) &amp;&amp;
+ (&apos;{!Opportunity.Billing_Country__c}&apos; != &apos;Ireland&apos;))
+{
+    alert(&quot;This functionality can only be used when contracting in the UK or Ireland&quot;);
+    
+}
+else if((StandardContract != &apos;true&apos;) &amp;&amp; (&apos;{!Opportunity.IME_Contract__c}&apos;))
+{
+    alert(&quot;The contract linked haven&apos;t gone through the Standard Contract Process. Please contact Contracts Team to assist.&quot;);
+}
+else if ((&apos;{!Opportunity.Type}&apos; != &apos;New Deal&apos;) || (&apos;{!Opportunity.StageName}&apos; != &apos;4 - Negotiate&apos;)) { 
+  alert(&quot;Standard Contracts can only be created for ’New Deal’ Opportunities at &apos;Stage 4 - Negotiate&apos;&quot;); 
+} 
+else if(&apos;{!Opportunity.IME_Contract__c}&apos;) 
+{
+	var r = confirm(&quot;There is a Contract already linked to this Opportunity, if you progress that contract will be cancelled&quot;); 
+    if(r == true) 
+	{	
+		createContract =true;
+		cancelContract =true;
+	}
+}  
+else
+{ 
+	createContract =true;
+}
+
+if(createContract)
+{
+
+  var r = confirm(&quot;Are you sure the contract is a Standard Contract and you have checked the followings? \n\n1. Verify companies house has been checked and used on the Opportunity \n2. Has the correct service and term been selected \n3. Address must be UK or Ireland if anything different do not proceed&quot;); 
+  if(r == true) 
+  { 
+	if((&apos;{!JSENCODE(Opportunity.Company_Name__c)}&apos; == &apos;&apos;) || (&apos;{!JSENCODE(Opportunity.Company_Registered_Address2__c)}&apos; == &apos;&apos;) || (&apos;{!Opportunity.Company_Number__c}&apos; == &apos;&apos;) || (&apos;{!Opportunity.Contract_Term__c}&apos; == &apos;&apos; ) || (&apos;{!Opportunity.Effective_Date__c}&apos; == &apos;&apos; ) || (&apos;{!Opportunity.Product__c}&apos; == &apos;&apos; ) || (&apos;{!Opportunity.Registered_In__c}&apos; == &apos;&apos; )) 
+	  {
+		  alert(&quot;All fields in the &apos;Standard Contract Details&apos; section should be populated&quot;); 
+	  }
+	  else
+	  {	
+             var contractingCountry = &apos;{!Opportunity.Contracting_Country__c}&apos;;
+             var BillingCountry = &apos;{!Opportunity.Billing_Country__c}&apos;;
+            
+
+			if(contractingCountry == BillingCountry){
+				
+			var signature = sforce.apex.execute(&quot;createNewContract&quot;,&quot;createStandardContract&quot;,{opportunityId:&quot;{!Opportunity.Id}&quot;,UpdateContract:cancelContract}); 
+
+
+
+		  var result = sforce.connection.query(&quot;Select product__c, Conga_Params__c,Country__c from IME_Contract_Conga_url__c&quot;); 
+		  records = result.getArray(&quot;records&quot;); 
+		  var conga_params=&apos;&apos;; 
+		  var oppProduct=&apos;{!Opportunity.Product__c}&apos;; 
+		  
+		  for (var i=0; i&lt; records.length; i++) 
+		  { 
+			  if((records[i].Product__c== oppProduct) &amp;&amp; (records[i].Country__c == contractingCountry)) 
+			  { 
+				  conga_params=records[i].Conga_Params__c; 
+			  } 
+		  } 
+		 // alert(conga_params); 
+		  window.open(&apos;https://composer.congamerge.com?sessionId={!API.Session_ID}&amp;serverUrl={!API.Partner_Server_URL_290}&amp;id={!Opportunity.Id}&amp;AttachmentParentId=&apos;+signature+conga_params)&amp;OCNR=1; 
+
+		  window.location.reload(); 
+	  }
+	  else
+	  {
+		  alert(&apos;Billing Country needs to match with Contracting Country&apos;);
+	  }
+  } 
+}
+}</url>
+</WebLink>

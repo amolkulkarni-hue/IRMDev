@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IME_SC_ValidateClosedStatus</fullName>
+    <active>true</active>
+    <description>The value of Status cannot be changed if it is closed .</description>
+    <errorConditionFormula>AND(NOT(ISCHANGED( IME_SC_Owner_Manager__c )), 
+NOT(ISCHANGED( IME_SC_Manager_of_Manager_OwnerId__c )),
+OR( $RecordType.Name = &quot;IME SC Case&quot; ,$RecordType.Name = &quot;IME SC Case Resolved&quot;  ), ISCHANGED( Status ),ISPICKVAL(PRIORVALUE( Status ), &quot;Closed&quot;),OR(ISPICKVAL( Status, &quot;New&quot;) , ISPICKVAL( Status, &quot;Validated&quot;) , ISPICKVAL( Status, &quot;Assigned&quot;) , ISPICKVAL( Status, &quot;In Progress&quot;) , ISPICKVAL( Status, &quot;On Hold - Internal&quot;) , ISPICKVAL( Status, &quot;On Hold - Customer&quot;) , ISPICKVAL( Status, &quot;Resolved&quot;)))</errorConditionFormula>
+    <errorDisplayField>Status</errorDisplayField>
+    <errorMessage>Status value can not be changed if it is closed .</errorMessage>
+</ValidationRule>

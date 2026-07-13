@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IME_SC_ValidateNewStatus</fullName>
+    <active>true</active>
+    <description>This rule triggers when status is changed back to NEW , once the value changes from New to some other value and again New .</description>
+    <errorConditionFormula>AND( NOT(ISCHANGED( IME_SC_Owner_Manager__c )), 
+NOT(ISCHANGED( IME_SC_Manager_of_Manager_OwnerId__c )),
+ $RecordType.Name = &quot;IME SC Case&quot;,  ISCHANGED( Status ),NOT(ISPICKVAL(PRIORVALUE( Status ), &quot;New&quot;)),ISPICKVAL( Status, &quot;New&quot;))</errorConditionFormula>
+    <errorDisplayField>Status</errorDisplayField>
+    <errorMessage>Status cannot be changed back to New.</errorMessage>
+</ValidationRule>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CAC_Retention_Date_to_be_Moved_on_Call</fullName>
+    <active>true</active>
+    <errorConditionFormula>$RecordType.Name = &apos;CAC - DP Closure&apos;  &amp;&amp; not(isblank( Date_Final_Service_Order_Created__c )) &amp;&amp; isblank( Date_to_be_Moved_on_Call__c )</errorConditionFormula>
+    <errorDisplayField>Date_to_be_Moved_on_Call__c</errorDisplayField>
+    <errorMessage>Date to be moved on Call is required when Date of Final Service order created populated.</errorMessage>
+</ValidationRule>

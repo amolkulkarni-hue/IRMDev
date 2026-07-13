@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Partner_Account_Mandatory_Fields</fullName>
+    <active>true</active>
+    <description>Following fields are mandatory if Account is a Partner Account - Partner Flag, Partner Manager, Partner Status, Partner Type.</description>
+    <errorConditionFormula>AND(ISPICKVAL(Type, &quot;Partner&quot;), 
+OR( 
+IM_Partner_Flag__c =FALSE, 
+ISBLANK( IM_Partner_Manager__c ), 
+ISPICKVAL( IM_Partner_Status__c,&quot;&quot; ), 
+ISPICKVAL( IM_Partner_Type__c,&quot;&quot;) 
+) 
+)</errorConditionFormula>
+    <errorDisplayField>Customers__c</errorDisplayField>
+    <errorMessage>Please enter Partner Flag, Partner Manager, Partner Status, Partner Type info for this Partner Account.</errorMessage>
+</ValidationRule>

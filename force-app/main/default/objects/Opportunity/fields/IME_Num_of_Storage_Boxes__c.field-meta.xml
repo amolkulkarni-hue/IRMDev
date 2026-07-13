@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IME_Num_of_Storage_Boxes__c</fullName>
+    <description>Counts the number of Storage Box products related to the opportunity</description>
+    <label>Num of Storage Boxes</label>
+    <summaryFilterItems>
+        <field>OpportunityLineItem.IME_Product_Name__c</field>
+        <operation>equals</operation>
+        <value>Storage - Boxes (CuFt) [Rec]</value>
+    </summaryFilterItems>
+    <summaryForeignKey>OpportunityLineItem.OpportunityId</summaryForeignKey>
+    <summaryOperation>count</summaryOperation>
+    <trackHistory>false</trackHistory>
+    <type>Summary</type>
+</CustomField>

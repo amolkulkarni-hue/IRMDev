@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>66.0</apiVersion>
+    <isExposed>true</isExposed>
+
+    <targets>
+        <target>lightning__RecordPage</target>
+        <target>lightning__AppPage</target>
+        <target>lightning__HomePage</target>
+    </targets>
+
+    <targetConfigs>
+        <targetConfig targets="lightning__RecordPage,lightning__AppPage,lightning__HomePage">
+
+            <property
+                name="buttonLabel"
+                type="String"
+                label="Button Label"
+                default="Create Quote"
+                description="Create Quote" />
+
+            <property
+                name="buttonTooltip"
+                type="String"
+                label="Button Tooltip"
+                default="Open transaction link"/>
+
+            <property
+                name="iconName"
+                type="String"
+                label="Icon (e.g., utility:link)"
+                default="utility:link"
+                description="Ej: utility:link" />
+
+            <property
+                name="buttonVariant"
+                type="String"
+                label="Button Variant"
+                default="brand"
+                datasource="brand,neutral,brand-outline,destructive,success"
+                description="Button Style" />
+
+            <property
+                name="openInNewTab"
+                type="Boolean"
+                label="Open in New Tab?"
+                default="false"
+                description="If active, link is oppened in a new Tab." />
+
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

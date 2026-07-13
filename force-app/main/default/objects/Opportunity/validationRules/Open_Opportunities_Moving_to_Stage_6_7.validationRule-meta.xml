@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Open_Opportunities_Moving_to_Stage_6_7</fullName>
+    <active>false</active>
+    <description>#21200
+Deactivating the VR as this is acts as duplicate</description>
+    <errorConditionFormula>AND( ISCHANGED( StageName ), 
+NOT(
+ISPICKVAL(PRIORVALUE(StageName),&apos;Lost&apos;)),
+ISBLANK( IM_Stage_5_Entered_Date__c ), 
+OR(
+ISPICKVAL( StageName , &apos;6 - Setup&apos;),
+ISPICKVAL( StageName , &apos;7 - Closed&apos;)),
+OR(
+$Profile.Name = &apos;IME_In_Country_Admin&apos;,
+$Profile.Name = &apos;IME_Contracts&apos;,
+$Profile.Name = &apos;IMLA_Manager&apos;,
+$Profile.Name = &apos;IMLA_Marketing&apos;,
+$Profile.Name = &apos;IMLA_Sales_AM&apos;,
+$Profile.Name = &apos;IMLA_Sales_Support&apos;,
+$Profile.Name = &apos;IMLA_SC_In_Country_Admin&apos;,
+$Profile.Name = &apos;IMLA_SC_Manager&apos;,
+$Profile.Name = &apos;IMLA_SC_Representative&apos;)
+)</errorConditionFormula>
+    <errorDisplayField>StageName</errorDisplayField>
+    <errorMessage>An open Opportunity must move to stage 5 before moving to stage 6 or 7.</errorMessage>
+</ValidationRule>

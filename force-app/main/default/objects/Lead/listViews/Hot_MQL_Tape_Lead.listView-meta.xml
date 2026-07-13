@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Hot_MQL_Tape_Lead</fullName>
+    <filterScope>Queue</filterScope>
+    <filters>
+        <field>LEAD.STATUS</field>
+        <operation>notEqual</operation>
+        <value>Disqualified</value>
+    </filters>
+    <label>Hot MQL Tape</label>
+    <language>en_US</language>
+    <queue>Hot_MQL_Tape</queue>
+    <sharedTo>
+        <group>NAAllUsers</group>
+    </sharedTo>
+</ListView>

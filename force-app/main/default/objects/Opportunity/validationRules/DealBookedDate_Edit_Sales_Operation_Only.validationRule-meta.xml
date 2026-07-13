@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>DealBookedDate_Edit_Sales_Operation_Only</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+ NOT(Bypass_Validation__c),
+    $Profile.Name &lt;&gt; &quot;IM_Custom Sys Admin&quot;,
+ISCHANGED(Deal_Booked_Date__c),
+    NOT($Permission.Sales_Operations)
+)</errorConditionFormula>
+    <errorMessage>Only Sales Operations users may modify Deal Booked Date.</errorMessage>
+</ValidationRule>

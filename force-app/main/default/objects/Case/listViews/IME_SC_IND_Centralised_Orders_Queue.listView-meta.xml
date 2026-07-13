@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IME_SC_IND_Centralised_Orders_Queue</fullName>
+    <columns>CASES.CASE_NUMBER</columns>
+    <columns>OWNER_NAME</columns>
+    <columns>IME_SC_Case_Email__c</columns>
+    <columns>IME_SC_Category__c</columns>
+    <columns>IME_SC_Sub_Category__c</columns>
+    <columns>IME_SC_Customer_AccountId__c</columns>
+    <columns>Customer_Name__c</columns>
+    <columns>CASES.SUBJECT</columns>
+    <columns>IME_SC_Case_Fax__c</columns>
+    <columns>CASES.STATUS</columns>
+    <columns>CASES.PRIORITY</columns>
+    <columns>CASES.CREATED_DATE</columns>
+    <columns>End_Time_Cutoff_SLA__c</columns>
+    <columns>CASES.ORIGIN</columns>
+    <division>*</division>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>CASES.ORIGIN</field>
+        <operation>equals</operation>
+        <value>,IND_NORTH_EMAIL_CS,IND_SOUTH_EMAIL_CS,IND_WEST_EMAIL_CS,IND_EAST_EMAIL_CS</value>
+    </filters>
+    <filters>
+        <field>IME_SC_Sub_Category__c</field>
+        <operation>equals</operation>
+        <value>Destruction,Destruction (DP),Destruction (RM),Permanent Withdrawal</value>
+    </filters>
+    <filters>
+        <field>CASES.STATUS</field>
+        <operation>equals</operation>
+        <value>Validated</value>
+    </filters>
+    <filters>
+        <field>IME_SC_Category__c</field>
+        <operation>equals</operation>
+        <value>Create a new Order</value>
+    </filters>
+    <label>IME SC IND Destruction &amp; Perm Out</label>
+    <language>en_US</language>
+    <sharedTo>
+        <group>IME_SC_IND_NORTH_Orders_Group</group>
+        <group>IME_SC_IND_SOUTH_Orders_Group</group>
+        <group>IME_SC_IND_WEST_Orders_Group</group>
+    </sharedTo>
+</ListView>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Contract_Accepted_Date</fullName>
+    <active>true</active>
+    <description>Contract Accepted Date must be a current date only (cannot be a past or future). For reference, check user story #26355 on Gitlab.</description>
+    <errorConditionFormula>((RecordType_Name__c = &quot;NCSP: SKP New Customer Setup&quot;) ||
+(RecordType_Name__c = &quot;NCSP: DP New Customer Setup&quot;) ||
+(RecordType_Name__c = &quot;NCSP: DMS&quot;) ||
+(RecordType_Name__c = &quot;NCSP: Tech Services New Customer Setup&quot;) 
+)&amp;&amp;
+OR(
+	(
+	NOT(ISCHANGED(Open_Tasks__c)) &amp;&amp;
+	ISCHANGED(Date_Sent_to_Contracts_Admin__c) &amp;&amp;
+	NOT(ISBLANK(Date_Sent_to_Contracts_Admin__c)) &amp;&amp;
+	DATEVALUE(Date_Sent_to_Contracts_Admin__c) != TODAY() &amp;&amp;
+	(
+	  ISBLANK(PRIORVALUE(Date_Sent_to_Contracts_Admin__c)) ||
+	  DATEVALUE(Date_Sent_to_Contracts_Admin__c) != DATEVALUE(PRIORVALUE(Date_Sent_to_Contracts_Admin__c))
+	)
+	),
+    (	
+	ISNEW() &amp;&amp;
+	NOT(ISBLANK(Date_Sent_to_Contracts_Admin__c)) &amp;&amp;
+	DATEVALUE(Date_Sent_to_Contracts_Admin__c) != TODAY() 
+	) 
+)</errorConditionFormula>
+    <errorDisplayField>Date_Sent_to_Contracts_Admin__c</errorDisplayField>
+    <errorMessage>Contract Accepted Date must be a current date only (cannot be a past or future).</errorMessage>
+</ValidationRule>

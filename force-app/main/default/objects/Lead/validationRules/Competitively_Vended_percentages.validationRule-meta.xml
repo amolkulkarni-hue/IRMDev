@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Competitively_Vended_percentages</fullName>
+    <active>true</active>
+    <description>Percentages must be entered if Both is selected under Competitively Vended</description>
+    <errorConditionFormula>AND(
+ISPICKVAL( Competitively_Vended__c ,&quot;Both&quot;),
+OR(
+(ISBLANK( Vended__c )),
+(ISBLANK( Unvended__c ))
+))</errorConditionFormula>
+    <errorDisplayField>Unvended__c</errorDisplayField>
+    <errorMessage>Enter the percent of storage Vended and Unvended.</errorMessage>
+</ValidationRule>

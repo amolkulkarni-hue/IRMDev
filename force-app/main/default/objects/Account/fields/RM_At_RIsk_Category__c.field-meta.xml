@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>RM_At_RIsk_Category__c</fullName>
+    <description>The risk assessment category for the Records Management business line.</description>
+    <externalId>false</externalId>
+    <formula>IF
+( RM_At_Risk_Score__c &gt;= 10
+, &quot;High Risk&quot;
+, IF
+  ( RM_At_Risk_Score__c &gt;= 7
+  , &quot;Medium Risk&quot;, &quot;Low Risk&quot;
+  )
+)</formula>
+    <inlineHelpText>The risk assessment category for the Records Management business line.</inlineHelpText>
+    <label>RM At RIsk Category</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

@@ -1,0 +1,108 @@
+{
+  "appPageId" : "f0c590c7-a247-479b-bb7f-e164da29928d",
+  "componentName" : "siteforce:dynamicLayout",
+  "dataProviders" : [ ],
+  "id" : "e9dcfe59-be40-4b4c-adff-b1d14815cc5f",
+  "label" : "My Cases",
+  "regions" : [ {
+    "components" : [ {
+      "componentAttributes" : {
+        "background" : "background: rgba(0,0,0,0)",
+        "backgroundOverlay" : "rgba(0,0,0,0.5)",
+        "contentAreaWidth" : 100,
+        "sectionConfig" : {
+          "UUID" : "528b89b5-28d6-4071-9b6c-044e21c4bb97",
+          "columns" : [ {
+            "UUID" : "e53f829d-2f6c-4edc-9095-49e6e8798f4b",
+            "columnKey" : "1",
+            "columnName" : "Column 1",
+            "columnWidth" : "12",
+            "seedComponents" : [ ]
+          } ]
+        },
+        "sectionHeight" : 300
+      },
+      "componentName" : "forceCommunity:section",
+      "id" : "528b89b5-28d6-4071-9b6c-044e21c4bb97",
+      "regions" : [ {
+        "components" : [ {
+          "componentAttributes" : {
+            "richTextValue" : "<div class=\"pageHeadings\">\n    <div class=\"pageHeadingsTitle\">My cases</div>\n    <div class=\"pageHeadingsSubTitle\">View and manage your support cases below. Click on any case to view additional details.</div>\n</div>"
+          },
+          "componentName" : "forceCommunity:htmlBlock",
+          "id" : "4b961c83-f38d-46a0-95e1-0c21de2c8a09",
+          "renderPriority" : "NEUTRAL",
+          "renditionMap" : {
+            "de" : "00e09cff-4f44-43b3-a13a-337675d8ede8",
+            "es" : "e6925e7f-ff07-4737-a8d8-f33554b646cb",
+            "fr" : "97956dc6-1cb4-4cc9-a9eb-39b0e4047225"
+          },
+          "renditions" : [ {
+            "id" : "e6925e7f-ff07-4737-a8d8-f33554b646cb",
+            "renditionValue" : {
+              "componentAttributes" : {
+                "richTextValue" : "<div class=\"pageHeadings\">\n    <div class=\"pageHeadingsTitle\">Mis casos</div>\n    <div class=\"pageHeadingsSubTitle\">Vea y administre sus casos de soporte a continuación. Haga clic en cualquier caso para ver detalles adicionales.</div>\n</div>"
+              }
+            },
+            "type" : "renditionComponent"
+          }, {
+            "id" : "00e09cff-4f44-43b3-a13a-337675d8ede8",
+            "renditionValue" : {
+              "componentAttributes" : {
+                "richTextValue" : "<div class=\"pageHeadings\">\n    <div class=\"pageHeadingsTitle\">Meine Fälle</div>\n    <div class=\"pageHeadingsSubTitle\">Zeigen Sie unten Ihre Supportfälle an und verwalten Sie sie. Klicken Sie auf einen Fall, um weitere Details anzuzeigen.</div>\n</div>"
+              }
+            },
+            "type" : "renditionComponent"
+          }, {
+            "id" : "97956dc6-1cb4-4cc9-a9eb-39b0e4047225",
+            "renditionValue" : {
+              "componentAttributes" : {
+                "richTextValue" : "<div class=\"pageHeadings\">\n    <div class=\"pageHeadingsTitle\">Mes demandes</div>\n    <div class=\"pageHeadingsSubTitle\">Consultez et gérez vos demandes d'assistance ci-dessous. Cliquez sur n'importe quelle demande pour afficher des détails supplémentaires.</div>\n</div>"
+              }
+            },
+            "type" : "renditionComponent"
+          } ],
+          "type" : "component"
+        }, {
+          "componentAttributes" : {
+            "requestedListView" : "Case_Home_Page_Paginated"
+          },
+          "componentName" : "c:nfListView",
+          "id" : "d602ec84-a84e-4bb1-bd85-4461ad93db41",
+          "renderPriority" : "NEUTRAL",
+          "renditionMap" : { },
+          "type" : "component"
+        } ],
+        "id" : "e53f829d-2f6c-4edc-9095-49e6e8798f4b",
+        "regionLabel" : "Column 1",
+        "regionName" : "1",
+        "renditionMap" : { },
+        "type" : "region"
+      } ],
+      "renderPriority" : "NEUTRAL",
+      "renditionMap" : { },
+      "type" : "component"
+    } ],
+    "id" : "ff43d74c-233a-46af-908b-100f64c629b8",
+    "regionName" : "content",
+    "type" : "region"
+  }, {
+    "components" : [ {
+      "componentAttributes" : {
+        "customHeadTags" : "",
+        "description" : "",
+        "title" : "My Cases"
+      },
+      "componentName" : "forceCommunity:seoAssistant",
+      "id" : "69d9f1b7-ecdd-46bd-82f8-073e0b9f8502",
+      "renditionMap" : { },
+      "type" : "component"
+    } ],
+    "id" : "fcc1ba97-bd79-4612-9557-dba3fabfa9cf",
+    "regionName" : "sfdcHiddenRegion",
+    "type" : "region"
+  } ],
+  "themeLayoutType" : "NKFwniTevseiLgcT9DPLmiMXBtO2S0",
+  "type" : "view",
+  "viewType" : "custom-my-cases"
+}

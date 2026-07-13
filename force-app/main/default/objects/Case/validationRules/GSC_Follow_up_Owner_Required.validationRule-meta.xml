@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>GSC_Follow_up_Owner_Required</fullName>
+    <active>true</active>
+    <description>The field &apos;Follow-up Owner&apos; is required when Follow-up Department is selected. The epic for reference #1008. The rule updated for CAC Executive Escalations record type. For ref, check user story #27296 on Gitlab.</description>
+    <errorConditionFormula>AND(
+OR(RecordType_Name__c =&quot;Global Service Case&quot;,RecordType_Name__c =&quot;CAC Executive Escalations&quot;),
+OR((ISPICKVAL(GSC_Follow_up_Department__c, &quot;Care&quot;)),
+(ISPICKVAL(GSC_Follow_up_Department__c, &quot;Online System Support&quot;)),
+(ISPICKVAL(GSC_Follow_up_Department__c, &quot;A2C&quot;))
+),
+ISPICKVAL(GSC_Follow_up_Owner__c, &quot;&quot; )
+)</errorConditionFormula>
+    <errorMessage>&apos;Follow-up Owner&apos; is required when Follow-up Department is selected.</errorMessage>
+</ValidationRule>

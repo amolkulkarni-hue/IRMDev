@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CAC_Retention_Date_PDL_Sent_to_customer</fullName>
+    <active>true</active>
+    <errorConditionFormula>$RecordType.Name = &apos;CAC - SKP RM&apos; &amp;&amp; Not(ISBLANK(   Date_Invoice_Details_Package_Sent__c )) &amp;&amp; ISBLANK( Date_PDL_Sent_to_Customer__c ) &amp;&amp;  (INCLUDES( Request_Type__c , &apos;Dest – Key&apos;)  || INCLUDES(Request_Type__c , &apos;Dest - SR&apos;) )</errorConditionFormula>
+    <errorDisplayField>Date_PDL_Sent_to_Customer__c</errorDisplayField>
+    <errorMessage>Date PDL sent to customer is required when the Request type is for Destruction and the Date Invoice details package sent is populated.</errorMessage>
+</ValidationRule>

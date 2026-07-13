@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Qual_NextStep_Required</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND( NOT(Bypass_Validation__c), 
+				ISCHANGED(StageName), 
+				ISPICKVAL(PRIORVALUE(StageName), &apos;Qualification&apos;), 
+				ISPICKVAL(StageName, &apos;Solutioning&apos;), 
+				OR( 
+							ISPICKVAL(Touch_Level__c, &apos;High Touch&apos;), 
+							ISPICKVAL(Touch_Level__c, &apos;Standard Touch&apos;) 
+				), 
+				ISBLANK(NextStep) 
+)</errorConditionFormula>
+    <errorDisplayField>NextStep</errorDisplayField>
+    <errorMessage>Next Step is required for Standard Touch and High Touch opportunities before advancing from Qualification.</errorMessage>
+</ValidationRule>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IME_SC_ValidateOwnerChange</fullName>
+    <active>true</active>
+    <description>to prevent owner change when case status is closed.</description>
+    <errorConditionFormula>AND(NOT(ISCHANGED( IME_SC_Owner_Manager__c )), 
+NOT(ISCHANGED( IME_SC_Manager_of_Manager_OwnerId__c )),
+NOT( 
+OR($Profile.Name = &quot;IME_Custom Sys Admin&quot;, 
+$Profile.Name = &quot;IMLA_Custom Sys Admin&quot;, 
+$Profile.Name = &quot;IM_Custom Sys Admin&quot;) 
+),  
+ $RecordType.Name =&apos;IME SC Case Resolved&apos;,
+ ISPICKVAL(Status,&apos;Closed&apos;),
+ ISCHANGED(OwnerId)
+)</errorConditionFormula>
+    <errorDisplayField>of_Service_Reschedules__c</errorDisplayField>
+    <errorMessage>Case Owner cannot be changed after case is closed</errorMessage>
+</ValidationRule>

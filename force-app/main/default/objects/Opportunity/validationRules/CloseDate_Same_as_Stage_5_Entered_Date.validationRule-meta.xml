@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CloseDate_Same_as_Stage_5_Entered_Date</fullName>
+    <active>true</active>
+    <description>Booked Date should be same as Stage 5 Entered date
+CloseDate formerly First Bill Date, Booked Date is now First Bill Date.
+#20656- Added bypass logic</description>
+    <errorConditionFormula>AND( 
+ISCHANGED(CloseDate),
+ISPICKVAL(StageName, &apos;5 - Signed/PO in&apos;),
+CloseDate != IM_Stage_5_Entered_Date__c,
+$Profile.Name &lt;&gt; &apos;System Administrator&apos;,
+$Profile.Name &lt;&gt; &apos;IM_Custom Sys Admin&apos;,
+NOT( $Permission.Edit_Close_Date_in_Late_Stage_Opp ), NOT($Permission.VR_Bypass_Permission)
+)</errorConditionFormula>
+    <errorMessage>The Close Date cannot be different than Stage 5 Entered Date. Need help? Contact your Sales Operations Business Partner.</errorMessage>
+</ValidationRule>

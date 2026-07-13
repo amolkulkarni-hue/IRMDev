@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>GSC_Status_InProgress_Req_Fields</fullName>
+    <active>true</active>
+    <description>The Contact ID, (Customer ID/Operational Acc/Billing Acc), Category and Sub Category are required for Status: In Progress. The epic for reference #1008#23176</description>
+    <errorConditionFormula>AND(
+RecordType_Name__c =&quot;Global Service Case&quot;,
+OR(
+AND(ISBLANK(Customer_ID__c),ISBLANK(GSC_Billing_Account__c),ISBLANK(GSC_Operational_Account__c)),
+(AND(ISBLANK( ContactId ),Is_IM_Employee__c = False)), 
+ISPICKVAL(  GSC_Category__c  , &apos;&apos;  ),
+ISPICKVAL(  GSC_Sub_Category__c  , &apos;&apos;  )),
+ISPICKVAL( Status , &apos;In Progress&apos;)
+)</errorConditionFormula>
+    <errorMessage>The Contact ID,(Customer ID/Operational Acc/Billing Acc), Category and Sub Category are required.</errorMessage>
+</ValidationRule>

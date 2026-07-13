@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>GSC_StatusResolved_ReqFields</fullName>
+    <active>true</active>
+    <description>Contact Name,(Customer ID/Operational Acc/Billing Acc), Category and Sub Category are required when Case status is Resolved. The epic for reference #1008 #15668#23176.#29931- Removed AccountId</description>
+    <errorConditionFormula>AND(
+$RecordType.DeveloperName = &apos;Global_Service_Case&apos;,
+OR(
+(AND(ISBLANK( ContactId ),Is_IM_Employee__c = False)),
+AND(ISBLANK(Customer_ID__c),ISBLANK(GSC_Billing_Account__c),ISBLANK(GSC_Operational_Account__c)),
+
+ISPICKVAL(   GSC_Category__c  , &quot;&quot; ),
+ISPICKVAL(  GSC_Sub_Category__c   , &quot;&quot; )
+),
+ISPICKVAL( Status, &quot;Resolved&quot; )
+)</errorConditionFormula>
+    <errorMessage>Contact Name, (Customer ID/Operational Acc/Billing Acc), Category and Sub Category are required to close the Case as Resolved.</errorMessage>
+</ValidationRule>

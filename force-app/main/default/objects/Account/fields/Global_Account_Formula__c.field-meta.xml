@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Global_Account_Formula__c</fullName>
+    <description>Case #8321313 : Global Accounts: Account Field Identifier
+#36574: Account: GI Account Indicator to copy down only to North America Accounts - PLNI0018014</description>
+    <formula>/* IMGA LEVEL: Current record is IMGA - Just check GI */
+IF(TEXT(IM_Hierarchy_Level__c) == &quot;IM Group (IMGA)&quot;, Global_Account__c,
+
+/* Country Parent Level: Parent is IMGA - Check GI first, then IMGA, then PD */
+IF(Parent.Global_Account__c &amp;&amp; TEXT(Parent.IM_Hierarchy_Level__c) == &quot;IM Group (IMGA)&quot;,
+    IF(TEXT(Parent.Program_Designation__c) == &quot;Strategic Account&quot;,
+        /* Strategic Account: Check Current Record for North America */
+        IF(Territory_Region__c == &quot;North America&quot;, Parent.Global_Account__c, FALSE),
+        /* Must be explicitly &apos;Global Account&apos; to flow directly */
+        IF(TEXT(Parent.Program_Designation__c) == &quot;Global Account&quot;, Parent.Global_Account__c, FALSE)
+    ),
+
+/* LEVEL 2: Parent is Country Parent */
+IF(NOT(ISBLANK(ParentId)) &amp;&amp; TEXT(Parent.Parent.IM_Hierarchy_Level__c) == &quot;IM Group (IMGA)&quot;,
+Parent.Global_Account__c,
+FALSE)
+)
+)</formula>
+    <label>Global Industries (Formula)</label>
+    <trackHistory>false</trackHistory>
+    <type>Checkbox</type>
+</CustomField>

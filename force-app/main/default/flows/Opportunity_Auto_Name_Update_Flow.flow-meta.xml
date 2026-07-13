@@ -1,23 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
-    <apiVersion>67.0</apiVersion>
-    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
-    <description>Record-Triggered After Save flow on Opportunity (Update). Fires only when the Opportunity Name contains TBD — indicating the auto-generated name has unfilled placeholders. Recalculates the full Name via IRM_OppNamingAction. Updates the record ONLY if the newly-built name differs from the current Name, preventing infinite loops. Once the seller manually sets a Name without TBD this flow stops firing, preserving their override.</description>
-    <label>Opportunity Auto Name - Update</label>
-    <processType>AutoLaunchedFlow</processType>
-    <status>Active</status>
-
-    <!-- actionCalls ─────────────────────────────────────────────────────── -->
     <actionCalls>
         <name>buildOppName</name>
         <label>Build Opportunity Name</label>
-        <locationX>176</locationX>
-        <locationY>888</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <actionName>IRM_OppNamingAction</actionName>
         <actionType>apex</actionType>
         <connector>
             <targetReference>checkNameChanged</targetReference>
         </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>opportunity</name>
             <value>
@@ -36,18 +29,192 @@
                 <elementReference>varNamingSegments</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>IRM_OppNamingAction</nameSegment>
+        <offset>0</offset>
         <outputParameters>
             <assignToReference>varBuiltName</assignToReference>
             <name>opportunityName</name>
         </outputParameters>
     </actionCalls>
-
-    <!-- decisions ───────────────────────────────────────────────────────── -->
+    <apiVersion>67.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <name>Set_Deal_Booked_Date</name>
+        <label>Set Deal Booked Date</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Deal_Booked_Date__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Flow.CurrentDate</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>OpportunityRecord</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>checkNameHasTBD</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Deal_Completed_Date</name>
+        <label>Set Deal Completed Date</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Deal_Completed_Date__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Flow.CurrentDate</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>OpportunityRecord</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>checkNameHasTBD</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Opportunity_Name</name>
+        <label>Set Opportunity Name</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Name</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>varBuiltName</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>OpportunityRecord</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_Opportunity_Record</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <name>Check_Oppty_Stage</name>
+        <label>Check Oppty Stage</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>checkNameHasTBD</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Stage_Booked</name>
+            <conditionLogic>1 AND (2 OR 3 OR 4) AND 5</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.StageName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Booked</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Deal_Type__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>New Deal</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Deal_Type__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Upsell</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Deal_Type__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Renewal</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Deal_Booked_Date__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Deal_Booked_Date</targetReference>
+            </connector>
+            <label>Stage = Booked</label>
+        </rules>
+        <rules>
+            <name>Stage_Closed</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.StageName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Closed</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Deal_Completed_Date__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Deal_Completed_Date</targetReference>
+            </connector>
+            <label>Stage = Closed</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>checkNameChanged</name>
+        <label>Built Name Different from Current?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Update_Opportunity_Record</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Name Unchanged — End (loop guard)</defaultConnectorLabel>
+        <rules>
+            <name>nameChanged</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>varBuiltName</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>$Record.Name</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Opportunity_Name</targetReference>
+            </connector>
+            <label>Name Changed — Update</label>
+        </rules>
+    </decisions>
     <decisions>
         <name>checkNameHasTBD</name>
         <label>Name Contains TBD?</label>
-        <locationX>176</locationX>
-        <locationY>168</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Update_Opportunity_Record</targetReference>
+        </defaultConnector>
         <defaultConnectorLabel>No TBD — End</defaultConnectorLabel>
         <rules>
             <name>nameHasTBD</name>
@@ -68,8 +235,11 @@
     <decisions>
         <name>checkRecordType</name>
         <label>Is Target Record Type?</label>
-        <locationX>176</locationX>
-        <locationY>408</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Update_Opportunity_Record</targetReference>
+        </defaultConnector>
         <defaultConnectorLabel>Not Target RT — End</defaultConnectorLabel>
         <rules>
             <name>isTargetRT</name>
@@ -97,8 +267,11 @@
     <decisions>
         <name>checkSegmentsExist</name>
         <label>Naming Segments Found?</label>
-        <locationX>176</locationX>
-        <locationY>768</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Update_Opportunity_Record</targetReference>
+        </defaultConnector>
         <defaultConnectorLabel>No Segments — End</defaultConnectorLabel>
         <rules>
             <name>segmentsFound</name>
@@ -116,66 +289,27 @@
             <label>Segments Found</label>
         </rules>
     </decisions>
-    <decisions>
-        <name>checkNameChanged</name>
-        <label>Built Name Different from Current?</label>
-        <locationX>176</locationX>
-        <locationY>1008</locationY>
-        <defaultConnectorLabel>Name Unchanged — End (loop guard)</defaultConnectorLabel>
-        <rules>
-            <name>nameChanged</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>varBuiltName</leftValueReference>
-                <operator>NotEqualTo</operator>
-                <rightValue>
-                    <elementReference>$Record.Name</elementReference>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>updateOppName</targetReference>
-            </connector>
-            <label>Name Changed — Update</label>
-        </rules>
-    </decisions>
-
-    <!-- recordLookups ───────────────────────────────────────────────────── -->
-    <recordLookups>
-        <name>getRecordTypeName</name>
-        <label>Get RecordType Dev Name</label>
-        <locationX>176</locationX>
-        <locationY>288</locationY>
-        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>checkRecordType</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>$Record.RecordTypeId</elementReference>
-            </value>
-        </filters>
-        <filters>
-            <field>SObjectType</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>Opportunity</stringValue>
-            </value>
-        </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>RecordType</object>
-        <outputAssignments>
-            <assignToReference>varRecordTypeDevName</assignToReference>
-            <field>DeveloperName</field>
-        </outputAssignments>
-    </recordLookups>
+    <description>Record-Triggered After Save flow on Opportunity (Update). Fires only when the Opportunity Name contains TBD — indicating the auto-generated name has unfilled placeholders. Recalculates the full Name via IRM_OppNamingAction. Updates the record ONLY if the newly-built name differs from the current Name, preventing infinite loops. Once the seller manually sets a Name without TBD this flow stops firing, preserving their override.</description>
+    <environments>Default</environments>
+    <label>Opportunity Auto Name - Update</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
     <recordLookups>
         <name>getAccount</name>
         <label>Get Account Name</label>
-        <locationX>176</locationX>
-        <locationY>528</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>getNamingSegments</targetReference>
@@ -188,7 +322,6 @@
                 <elementReference>$Record.AccountId</elementReference>
             </value>
         </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>Account</object>
         <outputAssignments>
             <assignToReference>varAccountName</assignToReference>
@@ -198,8 +331,8 @@
     <recordLookups>
         <name>getNamingSegments</name>
         <label>Get Naming Segments</label>
-        <locationX>176</locationX>
-        <locationY>648</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>checkSegmentsExist</targetReference>
@@ -226,7 +359,6 @@
                 <elementReference>varRecordTypeDevName</elementReference>
             </value>
         </filters>
-        <getFirstRecordOnly>false</getFirstRecordOnly>
         <object>Opp_Naming_Segment__c</object>
         <outputReference>varNamingSegments</outputReference>
         <queriedFields>Id</queriedFields>
@@ -234,43 +366,62 @@
         <queriedFields>Field_API_Name__c</queriedFields>
         <queriedFields>Fallback_Value__c</queriedFields>
     </recordLookups>
-
-    <!-- recordUpdates ───────────────────────────────────────────────────── -->
-    <recordUpdates>
-        <name>updateOppName</name>
-        <label>Update Opportunity Name</label>
-        <locationX>176</locationX>
-        <locationY>1128</locationY>
+    <recordLookups>
+        <name>getRecordTypeName</name>
+        <label>Get RecordType Dev Name</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>checkRecordType</targetReference>
+        </connector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>$Record.Id</elementReference>
+                <elementReference>$Record.RecordTypeId</elementReference>
             </value>
         </filters>
-        <inputAssignments>
-            <field>Name</field>
+        <filters>
+            <field>SobjectType</field>
+            <operator>EqualTo</operator>
             <value>
-                <elementReference>varBuiltName</elementReference>
+                <stringValue>Opportunity</stringValue>
             </value>
-        </inputAssignments>
-        <object>Opportunity</object>
+        </filters>
+        <object>RecordType</object>
+        <outputAssignments>
+            <assignToReference>varRecordTypeDevName</assignToReference>
+            <field>DeveloperName</field>
+        </outputAssignments>
+    </recordLookups>
+    <recordUpdates>
+        <name>Update_Opportunity_Record</name>
+        <label>Update Opportunity Record</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <inputReference>OpportunityRecord</inputReference>
     </recordUpdates>
-
-    <!-- start ───────────────────────────────────────────────────────────── -->
     <start>
-        <locationX>176</locationX>
-        <locationY>48</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <connector>
-            <targetReference>checkNameHasTBD</targetReference>
+            <targetReference>Check_Oppty_Stage</targetReference>
         </connector>
         <object>Opportunity</object>
         <recordTriggerType>Update</recordTriggerType>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-
-    <!-- variables ───────────────────────────────────────────────────────── -->
+    <status>Active</status>
+    <variables>
+        <name>OpportunityRecord</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Opportunity</objectType>
+    </variables>
     <variables>
         <name>varAccountName</name>
         <dataType>String</dataType>

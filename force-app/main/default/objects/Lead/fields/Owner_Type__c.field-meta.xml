@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Owner_Type__c</fullName>
+    <description>IF(BEGINS (OwnerId, &quot;00G&quot;), &quot;Queue&quot;, &quot;User&quot;)</description>
+    <externalId>false</externalId>
+    <formula>IF(BEGINS (OwnerId, &quot;00G&quot;), &quot;Queue&quot;,
+IF ( ISPICKVAL( Owner_Details__r.Sales_Segment__c,  &quot;Digital&quot;) ,&quot;OSR&quot;, 
+IF ( ISPICKVAL( Owner_Details__r.Sales_Segment__c,  &quot;Enterprise&quot;) ,&quot;OSR&quot;, 
+IF ( ISPICKVAL( Owner_Details__r.Sales_Segment__c,  &quot;Mid Market&quot;) ,&quot;OSR&quot;, 
+IF ( ISPICKVAL( Owner_Details__r.Sales_Segment__c,  &quot;Inside Sales - Digital&quot;) ,&quot;ISR&quot;, 
+IF ( ISPICKVAL( Owner_Details__r.Sales_Segment__c,  &quot;Inside Sales - Physical&quot;) ,&quot;ISR&quot;,
+IF ( ISPICKVAL(  Owner_Details__r.Sales_Line_of_Business__c ,  &quot;AS-Digital&quot; ),&quot;ISR&quot;, 
+&quot;Other&quot;)))))))</formula>
+    <label>Owner Type</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

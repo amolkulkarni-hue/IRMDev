@@ -1,0 +1,756 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ReportType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <baseObject>Opportunity</baseObject>
+    <category>opportunities</category>
+    <deployed>true</deployed>
+    <description>Used to create reports on Opportunities with and without Tackle AWS Co-sell Opportunities</description>
+    <join>
+        <join>
+            <outerJoin>true</outerJoin>
+            <relationship>tackleio__AWSCosellOpportunityDetails__r</relationship>
+        </join>
+        <outerJoin>true</outerJoin>
+        <relationship>tackleio__Opportunities__r</relationship>
+    </join>
+    <label>Opportunities with and without Tackle AWS Co-sells</label>
+    <sections>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Opportunity ID</displayNameOverride>
+            <field>Id</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Account Name</displayNameOverride>
+            <field>Account</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Private</displayNameOverride>
+            <field>IsPrivate</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>true</checkedByDefault>
+            <displayNameOverride>Opportunity Name</displayNameOverride>
+            <field>Name</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Description</displayNameOverride>
+            <field>Description</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Stage</displayNameOverride>
+            <field>StageName</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Stage Sort Order</displayNameOverride>
+            <field>StageSortOrder</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Amount</displayNameOverride>
+            <field>Amount</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Probability (%)</displayNameOverride>
+            <field>Probability</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Expected Revenue</displayNameOverride>
+            <field>ExpectedRevenue</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Quantity</displayNameOverride>
+            <field>TotalOpportunityQuantity</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Close Date</displayNameOverride>
+            <field>CloseDate</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Type</displayNameOverride>
+            <field>Type</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Next Step</displayNameOverride>
+            <field>NextStep</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Lead Source</displayNameOverride>
+            <field>LeadSource</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Closed</displayNameOverride>
+            <field>IsClosed</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Won</displayNameOverride>
+            <field>IsWon</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Forecast Category</displayNameOverride>
+            <field>ForecastCategoryName</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Primary Campaign Source</displayNameOverride>
+            <field>Campaign</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Has Line Item</displayNameOverride>
+            <field>HasOpportunityLineItem</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Price Book</displayNameOverride>
+            <field>Pricebook2</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Opportunity Owner</displayNameOverride>
+            <field>Owner</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Created Date</displayNameOverride>
+            <field>CreatedDate</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Created By</displayNameOverride>
+            <field>CreatedBy</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Last Modified Date</displayNameOverride>
+            <field>LastModifiedDate</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Last Modified By</displayNameOverride>
+            <field>LastModifiedBy</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Last Activity</displayNameOverride>
+            <field>LastActivityDate</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Push Count</displayNameOverride>
+            <field>PushCount</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Last Stage Change Date</displayNameOverride>
+            <field>LastStageChangeDate</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Contact</displayNameOverride>
+            <field>Contact</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Primary Partner Account</displayNameOverride>
+            <field>PrimaryPartnerAccount</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Contract</displayNameOverride>
+            <field>Contract</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Customer_Outcome_Predefined__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Deal_Review_Status__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>IM_Legal_Entity__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Eligible_for_Negotiation__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Eligible_for_Counterparty_Paper__c</field>
+            <table>Opportunity</table>
+        </columns>
+        <masterLabel>Opportunities</masterLabel>
+    </sections>
+    <sections>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Tackle AWS Co-sell Opportunity ID</displayNameOverride>
+            <field>Id</field>
+            <table>Opportunity.tackleio__Opportunities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Owner</displayNameOverride>
+            <field>Owner</field>
+            <table>Opportunity.tackleio__Opportunities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>true</checkedByDefault>
+            <displayNameOverride>Name</displayNameOverride>
+            <field>Name</field>
+            <table>Opportunity.tackleio__Opportunities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>tackleio__OpportunityCrmId__c</field>
+            <table>Opportunity.tackleio__Opportunities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Created Date</displayNameOverride>
+            <field>CreatedDate</field>
+            <table>Opportunity.tackleio__Opportunities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Created By</displayNameOverride>
+            <field>CreatedBy</field>
+            <table>Opportunity.tackleio__Opportunities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Last Modified Date</displayNameOverride>
+            <field>LastModifiedDate</field>
+            <table>Opportunity.tackleio__Opportunities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Last Modified By</displayNameOverride>
+            <field>LastModifiedBy</field>
+            <table>Opportunity.tackleio__Opportunities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Last Activity Date</displayNameOverride>
+            <field>LastActivityDate</field>
+            <table>Opportunity.tackleio__Opportunities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>AWS Created Date</displayNameOverride>
+            <field>tackleio__AwsCreatedDate__c</field>
+            <table>Opportunity.tackleio__Opportunities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>AWS Created Date</displayNameOverride>
+            <field>tackleio__AwsCreatedDateTime__c</field>
+            <table>Opportunity.tackleio__Opportunities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>AWS Last Modified Date</displayNameOverride>
+            <field>tackleio__AwsLastModifiedDate__c</field>
+            <table>Opportunity.tackleio__Opportunities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>AWS Last Modified Date</displayNameOverride>
+            <field>tackleio__AwsLastModifiedDateTime__c</field>
+            <table>Opportunity.tackleio__Opportunities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>AWS Marketplace Offer Id</displayNameOverride>
+            <field>tackleio__AwsMarketplaceOffers__c</field>
+            <table>Opportunity.tackleio__Opportunities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>AWS Partner Central Id</displayNameOverride>
+            <field>tackleio__AwsOpportunityExternalId__c</field>
+            <table>Opportunity.tackleio__Opportunities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>AWS Summary Closed Lost Reason</displayNameOverride>
+            <field>tackleio__AwsOpportunitySummaryClosedLostReason__c</field>
+            <table>Opportunity.tackleio__Opportunities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>AWS Summary Next Steps</displayNameOverride>
+            <field>tackleio__AwsOpportunitySummaryNextSteps__c</field>
+            <table>Opportunity.tackleio__Opportunities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>AWS Summary Stage</displayNameOverride>
+            <field>tackleio__AwsOpportunitySummaryStage__c</field>
+            <table>Opportunity.tackleio__Opportunities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>AWS Sales Life Cycle Closed Lost Reason</displayNameOverride>
+            <field>tackleio__AwsSalesLifeCycleClosedLostReason__c</field>
+            <table>Opportunity.tackleio__Opportunities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>AWS Sales Life Cycle Stage</displayNameOverride>
+            <field>tackleio__AwsSalesLifeCycleStage__c</field>
+            <table>Opportunity.tackleio__Opportunities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>CRM Org Id</displayNameOverride>
+            <field>tackleio__CrmOrgId__c</field>
+            <table>Opportunity.tackleio__Opportunities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>City</displayNameOverride>
+            <field>tackleio__CustomerAccountAddressCity__c</field>
+            <table>Opportunity.tackleio__Opportunities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Country</displayNameOverride>
+            <field>tackleio__CustomerAccountAddressCountryCode__c</field>
+            <table>Opportunity.tackleio__Opportunities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Postal Code</displayNameOverride>
+            <field>tackleio__CustomerAccountAddressPostalCode__c</field>
+            <table>Opportunity.tackleio__Opportunities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>State/Province</displayNameOverride>
+            <field>tackleio__CustomerAccountAddressStateOrRegion__c</field>
+            <table>Opportunity.tackleio__Opportunities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Address</displayNameOverride>
+            <field>tackleio__CustomerAccountAddressStreetAddress__c</field>
+            <table>Opportunity.tackleio__Opportunities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>AWS Account Id</displayNameOverride>
+            <field>tackleio__CustomerAccountAwsAccountId__c</field>
+            <table>Opportunity.tackleio__Opportunities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Customer Company Name</displayNameOverride>
+            <field>tackleio__CustomerAccountCompanyName__c</field>
+            <table>Opportunity.tackleio__Opportunities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Customer Data Universal Number System</displayNameOverride>
+            <field>tackleio__CustomerAccountDuns__c</field>
+            <table>Opportunity.tackleio__Opportunities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Industry Vertical</displayNameOverride>
+            <field>tackleio__CustomerAccountIndustry__c</field>
+            <table>Opportunity.tackleio__Opportunities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Industry Other</displayNameOverride>
+            <field>tackleio__CustomerAccountOtherIndustry__c</field>
+            <table>Opportunity.tackleio__Opportunities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Customer Website</displayNameOverride>
+            <field>tackleio__CustomerAccountWebsiteUrl__c</field>
+            <table>Opportunity.tackleio__Opportunities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Expected Customer Spend Amount</displayNameOverride>
+            <field>tackleio__ExpectedCustomerSpendAmount__c</field>
+            <table>Opportunity.tackleio__Opportunities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Expected Customer Spend Currency</displayNameOverride>
+            <field>tackleio__ExpectedCustomerSpendCurrencyCode__c</field>
+            <table>Opportunity.tackleio__Opportunities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Expected Customer Spend Frequency</displayNameOverride>
+            <field>tackleio__ExpectedCustomerSpendFrequency__c</field>
+            <table>Opportunity.tackleio__Opportunities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Has Cloud Errors</displayNameOverride>
+            <field>tackleio__HasCloudErrors__c</field>
+            <table>Opportunity.tackleio__Opportunities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Engagement Score</displayNameOverride>
+            <field>tackleio__InsightsEngagementScore__c</field>
+            <table>Opportunity.tackleio__Opportunities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Insights Next Best Actions</displayNameOverride>
+            <field>tackleio__InsightsNextBestActionsLong__c</field>
+            <table>Opportunity.tackleio__Opportunities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Insights Next Best Actions</displayNameOverride>
+            <field>tackleio__InsightsNextBestActions__c</field>
+            <table>Opportunity.tackleio__Opportunities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Additional Comments</displayNameOverride>
+            <field>tackleio__AdditionalComments__c</field>
+            <table>Opportunity.tackleio__Opportunities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Additional Comments</displayNameOverride>
+            <field>tackleio__LifeCycleReviewComments__c</field>
+            <table>Opportunity.tackleio__Opportunities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Reviewer Status Reason</displayNameOverride>
+            <field>tackleio__LifeCycleReviewStatusReason__c</field>
+            <table>Opportunity.tackleio__Opportunities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Review Status</displayNameOverride>
+            <field>tackleio__LifeCycleReviewStatus__c</field>
+            <table>Opportunity.tackleio__Opportunities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Lifecycle Stage</displayNameOverride>
+            <field>tackleio__LifeCycleStage__c</field>
+            <table>Opportunity.tackleio__Opportunities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Target Close Date</displayNameOverride>
+            <field>tackleio__LifeCycleTargetCloseDate__c</field>
+            <table>Opportunity.tackleio__Opportunities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Marketing Development Funds</displayNameOverride>
+            <field>tackleio__MarketingAwsFundingUsed__c</field>
+            <table>Opportunity.tackleio__Opportunities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Marketing Campaign</displayNameOverride>
+            <field>tackleio__MarketingCampaignName__c</field>
+            <table>Opportunity.tackleio__Opportunities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Opportunity Source</displayNameOverride>
+            <field>tackleio__MarketingSource__c</field>
+            <table>Opportunity.tackleio__Opportunities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Classified National Security Information</displayNameOverride>
+            <field>tackleio__NationalSecurity__c</field>
+            <table>Opportunity.tackleio__Opportunities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Opportunity Type</displayNameOverride>
+            <field>tackleio__OpportunityType__c</field>
+            <table>Opportunity.tackleio__Opportunities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Origin</displayNameOverride>
+            <field>tackleio__Origin__c</field>
+            <table>Opportunity.tackleio__Opportunities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Primary Needs from AWS</displayNameOverride>
+            <field>tackleio__PrimaryNeedsFromAws__c</field>
+            <table>Opportunity.tackleio__Opportunities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>APN Programs</displayNameOverride>
+            <field>tackleio__ProjectApnProgram__c</field>
+            <table>Opportunity.tackleio__Opportunities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Project Delivery Model</displayNameOverride>
+            <field>tackleio__ProjectDeliveryModels__c</field>
+            <table>Opportunity.tackleio__Opportunities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Other Solution Description</displayNameOverride>
+            <field>tackleio__ProjectOtherSolutionDescription__c</field>
+            <table>Opportunity.tackleio__Opportunities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Related Opportunity Identifier</displayNameOverride>
+            <field>tackleio__ProjectRelatedOpportunityIdentifier__c</field>
+            <table>Opportunity.tackleio__Opportunities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Sales Activities</displayNameOverride>
+            <field>tackleio__ProjectSalesActivities__c</field>
+            <table>Opportunity.tackleio__Opportunities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Project Title</displayNameOverride>
+            <field>tackleio__ProjectTitle__c</field>
+            <table>Opportunity.tackleio__Opportunities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Delivery Model</displayNameOverride>
+            <field>tackleio__SoftwareRevenueDeliveryModel__c</field>
+            <table>Opportunity.tackleio__Opportunities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Contract Start Date</displayNameOverride>
+            <field>tackleio__SoftwareRevenueEffectiveDate__c</field>
+            <table>Opportunity.tackleio__Opportunities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Contract End Date</displayNameOverride>
+            <field>tackleio__SoftwareRevenueExpirationDate__c</field>
+            <table>Opportunity.tackleio__Opportunities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Customer Software Value</displayNameOverride>
+            <field>tackleio__SoftwareRevenueValueAmount__c</field>
+            <table>Opportunity.tackleio__Opportunities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Currency</displayNameOverride>
+            <field>tackleio__SoftwareRevenueValueCurrencyCode__c</field>
+            <table>Opportunity.tackleio__Opportunities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Solutions Offered</displayNameOverride>
+            <field>tackleio__SolutionIds__c</field>
+            <table>Opportunity.tackleio__Opportunities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Archived Date</displayNameOverride>
+            <field>tackleio__TackleArchivedDate__c</field>
+            <table>Opportunity.tackleio__Opportunities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Archived Date</displayNameOverride>
+            <field>tackleio__TackleArchivedDateTime__c</field>
+            <table>Opportunity.tackleio__Opportunities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Tackle Created Date</displayNameOverride>
+            <field>tackleio__TackleCreatedDate__c</field>
+            <table>Opportunity.tackleio__Opportunities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Tackle Created Date</displayNameOverride>
+            <field>tackleio__TackleCreatedDateTime__c</field>
+            <table>Opportunity.tackleio__Opportunities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Tackle Co-sell Id</displayNameOverride>
+            <field>tackleio__TackleExternalId__c</field>
+            <table>Opportunity.tackleio__Opportunities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Tackle Last Modified Date</displayNameOverride>
+            <field>tackleio__TackleLastModifiedDate__c</field>
+            <table>Opportunity.tackleio__Opportunities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Tackle Last Modified Date</displayNameOverride>
+            <field>tackleio__TackleLastModifiedDateTime__c</field>
+            <table>Opportunity.tackleio__Opportunities__r</table>
+        </columns>
+        <masterLabel>Tackle AWS Co-sell Opportunities</masterLabel>
+    </sections>
+    <sections>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Tackle AWS Co-sell Contact ID</displayNameOverride>
+            <field>Id</field>
+            <table>Opportunity.tackleio__Opportunities__r.tackleio__AWSCosellOpportunityDetails__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Owner</displayNameOverride>
+            <field>Owner</field>
+            <table>Opportunity.tackleio__Opportunities__r.tackleio__AWSCosellOpportunityDetails__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>true</checkedByDefault>
+            <displayNameOverride>Name</displayNameOverride>
+            <field>Name</field>
+            <table>Opportunity.tackleio__Opportunities__r.tackleio__AWSCosellOpportunityDetails__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>tackleio__TackleAwsCosellOpportunity__c</field>
+            <table>Opportunity.tackleio__Opportunities__r.tackleio__AWSCosellOpportunityDetails__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Created Date</displayNameOverride>
+            <field>CreatedDate</field>
+            <table>Opportunity.tackleio__Opportunities__r.tackleio__AWSCosellOpportunityDetails__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Created By</displayNameOverride>
+            <field>CreatedBy</field>
+            <table>Opportunity.tackleio__Opportunities__r.tackleio__AWSCosellOpportunityDetails__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Last Modified Date</displayNameOverride>
+            <field>LastModifiedDate</field>
+            <table>Opportunity.tackleio__Opportunities__r.tackleio__AWSCosellOpportunityDetails__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Last Modified By</displayNameOverride>
+            <field>LastModifiedBy</field>
+            <table>Opportunity.tackleio__Opportunities__r.tackleio__AWSCosellOpportunityDetails__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Last Activity Date</displayNameOverride>
+            <field>LastActivityDate</field>
+            <table>Opportunity.tackleio__Opportunities__r.tackleio__AWSCosellOpportunityDetails__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Business Title</displayNameOverride>
+            <field>tackleio__BusinessTitle__c</field>
+            <table>Opportunity.tackleio__Opportunities__r.tackleio__AWSCosellOpportunityDetails__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Detail Type</displayNameOverride>
+            <field>tackleio__DetailType__c</field>
+            <table>Opportunity.tackleio__Opportunities__r.tackleio__AWSCosellOpportunityDetails__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Email</displayNameOverride>
+            <field>tackleio__Email__c</field>
+            <table>Opportunity.tackleio__Opportunities__r.tackleio__AWSCosellOpportunityDetails__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>First Name</displayNameOverride>
+            <field>tackleio__FirstName__c</field>
+            <table>Opportunity.tackleio__Opportunities__r.tackleio__AWSCosellOpportunityDetails__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Last Name</displayNameOverride>
+            <field>tackleio__LastName__c</field>
+            <table>Opportunity.tackleio__Opportunities__r.tackleio__AWSCosellOpportunityDetails__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Phone</displayNameOverride>
+            <field>tackleio__Phone__c</field>
+            <table>Opportunity.tackleio__Opportunities__r.tackleio__AWSCosellOpportunityDetails__r</table>
+        </columns>
+        <masterLabel>Tackle AWS Co-sell Contacts</masterLabel>
+    </sections>
+</ReportType>

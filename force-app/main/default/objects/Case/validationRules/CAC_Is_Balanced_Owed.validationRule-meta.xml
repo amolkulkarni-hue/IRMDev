@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CAC_Is_Balanced_Owed</fullName>
+    <active>true</active>
+    <description>Is Balance Owed&apos; to be required based on Term Invoice Payment Date&apos; being populated</description>
+    <errorConditionFormula>AND(
+				$RecordType.Name = &quot;CLAS - RM&quot;,
+				Not(ISBLANK(Payment_Confirmation_Date__c)),
+								ISPICKVAL(Is_Balance_Owed__c,&quot;&quot;))</errorConditionFormula>
+    <errorMessage>Is Balanced Owed field is required if Term Invoice Payment Confirmation Date is populated.</errorMessage>
+</ValidationRule>

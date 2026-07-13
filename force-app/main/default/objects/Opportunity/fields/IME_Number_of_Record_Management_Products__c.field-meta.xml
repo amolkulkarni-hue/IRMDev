@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IME_Number_of_Record_Management_Products__c</fullName>
+    <description>Counts the Number of Opp Products where Product Class = Opportunity Management. This field will be used for the vended/unvended alert forumal field</description>
+    <label>Number of Record Management Products</label>
+    <summaryFilterItems>
+        <field>OpportunityLineItem.Product_Class__c</field>
+        <operation>equals</operation>
+        <value>Records Management</value>
+    </summaryFilterItems>
+    <summaryForeignKey>OpportunityLineItem.OpportunityId</summaryForeignKey>
+    <summaryOperation>count</summaryOperation>
+    <trackHistory>false</trackHistory>
+    <type>Summary</type>
+</CustomField>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Date_PDL_Sent_to_Customer_Req_if_DST_Ord</fullName>
+    <active>true</active>
+    <description>Date PDL Sent to Customer is required if Date Destruction Order Created is populated</description>
+    <errorConditionFormula>AND(
+RecordType.Name = &quot;CLAS - RM&quot;,
+ISBLANK( Date_PDL_Sent_to_Customer__c ),
+NOT(ISBLANK( Date_Destruction_Order_Created__c ))
+)</errorConditionFormula>
+    <errorDisplayField>Date_PDL_Sent_to_Customer__c</errorDisplayField>
+    <errorMessage>Date PDL Sent to Customer is required if Date Destruction Order Created is populated</errorMessage>
+</ValidationRule>

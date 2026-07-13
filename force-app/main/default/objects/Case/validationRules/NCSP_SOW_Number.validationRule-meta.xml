@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NCSP_SOW_Number</fullName>
+    <active>true</active>
+    <description>SOW Number is required for DMS cases when Contract Status is &apos;Accepted&apos; or &apos;Accepted with Follow up&apos;</description>
+    <errorConditionFormula>$RecordType.Name  =  &apos;NCSP: DMS&apos; &amp;&amp; ( ispickval( Contract_Status__c ,&apos;Accepted&apos;) || ispickval(  Contract_Status__c ,&apos;Accepted with Follow up&apos;)) &amp;&amp;  ISBLANK(SOW_Number__c)</errorConditionFormula>
+    <errorDisplayField>Contract_Status__c</errorDisplayField>
+    <errorMessage>SOW Number is required for DMS cases when Contract Status is &apos;Accepted&apos; or &apos;Accepted with Follow up&apos;</errorMessage>
+</ValidationRule>

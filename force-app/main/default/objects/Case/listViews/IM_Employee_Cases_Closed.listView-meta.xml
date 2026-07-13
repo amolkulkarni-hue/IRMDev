@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IM_Employee_Cases_Closed</fullName>
+    <columns>CASES.PRIORITY</columns>
+    <columns>CASES.CASE_NUMBER</columns>
+    <columns>OWNER_NAME</columns>
+    <columns>IM_Employee_Contact__c</columns>
+    <columns>CASES.CREATED_DATE</columns>
+    <columns>CASES.CLOSED_DATE</columns>
+    <columns>CREATEDBY_USER.ALIAS</columns>
+    <columns>CASES.SUBJECT</columns>
+    <columns>Case_Category__c</columns>
+    <columns>Case_Sub_Category__c</columns>
+    <columns>IM_Functional_Group__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>CASES.CLOSED</field>
+        <operation>equals</operation>
+        <value>1</value>
+    </filters>
+    <filters>
+        <field>CASES.RECORDTYPE</field>
+        <operation>equals</operation>
+        <value>Case.IM_Employee_Support_Case_Closed</value>
+    </filters>
+    <filters>
+        <field>IM_Division__c</field>
+        <operation>equals</operation>
+        <value>IMNA</value>
+    </filters>
+    <filters>
+        <field>CASES.CLOSED_DATE</field>
+        <operation>greaterThan</operation>
+        <value>1/1/2012 12:00 AM</value>
+    </filters>
+    <label>IM Employee Cases Closed</label>
+    <language>en_US</language>
+    <sharedTo>
+        <group>ASOps</group>
+    </sharedTo>
+</ListView>

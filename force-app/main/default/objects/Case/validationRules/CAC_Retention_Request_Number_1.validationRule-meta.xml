@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CAC_Retention_Request_Number_1</fullName>
+    <active>true</active>
+    <errorConditionFormula>$RecordType.Name = &apos;CAC - DP Closure&apos;  &amp;&amp; not (isblank( Date_Final_Service_Order_Created__c )) &amp;&amp; isblank( Request_Number_1__c )</errorConditionFormula>
+    <errorDisplayField>Request_Number_1__c</errorDisplayField>
+    <errorMessage>Request number 1 is required when Date final service order created is populated.</errorMessage>
+</ValidationRule>

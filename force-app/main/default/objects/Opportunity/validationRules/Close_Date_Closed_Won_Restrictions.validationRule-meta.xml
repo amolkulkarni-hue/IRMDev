@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Close_Date_Closed_Won_Restrictions</fullName>
+    <active>false</active>
+    <description>If the Opportunity is already at Stage 5 (not being changed to Stage 5) or at Stages 6 or 7, ensure that the Booked Date cannot be changed except by the listed Profiles on the specified record types.Booked Date is now first bill date</description>
+    <errorConditionFormula>ISCHANGED(CloseDate) &amp;&amp; (ISPICKVAL(StageName , &apos;7 - Closed&apos;) || ISPICKVAL(StageName , &apos;6 - Setup&apos;) || (ISPICKVAL(StageName, &apos;5 - Signed/PO in&apos;) &amp;&amp; NOT(ISCHANGED(StageName)))) 
+&amp;&amp; ( 
+$Profile.Name &lt;&gt; &quot;IME_Custom Sys Admin&quot; &amp;&amp; 
+$Profile.Name &lt;&gt; &quot;IME_In_Country_Admin&quot; &amp;&amp; 
+$Profile.Name &lt;&gt; &quot;IME_SC_Account_Admin&quot; &amp;&amp; 
+$Profile.Name &lt;&gt; &quot;IME_Contracts&quot; &amp;&amp; 
+$Profile.Name &lt;&gt; &quot;IME_JV_Admin&quot; &amp;&amp; 
+$Profile.Name &lt;&gt; &quot;IMAP_In_Country_Admin&quot; &amp;&amp; 
+$Profile.Name &lt;&gt; &quot;IMAP_SC_In_Country_Admin+&quot; &amp;&amp; 
+$Profile.Name &lt;&gt; &quot;IMLA_In_Country_Admin&quot; &amp;&amp; 
+$Profile.Name &lt;&gt; &quot;IMLTD_In_Country_Admin&quot; &amp;&amp; 
+$Profile.Name &lt;&gt; &quot;IMLA_Custom Sys&quot; &amp;&amp; 
+$Profile.Name &lt;&gt; &quot;IMLA_In_Country_Admin+&quot; &amp;&amp; 
+$Profile.Name &lt;&gt; &quot;IM_API Only_Admin&quot; &amp;&amp; 
+$Profile.Name &lt;&gt; &quot;AS NCSP Coordinator&quot; &amp;&amp; 
+$Profile.Name &lt;&gt; &quot;AS NCSP CSA&quot; &amp;&amp; 
+$Profile.Name &lt;&gt; &quot;AS NCSP Management&quot; &amp;&amp; 
+$Profile.Name &lt;&gt; &quot;Contract Admin NA&quot; &amp;&amp; 
+$Profile.Name &lt;&gt; &quot;AS_Ops User&quot; &amp;&amp; 
+$Profile.Name &lt;&gt; &quot;IM_Sales_Ops-Cleanup Temporary&quot; &amp;&amp; 
+$Profile.Name &lt;&gt; &quot;IM_Sales Ops Super User&quot; &amp;&amp; 
+$Profile.Name &lt;&gt; &quot;IM_Sales Ops Super User_Kimble&quot; &amp;&amp; 
+$Profile.Name &lt;&gt; &quot;IMAP_SC_In_Country_Admin&quot; &amp;&amp; 
+$Profile.Name &lt;&gt; &quot;IME_SC_In_Country_Admin&quot; &amp;&amp; 
+$Profile.Name &lt;&gt; &quot;IM_Super_User&quot; &amp;&amp; 
+$Profile.Name &lt;&gt; &quot;IME_Super_User&quot;) &amp;&amp; 
+(RecordTypeId = &quot;01280000000BDei&quot; || RecordTypeId = &quot;01280000000BDeh&quot;|| RecordTypeId = &quot;01280000000BDec&quot;)</errorConditionFormula>
+    <errorDisplayField>CloseDate</errorDisplayField>
+    <errorMessage>Once the Opportunity has been Closed Won by reaching Stage 5 or beyond, you cannot make further changes to the Close Date.</errorMessage>
+</ValidationRule>

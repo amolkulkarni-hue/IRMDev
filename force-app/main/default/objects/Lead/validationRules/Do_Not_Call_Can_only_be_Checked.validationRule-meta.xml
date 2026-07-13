@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Do_Not_Call_Can_only_be_Checked</fullName>
+    <active>true</active>
+    <description>Do Not Call can be checked but not unchecked</description>
+    <errorConditionFormula>AND( 
+PRIORVALUE ( DoNotCall ), ISCHANGED (DoNotCall), 
+$Profile.Name &lt;&gt; &quot;System Administrator&quot;, 
+$Profile.Name &lt;&gt; &quot;IM_Custom Sys Admin&quot;, 
+$Profile.Name &lt;&gt; &quot;IME_Custom Sys Admin&quot;, 
+$Profile.Name &lt;&gt; &quot;IME_In_Country_Admin&quot;,
+$Profile.Name &lt;&gt; &quot;IME_Marketing&quot;,
+$Profile.Name &lt;&gt; &quot;IMAP_In_Country_Admin&quot;, 
+$Profile.Name &lt;&gt; &quot;IMAP_SC_In_Country_Admin+&quot; ,
+$Profile.Name &lt;&gt; &quot;IMLA_In_Country_Admin&quot;, 
+$Profile.Name &lt;&gt; &quot;IMLA_Custom Sys&quot;, 
+$Profile.Name &lt;&gt; &quot;IMLA_In_Country_Admin+&quot;,
+$Profile.Name &lt;&gt; &quot;IMLA_Marketing&quot;,
+$Profile.Name &lt;&gt; &quot;IME_SC_In_Country_Admin&quot;,
+$Profile.Name &lt;&gt; &quot;IMAP_SC_In_Country_Admin&quot;,
+$Profile.Name &lt;&gt; &quot;IM_Marketing&quot; 
+)</errorConditionFormula>
+    <errorDisplayField>DoNotCall</errorDisplayField>
+    <errorMessage>Insufficient privileges to un-check Do Not Call</errorMessage>
+</ValidationRule>

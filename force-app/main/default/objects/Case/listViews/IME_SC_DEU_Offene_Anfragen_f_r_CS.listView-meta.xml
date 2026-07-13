@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IME_SC_DEU_Offene_Anfragen_f_r_CS</fullName>
+    <columns>CASES.CREATED_DATE</columns>
+    <columns>CORE.USERS.ALIAS</columns>
+    <columns>CASES.EMAIL</columns>
+    <columns>CASES.CASE_NUMBER</columns>
+    <columns>IME_SC_Customer_AccountId__c</columns>
+    <columns>NAME</columns>
+    <columns>CASES.SUBJECT</columns>
+    <columns>CASES.STATUS</columns>
+    <columns>CASES.PRIORITY</columns>
+    <division>*</division>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>IME_SC_Country__c</field>
+        <operation>equals</operation>
+        <value>Germany</value>
+    </filters>
+    <filters>
+        <field>IME_SC_Category__c</field>
+        <operation>notEqual</operation>
+        <value>Create a new Order,Order Enquiry</value>
+    </filters>
+    <filters>
+        <field>CASES.STATUS</field>
+        <operation>notEqual</operation>
+        <value>Closed</value>
+    </filters>
+    <filters>
+        <field>CASES.RECORDTYPE</field>
+        <operation>equals</operation>
+        <value>Case.IME_SC_Case</value>
+    </filters>
+    <label>IME SC DEU Offene Anfragen für CS</label>
+    <language>en_US</language>
+    <sharedTo>
+        <group>IME_SC_DEU_GRP_INDEXING</group>
+        <group>IME_SC_DEU_GRP_NON_ORDER</group>
+    </sharedTo>
+</ListView>

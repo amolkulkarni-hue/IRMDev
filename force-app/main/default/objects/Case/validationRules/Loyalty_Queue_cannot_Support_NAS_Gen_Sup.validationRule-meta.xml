@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Loyalty_Queue_cannot_Support_NAS_Gen_Sup</fullName>
+    <active>true</active>
+    <description>Does not allow NAS General Support Case Record types to be in Loyalty Specialist - Retention Queue</description>
+    <errorConditionFormula>AND(NOT(OR( RecordType.DeveloperName = &quot;Retention_RM&quot;,RecordType.DeveloperName= &quot;Retention_SH&quot;,$RecordType.Name = &quot;CLAS – Data Management&quot;)),Owner:Queue.Name = &quot;Loyalty Specialist - Retention Queue&quot;)</errorConditionFormula>
+    <errorMessage>Must change case to Retention SH/RM or CLAS - DM record type before adding to the Loyalty Specialist - Retention Queue</errorMessage>
+</ValidationRule>

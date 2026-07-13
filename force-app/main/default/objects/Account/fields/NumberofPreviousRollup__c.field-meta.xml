@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NumberofPreviousRollup__c</fullName>
+    <description>Rollup Field for status of &quot;Inactive&quot; or &quot;Terminated&quot; Customer Accounts</description>
+    <label>NumberofInactiveCARollup</label>
+    <summaryFilterItems>
+        <field>IM_Customer_Account__c.IM_Status__c</field>
+        <operation>contains</operation>
+        <value>Inactive, Terminated</value>
+    </summaryFilterItems>
+    <summaryForeignKey>IM_Customer_Account__c.IM_Account__c</summaryForeignKey>
+    <summaryOperation>count</summaryOperation>
+    <trackHistory>false</trackHistory>
+    <type>Summary</type>
+</CustomField>

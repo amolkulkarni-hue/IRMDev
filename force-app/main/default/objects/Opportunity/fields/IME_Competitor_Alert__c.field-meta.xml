@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IME_Competitor_Alert__c</fullName>
+    <externalId>false</externalId>
+    <formula>IF( 
+
+IME_Num_of_Storage_Boxes__c &gt; 0,
+
+IF(
+   AND(
+       OR(ISPICKVAL(StageName,&quot;1 - Qualification&quot;),
+          ISPICKVAL(StageName,&quot;2 - Solution Developed&quot;),
+          ISPICKVAL(StageName,&quot;3 - Solution Agreed&quot;)
+         ),
+        IME_Nb_Competitor__c=0,
+         IME_Nb_NoUnknownCompetitor__c=0
+       ),
+   IMAGE(&quot;/img/msg_icons/info16.png&quot; , &quot;&quot;)&amp; &quot; Please add at least one RM Competitor&quot;,
+   IF(
+      AND(
+          OR(ISPICKVAL(StageName,&quot;4 - Negotiate&quot;),
+             ISPICKVAL(StageName,&quot;5 - Signed/PO in&quot;),
+             ISPICKVAL(StageName,&quot;6 - Setup&quot;),
+             ISPICKVAL(StageName,&quot;7 - Closed&quot;),
+             ISPICKVAL(StageName,&quot;Lost&quot;),
+             ISPICKVAL(StageName,&quot;Dead&quot;)
+            ),
+            IME_Nb_Competitor__c=0,
+            IME_Nb_NoUnknownCompetitor__c=0
+           ),
+      IMAGE(&quot;/img/msg_icons/error16.png&quot;, &quot;&quot;)&amp; &quot; Please add at least one  RM Competitor&quot;,
+      &quot;&quot;)
+), 
+
+&quot;&quot;
+)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Competitor Alert</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Must_specify_competitor_if_Lost_Reason</fullName>
+    <active>true</active>
+    <description>For IME Standard opportunities, must specify at least one competitor if the reason lost is &apos;Competitor Solution&apos;</description>
+    <errorConditionFormula>AND(
+ISPICKVAL( IM_Reason_Lost__c, &apos;Competitors Solution&apos;),     
+IM_Has_Competitors__c   = FALSE, 
+RecordTypeId = &apos;01280000000UDKJ&apos; || RecordTypeId = &quot;01280000000UEMI&quot; || RecordTypeId = &quot;01280000000UEfu&quot;,
+NOT($Permission.VR_Bypass_Permission)
+)</errorConditionFormula>
+    <errorMessage>At least one competitor must be specified if the Reason Lost is &apos;Competitors Solution&apos;</errorMessage>
+</ValidationRule>

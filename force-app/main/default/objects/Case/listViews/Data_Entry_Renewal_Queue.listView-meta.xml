@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Data_Entry_Renewal_Queue</fullName>
+    <columns>CASES.CASE_NUMBER</columns>
+    <columns>CASES.PRIORITY</columns>
+    <columns>NCSP_Service_line__c</columns>
+    <columns>Setup_Action_Date__c</columns>
+    <columns>Contract_Effective_Date__c</columns>
+    <columns>CASES.CREATED_DATE_DATE_ONLY</columns>
+    <columns>GSA_Eligibility__c</columns>
+    <columns>CASES.STATUS</columns>
+    <columns>Country__c</columns>
+    <columns>NCSP_Opportunity__c</columns>
+    <columns>Case_Type__c</columns>
+    <filterScope>Queue</filterScope>
+    <filters>
+        <field>CASES.RECORDTYPE</field>
+        <operation>equals</operation>
+        <value>Case.NCSP_Renewal</value>
+    </filters>
+    <label>Data Entry Renewal Queue</label>
+    <queue>Data_Entry</queue>
+    <sharedTo>
+        <group>ASCustomerProgramsHybrid</group>
+        <group>ASNCSPCSA</group>
+        <group>ASNCSPCoordinatorsMgmt</group>
+        <group>NCSP_NAS_Blended_Group</group>
+    </sharedTo>
+</ListView>

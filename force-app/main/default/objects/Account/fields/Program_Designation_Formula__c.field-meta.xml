@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Program_Designation_Formula__c</fullName>
+    <description>#36574: Account: GI Account Indicator to copy down only to North America Accounts - PLNI0018014</description>
+    <externalId>false</externalId>
+    <formula>/* LEVEL 0: Current Record is IMGA */
+IF(TEXT(IM_Hierarchy_Level__c) == &quot;IM Group (IMGA)&quot;, TEXT(Program_Designation__c),
+
+/* LEVEL 1: Parent is IMGA */
+IF(Parent.Global_Account__c &amp;&amp; TEXT(Parent.IM_Hierarchy_Level__c) == &quot;IM Group (IMGA)&quot;,
+IF(TEXT(Parent.Program_Designation__c) == &quot;Strategic Account&quot;,
+/* If Strategic: Only flow Parent&apos;s value if this child is North America */
+IF(Territory_Region__c == &quot;North America&quot;, TEXT(Parent.Program_Designation__c), NULL),
+/* If Global Account: Flow Parent&apos;s value directly */
+IF(TEXT(Parent.Program_Designation__c) == &quot;Global Account&quot;, TEXT(Parent.Program_Designation__c), NULL)
+),
+
+/* LEVEL 2: Parent is Country Parent */
+IF(NOT(ISBLANK(ParentId)) &amp;&amp; TEXT(Parent.Parent.IM_Hierarchy_Level__c) == &quot;IM Group (IMGA)&quot;, 
+TEXT(Parent.Program_Designation__c), 
+NULL)
+)
+)</formula>
+    <label>Program Designation (Formula)</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

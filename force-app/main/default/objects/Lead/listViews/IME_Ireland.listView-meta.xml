@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IME_Ireland</fullName>
+    <columns>LEAD.CREATED_DATE</columns>
+    <columns>MQL_Type_Most_Recent__c</columns>
+    <columns>FULL_NAME</columns>
+    <columns>LEAD.PHONE</columns>
+    <columns>LEAD.EMAIL</columns>
+    <columns>LEAD.COMPANY</columns>
+    <columns>LEAD.STATUS</columns>
+    <columns>LEAD.LEAD_SOURCE</columns>
+    <columns>Product_Interest__c</columns>
+    <columns>IM_Product_Class__c</columns>
+    <filterScope>Queue</filterScope>
+    <filters>
+        <field>LEAD.STATUS</field>
+        <operation>equals</operation>
+        <value>New,Open,Nurture</value>
+    </filters>
+    <filters>
+        <field>IM_Stage_2_Entered_Date__c</field>
+        <operation>greaterOrEqual</operation>
+        <value>1/1/2022</value>
+    </filters>
+    <label>IME Ireland</label>
+    <queue>IMEIreland</queue>
+    <sharedTo>
+        <group>IMEAdmins</group>
+        <group>IMEIrelandAdmins</group>
+        <group>IME_Ireland_Teleprospectors</group>
+    </sharedTo>
+</ListView>

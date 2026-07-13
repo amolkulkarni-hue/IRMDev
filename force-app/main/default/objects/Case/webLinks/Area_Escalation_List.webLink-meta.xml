@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebLink xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Area_Escalation_List</fullName>
+    <availability>online</availability>
+    <displayType>link</displayType>
+    <linkType>javascript</linkType>
+    <masterLabel>Area Escalation List</masterLabel>
+    <openType>onClickJavaScript</openType>
+    <protected>false</protected>
+    <url>var varUrl = &quot;&quot;;
+var  area = &apos;{!Case.Area__c}&apos;;
+if( area  ==&apos;South&apos;)
+varUrl= &apos;http://imsharepoint/csg/hr/training/csort/Document%20Library/Escalation%20Lists/Southern%20Area%20Escalation.xls&apos;;
+else if (area == &apos;EASTERN&apos;)
+varUrl = &apos;http://imsharepoint/csg/hr/training/csort/Document Library/Escalation Lists/Eastern Area Escalation.xls&apos;;
+else if (area  == &apos;CANADA&apos;)
+varUrl  = &apos;http://imsharepoint/csg/hr/training/csort/Document Library/Escalation Lists/Canada Area Escalation.xls&apos;;
+else if (area == &apos;CENTRAL&apos;)
+varUrl  = &apos;http://imsharepoint/csg/hr/training/csort/Document%20Library/Escalation%20Lists/Central%20Area%20Escalation.xls&apos;;
+else if (area == &apos;WESTERN&apos;)
+varUrl  =&apos;http://imsharepoint/csg/hr/training/csort/Document%20Library/Escalation%20Lists/Western%20Area%20Escalation.xls&apos;;
+
+
+if(varUrl  !=&apos;&apos;)
+window.open(varUrl);</url>
+</WebLink>

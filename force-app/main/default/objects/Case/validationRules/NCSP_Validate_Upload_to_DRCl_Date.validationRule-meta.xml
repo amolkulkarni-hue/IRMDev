@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NCSP_Validate_Upload_to_DRCl_Date</fullName>
+    <active>true</active>
+    <description>Gitlab #25723
+DRCI Complete Date cannot be a date in the Past or Future when a case is updated not on creation as per trigger IMNA_updateInternalCaseTeam.</description>
+    <errorConditionFormula>($RecordType.DeveloperName == &apos;NCSP_New_Customer_Setup&apos; || $RecordType.DeveloperName == &apos;NCSP_SKP_Department_Add_Only&apos; || $RecordType.DeveloperName == &apos;NCSP_Upsell&apos; ||
+$RecordType.DeveloperName == &apos;NCSP_DP_Onboarding_team&apos; || $RecordType.DeveloperName == &apos;NCSP_SKP_New_customer_setup&apos; || $RecordType.DeveloperName == &apos;NCSP_DMS&apos; || $RecordType.DeveloperName == &apos;NCSP_Tech_Services_New_Customer_Setup&apos;) 
+&amp;&amp; (ISCHANGED(Upload_to_DRCI_Complete_Date__c)) &amp;&amp;
+DATEVALUE(Upload_to_DRCI_Complete_Date__c) &lt;&gt; TODAY()</errorConditionFormula>
+    <errorDisplayField>Upload_to_DRCI_Complete_Date__c</errorDisplayField>
+    <errorMessage>Upload to DRCI Complete Date cannot be a date in the Past or Future.</errorMessage>
+</ValidationRule>

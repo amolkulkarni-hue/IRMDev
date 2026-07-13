@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebLink xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>At_Risk_UK</fullName>
+    <availability>online</availability>
+    <description>Standard page button to run AtRisk/RedAlert UK flow.Once the user is complete with the AtRisk/RedAlert page, it will generate a new AtRisk/RedAlert record,but navigate the user back to the account page.</description>
+    <displayType>button</displayType>
+    <linkType>javascript</linkType>
+    <masterLabel>At Risk (UK)</masterLabel>
+    <openType>onClickJavaScript</openType>
+    <protected>false</protected>
+    <url>{!REQUIRESCRIPT(&quot;/soap/ajax/30.0/connection.js&quot;)} 
+{!REQUIRESCRIPT(&quot;/soap/ajax/30.0/apex.js&quot;)} 
+
+var HierarchyLevel= &apos;{!Account.IM_Hierarchy_Level__c}&apos;; 
+
+if(HierarchyLevel == &apos;Country Parent&apos;){ 
+window.location=&quot;/flow/At_Risk_Red_Alert_UK?vAccountID={!Account.Country_Parent_ID__c}&amp;vAccountName={! Account.Country_Parent_Formula__c}&amp;vCountryParentID={!Account.Country_Parent_ID__c}&amp;vUserId={!User.Id}&amp;retURL={!Account.Id}&quot;; 
+} 
+else{ 
+alert(&apos;Please select Country Parent Account to create an At Risk/Red Alert record.&apos;); 
+}</url>
+</WebLink>

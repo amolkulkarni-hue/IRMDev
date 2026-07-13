@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Outstanding_Invoice_Payment_Date</fullName>
+    <active>true</active>
+    <description>Outstanding Invoice Payment Date cannot be in the Future. For reference, check user story #26355 on Gitlab.</description>
+    <errorConditionFormula>(RecordType_Name__c = &quot;CLAS - RM&quot;) &amp;&amp;
+NOT(ISCHANGED(Open_Tasks__c)) &amp;&amp;
+ISCHANGED(Outstanding_Invoice_Payment_Date__c) &amp;&amp;
+NOT(ISBLANK(Outstanding_Invoice_Payment_Date__c)) &amp;&amp;
+Outstanding_Invoice_Payment_Date__c &gt; TODAY() &amp;&amp;
+(
+  ISBLANK(PRIORVALUE(Outstanding_Invoice_Payment_Date__c)) ||
+  Outstanding_Invoice_Payment_Date__c != PRIORVALUE(Outstanding_Invoice_Payment_Date__c)
+)</errorConditionFormula>
+    <errorDisplayField>Outstanding_Invoice_Payment_Date__c</errorDisplayField>
+    <errorMessage>Outstanding Invoice Payment Date cannot be in the Future.</errorMessage>
+</ValidationRule>

@@ -1,0 +1,133 @@
+{
+  "appPageId" : "f0c590c7-a247-479b-bb7f-e164da29928d",
+  "componentName" : "siteforce:dynamicLayout",
+  "dataProviders" : [ ],
+  "id" : "03deb985-8ce9-40f9-8f2c-23ead22aefa0",
+  "label" : "My Account",
+  "regions" : [ {
+    "id" : "9bd877d5-7eca-4573-a650-9de8455fae36",
+    "regionName" : "header",
+    "type" : "region"
+  }, {
+    "components" : [ {
+      "componentAttributes" : {
+        "background" : "background: rgba(0,0,0,0)",
+        "backgroundOverlay" : "rgba(0,0,0,0.5)",
+        "contentAreaWidth" : 100,
+        "sectionConfig" : {
+          "UUID" : "a88d09dd-0e1d-43c1-b613-204c4ea880dd",
+          "columns" : [ {
+            "UUID" : "d1ef4dfd-371f-4ca7-9dc0-7777cf2e1ce5",
+            "columnKey" : "col1",
+            "columnName" : "column 1",
+            "columnWidth" : "12",
+            "seedComponents" : [ {
+              "attributes" : {
+                "recordId" : "{!CurrentUser.accountId}",
+                "sfdc:identifier" : "forceCommunity_recordHeadline"
+              },
+              "fqn" : "forceCommunity:recordHeadline"
+            }, {
+              "attributes" : {
+                "recordId" : "{!CurrentUser.accountId}",
+                "sfdc:identifier" : "forceCommunity_recordHomeTabs"
+              },
+              "fqn" : "forceCommunity:recordHomeTabs"
+            } ]
+          } ]
+        },
+        "sectionHeight" : 32
+      },
+      "componentName" : "forceCommunity:section",
+      "id" : "a88d09dd-0e1d-43c1-b613-204c4ea880dd",
+      "regions" : [ {
+        "components" : [ {
+          "componentAttributes" : {
+            "recordId" : "{!CurrentUser.accountId}"
+          },
+          "componentName" : "forceCommunity:recordHeadline",
+          "id" : "341cc43c-c40d-4c61-9a80-2da6a12c8f0b",
+          "renderPriority" : "NEUTRAL",
+          "renditionMap" : {
+            "en_gb" : "2bd3b930-2071-415a-9cd3-f71c02980010"
+          },
+          "renditions" : [ {
+            "id" : "2bd3b930-2071-415a-9cd3-f71c02980010",
+            "renditionValue" : {
+              "componentAttributes" : { }
+            },
+            "type" : "renditionComponent"
+          } ],
+          "type" : "component"
+        }, {
+          "componentAttributes" : {
+            "detailsTabLabel" : "Details",
+            "discussionsTabLabel" : "Feed",
+            "recordId" : "{!CurrentUser.accountId}",
+            "relatedTabLabel" : "Related",
+            "tab1Type" : "details",
+            "tab2Type" : "related",
+            "tab3Type" : "chatter",
+            "tab4Type" : "none",
+            "timelineTabLabel" : "Activity"
+          },
+          "componentName" : "forceCommunity:recordHomeTabs",
+          "id" : "0ed5d12b-0124-48f0-8695-22fef78b7a82",
+          "renderPriority" : "NEUTRAL",
+          "renditionMap" : {
+            "en_gb" : "8c7c5329-393f-4407-8e7b-74a82f5a7691"
+          },
+          "renditions" : [ {
+            "id" : "8c7c5329-393f-4407-8e7b-74a82f5a7691",
+            "renditionValue" : {
+              "componentAttributes" : {
+                "detailsTabLabel" : "Details",
+                "discussionsTabLabel" : "Feed",
+                "relatedTabLabel" : "Related",
+                "timelineTabLabel" : "Activity"
+              }
+            },
+            "type" : "renditionComponent"
+          } ],
+          "type" : "component"
+        } ],
+        "id" : "d1ef4dfd-371f-4ca7-9dc0-7777cf2e1ce5",
+        "regionLabel" : "column 1",
+        "regionName" : "col1",
+        "renditionMap" : {
+          "en_gb" : "0de8adb4-7aaa-4910-9507-79f6f9080aba"
+        },
+        "renditions" : [ {
+          "id" : "0de8adb4-7aaa-4910-9507-79f6f9080aba",
+          "renditionValue" : {
+            "regionLabel" : "column 1"
+          },
+          "type" : "renditionComponent"
+        } ],
+        "type" : "region"
+      } ],
+      "renderPriority" : "NEUTRAL",
+      "renditionMap" : {
+        "en_gb" : "c07ec3ca-ef92-4383-8a68-a31cacf9024f"
+      },
+      "renditions" : [ {
+        "id" : "c07ec3ca-ef92-4383-8a68-a31cacf9024f",
+        "renditionValue" : {
+          "componentAttributes" : { }
+        },
+        "type" : "renditionComponent"
+      } ],
+      "type" : "component"
+    } ],
+    "id" : "99f4fc8f-93c8-4dfb-a58e-bd8661804556",
+    "regionName" : "content",
+    "type" : "region"
+  }, {
+    "id" : "3b3d439f-32c2-4a11-b402-f1a306e5efb9",
+    "regionName" : "footer",
+    "type" : "region"
+  } ],
+  "themeLayoutType" : "NKFwniTevseiLgcT9DPLmiMXBtO2S0",
+  "type" : "view",
+  "viewType" : "my-account"
+}

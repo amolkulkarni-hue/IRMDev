@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NAS_Closures_Cannot_Support_NAS_Gen_Sup</fullName>
+    <active>true</active>
+    <description>Does not allow NAS General Support Case Record types to be in NAS Account Closures queue</description>
+    <errorConditionFormula>AND(NOT(OR($RecordType.Name = &quot;CLAS - RM&quot;,$RecordType.Name = &quot;CLAS - Shred&quot;,$RecordType.Name = &quot;CLAS – Data Management&quot;, $RecordType.Name = &quot;Global Service Case&quot;)),Owner:Queue.Name = &quot;NAS Account Closures&quot;)</errorConditionFormula>
+    <errorDisplayField>of_Service_Reschedules__c</errorDisplayField>
+    <errorMessage>Must change case to CLAS record type before adding to the NAS Account Closures Queue</errorMessage>
+</ValidationRule>

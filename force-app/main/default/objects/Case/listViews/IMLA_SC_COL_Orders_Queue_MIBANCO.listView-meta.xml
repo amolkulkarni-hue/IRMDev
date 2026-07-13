@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IMLA_SC_COL_Orders_Queue_MIBANCO</fullName>
+    <columns>CASES.CASE_NUMBER</columns>
+    <columns>IME_SC_Case_Email__c</columns>
+    <columns>CASES.SUBJECT</columns>
+    <columns>CASES.CREATED_DATE_DATE_ONLY</columns>
+    <columns>CORE.USERS.ALIAS</columns>
+    <columns>NAME</columns>
+    <filterScope>Queue</filterScope>
+    <filters>
+        <field>IME_SC_Case_Email__c</field>
+        <operation>equals</operation>
+        <value>maritza.zabala@mibanco.com.co</value>
+    </filters>
+    <label>COL Orders Queue - MIBANCO</label>
+    <queue>GSC_COL_Orders</queue>
+    <sharedTo>
+        <role>IMLA_SC_COL_COORDINATOR_CSR</role>
+        <role>IMLA_SC_COL_COORDINATOR_CSTL</role>
+        <role>IMLA_SC_COL_CSM</role>
+        <role>IMLA_SC_COL_SENIOR_AGENTS_CSR</role>
+    </sharedTo>
+</ListView>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CLAS_Annual_Revenue_Non_Negative</fullName>
+    <active>true</active>
+    <description>Does not allow annual revenue field to be non negative</description>
+    <errorConditionFormula>Annual_Revenue__c &lt; 0</errorConditionFormula>
+    <errorDisplayField>Annual_Revenue__c</errorDisplayField>
+    <errorMessage>Cannot be a negative number.</errorMessage>
+</ValidationRule>

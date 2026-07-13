@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IME_SC_CaseCanBeClosedWithoutCutOffTime</fullName>
+    <active>true</active>
+    <description>If Closure Reason is &apos;Completed&apos; and End Time 100 Percent SLA is null throw validation error</description>
+    <errorConditionFormula>AND(
+ISPICKVAL(Status, &apos;Closed&apos;),
+$RecordType.Name = &quot;IME SC Case&quot;,
+ISBLANK(TEXT(End_Time_Cutoff_SLA__c)),
+ISPICKVAL(IME_SC_Closure_Reason__c, &quot;Completed&quot;))</errorConditionFormula>
+    <errorDisplayField>End_Time_Cutoff_SLA__c</errorDisplayField>
+    <errorMessage>Cut-Off Time can&apos;t be left blank</errorMessage>
+</ValidationRule>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Date_Contract_Signed</fullName>
+    <active>true</active>
+    <description>Date Contract Signed cannot be a date in the Future.</description>
+    <errorConditionFormula>((RecordType_Name__c = &quot;NCSP: SKP New Customer Setup&quot;) ||
+(RecordType_Name__c = &quot;NCSP: SKP Department Add Only&quot;) ||
+(RecordType_Name__c = &quot;NCSP: DP New Customer Setup&quot;) ||
+(RecordType_Name__c = &quot;NCSP: DMS&quot;) ||
+(RecordType_Name__c = &quot;NCSP: Tech Services New Customer Setup&quot;) ||
+(RecordType_Name__c = &quot;NCSP: New Customer Setup&quot;) 
+)&amp;&amp;
+OR(
+	(
+	NOT(ISCHANGED(Open_Tasks__c)) &amp;&amp;
+	ISCHANGED(Date_Contract_Signed__c ) &amp;&amp;
+	NOT(ISBLANK(Date_Contract_Signed__c )) &amp;&amp;
+	DATEVALUE(Date_Contract_Signed__c ) &gt; TODAY() &amp;&amp;
+	(
+	  ISBLANK(PRIORVALUE(Date_Contract_Signed__c )) ||
+	  DATEVALUE(Date_Contract_Signed__c ) != DATEVALUE(PRIORVALUE(Date_Contract_Signed__c ))
+	)
+	),
+    (	
+	ISNEW() &amp;&amp;
+	NOT(ISBLANK(Date_Contract_Signed__c )) &amp;&amp;
+	DATEVALUE(Date_Contract_Signed__c ) &gt; TODAY() 
+	) 
+)</errorConditionFormula>
+    <errorDisplayField>Date_Contract_Signed__c</errorDisplayField>
+    <errorMessage>Date Contract Signed cannot be a date in the Future.</errorMessage>
+</ValidationRule>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Deal_Validation</fullName>
+    <booleanFilter>(1 AND 3 AND 5) OR (1 AND 2 AND 3 AND 4)</booleanFilter>
+    <columns>Deal_Validation__c</columns>
+    <columns>IM_Stage_5_Entered_Date__c</columns>
+    <columns>OPPORTUNITY.LAST_UPDATE</columns>
+    <columns>Billing_Country__c</columns>
+    <columns>OPPORTUNITY.AMOUNT</columns>
+    <columns>OPPORTUNITY.NAME</columns>
+    <columns>OPPORTUNITY.STAGE_NAME</columns>
+    <columns>OPPORTUNITY.TYPE</columns>
+    <columns>OPPORTUNITY.CLOSE_DATE</columns>
+    <columns>Primary_Product_Line__c</columns>
+    <columns>Opportunity_Owner_Full_Name__c</columns>
+    <columns>ACCOUNT.NAME</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>OPPORTUNITY.RECORDTYPE</field>
+        <operation>equals</operation>
+        <value>Opportunity.Standard_Opportunity</value>
+    </filters>
+    <filters>
+        <field>OPPORTUNITY.AMOUNT</field>
+        <operation>greaterOrEqual</operation>
+        <value>USD 18531.13</value>
+    </filters>
+    <filters>
+        <field>IM_Stage_5_Entered_Date__c</field>
+        <operation>greaterOrEqual</operation>
+        <value>2/13/2024</value>
+    </filters>
+    <filters>
+        <field>OPPORTUNITY.CURRENCY_ISO_CODE</field>
+        <operation>equals</operation>
+        <value>CAD</value>
+    </filters>
+    <filters>
+        <field>OPPORTUNITY.AMOUNT</field>
+        <operation>greaterOrEqual</operation>
+        <value>USD 25000</value>
+    </filters>
+    <label>Deal Validation</label>
+</ListView>

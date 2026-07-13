@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IMLA_CloseCaseFromOnHold_Customer</fullName>
+    <active>true</active>
+    <description>Prevents from closing a case when status is &quot;OnHold customer&quot;</description>
+    <errorConditionFormula>AND ((ISPICKVAL(PRIORVALUE( Status ), &quot;On Hold - Customer&quot;)),ISPICKVAL( Status, &quot;Closed&quot;),
+AND (OR(
+(ISPICKVAL(IME_SC_Country__c,&apos;Argentina&apos;)) , (ISPICKVAL(IME_SC_Country__c,&apos;Brazil&apos;)) , (ISPICKVAL(IME_SC_Country__c,&apos;Peru&apos;)) ,(ISPICKVAL(IME_SC_Country__c,&apos;Chile&apos;)) , (ISPICKVAL(IME_SC_Country__c,&apos;Mexico&apos;)), (ISPICKVAL(IME_SC_Country__c,&apos;Colombia&apos;))
+)))</errorConditionFormula>
+    <errorDisplayField>Status</errorDisplayField>
+    <errorMessage>You can not close a case from status &quot;On Hold - Customer&quot;.</errorMessage>
+</ValidationRule>

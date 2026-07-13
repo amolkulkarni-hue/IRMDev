@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>URL_required</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+OR(
+ ISPICKVAL( Issue__c , &quot;Delete Records&quot;),
+ ISPICKVAL( Issue__c , &quot;Merge Records&quot;)), 
+$RecordType.Id =&apos;01280000000BWs6&apos;,
+ ISBLANK (URL__c ))</errorConditionFormula>
+    <errorDisplayField>URL__c</errorDisplayField>
+    <errorMessage>Please provide the URL for the record. If merging records please paste the URL of the master record in the &apos;URL&apos; field and paste the other URLs in the &apos;Description&apos; field.</errorMessage>
+</ValidationRule>

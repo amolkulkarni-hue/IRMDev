@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Outreach_Sequence_Attributed__c</fullName>
+    <description>36949 : Impact Analysis | Opportunity: Remove Outreach fields on Opp - PLNI0018039</description>
+    <externalId>false</externalId>
+    <formula>IF(
+NOT(ISBLANK(Outreach_Attributed_Finished_Sequences__c)), 
+&quot;Yes&quot;,
+&quot;No&quot;)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Sequence Attributed?  - To Be Deleted</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

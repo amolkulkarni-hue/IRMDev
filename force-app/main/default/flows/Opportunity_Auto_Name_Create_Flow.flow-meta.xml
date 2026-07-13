@@ -1,13 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
-    <apiVersion>67.0</apiVersion>
-    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
-    <description>Record-Triggered After Save flow on Opportunity (Create). When a Standard_Opportunity or Framework_Parent_Opportunity is created, queries active Opp_Naming_Segment__c config records and calls IRM_OppNamingAction to build the Opportunity Name dynamically. Blank fields are replaced with the segment Fallback_Value__c (default TBD). The companion Opportunity_Auto_Name_Update_Flow recalculates on subsequent saves while the Name still contains TBD.</description>
-    <label>Opportunity Auto Name - Create</label>
-    <processType>AutoLaunchedFlow</processType>
-    <status>Active</status>
-
-    <!-- actionCalls ─────────────────────────────────────────────────────── -->
     <actionCalls>
         <name>buildOppName</name>
         <label>Build Opportunity Name</label>
@@ -18,6 +10,7 @@
         <connector>
             <targetReference>updateOppName</targetReference>
         </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>opportunity</name>
             <value>
@@ -36,13 +29,14 @@
                 <elementReference>varNamingSegments</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>IRM_OppNamingAction</nameSegment>
         <outputParameters>
             <assignToReference>varBuiltName</assignToReference>
             <name>opportunityName</name>
         </outputParameters>
     </actionCalls>
-
-    <!-- decisions ───────────────────────────────────────────────────────── -->
+    <apiVersion>67.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <decisions>
         <name>checkRecordType</name>
         <label>Is Target Record Type?</label>
@@ -94,39 +88,9 @@
             <label>Segments Found</label>
         </rules>
     </decisions>
-
-    <!-- recordLookups ───────────────────────────────────────────────────── -->
-    <recordLookups>
-        <name>getRecordTypeName</name>
-        <label>Get RecordType Dev Name</label>
-        <locationX>176</locationX>
-        <locationY>168</locationY>
-        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>checkRecordType</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>$Record.RecordTypeId</elementReference>
-            </value>
-        </filters>
-        <filters>
-            <field>SObjectType</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>Opportunity</stringValue>
-            </value>
-        </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>RecordType</object>
-        <outputAssignments>
-            <assignToReference>varRecordTypeDevName</assignToReference>
-            <field>DeveloperName</field>
-        </outputAssignments>
-    </recordLookups>
+    <description>Record-Triggered After Save flow on Opportunity (Create). When a Standard_Opportunity or Framework_Parent_Opportunity is created, queries active Opp_Naming_Segment__c config records and calls IRM_OppNamingAction to build the Opportunity Name dynamically. Blank fields are replaced with the segment Fallback_Value__c (default TBD). The companion Opportunity_Auto_Name_Update_Flow recalculates on subsequent saves while the Name still contains TBD.</description>
+    <label>Opportunity Auto Name - Create</label>
+    <processType>AutoLaunchedFlow</processType>
     <recordLookups>
         <name>getAccount</name>
         <label>Get Account Name</label>
@@ -144,7 +108,6 @@
                 <elementReference>$Record.AccountId</elementReference>
             </value>
         </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>Account</object>
         <outputAssignments>
             <assignToReference>varAccountName</assignToReference>
@@ -182,7 +145,6 @@
                 <elementReference>varRecordTypeDevName</elementReference>
             </value>
         </filters>
-        <getFirstRecordOnly>false</getFirstRecordOnly>
         <object>Opp_Naming_Segment__c</object>
         <outputReference>varNamingSegments</outputReference>
         <queriedFields>Id</queriedFields>
@@ -190,8 +152,36 @@
         <queriedFields>Field_API_Name__c</queriedFields>
         <queriedFields>Fallback_Value__c</queriedFields>
     </recordLookups>
-
-    <!-- recordUpdates ───────────────────────────────────────────────────── -->
+    <recordLookups>
+        <name>getRecordTypeName</name>
+        <label>Get RecordType Dev Name</label>
+        <locationX>176</locationX>
+        <locationY>168</locationY>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>checkRecordType</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.RecordTypeId</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>SobjectType</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Opportunity</stringValue>
+            </value>
+        </filters>
+        <object>RecordType</object>
+        <outputAssignments>
+            <assignToReference>varRecordTypeDevName</assignToReference>
+            <field>DeveloperName</field>
+        </outputAssignments>
+    </recordLookups>
     <recordUpdates>
         <name>updateOppName</name>
         <label>Update Opportunity Name</label>
@@ -213,8 +203,6 @@
         </inputAssignments>
         <object>Opportunity</object>
     </recordUpdates>
-
-    <!-- start ───────────────────────────────────────────────────────────── -->
     <start>
         <locationX>176</locationX>
         <locationY>48</locationY>
@@ -225,8 +213,7 @@
         <recordTriggerType>Create</recordTriggerType>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-
-    <!-- variables ───────────────────────────────────────────────────────── -->
+    <status>Active</status>
     <variables>
         <name>varAccountName</name>
         <dataType>String</dataType>

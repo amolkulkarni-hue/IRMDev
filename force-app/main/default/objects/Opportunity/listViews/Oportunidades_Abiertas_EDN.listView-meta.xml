@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Oportunidades_Abiertas_EDN</fullName>
+    <columns>IM_External_Id__c</columns>
+    <columns>CORE.USERS.FULL_NAME</columns>
+    <columns>ACCOUNT.NAME</columns>
+    <columns>OPPORTUNITY.NAME</columns>
+    <columns>OPPORTUNITY.STAGE_NAME</columns>
+    <columns>OPPORTUNITY.AMOUNT</columns>
+    <columns>IM_Booked_Date__c</columns>
+    <columns>OPPORTUNITY.CLOSE_DATE</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>CORE.USERS.ALIAS</field>
+        <operation>equals</operation>
+        <value>tusca,Cvel,Ccab,cnave,alazc,hleos,corte,lpere,agonz,PCle</value>
+    </filters>
+    <filters>
+        <field>OPPORTUNITY.STAGE_NAME</field>
+        <operation>equals</operation>
+        <value>1 - Qualification,2 - Solution Developed,3 - Solution Agreed,4 - Negotiate</value>
+    </filters>
+    <filters>
+        <field>OPPORTUNITY.TYPE</field>
+        <operation>equals</operation>
+        <value>New Deal,Up-Sell/Lift</value>
+    </filters>
+    <filters>
+        <field>OPPORTUNITY.RECORDTYPE</field>
+        <operation>equals</operation>
+        <value>Opportunity.IMLA_Standard_Opportunity</value>
+    </filters>
+    <label>Oportunidades Abiertas EDN</label>
+    <language>en_US</language>
+    <sharedTo>
+        <role>IMLAAdmin</role>
+    </sharedTo>
+</ListView>

@@ -2,12 +2,13 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Case_Completion_Display__c</fullName>
     <description>Text formula rendering Case_Completion_Pct__c as a unicode progress bar. Add to Related Cases list on Opportunity to give sellers an at-a-glance progress indicator.</description>
-    <formula>IF(Case_Completion_Pct__c = 100, "▓▓▓▓▓  100% ✔",
-IF(Case_Completion_Pct__c >= 90, "▓▓▓▓░  90% — awaiting docs",
-IF(Case_Completion_Pct__c >= 75, "▓▓▓░░  75%",
-IF(Case_Completion_Pct__c >= 50, "▓▓░░░  50%",
-IF(Case_Completion_Pct__c >= 25, "▓░░░░  25%",
-"░░░░░  0%")))))</formula>
+    <externalId>false</externalId>
+    <formula>IF(Case_Completion_Pct__c = 100, &quot;▓▓▓▓▓  100% ✔&quot;,
+IF(Case_Completion_Pct__c &gt;= 90, &quot;▓▓▓▓░  90% — awaiting docs&quot;,
+IF(Case_Completion_Pct__c &gt;= 75, &quot;▓▓▓░░  75%&quot;,
+IF(Case_Completion_Pct__c &gt;= 50, &quot;▓▓░░░  50%&quot;,
+IF(Case_Completion_Pct__c &gt;= 25, &quot;▓░░░░  25%&quot;,
+&quot;░░░░░  0%&quot;)))))</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Completion Display</label>
     <required>false</required>

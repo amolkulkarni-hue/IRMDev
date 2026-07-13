@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Date_Ops_Emailed_For_Timeline</fullName>
+    <active>true</active>
+    <description>Date Ops Emailed For Timeline must be today&apos;s date. It cannot be in the Past or the Future. For reference, check user story #26355 on Gitlab.</description>
+    <errorConditionFormula>(RecordType_Name__c = &quot;CLAS - RM&quot;) &amp;&amp;
+OR(
+	(
+	NOT(ISCHANGED(Open_Tasks__c)) &amp;&amp;
+	ISCHANGED(Date_Ops_emailed_for_timeline__c) &amp;&amp;
+	NOT(ISBLANK(Date_Ops_emailed_for_timeline__c)) &amp;&amp;
+	DATEVALUE(Date_Ops_emailed_for_timeline__c) != TODAY() &amp;&amp;
+	(
+	  ISBLANK(PRIORVALUE(Date_Ops_emailed_for_timeline__c)) ||
+	  DATEVALUE(Date_Ops_emailed_for_timeline__c) != DATEVALUE(PRIORVALUE(Date_Ops_emailed_for_timeline__c))
+	)
+	),
+    (	
+	ISNEW() &amp;&amp;
+	NOT(ISBLANK(Date_Ops_emailed_for_timeline__c)) &amp;&amp;
+	DATEVALUE(Date_Ops_emailed_for_timeline__c) != TODAY() 
+	) 
+)</errorConditionFormula>
+    <errorDisplayField>Date_Ops_emailed_for_timeline__c</errorDisplayField>
+    <errorMessage>Date Ops Emailed For Timeline must be today&apos;s date. It cannot be in the Past or the Future.</errorMessage>
+</ValidationRule>

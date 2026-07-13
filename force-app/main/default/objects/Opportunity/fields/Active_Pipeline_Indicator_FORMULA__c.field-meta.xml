@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Active_Pipeline_Indicator_FORMULA__c</fullName>
+    <description>CloseDate formerly First Bill Date, Booked Date is now First Bill Date.</description>
+    <externalId>false</externalId>
+    <formula>CASE((VALUE(MID(TEXT(CloseDate),1,4)) - VALUE(MID(TEXT(TODAY()),1,4))), 
+
+-1, &quot;Last Year&quot;, 
+0, &quot;Current Year&quot;, 
+1, &quot;Next Year&quot;, 
+2, &quot;Future&quot;, 
+3, &quot;Future&quot;, 
+4, &quot;Future&quot;, 
+5, &quot;Future&quot;, 
+&quot;More than 1 year old&quot;)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Active Pipeline Indicator (FORMULA)</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

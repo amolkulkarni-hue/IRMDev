@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Total_Booked_Won__c</fullName>
+    <inlineHelpText>This field displays the Account historical sum of total closed-won Opportunities</inlineHelpText>
+    <label>Total Bookings</label>
+    <summarizedField>Opportunity.Amount</summarizedField>
+    <summaryFilterItems>
+        <field>Opportunity.Type</field>
+        <operation>notEqual</operation>
+        <value>Framework</value>
+    </summaryFilterItems>
+    <summaryFilterItems>
+        <field>Opportunity.StageName</field>
+        <operation>equals</operation>
+        <value>5 - Signed/PO in, 6 - Setup, 7 - Closed</value>
+    </summaryFilterItems>
+    <summaryFilterItems>
+        <field>Opportunity.Type</field>
+        <operation>notEqual</operation>
+        <value>Renewal</value>
+    </summaryFilterItems>
+    <summaryForeignKey>Opportunity.AccountId</summaryForeignKey>
+    <summaryOperation>sum</summaryOperation>
+    <trackHistory>false</trackHistory>
+    <type>Summary</type>
+</CustomField>

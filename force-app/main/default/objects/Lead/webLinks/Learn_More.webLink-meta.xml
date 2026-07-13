@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebLink xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Learn_More</fullName>
+    <availability>online</availability>
+    <description>Direct user to the Lexis/Nexis listing for this company</description>
+    <displayType>link</displayType>
+    <encodingKey>UTF-8</encodingKey>
+    <height>600</height>
+    <linkType>url</linkType>
+    <masterLabel>Learn More</masterLabel>
+    <openType>sidebar</openType>
+    <protected>false</protected>
+    <url>https://www.lexisnexis.com/dossier/api/start.do?host=SalesForce&amp;prod=CD&amp;name={!Lead.Company}&amp;ORIGINATION_CODE=00211&amp;ServerURL={!$Api.Partner_Server_URL_100}&amp;SessionId={!$Api.Session_ID}&amp;isSC=n&amp;ticker={!Lead.LexisNexis_PP__Ticker__c}&amp;leadId={!Lead.Id}</url>
+</WebLink>

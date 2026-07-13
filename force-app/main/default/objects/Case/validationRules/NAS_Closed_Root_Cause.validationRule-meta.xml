@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NAS_Closed_Root_Cause</fullName>
+    <active>true</active>
+    <description>Root Couse Required to CLose Case</description>
+    <errorConditionFormula>and(
+$RecordType.Name = &quot;NAS General Support Case&quot;, 
+ISPICKVAL(Status, &quot;Closed&quot;),
+ISPICKVAL(NAS_Root_Cause_Reason__c, &quot;&quot;))</errorConditionFormula>
+    <errorMessage>Root Cause is required to close a case.</errorMessage>
+</ValidationRule>

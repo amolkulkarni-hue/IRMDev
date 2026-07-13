@@ -1,0 +1,174 @@
+{
+  "appPageId" : "7e024fb9-9cea-452c-9152-dc5566ec182d",
+  "componentName" : "siteforce:dynamicLayout",
+  "dataProviders" : [ ],
+  "id" : "00500e4c-941f-431c-a2f7-b50a823c35f3",
+  "label" : "My orders",
+  "regions" : [ {
+    "components" : [ {
+      "componentAttributes" : {
+        "background" : "background: rgba(0,0,0,0)",
+        "backgroundOverlay" : "rgba(0,0,0,0.5)",
+        "contentAreaWidth" : 100,
+        "sectionConfig" : {
+          "UUID" : "e16881f2-ba22-4090-810e-421c44872654",
+          "columns" : [ {
+            "UUID" : "5644ff66-6b54-4270-aa88-111cbe70e599",
+            "columnKey" : "1",
+            "columnName" : "Column 1",
+            "columnWidth" : "12",
+            "seedComponents" : [ ]
+          } ]
+        },
+        "sectionHeight" : 300
+      },
+      "componentName" : "forceCommunity:section",
+      "id" : "e16881f2-ba22-4090-810e-421c44872654",
+      "regions" : [ {
+        "components" : [ {
+          "componentAttributes" : {
+            "richTextValue" : "<div style=\"margin-left:auto;margin-right:auto;\">\n    <div class=\"pageHeadings\">\n        <div class=\"pageHeadingsTitle\">My orders</div>\n        <div class=\"pageHeadingsSubTitle\">View details of your most recent orders below</div>\n    </div>\n</div>"
+          },
+          "componentName" : "forceCommunity:htmlBlock",
+          "id" : "e1609e4c-acd2-4954-b046-d0c40a47dcde",
+          "renderPriority" : "NEUTRAL",
+          "renditionMap" : {
+            "fr_ca" : "5ab32fdb-e480-4fbd-974a-edcdeea23a9b"
+          },
+          "renditions" : [ {
+            "id" : "5ab32fdb-e480-4fbd-974a-edcdeea23a9b",
+            "renditionValue" : {
+              "componentAttributes" : {
+                "richTextValue" : "<div style=\"margin-left:auto;margin-right:auto;\">\n    <div class=\"pageHeadings\">\n        <div class=\"pageHeadingsTitle\">Mes commandes</div>\n        <div class=\"pageHeadingsSubTitle\">Consultez les détails de vos commandes les plus récentes ci-dessous</div>\n    </div>\n</div>"
+              }
+            },
+            "type" : "renditionComponent"
+          } ],
+          "type" : "component"
+        }, {
+          "componentAttributes" : {
+            "INVOICESORTDATEFIELD" : "invoice_date",
+            "ORDERSORTDATEFIELD" : "deliveryDateTime",
+            "emptyMessage" : "You don't have any recent orders.",
+            "filterByLabel" : "Filter by service date range",
+            "jsonConfiguration" : "[ { \"label\": \"Customer ID\", \"fieldName\": \"customerId\", \"sortable\": \"true\" }, { \"label\": \"Order Number\", \"fieldName\": \"orderNumber\", \"sortable\": \"true\" }, { \"label\": \"Requested Date\", \"fieldName\": \"requestDateTime\", \"type\": \"date\", \"sortable\": \"true\", \"typeAttributes\": { \"day\": \"numeric\", \"month\": \"short\", \"year\": \"numeric\" } }, { \"label\": \"Service Date\", \"fieldName\": \"deliveryDateTime\", \"sortable\": \"true\", \"type\": \"date\", \"typeAttributes\": { \"day\": \"numeric\", \"month\": \"short\", \"year\": \"numeric\" } }, { \"label\": \"Order Status\", \"fieldName\": \"orderStatus\", \"sortable\": \"true\" }, { \"label\": \"Department ID\", \"fieldName\": \"departmentId\", \"sortable\": \"true\" }, { \"label\": \"Division ID\", \"fieldName\": \"divisionId\", \"sortable\": \"true\" } ]",
+            "leftButtonLabelAndLink" : "New Order Request,/s/contactsupport",
+            "noSearchResultsFoundMessageLabel" : "That didn't return any results. Try again.",
+            "recordsToRetrieve" : "Orders",
+            "rightButtonLabelAndLink" : "View more,/s/my-orders",
+            "searchLabel" : "Search",
+            "searchPlaceholder" : "My recent orders",
+            "showFullTable" : true
+          },
+          "componentName" : "c:nf_invoicesWindow",
+          "id" : "1747f198-888f-4320-870b-25e2e82c6183",
+          "renderPriority" : "NEUTRAL",
+          "renditionMap" : { },
+          "type" : "component"
+        }, {
+          "componentAttributes" : {
+            "bannerBackgroundColor" : "rgb(247, 247, 254)",
+            "bannerHeight" : "250px",
+            "bannerHeightMobile" : "220px",
+            "button1BackgroundColor" : "#4bca81",
+            "button1BorderRadius" : "5px",
+            "button1HoverBackgroundColor" : "#000000",
+            "button1HoverLabelColor" : "#ffffff",
+            "button1Label" : "Log in to Iron Mountain Connect",
+            "button1LabelColor" : "#ffffff",
+            "button1RedirectionURL" : "https://www.ironmountainconnect.com/forms/forms/login.fcc?TYPE=33554433&REALMOID=06-0001d6dd-12b5-15db-80eb-152eac14300d&GUID=&SMAUTHREASON=0&METHOD=GET&SMAGENTNAME=-SM-5qkSoxBtXSTgFChyy%2fbh7KHLG2e7bbGc%2bbm%2b%2frbFszM4%2bvIhUX037EIIwAe5KisT&TARGET=-SM-https%3a%2f%2fwww%2eironmountainconnect%2ecom%2f",
+            "button2BackgroundColor" : "#4bca82",
+            "button2BorderRadius" : "5px",
+            "button2HoverBackgroundColor" : "#ff0000",
+            "button2HoverLabelColor" : "#ffffff",
+            "button2Label" : "Log in to SecureSync",
+            "button2LabelColor" : "#ffffff",
+            "button2RedirectionURL" : "https://www3.securesync.com/",
+            "buttonAlignment" : "Horizontal",
+            "buttonLabelFontSize" : "16px",
+            "buttonLabelFontSizeMobile" : "12px",
+            "contentAlignment" : "Center",
+            "isButton1CTA" : false,
+            "isButton2CTA" : false,
+            "leftRightPadding" : "30px",
+            "leftRightPaddingMobile" : "10px",
+            "subTitleFontColor" : "rgb(88, 89, 91)",
+            "subTitleFontSize" : "18px",
+            "subTitleFontSizeMobile" : "24px",
+            "subTitleLink" : "",
+            "subTitleText" : "Log in to your Orders Portal to view your full order history and details.",
+            "titleFontColor" : "rgb(20, 71, 125)",
+            "titleFontSize" : "36px",
+            "titleFontSizeMobile" : "24px",
+            "titleText" : "Can't find what you're looking for?"
+          },
+          "componentName" : "c:bannerWithButton",
+          "id" : "ca56163a-871e-4aa5-aa7b-4737682dea20",
+          "renderPriority" : "NEUTRAL",
+          "renditionMap" : {
+            "fr_ca" : "77a3ab6d-c9e8-4231-9639-77f64889ec34"
+          },
+          "renditions" : [ {
+            "id" : "77a3ab6d-c9e8-4231-9639-77f64889ec34",
+            "renditionValue" : {
+              "componentAttributes" : {
+                "bannerHeight" : "250px",
+                "bannerHeightMobile" : "220px",
+                "button1BorderRadius" : "5px",
+                "button1Label" : "Connectez-vous à Iron Mountain Connect",
+                "button1RedirectionURL" : "https://www.ironmountainconnect.com/forms/forms/login.fcc?TYPE=33554433&REALMOID=06-0001d6dd-12b5-15db-80eb-152eac14300d&GUID=&SMAUTHREASON=0&METHOD=GET&SMAGENTNAME=-SM-5qkSoxBtXSTgFChyy%2fbh7KHLG2e7bbGc%2bbm%2b%2frbFszM4%2bvIhUX037EIIwAe5KisT&TARGET=-SM-https%3a%2f%2fwww%2eironmountainconnect%2ecom%2f",
+                "button2BorderRadius" : "5px",
+                "button2Label" : "Connectez-vous à SecureSync",
+                "button2RedirectionURL" : "https://www3.securesync.com/",
+                "buttonAlignment" : "Horizontal",
+                "buttonLabelFontSize" : "16px",
+                "buttonLabelFontSizeMobile" : "12px",
+                "contentAlignment" : "Center",
+                "leftRightPadding" : "30px",
+                "leftRightPaddingMobile" : "10px",
+                "subTitleFontSize" : "18px",
+                "subTitleFontSizeMobile" : "24px",
+                "subTitleLink" : "",
+                "subTitleText" : "Connectez-vous à votre portail de commandes pour afficher l'historique complet et les détails de vos commandes.",
+                "titleFontSize" : "36px",
+                "titleFontSizeMobile" : "24px",
+                "titleText" : "Vous ne trouvez pas ce que vous cherchez ?"
+              }
+            },
+            "type" : "renditionComponent"
+          } ],
+          "type" : "component"
+        } ],
+        "id" : "5644ff66-6b54-4270-aa88-111cbe70e599",
+        "regionLabel" : "Column 1",
+        "regionName" : "1",
+        "renditionMap" : { },
+        "type" : "region"
+      } ],
+      "renderPriority" : "NEUTRAL",
+      "renditionMap" : { },
+      "type" : "component"
+    } ],
+    "id" : "abf637a6-a975-42fc-ba30-2ed2180e8eb3",
+    "regionName" : "content",
+    "type" : "region"
+  }, {
+    "components" : [ {
+      "componentAttributes" : {
+        "customHeadTags" : "",
+        "description" : "",
+        "title" : "My orders"
+      },
+      "componentName" : "forceCommunity:seoAssistant",
+      "id" : "29859e81-3734-4bf8-8105-954aba4b6698",
+      "renditionMap" : { },
+      "type" : "component"
+    } ],
+    "id" : "32590921-33de-4862-b287-05edd2de2005",
+    "regionName" : "sfdcHiddenRegion",
+    "type" : "region"
+  } ],
+  "themeLayoutType" : "5IS8MaShST5FYkZT9VO9eznWjK4uEX",
+  "type" : "view",
+  "viewType" : "custom-my-orders"
+}

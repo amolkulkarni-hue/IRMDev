@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IME_SC_ValidateClosureReason_1</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND ( NOT(ISCHANGED( IME_SC_Owner_Manager__c )), 
+NOT(ISCHANGED( IME_SC_Manager_of_Manager_OwnerId__c )),
+$RecordType.Name = &quot;IME SC Case&quot; ,  ISPICKVAL ( 	IME_SC_Closure_Reason__c  , &quot;Duplicate&quot;) ,   ISBLANK( ParentId )   )</errorConditionFormula>
+    <errorDisplayField>ParentId</errorDisplayField>
+    <errorMessage>Please enter original case reference number in parent case field .</errorMessage>
+</ValidationRule>

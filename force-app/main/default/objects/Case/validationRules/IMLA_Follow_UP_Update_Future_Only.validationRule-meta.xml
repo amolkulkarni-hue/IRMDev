@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IMLA_Follow_UP_Update_Future_Only</fullName>
+    <active>true</active>
+    <description>for IMLA SC profiles, Please set Follow Up Date to a future date.</description>
+    <errorConditionFormula>AND(
+	OR(
+		$Profile.Name = &quot;IMLA_SC_Representative&quot;,
+		$Profile.Name = &quot;IMLA_SC_Manager&quot;,
+		$Profile.Name = &quot;IMLA_SC_In_Country_Admin&quot;
+	),	
+
+	Follow_up_Date__c &lt; NOW()
+)</errorConditionFormula>
+    <errorDisplayField>Follow_up_Date__c</errorDisplayField>
+    <errorMessage>Please set Follow Up Date to a future date.</errorMessage>
+</ValidationRule>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>GSC_Status_CustomerOnHold_Req_Fields</fullName>
+    <active>true</active>
+    <description>The Pending Reason &apos;Customer Response&apos; needs to be selected for Status &apos;Customer - On Hold&apos; The epic for reference #1008. The rule updated for CAC Executive Escalations record type. For ref, check user story #27296 on Gitlab.</description>
+    <errorConditionFormula>AND(
+    OR($RecordType.Name = &apos;Global Service Case&apos;,$RecordType.Name = &apos;CAC Executive Escalations&apos;),
+    NOT(ISPICKVAL(NAS_Pending_Reason__c, &apos;Customer Response&apos;)),
+    ISPICKVAL(Status, &apos;Customer - On Hold&apos;)
+)</errorConditionFormula>
+    <errorMessage>The Pending Reason should be &apos;Customer Response&apos; to change the status to &apos;Customer - On Hold&apos;.</errorMessage>
+</ValidationRule>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Cant_Move_oppty_from_stage_6_to_stage_5</fullName>
+    <active>true</active>
+    <description>#21200- Restrict users from moving an Opportunity from Stage 6 to Stage 5 except Admins
+#21201- Users with Move Opportunity To stage 5 permission set are bypassed</description>
+    <errorConditionFormula>AND(
+ ISCHANGED( StageName ),
+ ISPICKVAL(StageName, &apos;5 - Signed/PO in&apos;),
+ ISPICKVAL(PRIORVALUE(StageName), &apos;6 - Setup&apos;),
+
+$Profile.Name &lt;&gt; &apos;IM_Custom Sys Admin&apos;,
+$Profile.Name &lt;&gt; &apos;System Administrator&apos;,
+
+NOT(  $Permission.Update_Stage_of_Closed_Opportunities  ),
+NOT($Permission.VR_Bypass_Permission)
+
+ )</errorConditionFormula>
+    <errorMessage>You do not have permission to  move an Opportunity from Stage 6 to Stage 5. Need help? Contact your Sales Operations Business Partner.</errorMessage>
+</ValidationRule>

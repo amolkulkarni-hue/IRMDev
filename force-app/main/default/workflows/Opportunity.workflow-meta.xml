@@ -1,0 +1,1581 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <alerts>
+        <fullName>AWS_Deal_Registration_Notification</fullName>
+        <description>AWS Deal registration Notification</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>All/AWS_Deal_Registration_Notification</template>
+    </alerts>
+    <alerts>
+        <fullName>Approval_notification</fullName>
+        <description>Approval notification</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>IMCSS_Templates/Up_sell_Approval_Notification</template>
+    </alerts>
+    <alerts>
+        <fullName>Clean_Start_Opportunity_Alert</fullName>
+        <ccEmails>cleanstart@ironmountain.com</ccEmails>
+        <description>Clean Start opportunity Alert</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>unfiled$public/Clean_Start_opportunity_1703773547601</template>
+    </alerts>
+    <alerts>
+        <fullName>EMAIL_ALERT_1_When_a_field_updated_to_US_Federal_GSA_Pricing_Yes</fullName>
+        <description>EMAIL ALERT 1 - When a field updated to - US Federal/ GSA Pricing = Yes</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <recipients>
+            <recipient>kimberly.dahms@ironmountain.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>laura.rogers@ironmountain.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>richard.o&apos;brien@ironmountain.com</recipient>
+            <type>user</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>IMGS_Approval/Opportunity_GSA_Eligibility_Equals_GSA_Eligible</template>
+    </alerts>
+    <alerts>
+        <fullName>EMAIL_ALERT_2_When_the_opportunity_approved</fullName>
+        <description>EMAIL ALERT 2 - When the opportunity approved</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>IMGS_Approval/Opportunity_Approved</template>
+    </alerts>
+    <alerts>
+        <fullName>EMAIL_ALERT_3_When_the_opportunity_rejected</fullName>
+        <description>EMAIL ALERT 3 - When the opportunity rejected</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>IMGS_Approval/Opportunity_Rejected</template>
+    </alerts>
+    <alerts>
+        <fullName>Enter_Sales_Win_Information_Email_Alert</fullName>
+        <description>Enter Sales Win Information Email Alert</description>
+        <protected>false</protected>
+        <recipients>
+            <field>Owner_Director_Email__c</field>
+            <type>email</type>
+        </recipients>
+        <recipients>
+            <field>Owner_VP_Email__c</field>
+            <type>email</type>
+        </recipients>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Sales_Operations/Enter_Sales_Win_Notification</template>
+    </alerts>
+    <alerts>
+        <fullName>GSA_Approval_Completed</fullName>
+        <description>GSA Approval Completed</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>IMGS_Approval/GSA_Approval_Completed</template>
+    </alerts>
+    <alerts>
+        <fullName>GSA_Eligible_Opty_Created</fullName>
+        <description>GSA Eligible Opty Created</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>IMGS_Approvers</recipient>
+            <type>group</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>IMGS_Approval/GSA_Review_Needed</template>
+    </alerts>
+    <alerts>
+        <fullName>IME_Big_Deal_Alert_Email</fullName>
+        <description>IME Big Deal Alert Email</description>
+        <protected>false</protected>
+        <recipients>
+            <field>Owner_Manager_Email__c</field>
+            <type>email</type>
+        </recipients>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <recipients>
+            <recipient>pdoody@emea.ironmountain.com</recipient>
+            <type>user</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>IMCSS_Templates/Big_Deal_Alert_Email</template>
+    </alerts>
+    <alerts>
+        <fullName>Metadata_Activation_Check</fullName>
+        <description>Metadata Activation Check</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderAddress>noreply@ironmountain.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>unfiled$public/Metadata_Activation_Template_1648029226118</template>
+    </alerts>
+    <alerts>
+        <fullName>Opportunity_GSA_Eligibility_Equals_GSA_Eligible</fullName>
+        <description>Opportunity: GSA Eligibility Equals GSA Eligible</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>IMGS_Approval/Opportunity_GSA_Eligibility_Equals_GSA_Eligible</template>
+    </alerts>
+    <alerts>
+        <fullName>Opportuntiy_Alerts_for_Brazil</fullName>
+        <description>Opportuntiy Alerts for Brazil</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>Brazil_Email_Notification_Group</recipient>
+            <type>group</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>IME_SC_BRA_Email/IME_SC_BRA_Opportuntiy_Alerts_for_Brazil</template>
+    </alerts>
+    <alerts>
+        <fullName>PRM_Oppty_15_Day_Expiration_Alert</fullName>
+        <description>Oppty 15 Day Expiration Alert</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>Partner Manager</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Partner User</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>IMCSS_Templates/PRM_Oppty_15_Day_Expiration_Alert_Template</template>
+    </alerts>
+    <alerts>
+        <fullName>PRM_Oppty_30_Day_Expiration_Alert</fullName>
+        <description>Oppty 30 Day Expiration Alert</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>Partner Manager</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Partner User</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>IMCSS_Templates/PRM_Oppty_30_Day_Expiration_Alert_Template</template>
+    </alerts>
+    <alerts>
+        <fullName>PRM_Oppty_5_Day_Expiration_Alert</fullName>
+        <description>Oppty 5 Day Expiration Alert</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>Partner Manager</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Partner User</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>IMCSS_Templates/PRM_Oppty_05_Days_Expiration_Alert_Template</template>
+    </alerts>
+    <alerts>
+        <fullName>PRM_Partner_Oppty_Expired_Alert</fullName>
+        <description>Partner Oppty Expired Alert</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>Partner Manager</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Partner User</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>IMCSS_Templates/PRM_Partner_Oppty_Expired_Alert</template>
+    </alerts>
+    <alerts>
+        <fullName>Rejection_notification</fullName>
+        <description>Rejection notification</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>IMCSS_Templates/Up_sell_Rejection_Notification</template>
+    </alerts>
+    <alerts>
+        <fullName>SV_Status_BAU</fullName>
+        <description>SV Status BAU</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderAddress>imesalesvalidation@ironmountain.co.uk</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>Commission_Accounting/Sales_Validation_BAU</template>
+    </alerts>
+    <alerts>
+        <fullName>SV_Status_Open</fullName>
+        <description>SV Status Open</description>
+        <protected>false</protected>
+        <recipients>
+            <field>Owner_Manager_Email__c</field>
+            <type>email</type>
+        </recipients>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderAddress>imesalesvalidation@ironmountain.co.uk</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>Commission_Accounting/Sales_Validation_Open</template>
+    </alerts>
+    <alerts>
+        <fullName>SV_Status_Open_40Days</fullName>
+        <description>SV Status Open 40Days</description>
+        <protected>false</protected>
+        <recipients>
+            <field>Owner_Manager_Email__c</field>
+            <type>email</type>
+        </recipients>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderAddress>imesalesvalidation@ironmountain.co.uk</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>Commission_Accounting/Sales_Validation_Open_40_days_alert</template>
+    </alerts>
+    <alerts>
+        <fullName>SV_Status_Open_50Days</fullName>
+        <description>SV Status Open 50Days</description>
+        <protected>false</protected>
+        <recipients>
+            <field>Owner_Manager_Email__c</field>
+            <type>email</type>
+        </recipients>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderAddress>imesalesvalidation@ironmountain.co.uk</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>Commission_Accounting/Sales_Validation_Open_50_day_alert</template>
+    </alerts>
+    <alerts>
+        <fullName>SV_Status_Passed</fullName>
+        <description>SV Status Passed</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderAddress>imesalesvalidation@ironmountain.co.uk</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>Commission_Accounting/Sales_Validation_Passed</template>
+    </alerts>
+    <alerts>
+        <fullName>SV_Status_failed</fullName>
+        <description>SV Status failed</description>
+        <protected>false</protected>
+        <recipients>
+            <field>Owner_Manager_Email__c</field>
+            <type>email</type>
+        </recipients>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderAddress>imesalesvalidation@ironmountain.co.uk</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>Commission_Accounting/Sales_Validation_Failed</template>
+    </alerts>
+    <fieldUpdates>
+        <fullName>Active_Pipeline_Update</fullName>
+        <field>Active_Pipeline__c</field>
+        <literalValue>1</literalValue>
+        <name>Active Pipeline Update</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Booked_date_update_on_First_Bill_Date</fullName>
+        <field>IM_Booked_Date__c</field>
+        <formula>IF(IM_Booked_Date__c&lt;TODAY(), TODAY(), IM_Booked_Date__c)</formula>
+        <name>Booked date update on First Bill Date</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Field_Update_Forecast_field_to_True</fullName>
+        <field>IM_Commit_to_Forecast__c</field>
+        <literalValue>1</literalValue>
+        <name>Field Update: Forecast field to True</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>First_Bill_Date_Override_update1</fullName>
+        <field>IM_Booked_Date__c</field>
+        <formula>PRIORVALUE( IM_Booked_Date__c )</formula>
+        <name>First Bill Date Override update1</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>GSA_Approved</fullName>
+        <field>IMGS_Approval_Status__c</field>
+        <literalValue>GSA Pricing Approved</literalValue>
+        <name>GSA Approved</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>GSA_Not_Approved</fullName>
+        <field>IMGS_Approval_Status__c</field>
+        <literalValue>Standard Pricing Applies</literalValue>
+        <name>GSA Not Approved</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>GSA_Under_Review</fullName>
+        <field>IMGS_Approval_Status__c</field>
+        <literalValue>Under Review</literalValue>
+        <name>GSA Under Review</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>IME_Forecast_Last_Modified</fullName>
+        <description>Case 02534948, record when field ‘Forecast’ was last modified</description>
+        <field>IME_Forecast_last_Modified__c</field>
+        <formula>TODAY()</formula>
+        <name>IME Forecast Last Modified</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>IME_Update_First_Added_to_Forecast</fullName>
+        <description>Case 02534948, write date opportunity was first added to forecast</description>
+        <field>IME_First_Added_to_Forecast__c</field>
+        <formula>TODAY()</formula>
+        <name>IME Update First Added to Forecast</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Inactive_Pipeline_Update</fullName>
+        <field>Active_Pipeline__c</field>
+        <literalValue>0</literalValue>
+        <name>Inactive Pipeline Update</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Manager_Approval_Needed_Hidden</fullName>
+        <field>Manager_Approval_Needed_Hidden__c</field>
+        <formula>Manager_Approval_Needed__c</formula>
+        <name>Manager Approval Needed Hidden</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Move_Stage_to_1</fullName>
+        <description>Moves opportunity stage to 1 - Qualification.</description>
+        <field>StageName</field>
+        <literalValue>1 - Qualification</literalValue>
+        <name>Move Stage to 1</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Opportunity</fullName>
+        <field>IM_X3_Propose_Reached__c</field>
+        <literalValue>1</literalValue>
+        <name>Opportunity Stage 3 Update</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Opportunity_Approved</fullName>
+        <description>When the opportunity is approved, then an EMAIL ALERT 2 should go out to the opportunity owner ( no change to action just updated email template)</description>
+        <field>sbaa__ApprovalStatus__c</field>
+        <literalValue>Approved</literalValue>
+        <name>Opportunity Approved</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Opportunity_GSA_Eligibility_Equals_GSA</fullName>
+        <description>Opportunity: GSA Eligibility Equals GSA</description>
+        <field>GSA_Eligibility__c</field>
+        <literalValue>GSA Eligible</literalValue>
+        <name>Opportunity: GSA Eligibility Equals GSA</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Opportunity_Rejected</fullName>
+        <description>When the opportunity is rejected, then an EMAIL ALERT 3 should go out to the opportunity owner ( no change to action just updated email template)</description>
+        <field>sbaa__ApprovalStatus__c</field>
+        <literalValue>Rejected</literalValue>
+        <name>Opportunity Rejected</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Opportunity_Stage_1_Update</fullName>
+        <field>IM_X1_Qualification_Reached__c</field>
+        <literalValue>1</literalValue>
+        <name>Opportunity Stage 1 Update</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Opportunity_Stage_4_Update</fullName>
+        <field>IM_X4_Negotiate_Reached__c</field>
+        <literalValue>1</literalValue>
+        <name>Opportunity Stage 4 Update</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Opportunity_Stage_5_Update</fullName>
+        <field>IM_X5_Signed_PO_in_Reached__c</field>
+        <literalValue>1</literalValue>
+        <name>Opportunity Stage 5 Update</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Opportunity_Stage_6_Update</fullName>
+        <field>IM_X6_Setup_Reached__c</field>
+        <literalValue>1</literalValue>
+        <name>Opportunity Stage 6 Update</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Opportunity_Stage_7_Update</fullName>
+        <field>IM_X7_Closed_Reached__c</field>
+        <literalValue>1</literalValue>
+        <name>Opportunity Stage 7 Update</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Opportunity_Stage_Date</fullName>
+        <field>IM_Stage_7_Entered_Date__c</field>
+        <formula>TODAY ()</formula>
+        <name>Stage 7 Date Reached</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Opportunity_Stage_Updates2</fullName>
+        <field>IM_X2_Solution_Development_Reached__c</field>
+        <literalValue>1</literalValue>
+        <name>Opportunity Stage 2 Update</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Opportunity_Stage_is_5</fullName>
+        <field>NCSP_Status__c</field>
+        <name>Opportunity Stage is &lt; 5</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Opportunity_Status</fullName>
+        <field>IMGS_Approval_Status__c</field>
+        <literalValue>Under Review</literalValue>
+        <name>Opportunity: Status</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Opty_Dead_Date_Update</fullName>
+        <field>Date_Dead__c</field>
+        <formula>Today()</formula>
+        <name>Opty Dead Date Update</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Opty_Dead_Flag_Update</fullName>
+        <field>Dead_Entered__c</field>
+        <literalValue>1</literalValue>
+        <name>Opty Dead Flag Update</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Opty_Lost_Date_Update</fullName>
+        <description>When an opportunity is lost, updates the lost date to today.</description>
+        <field>Date_Lost__c</field>
+        <formula>Today()</formula>
+        <name>Opty Lost Date Update</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Opty_Lost_Flag_Update</fullName>
+        <description>When opportunity is lost, flag is marked as true.</description>
+        <field>Lost_Entered__c</field>
+        <literalValue>1</literalValue>
+        <name>Opty Lost Flag Update</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Owner_Manager_Email</fullName>
+        <field>Owner_Manager_Email__c</field>
+        <formula>Owner_Link__r.Manager.Email</formula>
+        <name>Owner Manager Email</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>PRM_Oppty_Set_Expiration_Date</fullName>
+        <description>Sets the expiration date for partner opportunities.</description>
+        <field>Partner_Deal_Expiration_Date__c</field>
+        <formula>TODAY () + 90</formula>
+        <name>Partner Oppty Set Expiration Date</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>PRM_Partner_Oppty_Reset_Expiration_Date</fullName>
+        <description>Updates opportunity expiration date for partners.</description>
+        <field>Partner_Deal_Expiration_Date__c</field>
+        <formula>TODAY() + 30</formula>
+        <name>Partner Oppty Reset Expiration Date</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>PRM_Partner_Oppty_Update_Stage_Expired</fullName>
+        <description>Updates the Opportunity stage to Expired for Partner opps.</description>
+        <field>StageName</field>
+        <literalValue>Expired</literalValue>
+        <name>Partner Oppty Update Stage-Expired</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>PRM_Update_Oppty_Type</fullName>
+        <description>Sets the value for the Opportunity Record type to &apos;Deal Registration&apos;</description>
+        <field>RecordTypeId</field>
+        <lookupValue>Deal_Registration</lookupValue>
+        <lookupValueType>RecordType</lookupValueType>
+        <name>PRM Update Oppty Type</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>LookupValue</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Populate_SV_Status_Last_Changed</fullName>
+        <field>SV_Status_Last_Changed__c</field>
+        <formula>NOW()</formula>
+        <name>Populate SV Status Last Changed</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Remove_From_Forecast</fullName>
+        <description>When an opportunity is dead, lost or postponed, this will uncheck the commit flag.</description>
+        <field>IM_Commit_to_Forecast__c</field>
+        <literalValue>0</literalValue>
+        <name>Remove From Forecast</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>SVStatus_Passed</fullName>
+        <field>SV_Status__c</field>
+        <literalValue>Passed</literalValue>
+        <name>SVStatus(Passed)</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>SVStatus_Queued</fullName>
+        <field>SV_Status__c</field>
+        <literalValue>Queued</literalValue>
+        <name>SVStatus(Queued)</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>SV_Status</fullName>
+        <field>SV_Status__c</field>
+        <literalValue>Queued</literalValue>
+        <name>SV Status</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>SV_Status_Blank</fullName>
+        <field>SV_Status__c</field>
+        <name>SV Status Blank</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>SV_Status_Failed</fullName>
+        <field>SV_Status__c</field>
+        <literalValue>Failed</literalValue>
+        <name>SV Status Failed</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Sent_to_NCSP_Date_Update</fullName>
+        <field>Sent_to_NCSP_Date__c</field>
+        <formula>TODAY()</formula>
+        <name>Sent to NCSP Date_Update</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Stage_1_Date_Reached</fullName>
+        <field>IM_Stage_1_Entered_Date__c</field>
+        <formula>TODAY ()</formula>
+        <name>Stage 1 Date Reached</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Stage_2_Date_Reached</fullName>
+        <field>IM_Stage_2_Entered_Date__c</field>
+        <formula>TODAY ()</formula>
+        <name>Stage 2 Date Reached</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Stage_3_Date_Reached</fullName>
+        <field>IM_Stage_3_Entered_Date__c</field>
+        <formula>TODAY ()</formula>
+        <name>Stage 3 Date Reached</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Stage_4_Date_Reached</fullName>
+        <field>IM_Stage_4_Entered_Date__c</field>
+        <formula>TODAY ()</formula>
+        <name>Stage 4 Date Reached</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Stage_5_Date_Reached</fullName>
+        <field>IM_Stage_5_Entered_Date__c</field>
+        <formula>TODAY ()</formula>
+        <name>Stage 5 Date Reached</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Stage_5_Sent_to_NCSP_Age</fullName>
+        <field>Stage_5_Sent_to_NCSP_Age__c</field>
+        <formula>TODAY()  -  IM_Stage_5_Entered_Date__c</formula>
+        <name>Stage 5 - Sent to NCSP Age_Update</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Stage_6_Date_Reached</fullName>
+        <field>IM_Stage_6_Entered_Date__c</field>
+        <formula>TODAY ()</formula>
+        <name>Stage 6 Date Reached</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Tier_1_Grace_Period</fullName>
+        <description>Update Tier 1 Grace Period to Not Applicable</description>
+        <field>Grace_Period__c</field>
+        <literalValue>Not Applicable</literalValue>
+        <name>Tier 1 Grace Period</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Tier_1_Minimum_Billing_Values</fullName>
+        <field>Minimum_Billing__c</field>
+        <literalValue>Not Applicable</literalValue>
+        <name>Tier 1 Minimum Billing Values</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Tier_2_Grace_Period_Value</fullName>
+        <description>Set Tier 2 Grace Period to 3</description>
+        <field>Grace_Period__c</field>
+        <literalValue>3</literalValue>
+        <name>Tier 2 Grace Period Value</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Tier_2_Minimum_Billing_Percent_Value</fullName>
+        <description>Set Minimum Billing Percent to 80%</description>
+        <field>Minimum_Billing__c</field>
+        <literalValue>80</literalValue>
+        <name>Tier_2_Minimum_Billing_Percent_Value</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Booked_Date</fullName>
+        <field>IM_Booked_Date__c</field>
+        <formula>today()</formula>
+        <name>Update Booked Date</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Booked_Date_As_Stage_5</fullName>
+        <description>Update Booked date as Stage 5 entered date</description>
+        <field>IM_Booked_Date__c</field>
+        <formula>today()</formula>
+        <name>Update Booked Date</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Closed_Date</fullName>
+        <field>CloseDate</field>
+        <formula>TODAY()</formula>
+        <name>Update Closed Date</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Commit_Checkbox</fullName>
+        <field>IM_Commit_to_Forecast__c</field>
+        <literalValue>1</literalValue>
+        <name>Update Commit Checkbox</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_IMGS_to_Approved</fullName>
+        <description>Updates the IMGS status to Approved when Opportunity is created by Government Rep</description>
+        <field>IMGS_Approval_Status__c</field>
+        <literalValue>GSA Pricing Approved</literalValue>
+        <name>Update IMGS to Approved</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Opportunity_Name</fullName>
+        <field>Name</field>
+        <formula>SUBSTITUTE(Name, &apos;|&apos;, &apos;&apos;)</formula>
+        <name>Update Opportunity Name</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Original_First_Bill_Date</fullName>
+        <description>Update the Original First Bill Date field when Inbound Storage is approved against this Opportunity. This value will drive formulas on Inbound Storage Records which are important for Commissions Extract Report.</description>
+        <field>Original_First_Billed_Date__c</field>
+        <formula>CloseDate</formula>
+        <name>Update Original First Bill Date</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <rules>
+        <fullName>AWS Deal Registration Notification</fullName>
+        <actions>
+            <name>AWS_Deal_Registration_Notification</name>
+            <type>Alert</type>
+        </actions>
+        <active>false</active>
+        <criteriaItems>
+            <field>Opportunity.Cloud_Provider__c</field>
+            <operation>equals</operation>
+            <value>AWS</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Opportunity.StageName</field>
+            <operation>equals</operation>
+            <value>2 - Solution Developed</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Opportunity.Primary_Product_Line__c</field>
+            <operation>equals</operation>
+            <value>Insight</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Active Pipeline Flag</fullName>
+        <actions>
+            <name>Active_Pipeline_Update</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <criteriaItems>
+            <field>Opportunity.Active_Pipeline_Indicator_FORMULA__c</field>
+            <operation>equals</operation>
+            <value>Current Year,Next Year</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Opportunity.StageName</field>
+            <operation>equals</operation>
+            <value>0 - Pre-Qualification,1 - Qualification,7 - Closed,5 - Signed/PO in,2 - Solution Developed,3 - Solution Agreed,6 - Setup,4 - Negotiate</value>
+        </criteriaItems>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Capture Original First Bill Date</fullName>
+        <actions>
+            <name>Update_Original_First_Bill_Date</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <description>This workflow captures what the value of the First Bill Date is when Inbound Storage is first assigned to an Opportunity.</description>
+        <formula>AND(ISBLANK(PRIORVALUE( Total_Inbound_Storage_Received__c )), NOT(ISBLANK(Total_Inbound_Storage_Received__c)))</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>First Bill Date Override</fullName>
+        <actions>
+            <name>First_Bill_Date_Override_update1</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <criteriaItems>
+            <field>Opportunity.StageName</field>
+            <operation>equals</operation>
+            <value>6 - Setup,7 - Closed,5 - Signed/PO in</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Opportunity.CloseDate</field>
+            <operation>equals</operation>
+            <value>TODAY</value>
+        </criteriaItems>
+        <description>Corrects the issue of  the system changing the Close Date (First Bill Date) to TODAY when the opportunity staged is changed to a closed stage.
+CloseDate formerly First Bill Date, Booked Date is now First Bill Date.</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>IME Forecast Last Modified</fullName>
+        <actions>
+            <name>IME_Forecast_Last_Modified</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <description>Case 02534948, record when field ‘Forecast’ was last modified</description>
+        <formula>ISCHANGED( IM_Commit_to_Forecast__c )</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>IME_First_Added_to_Forecast</fullName>
+        <actions>
+            <name>IME_Update_First_Added_to_Forecast</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <description>Case 02534948, adds date opportunity was first added to forecast</description>
+        <formula>AND( ISCHANGED(IM_Commit_to_Forecast__c),  ISBLANK(IME_First_Added_to_Forecast__c)  )</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Inactive Pipeline Flag</fullName>
+        <actions>
+            <name>Inactive_Pipeline_Update</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <booleanFilter>1 OR 2</booleanFilter>
+        <criteriaItems>
+            <field>Opportunity.Active_Pipeline_Indicator_FORMULA__c</field>
+            <operation>equals</operation>
+            <value>Last Year,Future,More than 1 year old</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Opportunity.StageName</field>
+            <operation>equals</operation>
+            <value>Dead,Postponed,Lost</value>
+        </criteriaItems>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Opportunity Booked Date</fullName>
+        <actions>
+            <name>Booked_date_update_on_First_Bill_Date</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Update_Closed_Date</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <description>When an Opportunity moves to Stage 5 or the NCSP Status is set to &quot;Sent to NCSP&quot;, this rule will fire so that the Booked Date will be updated to Today&apos;s Date.  In addition, if the First Bill Date is in the past, it will also update to today&apos;s date.</description>
+        <formula>AND(  OR(  RecordTypeId = &quot;01280000000BDei&quot;,  RecordTypeId = &quot;01280000000BDeh&quot;,  RecordTypeId = &quot;01280000000BDec&quot;, RecordTypeId = &quot;0122H000000URxX&quot; ),  OR(  AND(  ISCHANGED(StageName),  ISPICKVAL(StageName, &quot;5 - Signed/PO in&quot;),  NOT(ISPICKVAL(PRIORVALUE(StageName), &quot;6 - Setup&quot;)),  NOT(ISPICKVAL(PRIORVALUE(StageName), &quot;7 - Closed&quot;))  ),  AND(  ISCHANGED(NCSP_Status__c),  ISPICKVAL(NCSP_Status__c, &quot;Sent to NCSP&quot;)  ),  AND(  ISCHANGED(NCSP_Status__c),  ISPICKVAL(NCSP_Status__c, &quot;Escalated&quot;),  ISPICKVAL(PRIORVALUE(NCSP_Status__c), &quot;&quot;),  ISPICKVAL(Type, &quot;Up-Sell/Lift&quot;)  )  )  )</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Opportunity Dead Update</fullName>
+        <actions>
+            <name>Opty_Dead_Date_Update</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Opty_Dead_Flag_Update</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Remove_From_Forecast</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <description>Similar to the stage workflows, this will update a lost flag and lost date when the opty stage = dead</description>
+        <formula>And(  OR(  ISNEW() ,  ISCHANGED(StageName) ),  Ispickval( StageName, &quot;Dead&quot;)  )</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Opportunity Lost Update</fullName>
+        <actions>
+            <name>Opty_Lost_Date_Update</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Opty_Lost_Flag_Update</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Remove_From_Forecast</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <description>Similar to the stage workflows, this will update a lost flag and lost date when the opty stage = lost</description>
+        <formula>And(  OR(  ISNEW() ,  ISCHANGED(StageName) ),  Ispickval( StageName, &quot;Lost&quot;)  )</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Opportunity Postponed Update</fullName>
+        <actions>
+            <name>Remove_From_Forecast</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <description>Similar to the stage workflows, this will update a lost flag and lost date when the opty stage = postponed</description>
+        <formula>And(  OR(  ISNEW() ,  ISCHANGED(StageName) ),  Ispickval( StageName, &quot;Postponed&quot;)  )</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Opportunity Rule for Email Updates</fullName>
+        <active>false</active>
+        <criteriaItems>
+            <field>Opportunity.OwnerId</field>
+            <operation>notEqual</operation>
+        </criteriaItems>
+        <description>This rule should always fire in case updates have been made elsewhere (such as the user record) so the field updates to emails are always current whenever changes have been made.</description>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Opportunity Stage Date Updates0</fullName>
+        <active>false</active>
+        <formula>And(  OR(  ISNEW() ,  ISCHANGED(StageName) ),  Ispickval( StageName, &quot;0 - Pre-Qualification&quot;)  )</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Opportunity Stage Date Updates1</fullName>
+        <actions>
+            <name>Opportunity_Stage_1_Update</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Stage_1_Date_Reached</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <formula>And( OR( ISNEW() , ISCHANGED(StageName) ),  Ispickval( StageName, &quot;1 - Qualification&quot;)  )</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Opportunity Stage Date Updates2</fullName>
+        <actions>
+            <name>Opportunity_Stage_Updates2</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Stage_2_Date_Reached</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <formula>And(  OR(  ISNEW() ,  ISCHANGED(StageName) ),  Ispickval( StageName, &quot;2 - Solution Developed&quot;)  )</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Opportunity Stage Date Updates3</fullName>
+        <actions>
+            <name>Opportunity</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Stage_3_Date_Reached</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <formula>And(  OR(  ISNEW() ,  ISCHANGED(StageName) ),  Ispickval( StageName, &quot;3 - Solution Agreed&quot;) )</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Opportunity Stage Date Updates4</fullName>
+        <actions>
+            <name>Opportunity_Stage_4_Update</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Stage_4_Date_Reached</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <formula>And(  OR(  ISNEW() ,  ISCHANGED(StageName) ),  Ispickval( StageName, &quot;4 - Negotiate&quot;)  )</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Opportunity Stage Date Updates5</fullName>
+        <actions>
+            <name>Opportunity_Stage_5_Update</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Stage_5_Date_Reached</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Update_Booked_Date_As_Stage_5</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Update_Closed_Date</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <formula>And(  OR(  ISNEW() ,  ISCHANGED(StageName) ),  Ispickval( StageName, &quot;5 - Signed/PO in&quot;) )</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Opportunity Stage Date Updates6</fullName>
+        <actions>
+            <name>Opportunity_Stage_6_Update</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Stage_6_Date_Reached</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <formula>And(  OR(  ISNEW() ,  ISCHANGED(StageName) ),  Ispickval( StageName, &quot;6 - Setup&quot;)  )</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Opportunity Stage Date Updates7</fullName>
+        <actions>
+            <name>Opportunity_Stage_7_Update</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Opportunity_Stage_Date</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <formula>And(  OR(  ISNEW() ,  ISCHANGED(StageName) ),  Ispickval( StageName, &quot;7 - Closed&quot;)  )</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Opty Created from Lead Should be Stage 1</fullName>
+        <actions>
+            <name>Move_Stage_to_1</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Opportunity_Stage_1_Update</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Stage_1_Date_Reached</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <description>Opportunities created from lead conversion should be stage 1, not stage 0.</description>
+        <formula>AND( Sales_Division__c = &quot;North America&quot; , NOT(ISBLANK( IM_Original_Lead_Owner__c )) , ISPICKVAL(StageName, &quot;0 - Pre-Qualification&quot;) , ( CreatedDate &lt;= NOW() + 0.010417) )</formula>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>PRM Change Opportunity Type</fullName>
+        <actions>
+            <name>PRM_Update_Oppty_Type</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <criteriaItems>
+            <field>Opportunity.LeadSource</field>
+            <operation>equals</operation>
+            <value>Partner Community</value>
+        </criteriaItems>
+        <description>This workflow rule changes the Oppty record type to &apos;Deal Registration&apos; when the lead was created via the Partner community.</description>
+        <triggerType>onCreateOnly</triggerType>
+    </rules>
+    <rules>
+        <fullName>PRM_Partner Oppty 05 Days Expiration</fullName>
+        <active>false</active>
+        <criteriaItems>
+            <field>Opportunity.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Deal Registration</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Opportunity.StageName</field>
+            <operation>notEqual</operation>
+            <value>5 - Signed/PO in,6 - Setup,7 - Closed,Lost,Dead,Postponed</value>
+        </criteriaItems>
+        <description>Workflow rule to notify partner that their Oppty will expire in 5 days.</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+        <workflowTimeTriggers>
+            <actions>
+                <name>PRM_Oppty_5_Day_Expiration_Alert</name>
+                <type>Alert</type>
+            </actions>
+            <offsetFromField>Opportunity.Partner_Deal_Expiration_Date__c</offsetFromField>
+            <timeLength>-5</timeLength>
+            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
+        </workflowTimeTriggers>
+    </rules>
+    <rules>
+        <fullName>PRM_Partner Oppty 15 Days Expiration</fullName>
+        <active>false</active>
+        <criteriaItems>
+            <field>Opportunity.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Deal Registration</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Opportunity.StageName</field>
+            <operation>notEqual</operation>
+            <value>5 - Signed/PO in,6 - Setup,7 - Closed,Lost,Dead,Postponed</value>
+        </criteriaItems>
+        <description>Workflow rule to notify partner that their Oppty will expire in 15 days.</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+        <workflowTimeTriggers>
+            <actions>
+                <name>PRM_Oppty_15_Day_Expiration_Alert</name>
+                <type>Alert</type>
+            </actions>
+            <offsetFromField>Opportunity.Partner_Deal_Expiration_Date__c</offsetFromField>
+            <timeLength>-15</timeLength>
+            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
+        </workflowTimeTriggers>
+    </rules>
+    <rules>
+        <fullName>PRM_Partner Oppty 30 Days Expiration</fullName>
+        <active>false</active>
+        <criteriaItems>
+            <field>Opportunity.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Deal Registration</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Opportunity.StageName</field>
+            <operation>notEqual</operation>
+            <value>5 - Signed/PO in,6 - Setup,7 - Closed,Lost,Dead,Postponed</value>
+        </criteriaItems>
+        <description>Workflow rule to notify partner that their Oppty will expire in 30 days.</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+        <workflowTimeTriggers>
+            <actions>
+                <name>PRM_Oppty_30_Day_Expiration_Alert</name>
+                <type>Alert</type>
+            </actions>
+            <offsetFromField>Opportunity.Partner_Deal_Expiration_Date__c</offsetFromField>
+            <timeLength>-30</timeLength>
+            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
+        </workflowTimeTriggers>
+    </rules>
+    <rules>
+        <fullName>PRM_Partner Oppty Expired</fullName>
+        <active>false</active>
+        <criteriaItems>
+            <field>Opportunity.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Deal Registration</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Opportunity.StageName</field>
+            <operation>notEqual</operation>
+            <value>5 - Signed/PO in,6 - Setup,7 - Closed,Lost,Dead,Postponed</value>
+        </criteriaItems>
+        <description>Workflow rule to notify partner that their Oppty has expired.</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+        <workflowTimeTriggers>
+            <actions>
+                <name>PRM_Partner_Oppty_Expired_Alert</name>
+                <type>Alert</type>
+            </actions>
+            <actions>
+                <name>PRM_Partner_Oppty_Update_Stage_Expired</name>
+                <type>FieldUpdate</type>
+            </actions>
+            <offsetFromField>Opportunity.Partner_Deal_Expiration_Date__c</offsetFromField>
+            <timeLength>0</timeLength>
+            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
+        </workflowTimeTriggers>
+    </rules>
+    <rules>
+        <fullName>PRM_Partner Oppty Reset Expiration Date</fullName>
+        <actions>
+            <name>PRM_Partner_Oppty_Reset_Expiration_Date</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <description>Workflow rule to reset the expiration date on the partner opportunity.</description>
+        <formula>RecordTypeId = &quot;01234000000M7Sb&quot;  &amp;&amp;  IF(  CASE( PRIORVALUE(StageName), &quot;5 - Signed/PO in&quot;, 1, &quot;6 - Setup&quot;, 1, &quot;7 - Closed&quot;, 1, &quot;Lost&quot;, 1, &quot;Dead&quot;, 1, 0)= 1, TRUE, FALSE)  &amp;&amp;  IF(  CASE( StageName, &quot;5 - Signed/PO in&quot;, 0, &quot;6 - Setup&quot;, 0, &quot;7 - Closed&quot;, 0, &quot;Lost&quot;, 0, &quot;Dead&quot;, 0, 1)= 1, TRUE, FALSE)</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>PRM_Partner Oppty Set Expiration Date</fullName>
+        <actions>
+            <name>PRM_Oppty_Set_Expiration_Date</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <criteriaItems>
+            <field>Opportunity.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Deal Registration</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Opportunity.StageName</field>
+            <operation>notEqual</operation>
+            <value>5 - Signed/PO in,6 - Setup,7 - Closed,Lost,Dead,Postponed</value>
+        </criteriaItems>
+        <description>Sets the partner opportunity expiration date</description>
+        <triggerType>onCreateOnly</triggerType>
+    </rules>
+    <rules>
+        <fullName>Stage 5 - Sent to NCSP Age</fullName>
+        <actions>
+            <name>Sent_to_NCSP_Date_Update</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Stage_5_Sent_to_NCSP_Age</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <description>Workflow to populate the Stage 5 - Sent to NCSP Age and Sent to NCSP Date fields.</description>
+        <formula>AND( ISCHANGED( NCSP_Status__c ),    OR( ISPICKVAL( NCSP_Status__c,&quot;Sent to NCSP&quot;),  ISPICKVAL( NCSP_Status__c,&quot;Escalated&quot;) ),  ISPICKVAL( StageName, &quot;5 - Signed/PO in&quot;)   )</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Tier_1_Grace_Period_Value</fullName>
+        <actions>
+            <name>Tier_1_Grace_Period</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <criteriaItems>
+            <field>Opportunity.Type</field>
+            <operation>equals</operation>
+            <value>New Deal</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Opportunity.Tier_Level__c</field>
+            <operation>equals</operation>
+            <value>Tier 1</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Opportunity.Grace_Period__c</field>
+            <operation>notEqual</operation>
+            <value>Not Applicable</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Opportunity.Service_Type__c</field>
+            <operation>equals</operation>
+            <value>Storage A la carte</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Tier_1_Minimum_Billing_Percent_Value</fullName>
+        <actions>
+            <name>Tier_1_Minimum_Billing_Values</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <criteriaItems>
+            <field>Opportunity.Type</field>
+            <operation>equals</operation>
+            <value>New Deal</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Opportunity.Tier_Level__c</field>
+            <operation>equals</operation>
+            <value>Tier 1</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Opportunity.Minimum_Billing__c</field>
+            <operation>notEqual</operation>
+            <value>Not Applicable</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Opportunity.Service_Type__c</field>
+            <operation>equals</operation>
+            <value>Storage A la carte</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Tier_2_Grace_Period_Value</fullName>
+        <actions>
+            <name>Tier_2_Grace_Period_Value</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <criteriaItems>
+            <field>Opportunity.Type</field>
+            <operation>equals</operation>
+            <value>New Deal</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Opportunity.Tier_Level__c</field>
+            <operation>equals</operation>
+            <value>Tier 2</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Opportunity.Grace_Period__c</field>
+            <operation>notEqual</operation>
+            <value>1,2,3,4,5,6</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Opportunity.Service_Type__c</field>
+            <operation>equals</operation>
+            <value>Storage A la carte</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Tier_2_Minimum_Billing_Percent_Value</fullName>
+        <actions>
+            <name>Tier_2_Minimum_Billing_Percent_Value</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <criteriaItems>
+            <field>Opportunity.Type</field>
+            <operation>equals</operation>
+            <value>New Deal</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Opportunity.Tier_Level__c</field>
+            <operation>equals</operation>
+            <value>Tier 2</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Opportunity.Minimum_Billing__c</field>
+            <operation>notEqual</operation>
+            <value>50,55,60,65,70,75,80</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Opportunity.Service_Type__c</field>
+            <operation>equals</operation>
+            <value>Storage A la carte</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Update Forecast field to True</fullName>
+        <actions>
+            <name>Field_Update_Forecast_field_to_True</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <criteriaItems>
+            <field>Opportunity.StageName</field>
+            <operation>equals</operation>
+            <value>6 - Setup,7 - Closed,5 - Signed/PO in</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Opportunity.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Standard Opportunity</value>
+        </criteriaItems>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Update Manager Approval Needed Hidden with Manager Approval Needed%3F</fullName>
+        <actions>
+            <name>Manager_Approval_Needed_Hidden</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <criteriaItems>
+            <field>Opportunity.Manager_Approval_Needed__c</field>
+            <operation>notEqual</operation>
+        </criteriaItems>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <tasks>
+        <fullName>Big_Deal_Alert_Email_Sent</fullName>
+        <assignedToType>owner</assignedToType>
+        <description>Big Deal Alert email has been sent for this Opportunity.</description>
+        <dueDateOffset>0</dueDateOffset>
+        <notifyAssignee>false</notifyAssignee>
+        <priority>Normal</priority>
+        <protected>false</protected>
+        <status>Completed</status>
+        <subject>Big Deal Alert Email Sent</subject>
+    </tasks>
+</Workflow>

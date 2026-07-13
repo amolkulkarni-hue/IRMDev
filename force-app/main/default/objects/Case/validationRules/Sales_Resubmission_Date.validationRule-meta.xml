@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Sales_Resubmission_Date</fullName>
+    <active>true</active>
+    <description>Sales Resubmission Date cannot be a date in the Future.</description>
+    <errorConditionFormula>((RecordType_Name__c = &quot;NCSP: SKP New Customer Setup&quot;) ||
+(RecordType_Name__c = &quot;NCSP: DP New Customer Setup&quot;) ||
+(RecordType_Name__c = &quot;NCSP: DMS&quot;) ||
+(RecordType_Name__c = &quot;NCSP: Tech Services New Customer Setup&quot;) )&amp;&amp;
+OR(
+	(
+	NOT(ISCHANGED(Open_Tasks__c)) &amp;&amp;
+	ISCHANGED(Sales_Resubmission_Date__c ) &amp;&amp;
+	NOT(ISBLANK(Sales_Resubmission_Date__c )) &amp;&amp;
+	DATEVALUE(Sales_Resubmission_Date__c ) &gt; TODAY() &amp;&amp;
+	(
+	  ISBLANK(PRIORVALUE(Sales_Resubmission_Date__c )) ||
+	  DATEVALUE(Sales_Resubmission_Date__c ) != DATEVALUE(PRIORVALUE(Sales_Resubmission_Date__c ))
+	)
+	),
+    (	
+	ISNEW() &amp;&amp;
+	NOT(ISBLANK(Sales_Resubmission_Date__c )) &amp;&amp;
+	DATEVALUE(Sales_Resubmission_Date__c ) &gt; TODAY() 
+	) 
+)</errorConditionFormula>
+    <errorDisplayField>Sales_Resubmission_Date__c</errorDisplayField>
+    <errorMessage>Sales Resubmission Date cannot be a date in the Future.</errorMessage>
+</ValidationRule>

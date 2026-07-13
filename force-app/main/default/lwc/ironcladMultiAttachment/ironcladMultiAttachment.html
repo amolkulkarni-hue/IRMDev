@@ -1,0 +1,49 @@
+<template>
+    <lightning-card title="Attach Files to Ironclad Workflow">
+        <div class="slds-m-around_medium">
+
+            <!-- Loading spinner -->
+            <template if:true={isLoading}>
+                <lightning-spinner alternative-text="Loading" size="small"></lightning-spinner>
+            </template>
+
+            <!-- File list -->
+            <template if:false={isLoading}>
+                <template if:true={hasFiles}>
+                    <p class="slds-m-bottom_small">Select the files you want to attach to the Ironclad workflow:</p>
+                    <template for:each={files} for:item="file">
+                        <div key={file.id} class="slds-m-bottom_x-small">
+                            <lightning-input
+                                type="checkbox"
+                                label={file.name}
+                                value={file.id}
+                                onchange={handleFileSelection}>
+                            </lightning-input>
+                        </div>
+                    </template>
+                </template>
+
+                <!-- No files message -->
+                <template if:false={hasFiles}>
+                    <p>No files found on this Opportunity.</p>
+                </template>
+            </template>
+
+            <!-- Upload button -->
+            <div class="slds-m-top_medium">
+                <lightning-button
+                    label="Attach Selected Files to Ironclad"
+                    variant="brand"
+                    onclick={handleUpload}
+                    disabled={isUploading}>
+                </lightning-button>
+            </div>
+
+            <!-- Upload status -->
+            <template if:true={uploadStatus}>
+                <p class="slds-m-top_small">{uploadStatus}</p>
+            </template>
+
+        </div>
+    </lightning-card>
+</template>

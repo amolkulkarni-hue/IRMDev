@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Rescheduled_Date</fullName>
+    <active>true</active>
+    <description>Rescheduled Date must be current or future date. It cannot be in the Past. For reference, check user story #26355 on Gitlab.</description>
+    <errorConditionFormula>(RecordType_Name__c = &quot;CLAS - Shred&quot;) &amp;&amp;
+OR(
+	(
+	NOT(ISCHANGED(Open_Tasks__c)) &amp;&amp;
+	ISCHANGED(Rescheduled_Date__c) &amp;&amp;
+	NOT(ISBLANK(Rescheduled_Date__c)) &amp;&amp;
+	DATEVALUE(Rescheduled_Date__c) &lt; TODAY() &amp;&amp;
+	(
+	  ISBLANK(PRIORVALUE(Rescheduled_Date__c)) ||
+	  DATEVALUE(Rescheduled_Date__c) != DATEVALUE(PRIORVALUE(Rescheduled_Date__c))
+	)
+	),
+    (	
+	ISNEW() &amp;&amp;
+	NOT(ISBLANK(Rescheduled_Date__c)) &amp;&amp;
+	DATEVALUE(Rescheduled_Date__c) &lt; TODAY() 
+	) 
+)</errorConditionFormula>
+    <errorDisplayField>Rescheduled_Date__c</errorDisplayField>
+    <errorMessage>Rescheduled Date must be current or future date. It cannot be in the Past.</errorMessage>
+</ValidationRule>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CAC_Retention_Service_Order_Number</fullName>
+    <active>true</active>
+    <errorConditionFormula>$RecordType.Name = &apos;CLAS - Shred&apos;  &amp;&amp;  not (isblank(Date_Final_Order_Created_in_SKP__c )) &amp;&amp; ISBLank( Service_Order_Number__c )</errorConditionFormula>
+    <errorDisplayField>Service_Order_Number__c</errorDisplayField>
+    <errorMessage>Service Order number is required when Date final Order Created in SKP is populated.</errorMessage>
+</ValidationRule>

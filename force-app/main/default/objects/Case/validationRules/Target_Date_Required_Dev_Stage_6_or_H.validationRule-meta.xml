@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Target_Date_Required_Dev_Stage_6_or_H</fullName>
+    <active>true</active>
+    <description>IM Internal - Will require a Target Prod Deployment Date at Stage 6 Cases and higher. Only fires on Sales Tools Project Cases.</description>
+    <errorConditionFormula>($RecordType.Id = &apos;01280000000BWs8&apos;) &amp;&amp;  (ISBLANK(Target_Prod_Deployment_Date__c)) &amp;&amp;  (ISPICKVAL(Development_Status__c, &apos;6. Business Approved&apos;)  ||  ISPICKVAL(Development_Status__c, &apos;7. Assigned to Business Owner for QA&apos;)  ||  ISPICKVAL(Development_Status__c, &apos;8. Ready for UAT Deployment&apos;)  ||  ISPICKVAL(Development_Status__c, &apos;9. Assigned to IT for QA&apos;)  ||  ISPICKVAL(Development_Status__c, &apos;10. Pending Business Approval in UAT&apos;)  ||  ISPICKVAL(Development_Status__c, &apos;12. Pending Change Control Approval&apos;)  ||  ISPICKVAL(Development_Status__c, &apos;13. Ready for Prod Deployment&apos;))</errorConditionFormula>
+    <errorDisplayField>Target_Prod_Deployment_Date__c</errorDisplayField>
+    <errorMessage>Any case at Development Status 6 or higher must have a Target Prod Deployment Date.</errorMessage>
+</ValidationRule>

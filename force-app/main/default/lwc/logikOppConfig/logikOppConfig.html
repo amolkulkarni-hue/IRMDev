@@ -1,0 +1,20 @@
+<template>
+    <lightning-card>
+        <div class="wrapper">
+            <template if:true={finalUrl}>
+                <iframe
+                    class="config-frame"
+                    src={finalUrl}
+                    title="Logik Configuration"
+                    data-lgkid="lgk-root"
+                ></iframe>
+            </template>
+
+            <template if:false={finalUrl}>
+                <div class="empty-state">
+                    No allow to build iframe, review parameters.
+                </div>
+            </template>
+        </div>
+    </lightning-card>
+</template>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CloseDate_NotBeforeToday</fullName>
+    <active>true</active>
+    <description>Booked date cannot be before today&apos;s date unless changed by SysAdmin or SuperUser.
+CloseDate formerly First Bill Date, Booked Date is now First Bill Date.
+#20656- Removed the Profiles, to make it applicable for all except Admins</description>
+    <errorConditionFormula>AND (
+
+ISCHANGED(CloseDate),
+CloseDate &lt; TODAY (),
+NOT( $Permission.Bypass_Stage_5_VR ),
+NOT($Permission.VR_Bypass_Permission),
+
+NOT($Permission.Edit_Close_Date_in_Late_Stage_Opp),
+$Profile.Name &lt;&gt; &apos;System Administrator&apos;,
+$Profile.Name &lt;&gt; &apos;IM_Custom Sys Admin&apos;
+
+)</errorConditionFormula>
+    <errorMessage>Your Opportunity&apos;s Closed Date cannot be a past date. Update to an appropriate date in order to proceed. Need help? Contact your Sales Operations Business Partner.</errorMessage>
+</ValidationRule>

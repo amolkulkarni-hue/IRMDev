@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Opportunity_Update_To_Stage7</fullName>
+    <active>true</active>
+    <description>#10773 : Book to Bill: Update Permissions to allow Implementation Team to Move Deals from Stage 5 to 6 &amp; Stage 6 to 7
+#21200-Making the VR applicable for all profiles except Admins
+#21201-Users with permissionset Move Opportunity to Stage 7 are bypassed</description>
+    <errorConditionFormula>AND( 
+
+ISCHANGED( StageName ),
+
+ISPICKVAL( StageName , &apos;7 - Closed&apos;),
+
+$Profile.Name &lt;&gt; &quot;System Administrator&quot;, 
+$Profile.Name &lt;&gt; &quot;IM_Custom Sys Admin&quot;, 
+
+$Setup.ValidationRuleException__c.RunRule__c,
+
+$Permission.NCSP_NAS_Blended = FALSE,
+
+
+NOT( $Permission.Update_Stage_of_Closed_Opportunities ),
+NOT($Permission.VR_Bypass_Permission)
+)</errorConditionFormula>
+    <errorDisplayField>StageName</errorDisplayField>
+    <errorMessage>You do not have permission to update an Opportunity to Stage 7. Need help? Contact your Sales Operations Business Partner.</errorMessage>
+</ValidationRule>

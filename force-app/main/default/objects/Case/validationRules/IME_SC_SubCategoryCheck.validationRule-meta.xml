@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IME_SC_SubCategoryCheck</fullName>
+    <active>true</active>
+    <description>Checks whether subcategory has been specified whenever the category is selected.</description>
+    <errorConditionFormula>AND (NOT(ISCHANGED( IME_SC_Owner_Manager__c )), 
+NOT(ISCHANGED( IME_SC_Manager_of_Manager_OwnerId__c )), $RecordType.Name = &quot;IME SC Case&quot; , 
+NOT  ISPICKVAL (IME_SC_Category__c , &quot;&quot; ) , 
+ISPICKVAL(IME_SC_Sub_Category__c , &quot;&quot; )
+ )</errorConditionFormula>
+    <errorDisplayField>IME_SC_Sub_Category__c</errorDisplayField>
+    <errorMessage>Sub Category cannot be blank once Category is selected.</errorMessage>
+</ValidationRule>

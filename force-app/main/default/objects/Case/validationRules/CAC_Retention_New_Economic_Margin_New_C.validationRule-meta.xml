@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CAC_Retention_New_Economic_Margin_New_C</fullName>
+    <active>true</active>
+    <description>New Economic Margin and New Contract Signed ? are required when a proposal is accepted.</description>
+    <errorConditionFormula>AND (
+AND(
+OR(
+RecordType.DeveloperName = &apos;Retention_RM&apos;,
+RecordType.DeveloperName = &apos;Retention_SH&apos;),				 
+ISPICKVAL(Proposal_Offer_Accepted__c,&apos;Yes&apos;)
+&amp;&amp; (isblank( New_Economic_Margin__c ) || ispickval( New_Contract_Signed__c,&apos;&apos; ))))</errorConditionFormula>
+    <errorMessage>New Economic Margin and New Contract Signed ? are required when a proposal is accepted.</errorMessage>
+</ValidationRule>

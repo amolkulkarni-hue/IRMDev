@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>QTB_Sierra26_Email_to_Case_Case</fullName>
+    <columns>CASES.CASE_NUMBER</columns>
+    <columns>NAME</columns>
+    <columns>CASES.SUBJECT</columns>
+    <columns>CASES.STATUS</columns>
+    <columns>CASES.CREATED_DATE_DATE_ONLY</columns>
+    <columns>CORE.USERS.ALIAS</columns>
+    <columns>Customer_ID__c</columns>
+    <columns>Service_Order_Number__c</columns>
+    <columns>Service_Schedule_Date__c</columns>
+    <filterScope>Queue</filterScope>
+    <filters>
+        <field>RecordType_Name__c</field>
+        <operation>equals</operation>
+        <value>Global Service Case</value>
+    </filters>
+    <filters>
+        <field>CASES.STATUS</field>
+        <operation>notEqual</operation>
+        <value>Cancelled,Complete,Resolved,Closed</value>
+    </filters>
+    <label>IM Express Queue</label>
+    <queue>QTB_Sierra26_Email_to_Case</queue>
+    <sharedTo>
+        <group>AllUsers</group>
+    </sharedTo>
+</ListView>

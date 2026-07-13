@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>GSC_Status_InternalOnHold_Req_Fields</fullName>
+    <active>true</active>
+    <description>The Pending Reason &apos;Internal Response&apos; or &apos;Supervisor&apos; needs to be selected for Status &apos;Internal - On Hold&apos; The epic for reference #1008
+Contact  is Required #26422</description>
+    <errorConditionFormula>AND(
+    $RecordType.Name = &apos;Global Service Case&apos;,
+    ISPICKVAL(Status, &apos;Internal - On Hold&apos;),
+    OR(
+        NOT(ISPICKVAL(NAS_Pending_Reason__c, &apos;Internal Response&apos;)),
+        NOT(ISPICKVAL(NAS_Pending_Reason__c, &apos;Supervisor&apos;))
+    ),
+
+    AND(ISBLANK(ContactId),NOT(Is_IM_Employee__c))
+)</errorConditionFormula>
+    <errorMessage>To change the case status to &apos;Internal - On Hold&apos;, the Pending Reason must be either &apos;Internal Response&apos; or &apos;Supervisor&apos; and a Contact is mandatory.</errorMessage>
+</ValidationRule>

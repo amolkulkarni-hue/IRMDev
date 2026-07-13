@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Prevent_OpportunityLine_Deletion</fullName>
+    <active>true</active>
+    <description>Validation Rule to prevent deletion of Opportunity lines if quote is Approved or Sent for Approval</description>
+    <errorConditionFormula>AND(NOT($Setup.Metadata_Activation_Settings__c.Disable_VR__c &amp;&amp;
+OR(ISBLANK($Setup.Metadata_Activation_Settings__c.SObject_API_Name__c),
+CONTAINS($Setup.Metadata_Activation_Settings__c.SObject_API_Name__c, &apos;Opportunity&apos;))),
+
+Opportunity_Line_Item_Count__c &lt; PRIORVALUE(Opportunity_Line_Item_Count__c ),
+(TEXT(SBQQ__PrimaryQuote__r.ApprovalStatus__c)= $Label.QTB_Pending || TEXT(SBQQ__PrimaryQuote__r.ApprovalStatus__c)=$Label.QTB_Approved), NOT($Permission.VR_Bypass_Permission))</errorConditionFormula>
+    <errorMessage>Opportunity Lines can&apos;t be deleted once the Quote is Submitted for Approval or Approved.</errorMessage>
+</ValidationRule>

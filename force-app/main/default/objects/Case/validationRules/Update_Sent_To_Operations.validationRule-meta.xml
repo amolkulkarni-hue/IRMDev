@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Update_Sent_To_Operations</fullName>
+    <active>true</active>
+    <description>Update Sent To Operations must be today&apos;s date. It cannot be in the Past or the Future.</description>
+    <errorConditionFormula>RecordType_Name__c = &quot;CAC - DP Closure&quot; &amp;&amp;
+OR(
+	(
+	NOT(ISCHANGED(Open_Tasks__c)) &amp;&amp;
+	ISCHANGED(Update_Sent_To_Operations__c) &amp;&amp;
+	NOT(ISBLANK(Update_Sent_To_Operations__c)) &amp;&amp;
+	DATEVALUE(Update_Sent_To_Operations__c) != TODAY() &amp;&amp;
+	(
+	  ISBLANK(PRIORVALUE(Update_Sent_To_Operations__c)) ||
+	  DATEVALUE(Update_Sent_To_Operations__c) != DATEVALUE(PRIORVALUE(Update_Sent_To_Operations__c))
+	)
+	),
+    (	
+	ISNEW() &amp;&amp;
+	NOT(ISBLANK(Update_Sent_To_Operations__c)) &amp;&amp;
+	DATEVALUE(Update_Sent_To_Operations__c) != TODAY() 
+	) 
+)</errorConditionFormula>
+    <errorDisplayField>Update_Sent_To_Operations__c</errorDisplayField>
+    <errorMessage>Update Sent To Operations must be today&apos;s date. It cannot be in the Past or the Future.</errorMessage>
+</ValidationRule>

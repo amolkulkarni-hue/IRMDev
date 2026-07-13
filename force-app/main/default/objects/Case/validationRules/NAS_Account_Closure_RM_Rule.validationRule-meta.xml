@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NAS_Account_Closure_RM_Rule</fullName>
+    <active>true</active>
+    <description>Allow CLAS - RM Record type to be in NAS Account Closure RM Queue</description>
+    <errorConditionFormula>AND(NOT(OR($RecordType.DeveloperName = &quot;CAC_SKP_RM&quot;)),
+Owner:Queue.Name = &quot;NAS Account Closure RM Queue&quot;)</errorConditionFormula>
+    <errorMessage>Must change case to CLAS -RM record type before adding to the NAS Account Closure RM Queue</errorMessage>
+</ValidationRule>

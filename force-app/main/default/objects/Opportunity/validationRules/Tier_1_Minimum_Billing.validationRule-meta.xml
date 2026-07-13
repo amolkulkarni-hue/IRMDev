@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Tier_1_Minimum_Billing</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(ISPICKVAL(Service_Type__c, &quot;Storage A la carte&quot;), OR(
+ISPICKVAL(Type, &quot;New Deal&quot;),
+ISPICKVAL(Type, &quot;Framework&quot;)
+),
+Tier_Level__c = &quot;Tier 1&quot;,  
+NOT(ISPICKVAL(  Minimum_Billing__c  , &quot;Not Applicable&quot;) ),
+ ISCHANGED( Minimum_Billing__c ),
+ NOT($Permission.VR_Bypass_Permission))</errorConditionFormula>
+    <errorDisplayField>Minimum_Billing__c</errorDisplayField>
+    <errorMessage>Minimum Billing Percentage is Not Applicable for Tier 1 New Deals and Framework Opportunities</errorMessage>
+</ValidationRule>

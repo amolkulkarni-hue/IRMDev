@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Term_Quote_Amount_Required</fullName>
+    <active>true</active>
+    <description>&apos;Term Quote Amount&apos; is required if Date Term Quote Created is populated</description>
+    <errorConditionFormula>AND(
+RecordType.Name = &quot;CLAS - RM&quot;,
+NOT(ISBLANK( Date_Worksheet_Created__c)),
+ISBLANK( Cost_Summary_Amount__c )
+)</errorConditionFormula>
+    <errorMessage>Term Quote Amount is required if Date Term Quote Created is populated</errorMessage>
+</ValidationRule>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>MQL_Type_Most_Recent__c</fullName>
+    <description>Calculates if Lead is Hot or Scored or Manual. If Hot and Scored date are the same, Hot takes precedence. Case #03846525 - Updated the formula to consider EDT</description>
+    <externalId>false</externalId>
+    <formula>IF( Partner_MQL__c = TRUE, &quot;Partner MQL&quot;, 
+IF((IM_Stage_2_Entered_Date__c = DATEVALUE(TEXT(DATETIMEVALUE(Hot_MQL_Date__c) - 0.16666))) , &quot;Hot&quot;, 
+IF((IM_Stage_2_Entered_Date__c = DATEVALUE(TEXT(DATETIMEVALUE( Scored_MQL_Date__c) - 0.16666))), &quot;Scored&quot;, 
+&quot;Manual&quot; 
+) 
+) 
+)</formula>
+    <label>MQL Type Most Recent</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

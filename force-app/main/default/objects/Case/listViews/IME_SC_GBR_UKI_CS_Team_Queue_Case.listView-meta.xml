@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IME_SC_GBR_UKI_CS_Team_Queue_Case</fullName>
+    <columns>CASES.CASE_NUMBER</columns>
+    <columns>Customer_ID__c</columns>
+    <columns>ACCOUNT.NAME</columns>
+    <columns>NAME</columns>
+    <columns>CASES.SUBJECT</columns>
+    <columns>CASES.STATUS</columns>
+    <columns>CASES.PRIORITY</columns>
+    <columns>CASES.LAST_UPDATE_DATE_ONLY</columns>
+    <filterScope>Queue</filterScope>
+    <label>GBR UKI CS Team</label>
+    <queue>IME_SC_GBR_UKI_CS_Team_Queue</queue>
+    <sharedTo>
+        <group>IMEAdmins</group>
+        <group>IME_SC_GBR_Service_team_backup</group>
+        <role>IME_SC_GBR_CSM</role>
+        <role>IME_SC_GBR_CSR</role>
+        <role>IME_SC_GBR_CSTL</role>
+        <role>IME_SC_GBR_NORDICS_CED</role>
+    </sharedTo>
+</ListView>

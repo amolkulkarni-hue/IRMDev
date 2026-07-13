@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Stage_6_if_Customer_ID_Entered</fullName>
+    <active>true</active>
+    <description>Stage needs to be updated to 6- Setup if the</description>
+    <errorConditionFormula>AND
+(NOT(OR(ISPICKVAL( StageName , &apos;6 - Setup&apos;), ISPICKVAL( StageName , &apos;7 - Closed&apos;) )), 
+NOT(ISBLANK( Customer_Account_Number__c)),
+RecordTypeId = &apos;01280000000UDKJ&apos; || RecordTypeId = &quot;01280000000UEMI&quot;|| RecordTypeId = &quot;01280000000UEfu&quot;,
+NOT( $Permission.Update_Customer_ID_Source_System ),
+NOT($Permission.VR_Bypass_Permission))</errorConditionFormula>
+    <errorDisplayField>Customer_Account_Number__c</errorDisplayField>
+    <errorMessage>To enter a Customer ID, the opportunity stage should be set to Stage 6 - Setup</errorMessage>
+</ValidationRule>

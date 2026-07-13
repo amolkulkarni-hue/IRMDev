@@ -1,0 +1,6 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes" access="global">
+    <aura:attribute name="showComponent" type="Boolean" default="true" />
+    <aura:if isTrue="{!v.showComponent}">
+        <c:newLeadFlowLauncher onflowfinished="{!c.handleFlowFinished}" />
+    </aura:if>
+</aura:component>

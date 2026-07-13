@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Active_IME_Products_excl_Bill_Codes</fullName>
+    <columns>PRODUCT.NAME</columns>
+    <columns>PRODUCT.CUSTOMER_PRODUCT_ID</columns>
+    <columns>PRODUCT2.RECORD_TYPE</columns>
+    <columns>Product2.IM_Business_Line__c</columns>
+    <columns>Product2.IM_Product_Class__c</columns>
+    <columns>Product2.IM_Unit_of_Measure__c</columns>
+    <columns>Product2.IM_Revenue_Type__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>PRODUCT2.ACTIVE</field>
+        <operation>equals</operation>
+        <value>1</value>
+    </filters>
+    <filters>
+        <field>PRODUCT2.RECORD_TYPE</field>
+        <operation>equals</operation>
+        <value>Product2.IME</value>
+    </filters>
+    <filters>
+        <field>PRICEBOOK.CURRENCY_ISO_CODE</field>
+        <operation>equals</operation>
+        <value>GBP</value>
+    </filters>
+    <label>Active IME Products (excl. Bill Codes)</label>
+    <language>en_US</language>
+</ListView>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CLAS_CAC_Inactivate_Request</fullName>
+    <active>true</active>
+    <description>Cancel Inactivate Request Date field is required if Date Third Customer Contact Attempt is not blank and Intro Date is Blank</description>
+    <errorConditionFormula>AND(
+OR(
+$RecordType.Name = &apos;CLAS - Shred&apos;,
+$RecordType.Name = &apos;CLAS – Data Management&apos;,
+$RecordType.Name = &apos;CLAS - RM&apos;), 
+				ISBLANK(Intro_Date__c ), 
+				NOT(ISBLANK(Date_Third_Customer_Contact_Attempt__c)),
+				ISBLANK( CAC_Inactivate_Request__c ))</errorConditionFormula>
+    <errorMessage>Cancel Inactivate Request Date field is required if Date Third Customer Contact Attempt is not blank and Intro Date is blank</errorMessage>
+</ValidationRule>

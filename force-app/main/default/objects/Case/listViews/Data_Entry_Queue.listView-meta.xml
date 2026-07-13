@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Data_Entry_Queue</fullName>
+    <columns>Sync_to_SKP__c</columns>
+    <columns>Customer_ID__c</columns>
+    <columns>CASES.SUBJECT</columns>
+    <columns>CASES.CASE_NUMBER</columns>
+    <columns>CASES.RECORDTYPE</columns>
+    <columns>CASES.CREATED_DATE_DATE_ONLY</columns>
+    <columns>CASES.PRIORITY</columns>
+    <columns>Case_Type__c</columns>
+    <columns>NCSP_Service_line__c</columns>
+    <columns>Country__c</columns>
+    <columns>NAME</columns>
+    <columns>ACCOUNT.NAME</columns>
+    <columns>NCSP_Opportunity__c</columns>
+    <columns>OWNER_NAME</columns>
+    <columns>NCSP_Opportunity_Type__c</columns>
+    <filterScope>Queue</filterScope>
+    <filters>
+        <field>CASES.RECORDTYPE</field>
+        <operation>notEqual</operation>
+        <value>Case.NCSP_Renewal</value>
+    </filters>
+    <label>Data Entry Queue</label>
+    <queue>Data_Entry</queue>
+    <sharedTo>
+        <group>ASCustomerProgramsHybrid</group>
+        <group>ASNCSPCSA</group>
+        <group>ASNCSPCoordinatorsMgmt</group>
+        <group>NCSP_NAS_Blended_Group</group>
+    </sharedTo>
+</ListView>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NCSP_Opportunity_Order__c</fullName>
+    <description>Image Indicator on Case if sales rep has an order number for the opportunity (via NCSP integration wizard).</description>
+    <externalId>false</externalId>
+    <formula>IF( ISPICKVAL( NCSP_Opportunity__r.Order_Completed__c , &apos;Yes&apos;) ,  IMAGE(&quot;resource/1480328083000/Opportunity_Order&quot;,&quot;Opportunity Order&quot;) ,&apos;&apos;)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>NCSP Opportunity Order</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

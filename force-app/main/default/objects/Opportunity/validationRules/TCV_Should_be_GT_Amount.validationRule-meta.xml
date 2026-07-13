@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>TCV_Should_be_GT_Amount</fullName>
+    <active>true</active>
+    <description>#16611 : Restrict opportunities from moving stages if the Total Annual Amount &gt;TCV and Contract Terms is &gt; 12 and force the seller to reevaluate the values in those fields
+
+#17293 : Added other stages.</description>
+    <errorConditionFormula>AND
+(
+NOT(
+$Setup.Metadata_Activation_Settings__c.Disable_VR__c &amp;&amp;
+OR(
+ISBLANK($Setup.Metadata_Activation_Settings__c.SObject_API_Name__c),
+CONTAINS($Setup.Metadata_Activation_Settings__c.SObject_API_Name__c, &apos;Opportunity&apos;)
+)
+),
+
+OR(
+PRIORVALUE(IsClosed)&lt;&gt; IsClosed,
+NOT(IsClosed)
+),
+
+Amount &gt;= Total_Contract_Value_TCV__c,
+Contract_Term_months__c&gt;12,
+
+QTB_APIProcess__c = false,
+NOT($Permission.VR_Bypass_Permission)
+
+)</errorConditionFormula>
+    <errorMessage>For opportunities with a Contract Term greater than 12 months, the Total Annual Amount cannot be equal to or greater than the Total Contract Value.</errorMessage>
+</ValidationRule>

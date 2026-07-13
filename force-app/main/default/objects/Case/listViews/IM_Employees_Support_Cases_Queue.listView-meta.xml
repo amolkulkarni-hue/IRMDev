@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IM_Employees_Support_Cases_Queue</fullName>
+    <columns>CASES.CREATED_DATE_DATE_ONLY</columns>
+    <columns>CASES.PRIORITY</columns>
+    <columns>CASES.CASE_NUMBER</columns>
+    <columns>IM_Employee_Contact__c</columns>
+    <columns>CASES.SUBJECT</columns>
+    <columns>CASES.STATUS</columns>
+    <columns>CASES.LAST_UPDATE_DATE_ONLY</columns>
+    <columns>CASES.ORIGIN</columns>
+    <columns>IM_Division__c</columns>
+    <columns>Case_Category__c</columns>
+    <columns>Case_Sub_Category__c</columns>
+    <columns>IM_Functional_Group__c</columns>
+    <columns>Issue__c</columns>
+    <columns>PARENT.CASE_NUMBER</columns>
+    <filterScope>Queue</filterScope>
+    <filters>
+        <field>CASES.STATUS</field>
+        <operation>notEqual</operation>
+        <value>Cancelled,Closed</value>
+    </filters>
+    <filters>
+        <field>CASES.RECORDTYPE</field>
+        <operation>notEqual</operation>
+        <value>Case.NCSP_SKP_New_customer_setup</value>
+    </filters>
+    <label>IM Employees Support Cases Queue</label>
+    <queue>IMEmployeesSupportCasesQueue</queue>
+    <sharedTo>
+        <group>AccountServices180611</group>
+    </sharedTo>
+</ListView>

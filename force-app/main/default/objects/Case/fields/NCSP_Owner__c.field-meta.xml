@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NCSP_Owner__c</fullName>
+    <description>used to trigger a workflow when the case owner changes from the NCSP Assignment Queue to an NCSP CSA</description>
+    <externalId>false</externalId>
+    <formula>IF( OwnerId = &apos;00G800000022m9f&apos;, &quot;Assignment Queue&quot;,
+IF(BEGINS (OwnerId, &quot;00G&quot;) &amp;&amp; (OwnerId &lt;&gt; &apos;00G800000022m9f&apos;) , &quot;Queue&quot;,
+IF(CONTAINS($Label.NCSP_Owner,  OwnerId ) , &quot;NCSP CSA&quot;, &quot;User&quot;)))</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>NCSP Owner</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

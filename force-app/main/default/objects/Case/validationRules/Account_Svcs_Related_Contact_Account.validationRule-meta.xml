@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Account_Svcs_Related_Contact_Account</fullName>
+    <active>true</active>
+    <description>The contact and account must be related in order to save a case. (Does not apply to NCSP).</description>
+    <errorConditionFormula>(($RecordType.Name == &apos;Task Request&apos; || $RecordType.Name == &apos;CAC - DP Closure&apos; || $RecordType.Name == &apos;CAC - SKP RM&apos; || $RecordType.Name == &apos;CAC - SKP Shred&apos; || $RecordType.Name == &apos;Retention&apos;) &amp;&amp; Not(isblank( Contact.Id)) &amp;&amp; Not(isblank( AccountId))) &amp;&amp; 
+
+((NOT(ISBLANK(Account.IM_IMGA_Indexed__c)) &amp;&amp; NOT(ISBLANK( Contact.Account.IM_IMGA_Indexed__c)) &amp;&amp; Account.IM_IMGA_Indexed__c &lt;&gt; Contact.Account.IM_IMGA_Indexed__c) || 
+
+(ISBLANK(Account.IM_IMGA_Indexed__c) &amp;&amp; ISBLANK( Contact.Account.IM_IMGA_Indexed__c) &amp;&amp; Contact.Account.Id &lt;&gt; AccountId) || 
+
+(NOT(ISBLANK(Account.IM_IMGA_Indexed__c)) &amp;&amp; ISBLANK( Contact.Account.IM_IMGA_Indexed__c) &amp;&amp; Account.IM_IMGA_Indexed__c &lt;&gt; Contact.Account.IM_IMGA_Indexed__c) || 
+
+(ISBLANK(Account.IM_IMGA_Indexed__c) &amp;&amp; NOT(ISBLANK( Contact.Account.IM_IMGA_Indexed__c)) &amp;&amp; Account.IM_IMGA_Indexed__c &lt;&gt; Contact.Account.IM_IMGA_Indexed__c))</errorConditionFormula>
+    <errorDisplayField>of_Service_Reschedules__c</errorDisplayField>
+    <errorMessage>Contact must be related to the Account selected or within its IMGA&apos;s hierarchy.</errorMessage>
+</ValidationRule>

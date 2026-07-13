@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Solutioning_Fields_Locked</fullName>
+    <active>false</active>
+    <description>Prevents updates to solutioning-related Opportunity fields once the Opportunity reaches Booking Verification, unless the user has the appropriate override permission.</description>
+    <errorConditionFormula>AND(
+    Opportunity_Fields_Locked__c = TRUE,
+    NOT(Bypass_Validation__c),
+    NOT(
+        AND(
+            ISCHANGED(StageName),
+            ISPICKVAL(StageName, &quot;Booking Verification&quot;)
+        )
+    ),
+    OR(
+        ISCHANGED(Desired_Future_State__c),
+        ISCHANGED(Success_Criteria__c),
+        ISCHANGED(Business_Case_Justification__c),
+        ISCHANGED(Solution_Approach_Validated__c),
+        ISCHANGED(Technical_Validation_Completed__c),
+        ISCHANGED(Internal_Approvals_Received__c),
+        ISCHANGED(Deal_Review_Accepted__c),
+        ISCHANGED(Fuel_Surcharge_Waiver__c),
+        ISCHANGED(Free_Storage_Period__c),
+        ISCHANGED(IM_Servicing_Region__c),
+        ISCHANGED(No_of_Forecast_Billing_Month__c)
+    )
+)</errorConditionFormula>
+    <errorMessage>Fields cannot be edited once the Opportunity reaches a restricted sales stage.</errorMessage>
+</ValidationRule>

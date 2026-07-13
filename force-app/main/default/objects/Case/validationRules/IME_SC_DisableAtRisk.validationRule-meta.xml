@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IME_SC_DisableAtRisk</fullName>
+    <active>true</active>
+    <description>This rule describes that the user should not be able to change &quot;At Risk Assessment Requested” flag once it is checked .</description>
+    <errorConditionFormula>AND( NOT(ISCHANGED( IME_SC_Owner_Manager__c )), 
+NOT(ISCHANGED( IME_SC_Manager_of_Manager_OwnerId__c )),  $RecordType.Name = &quot;IME SC Case&quot; , ISCHANGED( IME_SC_Customer_At_Risk__c ) , NOT (IME_SC_Customer_At_Risk__c ))</errorConditionFormula>
+    <errorDisplayField>IME_SC_Customer_At_Risk__c</errorDisplayField>
+    <errorMessage>At Risk Assessment Requested cannot be unchecked.</errorMessage>
+</ValidationRule>

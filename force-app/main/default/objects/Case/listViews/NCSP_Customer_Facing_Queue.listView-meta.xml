@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NCSP_Customer_Facing_Queue</fullName>
+    <booleanFilter>1 OR (2 AND (3 OR 4)) OR (5 AND 6)</booleanFilter>
+    <columns>Customer_ID__c</columns>
+    <columns>CASES.RECORDTYPE</columns>
+    <columns>CASES.CREATED_DATE</columns>
+    <columns>CASES.PRIORITY</columns>
+    <columns>CASES.SUBJECT</columns>
+    <columns>CASES.CASE_NUMBER</columns>
+    <columns>NAME</columns>
+    <columns>ACCOUNT.NAME</columns>
+    <columns>NCSP_Opportunity__c</columns>
+    <columns>OWNER_NAME</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>OWNER_NAME</field>
+        <operation>contains</operation>
+        <value>boarding</value>
+    </filters>
+    <filters>
+        <field>OWNER_NAME</field>
+        <operation>contains</operation>
+        <value>FIFO</value>
+    </filters>
+    <filters>
+        <field>CASES.RECORDTYPE</field>
+        <operation>equals</operation>
+        <value>Case.NCSP_DP_Onboarding_team,Case.NCSP_SKP_Department_Add_Only,Case.NCSP_Upsell</value>
+    </filters>
+    <filters>
+        <field>CASES.RECORDTYPE</field>
+        <operation>equals</operation>
+        <value>Case.NCSP_DMS,Case.NCSP_Tech_Services_New_Customer_Setup</value>
+    </filters>
+    <filters>
+        <field>OWNER_NAME</field>
+        <operation>contains</operation>
+        <value>Data Entry</value>
+    </filters>
+    <filters>
+        <field>CASES.RECORDTYPE</field>
+        <operation>equals</operation>
+        <value>Case.NCSP_SKP_Department_Add_Only</value>
+    </filters>
+    <label>NCSP Customer Facing Queue</label>
+    <language>en_US</language>
+    <sharedTo>
+        <group>ASCustomerProgramsHybrid</group>
+        <group>ASNCSPCSA</group>
+        <group>ASNCSPCoordinatorsMgmt</group>
+    </sharedTo>
+</ListView>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>QTB_Cannot_Change_Currency</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+AND(
+OR(
+$Setup.Metadata_Activation_Settings__c.SObject_API_Name__c = &apos;Opportunity&apos;,
+$Setup.Metadata_Activation_Settings__c.SObject_API_Name__c = &apos;&apos;
+),
+NOT($Setup.Metadata_Activation_Settings__c.Disable_VR__c)
+),
+(ISCHANGED( CurrencyIsoCode ) &amp;&amp; 
+  NOT(ISBLANK( SBQQ__PrimaryQuote__c ))  &amp;&amp; IF(TEXT( CurrencyIsoCode )  &lt;&gt; TEXT(SBQQ__PrimaryQuote__r.CurrencyIsoCode  ), true, false)), NOT($Permission.VR_Bypass_Permission))</errorConditionFormula>
+    <errorMessage>Currency on primary quotes must match opportunity currency. Either change quote currency or make it no longer primary.</errorMessage>
+</ValidationRule>

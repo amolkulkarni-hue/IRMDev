@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Restrict_Industry_Override_To_CP</fullName>
+    <active>true</active>
+    <description>#34498: 2026 Planning Readiness | Account: Create Sector, Industry &amp; Industry Override Fields
+#34947 : 2026 Sales Planning Readiness | Account: Industry Override field copies down to Sales Site</description>
+    <errorConditionFormula>AND(
+NOT($Setup.Metadata_Activation_Settings__c.Disable_VR__c &amp;&amp; OR(ISBLANK($Setup.Metadata_Activation_Settings__c.SObject_API_Name__c),
+CONTAINS($Setup.Metadata_Activation_Settings__c.SObject_API_Name__c, &apos;Account&apos;))),
+
+/*---Block when Hierarchy Level is not Country Parent---*/
+NOT( ISPICKVAL(IM_Hierarchy_Level__c,&apos;Country Parent&apos;)),
+
+/*---Block on create or when Industry Override is changed---*/
+OR(
+AND(
+ISNEW(),
+Industry_Override__c = True
+),
+AND(
+ISCHANGED( Industry_Override__c )
+)
+),
+
+$User.UITheme &lt;&gt;&apos;Theme2&apos;,
+$User.UITheme &lt;&gt; &apos;Theme3&apos;
+
+)</errorConditionFormula>
+    <errorMessage>Industry Override can only be updated on a Country Parent.</errorMessage>
+</ValidationRule>

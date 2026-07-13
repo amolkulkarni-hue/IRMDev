@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Proposal_Follow_Up_Date_1X</fullName>
+    <active>true</active>
+    <description>Proposal Follow Up Date 1 cannot be in the Future. For reference, check user story #26355 on Gitlab.</description>
+    <errorConditionFormula>((RecordType_Name__c = &quot;Retention RM&quot;) || (RecordType_Name__c = &quot;Retention SH&quot;)) &amp;&amp;
+NOT(ISCHANGED(Open_Tasks__c)) &amp;&amp;
+ISCHANGED(Proposal_Attempt_Date_1__c) &amp;&amp;
+NOT(ISBLANK(Proposal_Attempt_Date_1__c)) &amp;&amp;
+DATEVALUE(Proposal_Attempt_Date_1__c) &gt; TODAY() &amp;&amp;
+(
+  ISBLANK(PRIORVALUE(Proposal_Attempt_Date_1__c)) ||
+  DATEVALUE(Proposal_Attempt_Date_1__c) != DATEVALUE(PRIORVALUE(Proposal_Attempt_Date_1__c))
+)</errorConditionFormula>
+    <errorDisplayField>Proposal_Attempt_Date_1__c</errorDisplayField>
+    <errorMessage>Proposal Follow Up Date 1 cannot be in the Future.</errorMessage>
+</ValidationRule>

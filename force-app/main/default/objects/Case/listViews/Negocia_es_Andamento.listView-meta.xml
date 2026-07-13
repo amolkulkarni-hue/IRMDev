@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Negocia_es_Andamento</fullName>
+    <columns>Days_Open_del__c</columns>
+    <columns>CASES.CREATED_DATE_DATE_ONLY</columns>
+    <columns>CASES.CASE_NUMBER</columns>
+    <columns>IME_SC_Sub_Category__c</columns>
+    <columns>IME_SC_Source_Operational_System_ID__c</columns>
+    <columns>IME_SC_Target_Operational_System_ID__c</columns>
+    <columns>IME_SC_Order_Id__c</columns>
+    <columns>IME_SC_SKP_Category_Code__c</columns>
+    <columns>Source_Sys_Customer_ID__c</columns>
+    <columns>Source_Sys_Customer_Name__c</columns>
+    <columns>IME_SC_Compensation_Amount__c</columns>
+    <columns>FollowUp_Type__c</columns>
+    <columns>CASES.REASON</columns>
+    <columns>IME_SC_Category__c</columns>
+    <columns>OWNER_NAME</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>CASES.STATUS</field>
+        <operation>notEqual</operation>
+        <value>Closed</value>
+    </filters>
+    <filters>
+        <field>OWNER_NAME</field>
+        <operation>contains</operation>
+        <value>Lais de Lima,Brenda Araujo,Alexandre De Farias</value>
+    </filters>
+    <label>Negociações Andamento</label>
+    <sharedTo>
+        <group>AllUsers</group>
+    </sharedTo>
+</ListView>

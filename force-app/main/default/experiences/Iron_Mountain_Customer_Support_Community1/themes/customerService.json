@@ -1,0 +1,200 @@
+{
+  "activeBrandingSetId" : "13177742-7535-47fc-8aab-31106866f316",
+  "customCSS" : "/* To hide TITLE and URL from Article Detail Page*/\n.selfServiceArticleLayout .test-id__section:nth-child(1) {display: none;}\n.selfServiceArticleLayout .test-id__section:nth-child(2) {display: none;}\n.selfServiceArticleLayout .test-id__section:nth-child(4) {display: none;}\n.selfServiceArticleLayout .test-id__section:nth-child(5) {display: none;}\n\n/* To hide Post/Poll chatter*/\n.userProfileTabs{  \n    display:none;\n}\n/*To hide the list view actions in the mobile mode in the community*/\n.forceCommunityActionButtonMobile {\n\tdisplay:none;\n}\n/*To Make Search Button text White*/\n.forceCommunitySearchBox .search-button {\n    width: 128px;\n    height: 100%;\n    color: white;\n}\n/* To make user name in white - User profile menu*/\n.siteforceServiceBody .cProfileCon .trigger-link .profileName {\n    text-decoration: inherit;\n    color: white;\n}\n/* To hide the filter text under list view*/\n.countSortedByFilteredBy{\n    display:none;\n}\n\n/*To make login pag - login button label white*/\n.salesforceIdentityLoginForm2 .uiButton{\n\tcolor:white !important;\n}\n\n.uiOutputText, .forcePageBlockSectionRow ~ .forcePageBlockSectionRow div{\n   display:none;\n}\n.slds-has-dividers_right>.slds-list__item, .slds-has-dividers--right>.slds-list__item, .slds-has-dividers_right>.slds-item, .slds-has-dividers--right>.slds-item, .forcePageBlockSectionRow ~ .forcePageBlockSectionRow div{\n\talign-items: center;\n\tdisplay: inline;\n\tposition:relative;\n}\n.slds-has-dividers_right>.slds-list__item:after, .slds-has-dividers--right>.slds-list__item:after, .slds-has-dividers_right>.slds-item:after, .slds-has-dividers--right>.slds-item:after , .forcePageBlockSectionRow ~ .forcePageBlockSectionRow div{\n  margin-left: 0;\n  margin-right: 0;\n}",
+  "developerName" : "service",
+  "id" : "8de06a36-797f-4a37-aade-d031b0dfd655",
+  "label" : "Customer Service",
+  "layouts" : {
+    "Inner" : "d202ad39-51f9-4337-91ff-df5b87fd206a",
+    "Login" : "0ccb7292-e3fa-40a0-872d-3817c7b3cf37",
+    "ServiceNotAvailable" : "a75f84e1-d4de-4a98-837c-20ac229277ff"
+  },
+  "type" : "theme",
+  "views" : [ {
+    "componentAttributes" : { },
+    "componentName" : "salesforceIdentity:loginBody2",
+    "id" : "0ccb7292-e3fa-40a0-872d-3817c7b3cf37",
+    "label" : "Login",
+    "regions" : [ {
+      "components" : [ {
+        "componentAttributes" : {
+          "richTextValue" : "<p>&nbsp;</p>"
+        },
+        "componentName" : "forceCommunity:richTextInline",
+        "id" : "ee6ae6e6-3c38-4df5-9899-73a3a73a6a41",
+        "renditionMap" : { },
+        "type" : "component"
+      } ],
+      "id" : "19a3c553-739b-4bf2-a5f6-51b97b194f53",
+      "regionName" : "header",
+      "type" : "region"
+    }, {
+      "id" : "191a8024-aaae-4741-8a0c-b851dc837ad2",
+      "regionName" : "content",
+      "type" : "region"
+    }, {
+      "id" : "e5ee8bba-7907-4884-8428-6cb1b3fb713f",
+      "regionName" : "footer",
+      "type" : "region"
+    } ],
+    "type" : "view"
+  }, {
+    "componentAttributes" : {
+      "IsDefaultHeaderHidden" : false,
+      "IsDefaultNotificationsHidden" : false,
+      "fixedPageWidth" : 1140,
+      "isPageWidthFixed" : true
+    },
+    "componentName" : "siteforce:serviceBody",
+    "id" : "d202ad39-51f9-4337-91ff-df5b87fd206a",
+    "label" : "Default",
+    "regions" : [ {
+      "id" : "b0c48aa5-afd5-43f4-857a-3aa63bc47ace",
+      "regionName" : "customHeader",
+      "type" : "region"
+    }, {
+      "components" : [ {
+        "componentAttributes" : {
+          "contineActionLabel" : "Ask the community",
+          "continueLabel" : "Don’t see it?",
+          "crossObjectTypeaheadApiNames" : [ {
+            "isPublic" : false,
+            "name" : "Case"
+          }, {
+            "isPublic" : false,
+            "name" : "Knowledge__kav"
+          } ],
+          "disableCrossObjectRelevance" : false,
+          "enableAutocomplete" : true,
+          "maxNumberOfResults" : 6,
+          "placeholder" : "Have a question? Ask it here.",
+          "questionResultsFirst" : false,
+          "showContinueAction" : false,
+          "showDetails" : false,
+          "showTopics" : false,
+          "signInActionLabel" : "Sign in to ask the community"
+        },
+        "componentName" : "forceCommunity:searchBox",
+        "id" : "dcbc5f95-c832-4482-a530-e1cf85bb5f1b",
+        "renditionMap" : { },
+        "type" : "component"
+      } ],
+      "id" : "49393776-7b50-4083-a8ae-26baee70b3b7",
+      "regionName" : "search",
+      "type" : "region"
+    }, {
+      "components" : [ {
+        "componentAttributes" : {
+          "accountManagementLabel" : "Account Management",
+          "communityBuilderLabel" : "",
+          "communitySetupLabel" : "",
+          "contactSupportLabel" : "Contact Support",
+          "filterName" : "",
+          "homeLabel" : "Home",
+          "includeContactSupport" : false,
+          "includeMessages" : false,
+          "loginLabel" : "Login",
+          "logoutLabel" : "Logout",
+          "myAccountLabel" : "My Account",
+          "showAccountManagement" : false,
+          "showUserSettings" : false,
+          "userSettingsLabel" : "",
+          "viewProfileLabel" : "My Profile"
+        },
+        "componentName" : "selfService:userProfileMenu",
+        "id" : "ea8484be-e30c-4757-a202-086a05ca3418",
+        "renditionMap" : { },
+        "type" : "component"
+      } ],
+      "id" : "b390e75d-5732-43a1-96de-fcbd318435d9",
+      "regionName" : "profileMenu",
+      "type" : "region"
+    }, {
+      "components" : [ {
+        "componentAttributes" : {
+          "NavigationMenuEditorRefresh" : "Default_Navigation1",
+          "hideAppLauncher" : false,
+          "hideHomeText" : true
+        },
+        "componentName" : "forceCommunity:globalNavigation",
+        "id" : "2dbe1f61-0bca-4969-91e0-ca352143c6f1",
+        "renditionMap" : { },
+        "type" : "component"
+      } ],
+      "id" : "6d487f6c-9611-4463-b416-98bb047d16a7",
+      "regionName" : "navBar",
+      "type" : "region"
+    }, {
+      "id" : "56dc1e18-0c0b-4d65-b56c-3dbed9e527a8",
+      "regionName" : "customRegion",
+      "type" : "region"
+    }, {
+      "components" : [ {
+        "componentAttributes" : {
+          "allowPrepopulatePrechatFields" : true,
+          "avatarImgURL" : "https://ironmountain--c.na97.content.force.com/servlet/servlet.ImageServer?id=0152H000002gNSD&oid=00D80000000aP47&lastMod=1603452637000",
+          "codeSettingsName" : "",
+          "defaultMinimizedText" : "Chat with an Expert",
+          "displayHelpButton" : true,
+          "eswConfigurationJSON" : {
+            "baseCoreURL" : "https://ironmountain.my.salesforce.com",
+            "baseLiveAgentContentURL" : "https://c.la3-c1-ph2.salesforceliveagent.com/content",
+            "baseLiveAgentURL" : "https://d.la3-c1-ph2.salesforceliveagent.com/chat",
+            "buttonId" : "5732H000000Cam9",
+            "deploymentId" : "5722H0000008Oba",
+            "enabledFeatures" : [ "LiveAgent" ],
+            "entryFeature" : "LiveAgent",
+            "eswConfigDevName" : "IRM_Customer_Community_Chat",
+            "eswConfigId" : "04I2H000000000LUAQ",
+            "eswLiveAgentDevName" : "IRM_Customer_Community_Chat",
+            "gslbBaseURL" : "https://service.force.com",
+            "isOfflineCasesEnabled" : "0",
+            "orgId" : "00D80000000aP47"
+          },
+          "externalScripts" : "",
+          "externalStyles" : "",
+          "fallbackRouting" : "",
+          "offlineSupportMinimizedText" : "Contact Us",
+          "offlineText" : "CHAT NOT AVAILABLE",
+          "onlineLoadingText" : "Loading",
+          "prechatBackgroundImgURL" : "https://ironmountain--c.na97.content.force.com/servlet/servlet.ImageServer?id=0152H000002gNS3&oid=00D80000000aP47&lastMod=1603452428000",
+          "smallCompanyLogoImgURL" : "https://ironmountain--c.na97.content.force.com/servlet/servlet.ImageServer?id=0152H000002gNS8&oid=00D80000000aP47&lastMod=1603452562000",
+          "snippetSettingsFile" : "IRMCustomerCommunityChatCodeSnippet.js",
+          "storageDomain" : "",
+          "waitingStateBackgroundImgURL" : "https://ironmountain--c.na97.content.force.com/servlet/servlet.ImageServer?id=0152H000002gNSI&oid=00D80000000aP47&lastMod=1603452722000"
+        },
+        "componentName" : "forceCommunity:embeddedService",
+        "id" : "1b07432a-37a5-4b86-963c-c9dda5a86b94",
+        "renditionMap" : { },
+        "type" : "component"
+      } ],
+      "id" : "c81a251c-48b6-4549-b35a-92ad02d2612b",
+      "regionName" : "footer",
+      "type" : "region"
+    } ],
+    "type" : "view"
+  }, {
+    "componentAttributes" : {
+      "fixedPageWidth" : 1170,
+      "headerBgColor" : "rgba(0, 0, 0, 0)",
+      "isHeaderPinned" : false,
+      "isHeroUnderHeader" : false,
+      "isPageWidthFixed" : true,
+      "showHeader" : true,
+      "showHero" : true
+    },
+    "componentName" : "siteforce:themeLayoutStarter",
+    "id" : "a75f84e1-d4de-4a98-837c-20ac229277ff",
+    "label" : "ServiceNotAvailable",
+    "regions" : [ {
+      "id" : "c965df7d-ddd4-4da2-9b7a-2d3216278e19",
+      "regionName" : "themeHeader",
+      "type" : "region"
+    }, {
+      "id" : "dd9ffb3b-4f50-45d8-b5db-b159260bed2d",
+      "regionName" : "themeFooter",
+      "type" : "region"
+    } ],
+    "type" : "view"
+  } ]
+}

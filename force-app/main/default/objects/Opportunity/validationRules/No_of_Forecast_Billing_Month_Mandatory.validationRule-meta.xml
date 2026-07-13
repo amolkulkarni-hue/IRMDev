@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>No_of_Forecast_Billing_Month_Mandatory</fullName>
+    <active>true</active>
+    <description>No_of_Forecast_Billing_Month_Mandatory
+#26747 : Bug fix : Opportunity: Salesforce opportunities to require # of Forecast Billing Months in Stage 4
+#33297: Add bypass to Opp VRs to support manual, bulk ecomm Opp creation - PRJTASK0017641</description>
+    <errorConditionFormula>AND(
+NOT($Setup.Metadata_Activation_Settings__c.Disable_VR__c &amp;&amp; OR(ISBLANK($Setup.Metadata_Activation_Settings__c.SObject_API_Name__c),
+CONTAINS($Setup.Metadata_Activation_Settings__c.SObject_API_Name__c, &apos;Opportunity&apos;))),
+OR(NOT($Permission.Bypass_Opportunity_Validations)),
+
+(Amount / CURRENCYRATE(TEXT(CurrencyIsoCode))) &gt; 24999,
+AND( ISCHANGED(StageName),
+( ISPICKVAL(PRIORVALUE(StageName), &quot;4 - Negotiate&quot;) &amp;&amp;
+ISPICKVAL(StageName, &quot;5 - Signed/PO in&quot;)
+),
+AND(
+ISBLANK(TEXT(No_of_Forecast_Billing_Month__c)),
+
+OR(
+Min_Of_Sales_Billing_Estimate__c &lt; 1,
+ISBLANK(Min_Of_Sales_Billing_Estimate__c)
+)
+)
+),
+NOT(ISPICKVAL( Type , &apos;Renewal&apos;)|| ISPICKVAL( Type , &apos;Framework&apos;)),
+ISBLANK(TEXT(No_of_Forecast_Billing_Month__c)),
+$Profile.Name &lt;&gt; &apos;IM_Sales_IMTN&apos;,
+(Total_Sales_Billing_Estimate__c / CURRENCYRATE(TEXT(CurrencyIsoCode))) &lt;= 0,
+/*--Bypass eComm from this VR--*/
+$Label.IMExpress_Opp_Owner!= OwnerId
+)</errorConditionFormula>
+    <errorDisplayField>No_of_Forecast_Billing_Month__c</errorDisplayField>
+    <errorMessage>Please enter &quot;# Of Forecast Billing Month&quot;.</errorMessage>
+</ValidationRule>

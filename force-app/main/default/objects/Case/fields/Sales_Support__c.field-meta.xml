@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Sales_Support__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>lookup for the Sales Support analyst associated to the case</description>
+    <inlineHelpText>lookup for the Sales Support analyst associated to the case</inlineHelpText>
+    <label>Sales Support</label>
+    <lookupFilter>
+        <active>true</active>
+        <filterItems>
+            <field>User.UserRoleId</field>
+            <operation>equals</operation>
+            <value>00E800000018pTMEAY, 00E800000018pTJEAY</value>
+        </filterItems>
+        <infoMessage>if the analyst&apos;s name does not appear click the &apos;Show all results&apos; link to search all of the users</infoMessage>
+        <isOptional>true</isOptional>
+    </lookupFilter>
+    <referenceTo>User</referenceTo>
+    <relationshipName>Cases5</relationshipName>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

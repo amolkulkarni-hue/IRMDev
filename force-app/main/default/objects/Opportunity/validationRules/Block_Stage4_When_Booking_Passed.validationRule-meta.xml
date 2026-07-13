@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Block_Stage4_When_Booking_Passed</fullName>
+    <active>true</active>
+    <description>#31292- Block Stage 5 Opportunities backward movement when Booking Verification is Passed.
+This is to validate the Opportunities moved from Stage 4 to Stage 5</description>
+    <errorConditionFormula>AND(
+
+    NOT($Setup.Metadata_Activation_Settings__c.Disable_VR__c &amp;&amp; OR(ISBLANK($Setup.Metadata_Activation_Settings__c.SObject_API_Name__c),
+    CONTAINS($Setup.Metadata_Activation_Settings__c.SObject_API_Name__c, &apos;Opportunity&apos;))),
+
+      /*--Block Stage 5 -&gt; 4 when Booking Verification is Passed--*/
+   
+     ISPICKVAL(StageName, &apos;4 - Negotiate&apos;),
+     OR(
+         ISPICKVAL(PRIORVALUE(StageName), &apos;5 - Signed/PO in&apos;),
+         ISPICKVAL(PRIORVALUE(StageName), &apos;6 - Setup&apos;)
+      ),
+     Booking_Verification_Validation__c = True,
+     
+     ISPICKVAL( Deal_Validation__c , &apos;Pass&apos;),
+    
+      /*--Limit to Any Std Record Types--*/
+     OR(
+        ( RecordType.DeveloperName ) = &apos;Standard_Opportunity&apos;,
+        ( RecordType.DeveloperName ) = &apos;IMLA_Standard_Opportunity&apos;,
+        ( RecordType.DeveloperName ) = &apos;IMAP_Standard_Opportunity&apos;,
+        ( RecordType.DeveloperName ) = &apos;IME_Standard_Opportunity&apos;
+      ),
+      
+       /*--Bypass Admins from this VR--*/
+ $Profile.Name &lt;&gt; &apos;System Administrator&apos;,
+ $Profile.Name &lt;&gt; &apos;IM_Custom Sys Admin&apos;,
+ NOT($Permission.VR_Bypass_Permission)
+
+)</errorConditionFormula>
+    <errorMessage>You cannot move an Opportunity back to Stage 4 after it has Passed Booking Verification Validation.</errorMessage>
+</ValidationRule>

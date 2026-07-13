@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IME_SC_ResolvedRecordType</fullName>
+    <active>true</active>
+    <description>This validation rule triggers if user changes the record type as IME SC Case Resolved and status not equal to closed.</description>
+    <errorConditionFormula>AND(NOT(ISCHANGED( IME_SC_Owner_Manager__c )), 
+NOT(ISCHANGED( IME_SC_Manager_of_Manager_OwnerId__c )),
+$RecordType.Name = &quot;IME SC Case Resolved&quot; ,
+NOT(ISPICKVAL(Status ,&quot;Closed&quot;))
+)</errorConditionFormula>
+    <errorDisplayField>Status</errorDisplayField>
+    <errorMessage>Case should be Closed.</errorMessage>
+</ValidationRule>

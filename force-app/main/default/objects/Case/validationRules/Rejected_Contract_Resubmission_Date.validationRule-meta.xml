@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Rejected_Contract_Resubmission_Date</fullName>
+    <active>true</active>
+    <description>Rejected Contract Resubmission Date must be today&apos;s date. It cannot be in the Past or the Future. For reference, check user story #26355 on Gitlab.</description>
+    <errorConditionFormula>((RecordType_Name__c = &quot;NCSP: SKP New Customer Setup&quot;) ||
+(RecordType_Name__c = &quot;NCSP: SKP Department Add Only&quot;) ||
+(RecordType_Name__c = &quot;NCSP: DP New Customer Setup&quot;) ||
+(RecordType_Name__c = &quot;NCSP: DMS&quot;) ||
+(RecordType_Name__c = &quot;NCSP: New Customer Setup&quot;) 
+)&amp;&amp;
+OR(
+	(
+	NOT(ISCHANGED(Open_Tasks__c)) &amp;&amp;
+	ISCHANGED(Rejected_Contract_Resubmission_Date__c) &amp;&amp;
+	NOT(ISBLANK(Rejected_Contract_Resubmission_Date__c)) &amp;&amp;
+	DATEVALUE(Rejected_Contract_Resubmission_Date__c) != TODAY() &amp;&amp;
+	(
+	  ISBLANK(PRIORVALUE(Rejected_Contract_Resubmission_Date__c)) ||
+	  DATEVALUE(Rejected_Contract_Resubmission_Date__c) != DATEVALUE(PRIORVALUE(Rejected_Contract_Resubmission_Date__c))
+	)
+	),
+    (	
+	ISNEW() &amp;&amp;
+	NOT(ISBLANK(Rejected_Contract_Resubmission_Date__c)) &amp;&amp;
+	DATEVALUE(Rejected_Contract_Resubmission_Date__c) != TODAY() 
+	) 
+)</errorConditionFormula>
+    <errorDisplayField>Rejected_Contract_Resubmission_Date__c</errorDisplayField>
+    <errorMessage>Rejected Contract Resubmission Date must be today&apos;s date. It cannot be in the Past or the Future.</errorMessage>
+</ValidationRule>

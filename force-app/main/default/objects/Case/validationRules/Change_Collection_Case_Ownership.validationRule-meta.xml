@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Change_Collection_Case_Ownership</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+	NOT($Permission.NAS_Collection_Queue_Member),
+	RecordType.DeveloperName == &apos;NAS_General_Support_Case&apos;,
+	NOT(ISBLANK(ParentId)),
+	ISPICKVAL(Parent.Status , &apos;On Hold - Internal&apos;),
+	OR(
+		Parent.RecordType.DeveloperName == &apos;CAC_SKP_RM&apos;,
+		Parent.RecordType.DeveloperName == &apos;CAC_SKP_Shred&apos;,
+		Parent.RecordType.DeveloperName == &apos;Case_DM&apos;
+	),
+	ISCHANGED(OwnerId),
+	LEFT(PRIORVALUE(OwnerId),3) = &quot;00G&quot; 
+)</errorConditionFormula>
+    <errorMessage>You cannot change the case owner. This case can be owned by Collections Team only.</errorMessage>
+</ValidationRule>

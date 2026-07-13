@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CAC_Status_ReqFields</fullName>
+    <active>true</active>
+    <description>For CAC Executive Escalations, the fields Contact, Country, Customer ID and Account  ID are required. For reference, check user story #27296 on Gitlab Refined rule #27569</description>
+    <errorConditionFormula>AND(RecordType_Name__c =&quot;CAC Executive Escalations&quot;,
+	OR(
+	(AND(ISBLANK( ContactId ),Is_IM_Employee__c = False)),
+	ISBLANK(Customer_ID__c),
+	ISBLANK( AccountId ),
+        ISPICKVAL(IME_SC_Country__c ,&quot;&quot;)
+	),
+	OR(
+	ISPICKVAL( Status, &quot;First Contact&quot;),
+	ISPICKVAL( Status, &quot;Research&quot;),
+	ISPICKVAL( Status, &quot;5 whys&quot;)
+	)
+)</errorConditionFormula>
+    <errorMessage>(Contact Name or Is IM Employee checked), Country, Account Name and Customer ID are required</errorMessage>
+</ValidationRule>

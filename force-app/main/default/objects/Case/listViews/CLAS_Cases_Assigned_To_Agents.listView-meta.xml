@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CLAS_Cases_Assigned_To_Agents</fullName>
+    <columns>CASES.CASE_NUMBER</columns>
+    <columns>NAME</columns>
+    <columns>CASES.SUBJECT</columns>
+    <columns>CASES.STATUS</columns>
+    <columns>OWNER_NAME</columns>
+    <columns>Owner_Name__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>CASES.RECORDTYPE</field>
+        <operation>equals</operation>
+        <value>Case.CAC_SKP_RM</value>
+    </filters>
+    <filters>
+        <field>CASES.STATUS</field>
+        <operation>equals</operation>
+        <value>New,Assigned,Validate,Validated,In Progress,Inactivation,Intro,Orders - PW,Orders,Termination Quote</value>
+    </filters>
+    <filters>
+        <field>CASES.CREATED_DATE_DATE_ONLY</field>
+        <operation>lessThan</operation>
+        <value>3/1/2021 12:00 AM</value>
+    </filters>
+    <label>Front End Cases Assigned To Agents</label>
+    <sharedTo>
+        <roleAndSubordinatesInternal>Manager_Customer_Loyalty</roleAndSubordinatesInternal>
+    </sharedTo>
+</ListView>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CAC_Outstanding_Payment_Invoice_Payment</fullName>
+    <active>true</active>
+    <description>Outstanding Invoice Payment Date&apos; to be required if Is Balance Owed&apos; has a value of Yes</description>
+    <errorConditionFormula>AND(
+				$RecordType.Name = &quot;CLAS - RM&quot;,
+				ISPICKVAL(Is_Balance_Owed__c, &quot;Yes&quot;),
+				ISBlank(Outstanding_Invoice_Payment_Date__c))</errorConditionFormula>
+    <errorMessage>Outstanding Invoice Payment Date is required if Is Balance Owed has a value of Yes</errorMessage>
+</ValidationRule>

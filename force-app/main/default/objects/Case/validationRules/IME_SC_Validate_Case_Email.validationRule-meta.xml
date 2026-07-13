@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IME_SC_Validate_Case_Email</fullName>
+    <active>true</active>
+    <description>This rule will ensure that &apos;case email&apos; is not blank if &apos;send closure email&apos; checkbox is checked.</description>
+    <errorConditionFormula>AND( NOT(ISCHANGED( IME_SC_Owner_Manager__c )), 
+NOT(ISCHANGED( IME_SC_Manager_of_Manager_OwnerId__c )),
+$RecordType.Name = &quot;IME SC Case&quot;, 
+ISPICKVAL( Status , &quot;Closed&quot;), 
+IME_SC_Send_Closure_Email__c, 
+ISBLANK( IME_SC_Case_Email__c ) 
+)</errorConditionFormula>
+    <errorMessage>To send a Closure Email, either add a valid Contact to the Case, or add the Contact&apos;s email address to the Case Email field. If a Closure Email is not required uncheck Send Closure Email</errorMessage>
+</ValidationRule>

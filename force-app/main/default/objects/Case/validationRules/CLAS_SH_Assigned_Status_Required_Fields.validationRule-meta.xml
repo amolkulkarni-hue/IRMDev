@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CLAS_SH_Assigned_Status_Required_Fields</fullName>
+    <active>true</active>
+    <description>Fields that are required while the case is in the status of assigned. # Created new to accommodate clas shred #10358</description>
+    <errorConditionFormula>AND($RecordType.Name = &apos;CLAS - Shred&apos;,
+NOT(ISBLANK(Date_First_Customer_Contact_Attempt__c)),	ISPICKVAL(Owning_Group__c,&apos;&apos;)
+)</errorConditionFormula>
+    <errorDisplayField>Owning_Group__c</errorDisplayField>
+    <errorMessage>Before Date First Customer Contact Attempt is populated, please complete Owning Group</errorMessage>
+</ValidationRule>

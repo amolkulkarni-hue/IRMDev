@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Insight_Use_Case_Ot_req_on_Insight_other</fullName>
+    <active>true</active>
+    <description>Digital Use Case - Other  is required when other is selected in Digital use case.</description>
+    <errorConditionFormula>AND(
+NOT($Setup.Metadata_Activation_Settings__c.Disable_VR__c &amp;&amp;
+OR(ISBLANK($Setup.Metadata_Activation_Settings__c.SObject_API_Name__c),
+CONTAINS($Setup.Metadata_Activation_Settings__c.SObject_API_Name__c,&apos;Opportunity&apos;)
+)
+),
+Insight_Use_Case_Other__c = &apos;&apos;,
+ISPICKVAL( InSight_Opportunities__c , &apos;Other&apos;),
+$Profile.Name &lt;&gt; &quot;IME_Custom Sys Admin&quot;,
+$Profile.Name &lt;&gt; &quot;IM_Custom Sys Admin&quot;,
+$Profile.Name &lt;&gt; &quot;IMLA_Custom Sys&quot;,
+$Profile.Name &lt;&gt; &quot;System Administrator&quot;,
+$Profile.Name &lt;&gt; &quot;IM_Sales_IMTN&quot;,
+NOT($Permission.VR_Bypass_Permission)
+)</errorConditionFormula>
+    <errorDisplayField>Insight_Use_Case_Other__c</errorDisplayField>
+    <errorMessage>Digital Use Case - Other is required when &quot;Other&quot; is selected in Digital Use Case</errorMessage>
+</ValidationRule>

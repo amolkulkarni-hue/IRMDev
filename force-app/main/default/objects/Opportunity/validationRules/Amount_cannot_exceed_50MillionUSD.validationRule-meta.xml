@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Amount_cannot_exceed_50MillionUSD</fullName>
+    <active>true</active>
+    <description>#24349: Validation to restrict users from entering Annual Amount above 50 M USD
+#30753: Opportunity: Add bypass logic to Amount_cannot_exceed_50MillionUSD VR for SOps users
+#31272: Opportunity: Handling &amp; Permissioning of Opps w/ Total Annual Amount</description>
+    <errorConditionFormula>AND(
+
+OR(
+AND(ISCHANGED(Amount),
+Amount / CURRENCYRATE(TEXT(CurrencyIsoCode)) &gt;= 50000000),
+AND( ISNEW(),
+Amount / CURRENCYRATE(TEXT(CurrencyIsoCode)) &gt;= 50000000 )),
+
+$Profile.Name &lt;&gt; &apos;IM_Custom Sys Admin&apos;,
+$Profile.Name &lt;&gt; &apos;System Administrator&apos;,
+NOT($Permission.VR_Bypass_Permission),
+NOT($Permission.VR_Bypass_Permission_Sales_Super_User)
+)</errorConditionFormula>
+    <errorDisplayField>Amount</errorDisplayField>
+    <errorMessage>Total Annual Amount cannot exceed $50 million by default. Need help? Contact your Sales Operations Business Partner.</errorMessage>
+</ValidationRule>

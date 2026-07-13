@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Division_ID__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <inlineHelpText>Customer Account Division.  Only Strict Divisions are shown.  Non-Strict Divisions shown in source systems.</inlineHelpText>
+    <label>Division</label>
+    <lookupFilter>
+        <active>true</active>
+        <errorMessage>There were no matching divisions found against customer account</errorMessage>
+        <filterItems>
+            <field>Division__c.Customer_Id__c</field>
+            <operation>equals</operation>
+            <valueField>$Source.Customer_ID__c</valueField>
+        </filterItems>
+        <isOptional>false</isOptional>
+    </lookupFilter>
+    <referenceTo>Division__c</referenceTo>
+    <relationshipLabel>Cases</relationshipLabel>
+    <relationshipName>Cases</relationshipName>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

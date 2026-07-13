@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Booking_Duration__c</fullName>
+    <externalId>false</externalId>
+    <formula>IF( OR( ISPICKVAL(StageName, &quot;5 - Signed/PO in&quot;),
+        ISPICKVAL(StageName, &quot;6 - Setup&quot;),
+        ISPICKVAL(StageName, &quot;7 - Closed&quot;) 
+      ), IM_Stage_5_Entered_Date__c -  DATEVALUE(  CreatedDate ), null
+  )</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Booking Duration</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>0</scale>
+    <trackHistory>false</trackHistory>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

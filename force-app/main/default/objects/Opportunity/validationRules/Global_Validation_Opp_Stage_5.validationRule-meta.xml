@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Global_Validation_Opp_Stage_5</fullName>
+    <active>false</active>
+    <errorConditionFormula>AND(
+NOT($Permission.Bypass_Stage_5_VR),
+NOT(ISPICKVAL(Type, &apos;Renewal&apos;)),
+NOT(OR (ISPICKVAL( PRIORVALUE (StageName), &quot;1 - Qualification&quot;),
+ISPICKVAL( PRIORVALUE (StageName), &quot;2 - Solution Developed&quot;), ISPICKVAL(PRIORVALUE(StageName), &quot;3 - Solution Agreed&quot;))),
+OR(ISPICKVAL(StageName, &quot;5 - Signed/PO In&quot;), ISPICKVAL( StageName, &quot;6 - Setup&quot;),ISPICKVAL( StageName, &quot;7 - Closed&quot;)),
+OR(
+RecordType.Name = &apos;Standard Opportunity&apos;, RecordType.Name =&apos;IMAP Standard Opportunity&apos;,RecordType.Name=&apos;IMLA Standard Opportunity&apos;,RecordType.Name=&apos;IME Standard Opportunity&apos;),
+OR(
+ISCHANGED(IM_Booked_Date__c) ,
+ISCHANGED(Total_Contract_Value_TCV__c),
+ISCHANGED(Contract_Term_months__c),
+ISCHANGED(CloseDate),
+ISCHANGED(Amount),
+ISCHANGED(Billing_Country__c),
+ISCHANGED(CurrencyIsoCode),
+ISCHANGED(IM_Servicing_Region__c),
+ISCHANGED(No_of_Forecast_Billing_Month__c)))</errorConditionFormula>
+    <errorDisplayField>No_of_Forecast_Billing_Month__c</errorDisplayField>
+    <errorMessage>You cannot make updates to the Opportunity at this stage. Please reach out to your Sales Operations Business Partner(s) for assistance.</errorMessage>
+</ValidationRule>

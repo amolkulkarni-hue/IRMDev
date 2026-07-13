@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CAC_SKP_RM_Date_Customer_Approval_Receiv</fullName>
+    <active>true</active>
+    <description>Date Customer Approval Received&apos; to be required if &apos;Customer Approved&apos; has a value of &quot;yes&quot;</description>
+    <errorConditionFormula>AND(
+				$RecordType.Name = &quot;CLAS - RM&quot;,
+				ISPICKVAL(Customer_approved_Cost_Summary__c	,&quot;Yes&quot;),
+				ISBLANK(Date_Customer_Approval_Received__c))</errorConditionFormula>
+    <errorMessage>Date Customer Approval Received is required if Customer Approved Cost Summary has a value of &quot;Yes&quot;</errorMessage>
+</ValidationRule>

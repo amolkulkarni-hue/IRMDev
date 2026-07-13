@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Standard_Lead_Status_Change_NextStep_Req</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+    NOT(ISNEW()),
+    RecordType.DeveloperName = &quot;Standard_Lead&quot;,
+    NOT($Profile.Name = &quot;System Administrator&quot;),
+    NOT($Profile.Name = &quot;IM_Custom Sys Admin&quot;),
+    ISCHANGED(Status),
+    OR(
+        ISPICKVAL(Status, &quot;Accepted&quot;),
+        ISPICKVAL(Status, &quot;Contacted&quot;)
+    ),
+    OR(
+        ISBLANK(Next_Step__c),
+        ISBLANK(Next_Step_Date__c)
+    )
+)</errorConditionFormula>
+    <errorMessage>Both Next Step and Next Step Date must be updated when advancing the Lead Status.</errorMessage>
+</ValidationRule>

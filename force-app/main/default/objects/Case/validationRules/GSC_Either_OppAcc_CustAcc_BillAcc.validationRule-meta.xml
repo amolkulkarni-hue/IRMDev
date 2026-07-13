@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>GSC_Either_OppAcc_CustAcc_BillAcc</fullName>
+    <active>true</active>
+    <description>Validation rule to add only either of operational/Billing / Customer account  should updated</description>
+    <errorConditionFormula>AND(
+RecordType.DeveloperName = &quot;Global_Service_Case&quot;,
+OR(
+NOT(ISBLANK(GSC_Operational_Account__c)),
+NOT(ISBLANK(GSC_Billing_Account__c)),
+NOT(ISBLANK(Customer_ID__c))
+),
+OR(
+AND(
+NOT(ISBLANK(GSC_Operational_Account__c)),
+OR(
+NOT(ISBLANK(GSC_Billing_Account__c)),
+NOT(ISBLANK(Customer_ID__c))
+)
+),
+AND(
+NOT(ISBLANK(GSC_Billing_Account__c)),
+NOT(ISBLANK(Customer_ID__c))
+)
+)
+)</errorConditionFormula>
+    <errorMessage>Only either of operational/ Billing / Customer account should be Updated .</errorMessage>
+</ValidationRule>

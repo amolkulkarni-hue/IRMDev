@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Select_GSA_Pricing_option_for_CAN_US</fullName>
+    <active>true</active>
+    <description>#32099 : Opportunity: Select GSA Pricing option can be selected when Billing Country = United States or Canada</description>
+    <errorConditionFormula>OR
+(
+AND(
+QTB_Billing_Country_Name__c =&quot;Canada&quot;,
+NOT(
+OR(
+ISPICKVAL(US_Federal_GSA_Pricing__c, &quot;Yes - Canada Public Sector (non-Healthcare)&quot;),
+ISPICKVAL(US_Federal_GSA_Pricing__c, &quot;No&quot;)
+)
+)
+),
+AND(
+QTB_Billing_Country_Name__c =&quot;United States&quot;,
+ISPICKVAL(US_Federal_GSA_Pricing__c, &quot;Yes - Canada Public Sector (non-Healthcare)&quot;)
+)
+)</errorConditionFormula>
+    <errorDisplayField>US_Federal_GSA_Pricing__c</errorDisplayField>
+    <errorMessage>Incorrect value on the GSA/SLED/Public Sector Pricing field, please select a value specific to the Customer&apos;s Billing Country.</errorMessage>
+</ValidationRule>

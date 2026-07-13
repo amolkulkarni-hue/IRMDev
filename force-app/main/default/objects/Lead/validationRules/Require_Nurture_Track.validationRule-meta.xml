@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Require_Nurture_Track</fullName>
+    <active>true</active>
+    <description>Requires a nurture track for leads that are sent to be nurtured</description>
+    <errorConditionFormula>AND(
+$RecordType.Id = &quot;01280000000UDKP&quot;,
+OR
+( ISPICKVAL(Status, &quot;Nurture - Marketing&quot;),ISPICKVAL(Status, &quot;Nurture - Sales Engagement&quot;)),ISPICKVAL( Nurture_Track__c , &quot;&quot;))</errorConditionFormula>
+    <errorDisplayField>Nurture_Track__c</errorDisplayField>
+    <errorMessage>A nurture track is required</errorMessage>
+</ValidationRule>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>QTB_RecordType_Cha_Primary_Product_StOpp</fullName>
+    <active>true</active>
+    <description>While changing the record type we need to make &apos;Primary Product Line&apos; as respective to the Record Type(Standard Opportunity).</description>
+    <errorConditionFormula>AND(
+AND(
+OR(
+$Setup.Metadata_Activation_Settings__c.SObject_API_Name__c = &apos;Opportunity&apos;,
+$Setup.Metadata_Activation_Settings__c.SObject_API_Name__c = &apos;&apos;
+),
+NOT($Setup.Metadata_Activation_Settings__c.Disable_VR__c)),
+
+IF( AND(ISCHANGED(RecordTypeId),OR(RecordType.DeveloperName =&apos;IME_Standard_Opportunity&apos;,RecordType.DeveloperName =&apos;IMAP_Standard_Opportunity&apos;,RecordType.DeveloperName =&apos;IMLA_Standard_Opportunity&apos;,RecordType.DeveloperName =&apos;Standard_Opportunity&apos;)),
+If(OR(
+ISPICKVAL( Primary_Product_Line__c , &quot;Data Centers&quot;),
+ISPICKVAL( Primary_Product_Line__c , &quot;Digital Solutions&quot;),
+ISPICKVAL( Primary_Product_Line__c , &quot;DM Cloud Solutions&quot;),
+ISPICKVAL( Primary_Product_Line__c , &quot;DM SITAD&quot;),
+ISPICKVAL( Primary_Product_Line__c , &quot;DM Tape Vaulting&quot;),
+ISPICKVAL( Primary_Product_Line__c , &quot;DM (All other service lines)&quot;),
+ISPICKVAL( Primary_Product_Line__c , &quot;Entertainment Services&quot;),
+ISPICKVAL( Primary_Product_Line__c , &quot;Information Governance&quot;),
+ISPICKVAL( Primary_Product_Line__c , &quot;Insight&quot;),
+ISPICKVAL( Primary_Product_Line__c , &quot;RM Secure Storage&quot;),
+ISPICKVAL( Primary_Product_Line__c , &quot;RM (All other service lines)&quot;),
+ISPICKVAL( Primary_Product_Line__c , &quot;Secure Shredding&quot;),
+ISPICKVAL( Primary_Product_Line__c , &quot;SMB Packages&quot;)
+/* ISPICKVAL( Primary_Product_Line__c , &quot;Other&quot;) */
+),false,true),false),
+NOT($Permission.VR_Bypass_Permission)
+)</errorConditionFormula>
+    <errorMessage>Please select the Standard Opportunity related &apos;Primary Product Line&apos;</errorMessage>
+</ValidationRule>

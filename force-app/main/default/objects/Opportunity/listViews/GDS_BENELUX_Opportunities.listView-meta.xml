@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>GDS_BENELUX_Opportunities</fullName>
+    <booleanFilter>(1 OR 2) AND 3 AND (4 OR 5)</booleanFilter>
+    <columns>CORE.USERS.FULL_NAME</columns>
+    <columns>OPPORTUNITY.NAME</columns>
+    <columns>OPPORTUNITY.AMOUNT</columns>
+    <columns>Primary_Product_Line__c</columns>
+    <columns>ACCOUNT.NAME</columns>
+    <columns>OPPORTUNITY.STAGE_NAME</columns>
+    <columns>OPPORTUNITY.CLOSE_DATE</columns>
+    <columns>CORE.USERS.ALIAS</columns>
+    <columns>OPPORTUNITY_SCORE</columns>
+    <columns>OPPORTUNITY.CLOSED</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Billing_Country__c</field>
+        <operation>equals</operation>
+        <value>Belgium</value>
+    </filters>
+    <filters>
+        <field>Billing_Country__c</field>
+        <operation>equals</operation>
+        <value>Netherlands</value>
+    </filters>
+    <filters>
+        <field>OPPORTUNITY.CLOSE_DATE</field>
+        <operation>greaterOrEqual</operation>
+        <value>1/1/2020</value>
+    </filters>
+    <filters>
+        <field>Primary_Product_Line__c</field>
+        <operation>equals</operation>
+        <value>Digital Solutions,Information Governance,Insight</value>
+    </filters>
+    <label>GDS BENELUX Opportunities</label>
+    <sharedTo>
+        <role>ESA</role>
+    </sharedTo>
+</ListView>

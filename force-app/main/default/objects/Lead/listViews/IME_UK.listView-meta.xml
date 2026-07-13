@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IME_UK</fullName>
+    <columns>LEAD.CREATED_DATE</columns>
+    <columns>MQL_Type_Most_Recent__c</columns>
+    <columns>FULL_NAME</columns>
+    <columns>LEAD.PHONE</columns>
+    <columns>LEAD.EMAIL</columns>
+    <columns>LEAD.COMPANY</columns>
+    <columns>LEAD.STATUS</columns>
+    <columns>CORE.USERS.ALIAS</columns>
+    <columns>IM_Lead_Source_Most_Recent__c</columns>
+    <columns>LEAD.LEAD_SOURCE</columns>
+    <columns>Product_Interest__c</columns>
+    <columns>IM_Product_Class__c</columns>
+    <filterScope>Queue</filterScope>
+    <filters>
+        <field>LEAD.STATUS</field>
+        <operation>equals</operation>
+        <value>New,Open,New Activity</value>
+    </filters>
+    <filters>
+        <field>IM_Stage_2_Entered_Date__c</field>
+        <operation>greaterOrEqual</operation>
+        <value>1/1/2022</value>
+    </filters>
+    <label>IME UK</label>
+    <queue>IMEUK</queue>
+    <sharedTo>
+        <group>IMEAdmins</group>
+        <group>IMETeleprospecting</group>
+        <group>IMEUKAdmins</group>
+    </sharedTo>
+</ListView>

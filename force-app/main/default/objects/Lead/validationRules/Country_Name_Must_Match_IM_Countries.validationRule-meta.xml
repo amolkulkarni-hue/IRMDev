@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Country_Name_Must_Match_IM_Countries</fullName>
+    <active>true</active>
+    <description>Validates country name entered exactly matches approved country name in IM_Country__c. Implemented via VLOOKUP against the Name field on IM_Country__c. Requires Read access to IM_Country__c for all profiles responsible for Lead creation. Case sensitive.</description>
+    <errorConditionFormula>ISBLANK(
+   VLOOKUP(
+      $ObjectType.IM_Country__c.Fields.Name,
+      $ObjectType.IM_Country__c.Fields.Name,
+      Country
+   )
+)</errorConditionFormula>
+    <errorDisplayField>Country</errorDisplayField>
+    <errorMessage>The country name entered does not match our approved country list. Please enter the full country name as it appears. For example, &quot;United States&quot;, &quot;United Kingdom&quot;, &quot;United Arab Emirates&quot;. Refer to the IM Countries list for the exact spelling.</errorMessage>
+</ValidationRule>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>First_Name_Mandatory_On_Conversion</fullName>
+    <active>true</active>
+    <description>Lead first name to be mandatory on conversion and status change</description>
+    <errorConditionFormula>OR(
+AND(
+OR(RecordType.DeveloperName = &apos;Deal_Registration&apos;,RecordType.DeveloperName = &apos;NA_Account_Management_Lead&apos;),
+OR(ISPICKVAL(Status,&apos;Converted&apos;),IsConverted),
+ISBLANK( FirstName )
+),
+AND
+(
+ISBLANK( FirstName ),
+ISCHANGED( Status ) ,
+NOT(ISPICKVAL( Status , &quot;Converted&quot;)),
+NOT(ISPICKVAL( Status , &quot;Rejected&quot;))
+)
+)</errorConditionFormula>
+    <errorMessage>Please fill in the lead&apos;s first name</errorMessage>
+</ValidationRule>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Prevent_Coversion</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+  ISCHANGED(Status),
+  ISPICKVAL(Status, &quot;Converted&quot;),
+  OR(
+    ISPICKVAL(Business_Unit__c, &quot;Crozier&quot;),
+    ISPICKVAL(Business_Unit__c, &quot;Data Center&quot;)
+  )
+)</errorConditionFormula>
+    <errorDisplayField>Unvended__c</errorDisplayField>
+    <errorMessage>Please complete a Lead pass to Crozier or Data Center. Contact your Business Partner(s) for any additional support.</errorMessage>
+</ValidationRule>

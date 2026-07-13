@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Must_specify_competitor_In_Lost_Comments</fullName>
+    <active>true</active>
+    <description>When an opportunity stage is Lost, if the Reason Lost is &apos;Competitor&apos; then must fill the Lost Comments field.</description>
+    <errorConditionFormula>AND(
+ISPICKVAL( IM_Reason_Lost__c, &apos;Competitor&apos;),IM_Lost_Comments__c=&apos;&apos;, OR($RecordType.DeveloperName = &apos;Standard_Opportunity&apos;,
+$RecordType.DeveloperName = &apos;IMAP_Standard_Opportunity&apos;,
+$RecordType.DeveloperName = &apos;IME_Standard_Opportunity&apos;,
+$RecordType.DeveloperName = &apos;IMLA_Standard_Opportunity&apos;,
+$RecordType.DeveloperName = &apos;CPQ_Sales_Opportunity&apos;),
+NOT($Permission.VR_Bypass_Permission))</errorConditionFormula>
+    <errorDisplayField>IM_Lost_Comments__c</errorDisplayField>
+    <errorMessage>Please capture competitor&apos;s name and details pertaining loss (competitor&apos;s winning solution, price, value, etc.)</errorMessage>
+</ValidationRule>

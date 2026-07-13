@@ -1,0 +1,24 @@
+<apex:page standardController="Lead" recordSetVar="leads" lightningStylesheets="true">
+    <html>
+        <head>
+            <apex:includeLightning />
+        </head>
+        <body style="margin:0;">
+            <div id="flowContainer" style="padding:1rem;"></div>
+
+            <script type="text/javascript">
+                $Lightning.use("c:newLeadFlowOutApp", function() {
+                    $Lightning.createComponent(
+                        "c:newLeadFlowWrapper",
+                        {},
+                        "flowContainer",
+                        function(component) {
+                            // Component rendered
+                            console.log("newLeadFlowWrapper loaded");
+                        }
+                    );
+                });
+            </script>
+        </body>
+    </html>
+</apex:page>

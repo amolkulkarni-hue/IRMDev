@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>US_Zips_must_be_5_Digits</fullName>
+    <active>true</active>
+    <description>Zips for US based leads must be at least 5 digits long</description>
+    <errorConditionFormula>(LEN( PostalCode ) &lt; 5 &amp;&amp; NOT(LEN(PostalCode) = 0)) &amp;&amp; ( Country = &quot;United States&quot; || Country = &quot;USA&quot;) &amp;&amp; (CreatedById = &quot;00580000002puto&quot; || CreatedById = &quot;005800000036e5q&quot;)</errorConditionFormula>
+    <errorDisplayField>PostalCode</errorDisplayField>
+    <errorMessage>US Postal Codes must be at least 5 characters. Please check your entry and ensure the leading zero did not get cut off.</errorMessage>
+</ValidationRule>

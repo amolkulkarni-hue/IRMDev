@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Healthcare_Partner_GPO_Required</fullName>
+    <active>true</active>
+    <description>Healthcare Partner / GPO field is required when the Opportunity&apos;s Account is in the Healthcare Industry Gitlab #16066
+#26453: Added Metadata Activation Custom setting as bypass logic</description>
+    <errorConditionFormula>IF(
+AND(
+
+NOT($Setup.Metadata_Activation_Settings__c.Disable_VR__c &amp;&amp; OR(ISBLANK($Setup.Metadata_Activation_Settings__c.SObject_API_Name__c),
+CONTAINS($Setup.Metadata_Activation_Settings__c.SObject_API_Name__c, &apos;Opportunity&apos;))),
+
+ISPICKVAL(Group_Purchasing_Organization_GPO__c,&quot;&quot;),
+OR(ISPICKVAL(Account.IM_Industry__c,&quot;Healthcare&quot;),ISPICKVAL(Account.IM_Industry__c,&quot;Hospitals&quot;),ISPICKVAL(Account.IM_Industry__c,&quot;Outpatient Care &amp; Physician Groups&quot;),ISPICKVAL(Account.IM_Industry__c,&quot;Residential Care, Rehabilitation, and Homes&quot;)),
+OR (RecordType.DeveloperName =&apos;Standard_Opportunity&apos;,RecordType.DeveloperName=&apos;CPQ_Sales_Opportunity&apos;), 
+NOT(ISPICKVAL(StageName, &apos;1 - Qualification&apos;)), 
+NOT(ISNEW()),
+NOT($Setup.OpportunityAttribution__c.BypassValidation__c),  Billing_Country__r.Name = &quot;United States&quot;,NOT($Permission.VR_Bypass_Permission)
+),true,false)</errorConditionFormula>
+    <errorDisplayField>Group_Purchasing_Organization_GPO__c</errorDisplayField>
+    <errorMessage>Select a Healthcare Partner / GPO value</errorMessage>
+</ValidationRule>

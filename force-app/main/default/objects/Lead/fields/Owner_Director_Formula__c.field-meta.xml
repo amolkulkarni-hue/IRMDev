@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Owner_Director_Formula__c</fullName>
+    <description>If a lead is converted this formula will display Director of the owner during the time of conversion and if the lead is not converted it will display the Director from the user in the Last Non-Queue Owner field.</description>
+    <externalId>false</externalId>
+    <formula>IF(IsConverted, Owner_Details__r.IM_RSM__r.FirstName &amp; &quot; &quot; &amp; Owner_Details__r.IM_RSM__r.LastName, Last_Non_Queue_Owner__r.IM_RSM__r.FirstName &amp; &quot; &quot; &amp; Last_Non_Queue_Owner__r.IM_RSM__r.LastName )</formula>
+    <label>Owner Director Formula</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Total_Others__c</fullName>
+    <description>#25372: Displays total amount of Opportunity products with BU as Others else displays Total Annual Amount when there are no products</description>
+    <formula>IF( IM_Number_of_Opty_Products__c &gt; 0,  Total_Other__c ,  Amount )</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Total Other</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>2</scale>
+    <trackHistory>false</trackHistory>
+    <type>Currency</type>
+</CustomField>

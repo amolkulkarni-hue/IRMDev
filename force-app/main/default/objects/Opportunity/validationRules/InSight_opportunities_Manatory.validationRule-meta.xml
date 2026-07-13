@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>InSight_opportunities_Manatory</fullName>
+    <active>false</active>
+    <description>CHG0036400 - Change of name and exclude 1 and include all other</description>
+    <errorConditionFormula>AND(NOT($Permission.Bypass_Opportunity_Validations),
+ISPICKVAL(Primary_Product_Line__c ,&apos;Insight&apos;),
+ISBLANK(TEXT(InSight_Opportunities__c)),
+/* Commented for CHG0036400
+ISPICKVAL(StageName ,&apos;2 - Solution Developed&apos;) */
+NOT(ISPICKVAL(StageName ,&apos;1 - Qualification&apos;)),
+$Profile.Name &lt;&gt; &quot;IME_Custom Sys Admin&quot;,
+$Profile.Name &lt;&gt; &quot;IM_Custom Sys Admin&quot;,
+$Profile.Name &lt;&gt; &quot;IMLA_Custom Sys Admin&quot;,
+$Profile.Name &lt;&gt; &quot;System Administrator&quot;
+)</errorConditionFormula>
+    <errorDisplayField>InSight_Opportunities__c</errorDisplayField>
+    <errorMessage>Please provide a value for Insight Opportunities</errorMessage>
+</ValidationRule>

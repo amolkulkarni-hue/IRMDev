@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Restrict_Acc_Segment_SubSegment_on_GROs</fullName>
+    <active>true</active>
+    <description>#28092: Restricts Account Segment/Sub Segment modification on Sales Site Accounts if GI is False on IMGA Account. Values can be modified only at Country Parent/IMGA</description>
+    <errorConditionFormula>AND(
+NOT($Setup.Metadata_Activation_Settings__c.Disable_VR__c &amp;&amp; OR(ISBLANK($Setup.Metadata_Activation_Settings__c.SObject_API_Name__c),
+CONTAINS($Setup.Metadata_Activation_Settings__c.SObject_API_Name__c, &apos;Account&apos;))),
+
+ISPICKVAL(IM_Hierarchy_Level__c,&apos;Sales (Site)&apos;),
+ISPICKVAL(Parent.Parent.IM_Hierarchy_Level__c,&apos;IM Group (IMGA)&apos;),
+NOT(Parent.Parent.Global_Account__c),
+OR(ISCHANGED(Account_Segment__c),ISCHANGED(Account_Sub_Segment__c)),
+
+$User.UITheme &lt;&gt;&apos;Theme2&apos;,
+$User.UITheme &lt;&gt; &apos;Theme3&apos;
+)</errorConditionFormula>
+    <errorMessage>This is a GRO Account. Account Segment &amp; Sub-Segment can only be edited at the IMGA &amp; Country Parent level on GRO Accounts</errorMessage>
+</ValidationRule>

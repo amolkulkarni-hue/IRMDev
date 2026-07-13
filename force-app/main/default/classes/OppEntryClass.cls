@@ -2885,7 +2885,7 @@ Description: Inserting Vended, unvended params to new opportunity.
                  lstStrParams.add(leadopportunity.IME_Vended_Unvended__c); //19
                 /* lstStrParams.add(String.valueOf(leadopportunity.Vended__c)); //20 
                  lstStrParams.add(String.valueOf(leadopportunity.Unvended__c)); *///21
-                 lstStrParams.add(leadopportunity.Account_Plan__c);//22
+                 //lstStrParams.add(leadopportunity.Account_Plan__c);//22
                  //Case# 05491582, Added by pratap, We want to retain the ability for drivers to submit sales leads, 
                  //so we must create a new mechanism for them to record the lead information and transmit it 
                  //to IRM sales systems 

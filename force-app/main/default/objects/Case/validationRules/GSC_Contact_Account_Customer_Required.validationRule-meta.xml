@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>GSC_Contact_Account_Customer_Required</fullName>
+    <active>true</active>
+    <description>The Contact Name is required for record type Global Service Case. The epic for reference #1008
+added conditions related to self registration status #18954. #29931-Removed AccountId &amp; SefRegistration</description>
+    <errorConditionFormula>AND(
+        $RecordType.DeveloperName = &apos;Global_Service_Case&apos;,
+		ISPICKVAL(Status, &apos;Waiting for Agent&apos;), 
+        NOT(ISPICKVAL(GSC_Sub_Category__c, &apos;Non Customer Complaint&apos;)),
+        OR(
+            AND(
+				ISBLANK( ContactId ),
+				Is_IM_Employee__c = False
+			),
+            AND(
+                ISBLANK(Customer_ID__c), 
+                ISBLANK(GSC_Billing_Account__c), 
+                ISBLANK(GSC_Operational_Account__c)
+            ) 
+        )
+    )</errorConditionFormula>
+    <errorMessage>Contact Name and (Customer ID/Operational Account/Billing Account) are required.</errorMessage>
+</ValidationRule>

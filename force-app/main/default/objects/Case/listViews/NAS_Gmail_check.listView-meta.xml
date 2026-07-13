@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NAS_Gmail_check</fullName>
+    <columns>CASES.CASE_NUMBER</columns>
+    <columns>NAME</columns>
+    <columns>CASES.SUBJECT</columns>
+    <columns>CASES.STATUS</columns>
+    <columns>CASES.PRIORITY</columns>
+    <columns>CASES.CREATED_DATE</columns>
+    <columns>Case_ID_18_digit__c</columns>
+    <columns>OWNER_NAME</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>CASES.ORIGIN</field>
+        <operation>startsWith</operation>
+        <value>NAS_EMAIL</value>
+    </filters>
+    <filters>
+        <field>CASES.EMAIL</field>
+        <operation>equals</operation>
+        <value>mjennison@ironmountain.co.uk,mjennison@gmail.com</value>
+    </filters>
+    <filters>
+        <field>CASES.CREATED_DATE</field>
+        <operation>greaterOrEqual</operation>
+        <value>1/20/2020 10:50 AM</value>
+    </filters>
+    <label>NAS Gmail check</label>
+    <language>en_US</language>
+    <sharedTo>
+        <role>Admin</role>
+    </sharedTo>
+</ListView>

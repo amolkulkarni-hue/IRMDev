@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NAS_In_Progress_Lock</fullName>
+    <active>true</active>
+    <description>Does not allow a case status to move backwards once it moves to In Progress.</description>
+    <errorConditionFormula>AND(
+ $RecordType.Name = &quot;NAS General Support Case&quot;,
+				$Profile.Name &lt;&gt; &quot;System Administrator&quot;,
+ ISCHANGED(Status),
+	OR(
+ ISPICKVAL(PRIORVALUE(Status), &quot;In Progress&quot;),
+	ISPICKVAL(PRIORVALUE(Status), &quot;On Hold - Customer&quot;),
+	ISPICKVAL(PRIORVALUE(Status), &quot;On Hold - Internal&quot;)),
+ OR(
+  ISPICKVAL(Status, &quot;New&quot;),
+  ISPICKVAL(Status, &quot;Assigned&quot;),
+  ISPICKVAL(Status, &quot;Validate&quot;)
+ )
+)</errorConditionFormula>
+    <errorMessage>Case Status cannot go backwards from In Progress.</errorMessage>
+</ValidationRule>

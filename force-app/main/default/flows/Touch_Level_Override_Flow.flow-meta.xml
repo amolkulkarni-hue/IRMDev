@@ -2,78 +2,6 @@
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>61.0</apiVersion>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
-    <choices>
-        <name>choiceHighTouch</name>
-        <choiceText>High Touch</choiceText>
-        <dataType>String</dataType>
-        <value>
-            <stringValue>High Touch</stringValue>
-        </value>
-    </choices>
-    <choices>
-        <name>choiceLowTouch</name>
-        <choiceText>Low Touch</choiceText>
-        <dataType>String</dataType>
-        <value>
-            <stringValue>Low Touch</stringValue>
-        </value>
-    </choices>
-    <choices>
-        <name>choiceMediumTouch</name>
-        <choiceText>Medium Touch</choiceText>
-        <dataType>String</dataType>
-        <value>
-            <stringValue>Medium Touch</stringValue>
-        </value>
-    </choices>
-    <choices>
-        <name>choiceNoTouch</name>
-        <choiceText>No Touch</choiceText>
-        <dataType>String</dataType>
-        <value>
-            <stringValue>No Touch</stringValue>
-        </value>
-    </choices>
-    <description>Screen Flow invoked from the Opportunity record page. Allows users with IRM_Sales_Admin_PS or IRM_Deal_Desk_PS to manually override the Touch Level, select a reason, and set Touch_Level_Override__c = true.</description>
-    <label>Touch Level Override Flow</label>
-    <processMetadataValues>
-        <name>BuilderType</name>
-        <value>
-            <stringValue>LightningFlowBuilder</stringValue>
-        </value>
-    </processMetadataValues>
-    <processType>Flow</processType>
-    <recordLookups>
-        <name>getOpportunity</name>
-        <label>Get Opportunity</label>
-        <locationX>176</locationX>
-        <locationY>168</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>overrideScreen</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>recordId</elementReference>
-            </value>
-        </filters>
-        <object>Opportunity</object>
-        <outputAssignments>
-            <assignToReference>varOppName</assignToReference>
-            <field>Name</field>
-        </outputAssignments>
-        <outputAssignments>
-            <assignToReference>varCurrentCalculated</assignToReference>
-            <field>Touch_Level_Calculated__c</field>
-        </outputAssignments>
-        <outputAssignments>
-            <assignToReference>varCurrentTouchLevel</assignToReference>
-            <field>Touch_Level__c</field>
-        </outputAssignments>
-    </recordLookups>
     <assignments>
         <name>assignChatterBody</name>
         <label>Build Chatter Body</label>
@@ -139,6 +67,47 @@
             <targetReference>postChatter</targetReference>
         </connector>
     </assignments>
+    <choices>
+        <name>choiceHighTouch</name>
+        <choiceText>High Touch</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>High Touch</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>choiceLowTouch</name>
+        <choiceText>Low Touch</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Low Touch</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>choiceMediumTouch</name>
+        <choiceText>Medium Touch</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Medium Touch</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>choiceNoTouch</name>
+        <choiceText>No Touch</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>No Touch</stringValue>
+        </value>
+    </choices>
+    <description>Screen Flow invoked from the Opportunity record page. Allows users with IRM_Sales_Admin_PS or IRM_Deal_Desk_PS to manually override the Touch Level, select a reason, and set Touch_Level_Override__c = true.</description>
+    <label>Touch Level Override Flow</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>Flow</processType>
     <recordCreates>
         <name>postChatter</name>
         <label>Post to Chatter</label>
@@ -162,6 +131,37 @@
         </inputAssignments>
         <object>FeedItem</object>
     </recordCreates>
+    <recordLookups>
+        <name>getOpportunity</name>
+        <label>Get Opportunity</label>
+        <locationX>176</locationX>
+        <locationY>168</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>overrideScreen</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <object>Opportunity</object>
+        <outputAssignments>
+            <assignToReference>varOppName</assignToReference>
+            <field>Name</field>
+        </outputAssignments>
+        <outputAssignments>
+            <assignToReference>varCurrentCalculated</assignToReference>
+            <field>Touch_Level_Calculated__c</field>
+        </outputAssignments>
+        <outputAssignments>
+            <assignToReference>varCurrentTouchLevel</assignToReference>
+            <field>Touch_Level__c</field>
+        </outputAssignments>
+    </recordLookups>
     <recordUpdates>
         <name>applyOverride</name>
         <label>Apply Touch Level Override</label>
@@ -283,6 +283,14 @@
             <name>displayChatterWarning</name>
             <fieldText>Touch Level has been overridden successfully. (The Chatter notification could not be posted — please notify the team manually if needed.)</fieldText>
             <fieldType>DisplayText</fieldType>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
@@ -295,6 +303,13 @@
         </connector>
     </start>
     <status>Active</status>
+    <variables>
+        <name>recordId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
     <variables>
         <name>varChatterBody</name>
         <dataType>String</dataType>
@@ -321,13 +336,6 @@
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>recordId</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>true</isInput>
         <isOutput>false</isOutput>
     </variables>
 </Flow>

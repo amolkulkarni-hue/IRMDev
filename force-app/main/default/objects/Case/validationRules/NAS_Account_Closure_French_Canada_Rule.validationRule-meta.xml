@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NAS_Account_Closure_French_Canada_Rule</fullName>
+    <active>true</active>
+    <description>Allow CLAS Record type to be in NAS Account Closure French Canada Queue</description>
+    <errorConditionFormula>AND(NOT(OR($RecordType.DeveloperName = &quot;CAC_SKP_Shred&quot;,$RecordType.DeveloperName = &quot;CAC_SKP_RM&quot;,$RecordType.DeveloperName = &quot;Case_DM&quot;)),
+Owner:Queue.Name = &quot;NAS Account Closure French Canada Queue&quot;)</errorConditionFormula>
+    <errorMessage>Must change case to CLAS -Shread,CLAS - RM or CLAS - Data Management record type before adding to the NAS Account Closure French Canada Queue</errorMessage>
+</ValidationRule>

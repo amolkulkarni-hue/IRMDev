@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Fila_por_TJPernambuco</fullName>
+    <columns>CASES.CASE_NUMBER</columns>
+    <columns>IME_SC_Rush__c</columns>
+    <columns>OWNER_NAME</columns>
+    <columns>CASES.SUBJECT</columns>
+    <columns>IME_SC_Sub_Category__c</columns>
+    <columns>CASES.CREATED_DATE_DATE_ONLY</columns>
+    <columns>IME_SC_Acceptance_Date__c</columns>
+    <columns>End_Time_Cutoff_SLA__c</columns>
+    <columns>CASES.STATUS</columns>
+    <columns>IME_SC_CAc_Account__c</columns>
+    <columns>IME_SC_Is_Sensitive__c</columns>
+    <columns>IME_SC_SLA_Hold_Time__c</columns>
+    <columns>IME_SC_Target_Operational_System_ID__c</columns>
+    <columns>IME_SC_Order_Id__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>IME_SC_Country__c</field>
+        <operation>equals</operation>
+        <value>Brazil</value>
+    </filters>
+    <filters>
+        <field>CASES.STATUS</field>
+        <operation>notEqual</operation>
+        <value>Closed</value>
+    </filters>
+    <filters>
+        <field>OWNER_NAME</field>
+        <operation>contains</operation>
+        <value>Carolina Deoliveira,Jailson,Geana dos Santos,Beatriz Fontana da Silva,Tatiane Almeida,Genyane,Silvana Ferreira</value>
+    </filters>
+    <filters>
+        <field>IME_SC_CAc_Account__c</field>
+        <operation>equals</operation>
+        <value>Tribunal de Justiça Pernambuco</value>
+    </filters>
+    <label>Fila por TJPernambuco</label>
+    <sharedTo>
+        <group>AllUsers</group>
+    </sharedTo>
+</ListView>

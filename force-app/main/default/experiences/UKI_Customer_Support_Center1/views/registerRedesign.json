@@ -1,0 +1,156 @@
+{
+  "appPageId" : "8a213534-33b4-4592-a87a-c8c545c76a4c",
+  "componentName" : "siteforce:dynamicLayout",
+  "dataProviders" : [ ],
+  "id" : "d8ad41e8-701a-41ab-82c3-ca8f73f430b1",
+  "label" : "Register Redesign",
+  "regions" : [ {
+    "components" : [ {
+      "componentAttributes" : {
+        "background" : "background: rgb(255,255,255)",
+        "backgroundOverlay" : "rgba(255, 255, 255, 0)",
+        "contentAreaWidth" : 100,
+        "sectionConfig" : {
+          "UUID" : "12fb6c29-6a5b-4cbb-b34d-9cd4b2631759",
+          "columns" : [ {
+            "UUID" : "21fc313b-f915-476c-8f5a-342ce8a3a357",
+            "columnKey" : "1",
+            "columnName" : "Column 1",
+            "columnWidth" : "12",
+            "seedComponents" : [ ]
+          } ]
+        },
+        "sectionHeight" : 400
+      },
+      "componentName" : "forceCommunity:section",
+      "id" : "12fb6c29-6a5b-4cbb-b34d-9cd4b2631759",
+      "regions" : [ {
+        "components" : [ {
+          "componentAttributes" : {
+            "richTextValue" : "<div class=\"logoPlaceholderForLogin\" style=\"padding: 10px 0px 10px 0px;\">\n    <a href=\"/irmesa/s/?language=en_GB\" style=\"text-decoration: none;\">\n     <div><img src=\"/sfsites/c/resource/CSC_LoginLogo\" style=\"width: 80%; display: block; margin-left: auto; margin-right: auto;\"></div>\n    </a>\n</div>"
+          },
+          "componentName" : "forceCommunity:htmlBlock",
+          "id" : "189c52b6-d9a1-464f-b764-ff4383f70f4a",
+          "renderPriority" : "NEUTRAL",
+          "renditionMap" : {
+            "de" : "a0d70f90-de87-423d-a081-2e71174c08aa",
+            "es" : "0f0db3b0-bda7-48a8-8f02-e378621e2abc",
+            "fr" : "2fb0772d-ec95-496e-a2ad-fb9e6beb6ff4"
+          },
+          "renditions" : [ {
+            "id" : "2fb0772d-ec95-496e-a2ad-fb9e6beb6ff4",
+            "renditionValue" : {
+              "componentAttributes" : {
+                "richTextValue" : "<div class=\"logoPlaceholderForLogin\" style=\"padding: 10px 0px 10px 0px;\">\n    <a href=\"/irmesa/s/?language=fr\" style=\"text-decoration: none;\">\n     <div><img src=\"/sfsites/c/resource/CSC_LoginLogo\" style=\"width: 80%; display: block; margin-left: auto; margin-right: auto;\"></div>\n    </a>\n</div>"
+              }
+            },
+            "type" : "renditionComponent"
+          }, {
+            "id" : "a0d70f90-de87-423d-a081-2e71174c08aa",
+            "renditionValue" : {
+              "componentAttributes" : {
+                "richTextValue" : "<div class=\"logoPlaceholderForLogin\" style=\"padding: 10px 0px 10px 0px;\">\n    <a href=\"/irmesa/s/?language=de\" style=\"text-decoration: none;\">\n     <div><img src=\"/sfsites/c/resource/CSC_LoginLogo\" style=\"width: 80%; display: block; margin-left: auto; margin-right: auto;\"></div>\n    </a>\n</div>"
+              }
+            },
+            "type" : "renditionComponent"
+          }, {
+            "id" : "0f0db3b0-bda7-48a8-8f02-e378621e2abc",
+            "renditionValue" : {
+              "componentAttributes" : {
+                "richTextValue" : "<div class=\"logoPlaceholderForLogin\" style=\"padding: 10px 0px 10px 0px;\">\n    <a href=\"/irmesa/s/?language=es\" style=\"text-decoration: none;\">\n     <div><img src=\"/sfsites/c/resource/CSC_LoginLogo\" style=\"width: 80%; display: block; margin-left: auto; margin-right: auto;\"></div>\n    </a>\n</div>"
+              }
+            },
+            "type" : "renditionComponent"
+          } ],
+          "type" : "component"
+        }, {
+          "componentAttributes" : {
+            "flowArguments" : "[{\"label\":\"Language\",\"dataType\":\"String\",\"supportsRecordId\":false,\"value\":\"{!language}\"}]",
+            "flowName" : "Self_Registration_Single_Account"
+          },
+          "componentName" : "forceCommunity:flowCommunity",
+          "id" : "c1fbec6d-e350-448e-8050-e3dfb82939df",
+          "renderPriority" : "NEUTRAL",
+          "renditionMap" : { },
+          "type" : "component"
+        }, {
+          "componentAttributes" : {
+            "richTextValue" : "<p style=\"text-align:center; color:#58595B; font-size:10px; font-weight:500;\">By submitting this form I agree that Iron Mountain may process my data for the purpose of enabling access to the Customer Support Center and as described in Iron Mountain's <a href=\"https://www.ironmountain.com/utility/legal/privacy-policy\" style=\"color: #1B75BC; text-decoration: underline;\">privacy policy</a>.</p>"
+          },
+          "componentName" : "forceCommunity:htmlBlock",
+          "id" : "48c799ce-f69d-4da6-9e94-560c3f26610b",
+          "renderPriority" : "NEUTRAL",
+          "renditionMap" : {
+            "de" : "c691e6e3-2dd2-494f-95dc-22d22445d677",
+            "de_at" : "1dc6bc5f-f024-40c8-862c-b52aec97f2b1",
+            "es" : "3da2919b-ea32-42ff-a26c-c9088887b567",
+            "fr" : "41ac8efe-4f82-4fdd-94f8-62ca23fa05cb"
+          },
+          "renditions" : [ {
+            "id" : "41ac8efe-4f82-4fdd-94f8-62ca23fa05cb",
+            "renditionValue" : {
+              "componentAttributes" : {
+                "richTextValue" : "<p style=\"text-align:center; color:#58595B; font-size:10px; font-weight:500;\">En soumettant ce formulaire, j'accepte qu'Iron Mountain traite mes données dans le but de permettre l'accès au centre de support client et comme décrit dans la  d'Iron Mountain <a href=\"https://www.ironmountain.com/fr-fr/utility/legal/privacy-policy\" style=\"color: #1B75BC; text-decoration: underline;\">politique de confidentialité </a>.</p>"
+              }
+            },
+            "type" : "renditionComponent"
+          }, {
+            "id" : "c691e6e3-2dd2-494f-95dc-22d22445d677",
+            "renditionValue" : {
+              "componentAttributes" : {
+                "richTextValue" : "<p style=\"text-align:center; color:#58595B; font-size:10px; font-weight:500;\">Durch das Absenden des Formulars erkläre ich mich damit einverstanden, dass Iron Mountain meine Daten bearbeitet, um den Zugang zum Kundensupport-Center und wie in der von Iron Mountain beschriebenen <a href=\"https://www.ironmountain.com/de-de/utility/legal/privacy-policy\" style=\"color: #1B75BC; text-decoration: underline;\">Datenschutzrichtlinien</a> zu ermöglichen.</p>"
+              }
+            },
+            "type" : "renditionComponent"
+          }, {
+            "id" : "3da2919b-ea32-42ff-a26c-c9088887b567",
+            "renditionValue" : {
+              "componentAttributes" : {
+                "richTextValue" : "<p style=\"text-align:center; color:#58595B; font-size:10px; font-weight:500;\">Al enviar este formulario acepto que Iron Mountain procese mis datos con el fin de permitir el acceso al Centro de Atención al Cliente y tal como se describe en la de Iron Mountain <a href=\"https://www.ironmountain.com/es-es/utility/legal/privacy-policy\" style=\"color: #1B75BC; text-decoration: underline;\">politica privacidad</a>.</p>"
+              }
+            },
+            "type" : "renditionComponent"
+          }, {
+            "id" : "1dc6bc5f-f024-40c8-862c-b52aec97f2b1",
+            "renditionValue" : {
+              "componentAttributes" : {
+                "richTextValue" : "<p style=\"text-align:center; color:#58595B; font-size:10px; font-weight:500;\">Durch das Absenden des Formulars erkläre ich mich damit einverstanden, dass Iron Mountain meine Daten bearbeitet, um den Zugang zum Kundensupport-Center und wie in der von Iron Mountain beschriebenen <a href=\"https://www.ironmountain.com/de-de/utility/legal/privacy-policy\" style=\"color: #1B75BC; text-decoration: underline;\">Datenschutzrichtlinien</a> zu ermöglichen.</p>"
+              }
+            },
+            "type" : "renditionComponent"
+          } ],
+          "type" : "component"
+        } ],
+        "id" : "21fc313b-f915-476c-8f5a-342ce8a3a357",
+        "regionLabel" : "Column 1",
+        "regionName" : "1",
+        "renditionMap" : { },
+        "type" : "region"
+      } ],
+      "renderPriority" : "NEUTRAL",
+      "renditionMap" : { },
+      "type" : "component"
+    } ],
+    "id" : "ecbc2ce3-a29e-4129-a3fc-5d588bf53a4d",
+    "regionName" : "content",
+    "type" : "region"
+  }, {
+    "components" : [ {
+      "componentAttributes" : {
+        "customHeadTags" : "",
+        "description" : "",
+        "title" : ""
+      },
+      "componentName" : "forceCommunity:seoAssistant",
+      "id" : "bf4de48b-4034-429d-afb2-84fc2f892cc9",
+      "renditionMap" : { },
+      "type" : "component"
+    } ],
+    "id" : "c2c798ab-f0a6-4777-afbe-7ce3e11d599b",
+    "regionName" : "sfdcHiddenRegion",
+    "type" : "region"
+  } ],
+  "themeLayoutType" : "Login",
+  "type" : "view",
+  "viewType" : "self-register"
+}

@@ -24,7 +24,7 @@ private class Test_ClsOppObjects {
         
         insert new SVStatus__c(Name='SVStatusPassed',Amount__c = 24000,OpptType__c='New Deal,Up-Sell/Lift',Stage__c='6 - Setup');
 
-		OpportunityTriggerHandler.skipTriggerExecutionTestClass = true;
+        OpportunityTriggerHandler.skipTriggerExecutionTestClass = true;
         
         clsOppObjects clsOppObj = new clsOppObjects();
         Profile prof = [select Id from profile where Name='IM_Custom Sys Admin']; 
@@ -72,7 +72,7 @@ insert setting; */
         MailingState = 'London',MailingStreet = '745 Atlantic Ave',
         AccountId = acc.id);        
         insert con;
-       	
+        
         //create one more new Contact to by pass "An Opportunity Contact Role with the same Contact already exists" error.
         Contact cont = new Contact(
         MailingCountry='United States',
@@ -116,8 +116,8 @@ insert setting; */
         cusAcc.IM_Account__c = acc.id;
         cusAcc.Source_System__c = 'Other Europe';
         
-		Id IMERecordTypeId = Schema.SObjectType.Opportunity.getRecordTypeInfosByName().get('IME Standard Opportunity').getRecordTypeId();
-		
+        Id IMERecordTypeId = Schema.SObjectType.Opportunity.getRecordTypeInfosByName().get('IME Standard Opportunity').getRecordTypeId();
+        
         Opportunity opp = new Opportunity(name = 'Opportunity4TestMethod', AccountId = acc.id, Source_System__c = 'SKP', 
                                           Billing_Country__c = testCountry.id 
                                         ,Lead_Source_Most_Recent__c = 'x'
@@ -241,7 +241,7 @@ insert setting; */
         lstStrParams.add(opp.IME_Vended_Unvended__c);//18
        /* #16915 lstStrParams.add(String.ValueOf(opp.Vended_del__c));//19
         lstStrParams.add(String.ValueOf(opp.Unvended_del__c));//20 */ 
-        lstStrParams.add(opp.Account_Plan__c);//19
+        //lstStrParams.add(opp.Account_Plan__c);//19
         lstStrParams.add('testingdriverid');//20
         lstStrParams.add(opp.Primary_Product_Line__c);//21
         lstStrParams.add(opp.InSight_Opportunities__c);//22

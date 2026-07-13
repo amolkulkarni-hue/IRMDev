@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Reason_When_Excluded_Win_Loss_Feedback</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+    Exclude_from_Win_Loss_Feedback__c = TRUE,
+    OR(
+       ISPICKVAL(StageName, &quot;5 - Signed/PO in&quot;),
+       ISPICKVAL(StageName, &quot;Lost&quot;)
+    ),
+    ISBLANK(Reason_for_win_loss_exclusion__c)
+)</errorConditionFormula>
+    <errorDisplayField>Reason_for_win_loss_exclusion__c</errorDisplayField>
+    <errorMessage>Please capture the reason you are excluding this deal from win loss feedback</errorMessage>
+</ValidationRule>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Loss_To_Vendor_is_now_required</fullName>
+    <active>true</active>
+    <errorConditionFormula>ISPICKVAL(Loss_To_Vendor__c, &apos;Yes&apos;) &amp;&amp;  ISPICKVAL(New_Vendor__c, &apos;&apos;) &amp;&amp; ($RecordType.Name == &apos;CAC - DP Closure&apos; || $RecordType.Name == &apos;CAC - SKP Shred&apos; || $RecordType.Name == &apos;CAC - SKP RM&apos;)</errorConditionFormula>
+    <errorDisplayField>New_Vendor__c</errorDisplayField>
+    <errorMessage>Please enter the new vendor for losses to vendors.</errorMessage>
+</ValidationRule>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebLink xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Sales_Coach</fullName>
+    <availability>online</availability>
+    <description>Created per case 00599710</description>
+    <displayType>button</displayType>
+    <linkType>javascript</linkType>
+    <masterLabel>Sales Coach</masterLabel>
+    <openType>onClickJavaScript</openType>
+    <protected>false</protected>
+    <url>function showBox() {
+
+var box = new parent.SimpleDialog(&quot;helder&quot;+Math.random(), true);
+parent.box = box;
+
+box.setTitle(&quot;Sales Coach - Stage: {!Opportunity.StageName}&quot;);
+
+box.createDialog();
+box.setWidth(1050);
+box.setContentInnerHTML(&quot;&lt;a href=\&quot;#\&quot; onclick=\&quot;box.hide();\&quot;&gt;Close&lt;/a&gt;&lt;br/&gt;&lt;iframe src =\&quot;/apex/SalesCoachV2?id={!Opportunity.Id}\&quot; height=\&quot;700\&quot; width=\&quot;1025\&quot; frameborder=\&quot;0\&quot; style=\&quot;border:none; width:1025px; margin-left:0; margin-right: auto; height:600px;overflow-x:hidden;\&quot;&gt;&lt;p&gt;Your browser does not support iframes.&lt;/p&gt;&lt;/iframe&gt;&quot;);
+
+box.setupDefaultButtons();
+
+box.show();
+
+}
+
+showBox();</url>
+</WebLink>

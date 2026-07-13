@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebLink xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Commit_to_Forecast</fullName>
+    <availability>online</availability>
+    <displayType>button</displayType>
+    <linkType>javascript</linkType>
+    <masterLabel>Add to Forecast</masterLabel>
+    <openType>onClickJavaScript</openType>
+    <protected>false</protected>
+    <url>if({!Opportunity.IM_Commit_to_Forecast__c}==1){
+alert(&apos;Opportunity has already been added to forecast.&apos;);
+}
+else{
+if(confirm(&quot;PLEASE ENSURE THAT YOUR FORECAST IS UP TO DATE.\n\nClick &apos;OK&apos; to add the opportunity to forecast now.\n\nClick &apos;Cancel&apos; to review and update Revenue Schedule and Net New Revenue Forecast.&quot;)){
+window.location.href=&quot;/apex/OpportunityCommit?oppId={!Opportunity.Id}&quot;;
+}
+else{
+var flag = {!User.Suppress_Custom_Help_Popups__c};
+if(flag==0){
+var url = &quot;/apex/OpportunityCommitHelp?oppId={!Opportunity.Id}&quot;;
+openIntegration(url , &apos;height=250,width=640,resizable=no,toolbar=no,status=no,menubar=no,scrollbars=1&apos;, 2)
+}
+}
+}</url>
+</WebLink>

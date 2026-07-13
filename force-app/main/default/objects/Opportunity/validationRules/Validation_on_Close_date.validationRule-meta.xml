@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Validation_on_Close_date</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+  ISPICKVAL(StageName, &quot;Booking Verification&quot;),
+  ISCHANGED(CloseDate),
+  $Profile.Name &lt;&gt; &quot;System Administrator&quot;
+)</errorConditionFormula>
+    <errorMessage>Close Date can&apos;t be modified.</errorMessage>
+</ValidationRule>

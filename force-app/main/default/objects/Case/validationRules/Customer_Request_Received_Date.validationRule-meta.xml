@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Customer_Request_Received_Date</fullName>
+    <active>true</active>
+    <errorConditionFormula>((RecordType_Name__c = &quot;CLAS - RM&quot;) ||
+  (RecordType_Name__c = &quot;CLAS - Shred&quot;) ||
+  (RecordType_Name__c = &quot;CAC - DP Closure&quot;) ||
+  (RecordType_Name__c = &quot;Retention RM&quot;) ||
+  (RecordType_Name__c = &quot;Retention SH&quot;)) &amp;&amp;
+OR(
+	(
+	NOT(ISCHANGED(Open_Tasks__c)) &amp;&amp;
+	ISCHANGED(Customer_Request_Received_Date__c) &amp;&amp;
+	NOT(ISBLANK(Customer_Request_Received_Date__c)) &amp;&amp;
+	DATEVALUE(Customer_Request_Received_Date__c) &gt; TODAY() &amp;&amp;
+	(
+	  ISBLANK(PRIORVALUE(Customer_Request_Received_Date__c)) ||
+	  DATEVALUE(Customer_Request_Received_Date__c) != DATEVALUE(PRIORVALUE(Customer_Request_Received_Date__c))
+	)
+	),
+    (	
+	ISNEW() &amp;&amp;
+	NOT(ISBLANK(Customer_Request_Received_Date__c)) &amp;&amp;
+	DATEVALUE(Customer_Request_Received_Date__c)&gt; TODAY() 
+	) 
+)</errorConditionFormula>
+    <errorDisplayField>Customer_Request_Received_Date__c</errorDisplayField>
+    <errorMessage>Customer Request Received Date must be current or past date. It cannot be in the Future.</errorMessage>
+</ValidationRule>

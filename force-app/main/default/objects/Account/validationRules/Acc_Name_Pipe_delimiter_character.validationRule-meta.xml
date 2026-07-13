@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Acc_Name_Pipe_delimiter_character</fullName>
+    <active>true</active>
+    <description>Prevent Users from updating or creating Accounts with a Name that includes the pipe &apos;|&apos; delimiter character.</description>
+    <errorConditionFormula>AND(NOT(AND(ISNEW(), IM_Lead_Conversion_Flag__c)), CONTAINS(Name , &apos;|&apos;))</errorConditionFormula>
+    <errorMessage>Character &apos;|&apos; is not allowed for name in Account. Remove &apos;|&apos; from Account Name and try again</errorMessage>
+</ValidationRule>

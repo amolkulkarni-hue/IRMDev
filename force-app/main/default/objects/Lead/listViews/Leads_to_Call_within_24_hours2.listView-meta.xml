@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Leads_to_Call_within_24_hours2</fullName>
+    <booleanFilter>1 AND (2 OR 3) AND 4 AND 5</booleanFilter>
+    <columns>FULL_NAME</columns>
+    <columns>LEAD.COMPANY</columns>
+    <columns>LEAD.STATE</columns>
+    <columns>LEAD.EMAIL</columns>
+    <columns>LEAD.STATUS</columns>
+    <columns>LEAD.CREATED_DATE</columns>
+    <columns>CORE.USERS.ALIAS</columns>
+    <columns>LEAD.UNREAD</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>LEAD.STATUS</field>
+        <operation>equals</operation>
+        <value>New,New Activity</value>
+    </filters>
+    <filters>
+        <field>LEAD.LEAD_SOURCE</field>
+        <operation>equals</operation>
+        <value>Click to Call,Contact Us Form,Inbound NBI,NA - Customer Service Lead</value>
+    </filters>
+    <filters>
+        <field>LEAD.LEAD_SOURCE</field>
+        <operation>equals</operation>
+        <value>Online Display Advertising,Referral,Search Advertising</value>
+    </filters>
+    <filters>
+        <field>LEAD.CREATED_DATE</field>
+        <operation>greaterOrEqual</operation>
+        <value>1/1/2013 12:00 AM</value>
+    </filters>
+    <filters>
+        <field>IM_Lead_Stage__c</field>
+        <operation>equals</operation>
+        <value>2-Marketing Qual</value>
+    </filters>
+    <label>Leads To Call Within 24 hours</label>
+    <sharedTo>
+        <roleAndSubordinates>IMNAPhysical</roleAndSubordinates>
+    </sharedTo>
+</ListView>

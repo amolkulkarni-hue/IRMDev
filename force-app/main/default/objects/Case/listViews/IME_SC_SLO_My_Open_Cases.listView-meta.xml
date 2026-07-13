@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IME_SC_SLO_My_Open_Cases</fullName>
+    <columns>IME_SC_Rush__c</columns>
+    <columns>CASES.CASE_NUMBER</columns>
+    <columns>CASES.SUBJECT</columns>
+    <columns>CASES.STATUS</columns>
+    <columns>IME_SC_Category__c</columns>
+    <columns>IME_SC_Sub_Category__c</columns>
+    <columns>CASES.PRIORITY</columns>
+    <columns>IME_SC_Request_Type__c</columns>
+    <columns>CASES.LAST_UPDATE</columns>
+    <columns>CASES.CREATED_DATE</columns>
+    <columns>NAME</columns>
+    <columns>Customer_ID__c</columns>
+    <filterScope>Mine</filterScope>
+    <filters>
+        <field>CASES.CLOSED</field>
+        <operation>equals</operation>
+        <value>0</value>
+    </filters>
+    <filters>
+        <field>IME_SC_Country__c</field>
+        <operation>equals</operation>
+        <value>Slovakia (Slovak Republic)</value>
+    </filters>
+    <label>IME SC SVK My Open Cases</label>
+    <language>en_US</language>
+    <sharedTo>
+        <group>IME_SC_SLO_GRP_COMPLAINTS</group>
+        <group>IME_SC_SLO_GRP_INDEXING</group>
+        <group>IME_SC_SLO_GRP_NON_ORDER</group>
+        <group>IME_SC_SLO_GRP_ORDERS</group>
+        <group>IME_SC_SLO_GRP_RETENTION</group>
+        <group>IME_SC_SLO_GRP_SENSITIVE</group>
+    </sharedTo>
+</ListView>

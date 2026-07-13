@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>QTB_GST_Supply_Type__c</fullName>
+    <description>//Gitlab#19517 - This value population is only for Legal country = &apos;India&apos; else for other countries it will be as null</description>
+    <externalId>false</externalId>
+    <formula>/*Gitlab#19517*/
+/*This value population is only for Legal country = &apos;India&apos; else for other countries it will be as null*/
+IF(
+   ISPICKVAL(QTB_Legal_Entity_Country__c, &apos;India&apos;),
+   IF(
+        BillingCountry != &apos;India&apos;,
+        &apos;EXPWP&apos;,
+        IF(
+            QTB_SEZ_Customer__c = FALSE,
+            IF(
+                (QTB_Tax_Registration__c != &apos;URP&apos;) &amp;&amp; (NOT(ISNULL(QTB_Tax_Registration__c) || ISBLANK(QTB_Tax_Registration__c))),
+                &apos;B2B&apos;,
+                &apos;B2C&apos;
+            ),
+            IF(
+                ISPICKVAL(SBQQ__TaxExempt__c, &apos;Yes&apos;),
+                &apos;SEZWOP&apos;,
+                &apos;SEZWP&apos;
+            )
+        )
+    ),
+	/*This is to populate &apos;B2G&apos; for Greece if Contract number is not null - Gitlab #29135 else for all other countries it will be null*/
+    IF(
+        ISPICKVAL(QTB_Legal_Entity_Country__c, &apos;Greece&apos;) &amp;&amp; (NOT(ISBLANK(QTB_ContractNumber__c))), 
+        &apos;B2G&apos;,
+
+        /*This is to populate &apos;B2C&apos; for Turkey if Tax registration is &gt; 10 characters - Gitlab #34161 else for all other countries it will be null*/
+        IF(
+		   ISPICKVAL(QTB_Legal_Entity_Country__c, &apos;Turkey&apos;) &amp;&amp; (LEN(QTB_Tax_Registration__c) &gt; 10),
+            &apos;B2C&apos;,
+            null
+        )
+    )
+)</formula>
+    <label>GST Supply Type</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

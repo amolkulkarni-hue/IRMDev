@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>GSC_Resolved_Status_Root_Cause_Field_Req</fullName>
+    <active>true</active>
+    <description>The Root Cause is required when Case status is Resolved.The epic for reference #1008#14967. The rule updated for CAC Executive Escalations record type. For ref, check user story #27296 on Gitlab.</description>
+    <errorConditionFormula>AND(
+OR(RecordType_Name__c =&quot;Global Service Case&quot;,RecordType_Name__c =&quot;CAC Executive Escalations&quot;),
+ISPICKVAL( GSC_Root_Cause__c, &quot;&quot; ),
+ISPICKVAL( Status, &quot;Resolved&quot; )
+)</errorConditionFormula>
+    <errorDisplayField>GSC_Root_Cause__c</errorDisplayField>
+    <errorMessage>Root Cause is required to resolve the case.</errorMessage>
+</ValidationRule>

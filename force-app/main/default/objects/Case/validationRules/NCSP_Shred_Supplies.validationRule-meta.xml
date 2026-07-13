@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NCSP_Shred_Supplies</fullName>
+    <active>true</active>
+    <description>65-Gallon Ordered, Consoles Ordered, Supply Order Number, Frequency and Method are required when Shred - Date Visit Profile is populated</description>
+    <errorConditionFormula>($RecordType.Name == &apos;NCSP: SKP New Customer Setup&apos; || $RecordType.Name == &apos;NCSP: SKP Department Add Only&apos; ) &amp;&amp; ISPICKVAL( NCSP_Service_line__c ,&apos;Shred&apos;) &amp;&amp; ISBLANK(Shred_Quantity_65_Gallon_Ordered__c ) &amp;&amp;  ISBLANK(Shred_Quantity_Consoles_Ordered__c ) &amp;&amp;
+ISBLANK( Supply_Order_Number__c  ) &amp;&amp;
+ISPICKVAL (Shred_Service_Frequency__c,&apos;&apos;   ) &amp;&amp;
+ISPICKVAL ( Shred_Service_Method__c , &apos;&apos; )
+ &amp;&amp; NOT(ISBLANK( Date_Shred_Visit_Profile_Created__c ))</errorConditionFormula>
+    <errorMessage>65-Gallon Ordered, Consoles Ordered, Supply Order Number, Frequency and Method are required when Shred - Date Visit Profile is populated</errorMessage>
+</ValidationRule>

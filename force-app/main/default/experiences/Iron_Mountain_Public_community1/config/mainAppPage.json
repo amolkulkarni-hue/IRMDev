@@ -1,0 +1,11 @@
+{
+  "cmsSettings" : { },
+  "currentThemeId" : "eb6006a2-9597-41a4-b986-13d0e95595ee",
+  "headMarkup" : "<!--reCaptcha v2 Checkbox-->\n<script>\n    var verifyCallback = function(token) {\n        document.dispatchEvent(new CustomEvent('grecaptchaVerified', {'detail': {response: token}}));\n    };\n    var expireCallback = function() {\n        document.dispatchEvent(new Event('grecaptchaExpired'));\n    };\n    var errorCallback = function() {\n        document.dispatchEvent(new Event('grecaptchaError'));\n    };\n    document.addEventListener('grecaptchaRender', function(e) {\n        grecaptcha.render(e.detail.element, {\n            'sitekey': '6Lf_OeEZAAAAABDL6V3YPqhSWueDcNn4mSluJJyc',\n            'callback': verifyCallback,\n            'expired-callback': expireCallback,\n            'error-callback': errorCallback\n        });\n    });\n    document.addEventListener('grecaptchaReset', function() {\n        grecaptcha.reset();\n    }); \n</script>\n<script src='https://www.google.com/recaptcha/api.js?render=explicit' async defer></script>\n<link rel=\"apple-touch-icon\" sizes=\"180x180\" href=\"/resource/PRM_Community_Assets/icons/apple-touch-icon.png\" />\n    <link rel=\"icon\" type=\"image/png\" href=\"/resource/PRM_Community_Assets/icons/favicon-32x32.png\" sizes=\"32x32\" />\n    <link rel=\"icon\" type=\"image/png\" href=\"/resource/PRM_Community_Assets/icons/favicon-16x16.png\" sizes=\"16x16\" />\n\n<link rel=\"shortcut icon\" href=\"https://customersupport.ironmountain.com/irmpubliccommunity/favicon.ico?v=2\">",
+  "id" : "7e024fb9-9cea-452c-9152-dc5566ec182d",
+  "isLockerServiceEnabled" : true,
+  "isRelaxedCSPLevel" : true,
+  "label" : "main",
+  "templateName" : "Service Community Template",
+  "type" : "appPage"
+}

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Qual_DecisionProcess_Required</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+  NOT(Bypass_Validation__c),
+  ISCHANGED(StageName),
+  ISPICKVAL(PRIORVALUE(StageName), &apos;Qualification&apos;),
+  ISPICKVAL(StageName, &apos;Solutioning&apos;),
+  Decision_Process_Defined__c = FALSE
+)</errorConditionFormula>
+    <errorDisplayField>Decision_Process_Defined__c</errorDisplayField>
+    <errorMessage>Decision Process Defined must be confirmed before advancing from Qualification.</errorMessage>
+</ValidationRule>

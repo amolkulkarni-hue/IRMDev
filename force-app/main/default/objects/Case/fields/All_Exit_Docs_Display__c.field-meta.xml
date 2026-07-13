@@ -2,7 +2,8 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>All_Exit_Docs_Display__c</fullName>
     <description>Text formula showing exit document completion status. Add to the Related Cases list on Opportunity alongside Case_Completion_Display__c.</description>
-    <formula>IF(All_Exit_Docs_Final__c, "✔ All Final", "⏳ Docs Pending")</formula>
+    <externalId>false</externalId>
+    <formula>IF(All_Exit_Docs_Final__c, &quot;✔ All Final&quot;, &quot;⏳ Docs Pending&quot;)</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Exit Docs Status</label>
     <required>false</required>

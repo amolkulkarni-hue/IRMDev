@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Restrict_Acc_Segment_SubSegment_on_GIs</fullName>
+    <active>true</active>
+    <description>#28092: Restrict Account Segment and Sub Segment on GI Accounts if related IMGA Account has Global Industries as True. Only at IMGA the values can be modified</description>
+    <errorConditionFormula>AND(
+
+NOT($Setup.Metadata_Activation_Settings__c.Disable_VR__c &amp;&amp; OR(ISBLANK($Setup.Metadata_Activation_Settings__c.SObject_API_Name__c),
+CONTAINS($Setup.Metadata_Activation_Settings__c.SObject_API_Name__c, &apos;Account&apos;))),
+
+OR(
+AND(
+ISPICKVAL(IM_Hierarchy_Level__c,&apos;Sales (Site)&apos;),
+ISPICKVAL(Parent.Parent.IM_Hierarchy_Level__c,&apos;IM Group (IMGA)&apos;),
+Parent.Parent.Global_Account__c,
+OR(ISCHANGED(Account_Segment__c),ISCHANGED(Account_Sub_Segment__c))
+),
+
+AND(
+ISPICKVAL(IM_Hierarchy_Level__c,&apos;Country Parent&apos;),
+ISPICKVAL(Parent.IM_Hierarchy_Level__c,&apos;IM Group (IMGA)&apos;),
+Parent.Global_Account__c,
+OR(ISCHANGED(Account_Segment__c),ISCHANGED(Account_Sub_Segment__c))
+)
+),
+$User.UITheme &lt;&gt;&apos;Theme2&apos;,
+$User.UITheme &lt;&gt; &apos;Theme3&apos;
+)</errorConditionFormula>
+    <errorMessage>This is a GI Account. Account Segment &amp; Sub-Segment can only be edited at the IMGA level on GI Accounts.</errorMessage>
+</ValidationRule>

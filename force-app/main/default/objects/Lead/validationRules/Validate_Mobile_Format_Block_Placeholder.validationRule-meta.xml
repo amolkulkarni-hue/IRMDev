@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Validate_Mobile_Format_Block_Placeholder</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+    NOT($Permission.Bypass_Lead_Validation),
+    NOT(ISBLANK(MobilePhone)),
+    OR(
+        NOT(
+            REGEX(
+                MobilePhone,
+                &quot;^\\+?[0-9\\s\\-\\.\\(\\)xX#]{6,30}$&quot;
+            )
+        ),
+        CONTAINS(LOWER(MobilePhone), &quot;xxxx&quot;),
+        CONTAINS(LOWER(MobilePhone), &quot;0000&quot;),
+        CONTAINS(LOWER(MobilePhone), &quot;1111&quot;),
+        CONTAINS(LOWER(MobilePhone), &quot;9999&quot;),
+        CONTAINS(LOWER(MobilePhone), &quot;unknown&quot;),
+        CONTAINS(LOWER(MobilePhone), &quot;none&quot;),
+        CONTAINS(LOWER(MobilePhone), &quot;n/a&quot;),
+        CONTAINS(LOWER(MobilePhone), &quot;test&quot;),
+        REGEX(MobilePhone, &quot;^[\\s\\-\\.\\(\\)]+$&quot;)
+    )
+)</errorConditionFormula>
+    <errorDisplayField>MobilePhone</errorDisplayField>
+    <errorMessage>The mobile number entered is not valid or appears to be a placeholder. Please enter a real mobile number. International format is preferred (e.g., +1 617 555 1234 or +44 7700 900123).</errorMessage>
+</ValidationRule>

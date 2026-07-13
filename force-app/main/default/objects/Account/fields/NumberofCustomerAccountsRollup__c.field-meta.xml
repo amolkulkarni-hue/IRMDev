@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NumberofCustomerAccountsRollup__c</fullName>
+    <description>Rollup Filed for status of &quot;Active&quot; or &quot;Past Due 45&quot; or &quot;Suspended&quot; or &quot;Active - On Stop&quot; or &quot;Change of Status in Progress&quot; Customer Accounts</description>
+    <label>NumberofActiveCARollup</label>
+    <summaryFilterItems>
+        <field>IM_Customer_Account__c.IM_Status__c</field>
+        <operation>contains</operation>
+        <value>Active, Past Due 45, Suspended, Active - On Stop, Change of Status in Progress</value>
+    </summaryFilterItems>
+    <summaryForeignKey>IM_Customer_Account__c.IM_Account__c</summaryForeignKey>
+    <summaryOperation>count</summaryOperation>
+    <trackHistory>false</trackHistory>
+    <type>Summary</type>
+</CustomField>

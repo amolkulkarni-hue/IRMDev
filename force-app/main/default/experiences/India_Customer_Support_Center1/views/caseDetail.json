@@ -1,0 +1,247 @@
+{
+  "appPageId" : "3dcdb5ae-4ff8-4c20-a318-e81c2e4d116e",
+  "componentName" : "siteforce:sldsTwoCol84Layout",
+  "dataProviders" : [ ],
+  "id" : "b6fde158-baae-4085-9515-8b5168ecc386",
+  "label" : "Case Detail",
+  "regions" : [ {
+    "components" : [ {
+      "componentAttributes" : {
+        "recordId" : "{!recordId}"
+      },
+      "componentName" : "forceCommunity:recordHeadline",
+      "id" : "098ff5d4-00b9-4d49-8199-90765f4455c8",
+      "renderPriority" : "NEUTRAL",
+      "renditionMap" : { },
+      "type" : "component"
+    } ],
+    "id" : "cb564c7e-7c49-4f2d-803f-6868cab35a7d",
+    "regionName" : "header",
+    "type" : "region"
+  }, {
+    "components" : [ {
+      "componentAttributes" : {
+        "tabsetConfig" : {
+          "UUID" : "e2634ec8-e3a6-4103-8bf8-3805b51a88fb",
+          "activeTab" : "",
+          "tabs" : [ {
+            "UUID" : "6ffc86ad-d780-421f-8198-89795c9c84a6",
+            "allowGuestUser" : false,
+            "locked" : false,
+            "seedComponents" : [ ],
+            "tabKey" : "e9c2e",
+            "tabName" : "Feed ( Chatter )"
+          }, {
+            "UUID" : "6103be97-89b6-4659-8f63-2365ccd91fab",
+            "allowGuestUser" : false,
+            "locked" : false,
+            "seedComponents" : [ ],
+            "tabKey" : "76190",
+            "tabName" : "詳細資料"
+          } ],
+          "useOverflowMenu" : true
+        }
+      },
+      "componentName" : "forceCommunity:tabLayout",
+      "id" : "e2634ec8-e3a6-4103-8bf8-3805b51a88fb",
+      "regions" : [ {
+        "components" : [ {
+          "componentAttributes" : {
+            "agentBubbleColor" : "rgb(20, 71, 125)",
+            "agentCommentFontColor" : "rgb(255, 255, 255)",
+            "agentDateTimeFontColor" : "rgb(255, 255, 255)",
+            "agentLabel" : "Iron Mountain Support Team",
+            "agentTitleFontColor" : "rgb(255, 255, 255)",
+            "buttonBorderRadius" : "20",
+            "buttonColor" : "rgb(255, 255, 255)",
+            "buttonHoverColor" : "rgb(255, 255, 255)",
+            "buttonTextColor" : "rgb(255, 255, 255)",
+            "caseField1" : "Id",
+            "caseField2" : "Id",
+            "caseHeader1FontSize" : "12",
+            "caseHeader1FontWeight" : "300",
+            "caseHeader2FontSize" : "12",
+            "caseHeader2FontWeight" : "300",
+            "dateTimeFontWeight" : "light",
+            "fontInput" : "12",
+            "submitLabel" : "Submit",
+            "textBoxBorderRadius" : "20",
+            "userBubbleColor" : "rgb(247, 247, 254)",
+            "userCommentFontColor" : "rgb(88, 89, 91)",
+            "userDateTimeFontColor" : "rgb(88, 89, 91)",
+            "userFirstName" : "{!CurrentUser.firstName}",
+            "userLastName" : "{!CurrentUser.lastName}",
+            "userTitleFontColor" : "rgb(255, 255, 255)"
+          },
+          "componentName" : "c:nfCaseDetail",
+          "id" : "afa9000c-2835-4412-9e51-5d18d4a47782",
+          "renderPriority" : "NEUTRAL",
+          "renditionMap" : {
+            "in" : "2cb35e1a-4236-47c7-b18a-07d0bca0fb96",
+            "ko" : "2e41532e-fe94-44a1-971d-5dc9aa053dd5",
+            "th" : "ae45bded-fc72-4d2b-b881-6967ed549cf2",
+            "zh_tw" : "016d2635-7b74-4ef4-8199-74f6adab9b70"
+          },
+          "renditions" : [ {
+            "id" : "2cb35e1a-4236-47c7-b18a-07d0bca0fb96",
+            "renditionValue" : {
+              "componentAttributes" : {
+                "submitLabel" : "Kirim"
+              }
+            },
+            "type" : "renditionComponent"
+          }, {
+            "id" : "ae45bded-fc72-4d2b-b881-6967ed549cf2",
+            "renditionValue" : {
+              "componentAttributes" : {
+                "submitLabel" : "ส่ง"
+              }
+            },
+            "type" : "renditionComponent"
+          }, {
+            "id" : "2e41532e-fe94-44a1-971d-5dc9aa053dd5",
+            "renditionValue" : {
+              "componentAttributes" : {
+                "submitLabel" : "제출"
+              }
+            },
+            "type" : "renditionComponent"
+          }, {
+            "id" : "016d2635-7b74-4ef4-8199-74f6adab9b70",
+            "renditionValue" : {
+              "componentAttributes" : {
+                "submitLabel" : "提交"
+              }
+            },
+            "type" : "renditionComponent"
+          } ],
+          "type" : "component"
+        } ],
+        "id" : "6ffc86ad-d780-421f-8198-89795c9c84a6",
+        "regionLabel" : "Feed",
+        "regionName" : "e9c2e",
+        "renditionMap" : {
+          "in" : "49fb4eb1-dbfc-4cfa-9162-3930cf062af2",
+          "ko" : "1b6bc0ae-c7a8-44d5-adcb-6a84ebda6e10",
+          "th" : "f5dbedbc-54a9-452f-bfbe-2dfa1ceed391",
+          "zh_tw" : "98896fa2-0019-41c4-84ad-a11da26222ed"
+        },
+        "renditions" : [ {
+          "id" : "49fb4eb1-dbfc-4cfa-9162-3930cf062af2",
+          "renditionValue" : {
+            "regionLabel" : "Memberi makan"
+          },
+          "type" : "renditionComponent"
+        }, {
+          "id" : "f5dbedbc-54a9-452f-bfbe-2dfa1ceed391",
+          "renditionValue" : {
+            "regionLabel" : "เนื้อหาที่แสดง"
+          },
+          "type" : "renditionComponent"
+        }, {
+          "id" : "1b6bc0ae-c7a8-44d5-adcb-6a84ebda6e10",
+          "renditionValue" : {
+            "regionLabel" : "피드"
+          },
+          "type" : "renditionComponent"
+        }, {
+          "id" : "98896fa2-0019-41c4-84ad-a11da26222ed",
+          "renditionValue" : {
+            "regionLabel" : "餵食"
+          },
+          "type" : "renditionComponent"
+        } ],
+        "type" : "region"
+      }, {
+        "components" : [ {
+          "componentAttributes" : {
+            "recordId" : "{!recordId}"
+          },
+          "componentName" : "forceCommunity:recordDetail",
+          "id" : "a2b12ebb-82b5-48d6-b800-418ca43ae2a7",
+          "renderPriority" : "NEUTRAL",
+          "renditionMap" : { },
+          "type" : "component"
+        } ],
+        "id" : "6103be97-89b6-4659-8f63-2365ccd91fab",
+        "regionLabel" : "Detail",
+        "regionName" : "76190",
+        "renditionMap" : {
+          "in" : "d540ad35-e967-45d3-8000-72ba2d81255f",
+          "ko" : "8b80556c-42fa-4fd8-9507-b02276ef1858",
+          "th" : "f478b8b2-55f6-4406-b0a4-a75251d775ef",
+          "zh_tw" : "054e69f1-bb5b-46f5-a8ce-2631d5debe56"
+        },
+        "renditions" : [ {
+          "id" : "d540ad35-e967-45d3-8000-72ba2d81255f",
+          "renditionValue" : {
+            "regionLabel" : "Detail"
+          },
+          "type" : "renditionComponent"
+        }, {
+          "id" : "f478b8b2-55f6-4406-b0a4-a75251d775ef",
+          "renditionValue" : {
+            "regionLabel" : "รายละเอียด"
+          },
+          "type" : "renditionComponent"
+        }, {
+          "id" : "8b80556c-42fa-4fd8-9507-b02276ef1858",
+          "renditionValue" : {
+            "regionLabel" : "세부 정보"
+          },
+          "type" : "renditionComponent"
+        }, {
+          "id" : "054e69f1-bb5b-46f5-a8ce-2631d5debe56",
+          "renditionValue" : {
+            "regionLabel" : "詳細資料"
+          },
+          "type" : "renditionComponent"
+        } ],
+        "type" : "region"
+      } ],
+      "renderPriority" : "NEUTRAL",
+      "renditionMap" : { },
+      "type" : "component"
+    } ],
+    "id" : "06c3d103-7ac0-46bb-aba0-02d762067d80",
+    "regionName" : "content",
+    "type" : "region"
+  }, {
+    "id" : "3938bd16-a0d6-4283-9c12-72a7da52b607",
+    "regionName" : "footer",
+    "type" : "region"
+  }, {
+    "components" : [ {
+      "componentAttributes" : {
+        "customHeadTags" : "",
+        "description" : "",
+        "title" : "{!Record._Object}: {!Record._Title}"
+      },
+      "componentName" : "forceCommunity:seoAssistant",
+      "id" : "008ee722-3ec4-4aa2-9fd9-d44a917651a4",
+      "renditionMap" : { },
+      "type" : "component"
+    } ],
+    "id" : "91f24b35-4c71-49ed-b83e-626d4971ca7e",
+    "regionName" : "sfdcHiddenRegion",
+    "type" : "region"
+  }, {
+    "components" : [ {
+      "componentAttributes" : {
+        "recordId" : "{!recordId}",
+        "width" : "MEDIUM"
+      },
+      "componentName" : "forceCommunity:relatedRecords",
+      "id" : "7b383ed9-ba79-4bcd-969e-51222b9cdb74",
+      "renderPriority" : "NEUTRAL",
+      "renditionMap" : { },
+      "type" : "component"
+    } ],
+    "id" : "1020d501-e0a5-4a37-b850-83fa8a774dff",
+    "regionName" : "sidebar",
+    "type" : "region"
+  } ],
+  "themeLayoutType" : "2yMXB5LOLv2kZzfQg2HA434AHrDBTx",
+  "type" : "view",
+  "viewType" : "detail-500"
+}

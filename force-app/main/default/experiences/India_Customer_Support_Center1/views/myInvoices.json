@@ -1,0 +1,295 @@
+{
+  "appPageId" : "3dcdb5ae-4ff8-4c20-a318-e81c2e4d116e",
+  "componentName" : "siteforce:dynamicLayout",
+  "dataProviders" : [ ],
+  "id" : "a2a78c7a-2483-4574-ba14-f647b5cae89c",
+  "label" : "My Invoices",
+  "regions" : [ {
+    "components" : [ {
+      "componentAttributes" : {
+        "background" : "background: rgba(0,0,0,0)",
+        "backgroundOverlay" : "rgba(0,0,0,0.5)",
+        "contentAreaWidth" : 100,
+        "sectionConfig" : {
+          "UUID" : "10f151bc-9343-4af4-95a4-fee6698ac819",
+          "columns" : [ {
+            "UUID" : "731a31e5-8861-4889-8f8b-d577a919bcef",
+            "columnKey" : "1",
+            "columnName" : "Column 1",
+            "columnWidth" : "12",
+            "seedComponents" : [ ]
+          } ]
+        },
+        "sectionHeight" : 300
+      },
+      "componentName" : "forceCommunity:section",
+      "id" : "10f151bc-9343-4af4-95a4-fee6698ac819",
+      "regions" : [ {
+        "components" : [ {
+          "componentAttributes" : {
+            "richTextValue" : "<div class=\"pageHeadings\">\n    <div class=\"pageHeadingsTitle\">My Invoices</div>\n    <div class=\"pageHeadingsSubTitle\">View details of your most recent invoices below</div>\n</div>"
+          },
+          "componentName" : "forceCommunity:htmlBlock",
+          "id" : "0782a657-f6ba-411d-89f7-3a64955cba57",
+          "renderPriority" : "NEUTRAL",
+          "renditionMap" : {
+            "in" : "12eeef5a-c585-4d49-b559-a7499c9ea673",
+            "ko" : "13703f65-2eda-4148-b67c-68d40bcd4538",
+            "th" : "9e7e6221-2d85-4a44-9e83-7b58192d95d2",
+            "zh_tw" : "8c678b7e-fcf3-418d-9d7e-8848fd5ee8f9"
+          },
+          "renditions" : [ {
+            "id" : "12eeef5a-c585-4d49-b559-a7499c9ea673",
+            "renditionValue" : {
+              "componentAttributes" : {
+                "richTextValue" : "<div class=\"pageHeadings\">\n    <div class=\"pageHeadingsTitle\">Faktur Saya</div>\n    <div class=\"pageHeadingsSubTitle\">Lihat detail faktur terbaru Anda di bawah ini</div>\n</div>"
+              }
+            },
+            "type" : "renditionComponent"
+          }, {
+            "id" : "9e7e6221-2d85-4a44-9e83-7b58192d95d2",
+            "renditionValue" : {
+              "componentAttributes" : {
+                "richTextValue" : "<div class=\"pageHeadings\">\n    <div class=\"pageHeadingsTitle\">ใบแจ้งหนี้ของฉัน</div>\n    <div class=\"pageHeadingsSubTitle\">ดูรายละเอียดใบแจ้งหนี้ล่าสุดของคุณด้านล่าง</div>\n</div>"
+              }
+            },
+            "type" : "renditionComponent"
+          }, {
+            "id" : "13703f65-2eda-4148-b67c-68d40bcd4538",
+            "renditionValue" : {
+              "componentAttributes" : {
+                "richTextValue" : "<div class=\"pageHeadings\">\n    <div class=\"pageHeadingsTitle\">내 인보이스</div>\n    <div class=\"pageHeadingsSubTitle\">가장 최근 인보이스의 상세 내역을 아래에서 확인하세요</div>\n</div>"
+              }
+            },
+            "type" : "renditionComponent"
+          }, {
+            "id" : "8c678b7e-fcf3-418d-9d7e-8848fd5ee8f9",
+            "renditionValue" : {
+              "componentAttributes" : {
+                "richTextValue" : "<div class=\"pageHeadings\">\n    <div class=\"pageHeadingsTitle\">我的發票</div>\n    <div class=\"pageHeadingsSubTitle\">在下方檢視您近期發票的詳細資料</div>\n</div>"
+              }
+            },
+            "type" : "renditionComponent"
+          } ],
+          "type" : "component"
+        }, {
+          "componentAttributes" : {
+            "INVOICESORTDATEFIELD" : "invoice_date",
+            "ORDERSORTDATEFIELD" : "deliveryDateTime",
+            "emptyMessage" : "You don't have any recent invoices.",
+            "endDateLabel" : "End Date",
+            "filterByLabel" : "Filter by service date range",
+            "jsonConfiguration" : "[ { \"label\": \"L1 Account Code\", \"fieldName\": \"customer_number\", \"sortable\": \"true\" }, { \"label\": \"Invoice Number\", \"fieldName\": \"invoice_number\", \"sortable\": \"true\" }, { \"label\": \"Invoice Date\", \"fieldName\": \"invoice_date\", \"type\": \"date\", \"sortable\": \"true\", \"typeAttributes\": { \"day\": \"numeric\", \"month\": \"short\", \"year\": \"numeric\" } }, { \"label\": \"Invoice total\", \"fieldName\": \"invoiced_loc_sum\", \"sortable\": \"true\", \"type\": \"currency\", \"cellAttributes\": { \"alignment\": \"left\" } }, { \"label\": \"Invoice due date\", \"fieldName\": \"invoice_due_date\", \"type\": \"date\", \"sortable\": \"true\", \"typeAttributes\": { \"day\": \"numeric\", \"month\": \"short\", \"year\": \"numeric\" } } ]",
+            "noSearchResultsFoundMessageLabel" : "That didn't return any results. Try again.",
+            "recordsToRetrieve" : "Invoices",
+            "searchLabel" : "Search",
+            "searchPlaceholder" : "....",
+            "showFullTable" : true,
+            "startDateLabel" : "Start Date"
+          },
+          "componentName" : "c:nf_invoicesWindow",
+          "id" : "96e444f9-8f38-47bc-8e4a-36902fbcffec",
+          "renderPriority" : "NEUTRAL",
+          "renditionMap" : {
+            "en_ie" : "d9013cd2-35ff-4758-8b62-03c02e5204ce",
+            "in" : "6c87d3d6-7472-4662-a042-611d1eec9b54",
+            "ko" : "a54f4903-4e61-4596-bbe2-6a455e4f380c",
+            "th" : "5b4e70e0-7f0f-43a4-a219-b21fbf8bd330",
+            "zh_tw" : "b07e7b07-e802-4481-93cc-78d124228868"
+          },
+          "renditions" : [ {
+            "id" : "6c87d3d6-7472-4662-a042-611d1eec9b54",
+            "renditionValue" : {
+              "componentAttributes" : {
+                "emptyMessage" : "Anda tidak memiliki faktur terbaru.",
+                "endDateLabel" : "Tanggal Berakhir",
+                "filterByLabel" : "Tanggal Mulai (Bidang pemilihan tanggal untuk mulai dan selesai)",
+                "jsonConfiguration" : "[ { \"label\": \"ID Pelanggan/Kode Akun\", \"fieldName\": \"customer_number\", \"sortable\": \"true\" }, { \"label\": \"Nomor Faktur\", \"fieldName\": \"invoice_number\", \"sortable\": \"true\" }, { \"label\": \"Tanggal Faktur\", \"fieldName\": \"invoice_date\", \"type\": \"date\", \"sortable\": \"true\", \"typeAttributes\": { \"day\": \"numeric\", \"month\": \"short\", \"year\": \"numeric\" } }, { \"label\": \"Total faktur\", \"fieldName\": \"invoiced_loc_sum\", \"sortable\": \"true\", \"type\": \"currency\", \"cellAttributes\": { \"alignment\": \"left\" } }, { \"label\": \"Tanggal jatuh tempo faktur\", \"fieldName\": \"invoice_due_date\", \"type\": \"date\", \"sortable\": \"true\", \"typeAttributes\": { \"day\": \"numeric\", \"month\": \"short\", \"year\": \"numeric\" } } ]",
+                "noSearchResultsFoundMessageLabel" : "Tidak ada hasil apa pun. Coba lagi.",
+                "searchLabel" : "Cari (Cari data di kolom)",
+                "startDateLabel" : "Tanggal Mulai"
+              }
+            },
+            "type" : "renditionComponent"
+          }, {
+            "id" : "5b4e70e0-7f0f-43a4-a219-b21fbf8bd330",
+            "renditionValue" : {
+              "componentAttributes" : {
+                "emptyMessage" : "คุณไม่มีใบแจ้งหนี้ใดๆ ล่าสุด",
+                "endDateLabel" : "วันที่สิ้นสุด",
+                "filterByLabel" : "กรองตามช่วงวันที่ให้บริการ)",
+                "jsonConfiguration" : "[ { \"label\": \"ID ลูกค้า/รหัสบัญชี\", \"fieldName\": \"customer_number\", \"sortable\": \"true\" }, { \"label\": \"หมายเลขใบแจ้งหนี้\", \"fieldName\": \"invoice_number\", \"sortable\": \"true\" }, { \"label\": \"วันที่ใบแจ้งหนี้\", \"fieldName\": \"invoice_date\", \"type\": \"date\", \"sortable\": \"true\", \"typeAttributes\": { \"day\": \"numeric\", \"month\": \"short\", \"year\": \"numeric\" } }, { \"label\": \"ใบแจ้งหนี้ทั้งหมด\", \"fieldName\": \"invoiced_loc_sum\", \"sortable\": \"true\", \"type\": \"currency\", \"cellAttributes\": { \"alignment\": \"left\" } }, { \"label\": \"วันครบกำหนดออกใบแจ้งหนี้\", \"fieldName\": \"invoice_due_date\", \"type\": \"date\", \"sortable\": \"true\", \"typeAttributes\": { \"day\": \"numeric\", \"month\": \"short\", \"year\": \"numeric\" } } ]",
+                "noSearchResultsFoundMessageLabel" : "ไม่พบผลลัพธ์ใดๆ ลองอีกครั้ง",
+                "searchLabel" : "การค้นหา",
+                "startDateLabel" : "วันที่เริ่มต้น"
+              }
+            },
+            "type" : "renditionComponent"
+          }, {
+            "id" : "a54f4903-4e61-4596-bbe2-6a455e4f380c",
+            "renditionValue" : {
+              "componentAttributes" : {
+                "emptyMessage" : "최근 청구서가 없습니다.",
+                "endDateLabel" : "종료일",
+                "filterByLabel" : "시작 날짜(시작 및 종료에 대한 날짜 선택 필드)",
+                "jsonConfiguration" : "[ { \"label\": \"Level 1 ID\", \"fieldName\": \"customer_number\", \"sortable\": \"true\" }, { \"label\": \"인보이스 번호\", \"fieldName\": \"invoice_number\", \"sortable\": \"true\" }, { \"label\": \"인보이스 날짜\", \"fieldName\": \"invoice_date\", \"type\": \"date\", \"sortable\": \"true\", \"typeAttributes\": { \"day\": \"numeric\", \"month\": \"short\", \"year\": \"numeric\" } }, { \"label\": \"인보이스 총액\", \"fieldName\": \"invoiced_loc_sum\", \"sortable\": \"true\", \"type\": \"currency\", \"cellAttributes\": { \"alignment\": \"left\" } }, { \"label\": \"인보이스  결제 기한\", \"fieldName\": \"invoice_due_date\", \"type\": \"date\", \"sortable\": \"true\", \"typeAttributes\": { \"day\": \"numeric\", \"month\": \"short\", \"year\": \"numeric\" } } ]",
+                "noSearchResultsFoundMessageLabel" : "검색 결과가 없습니다. 다시 시도해 보세요.",
+                "searchLabel" : "검색(열에서 데이터 검색)",
+                "startDateLabel" : "시작일"
+              }
+            },
+            "type" : "renditionComponent"
+          }, {
+            "id" : "b07e7b07-e802-4481-93cc-78d124228868",
+            "renditionValue" : {
+              "componentAttributes" : {
+                "INVOICESORTDATEFIELD" : "invoice_date",
+                "ORDERSORTDATEFIELD" : "deliveryDateTime",
+                "emptyMessage" : "您沒有任何最近的發票。",
+                "endDateLabel" : "結束日期",
+                "filterByLabel" : "依服務日期範圍篩選",
+                "jsonConfiguration" : "[ { \"label\": \"L1 帳戶代碼\", \"fieldName\": \"customer_number\", \"sortable\": \"true\" }, { \"label\": \"發票編號\", \"fieldName\": \"invoice_number\", \"sortable\": \"true\" }, { \"label\": \"發票日期\", \"fieldName\": \"invoice_date\", \"type\": \"date\", \"sortable\": \"true\", \"typeAttributes\": { \"day\": \"numeric\", \"month\": \"short\", \"year\": \"numeric\" } }, { \"label\": \"發票總計\", \"fieldName\": \"invoiced_loc_sum\", \"sortable\": \"true\", \"type\": \"currency\", \"cellAttributes\": { \"alignment\": \"left\" } }, { \"label\": \"發票到期日\", \"fieldName\": \"invoice_due_date\", \"type\": \"date\", \"sortable\": \"true\", \"typeAttributes\": { \"day\": \"numeric\", \"month\": \"short\", \"year\": \"numeric\" } } ]",
+                "noSearchResultsFoundMessageLabel" : "未回傳任何結果。請重試。",
+                "recordsToRetrieve" : "Invoices",
+                "searchLabel" : "搜尋",
+                "searchPlaceholder" : "....",
+                "startDateLabel" : "開始日期"
+              }
+            },
+            "type" : "renditionComponent"
+          }, {
+            "id" : "d9013cd2-35ff-4758-8b62-03c02e5204ce",
+            "renditionValue" : {
+              "componentAttributes" : {
+                "jsonConfiguration" : "[ { \"label\": \"Customer ID\", \"fieldName\": \"customer_number\", \"sortable\": \"true\" }, { \"label\": \"Invoice Number\", \"fieldName\": \"invoice_number\", \"sortable\": \"true\" }, { \"label\": \"Invoice Date\", \"fieldName\": \"invoice_date\", \"type\": \"date\", \"sortable\": \"true\", \"typeAttributes\": { \"day\": \"numeric\", \"month\": \"short\", \"year\": \"numeric\" } }, { \"label\": \"Invoice total\", \"fieldName\": \"invoiced_loc_sum\", \"sortable\": \"true\", \"type\": \"currency\", \"cellAttributes\": { \"alignment\": \"left\" } }, { \"label\": \"Invoice due date\", \"fieldName\": \"invoice_due_date\", \"type\": \"date\", \"sortable\": \"true\", \"typeAttributes\": { \"day\": \"numeric\", \"month\": \"short\", \"year\": \"numeric\" } } ]"
+              }
+            },
+            "type" : "renditionComponent"
+          } ],
+          "type" : "component"
+        }, {
+          "componentAttributes" : {
+            "richTextValue" : "<div class=\"cust-banner\" style=\"margin-left:auto;margin-right:auto;\">\n    <div class=\"pageHeadings\">\n        <div class=\"pageHeadingsTitle\">Don't see the invoices you're looking for?</div>\n\t\t <div class=\"pageHeadingsSubTitle\">Log in to Invoice Gateway powered by High Radius to view more.</div>\n        <div class=\"cust-button-grp\">\n         <div class=\"cust-button\"><a href=\"https://cloud5.highradius.com/RRDMSProject/signin.do\" target=\"_blank\"> Log in to High Radius</a></div>\n        </div>\n    </div>\n</div>"
+          },
+          "componentName" : "forceCommunity:htmlBlock",
+          "id" : "fdf8aab0-ed4d-4754-a78a-379a7e573fd6",
+          "renderPriority" : "NEUTRAL",
+          "renditionMap" : {
+            "en_au" : "406ddc4a-cd81-4dbf-b9fc-54e6f7c6cf22",
+            "en_ie" : "c7d0d79a-8e3f-4046-be25-b7fe8b7518e7",
+            "en_my" : "6dc1ce46-07d2-4262-ab29-9347ea096e6d",
+            "en_ph" : "b6cd9302-4722-4184-81c3-545ecdec31df",
+            "en_sg" : "173505af-545a-4d6d-8f93-38162d35ee1b",
+            "in" : "b7340533-42ff-4886-85d5-ebe276874e98",
+            "ko" : "c170e9ba-431d-4981-a9c8-e4b682e6dbc1",
+            "th" : "ff34ad7c-0d45-41f2-94ab-2d3a12d31b7d",
+            "zh_tw" : "b40298f5-e4ae-401d-8da0-8713a3b33301"
+          },
+          "renditions" : [ {
+            "id" : "173505af-545a-4d6d-8f93-38162d35ee1b",
+            "renditionValue" : {
+              "componentAttributes" : {
+                "richTextValue" : "<div class=\"cust-banner\" style=\"margin-left:auto;margin-right:auto;\">\n    <div class=\"pageHeadings\">\n        <div class=\"pageHeadingsTitle\">Don't see the invoices you're looking for?</div>\n        <div class=\"pageHeadingsSubTitle\">Log in to Invoice Gateway powered by High Radius to view more.</div>\n        <div class=\"cust-button-grp\">\n         <div class=\"cust-button\"><a href=\"https://cloud5.highradius.com/RRDMSProject/signin.do\" target=\"_blank\">Log in to High Radius</a></div>\n        </div>\n    </div>\n</div>"
+              }
+            },
+            "type" : "renditionComponent"
+          }, {
+            "id" : "6dc1ce46-07d2-4262-ab29-9347ea096e6d",
+            "renditionValue" : {
+              "componentAttributes" : {
+                "richTextValue" : "<div class=\"cust-banner\" style=\"margin-left:auto;margin-right:auto;\">\n    <div class=\"pageHeadings\">\n        <div class=\"pageHeadingsTitle\">Don't see the invoices you're looking for?</div>\n\t\t <div class=\"pageHeadingsSubTitle\">Log in to Invoice Gateway powered by High Radius to view more.</div>\n        <div class=\"cust-button-grp\">\n         <div class=\"cust-button\"><a href=\"https://cloud5.highradius.com/RRDMSProject/signin.do\" target=\"_blank\">Log in to High Radius</a></div>\n        </div>\n    </div>\n</div>"
+              }
+            },
+            "type" : "renditionComponent"
+          }, {
+            "id" : "406ddc4a-cd81-4dbf-b9fc-54e6f7c6cf22",
+            "renditionValue" : {
+              "componentAttributes" : {
+                "richTextValue" : "<div class=\"cust-banner\" style=\"margin-left:auto;margin-right:auto;\">\n    <div class=\"pageHeadings\">\n        <div class=\"pageHeadingsTitle\">Don't see the invoices you're looking for?</div>\n        <div class=\"cust-button-grp\">\n         <div class=\"cust-button\"><a href=\"https://cloud5.highradius.com/RRDMSProject/signin.do\" target=\"_blank\">Log in to Invoice Portal-High Radius</a></div>\n        </div>\n    </div>\n</div>"
+              }
+            },
+            "type" : "renditionComponent"
+          }, {
+            "id" : "b6cd9302-4722-4184-81c3-545ecdec31df",
+            "renditionValue" : {
+              "componentAttributes" : {
+                "richTextValue" : "<div class=\"cust-banner\" style=\"margin-left:auto;margin-right:auto;\">\n    <div class=\"pageHeadings\">\n        <div class=\"pageHeadingsTitle\">Do you need more information about your invoice?</div>\n        <div class=\"pageHeadingsSubTitle\">Visit our Billing & payments articles</div>\n        <div class=\"cust-button-grp\">\n         <div class=\"cust-button\"><a href=\"/irmapac/s/topic/0TOHr000000QrqgOAC/billings-payments\" target=\"_blank\">Billing & payments</a></div>\n          <div class=\"cust-button\"><a href=\"/irmapac/s/article/How-to-Pay-an-Invoice-ph\" target=\"_blank\">How to pay Invoice</a></div>   \n        </div>\n    </div>\n</div>"
+              }
+            },
+            "type" : "renditionComponent"
+          }, {
+            "id" : "b7340533-42ff-4886-85d5-ebe276874e98",
+            "renditionValue" : {
+              "componentAttributes" : {
+                "richTextValue" : "<div class=\"cust-banner\" style=\"margin-left:auto;margin-right:auto;\">\n    <div class=\"pageHeadings\">\n        <div class=\"pageHeadingsTitle\">Apakah Anda memerlukan informasi lebih lanjut tentang faktur Anda?</div>\n        <div class=\"pageHeadingsSubTitle\"></div>\n        <div class=\"cust-button-grp\">\n         <div class=\"cust-button\"><a href=\"https://customersupport.ironmountain.com/irmapac/s/article/Bagaimana-cara-mengetahui-Kode-Akun-L1-Kode-Akun-L2-Kode-Akun-L3-saya?language=in\" target=\"Blank\">Kunjungi artikel Penagihan & pembayaran dan Faktur kami</a></div>\n         <div class=\"cust-button\"><a href=\"https://customersupport.ironmountain.com/irmapac/s/article/Bagaimana-cara-mengetahui-Kode-Akun-L1-Kode-Akun-L2-Kode-Akun-L3-saya?language=in\" target=\"Blank\">Tautan ke topik dukungan Penagihan & pembayaran</a></div>\n        </div>\n    </div>\n</div>"
+              }
+            },
+            "type" : "renditionComponent"
+          }, {
+            "id" : "ff34ad7c-0d45-41f2-94ab-2d3a12d31b7d",
+            "renditionValue" : {
+              "componentAttributes" : {
+                "richTextValue" : "<div class=\"cust-banner\" style=\"margin-left:auto;margin-right:auto;\">\n    <div class=\"pageHeadings\">\n        <div class=\"pageHeadingsTitle\">ไม่พบใบแจ้งหนี้ที่คุณต้องการใช่ไหม</div>\n        <div class=\"cust-button-grp\">\n         <div class=\"cust-button\"><a href=\"https://cloud5.highradius.com/RRDMSProject/signin.do\" target=\"_blank\">เข้าสู่ระบบ HighRadius </a></div>\n        </div>\n    </div>\n</div>"
+              }
+            },
+            "type" : "renditionComponent"
+          }, {
+            "id" : "c170e9ba-431d-4981-a9c8-e4b682e6dbc1",
+            "renditionValue" : {
+              "componentAttributes" : {
+                "richTextValue" : "<div class=\"cust-banner\" style=\"margin-left:auto;margin-right:auto;\">\n    <div class=\"pageHeadings\">\n        <div class=\"pageHeadingsTitle\">찾으시는 인보이스가 보이지 않으신가요?</div>\n        <div class=\"cust-button-grp\">\n         <div class=\"cust-button\"><a href=\"https://customersupport.ironmountain.com/irmapac/s/article/결제하기?language=ko\" target=\"_blank\">청구 및 결제</a></div>\n             <div class=\"cust-button\"><a href=\"https://customersupport.ironmountain.com/irmapac/s/article/인보이스-이해하기-인보이스-이해하기?language=ko\" target=\"_blank\">인보이스 관련 도움말</a></div>\n        </div>\n    </div>\n</div>"
+              }
+            },
+            "type" : "renditionComponent"
+          }, {
+            "id" : "b40298f5-e4ae-401d-8da0-8713a3b33301",
+            "renditionValue" : {
+              "componentAttributes" : {
+                "richTextValue" : "<div class=\"cust-banner\" style=\"margin-left:auto;margin-right:auto;\">\n    <div class=\"pageHeadings\">\n        <div class=\"pageHeadingsTitle\">沒看到您要尋找的發票</div>\n        <div class=\"pageHeadingsSubTitle\"></div>\n        <div class=\"cust-button-grp\">\n         <div class=\"cust-button\"><a href=\"/irmapac/s/topic/0TOHr000000QrqgOAC/billings-payments?language=zh_TW\">請款與付款</a></div>\n         <div class=\"cust-button\"><a href=\"/irmapac/s/topic/0TOHr000000QrqpOAC/invoices?language=zh_TW\">發票文章</a></div>\n        </div>\n    </div>\n</div>"
+              }
+            },
+            "type" : "renditionComponent"
+          }, {
+            "id" : "c7d0d79a-8e3f-4046-be25-b7fe8b7518e7",
+            "renditionValue" : {
+              "componentAttributes" : {
+                "richTextValue" : "<div class=\"cust-banner\" style=\"margin-left:auto;margin-right:auto;\">\n    <div class=\"pageHeadings\">\n        <div class=\"pageHeadingsTitle\">Don't see the invoices you're looking for?</div>\n        <div class=\"pageHeadingsSubTitle\">Login in to High Radius to view more.</div>\n        <div class=\"cust-button-grp\">\n         <div class=\"cust-button\"><a href=\"https://customersupport.ironmountain.com/irmapac/s/article/Indonesia-Invoice-Welcome-KIT?language=en_IE\" target=\"_blank\">Visit our Billing & payments and Invoice articles.</a></div>\n             <div class=\"cust-button\"><a href=\"https://customersupport.ironmountain.com/irmapac/s/article/Indonesia-Invoice-Welcome-KIT?language=en_IE\" target=\"_blank\">Link to Billing & payments support topic</a></div>\n        </div>\n    </div>\n</div>"
+              }
+            },
+            "type" : "renditionComponent"
+          } ],
+          "type" : "component"
+        } ],
+        "id" : "731a31e5-8861-4889-8f8b-d577a919bcef",
+        "regionLabel" : "Column 1",
+        "regionName" : "1",
+        "renditionMap" : { },
+        "type" : "region"
+      } ],
+      "renderPriority" : "NEUTRAL",
+      "renditionMap" : { },
+      "type" : "component"
+    } ],
+    "id" : "49e660cc-9476-41ff-b44a-2ec1cbcc2f1b",
+    "regionName" : "content",
+    "type" : "region"
+  }, {
+    "components" : [ {
+      "componentAttributes" : {
+        "customHeadTags" : "",
+        "description" : "",
+        "title" : "My Invoices"
+      },
+      "componentName" : "forceCommunity:seoAssistant",
+      "id" : "03ce78c2-90c1-4953-a437-2cf971fef3c6",
+      "renditionMap" : { },
+      "type" : "component"
+    } ],
+    "id" : "5ff465d8-bfa9-4261-b381-d9ac0504af09",
+    "regionName" : "sfdcHiddenRegion",
+    "type" : "region"
+  } ],
+  "themeLayoutType" : "2yMXB5LOLv2kZzfQg2HA434AHrDBTx",
+  "type" : "view",
+  "viewType" : "custom-my-invoices"
+}

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Case_Owner_Change_Permission</fullName>
+    <active>true</active>
+    <description>To restrict users other than System Admins to change the ownership on the case.</description>
+    <errorConditionFormula>AND(
+
+ISCHANGED(OwnerId),
+
+OR(
+$RecordType.Name = &quot;IM Employees Support Case&quot;,
+$RecordType.Name = &quot;IM Employees Support Case Closed (Locked)&quot;,
+$RecordType.Name = &quot;Sales Tools Project Case&quot;,
+$RecordType.Name = &quot;Sales Tools Project Case Closed (Locked)&quot;
+),
+
+NOT(
+OR(
+$Profile.Name = &quot;IME_Custom Sys Admin&quot;,
+$Profile.Name = &quot;IMLA_Custom Sys Admin&quot;,
+$Profile.Name = &quot;IM_Custom Sys Admin&quot;,
+$Profile.Name = &quot;IME_Super_User&quot;
+)
+),
+
+OR(
+PRIORVALUE(OwnerId) = &quot;00G34000003HgCK&quot;, /*IM Employees Support Cases IMNA Queue*/
+PRIORVALUE(OwnerId) = &quot;xxxxxxxxxxxxxxx&quot;, /*Place Holder for IME */
+PRIORVALUE(OwnerId) = &quot;xxxxxxxxxxxxxxx&quot;, /*Place Holder for IMLA */
+PRIORVALUE(OwnerId) = &quot;xxxxxxxxxxxxxxx&quot;, /*Place Holder for IMAP */
+PRIORVALUE(OwnerId) = &quot;00G34000003HmXO&quot;, /*NA Enhancement Requests*/
+PRIORVALUE(OwnerId) = &quot;00G80000001qLVe&quot;, /*IM Employees Support Cases Queue*/
+OwnerId = &quot;00G34000003HmXO&quot;, /*NA Enhancement Requests*/
+
+AND(
+PRIORVALUE(OwnerId)!= $User.Id, /*Current User does not own the record*/
+BEGINS(PRIORVALUE(OwnerId), &quot;005&quot;) /*Currently owned by a user, not a queue*/
+)
+)
+)</errorConditionFormula>
+    <errorMessage>You cannot change the owner of this case. Please contact the Salesforce support team for assistance.</errorMessage>
+</ValidationRule>

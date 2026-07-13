@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebLink xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Sync_to_SMS</fullName>
+    <availability>online</availability>
+    <displayType>button</displayType>
+    <linkType>javascript</linkType>
+    <masterLabel>Sync to SMS</masterLabel>
+    <openType>onClickJavaScript</openType>
+    <protected>false</protected>
+    <url>{!REQUIRESCRIPT(&quot;/soap/ajax/30.0/connection.js&quot;)} 
+{!REQUIRESCRIPT(&quot;/soap/ajax/30.0/apex.js&quot;)} 
+var custSycDate = &quot;{!Case.SMS_Customer_Sync_Date__c}&quot;;
+var ordSycDate = &quot;{!Case.SMS_Order_Sync_Date__c}&quot;;
+if(custSycDate == &apos;&apos; || ordSycDate == &apos;&apos;){
+	var conf = confirm(&quot;Click OK to confirm Sync to SMS&quot;);
+	try{
+		if(conf == true){ 
+		var casId= &quot;{!Case.Id}&quot;;
+		var a = sforce.apex.execute(&quot;SITADIntegration&quot;,&quot;callSMSSync&quot;,{caseId:casId});
+    alert(a);
+		}
+	}catch(e){ 
+		alert(&quot;Something went worng. Please try after some time\n\n&quot;+(e.message||e)); 
+	}
+}else if(custSycDate != &apos;&apos; &amp;&amp; ordSycDate != &apos;&apos;){
+	alert(&apos;Both Customer Account &amp; Case are allready Synced&apos;);
+}</url>
+</WebLink>

@@ -95,6 +95,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>Case_Type__c</field>
+            <value>
+                <elementReference>varCaseType</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Opportunity__c</field>
             <value>
                 <elementReference>$Record.Opportunity__c</elementReference>
@@ -122,12 +128,6 @@
             <field>Status</field>
             <value>
                 <stringValue>New</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Case_Type__c</field>
-            <value>
-                <elementReference>varCaseType</elementReference>
             </value>
         </inputAssignments>
         <object>Case</object>
@@ -346,7 +346,7 @@
             </value>
         </filters>
         <filters>
-            <field>SObjectType</field>
+            <field>SobjectType</field>
             <operator>EqualTo</operator>
             <value>
                 <stringValue>Case</stringValue>
@@ -428,13 +428,6 @@
     </start>
     <status>Active</status>
     <variables>
-        <name>varOppAccountId</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
         <name>varCaseType</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
@@ -463,6 +456,13 @@
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <objectType>Document_Checklist__c</objectType>
+    </variables>
+    <variables>
+        <name>varOppAccountId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
     </variables>
     <variables>
         <name>varOppStageName</name>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NCSP_Contract_Type_and_Contract_Status</fullName>
+    <active>true</active>
+    <description>Contract Type is required when the Contract is Accepted</description>
+    <errorConditionFormula>(($RecordType.Name == &apos;NCSP: SKP New Customer Setup&apos; || $RecordType.Name == &apos;NCSP: DMS&apos; || $RecordType.Name == &apos;NCSP: DP New Customer Setup&apos;  ||$RecordType.Name == &apos;NCSP: Tech Services New Customer Setup&apos;||$RecordType.Name == &apos;NCSP: New Customer Setup&apos;)  &amp;&amp; ISPICKVAL(Contract_Status__c ,&apos;Accepted&apos;) &amp;&amp; ISPICKVAL(Contract_Type__c ,&apos;&apos;)) &amp;&amp; (ISCHANGED(Contract_Type__c) || ISCHANGED(Contract_Status__c))</errorConditionFormula>
+    <errorDisplayField>Contract_Type__c</errorDisplayField>
+    <errorMessage>Contract Type is required when the Contract Status is Accepted.</errorMessage>
+</ValidationRule>

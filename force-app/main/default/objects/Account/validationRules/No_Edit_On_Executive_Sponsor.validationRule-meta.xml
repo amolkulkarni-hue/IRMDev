@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>No_Edit_On_Executive_Sponsor</fullName>
+    <active>true</active>
+    <description>#29143 : Account: Capture Executive Sponsor on Account.  Only allow editing of Executive Sponsor field on IMGA and Country Parent account(Hierarchy level).</description>
+    <errorConditionFormula>AND(
+NOT($Setup.Metadata_Activation_Settings__c.Disable_VR__c &amp;&amp;
+OR(
+ISBLANK($Setup.Metadata_Activation_Settings__c.SObject_API_Name__c),
+CONTAINS($Setup.Metadata_Activation_Settings__c.SObject_API_Name__c, &apos;Account&apos;)
+)
+),
+AND(
+   OR((ISNEW() &amp;&amp; TEXT(Executive_Sponsor__c) != NULL),
+   ISCHANGED(Executive_Sponsor__c)), 
+NOT(
+OR(TEXT(IM_Hierarchy_Level__c) = &apos;IM Group (IMGA)&apos;,
+TEXT(IM_Hierarchy_Level__c) = &apos;Country Parent&apos;)
+)
+)
+)</errorConditionFormula>
+    <errorDisplayField>Executive_Sponsor__c</errorDisplayField>
+    <errorMessage>Executive Sponsor cannot be saved on a Sales (Site) Account, please update on the IMGA or Country Parent Account.</errorMessage>
+</ValidationRule>

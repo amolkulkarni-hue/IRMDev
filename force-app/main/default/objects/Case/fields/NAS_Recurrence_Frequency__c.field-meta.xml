@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NAS_Recurrence_Frequency__c</fullName>
+    <description>Formula:
+API Name = DAY  MONTH | YEAR + &lt;Number to Add&gt;
+Example:
+Daily = DAY + 1
+Weekly = DAY + 7
+Every 2 Week = DAY + 14
+Monthly = MONTH + 1
+Quarterly = MONTH + 3
+Every 6 Month = MONTH + 6
+Yearly = YEAR + 1</description>
+    <label>Recurrence Frequency</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>DAY + 1</fullName>
+                <default>false</default>
+                <label>Daily</label>
+            </value>
+            <value>
+                <fullName>DAY + 7</fullName>
+                <default>false</default>
+                <label>Weekly</label>
+            </value>
+            <value>
+                <fullName>DAY + 14</fullName>
+                <default>false</default>
+                <label>Every 2 Weeks</label>
+            </value>
+            <value>
+                <fullName>MONTH + 1</fullName>
+                <default>false</default>
+                <label>Monthly</label>
+            </value>
+            <value>
+                <fullName>MONTH + 3</fullName>
+                <default>false</default>
+                <label>Quarterly</label>
+            </value>
+            <value>
+                <fullName>MONTH + 6</fullName>
+                <default>false</default>
+                <label>Every 6 Month</label>
+            </value>
+            <value>
+                <fullName>YEAR + 1</fullName>
+                <default>false</default>
+                <label>Yearly</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

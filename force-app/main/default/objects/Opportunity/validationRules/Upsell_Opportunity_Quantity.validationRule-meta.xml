@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Upsell_Opportunity_Quantity</fullName>
+    <active>true</active>
+    <description>The validation rule will not trigger on Enterprise Opportunities.  The code listed below here will trigger on ALL Opporutnity Rec Types.
+
+AND(ISPICKVAL(Type,&quot;Up-Sell/Lift&quot;),ISNULL(IM_Up_Sell_Quantity__c ))</description>
+    <errorConditionFormula>AND(ISPICKVAL(Type,&quot;Up-Sell/Lift&quot;),
+ISNULL( IM_Up_Sell_Quantity__c ),
+NOT( RecordTypeId = &quot;01280000000BDec&quot;),
+NOT($Permission.VR_Bypass_Permission))</errorConditionFormula>
+    <errorDisplayField>IM_Up_Sell_Quantity__c</errorDisplayField>
+    <errorMessage>If Type is Up-Sell you must fill in the Up-Sell Quantity</errorMessage>
+</ValidationRule>

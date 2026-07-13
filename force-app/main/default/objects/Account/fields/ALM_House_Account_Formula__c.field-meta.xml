@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ALM_House_Account_Formula__c</fullName>
+    <description>#30205-Account: create a &quot;ALM House Account&quot; field on the IMGA</description>
+    <formula>IF(
+/*If Account is IMGA, stores ALM House Account value */
+ISPICKVAL(IM_Hierarchy_Level__c, &apos;IM Group (IMGA)&apos;), ALM_House_Account__c ,
+IF(
+/*If Account is Country Parent, stores ALM House Account value */
+ISPICKVAL(IM_Hierarchy_Level__c, &apos;Country Parent&apos;), Parent.ALM_House_Account__c,
+IF(
+/*If Account is Sales site, stores Country Parent Account&apos;s ALM House Account by traversing one level up the hierarchy*/
+ISPICKVAL(IM_Hierarchy_Level__c, &apos;Sales (Site)&apos;), Parent.Parent.ALM_House_Account__c,False)))</formula>
+    <label>ALM House Account</label>
+    <trackHistory>false</trackHistory>
+    <type>Checkbox</type>
+</CustomField>

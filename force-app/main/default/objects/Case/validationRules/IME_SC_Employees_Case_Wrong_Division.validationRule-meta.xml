@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IME_SC_Employees_Case_Wrong_Division</fullName>
+    <active>true</active>
+    <description>Ensures that only users in IME and IMAP Divisions can select the Customer Service option from the &apos;Related To&apos; picklists.</description>
+    <errorConditionFormula>AND(NOT(ISCHANGED( IME_SC_Owner_Manager__c )), 
+NOT(ISCHANGED( IME_SC_Manager_of_Manager_OwnerId__c )),
+NOT(OR(ISPICKVAL(IM_Division__c,&quot;IME&quot;),ISPICKVAL(
+IM_Division__c,&quot;IMAP&quot;))),ISPICKVAL(Related_To__c,&quot;Service Cloud (Intl only)&quot;))</errorConditionFormula>
+    <errorMessage>The &apos;Related To&apos; value &apos;Service Cloud (Intl only)&apos; is only available for IME and IMAP users.</errorMessage>
+</ValidationRule>

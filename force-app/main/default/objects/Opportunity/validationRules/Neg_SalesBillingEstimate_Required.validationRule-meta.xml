@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Neg_SalesBillingEstimate_Required</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+  NOT(Bypass_Validation__c),
+  ISCHANGED(StageName),
+  ISPICKVAL(PRIORVALUE(StageName), &apos;Negotiation&apos;),
+  ISPICKVAL(StageName, &apos;Booking Verification&apos;),
+  OR(
+    ISPICKVAL(Type, &apos;New&apos;),
+    ISPICKVAL(Type, &apos;Cross-Sell/Upsell&apos;)
+  ),
+  Amount &gt;= 25000,
+  OR(
+    ISBLANK(Total_Sales_Billing_Estimate__c),
+    Total_Sales_Billing_Estimate__c = 0
+  )
+)</errorConditionFormula>
+    <errorMessage>Total Sales Billing Estimate must be confirmed before moving this Opportunity from Negotiation to Booking Verification.</errorMessage>
+</ValidationRule>

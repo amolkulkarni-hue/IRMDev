@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Market_OrderNumber_Mandatory</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(OR(
+ISPICKVAL(Type, &quot;Order Inquiry&quot;),
+ISPICKVAL( NAS_Root_Cause_Reason__c, &quot;&quot;)),
+ISPICKVAL(Status, &quot;Closed&quot;),
+$RecordType.Name = &apos;NAS General Support Case&apos;,
+NAS_Order_Number__c = NULL
+)</errorConditionFormula>
+    <errorMessage>A mandatory field like Order Number in Market Tab is blank</errorMessage>
+</ValidationRule>

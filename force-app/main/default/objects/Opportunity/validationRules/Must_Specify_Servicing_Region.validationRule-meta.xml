@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Must_Specify_Servicing_Region</fullName>
+    <active>false</active>
+    <description>Servicing Region is required to move to Stage 2
+#22221 - Exception for eCommerce opportunities</description>
+    <errorConditionFormula>AND(
+	NOT($Setup.Metadata_Activation_Settings__c.Disable_VR__c &amp;&amp; OR(ISBLANK($Setup.Metadata_Activation_Settings__c.SObject_API_Name__c),
+	CONTAINS($Setup.Metadata_Activation_Settings__c.SObject_API_Name__c, &apos;Opportunity&apos;))),NOT($Permission.Bypass_Opportunity_Validations),
+	NOT(ISPICKVAL(StageName ,&apos;1 - Qualification&apos;)),
+	ISBLANK( TEXT(IM_Servicing_Region__c)),
+	NOT($Profile.Name = &apos;IM_Sales_IMTN&apos;),
+	NOT($Setup.OpportunityAttribution__c.BypassValidation__c),
+	$Label.IMExpress_Opp_Owner!=  OwnerId,
+	NOT($Permission.VR_Bypass_Permission),
+
+	 NOT( AND( ISPICKVAL(StageName , &apos;Lost&apos;),
+	 OR(
+	$RecordType.DeveloperName = &apos;Standard_Opportunity&apos;,
+	$RecordType.DeveloperName = &apos;IMAP_Standard_Opportunity&apos;,
+	$RecordType.DeveloperName = &apos;IME_Standard_Opportunity&apos;,
+	$RecordType.DeveloperName = &apos;IMLA_Standard_Opportunity&apos;
+	)) )
+)</errorConditionFormula>
+    <errorDisplayField>IM_Servicing_Region__c</errorDisplayField>
+    <errorMessage>Servicing Region is required to move to Stage 2</errorMessage>
+</ValidationRule>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Validation_on_Disqualification_Reason</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND( NOT(ISNEW()), 
+
+NOT($Permission.Bypass_Lead_Validation), RecordType.DeveloperName = &quot;Standard_Lead&quot;, ISCHANGED(Status), 
+
+ISPICKVAL(Status, &quot;Disqualified&quot;), ISPICKVAL(IM_Disqualified_Reason__c, &quot;&quot;) )</errorConditionFormula>
+    <errorMessage>A Disqualification Reason is required.</errorMessage>
+</ValidationRule>

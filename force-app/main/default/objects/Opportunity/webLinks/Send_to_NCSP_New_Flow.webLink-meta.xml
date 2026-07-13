@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebLink xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Send_to_NCSP_New_Flow</fullName>
+    <availability>online</availability>
+    <displayType>button</displayType>
+    <linkType>javascript</linkType>
+    <masterLabel>Submit for Booking (Send to NCSP)</masterLabel>
+    <openType>onClickJavaScript</openType>
+    <protected>false</protected>
+    <url>{!REQUIRESCRIPT(&quot;/soap/ajax/26.0/connection.js&quot;)} 
+{!REQUIRESCRIPT(&quot;/soap/ajax/26.0/apex.js&quot;)} 
+
+var user = sforce.connection.query(&quot;Select isActive,Commission_ID__c from User where Id = &apos;{!Opportunity.OwnerId}&apos; &quot;); 
+var opps = sforce.connection.query(&quot;Select Amount,Total_Sales_Billing_Estimate__c from Opportunity where Id = &apos;{!Opportunity.Id}&apos; &quot;);
+
+if(opps.records.Amount &gt;= 25000 &amp;&amp;
+ opps.records.Total_Sales_Billing_Estimate__c &lt;=0 &amp;&amp;
+ (opps.records.Type ===&apos;New Deal&apos; || opps.records.Type === &apos;Up-Sell/Lift&apos;)
+){ 
+ alert(&quot;Please add sales Billing Forecast record&quot;); 
+ }else{
+if ( &quot;{!Opportunity.Type}&quot; === &quot;Renewal&quot; ) 
+{ 
+window.location.href=&quot;/apex/renewalOppWizard2_step1?oppId={!Opportunity.Id}&amp;accId={!Opportunity.AccountId}&amp;imga={!Opportunity.IMGA_Name__c}&quot;; 
+
+//alert(&quot;Renewal Opportunities cannot go through NCSP process.&quot;); 
+} 
+else if( user.records.IsActive == &apos;false&apos; ) 
+{ 
+alert(&apos;Only opportunities with active users may use the NCSP wizard&apos;); 
+} 
+else if(user.records.Commission_ID__c == null || user.records.Commission_ID__c == &apos; &apos;) 
+{ 
+alert(&quot;Your Commission ID is missing from your Sales Rep profile, and is needed to complete an NCSP form. You may obtain your Commission ID from a member of the Commissions Accounting team in Royersford, PA. Upon receipt, you must enter this ID in your SFDC Sales Rep user profile and then you may continue the submission of your NCSP form.&quot;) 
+} 
+else 
+{ 
+if(&apos;{!Opportunity.StageName}&apos; === &apos;5 - Signed/PO in&apos; ) 
+{ 
+if( &apos;{!Opportunity.Type}&apos; === &apos;Up-Sell/Lift&apos; ) 
+{ 
+window.location.href=&quot;/apex/NCSPSell_LiftWizard_CompletedOrder?Id={!Opportunity.Id}&quot;; 
+} 
+else 
+{ 
+window.location.href=&quot;/apex/NCSPWizard_Step1?oppId={!Opportunity.Id}&quot;; 
+} 
+}else 
+{ 
+alert(&quot;OPPORTUNITY MUST BE AT Stage &apos;5 – Signed/PO In&apos; BEFORE SUBMITTING TO NEW CUSTOMER IMPLEMENTATIONS TEAM&quot;); 
+} 
+}
+}</url>
+</WebLink>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>QTB_Invoice_Minimum_Start_Date_Required</fullName>
+    <active>true</active>
+    <description>#SFCPQBLG-482 When Apply Invoice Minimum Charges is checked, then Invoice Minimum Start Date and Invoice Minimum Charges are Required</description>
+    <errorConditionFormula>AND(
+NOT($Setup.Metadata_Activation_Settings__c.Disable_VR__c &amp;&amp;
+OR(
+ISBLANK($Setup.Metadata_Activation_Settings__c.SObject_API_Name__c),
+CONTAINS($Setup.Metadata_Activation_Settings__c.SObject_API_Name__c, &apos;Account&apos;)
+)),NOT(ISBLANK( ParentId )),RecordType.DeveloperName = $Label.QTB_AccountRecordType_Billing,
+QTB_Apply_Invoice_Minimum_Charges__c=true, OR(ISBLANK( QTB_Invoice_Minimum_Start_Date__c ),ISBLANK( QTB_Invoice_Minimum_Charges__c ) ) )</errorConditionFormula>
+    <errorMessage>Invoice Minimum Start Date and Invoice Minimum Charges are required if Apply Invoice Minimum Charges is Checked.</errorMessage>
+</ValidationRule>

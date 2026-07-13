@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Date_Package_Sent_to_Contracts_Admin_Req</fullName>
+    <active>true</active>
+    <description>&apos;Date package sent to contracts admin&apos; field is required if &apos;New contract signed&apos; has a value of &quot;Yes&quot;</description>
+    <errorConditionFormula>AND(
+OR(
+RecordType.DeveloperName = &quot;Retention_RM&quot;,
+RecordType.Name = &quot;CLAS – Data Management&quot;),
+ISBLANK(Date_Package_Sent_To_Contracts_Admin__c),
+ISPICKVAL( New_Contract_Signed__c , &quot;Yes&quot;)
+)</errorConditionFormula>
+    <errorMessage>Date Package Sent to Contracts Admin Field is required if &apos;New Contract Signed? has a value of &apos;Yes&apos;</errorMessage>
+</ValidationRule>

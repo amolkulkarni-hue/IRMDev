@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IME_SC_CZE_All_Open_Cases</fullName>
+    <columns>IME_SC_Rush__c</columns>
+    <columns>CASES.CASE_NUMBER</columns>
+    <columns>CASES.ORIGIN</columns>
+    <columns>IME_SC_Category__c</columns>
+    <columns>IME_SC_Sub_Category__c</columns>
+    <columns>IME_SC_Customer_AccountId__c</columns>
+    <columns>CORE.USERS.ALIAS</columns>
+    <columns>CASES.STATUS</columns>
+    <columns>End_Time_Cutoff_SLA__c</columns>
+    <columns>CASES.PRIORITY</columns>
+    <columns>CASES.CREATED_DATE</columns>
+    <columns>PARENT.CASE_NUMBER</columns>
+    <columns>UPDATEDBY_USER.ALIAS</columns>
+    <columns>CASES.LAST_UPDATE</columns>
+    <division>*</division>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>IME_SC_Country__c</field>
+        <operation>equals</operation>
+        <value>Czech Republic</value>
+    </filters>
+    <filters>
+        <field>CASES.STATUS</field>
+        <operation>notEqual</operation>
+        <value>Closed</value>
+    </filters>
+    <label>IME SC CZE All Open Cases</label>
+    <language>en_US</language>
+    <sharedTo>
+        <group>IME_SC_CZE_Hybrid_CSTL_Group</group>
+        <role>IME_SC_CZE_CSM</role>
+    </sharedTo>
+</ListView>

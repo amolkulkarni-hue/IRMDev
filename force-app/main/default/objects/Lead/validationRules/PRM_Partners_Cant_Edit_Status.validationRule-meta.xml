@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>PRM_Partners_Cant_Edit_Status</fullName>
+    <active>true</active>
+    <description>PRM - Prevents partners from changing lead status.</description>
+    <errorConditionFormula>AND( 
+ISCHANGED(Status), 
+OR( 
+$Profile.Name = &apos;PCL-Partner User&apos;, 
+$Profile.Name = &apos;PCL-Partner Manager&apos;, 
+$Profile.Name = &apos;PCN-Partner Manager&apos;, 
+$Profile.Name = &apos;PCN-Partner User&apos; 
+) 
+)</errorConditionFormula>
+    <errorMessage>Lead Status cannot be changed. Please contact your Channel Manager for assistance.</errorMessage>
+</ValidationRule>

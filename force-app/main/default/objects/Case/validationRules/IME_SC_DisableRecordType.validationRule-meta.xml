@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IME_SC_DisableRecordType</fullName>
+    <active>true</active>
+    <description>This validation rule triggers if user changes the record type .</description>
+    <errorConditionFormula>AND( NOT(ISCHANGED( IME_SC_Owner_Manager__c )), 
+NOT(ISCHANGED( IME_SC_Manager_of_Manager_OwnerId__c )),
+ ISCHANGED(  RecordType_Name__c  ),
+OR(
+AND(
+PRIORVALUE(RecordType_Name__c ) = &quot;IME SC Case&quot;,
+NOT($RecordType.Name = &quot;IME SC Case Resolved&quot;)
+) ,
+ PRIORVALUE(RecordType_Name__c ) = &quot;IME SC Case Resolved&quot; 
+ )
+)</errorConditionFormula>
+    <errorDisplayField>of_Service_Reschedules__c</errorDisplayField>
+    <errorMessage>You are not authorized to change the record type .</errorMessage>
+</ValidationRule>

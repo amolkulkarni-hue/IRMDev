@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Insight_not_proposed_cannot_be_BLANK</fullName>
+    <active>true</active>
+    <description>When Is Insight Proposed has any option that starts with No, cannot be blank.</description>
+    <errorConditionFormula>AND(
+OR(
+RecordType.DeveloperName = &quot;Standard_Opportunity&quot;,
+RecordType.DeveloperName = &quot;IME_Standard_Opportunity&quot;),
+
+ISBLANK( InSight_not_in_proposal_Explanation__c  ),
+
+(OR(
+INCLUDES(Is_InSight_being_proposed__c,&quot;No - Using Hyland Software due to feature requirements&quot;),
+INCLUDES(Is_InSight_being_proposed__c,&quot;No - Using other IRM product&quot;), 
+INCLUDES(Is_InSight_being_proposed__c,&quot;No - Price&quot;), 
+INCLUDES(Is_InSight_being_proposed__c,&quot;No - Missing Feature&quot;),
+INCLUDES(Is_InSight_being_proposed__c,&quot;No - Customer has internal solution&quot;),
+INCLUDES(Is_InSight_being_proposed__c,&quot;No - Other&quot;))), NOT($Permission.VR_Bypass_Permission))</errorConditionFormula>
+    <errorMessage>Must fill out explanation as to why not included in Proposal.</errorMessage>
+</ValidationRule>

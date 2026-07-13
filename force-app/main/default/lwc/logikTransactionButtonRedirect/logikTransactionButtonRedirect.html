@@ -1,0 +1,24 @@
+<template>
+    <div class="btn-wrapper">
+
+        <lightning-button
+            variant={buttonVariant}
+            label={buttonLabel}
+            title={buttonTooltip}
+            icon-name={iconName}
+            icon-position="left"
+            disabled={_isLoading}
+            onclick={handleClick}
+        ></lightning-button>
+
+        <template lwc:if={_isLoading}>
+            <div class="spinner-box">
+                <lightning-spinner
+                    alternative-text="Loading"
+                    size="x-small"
+                ></lightning-spinner>
+            </div>
+        </template>
+
+    </div>
+</template>

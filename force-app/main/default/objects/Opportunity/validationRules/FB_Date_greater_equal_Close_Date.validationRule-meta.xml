@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>FB_Date_greater_equal_Close_Date</fullName>
+    <active>true</active>
+    <description>The First Bill Date must be greater or equal to the Close Date. CloseDate formerly First Bill Date, Booked Date is now First Bill Date.</description>
+    <errorConditionFormula>AND(
+AND(
+NOT($Setup.Metadata_Activation_Settings__c.Disable_VR__c),
+OR(ISBLANK($Setup.Metadata_Activation_Settings__c.SObject_API_Name__c),
+CONTAINS($Setup.Metadata_Activation_Settings__c.SObject_API_Name__c, &apos;Opportunity&apos;))),
+$Profile.Name &lt;&gt; &quot;IMLA_Custom Sys&quot;,
+$Profile.Name &lt;&gt; &quot;IME_Super_User&quot;,
+$Profile.Name &lt;&gt; &quot;IME_Custom Sys Admin&quot;,
+$Profile.Name &lt;&gt; &quot;IMAP_SC_In_Country_Admin&quot;,
+
+ISPICKVAL(Primary_Product_Line__c,&apos;Entertainment Services&apos;),
+OR(IM_Booked_Date__c &lt; CloseDate,
+ISBLANK(IM_Booked_Date__c)
+), NOT($Permission.VR_Bypass_Permission))</errorConditionFormula>
+    <errorMessage>The First Bill date is mandatory if Product Line is Entertainment Service. The First Bill Date should also be greater than close Date. Need help? Contact your Sales Operations Business Partner.</errorMessage>
+</ValidationRule>

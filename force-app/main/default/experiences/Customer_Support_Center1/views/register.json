@@ -1,0 +1,105 @@
+{
+  "appPageId" : "ac9ca7aa-56d6-4aa2-a934-14015a806d7d",
+  "componentName" : "siteforce:sldsOneColLayout",
+  "dataProviders" : [ ],
+  "id" : "5a2d97e2-103e-40e0-a5a7-6fcbdc41320b",
+  "label" : "Register",
+  "regions" : [ {
+    "components" : [ {
+      "componentAttributes" : {
+        "richTextValue" : "<div class=\"logoPlaceholderForLogin\" style=\"padding: 10px 0px 10px 0px;\">\n    <a href=\"https://customersupport.ironmountain.com/s/?language=en_US\" style=\"text-decoration: none;\">\n     <div><img src=\"/sfsites/c/resource/CSC_LoginLogo\" style=\"width: 80%; display: block; margin-left: auto; margin-right: auto;\"></div>\n    </a>\n</div>"
+      },
+      "componentName" : "forceCommunity:htmlBlock",
+      "id" : "79cfaa69-8bb7-42d8-8ddc-16df8e150e49",
+      "renderPriority" : "NEUTRAL",
+      "renditionMap" : {
+        "fr_ca" : "9706f1e7-8145-4e10-ac0b-71eb677f73d2"
+      },
+      "renditions" : [ {
+        "id" : "9706f1e7-8145-4e10-ac0b-71eb677f73d2",
+        "renditionValue" : {
+          "componentAttributes" : {
+            "richTextValue" : "<div class=\"logoPlaceholderForLogin\" style=\"padding: 10px 0px 10px 0px;\">\n    <a href=\"/s/?language=fr_CA\" style=\"text-decoration: none;\">\n     <div><img src=\"/sfsites/c/resource/CSC_LoginLogo\" style=\"width: 80%; display: block; margin-left: auto; margin-right: auto;\"></div>\n    </a>\n</div>"
+          }
+        },
+        "type" : "renditionComponent"
+      } ],
+      "type" : "component"
+    }, {
+      "componentAttributes" : {
+        "flowArguments" : "[{\"label\":\"Language\",\"dataType\":\"String\",\"supportsRecordId\":false,\"value\":\"{!language}\"}]",
+        "flowName" : "Self_Registration_Single_Account"
+      },
+      "componentName" : "forceCommunity:flowCommunity",
+      "id" : "b78c0348-e4d5-4860-ab23-6e6065313a86",
+      "renderPriority" : "NEUTRAL",
+      "renditionMap" : { },
+      "type" : "component"
+    }, {
+      "componentAttributes" : {
+        "richTextValue" : "<p style=\"text-align:center; color:#58595B; font-size:14px; font-weight:700;\">Already have an account? <a href=\"https://customersupport.ironmountain.com/s/login/?language=en_US\" style=\"color: #1B75BC; text-decoration: underline;\">Sign in</a></p>"
+      },
+      "componentName" : "forceCommunity:htmlBlock",
+      "id" : "994f856d-33f2-4931-b74f-129a9416a5c3",
+      "renderPriority" : "NEUTRAL",
+      "renditionMap" : {
+        "fr_ca" : "a2a04d87-fef4-4da3-8f82-7d6f28aa19ab"
+      },
+      "renditions" : [ {
+        "id" : "a2a04d87-fef4-4da3-8f82-7d6f28aa19ab",
+        "renditionValue" : {
+          "componentAttributes" : {
+            "richTextValue" : "<p style=\"text-align:center; color:#58595B; font-size:14px; font-weight:700;\">Vous avez déjà un compte ? <a href=\"/s/login/\" style=\"color: #1B75BC; text-decoration: underline;\">Connexion</a></p>"
+          }
+        },
+        "type" : "renditionComponent"
+      } ],
+      "type" : "component"
+    } ],
+    "id" : "f49318b7-9f53-4aa2-9e5e-3fff0f8abad9",
+    "regionName" : "content",
+    "type" : "region"
+  }, {
+    "components" : [ {
+      "componentAttributes" : {
+        "customHeadTags" : "",
+        "description" : "",
+        "title" : "Register"
+      },
+      "componentName" : "forceCommunity:seoAssistant",
+      "id" : "b265ce92-a31d-44cd-a0f2-e0cbfe1e8416",
+      "renditionMap" : {
+        "fr" : "6137271c-77cf-4bdb-9ae8-d74c603eb2df",
+        "fr_ca" : "edfe2df8-1d87-47e7-a65d-d514dc3903f0"
+      },
+      "renditions" : [ {
+        "id" : "edfe2df8-1d87-47e7-a65d-d514dc3903f0",
+        "renditionValue" : {
+          "componentAttributes" : {
+            "customHeadTags" : "",
+            "description" : "",
+            "title" : "Register"
+          }
+        },
+        "type" : "renditionComponent"
+      }, {
+        "id" : "6137271c-77cf-4bdb-9ae8-d74c603eb2df",
+        "renditionValue" : {
+          "componentAttributes" : {
+            "customHeadTags" : "",
+            "description" : "",
+            "title" : "Register"
+          }
+        },
+        "type" : "renditionComponent"
+      } ],
+      "type" : "component"
+    } ],
+    "id" : "ff2e667a-0a02-4418-8ef5-e3e004afc6c5",
+    "regionName" : "sfdcHiddenRegion",
+    "type" : "region"
+  } ],
+  "themeLayoutType" : "Login",
+  "type" : "view",
+  "viewType" : "self-register"
+}

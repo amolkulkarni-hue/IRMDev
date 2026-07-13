@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Total_Booked_Amount__c</fullName>
+    <inlineHelpText>Aggregated booked value from associated products.</inlineHelpText>
+    <label>Total Booked Amount</label>
+    <summarizedField>OpportunityLineItem.Booked_Amount__c</summarizedField>
+    <summaryForeignKey>OpportunityLineItem.OpportunityId</summaryForeignKey>
+    <summaryOperation>sum</summaryOperation>
+    <trackHistory>false</trackHistory>
+    <type>Summary</type>
+</CustomField>

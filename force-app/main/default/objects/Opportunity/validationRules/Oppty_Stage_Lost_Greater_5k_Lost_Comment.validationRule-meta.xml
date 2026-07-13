@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Oppty_Stage_Lost_Greater_5k_Lost_Comment</fullName>
+    <active>true</active>
+    <description>IF the Opportunity stage is set to &quot;Lost&quot; AND the &quot;Total Booked Amount&quot; is GREATER than $5,000; THEN the &quot;Lost Comments&quot; field must be populated.</description>
+    <errorConditionFormula>AND(
+ISPICKVAL(StageName, &quot;Lost&quot;),
+Total_Booked_Amount__c &gt; 5000,
+IM_Lost_Comments__c = &quot;&quot;,
+NOT($Permission.VR_Bypass_Permission)
+)</errorConditionFormula>
+    <errorDisplayField>IM_Lost_Comments__c</errorDisplayField>
+    <errorMessage>Please provide more detail as to why this opportunity was lost.</errorMessage>
+</ValidationRule>

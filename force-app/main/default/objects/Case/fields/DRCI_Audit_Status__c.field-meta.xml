@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>DRCI_Audit_Status__c</fullName>
+    <description>DRCI is a system where all the customer contract records are scanned into and stored.</description>
+    <label>DRCI Audit Status</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>Audit_Status__c</controllingField>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Resubmitted</fullName>
+                <default>false</default>
+                <label>Resubmitted</label>
+            </value>
+            <value>
+                <fullName>Failed</fullName>
+                <default>false</default>
+                <label>Failed</label>
+            </value>
+            <value>
+                <fullName>Passed</fullName>
+                <default>false</default>
+                <label>Passed</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Failed</controllingFieldValue>
+            <controllingFieldValue>Resubmitted</controllingFieldValue>
+            <valueName>Resubmitted</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Failed</controllingFieldValue>
+            <controllingFieldValue>Resubmitted</controllingFieldValue>
+            <valueName>Failed</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Passed</controllingFieldValue>
+            <valueName>Passed</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

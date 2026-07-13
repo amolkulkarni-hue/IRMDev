@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Primary_CDE_Formula__c</fullName>
+    <description>If the Account is tied to an IMGA, it will return that IMGA&apos;s Account Primary CDE, otherwise it will return the Account Primary CDE listed on the Account.</description>
+    <externalId>false</externalId>
+    <formula>/* 
+This formula will traverse the Account hierarchy from (including) current record all the way to the top (up to 6 levels) and 
+will display the value of the &quot;Primary CDE&quot; field of the Parent Account */ 
+
+IF(ISBLANK( ParentId ), Primary_CDE__c , 
+
+IF(ISBLANK( Parent.ParentId), Parent.Primary_CDE__c , 
+
+IF(ISBLANK( Parent.Parent.ParentId), Parent.Parent.Primary_CDE__c , 
+
+IF(ISBLANK( Parent.Parent.Parent.ParentId), 
+Parent.Parent.Parent.Primary_CDE__c , 
+
+IF(ISBLANK( Parent.Parent.Parent.Parent.ParentId ), 
+Parent.Parent.Parent.Parent.Primary_CDE__c , 
+
+IF(ISBLANK( Parent.Parent.Parent.Parent.Parent.ParentId), 
+Parent.Parent.Parent.Parent.Parent.Primary_CDE__c , 
+
+&quot;&quot;) 
+) 
+) 
+) 
+) 
+)</formula>
+    <label>Primary CDE (Formula)</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

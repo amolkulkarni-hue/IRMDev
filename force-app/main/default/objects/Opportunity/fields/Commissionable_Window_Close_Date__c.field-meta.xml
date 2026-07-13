@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Commissionable_Window_Close_Date__c</fullName>
+    <description>Value of Commissionable_Window__c Months past First Bill Date (Closedate)
+CloseDate formerly First Bill Date, Booked Date is now First Bill Date.</description>
+    <formula>DATE(
+year(IM_Booked_Date__c)
++ floor((month(IM_Booked_Date__c) + Commissionable_Window__c)/12) + if(and(month(IM_Booked_Date__c)=12,Commissionable_Window__c&gt;=12),-1,0)
+,
+if( mod( month(IM_Booked_Date__c) + Commissionable_Window__c , 12 ) = 0, 12 , mod( month(IM_Booked_Date__c) + Commissionable_Window__c , 12 ))
+,
+min( 
+day(IM_Booked_Date__c),
+case(
+max( mod( month(IM_Booked_Date__c) + Commissionable_Window__c , 12 ) , 1),
+9,30,
+4,30,
+6,30,
+11,30,
+2,28,
+31
+)
+)
+)</formula>
+    <label>Commissionable Window Close Date</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Date</type>
+</CustomField>

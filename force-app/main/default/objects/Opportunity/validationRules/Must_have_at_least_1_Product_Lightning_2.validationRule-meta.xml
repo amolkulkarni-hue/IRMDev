@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Must_have_at_least_1_Product_Lightning_2</fullName>
+    <active>true</active>
+    <description>IMNA updated product requirement - must have product by Stage 3. Will stay deactivated until LEX is rolled out. It will take the place of &quot;Must_have_at_least_1_Product_Lightning&quot;, which should be deactivated.</description>
+    <errorConditionFormula>AND(
+OR(
+$RecordType.DeveloperName = &apos;Standard_Opportunity&apos;,
+$RecordType.DeveloperName = &apos;IMAP_Standard_Opportunity&apos;,
+$RecordType.DeveloperName = &apos;IME_Standard_Opportunity&apos;,
+$RecordType.DeveloperName = &apos;IMLA_Standard_Opportunity&apos;,
+$RecordType.DeveloperName = &apos;CPQ_Sales_Opportunity&apos;),
+ISCHANGED(StageName),(ISPICKVAL( StageName ,&apos;3 - Solution Agreed&apos;)||ISPICKVAL( StageName ,&apos;4 - Negotiate&apos;)|| ISPICKVAL( StageName ,&apos;5 - Signed/PO in&apos;)|| ISPICKVAL( StageName ,&apos;6 - Setup&apos;)|| ISPICKVAL( StageName ,&apos;7 - Closed&apos;)),NOT(HasOpportunityLineItem))</errorConditionFormula>
+    <errorDisplayField>StageName</errorDisplayField>
+    <errorMessage>This Opportunity requires a Product. Need help? Contact your Sales Operations Business Partner.</errorMessage>
+</ValidationRule>

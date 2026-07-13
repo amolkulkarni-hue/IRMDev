@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Is_Billing_Country_US_or_Canada__c</fullName>
+    <description>Drives visibility of GSA/SLED and Healthcare fields for US and Canada opportunities. Do not expose on page layout. Internal use only.</description>
+    <formula>OR(Billing_Country__r.Name = &apos;United States&apos;,Billing_Country__r.Name = &apos;Canada&apos;)</formula>
+    <inlineHelpText>Returns true when Billing Country = United States or Canada. Used for Dynamic Forms visibility only.</inlineHelpText>
+    <label>Is Billing Country US or Canada</label>
+    <trackHistory>false</trackHistory>
+    <type>Checkbox</type>
+</CustomField>

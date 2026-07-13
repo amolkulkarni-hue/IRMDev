@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Shred_Date_Visit_Profile_Modified</fullName>
+    <active>true</active>
+    <description>Shred - Date Visit Profile Modified must be today&apos;s date. It cannot be in the Past or the Future.</description>
+    <errorConditionFormula>(RecordType_Name__c = &quot;NCSP: Upsell&quot;)&amp;&amp;
+OR(
+	(
+	NOT(ISCHANGED(Open_Tasks__c)) &amp;&amp;
+	ISCHANGED(Shred_Date_Visit_Profile_Modified__c ) &amp;&amp;
+	NOT(ISBLANK(Shred_Date_Visit_Profile_Modified__c )) &amp;&amp;
+	DATEVALUE(Shred_Date_Visit_Profile_Modified__c ) != TODAY() &amp;&amp;
+	(
+	  ISBLANK(PRIORVALUE(Shred_Date_Visit_Profile_Modified__c )) ||
+	  DATEVALUE(Shred_Date_Visit_Profile_Modified__c ) != DATEVALUE(PRIORVALUE(Shred_Date_Visit_Profile_Modified__c ))
+	)
+	),
+    (	
+	ISNEW() &amp;&amp;
+	NOT(ISBLANK(Shred_Date_Visit_Profile_Modified__c )) &amp;&amp;
+	DATEVALUE(Shred_Date_Visit_Profile_Modified__c ) != TODAY() 
+	) 
+)</errorConditionFormula>
+    <errorDisplayField>Shred_Date_Visit_Profile_Modified__c</errorDisplayField>
+    <errorMessage>Shred - Date Visit Profile Modified must be today&apos;s date. It cannot be in the Past or the Future.</errorMessage>
+</ValidationRule>

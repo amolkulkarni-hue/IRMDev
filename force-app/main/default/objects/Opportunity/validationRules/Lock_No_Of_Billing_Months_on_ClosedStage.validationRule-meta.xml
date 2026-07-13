@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Lock_No_Of_Billing_Months_on_ClosedStage</fullName>
+    <active>true</active>
+    <description>#21306- Restricts users to edit No of Billing months once an opportunity is Won
+#21308- Added Bypass logic to allow edit on Forecast Billing months</description>
+    <errorConditionFormula>AND(
+
+ISCHANGED( No_of_Forecast_Billing_Month__c),
+
+OR(
+ISPICKVAL(StageName, &apos;5 - Signed/PO in&apos;),
+ISPICKVAL(StageName, &apos;6 - Setup&apos;),
+ISPICKVAL(StageName, &apos;7 - Closed&apos;)),
+
+NOT(
+ISPICKVAL( PRIORVALUE(StageName), &apos;4 - Negotiate&apos;)
+),
+
+NOT(ISPICKVAL( Type , &apos;Renewal&apos;)),
+
+Amount / CURRENCYRATE(TEXT(CurrencyIsoCode)) &gt;= 25000,
+
+NOT($Permission.Edit_Forecast_Billing_Months_in_Late_Stage_Opp),
+NOT($Permission.VR_Bypass_Permission),
+
+$Profile.Name &lt;&gt; &apos;System Administrator&apos;,
+$Profile.Name &lt;&gt; &apos;IM_Custom Sys Admin&apos;
+
+)</errorConditionFormula>
+    <errorDisplayField>No_of_Forecast_Billing_Month__c</errorDisplayField>
+    <errorMessage>You cannot update the Forecast Billing months once an Opportunity has been Won. Need help? Contact your Sales Operations Business Partner.</errorMessage>
+</ValidationRule>

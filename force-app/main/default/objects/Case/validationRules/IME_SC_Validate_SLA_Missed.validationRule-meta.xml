@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IME_SC_Validate_SLA_Missed</fullName>
+    <active>true</active>
+    <description>If Case record type is &quot;IME SC Case&quot; AND SLA Missed is True AND 
+(Cut Off Time is Changed OR End time Cut off is Changed OR Rush is changed),  then  do not allow to change the End Time Cut Off.</description>
+    <errorConditionFormula>AND(NOT(ISCHANGED( IME_SC_Owner_Manager__c )), 
+NOT(ISCHANGED( IME_SC_Manager_of_Manager_OwnerId__c )),
+$RecordType.Name = &quot;IME SC Case&quot;,
+ IME_SC_SLA_Missed__c  = true, 
+ OR( 
+ISCHANGED(IME_SC_Cut_Off_Time__c) ,
+AND(
+ISCHANGED(End_Time_Cutoff_SLA__c),
+ NOT(IME_SC_Rush__c ) 
+) 
+) )</errorConditionFormula>
+    <errorMessage>Case has already missed SLA. You cannot enter end cut-off time again.</errorMessage>
+</ValidationRule>

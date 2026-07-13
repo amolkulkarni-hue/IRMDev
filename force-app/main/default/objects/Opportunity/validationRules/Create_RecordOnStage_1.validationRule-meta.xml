@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Create_RecordOnStage_1</fullName>
+    <active>false</active>
+    <description>Globally, all opportunities should be only created in Stage 1
+#22221 - Exception for eCommerce opportunities</description>
+    <errorConditionFormula>AND(
+AND(
+OR(
+$Setup.Metadata_Activation_Settings__c.SObject_API_Name__c = &apos;Opportunity&apos;,
+$Setup.Metadata_Activation_Settings__c.SObject_API_Name__c = &apos;&apos;
+),
+NOT($Setup.Metadata_Activation_Settings__c.Disable_VR__c)
+),
+AND(
+ISNEW(),
+$RecordType.DeveloperName != &apos;CPQ_Billing_Opportunity&apos;,
+NOT(ISPICKVAL(StageName, &apos;1 - Qualification&apos;))
+),
+$Label.IMExpress_Opp_Owner!=  OwnerId,
+NOT($Permission.VR_Bypass_Permission)
+)</errorConditionFormula>
+    <errorDisplayField>StageName</errorDisplayField>
+    <errorMessage>New opportunities can only be created  as  Stage-1</errorMessage>
+</ValidationRule>

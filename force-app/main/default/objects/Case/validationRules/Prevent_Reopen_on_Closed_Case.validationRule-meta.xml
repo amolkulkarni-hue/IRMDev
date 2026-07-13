@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Prevent_Reopen_on_Closed_Case</fullName>
+    <active>true</active>
+    <description>Prevents any non-mgrs or coordinators from reopening a closed case (For Issues, task, cac, ncsp, and retention cases only)</description>
+    <errorConditionFormula>AND
+(ISCHANGED(Status),
+
+OR(ISPICKVAL(PRIORVALUE(Status),&apos;Closed&apos;),ISPICKVAL(PRIORVALUE(Status),&apos;Complete&apos;), ISPICKVAL(PRIORVALUE(Status),&apos;Cancelled&apos;)),
+
+OR($RecordType.Name = &quot;CLAS – Data Management&quot;,
+ RecordType.DeveloperName = &quot;Retention_RM&quot;, RecordType.DeveloperName = &quot;Retention_SH&quot;, $RecordType.Name = &quot;NCSP: DMS&quot;, $RecordType.Name = &quot;NCSP: DP New Customer Setup&quot;, $RecordType.Name = &quot;NCSP: SKP Department Add Only&quot;, $RecordType.Name == &apos;NCSP: Tech Services New Customer Setup&apos;, $RecordType.Name == &apos;NCSP: Upsell&apos;, $RecordType.Name == &apos;NCSP: New Customer Setup&apos;, $RecordType.Name == &apos;NCSP: SKP New Customer Setup&apos;,$RecordType.Name = &quot;Ad Hoc Report and Dashboard Request Cases&quot; ),
+
+OR($Profile.Name = &apos;AS Issue Res CSA1&apos;, $Profile.Name = &apos;AS CSA&apos;, $Profile.Name = &apos;AS NCSP CSA&apos;,$Profile.Name = &apos;AS Implementation Team&apos;),
+
+AND($Profile.Name &lt;&gt; &quot;IM_Custom Sys Admin&quot;,$Profile.Name &lt;&gt; &quot;IM_Sales Ops Super User&quot;,$Profile.Name &lt;&gt; &quot;IME_Custom Sys Admin&quot;,
+$Profile.Name &lt;&gt; &quot;IME_Super_User&quot;,$Profile.Name &lt;&gt; &quot;IM_Sales&quot;))</errorConditionFormula>
+    <errorMessage>Only managers, coordinators, and administrators can reopen a case or change the status of a closed case.</errorMessage>
+</ValidationRule>

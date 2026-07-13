@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>YTD_Total_Variance_Flag__c</fullName>
+    <externalId>false</externalId>
+    <formula>IF(
+
+(NA_CY_YTD_TOTAL__c -  NA_PY_YTD_TOTAL__c) &lt;0 &amp;&amp; (IM_IMGA_Indexed__c &lt;&gt; null), IMAGE(&quot;/img/msg_icons/error16.png&quot;, &quot;Red Flag&quot;) &amp;&quot; View &quot;&amp; HYPERLINK( &quot;/00O80000004p9aL?pv0=&quot; &amp; IM_IMGA_Indexed__c, &quot;Year over Year Summary&quot;, &quot;Test1&quot;)  &amp;&quot; or &quot;&amp; HYPERLINK( &quot;/00O80000004p9aK?pv0=&quot; &amp; IM_IMGA_Indexed__c, &quot;Year over Year Detail&quot;, &quot;Test1&quot;)  , 
+
+
+
+IF(
+
+(NA_CY_YTD_TOTAL__c -  NA_PY_YTD_TOTAL__c) &lt;0 &amp;&amp; (IM_IMGA_Indexed__c = null), IMAGE(&quot;/img/msg_icons/error16.png&quot;, &quot;Red Flag&quot;) &amp;&quot; View &quot;&amp; HYPERLINK( &quot;/00O80000004p9aJ?pv0=&quot; &amp; Id, &quot;Year over Year Summary&quot;, &quot;Test1&quot;)  &amp;&quot; or &quot;&amp; HYPERLINK( &quot;/00O80000004p9aI?pv0=&quot; &amp; Id, &quot;Year over Year Detail&quot;, &quot;Test1&quot;)  , 
+
+
+IF(
+(NA_CY_YTD_TOTAL__c +  NA_PY_YTD_TOTAL__c)=0, &quot;No Billings&quot;, 
+
+IF(
+( NA_CY_YTD_TOTAL__c -  NA_PY_YTD_TOTAL__c)&gt;=0, IMAGE(&quot;/img/msg_icons/confirm16.png&quot;, &quot;Green&quot;), 
+
+
+&quot;&quot;) 
+
+ 
+)
+)
+)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>YTD Total Variance Flag</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

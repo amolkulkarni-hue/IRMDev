@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IMGS_Status_Cancelled</fullName>
+    <active>true</active>
+    <errorConditionFormula>(ISCHANGED(IMGS_Status__c) &amp;&amp; ISPICKVAL(IMGS_Status__c, &quot;Cancelled&quot;) &amp;&amp; NOT(ISPICKVAL(Status, &quot;Non Conversion&quot;))) || (ISCHANGED(Status) &amp;&amp;  $Profile.Id = &quot;00eV0000000Lx3T&quot; &amp;&amp; ISPICKVAL(Status, &quot;Non Conversion&quot;) &amp;&amp; NOT(ISPICKVAL(IMGS_Status__c, &quot;Cancelled&quot;))) || ((ISCHANGED(IMGS_Status__c) || ISCHANGED(OwnerId) || ISCHANGED(Status)) &amp;&amp; ISPICKVAL(PRIORVALUE(IMGS_Status__c), &quot;Cancelled&quot;) &amp;&amp; $Profile.Id = &quot;00eV0000000Lx3T&quot;)</errorConditionFormula>
+    <errorDisplayField>Status</errorDisplayField>
+    <errorMessage>Please update the Case Status to Non Conversion when updating the IMGS Status to Cancelled.  Note: This will also update and close out the opportunity to Lost.  Once Cancelled, you will not be able to update the IMGS Status.</errorMessage>
+</ValidationRule>

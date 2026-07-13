@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IMGA_Id__c</fullName>
+    <externalId>false</externalId>
+    <formula>/* 
+This formula will traverse the Account hierarchy from (including) current record all the way to the top (up to 6 levels) and will display the Name of the parent Account where IM_HIerarchy_Level__c field is &quot;IM Group (IMGA)&quot;. 
+If there is no such level parent in the hierarchy - will leave field blank 
+*/ 
+
+
+/* If No Parent AND this Record Hierarchy level IS NOT IMGA leave blank */ 
+IF (LEN(ParentId)==0 &amp;&amp; TEXT( IM_Hierarchy_Level__c )!=&apos;IM Group (IMGA)&apos;, &apos;&apos;, 
+
+/*Else If No Parent AND this Record Hierarchy level IS IMGA leave blank*/ 
+IF (LEN(ParentId)==0 &amp;&amp; TEXT( IM_Hierarchy_Level__c )==&apos;IM Group (IMGA)&apos;, &apos;&apos;, 
+
+
+/*Else If parent is IMGA-Level, get name from parent*/ 
+IF(TEXT( Parent.IM_Hierarchy_Level__c )==&apos;IM Group (IMGA)&apos;, Parent.Id, 
+
+/*Else If second parent is IMGA-Level, get name from second parent*/ 
+IF(TEXT( Parent.Parent.IM_Hierarchy_Level__c )==&apos;IM Group (IMGA)&apos;, Parent.Parent.Id, 
+
+/*Else If third parent is IMGA-Level, get name from third parent*/ 
+IF(TEXT( Parent.Parent.Parent.IM_Hierarchy_Level__c )==&apos;IM Group (IMGA)&apos;, Parent.Parent.Parent.Id, 
+
+/*Else If fourth parent is IMGA-Level, get name from fourth parent*/ 
+IF(TEXT( Parent.Parent.Parent.Parent.IM_Hierarchy_Level__c )==&apos;IM Group (IMGA)&apos;, Parent.Parent.Parent.Parent.Id, 
+
+/*Else If fifth parent is IMGA-Level, get name from fifth parent*/ 
+IF(TEXT( Parent.Parent.Parent.Parent.Parent.IM_Hierarchy_Level__c )==&apos;IM Group (IMGA)&apos;, 
+Parent.Parent.Parent.Parent.Parent.Id, 
+
+/*Else (when reached up six levels, if no IMGA-level parent found - then put blank.*/ 
+&apos;&apos; ) 
+) 
+) 
+) 
+) 
+) 
+)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>IMGA Id</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

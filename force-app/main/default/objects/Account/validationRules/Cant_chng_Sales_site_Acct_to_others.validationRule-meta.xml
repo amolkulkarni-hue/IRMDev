@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Cant_chng_Sales_site_Acct_to_others</fullName>
+    <active>true</active>
+    <description>#31270 : Account Hierarchy: Customer Account &amp; Opportunity should always be linked to an account where Hierarchy level is Sales (Site) &amp; Hierarchy Level can not be changed from Sales (Site) to Country Parent etc.</description>
+    <errorConditionFormula>AND(
+OR(
+NumberofCustomerAccountsRollup__c&gt;0,
+OpportunityCounter__c&gt;0
+),
+AND(
+ISPICKVAL(IM_Hierarchy_Level__c ,&apos;Country Parent&apos;),
+ISCHANGED(IM_Hierarchy_Level__c)
+)
+)</errorConditionFormula>
+    <errorDisplayField>IM_Hierarchy_Level__c</errorDisplayField>
+    <errorMessage>Please re-parent the existing related opportunities &amp; customer accounts prior to the Hierarchy change to country parent.</errorMessage>
+</ValidationRule>

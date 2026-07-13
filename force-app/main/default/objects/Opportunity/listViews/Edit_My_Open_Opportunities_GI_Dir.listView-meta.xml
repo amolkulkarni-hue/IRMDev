@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Edit_My_Open_Opportunities_GI_Dir</fullName>
+    <columns>ACCOUNT.NAME</columns>
+    <columns>IMGA_Name__c</columns>
+    <columns>CORE.USERS.FULL_NAME</columns>
+    <columns>OPPORTUNITY.NAME</columns>
+    <columns>OPPORTUNITY.TYPE</columns>
+    <columns>OPPORTUNITY.AMOUNT</columns>
+    <columns>OPPORTUNITY.FORECAST_CATEGORY</columns>
+    <columns>OPPORTUNITY.STAGE_NAME</columns>
+    <columns>OPPORTUNITY.CLOSE_DATE</columns>
+    <columns>IM_Booked_Date__c</columns>
+    <columns>OPPORTUNITY_SCORE</columns>
+    <columns>OPPORTUNITY.CREATED_DATE</columns>
+    <columns>OPPORTUNITY.NEXT_STEP</columns>
+    <filterScope>Team</filterScope>
+    <filters>
+        <field>OPPORTUNITY.CLOSED</field>
+        <operation>equals</operation>
+        <value>0</value>
+    </filters>
+    <filters>
+        <field>OPPORTUNITY.RECORDTYPE</field>
+        <operation>equals</operation>
+        <value>Opportunity.Standard_Opportunity</value>
+    </filters>
+    <filters>
+        <field>OPPORTUNITY.CLOSE_DATE</field>
+        <operation>greaterOrEqual</operation>
+        <value>1/1/2024</value>
+    </filters>
+    <filters>
+        <field>Sales_Segment__c</field>
+        <operation>equals</operation>
+        <value>Global Industries</value>
+    </filters>
+    <label>Edit My Open Opportunities - GI NA Dir</label>
+    <sharedTo>
+        <role>Global_Account_Director</role>
+        <roleAndSubordinatesInternal>Global_Industries_GSV_BDE_DIR1</roleAndSubordinatesInternal>
+        <roleAndSubordinatesInternal>Global_Industries_HLS_BDE_DIR1</roleAndSubordinatesInternal>
+        <roleAndSubordinatesInternal>Global_Industries_HLS_BDE_DIR2</roleAndSubordinatesInternal>
+        <roleAndSubordinatesInternal>Global_Industries_HLS_BDE_DIR3</roleAndSubordinatesInternal>
+    </sharedTo>
+</ListView>

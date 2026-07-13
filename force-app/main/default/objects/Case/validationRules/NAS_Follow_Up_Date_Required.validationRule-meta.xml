@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NAS_Follow_Up_Date_Required</fullName>
+    <active>true</active>
+    <description>When a child case is created, this ensures that a follow up is entered upon case create.</description>
+    <errorConditionFormula>AND(
+$RecordType.Name = &quot;NAS General Support Case&quot;,
+OR(
+ISBLANK(Follow_up_Date__c),
+ISBLANK(Text(NAS_Pending_Reason__c))
+),
+OR(
+ISPICKVAL(Status, &quot;On Hold - Customer&quot;),
+ISPICKVAL(Status, &quot;On Hold - Internal&quot;)
+)
+)</errorConditionFormula>
+    <errorMessage>Please add a Follow Up Date and Pending Reason when placing case On Hold.</errorMessage>
+</ValidationRule>

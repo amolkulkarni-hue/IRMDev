@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>O2I_Audit_Failures</fullName>
+    <active>true</active>
+    <errorConditionFormula>ISPICKVAL(Audit_Status__c, &quot;Failed&quot;) &amp;&amp; (ISBLANK(Audit_Failure_Reason__c) || ISBLANK(Audit_Failure_Reason_Comments__c))</errorConditionFormula>
+    <errorDisplayField>Audit_Failure_Reason__c</errorDisplayField>
+    <errorMessage>Please add the Audit Failure Reason and Comments below for any Audit failures.</errorMessage>
+</ValidationRule>

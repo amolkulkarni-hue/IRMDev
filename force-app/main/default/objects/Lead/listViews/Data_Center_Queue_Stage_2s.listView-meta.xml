@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Data_Center_Queue_Stage_2s</fullName>
+    <columns>IM_Stage_2_Entered_Date__c</columns>
+    <columns>LEAD.CREATED_DATE</columns>
+    <columns>FULL_NAME</columns>
+    <columns>LEAD.COMPANY</columns>
+    <columns>LEAD.EMAIL</columns>
+    <columns>LEAD.STATE</columns>
+    <columns>LEAD.COUNTRY</columns>
+    <columns>IM_Lead_Stage__c</columns>
+    <columns>LEAD.STATUS</columns>
+    <columns>LEAD.LEAD_SOURCE</columns>
+    <columns>Lead_Source_Original_Detail__c</columns>
+    <columns>CORE.USERS.ALIAS</columns>
+    <columns>LEAD.UNREAD</columns>
+    <filterScope>Queue</filterScope>
+    <filters>
+        <field>IM_Lead_Stage__c</field>
+        <operation>equals</operation>
+        <value>2-Marketing Qual</value>
+    </filters>
+    <filters>
+        <field>LEAD.STATUS</field>
+        <operation>equals</operation>
+        <value>New</value>
+    </filters>
+    <label>Data Center Queue Stage 2 #</label>
+    <queue>Data_Center_Queue</queue>
+    <sharedTo>
+        <role>IMNA_US_Data_Center_BDE</role>
+        <role>IMNA_US_Data_Center_VP</role>
+    </sharedTo>
+</ListView>

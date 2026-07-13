@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Customer_Facing_Service_Line__c</fullName>
+    <externalId>false</externalId>
+    <formula>IF( TEXT(Welcome_Email_Language__c) = &quot;French&quot;,
+
+CASE(NCSP_Service_line__c,
+&quot;RM&quot;, &quot;FR_Records Management_FR&quot;, 
+&quot;DB&amp;R&quot;, &quot;FR_Data Management_FR&quot;,
+&quot;FR_&quot;&amp;TEXT(NCSP_Service_line__c)&amp;&quot;_FR&quot;
+),
+
+CASE(NCSP_Service_line__c,
+&quot;RM&quot;, &quot;Records Management&quot;, 
+&quot;DB&amp;R&quot;, &quot;Data Management&quot;,
+TEXT(NCSP_Service_line__c) 
+)
+
+)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Customer Facing Service Line</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

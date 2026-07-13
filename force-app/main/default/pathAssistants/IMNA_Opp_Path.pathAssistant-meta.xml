@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PathAssistant xmlns="http://soap.sforce.com/2006/04/metadata">
+    <active>true</active>
+    <entityName>Opportunity</entityName>
+    <fieldName>StageName</fieldName>
+    <masterLabel>IMNA Opp Path</masterLabel>
+    <pathAssistantSteps>
+        <fieldNames>IM_Reason_Lost__c</fieldNames>
+        <fieldNames>IM_Lost_Comments__c</fieldNames>
+        <picklistValueName>Lost</picklistValueName>
+    </pathAssistantSteps>
+    <pathAssistantSteps>
+        <fieldNames>Amount</fieldNames>
+        <fieldNames>US_Federal_GSA_Pricing__c</fieldNames>
+        <fieldNames>Primary_Product_Line__c</fieldNames>
+        <fieldNames>Billing_Country__c</fieldNames>
+        <fieldNames>NextStep</fieldNames>
+        <picklistValueName>Qualification</picklistValueName>
+    </pathAssistantSteps>
+    <pathAssistantSteps>
+        <fieldNames>Deal_Review_Status__c</fieldNames>
+        <picklistValueName>Solutioning</picklistValueName>
+    </pathAssistantSteps>
+    <recordTypeName>Standard_Opportunity</recordTypeName>
+</PathAssistant>

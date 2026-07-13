@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Cant_convert_lead_on_Sanctioned_Acct</fullName>
+    <active>true</active>
+    <description>#16068 : Sanctioned Accounts: Restrict Lead Conversion to Existing Sanctioned Account</description>
+    <errorConditionFormula>AND(
+    Converted_From_Lead__c = &apos;Converted&apos;,     
+    AND (
+        CONTAINS( TEXT(Type) , &apos;Sanctioned&apos;),
+        NOT(ISCHANGED (Type)),
+		NOT(ISNEW())
+    )   
+)</errorConditionFormula>
+    <errorMessage>You can not convert Lead to a Sanctioned Account.</errorMessage>
+</ValidationRule>

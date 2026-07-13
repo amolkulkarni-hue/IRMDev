@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Lost_Opportunities_Cannot_Move_to_Won</fullName>
+    <active>false</active>
+    <description>#21200 Deactivating the VR and created Cannot_change_Stage_of_Lost_Opportunity VR</description>
+    <errorConditionFormula>AND( ISCHANGED( StageName ), 
+ISPICKVAL(PRIORVALUE(StageName),&apos;Lost&apos;), 
+OR(
+ISPICKVAL(StageName, &apos;5 - Signed/PO in&apos;), 
+ISPICKVAL(StageName, &apos;6 - Setup&apos;),
+ISPICKVAL(StageName, &apos;7 - Closed&apos;)),
+OR( 
+$Profile.Name = &apos;IME_In_Country_Admin&apos;, 
+$Profile.Name = &apos;IME_Contracts&apos;, 
+$Profile.Name = &apos;IME_Manager&apos;, 
+$Profile.Name = &apos;IME_Sales_AM&apos;,
+$Profile.Name = &apos;IME_Sales_AM2&apos;,
+$Profile.Name = &apos;IME_SC_In_Country_Admin&apos;, 
+$Profile.Name = &apos;IME_SC_Manager&apos;, 
+$Profile.Name = &apos;IME_SC_Representative&apos;,
+$Profile.Name = &apos;IMLA_Manager&apos;,
+$Profile.Name = &apos;IMLA_Marketing&apos;,
+$Profile.Name = &apos;IMLA_Sales_AM&apos;,
+$Profile.Name = &apos;IMLA_Sales_Support&apos;,
+$Profile.Name = &apos;IMLA_SC_In_Country_Admin&apos;,
+$Profile.Name = &apos;IMLA_SC_Manager&apos;,
+$Profile.Name = &apos;IMLA_SC_Representative&apos;,
+$Profile.Name = &apos;IMAP_In_Country_Admin&apos;,
+$Profile.Name = &apos;IMAP_Manager&apos;,
+$Profile.Name = &apos;IMAP_Sales AM&apos;,
+$Profile.Name = &apos;IMAP_SC_Manager&apos;,
+$Profile.Name = &apos;IMAP_SC_Representative&apos;
+))</errorConditionFormula>
+    <errorDisplayField>StageName</errorDisplayField>
+    <errorMessage>If you want to re-open a lost Opportunity, move it to an open stage before closing the sale.</errorMessage>
+</ValidationRule>

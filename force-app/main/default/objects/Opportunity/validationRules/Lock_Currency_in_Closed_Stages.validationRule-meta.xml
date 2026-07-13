@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Lock_Currency_in_Closed_Stages</fullName>
+    <active>true</active>
+    <description>#21306- Restrict users from editing Currency on Won Opportunities
+#25605-add bypass logic with permission set for  user to edit currency field in late stages.</description>
+    <errorConditionFormula>AND(
+ISCHANGED(CurrencyIsoCode),
+
+OR(
+ISPICKVAL(StageName, &apos;5 - Signed/PO in&apos;),
+ISPICKVAL(StageName, &apos;6 - Setup&apos;),
+ISPICKVAL(StageName, &apos;7 - Closed&apos;)),
+
+NOT(PRIORVALUE(StageName)=&apos;4 - Negotiate&apos;),
+
+$Profile.Name &lt;&gt; &apos;System Administrator&apos;,
+$Profile.Name &lt;&gt; &apos;IM_Custom Sys Admin&apos;,
+NOT($Permission.Edit_Closed_Opportunity_Currency),
+NOT($Permission.VR_Bypass_Permission)
+
+)</errorConditionFormula>
+    <errorMessage>You cannot update Currency once an Opportunity has been Won. Need help? Contact your Sales Operations Business Partner.</errorMessage>
+</ValidationRule>

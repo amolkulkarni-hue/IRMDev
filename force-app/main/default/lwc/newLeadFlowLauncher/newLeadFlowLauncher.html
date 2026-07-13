@@ -1,0 +1,16 @@
+<template>
+    <lightning-card title="New Lead" icon-name="standard:lead">
+        <div class="slds-p-around_medium">
+            <template lwc:if={flowApiName}>
+                <lightning-flow flow-api-name={flowApiName} flow-input-variables={inputVariables}
+                    onstatuschange={handleFlowStatusChange}>
+                </lightning-flow>
+            </template>
+            <template lwc:else>
+                <p class="slds-text-color_error">
+                    No Flow API name configured.
+                </p>
+            </template>
+        </div>
+    </lightning-card>
+</template>

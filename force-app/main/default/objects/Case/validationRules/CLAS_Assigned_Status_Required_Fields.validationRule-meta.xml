@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CLAS_Assigned_Status_Required_Fields</fullName>
+    <active>true</active>
+    <description>Fields that are required while the case is in the status of assigned.</description>
+    <errorConditionFormula>AND(
+OR(
+$RecordType.Name = &apos;CLAS – Data Management&apos;, 
+$RecordType.Name  = &apos;CLAS - RM&apos;,
+RecordType.DeveloperName =&apos;Retention_RM&apos;, RecordType.DeveloperName =&apos;Retention_SH&apos;
+),
+NOT(ISBLANK(Date_First_Customer_Contact_Attempt__c)),		
+OR(				
+ISPICKVAL(Contract_Type__c ,&apos;&apos;), 
+ISPICKVAL(Owning_Group__c,&apos;&apos;),
+ISBLANK(Contract_Renewal_Date__c),
+ISBLANK(Annual_Revenue__c),
+ISPICKVAL(Contact_Made_Y_N__c,&apos;&apos;) 
+
+)
+)</errorConditionFormula>
+    <errorMessage>Before Date First Customer Contact Attempt is populated, please complete following fields:  Annual Revenue, Contract Renewal Date, Contract Type, Contact Made (Y/N) and Owning Group</errorMessage>
+</ValidationRule>

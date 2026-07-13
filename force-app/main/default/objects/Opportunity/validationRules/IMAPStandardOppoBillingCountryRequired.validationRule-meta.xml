@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IMAPStandardOppoBillingCountryRequired</fullName>
+    <active>false</active>
+    <description>For IMAP Standard Opportunity Billing Country Required.</description>
+    <errorConditionFormula>AND( RecordType.DeveloperName = &quot;IMAP_Standard_Opportunity&quot;,
+ISBLANK( Billing_Country__c ))</errorConditionFormula>
+    <errorDisplayField>Billing_Country__c</errorDisplayField>
+    <errorMessage>Billing country is Required for IMAP Standard Opportunity</errorMessage>
+</ValidationRule>

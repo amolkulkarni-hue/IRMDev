@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IMESC_VR_Case4</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND($Profile.Name &lt;&gt; &quot;System Administrator&quot;,
+$Profile.Name &lt;&gt; &quot;IM_Custom Sys Admin&quot;, RecordType_Name__c = &apos;IM Employees Support Case&apos;,  OR( ISPICKVAL(IM_Division__c, &apos;IMAP&apos;),ISPICKVAL(IM_Division__c, &apos;IME&apos;),ISPICKVAL(IM_Division__c, &apos;IMLA&apos;)),OR( ISPICKVAL(Related_To__c, &apos;Outlook Integration&apos;),ISPICKVAL(Related_To__c, &apos;Service Cloud&apos;)))</errorConditionFormula>
+    <errorMessage>For Salesforce issues and user management, submit ticket via https://irm.service-now.com/sp (select Technology &gt; General &gt; Salesforce). For Salesforce enhancements, submit request via https://forms.gle/aZPk9oYNMBni1vwq9</errorMessage>
+</ValidationRule>

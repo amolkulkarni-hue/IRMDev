@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IME_Opportunity_Total_Annual_Amount_Test</fullName>
+    <active>true</active>
+    <description>Opportunity SV Status field should only be set to &apos;Passed&apos; if the &apos;Opportunity Total Annual Amount Test&apos; is set to TRUE</description>
+    <errorConditionFormula>AND(Opportunity_Total_Annual_Amount_Test__c  = FALSE, ISPICKVAL(SV_Status__c ,&apos;Passed&apos;),
+NOT($Permission.VR_Bypass_Permission))</errorConditionFormula>
+    <errorDisplayField>Opportunity_Total_Annual_Amount_Test__c</errorDisplayField>
+    <errorMessage>SV Status can only equal “Passed”, if the &quot;Opportunity Total Annual Amount Test&quot; field has been ticked.</errorMessage>
+</ValidationRule>

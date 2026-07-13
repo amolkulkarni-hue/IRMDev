@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>At_Risk_Customer_Accounts_Flag__c</fullName>
+    <externalId>false</externalId>
+    <formula>IF(
+(of_Terminated_Customer_Accounts__c) &gt;0 &amp;&amp; (IM_IMGA_Indexed__c &lt;&gt; null), IMAGE(&quot;/img/msg_icons/error16.png&quot;, &quot;Red Flag&quot;) &amp;&quot; View &quot;&amp; HYPERLINK( &quot;/00O80000004p9aG?pv0=&quot; &amp; IM_IMGA_Indexed__c, &quot;Terminated and At Risk across IMGA&quot;, &quot;report of Customer Accounts&quot;),
+
+
+IF(
+(of_Terminated_Customer_Accounts__c) &gt;0 &amp;&amp; (IM_IMGA_Indexed__c = null), IMAGE(&quot;/img/msg_icons/error16.png&quot;, &quot;Red Flag&quot;) &amp;&quot; View &quot;&amp; HYPERLINK( &quot;/00O80000004p9aH?pv0=&quot; &amp; Id, &quot;Terminated and At Risk across Account&quot;, &quot;report of Customer Accounts&quot;),
+  
+
+IF( 
+(At_Risk_Revenue_PY_FY_Total__c) &gt;0 &amp;&amp; (IM_IMGA_Indexed__c &lt;&gt; null), IMAGE(&quot;/img/msg_icons/error16.png&quot;, &quot;Red Flag&quot;) &amp;&quot; View &quot;&amp; HYPERLINK( &quot;/00O80000004p9aG?pv0=&quot; &amp; IM_IMGA_Indexed__c, &quot;IMGA At Risk&quot;, &quot;report of Customer Accounts&quot;),
+  
+IF(
+(At_Risk_Revenue_PY_FY_Total__c) &gt;0 &amp;&amp; (IM_IMGA_Indexed__c = null), IMAGE(&quot;/img/msg_icons/error16.png&quot;, &quot;Red Flag&quot;) &amp;&quot; View &quot;&amp; HYPERLINK( &quot;/00O80000004p9aH?pv0=&quot; &amp; Id, &quot;Account At Risk&quot;, &quot;report of Customer Accounts&quot;),
+
+
+IF( 
+
+(NA_CY_YTD_TOTAL__c) = 0, &quot;N/A&quot;, 
+
+
+IF( 
+( At_Risk_Revenue_PY_FY_Total__c)&lt;=0, IMAGE(&quot;/img/msg_icons/confirm16.png&quot;, &quot;Green&quot;), 
+
+
+&quot;&quot;) 
+)))))</formula>
+    <label>At Risk Customer Accounts Flag</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

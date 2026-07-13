@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Tier_2_Minimum_Billing</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(ISPICKVAL(Service_Type__c, &quot;Storage A la carte&quot;),OR(
+ISPICKVAL(Type, &quot;New Deal&quot;),
+ISPICKVAL(Type, &quot;Framework&quot;)
+),
+Tier_Level__c = &quot;Tier 2&quot;, OR(ISPICKVAL( Minimum_Billing__c , &quot;Not Applicable&quot;), 
+ISPICKVAL( Minimum_Billing__c , &quot;&quot;)),
+ISCHANGED(  Minimum_Billing__c ),
+NOT($Permission.VR_Bypass_Permission))</errorConditionFormula>
+    <errorDisplayField>Minimum_Billing__c</errorDisplayField>
+    <errorMessage>Minimum % Billing for Tier 2 New Deals and Framework Opportunities should be a valid billing percentage between 50 and 80</errorMessage>
+</ValidationRule>

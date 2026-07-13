@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebLink xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Send_for_Signature</fullName>
+    <availability>online</availability>
+    <description>The button will initiate a DocuSign Envelope that is linked to the Case in case of the logged in user has the ‘DocuSign Use on Case Object’ checkbox ticked on the User record.</description>
+    <displayType>button</displayType>
+    <linkType>javascript</linkType>
+    <masterLabel>Send for Signature</masterLabel>
+    <openType>onClickJavaScript</openType>
+    <protected>false</protected>
+    <url>{!REQUIRESCRIPT(&quot;/soap/ajax/26.0/connection.js&quot;)} 
+{!REQUIRESCRIPT(&quot;/soap/ajax/26.0/apex.js&quot;)}  
+{!REQUIRESCRIPT(&quot;/apex/dsfs__DocuSign_JavaScript&quot;)}
+
+var checkdocusign = sforce.connection.query(&quot;select id,dsfs__DSProSFUsername__c,Docusign_Use_on_Case_Object__c from User where id=&apos;{!$User.Id}&apos;&quot;); 
+//alert(checkdocusign.records.Docusign_Use_on_Case_Object__c);
+//alert(checkdocusign.records.dsfs__DSProSFUsername__c );
+
+if(checkdocusign.records.dsfs__DSProSFUsername__c != null &amp;&amp; checkdocusign.records.Docusign_Use_on_Case_Object__c == &apos;false&apos;){ 
+alert(&quot;You don’t have the necessary privileges to use DocuSign with cases&quot;);
+}
+else
+{
+DocuSign_CreateEnvelope();
+}</url>
+</WebLink>

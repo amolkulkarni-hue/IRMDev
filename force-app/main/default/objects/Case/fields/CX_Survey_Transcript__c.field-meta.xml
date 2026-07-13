@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CX_Survey_Transcript__c</fullName>
+    <externalId>false</externalId>
+    <formula>HYPERLINK(&apos;https://services.walkerinfo.com/smartsum&apos; &amp; &apos;?id=&apos; &amp; TEXT(FLOOR(Respondent_ID__c)) &amp; &apos;&amp;templateId=&apos;&amp;TEXT(FLOOR(SS_Template_ID__c))&amp;&apos;&amp;a=35&amp;unauthHandler=loginPrompt&apos;, &apos;Report&apos;, &apos;_blank&apos;)</formula>
+    <label>CX Survey Transcript</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

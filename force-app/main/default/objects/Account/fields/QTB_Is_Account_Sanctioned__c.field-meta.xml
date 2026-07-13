@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>QTB_Is_Account_Sanctioned__c</fullName>
+    <formula>IF(AND(ISPICKVAL(QTB_Source_Opportunity__r.Account.Type,&apos;Sanctioned (Do Not Contact)&apos;),QTB_SITAD__c = false, OR(ISPICKVAL(QTB_Legal_Entity_Country__c, &apos;United States&apos;),ISPICKVAL(QTB_Legal_Entity_Country__c , &apos;Canada&apos;),ISPICKVAL(QTB_Legal_Entity_Country__c ,&apos;Singapore&apos;))),true,If(AND(QTB_Source_Opportunity__c==null,ISPICKVAL(Parent.Parent.Type,&apos;Sanctioned (Do Not Contact)&apos;),ISPICKVAL(QTB_Legal_Entity_Country__c,&apos;Singapore&apos;)),true, if(NOT(CONTAINS(Parent.Name, &apos;BILLP&apos;)) &amp;&amp; ISPICKVAL(Parent.Type , &apos;Sanctioned (Do Not Contact)&apos;) , true, False)))</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Is Account Sanctioned?</label>
+    <trackHistory>false</trackHistory>
+    <type>Checkbox</type>
+</CustomField>

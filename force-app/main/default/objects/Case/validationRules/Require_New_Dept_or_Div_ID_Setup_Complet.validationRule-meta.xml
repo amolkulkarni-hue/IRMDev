@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Require_New_Dept_or_Div_ID_Setup_Complet</fullName>
+    <active>true</active>
+    <description>New Department ID or New Division ID Required for Department Add Record Type when Setup Complete Date is entered</description>
+    <errorConditionFormula>RecordTypeId=&apos;01280000000UDqs&apos; &amp;&amp; NOT(ISBLANK( Setup_Complete_Date__c)) &amp;&amp; (ISBLANK(New_Department_ID__c) &amp;&amp; ISBLANK(New_Division_ID__c))</errorConditionFormula>
+    <errorMessage>Please enter the New Department ID or New Division ID when entering the Setup Complete Date on Department Add Records.</errorMessage>
+</ValidationRule>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IME_SC_Case_Assignment_Age__c</fullName>
+    <description>Case assignment age is used to calculate the difference between Case assigned date and Case closed date</description>
+    <externalId>false</externalId>
+    <formula>IF( NOT(ISNULL(IME_SC_Resolved_Date__c)),
+	 IF(NOT( ISNULL( IME_SC_Assigned_Date__c ) ) ,
+           	Text(FLOOR(IME_SC_Resolved_Date__c - IME_SC_Assigned_Date__c )) &amp;&quot; &quot;&amp;&quot;day(s)&quot;&amp;&quot; &quot;&amp;Text(FLOOR(MOD( (IME_SC_Resolved_Date__c -  IME_SC_Assigned_Date__c ) * 24 ,24))) &amp;&quot; &quot;&amp;&quot;hrs&quot;&amp;&quot; &quot;&amp;Text( FLOOR(MOD(((IME_SC_Resolved_Date__c - IME_SC_Assigned_Date__c ) * 24)*60 ,60)))&amp;&quot; &quot;&amp;&quot;min&quot;, 
+           	Text(FLOOR(IME_SC_Resolved_Date__c  - IME_SC_Acceptance_Date__c)) &amp;&quot; &quot;&amp;&quot;day(s)&quot;&amp;&quot; &quot;&amp;Text(FLOOR(MOD( (IME_SC_Resolved_Date__c  - IME_SC_Acceptance_Date__c) * 24 ,24))) &amp;&quot; &quot;&amp;&quot;hrs&quot;&amp;&quot; &quot;&amp;Text( FLOOR(MOD(((IME_SC_Resolved_Date__c  - IME_SC_Acceptance_Date__c) * 24)*60 ,60)))&amp;&quot; &quot;&amp;&quot;min&quot;)  , 
+	IF(NOT( ISNULL( IME_SC_Assigned_Date__c ) ) ,
+          	 Text(FLOOR( NOW()  - IME_SC_Assigned_Date__c )) &amp;&quot; &quot;&amp;&quot;day(s)&quot;&amp;&quot; &quot;&amp;Text(FLOOR(MOD( (NOW() -  IME_SC_Assigned_Date__c ) * 24 ,24))) &amp;&quot; &quot;&amp;&quot;hrs&quot;&amp;&quot; &quot;&amp;Text( FLOOR(MOD(((NOW() - IME_SC_Assigned_Date__c ) * 24)*60 ,60)))&amp;&quot; &quot;&amp;&quot;min&quot;, 
+         	  Text(FLOOR(NOW() - IME_SC_Acceptance_Date__c)) &amp;&quot; &quot;&amp;&quot;day(s)&quot;&amp;&quot; &quot;&amp;Text(FLOOR(MOD( (NOW() - IME_SC_Acceptance_Date__c) * 24 ,24))) &amp;&quot; &quot;&amp;&quot;hrs&quot;&amp;&quot; &quot;&amp;Text( FLOOR(MOD(((NOW() - IME_SC_Acceptance_Date__c) * 24)*60 ,60)))&amp;&quot; &quot;&amp;&quot;min&quot;)
+)</formula>
+    <label>Case Assignment Age</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

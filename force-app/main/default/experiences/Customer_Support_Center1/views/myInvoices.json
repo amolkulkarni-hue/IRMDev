@@ -1,0 +1,157 @@
+{
+  "appPageId" : "7e024fb9-9cea-452c-9152-dc5566ec182d",
+  "componentName" : "siteforce:dynamicLayout",
+  "dataProviders" : [ ],
+  "id" : "9322674e-eadb-4d0f-991e-0af2f12180f4",
+  "label" : "My invoices",
+  "regions" : [ {
+    "components" : [ {
+      "componentAttributes" : {
+        "background" : "background: rgba(0,0,0,0)",
+        "backgroundOverlay" : "rgba(0,0,0,0.5)",
+        "contentAreaWidth" : 100,
+        "sectionConfig" : {
+          "UUID" : "d2311727-8d53-4caf-9e21-8a448785f9db",
+          "columns" : [ {
+            "UUID" : "6dc2bed3-234b-4a71-b6a3-4c4b420775b5",
+            "columnKey" : "1",
+            "columnName" : "Column 1",
+            "columnWidth" : "12",
+            "seedComponents" : [ ]
+          } ]
+        },
+        "sectionHeight" : 300
+      },
+      "componentName" : "forceCommunity:section",
+      "id" : "d2311727-8d53-4caf-9e21-8a448785f9db",
+      "regions" : [ {
+        "components" : [ {
+          "componentAttributes" : {
+            "richTextValue" : "<div class=\"pageHeadings\">\n    <div class=\"pageHeadingsTitle\">My Invoices</div>\n    <div class=\"pageHeadingsSubTitle\">View details of your most recent invoices below</div>\n</div>"
+          },
+          "componentName" : "forceCommunity:htmlBlock",
+          "id" : "20d8b72a-b145-4cfc-9ef2-7aa1d4a39f28",
+          "renderPriority" : "NEUTRAL",
+          "renditionMap" : {
+            "fr_ca" : "8efcb14d-42be-4782-ad91-3c54319ef1a0"
+          },
+          "renditions" : [ {
+            "id" : "8efcb14d-42be-4782-ad91-3c54319ef1a0",
+            "renditionValue" : {
+              "componentAttributes" : {
+                "richTextValue" : "<div class=\"pageHeadings\">\n    <div class=\"pageHeadingsTitle\">Mes factures</div>\n    <div class=\"pageHeadingsSubTitle\">Consultez les détails de vos factures les plus récentes ci-dessous</div>\n</div>"
+              }
+            },
+            "type" : "renditionComponent"
+          } ],
+          "type" : "component"
+        }, {
+          "componentAttributes" : {
+            "INVOICESORTDATEFIELD" : "invoice_date",
+            "ORDERSORTDATEFIELD" : "deliveryDateTime",
+            "emptyMessage" : "You don't have any recent invoices.",
+            "filterByLabel" : "Filter by service date range",
+            "jsonConfiguration" : "[ { \"label\": \"Customer ID\", \"fieldName\": \"customer_number\", \"sortable\": \"true\" }, { \"label\": \"Invoice Number\", \"fieldName\": \"invoice_number\", \"sortable\": \"true\" }, { \"label\": \"Invoice Date\", \"fieldName\": \"invoice_date\", \"type\": \"date\", \"sortable\": \"true\", \"typeAttributes\": { \"day\": \"numeric\", \"month\": \"short\", \"year\": \"numeric\" } }, { \"label\": \"Invoice total\", \"fieldName\": \"invoiced_loc_sum\", \"sortable\": \"true\", \"type\": \"currency\", \"cellAttributes\": { \"alignment\": \"left\" } }, { \"label\": \"Invoice due date\", \"fieldName\": \"invoice_due_date\", \"type\": \"date\", \"sortable\": \"true\", \"typeAttributes\": { \"day\": \"numeric\", \"month\": \"short\", \"year\": \"numeric\" } } ]",
+            "leftButtonLabelAndLink" : "New Order Request,/s/contactsupport",
+            "noSearchResultsFoundMessageLabel" : "That didn't return any results. Try again.",
+            "recordsToRetrieve" : "Invoices",
+            "rightButtonLabelAndLink" : "View more, /s/my-invoices",
+            "searchLabel" : "Search",
+            "searchPlaceholder" : "My recent invoices",
+            "showFullTable" : true
+          },
+          "componentName" : "c:nf_invoicesWindow",
+          "id" : "23e1548c-c1ac-410b-8d4f-ae5c8c7d2311",
+          "renderPriority" : "NEUTRAL",
+          "renditionMap" : { },
+          "type" : "component"
+        }, {
+          "componentAttributes" : {
+            "bannerBackgroundColor" : "rgb(247, 247, 254)",
+            "bannerHeight" : "250px",
+            "bannerHeightMobile" : "200px",
+            "button1BackgroundColor" : "#4bca81",
+            "button1BorderRadius" : "5px",
+            "button1HoverBackgroundColor" : "#000000",
+            "button1HoverLabelColor" : "#ffffff",
+            "button1Label" : "Log in to Invoice Gateway",
+            "button1LabelColor" : "#ffffff",
+            "button1RedirectionURL" : "https://secure.billtrust.com/ironmountainbillingservices/ig/signin",
+            "button2BackgroundColor" : "rgb(255, 255, 255)",
+            "button2BorderRadius" : "5px",
+            "button2HoverBackgroundColor" : "rgb(88, 89, 91)",
+            "button2HoverLabelColor" : "#ffffff",
+            "button2Label" : "Learn More",
+            "button2LabelColor" : "rgb(88, 89, 91)",
+            "button2RedirectionURL" : "https://customersupport.ironmountain.com/s/article/What-is-Invoice-Gateway-and-how-do-I-signup",
+            "buttonAlignment" : "Horizontal",
+            "buttonLabelFontSize" : "16px",
+            "buttonLabelFontSizeMobile" : "12px",
+            "contentAlignment" : "Center",
+            "isButton1CTA" : false,
+            "isButton2CTA" : false,
+            "leftRightPadding" : "30px",
+            "leftRightPaddingMobile" : "10px",
+            "subTitleFontColor" : "rgb(88, 89, 91)",
+            "subTitleFontSize" : "18px",
+            "subTitleFontSizeMobile" : "18px",
+            "subTitleLink" : "",
+            "subTitleText" : "Log in to Invoice Gateway powered by Bill Trust to view more.",
+            "titleFontColor" : "rgb(20, 71, 125)",
+            "titleFontSize" : "36px",
+            "titleFontSizeMobile" : "24px",
+            "titleText" : "Don't see the invoices you're looking for?"
+          },
+          "componentName" : "c:bannerWithButton",
+          "id" : "0ca34470-52ac-4c11-8ea5-d2f7e6e95909",
+          "renderPriority" : "NEUTRAL",
+          "renditionMap" : {
+            "fr_ca" : "1e5dbab1-dde3-4824-8acb-dbd2e749fee7"
+          },
+          "renditions" : [ {
+            "id" : "1e5dbab1-dde3-4824-8acb-dbd2e749fee7",
+            "renditionValue" : {
+              "componentAttributes" : {
+                "button1Label" : "Connexion à Invoice Gateway",
+                "button2Label" : "En savoir plus",
+                "subTitleText" : "Connectez-vous à Invoice Gateway powered by Bill Trust pour en savoir plus.",
+                "titleText" : "Vous ne trouvez pas les factures que vous cherchez ?"
+              }
+            },
+            "type" : "renditionComponent"
+          } ],
+          "type" : "component"
+        } ],
+        "id" : "6dc2bed3-234b-4a71-b6a3-4c4b420775b5",
+        "regionLabel" : "Column 1",
+        "regionName" : "1",
+        "renditionMap" : { },
+        "type" : "region"
+      } ],
+      "renderPriority" : "NEUTRAL",
+      "renditionMap" : { },
+      "type" : "component"
+    } ],
+    "id" : "772722ef-114a-47aa-9682-0faebc9b3fda",
+    "regionName" : "content",
+    "type" : "region"
+  }, {
+    "components" : [ {
+      "componentAttributes" : {
+        "customHeadTags" : "",
+        "description" : "",
+        "title" : "My invoices"
+      },
+      "componentName" : "forceCommunity:seoAssistant",
+      "id" : "5ff25f75-3aca-412d-84ea-8b34ffbab137",
+      "renditionMap" : { },
+      "type" : "component"
+    } ],
+    "id" : "8609c6bf-add0-4495-a9fb-8ef1c54e8c26",
+    "regionName" : "sfdcHiddenRegion",
+    "type" : "region"
+  } ],
+  "themeLayoutType" : "5IS8MaShST5FYkZT9VO9eznWjK4uEX",
+  "type" : "view",
+  "viewType" : "custom-my-invoices"
+}

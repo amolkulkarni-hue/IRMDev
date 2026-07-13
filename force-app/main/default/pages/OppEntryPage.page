@@ -1,0 +1,1719 @@
+<apex:page standardController="Opportunity" extensions="OppEntryClass" action="{!autorun}">
+    
+    <apex:form id="frm">
+        <apex:outputPanel id="hiddenblock">
+        <apex:pagemessages />
+    </apex:outputPanel>
+        <apex:actionStatus id="searchStatus" stopText="">
+                <apex:facet name="start">
+                <div>
+                    <div class="popupBackground" />
+                    <div class="PopupPanel">
+                        <table border="0" width="100%" height="100%">
+                            <tr>
+                                <td align="center"><b>Please Wait</b></td>
+                            </tr>
+                           <tr>
+                                <td align="center"><img src="{!$Resource.Transparent_Loading_GIF}"/></td>
+                          </tr> 
+                        </table>
+                    </div>
+                </div>
+            </apex:facet>
+         </apex:actionStatus>
+        <apex:sectionHeader title="Opportunity Edit"
+            subtitle="New Opportunity" rendered="{!oppdetails}" />
+        <apex:sectionHeader title="Opportunity Edit"
+            subtitle="New Opportunity" rendered="{!roleselectblock}" />
+        <apex:sectionHeader title="Primary Contact" subtitle="Contact Roles"
+            rendered="{!contactdisplay}" />
+        <apex:sectionHeader title="Primary Contact" subtitle="Contact Role"
+            rendered="{!conroleselectblock}" />
+        <apex:sectionHeader title="Primary Contact" subtitle="New Contact"
+            rendered="{!newcontactdisplay}" />
+        <apex:sectionHeader title="Product Selection"
+            subtitle="Other Description" rendered="{!otherinformationdisplay}" />
+        <apex:sectionHeader title="Product Selection" subtitle="Product Class"
+            rendered="{!highleveldisplay}" />
+        <apex:sectionHeader title="Product Selection" subtitle="Product Line"
+            rendered="{!granularleveldisplay}" />
+        <apex:sectionHeader title="Product Selection"
+            subtitle="Primary Products" rendered="{!pricebookdisplay}" />
+        <apex:sectionHeader title="Product Selection"
+            subtitle="Primary Products" rendered="{!addprods}" />
+        <apex:sectionHeader title="Product Selection" subtitle="Product Line"
+            rendered="{!addprodline}" />
+        <apex:sectionHeader title="Product Selection"
+            subtitle="Solution Selection" rendered="{!bundlequestiondisplay}" />
+        <apex:sectionHeader title="Product Selection"
+            subtitle="Solution Selection" rendered="{!bundlelistdisplay}" />
+        <apex:sectionHeader title="Product Selection"
+            subtitle="Bundle Products" rendered="{!bundleproductlistdisplay}" />
+        <apex:sectionHeader title="Product Selection"
+            subtitle="Secondary Product Selection"
+            rendered="{!secproselectdisplay}" />
+        <apex:sectionHeader title="Product Selection"
+            subtitle="Secondary Products" rendered="{!secprodisplay}" />
+        <apex:sectionHeader subtitle="GSA & Product Questions"
+            rendered="{!questiondisplay}" />
+        <apex:sectionHeader subtitle="Price and Quantity Values"
+            rendered="{!addproductsdisplay}" />
+        <apex:sectionHeader subtitle="Competitively Vended" rendered="{!FinalDispBackVended}" />
+        <apex:sectionHeader subtitle="Competitively Vended" rendered="{!FinalDispBackLeadVended}" />
+        <!--<apex:sectionHeader title="Provided Information" rendered="{!finaldetailsdiplay}"/>-->
+
+        <apex:pageblock title="Opportunity Edit" rendered="{!oppdetails}"
+            mode="edit" id="pb">
+            <apex:pageblockButtons >
+                <apex:commandButton action="{!saveOpp}" value="NEXT"
+                    rendered="{!oppnextdisplay}" reRender="frm" status="searchStatus" />
+                <apex:commandButton value="CANCEL" action="{!cancel}"
+                    rendered="{!oppcanceldisplay}" reRender="frm" status="searchStatus" />
+                <apex:commandButton value="SAVE" action="{!oppsavebutton}"
+                    rendered="{!oppsavedisplay}" reRender="frm" status="searchStatus" />
+            </apex:pageblockButtons>
+            <apex:pageblockSection title="Opportunity Information" collapsible="false" id="pbs">
+                <apex:pageblockSectionItem >
+                    <apex:outputLabel >Opportunity Owner</apex:outputLabel>
+                    <apex:outputLabel value="{!oppowner}" />
+                </apex:pageblockSectionItem>
+                <apex:inputField value="{!opportunity.StageName}" required="true"
+                    onchange="probablity()" styleClass="stageFld"/>
+                <apex:inputField value="{!opportunity.Name}" required="true" />
+                <apex:inputField value="{!opportunity.CampaignId}"  />
+                <apex:inputField value="{!opportunity.Probability}"  styleClass="ProbabilityFld"/>
+                <apex:inputField value="{!opportunity.AccountId}" required="true" id="oppAccId" onchange="gposet()">
+                </apex:inputField>
+              <!--  <apex:inputField value="{!opportunity.IM_Competitor__c}" /> -->
+                <apex:inputField value="{!opportunity.IM_Category__c}" />
+                <apex:inputField value="{!opportunity.Type}" required="true" /><br></br>
+                <apex:inputField value="{!opportunity.Primary_Product_Line__c}" required="true" /><br></br>
+                <apex:inputField value="{!opportunity.IM_Sales_Event__c}" />
+                <apex:inputField value="{!opportunity.Group_Purchasing_Organization_GPO__c}" id="gpo" />
+                <!-- <apex:inputField value="{!opportunity.Account_Plan__c}"  />  -->
+            </apex:pageblockSection>
+            <apex:pageblockSection title="Forecast Detail" collapsible="false">
+                <apex:inputField value="{!opportunity.IM_Booked_Date__c}"
+                    required="true" />
+                <apex:inputField value="{!opportunity.CloseDate}" required="true" />
+            </apex:pageblockSection>
+            <apex:pageblockSection collapsible="false"
+                title="Description Information">
+                <apex:inputField value="{!opportunity.Description}" />
+            </apex:pageblockSection>
+            <apex:pageblockSection title="Up-Sell Information"
+                collapsible="false">
+                <apex:inputField value="{!opportunity.IM_Up_Sell_Quantity__c}" />
+         <!--   <apex:inputField value="{!opportunity.IM_Up_Sell_Sold_To__c}" /> 
+         
+                <apex:inputField value="{!opportunity.Upsell_Customer_ID__c}" /> -->
+                <apex:pageBlockSectionItem id="accountLookupInput">
+                <apex:outputText >{!$ObjectType.Opportunity.fields.Upsell_Customer_ID__c.label}</apex:outputText>
+                <apex:outputPanel > 
+                     <apex:panelGrid columns="3" id="theGrid">
+                        <apex:inputText id="accountNumber">{!Opportunity.Upsell_Customer_ID__r.Name}</apex:inputText>
+                        <span id="filteredLookup" onclick="openWindow('{!$Component.IdHiddenInput}','{!$Component.accountNumber}')" ></span>
+                    </apex:panelGrid> 
+                    <apex:inputHidden value="{!opportunity.Upsell_Customer_ID__c}" id="IdHiddenInput"/> 
+                 </apex:outputPanel>
+                 </apex:pageBlockSectionItem>                
+                <apex:inputField value="{!opportunity.IM_Up_Sell_Detail__c}" />
+                <apex:inputField value="{!opportunity.IM_Unit_of_Measure__c }" />
+            </apex:pageblockSection>
+            <!-- pratap, Added rendered=false -->
+            <apex:pageblockSection title="Competitively Vended"
+                collapsible="false" rendered="false">
+                <apex:inputField label="Competitively Vended" value="{!opportunity.IME_Vended_Unvended__c}" />
+                <apex:outputLabel ></apex:outputLabel>
+                <!-- #16915 <apex:inputField label="% Vended" value="{!opportunity.Vended__c}" /> -->
+               <!-- <apex:outputLabel ></apex:outputLabel> -->
+               <!-- #16915 <apex:inputField label="% Unvended" value="{!opportunity.Unvended__c}" /> -->
+
+            </apex:pageblockSection> 
+            <!--
+             <apex:pageBlockSection title="Opportunity Competitor" >
+                    <apex:inputField id="first" value="{!oppcomp.Competitor__c}" required="false"/>
+                    <apex:inputField id="second" value="{!oppcomp.Expiration_Notification_Date__c}" />
+                    <apex:inputField id="Third" value="{!oppcomp.Competitor_Expiration_Date__c}" />
+            </apex:pageBlockSection>   --> 
+        </apex:pageblock>
+        
+        
+        <style>
+.HeaderStyle {
+    background-color: black;}
+    
+    #filteredLookup {
+    margin: 0;
+    padding: 0;
+    text-align: right;
+    background: url('/img/func_icons/util/lookup20.gif') no-repeat transparent;
+    background-size: 45px 20px;
+    background-position: 0px -1px;
+    cursor: pointer;
+    height: 18px;
+    width: 20px;
+    float: right;
+}
+</style>
+        <apex:pageBlock title="Contact Role" rendered="{!conroleselectblock}" id="LeadRole">
+            <apex:pageBlockSection rendered="{!conrolerror}">
+                <apex:outputLabel >
+                    <p style="font-family: verdana; color: red;">Error: Please
+                        select a role.</p>
+                </apex:outputLabel>
+            </apex:pageBlockSection>
+            <apex:pageblockButtons >
+                <apex:commandButton value="NEXT" action="{!conleadnext}" reRender="frm" status="searchStatus"/>
+                <apex:commandButton value="BACK" action="{!conleadback}" reRender="frm" status="searchStatus"/>
+            </apex:pageblockButtons>
+            <apex:pageblockTable value="{!leadcontacts}" var="a">
+                <apex:column headerValue="Contact">
+                    <apex:outputLabel >{!leadname}</apex:outputLabel>
+                </apex:column>
+                <apex:column headerValue="Title">
+                </apex:column>
+                <apex:column headerValue="Contact Role">
+                    <apex:inputfield value="{!ocr.Role}" />
+                </apex:column>
+            </apex:pageblockTable>
+        </apex:pageBlock>
+
+        <apex:pageblock title="Opportunity Edit" rendered="{!roleselectblock}"
+            mode="edit" id="LeadRoleblock">
+            <apex:pageblockButtons >
+                <apex:commandButton value="NEXT" action="{!leadoppnext}"
+                    rendered="{!leadoppnextdisplay}" reRender="frm" status="searchStatus"/>
+                <apex:commandButton value="BACK" action="{!backtolead}"
+                  rendered="{!conleadbackdisplay}" immediate="true" reRender="frm" status="searchStatus"/>
+                <apex:commandButton value="SAVE" action="{!leadoppsave}"
+                    rendered="{!leadoppsavedisplay}" reRender="frm" status="searchStatus"/>
+            </apex:pageblockButtons>
+            <apex:pageblockSection title="Opportunity Information"
+                collapsible="false">
+                <apex:pageblockSectionItem >
+                    <apex:outputLabel >Opportunity Owner</apex:outputLabel>
+                    <apex:outputLabel value="{!oppowner}" />
+                </apex:pageblockSectionItem>
+                <apex:inputField value="{!leadopportunity.StageName}"
+                    required="true" onchange="probablity()" styleClass="stageFld"  id="leadStageName"  />
+                <apex:outputField value="{!leadopportunity.Name}" />
+                <apex:inputField value="{!leadopportunity.Probability}" styleClass="ProbabilityFld"/>
+                <apex:pageBlockSectionItem >
+                    <apex:outputText >Account Name</apex:outputText>
+                    <apex:outputLabel >{!leadaccountname}</apex:outputLabel>
+                </apex:pageBlockSectionItem>
+               <!-- <apex:inputField value="{!leadopportunity.IM_Competitor__c}" /> -->
+                <apex:inputField value="{!leadopportunity.IM_Category__c}" />
+                <apex:inputField value="{!leadopportunity.Type}" required="true" /><br></br>
+                <apex:inputField value="{!leadopportunity.Primary_Product_Line__c}" required="true" /><br></br>
+                <apex:inputField value="{!leadopportunity.IM_Sales_Event__c}" />
+                <apex:inputField value="{!leadopportunity.Group_Purchasing_Organization_GPO__c}"  />   
+                <!-- <apex:inputField value="{!leadopportunity.Account_Plan__c}"  />   -->
+                <apex:inputField value="{!leadopportunity.InSight_Opportunities__c}"  /> 
+            </apex:pageblockSection>
+            <apex:pageblockSection title="Forecast Detail" collapsible="false">
+                <apex:inputField value="{!leadopportunity.IM_Booked_Date__c}"
+                    required="true" />
+                <apex:inputField value="{!leadopportunity.CloseDate}"
+                    required="true" />
+            </apex:pageblockSection>
+            <apex:pageblockSection collapsible="false"
+                title="Description Information">
+                <apex:inputField value="{!leadopportunity.Description}" />
+            </apex:pageblockSection>
+            <apex:pageblockSection title="Up-Sell Information"
+                collapsible="false">
+                <apex:inputField value="{!leadopportunity.IM_Up_Sell_Quantity__c}" />
+<!--                <apex:inputField value="{!leadopportunity.Upsell_Customer_ID__c}"/> -->
+                <apex:pageBlockSectionItem id="accountLookupInput">
+                <apex:outputText >{!$ObjectType.Opportunity.fields.Upsell_Customer_ID__c.label}</apex:outputText>
+                <apex:outputPanel > 
+                     <apex:panelGrid columns="3" id="theGrid">
+                        <apex:inputText id="accountNumber">{!Opportunity.Upsell_Customer_ID__r.Name}</apex:inputText>
+                        <span id="filteredLookup" onclick="openWindow('{!$Component.IdHiddenInput}','{!$Component.accountNumber}')" ></span>
+                    </apex:panelGrid> 
+                    <apex:inputHidden value="{!leadopportunity.Upsell_Customer_ID__c}" id="IdHiddenInput"/> 
+                 </apex:outputPanel>
+                 </apex:pageBlockSectionItem>
+                <apex:inputField value="{!leadopportunity.IM_Up_Sell_Detail__c}" />
+                <apex:inputField value="{!leadopportunity.IM_Unit_of_Measure__c }" />
+            </apex:pageblockSection>
+          
+            <apex:pageblockSection title="Competitively Vended"
+                collapsible="false" rendered="false">
+                <apex:inputField label="Competitively Vended" value="{!sObjLead.Competitively_Vended__c}" />
+                <apex:outputLabel ></apex:outputLabel>
+              <!-- #16915 <apex:inputField label="% Vended" value="{!sObjLead.Vended__c}"  />
+                <apex:outputLabel ></apex:outputLabel>
+                <apex:inputField label="% Unvended" value="{!sObjLead.Unvended__c}"  /> -->
+
+            </apex:pageblockSection>    
+         
+        </apex:pageblock>
+        
+         
+     <!--------------------- New screen for competitor ------------->  
+     
+     <!---  Developer: Sandhya Ramesh
+            Case     : 03474925
+            -->    
+        <apex:pageBlock title="Opportunity Competitor" rendered="{!oppcompblock}">
+        <apex:pageBlockSection columns="1" >
+      <!--  <div style="background-color: white; color: blue; box-sizing: border-box; padding: 5px; border: 1px solid blue;">  -->
+            <div style="box-shadow: 3px 3px 3px 1px grey; height: 75px; width:1250px; align:center; padding: 5px; box-sizing: border-box;">
+                <div style="text-align: center; font-size: 130%;  padding: 5px;">
+                Your opportunity is competitively vended. Please consider adding an Opportunity Competitor at this time.
+                </div>
+            
+                <div style="text-align: center; font-size: 120%; padding: 5px;"> 
+                Hit SKIP to proceed if unknown or to add at a later time. 
+                </div>
+          </div>  
+          </apex:pageBlockSection>
+ <!--           <apex:pageBlockTable value="{!oppcompetitors}" var="x">
+                <apex:column headerValue="Col1">
+                    <apex:outputLabel >XX</apex:outputLabel>
+                </apex:column>
+                <apex:column headerValue="Col2">
+                </apex:column>
+                <apex:column headerValue="Exp date">
+                    <apex:inputfield value="{!oc.Competitor_Expiration_Date__c }" />
+                </apex:column>
+            </apex:pageBlockTable> -->
+            <apex:pageBlockSection title="Information">
+                <apex:inputField value="{!oc.Competitor__c }"/>
+                <apex:inputField value="{!oc.Competitor_Expiration_Date__c }"/>
+                <apex:outputLabel value=""></apex:outputLabel>
+                <apex:inputField value="{!oc.Expiration_Notification_Date__c}"/>
+            </apex:pageBlockSection>
+            <apex:pageblockSection title="Competitive Pricing">
+                <apex:inputField value="{!oc.Unknown_Pricing__c}"/>
+                <apex:outputLabel value=""></apex:outputLabel>
+                <apex:inputField value="{!oc.Storage_Price_per_Unit__c}"/>
+                <apex:inputField value="{!oc.Retrieval_File__c}"/>
+                <apex:inputField value="{!oc.Minimum_Storage_Charge__c}"/>
+                <apex:inputField value="{!oc.Retrieval_Box__c}"/>
+                <apex:inputField value="{!oc.Admin_Fee__c }"/>
+                <apex:inputField value="{!oc.Handling_Charge__c}"/>
+                <apex:inputField value="{!oc.Permanent_Withdrawal__c}"/>
+                <apex:inputField value="{!oc.Rush_Transport__c}"/>
+            </apex:pageblockSection>  
+            <apex:pageBlockSection columns="1">
+            <p>
+            <div style="text-align: center; font-size: 120%; padding: 20px; box-shadow: 0px 0px 0.05px 1px grey; height: 20px;"> 
+                Competitive pricing should be considered a target price our customers indicate as a price to meet or beat, we should 
+                not accept confidential documents that identify competitor pricing.
+            </div>    
+            </p>
+            </apex:pageBlockSection> 
+            <apex:pageBlockButtons >
+                <apex:commandButton value="NEXT" action="{!oppcompnext}" rendered="{!leadoppnextconbutton}" reRender="frm" status="searchStatus"/>
+                <apex:commandButton value="NEXT" action="{!oppcompsaverole}" rendered="{!oppnextconbutton}" reRender="frm" status="searchStatus"/>
+                <apex:commandButton value="SKIP" action="{!leadcompskip}" rendered="{!leadskipbutton}" immediate="true" reRender="frm" status="searchStatus"/>
+                <apex:commandButton value="SKIP" action="{!compskip}" rendered="{!skipbutton}" immediate="true" reRender="frm" status="searchStatus"/>
+                <apex:commandButton value="BACK" action="{!leadoppcompback}" immediate="true" rendered="{!leadoppbackbutton}" reRender="frm" status="searchStatus"/>
+                <apex:commandButton value="BACK" action="{!oppcompback}" immediate="true" rendered="{!oppbackbutton}" reRender="frm" status="searchStatus"/>
+            </apex:pageBlockButtons>    
+        </apex:pageBlock>
+  
+        
+        <!-- 
+            Added Page Block for Contact Search 
+             Case Number: 01654528  
+        -->        
+        <apex:pageBlock title="Search Contact" rendered="{!contactdisplay}">
+                  <!-- 
+                  <apex:pageMessage title="Special characters are not allowed in the search criteria, please refine the search criteria without these characters and search again." severity="warning" strength="3" rendered="{!ContactSearchErrorDisplay}"/>
+                  <apex:pageMessages /> 
+                  -->
+                  <p>Please enter any one of the following First Name, Last Name or Email of the contact you would like to search for.</p><br></br>
+                  <apex:inputText value="{!ContactSearchString}"/> 
+                  <apex:CommandButton action="{!doSearchOncontactRole}" Value="Find Contact" reRender="frm" status="searchStatus"/>
+                  <apex:CommandButton action="{!ClearSearchOnContactRole}" Value="Clear Search" reRender="frm" status="searchStatus"/>
+        </apex:pageBlock>
+    
+        <apex:pageBlock title="Contact Roles for {!opportunity.Name}"
+            rendered="{!contactdisplay}" mode="Edit">
+            <apex:pageblockButtons >
+                <apex:commandButton action="{!savePrimarycontact}" value="NEXT"
+                    rendered="{!consavedisplay}" styleClass="nextBtn" reRender="frm" status="searchStatus"/>
+                <apex:commandButton action="{!cancelprimarycontact}" value="BACK"
+                    rendered="{!conbackdisplay}" reRender="frm" status="searchStatus"/>    
+                    
+                <apex:commandButton action="{!primarycontactnotfound}"
+                    value="NOT FOUND" rendered="{!conbackdisplay}" reRender="frm" status="searchStatus" />
+                <apex:commandButton action="{!oldconsavebutton}" value="SAVE"
+                    rendered="{!conchangedisplay}" reRender="frm" status="searchStatus" />
+            </apex:pageblockButtons>
+            
+            <apex:pageBlockSection rendered="{!location}">
+                <apex:outputLabel >
+                    <p style="font-family: verdana; color: red;">Error: Please
+                        select a primary contact and its role.</p>
+                </apex:outputLabel>
+            </apex:pageBlockSection>
+            <apex:pageblockTable value="{!primarycontacts}" var="a"
+                headerClass="HeaderStyle">
+                <apex:column headerValue="Primary" style="header color=black">
+                    <apex:facet name="header">
+                    </apex:facet>
+                    <apex:inputCheckbox value="{!a.selected}" id="checkedone">
+                        <apex:actionSupport event="onclick" action="{!GetSelected}"
+                            onsubmit="deselectOther(this)" reRender="Accounts"
+                            status="testing" />
+                        <apex:actionstatus id="testing" startText="selecting.." onstart="hideNextBtn();" onstop="showNextBtn();"/>
+                    </apex:inputCheckbox>
+                </apex:column>
+                <apex:column headerValue="Contact" value="{!a.acc.Name}" />
+                <apex:column headerValue="Account" value="{!a.acc.AccountId}" />
+                <apex:column headerValue="Title" value="{!a.acc.Title}" />
+                <apex:column headerValue="Email" value="{!a.acc.Email}" />
+                <apex:column headerValue="Role">
+                    <apex:inputField value="{!a.oppcont.Role}" />
+                </apex:column>
+            </apex:pageblockTable>
+        </apex:pageBlock>
+
+
+        <apex:pageBlock rendered="{!newcontactdisplay}"
+            title="PLEASE PROVIDE A NEW PRIMARY CONTACT" mode="Edit">
+            <apex:pageBlockButtons >
+                <apex:commandButton action="{!newcontactsave}" value="SAVE"
+                    rendered="{!consavedisplay}" reRender="frm" status="searchStatus"/>
+                <apex:commandButton action="{!newcontactback}" value="BACK"
+                     rendered="{!conbackdisplay}" immediate="true"/>
+                <apex:commandButton value="SAVE" action="{!consavebutton}"
+                    rendered="{!conchangedisplay}" reRender="frm" status="searchStatus"/>
+            </apex:pageBlockButtons>
+            <apex:pageBlockSection rendered="{!contacterror}" collapsible="false">
+                <apex:outputLabel >
+                    <p style="font-family: verdana; color: red;">Error: Please
+                        provide a Contact Role.</p>
+                </apex:outputLabel>
+            </apex:pageBlockSection>
+            <apex:pageBlockSection title=" Contact Information" columns="2"
+                collapsible="false">
+                <apex:inputField value="{!contact.FirstName}" />
+                <apex:inputField value="{!contact.LastName}" />
+                <apex:inputField value="{!contact.IM_Functional_Area__c}" />
+                <apex:inputField value="{!contact.IM_Job_Level__c}" />
+                <apex:inputField value="{!contact.IM_Academic_Title__c}" />
+                <!--<apex:inputField value="{!contact.IM_Role__c}" />-->
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel >Opportunity Contact Role</apex:outputLabel>
+                    <apex:inputfield value="{!ocr.Role}" />
+                </apex:pageBlockSectionItem>
+                <apex:inputField value="{!contact.Title}" />
+                <apex:inputField value="{!contact.Email}" required="true" />
+                <apex:inputField value="{!contact.IM_Language_Preference__c}" />
+                <apex:inputField value="{!contact.IM_Responsible_For__c}" />
+                <apex:inputField value="{!contact.Phone}" required="true" />
+                <apex:inputField value="{!contact.MobilePhone}" />
+                <apex:inputField value="{!contact.Fax}" />
+                <apex:inputField value="{!contact.IM_Timezone__c}" />
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+
+
+        <apex:pageBlock rendered="{!bundlequestiondisplay}">
+            <apex:pageblockButtons location="bottom">
+                <apex:commandButton value="NEXT" action="{!bundleYes}" reRender="frm" status="searchStatus"/>
+                <!--<apex:commandButton value="NO" action="{!bundleno}"/>-->
+                <apex:commandButton value="BACK" action="{!bundleback}" reRender="frm" status="searchStatus"/>
+            </apex:pageblockButtons>
+            <apex:outputLabel rendered="{!bundlemsg}">
+                <p style="font-family: verdana; color: red;">Error: Please
+                    provide at least one solution type.</p>
+            </apex:outputLabel>
+            <apex:outputLabel style="font-size:12px">
+                <b>Please select the solution
+                    type:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b>
+            </apex:outputLabel>
+            <apex:selectList value="{!selectedbundletype}" size="1" id="CommonBundle">
+                <apex:selectOptions value="{!bundletypelist}" />
+            </apex:selectList>
+        </apex:pageBlock>
+
+        <apex:pageBlock rendered="{!bundlelistdisplay}">
+            <apex:outputLabel rendered="{!emptybundles}">
+                <p style="font-family: verdana; color: red;">There are no
+                    Bundles available for selection for {!selectedbundletype} Bundle
+                    Type. Please select "BACK" to select another Bundle Type</p>
+            </apex:outputLabel>
+            <apex:outputLabel style="font-size:12px"
+                rendered="{!NOT(emptybundles)}">
+                <b>Please select the {!selectedbundletype} Application
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b>
+            </apex:outputLabel>
+            <apex:pageBlockButtons >
+                <apex:commandButton action="{!nextbundle}" value="NEXT"
+                    rendered="{!NOT(emptybundles)}" reRender="frm" status="searchStatus"/>
+                <apex:commandButton action="{!cancelbundle}" value="BACK" reRender="frm" status="searchStatus"/>
+            </apex:pageBlockButtons>
+            <apex:selectList value="{!selectedbundle}" size="1"
+                rendered="{!NOT(emptybundles)}">
+                <apex:selectOptions value="{!bundleslist}" />
+            </apex:selectList>
+        </apex:pageBlock>
+
+        <apex:pageBlock rendered="{!otherinformationdisplay}">
+            <apex:outputLabel rendered="{!othererror}">
+                <p style="font-family: verdana; color: red;">Error: Please enter
+                    a description.</p>
+            </apex:outputLabel>
+            <apex:outputLabel style="font-size:12px">
+                <b>Please enter a description for
+                    'Other'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b>
+            </apex:outputLabel>
+            <apex:pageblockButtons >
+                <apex:commandButton action="{!otherinformationnext}" value="NEXT" reRender="frm" status="searchStatus"/>
+                <apex:commandButton action="{!otherinformationback}" value="BACK" reRender="frm" status="searchStatus"/>
+            </apex:pageblockButtons>
+            <apex:inputtext value="{!otherinformation}" />
+        </apex:pageBlock>
+
+        <apex:pageBlock rendered="{!highleveldisplay}">
+            <apex:outputLabel style="font-size:12px">
+                <b>Please select a Product
+                    Class&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b>
+            </apex:outputLabel>
+            <apex:pageblockButtons >
+                <apex:commandButton action="{!nextpg}" value="NEXT" reRender="frm" status="searchStatus"/>
+                <apex:commandButton action="{!cancelpg}" value="BACK" reRender="frm" status="searchStatus"/>
+            </apex:pageblockButtons>
+            <apex:selectList value="{!selectedpg}" size="1">
+                <apex:selectOptions value="{!productgrouplist}" />
+            </apex:selectList>
+        </apex:pageBlock>
+
+        <apex:pageBlock rendered="{!granularleveldisplay}">
+            <apex:outputLabel rendered="{!emptyprodlines}">
+                <p style="font-family: verdana; color: red;">There are no
+                    Product Lines available for selection for {!selectedpg} Product
+                    Class. Please select "BACK" to select another Product Class</p>
+            </apex:outputLabel>
+            <apex:outputLabel style="font-size:12px"
+                rendered="{!NOT(emptyprodlines)}">
+                <b>Please select a Product
+                    Line&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b>
+            </apex:outputLabel>
+            <apex:pageblockButtons >
+                <apex:commandButton action="{!nextpb}" value="NEXT"
+                    rendered="{!NOT(emptyprodlines)}" reRender="frm" status="searchStatus"/>
+                <apex:commandButton action="{!cancelpb}" value="BACK" reRender="frm" status="searchStatus"/>
+            </apex:pageblockButtons>
+            <apex:selectList value="{!selectedpb}" size="1"
+                rendered="{!NOT(emptyprodlines)}" id="pricebooklist">
+                <apex:selectOptions value="{!pricebooklist}" />
+            </apex:selectList>
+            <!--{!selectedpg}-->
+        </apex:pageBlock>
+
+        <apex:pageBlock rendered="{!addprodline}">
+            <apex:outputLabel rendered="{!emptyprodlines}">
+                <p style="font-family: verdana; color: red;">There are no
+                    Product Lines available for selection for {!selectedpg} Product
+                    Class. Please select "BACK" to select another Product Class</p>
+            </apex:outputLabel>
+            <apex:outputLabel style="font-size:12px"
+                rendered="{!NOT(emptyprodlines)}">
+                <b>Please select a Product
+                    Line&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b>
+            </apex:outputLabel>
+            <apex:pageblockButtons >
+                <apex:commandButton action="{!addprodlinenext}" value="NEXT"
+                    rendered="{!NOT(emptyprodlines)}" reRender="frm" status="searchStatus" />
+                <apex:commandButton action="{!addprodlineback}" value="BACK" reRender="frm" status="searchStatus"/>
+            </apex:pageblockButtons>
+            <apex:selectList value="{!selectedpb}" size="1"
+                rendered="{!NOT(emptyprodlines)}" id="ProdLines">
+                <apex:selectOptions value="{!pricebooklist}"  />
+            </apex:selectList>
+        </apex:pageBlock>
+
+
+        <apex:pageBlock rendered="{!bundleproductlistdisplay}">
+            <apex:pageblockButtons >
+                <apex:commandButton value="NEXT" action="{!bundleproselected}"
+                    rendered="{!NOT(emptyproductlist)}" styleClass="nextBtn" reRender="frm" status="searchStatus"/>
+                <apex:commandButton value="BACK" action="{!bundlepronotselected}" reRender="frm" status="searchStatus"/>
+            </apex:pageblockButtons>
+            <apex:pageBlockSection rendered="{!pricebookerror}"
+                collapsible="false">
+                <apex:outputLabel >
+                    <p style="font-family: verdana; color: red;">Error: Please
+                        select one option.</p>
+                </apex:outputLabel>
+            </apex:pageBlockSection>
+            <apex:pageBlockSection rendered="{!emptyproductlist}"
+                collapsible="false">
+                <apex:outputLabel >
+                    <p style="font-family: verdana; color: red;">There are no
+                        products available for selection for {!selectedbundle} Bundle.
+                        Please select "BACK" to select another bundle</p>
+                </apex:outputLabel>
+            </apex:pageBlockSection>
+            <apex:pageblocktable value="{!bundleproductlistwrap}" var="p">
+                <apex:column >
+                    <apex:facet name="header">
+                    </apex:facet>
+                    <apex:inputCheckbox value="{!p.selected}" id="checkedone12">
+                        <apex:actionSupport event="onclick" action="{!GetSelectedb}"
+                            reRender="Accounts" status="testing1" />
+                        <apex:actionstatus id="testing1" startText="selecting.." onstart="hideNextBtn();" onstop="showNextBtn();"/>
+                    </apex:inputCheckbox>
+                </apex:column>
+                <apex:column value="{!p.pbe.Name}" />
+                <apex:column value="{!p.pbe.ProductCode}" />
+                <apex:column value="{!p.pbe.Product2.IM_Product_Line__c}" />
+                <apex:column value="{!p.pbe.Product2.IM_Product_Class__c}" />
+                <apex:column value="{!p.pbe.Product2.IM_Business_Line__c}" />
+                <apex:column value="{!p.pbe.Product2.IM_Revenue_Type__c}" />
+                <apex:column value="{!p.pbe.CurrencyIsoCode}" />
+            </apex:pageblocktable>
+        </apex:pageBlock>
+
+        <apex:pageBlock rendered="{!pricebookdisplay}">
+            <apex:pageblockButtons >
+                <apex:commandButton value="NEXT" action="{!nextsecpro}"
+                    rendered="{!NOT(emptyprodlist)}" styleClass="nextBtn" reRender="frm" status="searchStatus"/>
+                <apex:commandButton value="BACK" action="{!cancelsecpro}" reRender="frm" status="searchStatus"/>
+            </apex:pageblockButtons>
+            <!--{!selectedpb}-->
+            <apex:pageBlockSection rendered="{!emptyprodlist}"
+                collapsible="false">
+                <apex:outputLabel >
+                    <p style="font-family: verdana; color: red;">There are no
+                        products available for selection for {!selectedpb} Product Line.
+                        Please select "BACK" to select another Product Line</p>
+                </apex:outputLabel>
+            </apex:pageBlockSection>
+            <apex:pageBlockSection rendered="{!pricebookerror}"
+                collapsible="false">
+                <apex:outputLabel >
+                    <p style="font-family: verdana; color: red;">Error: Please
+                        select one option.</p>
+                </apex:outputLabel>
+            </apex:pageBlockSection>
+            <apex:pageblocktable value="{!pricebookentries}" var="p">
+                <apex:column >
+                    <apex:facet name="header">
+                    </apex:facet>
+                    <apex:inputCheckbox value="{!p.selected}" id="checkedone1">
+                        <apex:actionSupport event="onclick" action="{!GetSelected1}"
+                            reRender="Accounts" status="testing1" />
+                        <apex:actionstatus id="testing1" startText="selecting.." onstart="hideNextBtn();" onstop="showNextBtn();"/>
+                    </apex:inputCheckbox>
+                </apex:column>
+                <apex:column value="{!p.pbe.Name}" />
+                <apex:column value="{!p.pbe.ProductCode}" />
+                <apex:column value="{!p.pbe.Product2.IM_Product_Line__c}" />
+                <apex:column value="{!p.pbe.Product2.IM_Product_Class__c}" />
+                <apex:column value="{!p.pbe.Product2.IM_Business_Line__c}" />
+                <apex:column value="{!p.pbe.Product2.IM_Revenue_Type__c}" />
+                <apex:column value="{!p.pbe.CurrencyIsoCode}" />
+            </apex:pageblocktable>
+        </apex:pageBlock>
+
+        <apex:pageBlock rendered="{!addprimaryprod}">
+            <apex:pageblockButtons >
+                <apex:commandButton value="NEXT" action="{!addnextsecpro}"
+                    rendered="{!NOT(emptynewprodlist)}" styleClass="nextBtn" reRender="frm" status="searchStatus"/>
+                <apex:commandButton value="BACK" action="{!addcancelsecpro}" reRender="frm" status="searchStatus"/>
+            </apex:pageblockButtons>
+            <!--{!selectedpb}-->
+            <apex:pageBlockSection rendered="{!emptynewprodlist}"
+                collapsible="false">
+                <apex:outputLabel >
+                    <p style="font-family: verdana; color: red;">There are no
+                        products available for selection for {!selectedpb} Product Line.
+                        Please select "BACK" to select another Product Line</p>
+                </apex:outputLabel>
+            </apex:pageBlockSection>
+            <apex:pageBlockSection rendered="{!pricebookerror}"
+                collapsible="false">
+                <apex:outputLabel >
+                    <p style="font-family: verdana; color: red;">Error: Please
+                        select one option.</p>
+                </apex:outputLabel>
+            </apex:pageBlockSection>
+            <apex:pageblocktable value="{!newpricebookentries}" var="p">
+                <apex:column >
+                    <apex:facet name="header">
+                    </apex:facet>
+                    <apex:inputCheckbox value="{!p.selected}" id="checkedone1">
+                        <apex:actionSupport event="onclick" action="{!GetSelected3}"
+                            reRender="Accounts" status="testing1" />
+                        <apex:actionstatus id="testing1" startText="selecting.." onstart="hideNextBtn();" onstop="showNextBtn();"/>
+                    </apex:inputCheckbox>
+                </apex:column>
+                <apex:column value="{!p.pbe.Name}" />
+                <apex:column value="{!p.pbe.ProductCode}" />
+                <apex:column value="{!p.pbe.Product2.IM_Product_Line__c}" />
+                <apex:column value="{!p.pbe.Product2.IM_Product_Class__c}" />
+                <apex:column value="{!p.pbe.Product2.IM_Business_Line__c}" />
+                <apex:column value="{!p.pbe.Product2.IM_Revenue_Type__c}" />
+                <apex:column value="{!p.pbe.CurrencyIsoCode}" />
+            </apex:pageblocktable>
+        </apex:pageBlock>
+
+        <apex:pageblock rendered="{!addprods}">
+            <apex:outputlabel style="font-size:12px">
+                <b>Would you like to select additional products from a different
+                    product line?</b>
+            </apex:outputlabel>
+            <apex:pageblockButtons location="bottom">
+                <apex:commandbutton value="YES" action="{!addprodsyes}" reRender="frm" status="searchStatus"/>
+                <apex:commandbutton value="NO" action="{!addprodsno}" reRender="frm" status="searchStatus"/>
+            </apex:pageblockButtons>
+            <apex:pageblockButtons location="top">
+                <apex:commandButton value="BACK" action="{!addprodsback}" reRender="frm" status="searchStatus"/>
+            </apex:pageblockButtons>
+            <apex:repeat value="{!additionalproductlist}" var="p">
+                <!--{!p.Name}-->
+            </apex:repeat>
+        </apex:pageblock>
+
+        <apex:pageblock rendered="{!secproselectdisplay}">
+            <apex:outputLabel style="font-size:12px">
+                <b>{!secondaryproductquestion}</b>
+            </apex:outputLabel>
+            <apex:pageblockButtons location="bottom">
+                <apex:commandButton value="YES" action="{!secprotrue}" reRender="frm" status="searchStatus"/>
+                <apex:commandButton value="NO" action="{!secprofalse}" reRender="frm" status="searchStatus"/>
+            </apex:pageblockButtons>
+            <apex:pageblockButtons location="top">
+                <apex:commandButton value="BACK" action="{!secproback}" reRender="frm" status="searchStatus"/>
+            </apex:pageblockButtons>
+            <apex:repeat value="{!pricebookentrieselected}" var="p">
+                <!--{!p.Name}-->
+            </apex:repeat>
+        </apex:pageblock>
+
+        <apex:pageBlock rendered="{!secprodisplay}">
+            <apex:pageblockButtons >
+                <apex:commandButton value="NEXT" action="{!secprodisplaynext}" styleClass="nextBtn" reRender="frm" status="searchStatus"/>
+                <apex:commandButton value="BACK" action="{!secprodisplayback}" reRender="frm" status="searchStatus"/>
+            </apex:pageblockButtons>
+            <apex:pageBlockSection rendered="{!secproerror}" collapsible="false">
+                <apex:outputLabel >
+                    <p style="font-family: verdana; color: red;">Error: Please
+                        select one option.</p>
+                </apex:outputLabel>
+            </apex:pageBlockSection>
+            <apex:pageblockTable value="{!secondaryproducts}" var="sp">
+                <apex:column >
+                    <apex:facet name="header">
+                    </apex:facet>
+                    <apex:inputCheckbox value="{!sp.selected}" id="checkedone2">
+                        <apex:actionSupport event="onclick" action="{!GetSelected2}"
+                            reRender="Accounts" status="testing2" />
+                        <apex:actionstatus id="testing2" startText="selecting.." onstart="hideNextBtn();" onstop="showNextBtn();"/>
+                    </apex:inputCheckbox>
+                </apex:column>
+                <apex:column value="{!sp.acc.Name}" />
+                <apex:column value="{!sp.acc.ProductCode}" />
+                <apex:column value="{!sp.acc.Product2.IM_Product_Line__c}" />
+                <apex:column value="{!sp.acc.Product2.IM_Product_Class__c}" />
+                <apex:column value="{!sp.acc.Product2.IM_Business_Line__c}" />
+                <apex:column value="{!sp.acc.Product2.IM_Revenue_Type__c}" />
+                <apex:column value="{!sp.acc.CurrencyIsoCode}" />
+            </apex:pageblockTable>
+        </apex:pageBlock>
+
+        <apex:repeat value="{!testlist}" var="t" rendered="{!questiondisplay}">
+        </apex:repeat>
+<!-- pratap -->  
+<apex:pageBlock title="Competitively Vended"  rendered="{!FinalDispBackLeadVended}">
+               <apex:pageblockButtons >                
+                <apex:commandButton value="SAVE" action="{!leadoppsave}"
+                    rendered="{!FinalDispBackLeadVended}" reRender="frm" status="searchStatus" />
+            </apex:pageblockButtons>
+                <apex:pageblocksection columns="2" rendered="{!VendedSecDisplay}">
+        <apex:outputLabel >You have selected a Records Management Storage Product.  Is all or a portion of this storage vended with a competitor?</apex:outputLabel>
+        <apex:inputField label="Competitively Vended" value="{!leadopportunity.IME_Vended_Unvended__c}" onchange="onVendedChange(this);"  id="Lead"/>
+
+                <apex:outputLabel ></apex:outputLabel>                
+                    <!--#16915 <apex:inputField label="% Vended" value="{!leadopportunity.Vended__c}" id="OppLeadVen" onfocus="onLoadVended();"  />
+                <apex:outputLabel ></apex:outputLabel>
+                <apex:inputField label="% Unvended" value="{!leadopportunity.Unvended__c}" id="OppLeadUnven" onfocus="onLoadVended();" />-->
+     </apex:pageblocksection>
+    </apex:pageBlock>
+
+       <apex:pageBlock title="Competitively Vended"  rendered="{!FinalDispBackVended}">
+               <apex:pageblockButtons >                
+                <apex:commandButton value="SAVE" action="{!oppsavebutton}"
+                    rendered="{!FinalDispBackVended}" reRender="frm" status="searchStatus" />
+            </apex:pageblockButtons>
+                <apex:pageblocksection columns="2" rendered="{!VendedSecDisplay}">
+        <apex:outputLabel >You have selected a Records Management Storage Product.  Is all or a portion of this storage vended with a competitor?</apex:outputLabel>
+        <apex:inputField label="Competitively Vended" value="{!opportunity.IME_Vended_Unvended__c}"  onchange="onVendedChange(this);"  />
+                <apex:outputLabel ></apex:outputLabel>                
+               <!-- #16915 <apex:inputField label="% Vended" value="{!opportunity.Vended__c}" id="OppVenFinal" onfocus="onLoadVended();"  />
+                <apex:outputLabel ></apex:outputLabel>
+                <apex:inputField label="% Unvended" value="{!opportunity.Unvended__c}"  id="OppUnvenFinal" onfocus="onLoadVended();" />-->
+        </apex:pageblocksection>
+    </apex:pageBlock>
+ <!-- pratap -->  
+        <apex:pageBlock rendered="{!questiondisplay}">
+             <!-- pratap -->    
+                <apex:pageblocksection columns="2" rendered="{!VendedSecDisplay}">
+        <apex:outputLabel >You have selected a Records Management Storage Product.  Is all or a portion of this storage vended with a competitor?</apex:outputLabel>
+        <apex:inputField label="Competitively Vended" value="{!opportunity.IME_Vended_Unvended__c}" onchange="onVendedChange(this);" />
+                <apex:outputLabel ></apex:outputLabel>
+               <!--#16915 <apex:inputField label="% Vended" value="{!opportunity.Vended__c}" id="OppVen" onfocus="onLoadVended();"  />
+                <apex:outputLabel ></apex:outputLabel>
+                <apex:inputField label="% Unvended" value="{!opportunity.Unvended__c}" id="OppUnven" onfocus="onLoadVended();" />-->
+        </apex:pageblocksection>
+         <!-- pratap -->
+            <apex:pageblockSection >
+                <apex:outputLabel rendered="{!questionblockrender}">
+                    <b>Please answer all the Product Questions</b>
+                </apex:outputLabel>
+                <apex:outputLabel rendered="{!IF(questionblockrender=true,false,false)}">
+                    <b>There are no questions associated to any of the products</b>
+                </apex:outputLabel>
+            </apex:pageblockSection>
+            <apex:pageblockSection >
+                <apex:outputLabel >
+                </apex:outputLabel>
+            </apex:pageblockSection>
+              <apex:pageBlockButtons location="top"> 
+                <apex:commandButton value="NEXT" action="{!addproducts}"
+                    rendered="{!questionsnextdisplay}" onclick="makeAllEnable();" reRender="frm" status="searchStatus"/>
+                <apex:commandButton value="BACK" action="{!backtosecpro}"
+                    rendered="{!questionsbackdisplay}" reRender="frm" status="searchStatus" immediate="true" />
+                <apex:commandButton value="SAVE" action="{!questionsavebutton}"
+                    rendered="{!questionsavedisplay}" reRender="frm" status="searchStatus"/>
+            </apex:pageBlockButtons> 
+            <apex:pageblockSection rendered="{!questionerror}">
+                <apex:outputLabel >
+                    <p style="font-family: verdana; color: red;">Error: All
+                        Questions must be answered.</p>
+                </apex:outputLabel>
+            </apex:pageblockSection>
+            <apex:repeat value="{!secondaryproductlist}" var="s">
+                <!--{!s.Name}-->
+            </apex:repeat>
+            <apex:repeat value="{!testlist}" var="e">
+                <!--{!e.Name}-->
+            </apex:repeat>
+
+            <apex:repeat value="{!testlistwrap}" var="t" rendered="{!questiondisplay}">
+                <apex:pageBlock title="{!t.p.Name}" rendered="{!t.questionsexist}">
+                    <apex:repeat value="{!t.questions}" var="top">
+                        <apex:pageBlockSection collapsible="false" columns="2">
+                            {!top.oqc.Name}
+                            <!--{!top.splitstring}-->
+                            <apex:inputText value="{!top.textanswer}" rendered="{!IF(top.oqc.Answer_Format__c ='Text',true, false)}" />
+                            <apex:selectradio value="{!top.checkboxanswer}" rendered="{!IF(top.oqc.Answer_Format__c ='Checkbox',true, false)}">
+                                <apex:selectOptions value="{!top.checkboxanswers}" />
+                            </apex:selectradio>
+                            <!--<apex:inputText value="{!top.oqc.Answer_Picklist__c}" rendered="{!IF(top.oqc.Answer_Format__c ='Picklist',true, false)}"/>-->
+                            <apex:selectList value="{!top.picklistanswer}" size="1" rendered="{!IF(top.oqc.Answer_Format__c ='Picklist',true, false)}">
+                                <apex:selectOptions value="{!top.picklistanswers}" />
+                            </apex:selectList>
+                        </apex:pageBlockSection>
+                    </apex:repeat>
+                </apex:pageBlock>
+            </apex:repeat>
+            <apex:repeat value="{!completeproductlist}" var="c">
+                <!--{!c.Name}-->
+            </apex:repeat>
+            <!--  <apex:pageBlock rendered="{!GSAQuestiondisplay}">
+                <apex:pageBlockSection >
+                    <apex:outputLabel >
+                        <b>Please answer all the GSA Questions</b>
+                    </apex:outputLabel>
+                </apex:pageBlockSection>
+                <apex:pageBlockSection >
+                    <div style="position: relative; left: 150px;">
+                        <apex:commandButton value="SAVE" action="{!gsaquestionsavebutton}" rendered="{!gsaquestionsavedisplay}"/>
+                    </div>  
+                </apex:pageBlockSection>
+                <apex:repeat value="{!GSATestList}" var="t" rendered="{!isExecuteGSAtestWrap}" >      
+                    <apex:repeat value="{!t.Gsarec}" var="t1">
+                        <apex:pageBlockSection > 
+                          {!t1.Name}
+                          <apex:selectList value="{!t.picklistanswer}" size="1" rendered="{!(t.isQuestionEditable==false)}">
+                              <apex:selectOptions value="{!t.picklistanswers}" />
+                          </apex:selectList>
+                          <apex:outputtext value="{!t.picklistanswer}" rendered="{!t.isQuestionEditable}"/>
+                        </apex:pageBlockSection>
+                    </apex:repeat>                    
+                </apex:repeat>
+            </apex:pageBlock>
+            -->
+            
+             
+        </apex:pageBlock>
+        
+        <!-- Added on 1-31-2013 to  display GSA questions in seperate page block section -->
+       
+        <apex:pageBlock rendered="{!GSAQuestiondisplay}">  
+            <apex:pageBlockSection >
+                <apex:outputLabel rendered="{!gsaquestionblockrender}">
+                    <b>Please answer all the GSA Questions</b>
+                </apex:outputLabel>
+            </apex:pageBlockSection>
+            <apex:pageBlockSection >
+                <div style="position: relative; left: 150px;">
+                    <apex:commandButton value="SAVE" action="{!gsaquestionsavebutton}" rendered="{!gsaquestionsavedisplay}" onclick="makeAllEnable();" reRender="frm" status="searchStatus"/>
+                </div>  
+            </apex:pageBlockSection> 
+            
+            <apex:pageBlock mode="maindetail">
+                
+                <apex:pageBlockSection rendered="{!GSATestList.Size == 0}">
+                    <p>There is no GSA Questions for now!</p>
+                </apex:pageBlockSection>
+                <apex:pageBlockSection columns="2" rendered="{!isExecuteGSAtestWrap}" >
+                     <apex:repeat value="{!GSATestList}" var="t" >      
+                          <apex:repeat value="{!t.Gsarec}" var="t1">
+                              <apex:pageBlockSection >
+                                {!t1.Name}
+                                <apex:selectList styleClass="gsaQue" value="{!t.picklistanswer}" size="1" rendered="{!(t.isQuestionEditable==false)}" onchange="makeAllNo()" > <!-- JS function added for Case #03408939 by Sandhya Ramesh -->
+                              <!--      <apex:param name="canadianOppValue" value="{!canada}" assignTo="{!canadianOpp}"/> -->
+                                    <apex:selectOptions value="{!t.picklistanswers}"  />
+                                </apex:selectList>
+                                <apex:outputtext value="{!t.picklistanswer}" rendered="{!t.isQuestionEditable}"/>
+                                
+                              </apex:pageBlockSection>
+                          </apex:repeat>                    
+                     </apex:repeat>
+                    <!--   <apex:inputHidden value="{!canOpp}" id="HiddenField"/>  -->
+                </apex:pageBlockSection>
+            </apex:pageBlock>    
+            <div  class="gsaHidden" id="gsaEligibilityDiv"> 
+                 <apex:inputHidden value="{!canOpp}"  id="HiddenField" />
+            </div> 
+        </apex:pageBlock>
+         
+        <apex:pageblock rendered="{!addproductsdisplay}">
+            <apex:pageblockSection >
+                <apex:outputLabel >
+                    <b>Please provide Price and Quantity values for each Product</b>
+                </apex:outputLabel>
+            </apex:pageblockSection>
+            <apex:pageblockSection >
+                <apex:outputLabel >
+                </apex:outputLabel>
+            </apex:pageblockSection>
+            <apex:pageblockButtons >
+                <apex:commandButton action="{!displaydetails}" value="NEXT"
+                    rendered="{!displaydetailsdisplay}" reRender="frm" status="searchStatus"/>
+                <apex:commandButton action="{!backtoquestions}" value="BACK"
+                    rendered="{!backtoquestionsdisplay}" reRender="frm" status="searchStatus" />
+                <apex:commandButton value="SAVE" action="{!productsavebutton}"
+                    rendered="{!productsavebuttondisplay}" reRender="frm" status="searchStatus"/>
+            </apex:pageblockButtons>
+            <apex:pageblockSection rendered="{!overwriterror}">
+                <apex:outputLabel >
+                    <p style="font-family: verdana; color: red;">Error: All values
+                        must be entered.</p>
+                </apex:outputLabel>
+            </apex:pageblockSection>
+
+
+             <apex:dataTable value="{!testlistwrap}" var="t" rendered="{!addproductsdisplay}" border="1" width="95%" cellpadding="10">
+                    <apex:column headerValue="Product">
+                        <apex:outputText value="{!t.complist[0].pe.Name}"/>
+                    </apex:column>
+                    <apex:column headerValue="Unit of Measurement">
+                        <apex:outputText value="{!t.complist[0].pe.Product2.IM_Unit_of_Measure__c}"/>
+                       
+                    </apex:column>
+                    <apex:column headerValue="Unit Price" >
+                        <apex:inputText value="{!t.complist[0].Price}" id="price" onblur="calcEmptyAmt(this)"/>
+                    </apex:column>
+                <apex:column headerValue="Revenue Type">
+                        <apex:inputText disabled="true" id="recur" value="{!t.complist[0].pe.Product2.IM_Revenue_Type__c}"/>
+                    </apex:column>
+                    <apex:column headerValue="Quantity">
+                        <apex:inputText value="{!t.complist[0].Quantity}" id="qty"
+                        rendered="{!IF(t.complist[0].pe.Product2.Quantity_Override_value__c = 'n/a', false, true)}" onblur="calcAmt(this)"/>
+                      <!--  <apex:actionSupport reRender="amt" event="onblur" oncomplete="calcAmt(this)"/> -->
+                        <apex:outputLabel rendered="{!IF(t.complist[0].pe.Product2.Quantity_Override_value__c = 'n/a', true, false)}">{!t.complist[0].Quantity}</apex:outputLabel>
+                    </apex:column>
+                    <apex:column headerValue="Total Annual Amount">
+                        <apex:inputText disabled="true" id="amt"/>
+                    </apex:column>
+                
+                </apex:dataTable>
+        </apex:pageblock>
+
+        <div style="text-align: center">
+            <apex:outputLabel style="font-size:18px"
+                rendered="{!finaldetailsdiplay}">
+                <b>PROVIDED INFORMATION</b>
+            </apex:outputLabel>
+        </div>
+        <apex:outputLabel >&nbsp;&nbsp;</apex:outputLabel>
+
+        <apex:pageBlock rendered="{!finaldetailsdiplay}" mode="edit">
+            <div style="text-align: center">
+                <apex:outputLabel >
+                    <p><b>Please confirm all the information before saving</b></p>
+                </apex:outputLabel>
+                <apex:outputLabel rendered="{!AND(isOpportunityMeetsGSA, finalgsadetails)}">
+                    <br/><font color="red"><b>Your opportunity meets the GSA criteria for review. Your opportunity will be locked for review when saved.</b></font>
+                </apex:outputLabel>
+            </div>
+            <apex:pageBlockButtons location="bottom">
+                <div style="position: relative; left: 125px;">
+                    <apex:commandButton value="SAVE" action="{!savedetails}" onclick="disableSaveButton(this);" styleClass="nextBtn" reRender="frm" status="searchStatus"/>
+
+                    <apex:commandButton value="BACK" action="{!backtopricequantity}" reRender="frm" status="searchStatus"/>
+                </div>
+            </apex:pageBlockButtons>
+
+        </apex:pageBlock>
+        <apex:outputLabel >&nbsp;&nbsp;</apex:outputLabel>
+        <div style="text-align: center">
+            <apex:outputLabel style="font-size:15px"
+                rendered="{!finaldetailsdiplay}">
+                <b>OPPORTUNITY INFORMATION</b>
+            </apex:outputLabel>
+        </div>
+        <apex:pageBlock rendered="{!IF(finaldetailsdiplay=true && ISNULL(leadid),true,false)}">
+            <apex:pageBlockButtons location="top">
+
+                <div style="position: relative; left: 150px;">
+                    <apex:commandButton value="EDIT" action="{!oppbackbutton}" reRender="frm" status="searchStatus"/>
+                </div>
+            </apex:pageBlockButtons>
+
+            <apex:pageblockSection collapsible="false">
+
+                <apex:pageblockSectionItem >
+                    <apex:outputLabel >Opportunity Owner</apex:outputLabel>
+                    <apex:outputLabel value="{!oppowner}" />
+                </apex:pageblockSectionItem>
+                <apex:outputField value="{!opportunity.StageName}" />
+                <apex:outputField value="{!opportunity.Name}" />
+                <apex:outputField value="{!opportunity.Probability}" />
+                <apex:outputField value="{!opportunity.AccountId}" />
+               <!-- <apex:outputField value="{!opportunity.IM_Competitor__c}" /> -->
+               <apex:outputField value="{!opportunity.IM_Category__c}" />
+                <apex:outputField value="{!opportunity.Type}" />
+                <apex:outputField value="{!opportunity.IM_Sales_Event__c}" />
+                 <apex:outputField value="{!opportunity.Primary_Product_Line__c}"/>
+                <apex:inputField value="{!opportunity.Group_Purchasing_Organization_GPO__c}" />
+                <!-- <apex:outputField value="{!opportunity.Account_Plan__c}"  /> -->
+            </apex:pageblockSection>
+            <apex:pageblockSection collapsible="false">
+                <apex:outputField value="{!opportunity.IM_Booked_Date__c}" />
+                <apex:outputField value="{!opportunity.CloseDate}" />
+            </apex:pageblockSection>
+            <apex:pageblockSection collapsible="false">
+                <apex:outputField value="{!opportunity.Description}" />
+            </apex:pageblockSection>
+            <apex:pageblockSection collapsible="false">
+                <apex:outputField value="{!opportunity.IM_Up_Sell_Quantity__c}" />
+                <apex:outputField value="{!opportunity.Upsell_Customer_ID__c}" />
+                
+                <apex:outputField value="{!opportunity.IM_Up_Sell_Detail__c}" />
+                <apex:outputField value="{!opportunity.IM_Unit_of_Measure__c }" />
+            </apex:pageblockSection>
+            
+            <apex:pageBlock rendered="{!VendedSecDisplay}">
+                <apex:pageBlockButtons location="top">
+
+                <div style="position: relative; left: 150px;">
+                    <apex:commandButton value="EDIT" action="{!oppFinalVenbackbutton}" reRender="frm" status="searchStatus"/>
+                </div>
+            </apex:pageBlockButtons>
+            <apex:pageblockSection collapsible="false" columns="2">
+                <apex:outputLabel >You have selected a Records Management Storage Product.  Is all or a portion of this storage vended with a competitor?</apex:outputLabel>
+                <apex:outputField label="Competitively Vended" value="{!opportunity.IME_Vended_Unvended__c}" />
+                <apex:outputLabel ></apex:outputLabel>
+               <!--#16915 <apex:outputField label="% Vended" value="{!opportunity.Vended__c}" />
+                <apex:outputLabel ></apex:outputLabel>
+                <apex:outputField label="% Unvended" value="{!opportunity.Unvended__c}" />-->
+
+            </apex:pageblockSection>   
+             </apex:pageBlock>
+             <apex:pageblockSection collapsible="false" rendered="false">
+                    <apex:outputField value="{!oppcomp.Competitor__c}" />
+                    <apex:outputField value="{!oppcomp.Expiration_Notification_Date__c}" />
+                    <apex:outputField value="{!oppcomp.Competitor_Expiration_Date__c}" />
+              </apex:pageblockSection>
+            
+            </apex:pageblock>
+            <apex:outputLabel >&nbsp;&nbsp;</apex:outputLabel>
+            <div style="text-align: center">
+                <apex:outputLabel style="font-size:15px"
+                    rendered="{!IF(finaldetailsdiplay=true && ISNULL(leadid),true,false)}">
+                    <b>PRIMARY CONTACT INFORMATION</b>
+                </apex:outputLabel>
+            </div>
+            <apex:pageBlock rendered="{!IF(finaldetailsdiplay=true && ISNULL(leadid),true,false)}">
+                <apex:pageblockButtons location="top">
+                    <div style="position: relative; left: 150px;">
+                        <apex:commandButton value="EDIT" action="{!contactbackbutton}"
+                            rendered="{!newcon}" reRender="frm" status="searchStatus"/>
+                        <apex:commandButton value="EDIT" action="{!oldcontactbackbutton}"
+                            rendered="{!oldcon}" reRender="frm" status="searchStatus"/>
+                    </div>
+                </apex:pageblockButtons>
+                <apex:pageBlockSection columns="2" collapsible="false"
+                    rendered="{!newcon}">
+
+                    <apex:outputField value="{!contact.FirstName}" />
+                    <apex:outputField value="{!contact.LastName}" />
+                    <apex:outputField value="{!contact.IM_Functional_Area__c}" />
+                    <apex:outputField value="{!contact.IM_Job_Level__c}" />
+                    <apex:outputField value="{!contact.IM_Academic_Title__c}" />
+                    <!--<apex:inputField value="{!contact.IM_Role__c}" />-->
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel >Opportunity Contact Role</apex:outputLabel>
+                        <apex:outputField value="{!ocr.Role}" />
+                    </apex:pageBlockSectionItem>
+                    <apex:outputField value="{!contact.Title}" />
+                    <apex:outputField value="{!contact.Email}" />
+                    <apex:outputField value="{!contact.IM_Language_Preference__c}" />
+                    <apex:outputField value="{!contact.IM_Responsible_For__c}" />
+                    <apex:outputField value="{!contact.Phone}" />
+                    <apex:outputField value="{!contact.MobilePhone}" />
+                    <apex:outputField value="{!contact.Fax}" />
+                    <apex:outputField value="{!contact.IM_Timezone__c}" />
+                </apex:pageBlockSection>
+
+                <apex:pageBlockSection columns="2" collapsible="false"
+                    rendered="{!oldcon}">
+                    <apex:outputField value="{!primarycontactlist[0].FirstName}" />
+                    <apex:outputField value="{!primarycontactlist[0].LastName}" />
+                    <apex:outputField value="{!primarycontactlist[0].IM_Functional_Area__c}" />
+                    <apex:outputField value="{!primarycontactlist[0].IM_Job_Level__c}" />
+                    <apex:outputField value="{!primarycontactlist[0].IM_Academic_Title__c}" />
+                    <!--<apex:inputField value="{!contact.IM_Role__c}" />-->
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel >Opportunity Contact Role</apex:outputLabel>
+                        <apex:outputLabel >{!rolestring}</apex:outputLabel>
+                    </apex:pageBlockSectionItem>
+                    <apex:outputField value="{!primarycontactlist[0].Title}" />
+                    <apex:outputField value="{!primarycontactlist[0].Email}" />
+                    <apex:outputField value="{!primarycontactlist[0].IM_Language_Preference__c}" />
+                    <apex:outputField value="{!primarycontactlist[0].IM_Responsible_For__c}" />
+                    <apex:outputField value="{!primarycontactlist[0].Phone}" />
+                    <apex:outputField value="{!primarycontactlist[0].MobilePhone}" />
+                    <apex:outputField value="{!primarycontactlist[0].Fax}" />
+                    <apex:outputField value="{!primarycontactlist[0].IM_Timezone__c}" />
+                </apex:pageBlockSection>
+            </apex:pageBlock>
+            <apex:pageBlock rendered="{!IF(finaldetailsdiplay=false || ISNULL(leadid),false,true)}">
+                <apex:pageBlockButtons location="top">
+                    <div style="position: relative; left: 150px;">
+                        <apex:commandButton value="EDIT" action="{!leadoppbackbutton}" reRender="frm" status="searchStatus"/>
+                    </div>
+                </apex:pageBlockButtons>
+                <apex:pageblockSection collapsible="false">
+                    <apex:pageblockSectionItem >
+                        <apex:outputLabel >Opportunity Owner</apex:outputLabel>
+                        <apex:outputLabel value="{!oppowner}" />
+                    </apex:pageblockSectionItem>
+                    <apex:outputField value="{!leadopportunity.StageName}" />
+                    <apex:outputField value="{!leadopportunity.Name}" />
+                    <apex:outputField value="{!leadopportunity.Probability}" />
+                    <apex:pageBlockSectionItem >
+                        <apex:outputText >Account Name</apex:outputText>
+                        <apex:outputLabel >{!leadaccountname}</apex:outputLabel>
+                    </apex:pageBlockSectionItem>
+                    <!--<apex:outputField value="{!leadopportunity.IM_Competitor__c}" /> -->
+                    <apex:outputField value="{!leadopportunity.IM_Category__c}" />
+                    <apex:outputField value="{!leadopportunity.Type}" />
+                      <apex:outputField value="{!leadopportunity.Primary_Product_Line__c}" />
+                    <apex:outputField value="{!leadopportunity.IM_Sales_Event__c}" />
+                    <!--<apex:outputField value="{!leadopportunity.Account_Plan__c}"  /> -->
+                    <apex:outputField value="{!leadopportunity.InSight_Opportunities__c}"  /> 
+                </apex:pageblockSection>
+                <apex:pageblockSection collapsible="false">
+                    <apex:outputField value="{!leadopportunity.IM_Booked_Date__c}" />
+                    <apex:outputField value="{!leadopportunity.CloseDate}" />
+                </apex:pageblockSection>
+                <apex:pageblockSection collapsible="false">
+                    <apex:outputField value="{!leadopportunity.Description}" />
+                </apex:pageblockSection>
+                <apex:pageblockSection collapsible="false">
+                    <apex:outputField value="{!leadopportunity.IM_Up_Sell_Quantity__c}" />
+                    <apex:outputField value="{!leadopportunity.Upsell_Customer_ID__c}" />
+                    <apex:outputField value="{!leadopportunity.IM_Up_Sell_Detail__c}" />
+                    <apex:outputField value="{!leadopportunity.IM_Unit_of_Measure__c }" />
+                </apex:pageblockSection>
+            <apex:pageBlock rendered="{!VendedSecDisplay}">
+                <apex:pageBlockButtons location="top">
+
+                <div style="position: relative; left: 150px;">
+                    <apex:commandButton value="EDIT" action="{!leadoppVendbackbutton}" reRender="frm" status="searchStatus"/>
+                </div>
+            </apex:pageBlockButtons>
+            <apex:pageblockSection collapsible="false" columns="2">
+                <apex:outputLabel >You have selected a Records Management Storage Product.  Is all or a portion of this storage vended with a competitor?</apex:outputLabel>
+                <apex:outputField label="Competitively Vended" value="{!leadopportunity.IME_Vended_Unvended__c}" />
+                <apex:outputLabel ></apex:outputLabel>
+               <!--#16915 <apex:outputField label="% Vended" value="{!leadopportunity.Vended__c}" />
+                 <apex:outputLabel ></apex:outputLabel>
+                <apex:outputField label="% Unvended" value="{!leadopportunity.Unvended__c}" /> -->
+
+            </apex:pageblockSection>
+         </apex:pageBlock>
+                </apex:pageblock>
+
+                <apex:outputLabel >&nbsp;&nbsp;</apex:outputLabel>
+                <div style="text-align: center">
+                    <apex:outputLabel style="font-size:16px"
+                        rendered="{!finaldetailsdiplay}">
+                        <b>PRODUCT INFORMATION</b>
+                    </apex:outputLabel>
+                </div>
+
+                <apex:repeat value="{!completelistwrap}" var="c">
+                    <!--{!c.pe.Name}-->
+                </apex:repeat>
+
+                <apex:repeat value="{!testlistwrap}" var="t"
+                    rendered="{!finaldetailsdiplay}">
+                    <apex:pageBlock title="PRODUCT # {!t.prodnumber}">
+                        <apex:pageblockSection columns="1" collapsible="false">
+                            <apex:outputLabel >{!t.p.Name}</apex:outputLabel>
+                            
+                            </apex:pageblocksection>
+
+                            <apex:outputLabel >&nbsp;&nbsp;</apex:outputLabel>
+                            <apex:outputLabel >&nbsp;&nbsp;</apex:outputLabel>
+
+                            <apex:pageBlockSection >
+                                <apex:repeat value="{!t.complist}" var="tc">
+
+                                </apex:repeat>
+                            </apex:pageBlockSection>
+                            <apex:outputLabel >
+                                <b>PRICE AND QUANTITY&nbsp;&nbsp;</b>
+                            </apex:outputLabel>
+                            <apex:commandButton value="EDIT"
+                                action="{!newbacktopricequantity}" reRender="frm" status="searchStatus"/>
+                            <!--<apex:repeat value="{!testlistwrap}" var="t">-->
+                            <!--<apex:pageBlockSection rendered="{!IF(t.p.Id=c.pe.Product2Id,true,false)}" collapsible="false" columns="1">-->
+                            <apex:pageblockSection collapsible="false" columns="1">
+                                <apex:outputLabel >&nbsp;</apex:outputLabel>
+                                <!--<apex:pageblockSection collapsible="false" columns="3" >-->
+                                <apex:outputLabel >
+                                    <apex:outputLabel rendered="{!IF(ISNULL(t.complist[0].pe.Product2.Price_Override_value__c), false, true)}">{!t.complist[0].pe.Product2.Price_Override_value__c}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${!t.complist[0].strprice}&nbsp;&nbsp;&nbsp;</apex:outputLabel>
+                                    <apex:outputLabel rendered="{!IF(ISNULL(t.complist[0].pe.Product2.Price_Override_value__c), true, false)}">Sales Price&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${!t.complist[0].strprice}&nbsp;&nbsp;&nbsp;</apex:outputLabel>
+                                    <apex:outputLabel rendered="{!IF(ISNULL(t.complist[0].pe.Product2.Quantity_Override_value__c)|| t.complist[0].pe.Product2.Quantity_Override_value__c = 'n/a', false, true)}">{!t.complist[0].pe.Product2.Quantity_Override_value__c}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{!t.complist[0].Quantity}&nbsp;&nbsp;&nbsp;</apex:outputLabel>
+                                    <apex:outputLabel rendered="{!IF(t.complist[0].pe.Product2.Quantity_Override_value__c = 'n/a', true, false)}">Quantity&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1&nbsp;&nbsp;&nbsp;</apex:outputLabel>
+                                    <apex:outputLabel rendered="{!IF(ISNULL(t.complist[0].pe.Product2.Quantity_Override_value__c), true, false)}">Quantity&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{!t.complist[0].Quantity}&nbsp;&nbsp;&nbsp;</apex:outputLabel>
+                                    <!--<apex:outputLabel >Total Annual Amount&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${!t.complist[0].Revenue}</apex:outputLabel>-->
+                                </apex:outputLabel>
+                                <apex:outputLabel >&nbsp;</apex:outputLabel>
+
+                                </apex:pageBlockSection>
+
+                                <apex:outputLabel rendered="{!t.questionsexist}">
+                                    <b>PRODUCT QUESTIONS AND ANSWERS&nbsp;&nbsp;</b>
+                                </apex:outputLabel>
+                                <apex:commandButton value="EDIT" action="{!newbacktoquestions}"
+                                    rendered="{!t.questionsexist}" reRender="frm" status="searchStatus"/>
+                                <apex:pageBlocksection rendered="{!t.questionsexist}"
+                                    collapsible="false" columns="1">
+                                    <!--<apex:outputLabel ><b>QUESTIONS AND ANSWERS</b></apex:outputLabel>-->
+                                    <apex:repeat value="{!t.questions}" var="top">
+                                        <apex:pageBlockSection collapsible="false" columns="2">
+                                            <apex:outputLabel value="Question: {!top.oqc.Name}" />
+                                            <apex:outputLabel value="Answer: {!top.finalanswer}" />
+                                        </apex:pageBlockSection>
+                                    </apex:repeat>
+                                </apex:pageBlocksection>
+                                
+                                
+                    </apex:pageBlock>
+                   
+                </apex:repeat>
+                <!-- Added on 1-31-2013 -->
+    
+             <apex:outputLabel >&nbsp;&nbsp;</apex:outputLabel>
+                   <div style="text-align: center">
+                       <apex:outputLabel style="font-size:16px" rendered="{!finalgsadetails}">
+                           <b>GSA INFORMATION</b>
+                       </apex:outputLabel>
+                   </div>
+            
+                <apex:PageBlock rendered="{!finalgsadetails}">
+                    <apex:outputLabel >
+                        <b>GSA QUESTIONS AND ANSWERS&nbsp;&nbsp;</b>
+                    </apex:outputLabel>
+                    <apex:commandButton value="EDIT" action="{!newbacktogsaquestions}" reRender="frm" status="searchStatus"/> 
+                      <apex:pageBlockSection columns="1">  
+                         <apex:repeat value="{!GSATestList}" var="t" >                          
+                             <apex:repeat value="{!t.Gsarec}" var="t1">
+                                  <apex:pageBlockSection > 
+                                      <apex:outputLabel value="Question: {!t1.Name}" />
+                                      <apex:outputText value="Answer: {!t.picklistanswer}" />
+                                  </apex:pageBlockSection>
+                             </apex:repeat>                                     
+                         </apex:repeat>
+                     </apex:pageBlockSection>
+                </apex:PageBlock>
+                <apex:pageBlock rendered="{!finaldetailsdiplay}">
+                    <apex:pageBlockButtons location="bottom">
+                        <div style="position: relative; left: 125px;">
+                            <apex:commandButton value="SAVE" action="{!savedetails}" rendered="oppreturnpage" reRender="frm" status="searchStatus"/>
+                            <apex:commandButton value="BACK" action="{!backtopricequantity}" reRender="frm" status="searchStatus"/>
+                        </div>
+                    </apex:pageBlockButtons>
+                </apex:pageBlock>
+                <apex:pageBlock id="oppreturnpage" rendered="{!showfinalpage}" title="Opportunity has been saved.">
+                 <b>Please</b> <apex:commandLink action="{!returnOppPage}" value="click here"/>
+                 <b>go to the Opportunity details page.</b>
+                </apex:pageBlock>
+                <apex:outputPanel id="jspanel"> 
+                  <script>  
+                  function onControllerReturn() {
+                     var segValue = "{!subSegHealthcare}";
+                     if(segValue === 'true'){
+                        document.getElementById('j_id0:frm:pb:pbs:gpo').value='';
+                     }
+                    else if (segValue === 'false')
+                    {
+                        document.getElementById('j_id0:frm:pb:pbs:gpo').value='Not Contracted';
+                    } 
+                  }
+                  </script>
+                  </apex:outputPanel>                
+                
+                <apex:actionFunction name="passAccId" action="{!passAccId}" oncomplete="onControllerReturn();" rerender="jspanel" immediate="true">
+                    <apex:param name="acctId" assignTo="{!acctId}" value="" id="accountIdParam"/>
+                </apex:actionFunction>
+          <script>
+         function gposet(){
+           // alert('Dev work. Ignore all popups.');
+            var acctId = document.getElementById("{!$Component.frm.pb.pbs.oppAccId}_lkid").value;          
+            passAccId(acctId);          
+           
+         /*  if(sub === 'true'){
+                document.getElementById('j_id0:frm:pb:pbs:gpo').value='';
+            }
+            else if (sub === 'false')
+            {
+                
+                document.getElementById('j_id0:frm:pb:pbs:gpo').value='Not Contracted';
+            } */
+        }
+          </script>
+                
+    </apex:form>
+    
+    <script>
+        
+        
+        /*Developer :Gopinandan */
+        
+            makeAllNo();
+
+    
+        function makeAllNo(){
+            var x = document.getElementsByClassName("gsaQue");
+            var i, c;
+            for (i = 0; i < x.length; i++) {
+                if(i == 0 && x[i].value == 'Yes'){
+                    c = 0;
+                }else if(i == 0 && x[i].value == 'No')
+                    c = 1;
+                else if(c == 0 ){
+                    x[i].value = 'No';
+                    x[i].disabled = true;
+                    x[i].style.background ="#ddd";
+                    x[i].style.color = "gray";
+                }else{
+                    x[i].disabled = false;
+                    x[i].style.removeProperty("background");
+                    x[i].style.removeProperty("color");
+                }
+            }
+            if(c == 0){
+               var gsaHdnFld=document.getElementById("gsaEligibilityDiv").getElementsByTagName("input"); 
+               gsaHdnFld[0].value='True';
+            }else if (c == 1){
+                var makeFalse = 0;
+                for (i = 1; i < x.length; i++) {
+                    if(x[i].value == 'Yes'){
+                        makeFalse = 1;
+                    }
+                }
+                if(makeFalse == 1){
+                    var gsaHdnFld=document.getElementById("gsaEligibilityDiv").getElementsByTagName("input");
+                    gsaHdnFld[0].value='False';
+                }else{
+                    var gsaHdnFld=document.getElementById("gsaEligibilityDiv").getElementsByTagName("input");
+                    gsaHdnFld[0].value='True';
+                }
+            }
+        }
+        function makeAllEnable(){
+            var x = document.getElementsByClassName("gsaQue");
+            var i,c;
+            for(i = 0; i < x.length; i++){
+                if(i == 0 && x[i].value =='Yes'){
+                
+                    c=0;
+                }else if( i == 0 && x[i].value =='No'){
+                    c=1;
+                }else if( c == 0){
+                    x[i].disabled = false;
+                    x[i].style.background ="#ddd";
+                    x[i].style.color = "gray";
+                }else{
+                
+                }
+                
+            }
+         }
+        
+    
+    
+        var selectedChkbox, selectedChkbox1,stage;
+        function probablity()
+        {
+            probabilityFld=document.getElementsByClassName('ProbabilityFld');
+            stage=document.getElementsByClassName('stageFld')[0].value;
+            // As per US #9534 probability value is updated by Nandhini Panneerselvam
+            if(stage=='0 - Pre-Qualification') 
+                probabilityFld[0].value=0;        
+            else if(stage=='1 - Qualification')
+                probabilityFld[0].value=20;
+            else if(stage=='2 - Solution Developed')
+                probabilityFld[0].value=20;
+            else if(stage=='3 - Solution Agreed')
+                probabilityFld[0].value=50;
+            else if(stage=='4 - Negotiate')
+                probabilityFld[0].value=90;
+            else if(stage=='5 - Signed/PO in')
+                probabilityFld[0].value=100;
+            else if(stage=='6 - Setup')
+                probabilityFld[0].value=100;
+            else if(stage=='7 - Closed')
+                probabilityFld[0].value=100;
+            else if(stage=='Lost')
+                probabilityFld[0].value=0;
+            else if(stage=='Dead')
+                probabilityFld[0].value=0;
+            else if(stage=='Postponed')
+                probabilityFld[0].value=0;
+        }
+        function probablity1()
+        {
+        //stage=document.getElementById('j_id0:j_id28:j_id91:j_id96:j_id101').value;
+        stage=document.getElementById('j_id0:frm:j_id91:j_id96:j_id101').value;
+        
+        if(stage=='0 - Pre-Qualification'){      
+                //document.getElementById('j_id0:j_id28:j_id91:j_id96:j_id103').value=0;
+                document.getElementById('j_id0:frm:j_id91:j_id96:j_id103').value=0;
+        }
+        if(stage=='1 - Qualification')
+                document.getElementById('j_id0:frm:j_id91:j_id96:j_id103').value=20;
+        if(stage=='2 - Solution Developed')
+                document.getElementById('j_id0:frm:j_id91:j_id96:j_id103').value=20;
+        if(stage=='3 - Solution Agreed')
+                document.getElementById('j_id0:frm:j_id91:j_id96:j_id103').value=50;
+        if(stage=='4 - Negotiate')
+                document.getElementById('j_id0:frm:j_id91:j_id96:j_id103').value=90;
+        if(stage=='5 - Signed/PO in')
+                document.getElementById('j_id0:frm:j_id91:j_id96:j_id103').value=100;
+        if(stage=='6 - Setup')
+                document.getElementById('j_id0:frm:j_id91:j_id96:j_id103').value=100;
+        if(stage=='7 - Closed')
+                document.getElementById('j_id0:frm:j_id91:j_id96:j_id103').value=100;
+        if(stage=='Lost')
+                document.getElementById('j_id0:frm:j_id91:j_id96:j_id103').value=0;
+        if(stage=='Dead')
+                document.getElementById('j_id0:frm:j_id91:j_id96:j_id103').value=0;
+        if(stage=='Postponed')
+                document.getElementById('j_id0:frm:j_id91:j_id96:j_id103').value=0;
+        }
+      
+        function deselectOther(chkBox) {
+            if (chkBox.checked) {
+            if ((chkBox != selectedChkbox) && (selectedChkbox != null)) {
+                    selectedChkbox.checked = false;
+                }
+            
+            var inputElem = document.getElementsByTagName("input");
+            for(var i=0; i<inputElem.length; i++)
+            {
+            if(inputElem[i].id.indexOf("checkedone")!=-1){
+                       inputElem[i].checked = false;
+            }
+            }
+            
+              chkBox.checked = true;
+                selectedChkbox = chkBox;
+            }
+        }
+        function deselectOther1(chkBox1) {
+            if (chkBox1.checked) {
+                if ((chkBox1 != selectedChkbox1) && (selectedChkbox1 != null)) {
+                    selectedChkbox1.checked = false;
+                }
+                selectedChkbox1 = chkBox1;
+            }
+        }
+   </script>
+   
+   <script> 
+ var previousOnload = window.onload; 
+            window.onload = function() { 
+                if (previousOnload) { 
+                    previousOnload(); 
+                    } 
+              //      alert('on load');
+          
+            gposet();
+            
+            
+               }
+        
+
+                function hideNextBtn()
+                {
+                    var nextBtns = document.getElementsByClassName('nextBtn');
+                    for(var i=0;i<nextBtns.length;i++)
+                    {
+                        nextBtns[i].disabled=true;
+                    }
+                    totalInprogress++;
+                }
+                
+                function disableSaveButton(saveBtn)
+                {       
+                    saveBtn.value="Saving...";
+                    setTimeout(function(){saveBtn.disabled=true; }, 100);                    
+                }
+                
+                function showNextBtn()
+                {
+                    totalInprogress--;
+                    if(totalInprogress==0)
+                    {
+                        var nextBtns = document.getElementsByClassName('nextBtn');
+                        for(var i=0;i<nextBtns.length;i++)
+                        {
+                            nextBtns[i].disabled=false;
+                        }
+                    }
+                }
+                var totalInprogress=0;                                  
+          </script>
+<script>
+        function calcEmptyAmt(sprice)
+        {
+            var priceId = sprice.id;
+            var idTemp = priceId.slice(0,-5);
+            var amtId=idTemp.concat("amt");
+            var recurId=idTemp.concat("recur");
+            var p = document.getElementById(priceId).value;
+            var recurring = document.getElementById(recurId).value;
+
+            if(recurring=='Recurring')
+                {
+                 document.getElementById(amtId).value=p*12;
+                }
+            else if (recurring =='Non-recurring')
+                {
+                 document.getElementById(amtId).value=p;
+                }
+            
+        }
+    </script>
+    <script language="javascript" type="text/javascript"> 
+        function getQueryVariable(variable) {
+          var query = window.location.search.substring(1);
+          var vars = query.split("&");
+          for (var i=0;i<vars.length;i++) {
+            var pair = vars[i].split("=");
+            if (pair[0] == variable) {
+              return pair[1];
+            }
+          } 
+        
+        }
+             
+        function openWindow(hiddenAccountElementId, textAccountNumberId)
+        {
+            var opId = "{!Opportunity.Id}";
+            var accId;
+            if (!document.getElementById("{!$Component.frm.pb.pbs.oppAccId}_lkid")) {
+                accId = getQueryVariable("straccname");
+            }
+            else
+            accId = document.getElementById("{!$Component.frm.pb.pbs.oppAccId}_lkid").value;
+            if(/^0*$/.test(accId))
+                accId = '';   
+            var scrWidth = screen.width - 100;
+            var scrHeight = screen.height - 100;
+            if(accId)
+                window.open("/apex/FilteredAccountLookup?hiddenId="+hiddenAccountElementId+"&opId="+opId+"&accId="+accId+"&textId="+textAccountNumberId, '', 'fullscreen=yes, scrollbars=1, height='+ scrHeight +', width='+scrWidth);
+            else
+                window.open("/apex/FilteredAccountLookup?hiddenId="+hiddenAccountElementId+"&opId="+opId+"&textId="+textAccountNumberId, '', 'fullscreen=yes, scrollbars=1, height='+ scrHeight +', width='+scrWidth);
+         }
+        function calcAmt(qty)
+        {
+            var qtyId = qty.id;
+            var idTemp = qtyId.slice(0,-3);
+            var priceId = idTemp.concat("price");
+            var amtId=idTemp.concat("amt");
+            var recurId=idTemp.concat("recur");
+            var p = document.getElementById(priceId).value;
+            var q = document.getElementById(qtyId).value;
+            var recurring = document.getElementById(recurId).value;
+            if(recurring=='Recurring')
+                {
+                 document.getElementById(amtId).value=p*q*12;
+                }
+            else if (recurring =='Non-recurring')
+                {
+                 document.getElementById(amtId).value=p*q;
+                }
+        
+        }
+
+
+function GetVenUnVenIds(){
+    var x = document.getElementsByClassName("labelCol vfLabelColTextWrap");    
+    var i;
+    var item,PickLst,OppVen,OppVenID,OppUnVen,OppUnVenID,PickListID,tempVen;
+    var ids;
+    
+    for (i = 0; i < x.length; i++) {
+        item = x[i].innerHTML; 
+        OppVen = item.search("% Vended"); 
+        OppUnVen = item.search("% Unvended"); 
+        PickLst = item.search("Competitively Vended"); 
+        if(OppVen >= 0){            
+            tempVen =item.replace("<label for=\"","");
+            OppVenID = tempVen.replace("\">% Vended</label>","");
+            console.log(OppVenID);    
+            }
+        if(OppUnVen >= 0){            
+            tempVen =item.replace("<label for=\"","");
+            OppUnVenID = tempVen.replace("\">% Unvended</label>","");
+            console.log(OppUnVenID);    
+            } 
+        if(PickLst >=0){
+            tempVen =item.replace("<label for=\"","");
+             PickListID = tempVen.replace("\">Competitively Vended</label>","");
+            //  PickListID = tempVen.replace("\"><span class=\"assistiveText\">*</span>Competitively Vended</label>","");
+            console.log(PickListID);  
+        }
+    }
+    
+    ids = OppVenID +',,' +OppUnVenID + ',,' +PickListID;
+    return ids;
+}
+
+function onVendedChange(vendedVal){
+    
+    var OppVenID,OppUnVenID;
+    var ids;
+    ids = GetVenUnVenIds();
+    OppVenID = ids.split(",,")[0];
+    OppUnVenID = ids.split(",,")[1];
+    var venField = document.getElementById(OppVenID); //document.getElementById('j_id0:frm:j_id396:j_id397:OppVen');
+    var UnvenField = document.getElementById(OppUnVenID);
+   
+    venField.value = '';
+    UnvenField.value = '';
+    venField.disabled = false;
+    UnvenField.disabled = false;
+    
+    if(vendedVal.value== 'Vended'){
+            venField.value = 100;
+            UnvenField.value = 0;
+            venField.disabled = true;
+            UnvenField.disabled = true;
+      }
+     
+     if(vendedVal.value== 'Unvended'){
+            venField.value = 0;
+            UnvenField.value = 100;
+            venField.disabled = true;
+            UnvenField.disabled = true;
+      }
+    }
+
+function onLoadVended(){
+    
+    var OppVenID,OppUnVenID,PickListID;
+    var ids;
+    ids = GetVenUnVenIds();
+    // console.log('IDs:'+ids);
+    OppVenID = ids.split(",,")[0];
+    OppUnVenID = ids.split(",,")[1];
+    PickListID = ids.split(",,")[2];
+    var PickList = document.getElementById(PickListID);
+    var venField = document.getElementById(OppVenID); //document.getElementById('j_id0:frm:j_id396:j_id397:OppVen');
+    var UnvenField = document.getElementById(OppUnVenID);
+   
+    
+    // console.log('Competitively Vended:'+PickListID.value);
+    if((PickList.value== 'Vended') ||(PickList.value== 'Unvended') ){
+        venField.disabled = true;
+        UnvenField.disabled = true;
+    }
+    else{
+         venField.disabled = false;
+        UnvenField.disabled = false;
+    }
+    
+    
+}
+
+    </script>
+<style>
+    .nextBtn:disabled
+    {
+        color:gray;
+        cursor:default;
+    }
+        .popupBackground {
+        /* Background color */
+        background-color:black;
+        opacity: 0.20;
+        filter: alpha(opacity = 20);
+    
+        /* Dimensions */
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        z-index: 998;
+        position: absolute;
+        
+        /* Mouse */
+        cursor:wait;
+    }
+
+
+ 
+    /* This is for the message DIV */
+    .PopupPanel {
+        /* Background color */
+        border: solid 1px black;
+        background-color: white;
+ 
+        /* Dimensions */
+        left: 50%;
+        width: 200px;
+        margin-left: -100px;
+        top: 50%;
+        height: 50px;
+        margin-top: -25px;
+        z-index: 999;
+        position: fixed;
+        
+        /* Mouse */
+        cursor:pointer;
+    }
+    
+</style>
+</apex:page>

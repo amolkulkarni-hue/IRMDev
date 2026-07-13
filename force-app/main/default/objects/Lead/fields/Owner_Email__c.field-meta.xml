@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Owner_Email__c</fullName>
+    <description>Field should only display email for Active owners that are real people. 
+ie 
+Lead Text Formula field that leverages the &quot;Owner Detail&quot; field which filters out Queue ownership.</description>
+    <externalId>false</externalId>
+    <formula>IF( 
+( 
+
+Owner_Details__r.IsActive = true 
+&amp;&amp; 
+Owner_Type__c &lt;&gt; &quot;Queue&quot;
+&amp;&amp;
+Owner_Details__r.LastName &lt;&gt; &quot;Eloqua&quot; 
+&amp;&amp; 
+Owner_Details__r.LastName &lt;&gt; &quot;Migration&quot; 
+&amp;&amp; 
+Owner_Details__r.LastName &lt;&gt; &quot;Integration&quot; 
+&amp;&amp; 
+Owner_Details__r.LastName &lt;&gt; &quot;Admin1&quot; 
+&amp;&amp; 
+Owner_Details__r.LastName &lt;&gt; &quot;Admin2&quot; 
+&amp;&amp; 
+Owner_Details__r.LastName &lt;&gt; &quot;Business Services&quot; 
+), 
+Owner_Details__r.Email , 
+&quot;&quot;)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <inlineHelpText>Field should only display email for Active owners that are real people. 
+ie</inlineHelpText>
+    <label>Owner Email</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

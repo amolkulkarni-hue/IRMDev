@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IME_SC_ValidateCutOffTimeOnRushChecked</fullName>
+    <active>true</active>
+    <description>On check of Rush user try to change cut off time</description>
+    <errorConditionFormula>AND(NOT(ISCHANGED( IME_SC_Owner_Manager__c )), 
+NOT(ISCHANGED( IME_SC_Manager_of_Manager_OwnerId__c )), 
+$RecordType.Name = &quot;IME SC Case&quot;, IME_SC_Rush__c  , PRIORVALUE(IME_SC_Rush__c) , 
+ISCHANGED(End_Time_Cutoff_SLA__c) 
+)</errorConditionFormula>
+    <errorDisplayField>End_Time_Cutoff_SLA__c</errorDisplayField>
+    <errorMessage>User entered Cut off Time is not acceptable for Rush.</errorMessage>
+</ValidationRule>

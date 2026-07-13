@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NCSP_Status__c</fullName>
+    <description>tracks the progress of the NCSP case related to this opportunity. The value is updated by an APEX trigger on the Case.</description>
+    <label>NCSP Status</label>
+    <required>false</required>
+    <trackFeedHistory>true</trackFeedHistory>
+    <trackHistory>true</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Sent to NCSP</fullName>
+                <color>#0B6FCE</color>
+                <default>false</default>
+                <label>Sent to NCSP</label>
+            </value>
+            <value>
+                <fullName>Contract Approved</fullName>
+                <color>#E27001</color>
+                <default>false</default>
+                <label>Contract Approved</label>
+            </value>
+            <value>
+                <fullName>Rejected</fullName>
+                <color>#A845DC</color>
+                <default>false</default>
+                <label>Rejected</label>
+            </value>
+            <value>
+                <fullName>Service Scheduled</fullName>
+                <color>#419249</color>
+                <default>false</default>
+                <label>Service Scheduled</label>
+            </value>
+            <value>
+                <fullName>Service Completed</fullName>
+                <color>#CC9933</color>
+                <default>false</default>
+                <label>Service Completed</label>
+            </value>
+            <value>
+                <fullName>Custom Setup</fullName>
+                <color>#33CCFF</color>
+                <default>false</default>
+                <label>Custom Setup</label>
+            </value>
+            <value>
+                <fullName>Local Market Setup</fullName>
+                <default>false</default>
+                <label>Local Market Setup</label>
+            </value>
+            <value>
+                <fullName>Special Projects</fullName>
+                <default>false</default>
+                <label>Special Projects</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Generate_Schedule_A__c</fullName>
+    <description>Generate Schedule A for Lightning users - Case# 09154470
+Updated the formula for the below story : #10277 : Opportunity: Global Org | IMNA opportunity - GSA/Sled/Public Sector validation rules
+#17773 Field label renamed to Generate ScheduleA with Approved Pricing</description>
+    <externalId>false</externalId>
+    <formula>IF(
+AND(
+CONTAINS( TEXT( US_Federal_GSA_Pricing__c ) , &apos;Yes&apos;),
+TEXT( IMGS_Approval_Status__c ) = &apos;Under Review&apos;
+),
+&apos;&apos;,
+HYPERLINK(&quot;/apex/IRM_ScheduleAWizard_Lightning?id=&quot;+ Id+&quot;&amp;Step=STEP_VIEW_MAIN&quot;, &quot;Generate ScheduleA with Approved Pricing&quot;)
+)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Generate ScheduleA with Approved Pricing</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

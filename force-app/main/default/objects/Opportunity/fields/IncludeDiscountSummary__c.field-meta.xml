@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IncludeDiscountSummary__c</fullName>
+    <externalId>false</externalId>
+    <formula>IF (value (substitute( text(  Storage_Discount__c ),&apos;%&apos;,&apos;&apos;)) &gt; 0, &apos;Yes&apos;, &apos;No&apos;)&amp; IF((value (substitute( text(  Services_Discount__c ),&apos;%&apos;,&apos;&apos;)) &gt; 0),&apos;Yes&apos;,&apos;No&apos;)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>IncludeDiscountSummary</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

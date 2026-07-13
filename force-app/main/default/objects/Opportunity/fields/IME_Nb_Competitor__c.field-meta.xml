@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IME_Nb_Competitor__c</fullName>
+    <label>IME_Nb_Competitor</label>
+    <summaryFilterItems>
+        <field>IME_RM_Competitor__c.Competitor__c</field>
+        <operation>notEqual</operation>
+        <value>-No/Unknown Competitor-</value>
+    </summaryFilterItems>
+    <summaryForeignKey>IME_RM_Competitor__c.Opportunity__c</summaryForeignKey>
+    <summaryOperation>count</summaryOperation>
+    <trackHistory>false</trackHistory>
+    <type>Summary</type>
+</CustomField>

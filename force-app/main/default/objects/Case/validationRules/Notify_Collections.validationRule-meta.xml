@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Notify_Collections</fullName>
+    <active>true</active>
+    <description>Notify Collections must be today&apos;s date. It cannot be in the Past or the Future. For reference, check user story #26355 on Gitlab.</description>
+    <errorConditionFormula>(RecordType_Name__c = &quot;CLAS - RM&quot;) &amp;&amp;
+OR(
+	(
+	NOT(ISCHANGED(Open_Tasks__c)) &amp;&amp;
+	ISCHANGED(Notify_Collections__c) &amp;&amp;
+	NOT(ISBLANK(Notify_Collections__c)) &amp;&amp;
+	DATEVALUE(Notify_Collections__c) != TODAY() &amp;&amp;
+	(
+	  ISBLANK(PRIORVALUE(Notify_Collections__c)) ||
+	  DATEVALUE(Notify_Collections__c) != DATEVALUE(PRIORVALUE(Notify_Collections__c))
+	)
+	),
+    (	
+	ISNEW() &amp;&amp;
+	NOT(ISBLANK(Notify_Collections__c)) &amp;&amp;
+	DATEVALUE(Notify_Collections__c) != TODAY() 
+	) 
+)</errorConditionFormula>
+    <errorDisplayField>Notify_Collections__c</errorDisplayField>
+    <errorMessage>Notify Collections must be today&apos;s date. It cannot be in the Past or the Future.</errorMessage>
+</ValidationRule>

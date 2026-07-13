@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>AccountCoverageUpdated1__c</fullName>
+    <description>Flag to determine the change in Account Coverage Fields
+#28690 part 1 of Account Coverage fields Part 2 is in AccountCoverageUpdated2 Field
+#34453 : Account: Update Account Segmentation for &apos;26 GTM - PLNI0014642 (Added :Regional_Top_50_Accounts_Formula__c != Strategic_Account__c,
+         Strategic_Account_Formula__c != Sales_Strategic_Account__c )
+#34947 : Account: Industry Override field copies down to Sales Site
+#36947: Account Coverage: Add W&amp;L Owner for GTM tracking - PLNI0017548</description>
+    <formula>IF(
+     OR(
+	 Global_Account_Manager_Formula__c != Global_Account_Manager__c,
+         Global_Account_Director_Formula__c != Global_Account_Director__c,
+         Global_IMGA_Owner_Formula__c!= Global_IMGA_Owner__c,
+	 Primary_BDE_FORMULA__c!=Primary_BDE__c,
+	 Tele_CDE_Formula__c!=Tele_CDE__c,
+	 DMS_Owner_Formula__c!=DMS_Owner__c,
+         Regional_Top_50_Accounts_Formula__c != Strategic_Account__c,
+         Strategic_Account_Formula__c != Sales_Strategic_Account__c,
+         Industry_Override_formula__c != Industry_Override__c,
+	 Information_Governance_Rep_Formula__c!=Information_Governance_Rep__c,
+	 Entertainment_Services_CDE_Formula__c!=Primary_Local_Market_Rep_1__c,
+         WL_Owner_Formula__c!=WL_Owner__c
+   ),True,False)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>AccountCoverageUpdated</label>
+    <trackHistory>false</trackHistory>
+    <type>Checkbox</type>
+</CustomField>

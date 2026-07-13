@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Account_Quadrant_Formula__c</fullName>
+    <description>If the Account is tied to an IMGA, it will return that IMGA&apos;s Account Quadrant, otherwise it will return the Account Quadrant listed on the Account.</description>
+    <externalId>false</externalId>
+    <formula>IF( 
+NOT(ISBLANK(IMGA_Lookup__c) 
+), TEXT( IMGA_Lookup__r.Account_Quadrant__c ), TEXT( Account_Quadrant__c ) 
+)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Account Quadrant To be Deleted</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

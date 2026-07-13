@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Only_System_Admin_can_change_Acct_Name</fullName>
+    <active>true</active>
+    <description>Only System Admin Can Change Account Name</description>
+    <errorConditionFormula>if(ISCHANGED(Name),if(OR(AND(RecordType.DeveloperName =$Label.QTB_AccountRecordType_Billing, QTB_FSO__c ),
+AND(RecordType.DeveloperName =$Label.QTB_Operational_Account_Record_Type, Related_Billing_Account__r.QTB_FSO__c ),
+$Profile.Name = &quot;System Administrator&quot;,$Profile.Name = &quot;IM_Custom Sys Admin&quot;,
+$Profile.Name = &quot;IME_Custom Sys Admin&quot;,
+$Profile.Name = &quot;IME_In_Country_Admin&quot;,
+$Profile.Name = &quot;IME_SC_Account_Admin&quot;,
+$Profile.Name = &quot;IME_JV_Admin&quot;,
+$Profile.Name = &quot;IME_Super_User&quot;,
+$Profile.Name = &quot;IME_Contracts&quot;,
+$Profile.Name = &quot;IMAP_In_Country_Admin&quot;,
+$Profile.Name = &quot;IMAP_SC_In_Country_Admin+&quot;,
+$Profile.Name = &quot;IMLA_Custom Sys&quot;,
+$Profile.Name = &quot;IME_SC_In_Country_Admin&quot; ,
+$Profile.Name = &quot;IMAP_SC_In_Country_Admin&quot; ,
+$Profile.Name = &quot;IMLA_In_Country_Admin&quot;,
+$Profile.Name = &quot;IMAP_SC_Representative&quot;,
+$Profile.Name = &quot;NAS Support Agent&quot;,
+$Profile.Name = &quot;NAS Support Manager&quot;,
+$Profile.Name = &quot;Contract Admin NA&quot;,
+$Profile.Name = &quot;IM_Sales Ops Super User&quot;),false,true),false)</errorConditionFormula>
+    <errorMessage>Only System Admin Can Change Account Name</errorMessage>
+</ValidationRule>

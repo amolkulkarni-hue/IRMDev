@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IME_SC_ValidateRequiredFields_1</fullName>
+    <active>true</active>
+    <description>This rule triggers when Case Category is left blank if status value is either Validated , In progress or Assigned .</description>
+    <errorConditionFormula>AND( NOT(ISCHANGED( IME_SC_Owner_Manager__c )),
+NOT(ISCHANGED(  IME_SC_Manager_of_Manager_OwnerId__c )),
+$RecordType.Name = &quot;IME SC Case&quot; , 
+ISPICKVAL(IME_SC_Category__c, &quot;&quot;), 
+OR( 
+OR( 
+ISPICKVAL(Status, &quot;Validated&quot;) , 
+ISPICKVAL(Status, &quot;Assigned&quot;) , 
+ISPICKVAL(Status, &quot;In Progress&quot;)), 
+OR( 
+AND(ISPICKVAL(IME_SC_Closure_Reason__c, &quot;Completed&quot;), 
+OR(ISPICKVAL(Status, &quot;Closed&quot;), ISPICKVAL(Status, &quot;Resolved&quot;)))) 
+) 
+)</errorConditionFormula>
+    <errorDisplayField>IME_SC_Category__c</errorDisplayField>
+    <errorMessage>Please enter the value of Case Category .</errorMessage>
+</ValidationRule>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NumberofOpportunitiesinGroup1__c</fullName>
+    <description>Counting Number of Opportunity in &quot;Stage 1&quot;, &quot;Stage 2&quot;, &quot;Stage 3&quot;, &quot;Stage 4&quot; or &quot;Lost&quot;</description>
+    <label>NumberofOpportunitiesinGroup1</label>
+    <summaryFilterItems>
+        <field>Opportunity.StageName</field>
+        <operation>contains</operation>
+        <value>1 - Qualification, 2 - Solution Developed, 3 - Solution Agreed, 4 - Negotiate, Lost</value>
+    </summaryFilterItems>
+    <summaryForeignKey>Opportunity.AccountId</summaryForeignKey>
+    <summaryOperation>count</summaryOperation>
+    <trackHistory>false</trackHistory>
+    <type>Summary</type>
+</CustomField>

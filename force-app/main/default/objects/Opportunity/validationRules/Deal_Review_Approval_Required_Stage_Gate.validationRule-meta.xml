@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Deal_Review_Approval_Required_Stage_Gate</fullName>
+    <active>false</active>
+    <description>Requires Deal Review Status to be Approved before advancing to Solutioning, Negotiation, Booking Verification, Setup, or Closing stages. Applies to Standard Opportunity Record type only.</description>
+    <errorConditionFormula>AND(
+    $RecordType.DeveloperName = &apos;Standard_Opportunity&apos;,
+    ISCHANGED(StageName),
+    OR(
+        ISPICKVAL(StageName, &apos;Negotiation&apos;),
+        ISPICKVAL(StageName, &apos;Booking Verification&apos;),
+        ISPICKVAL(StageName, &apos;Setup&apos;),
+        ISPICKVAL(StageName, &apos;Closing&apos;)
+    ),
+    NOT(ISPICKVAL(Deal_Review_Status__c, &apos;Approved&apos;)),
+    $Profile.Name &lt;&gt; &apos;System Administrator&apos;,
+    NOT(
+        OR(
+            $Permission.VR_Bypass_Permission,
+            $Permission.Bypass_Opportunity_Validations,
+            $Setup.OpportunityAttribution__c.BypassValidation__c
+        )
+    )
+)</errorConditionFormula>
+    <errorDisplayField>StageName</errorDisplayField>
+    <errorMessage>Deal Review must be &apos;Approved&apos; before advancing to this stage. Please complete the Deal Review process or contact your Sales Operations Business Partner.</errorMessage>
+</ValidationRule>

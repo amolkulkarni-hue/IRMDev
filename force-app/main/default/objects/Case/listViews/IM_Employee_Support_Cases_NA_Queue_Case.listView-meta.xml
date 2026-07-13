@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IM_Employee_Support_Cases_NA_Queue_Case</fullName>
+    <columns>Requested_Due_Date__c</columns>
+    <columns>CASES.CASE_NUMBER</columns>
+    <columns>IM_Employee_Contact__c</columns>
+    <columns>CASES.SUBJECT</columns>
+    <columns>CASES.STATUS</columns>
+    <columns>IM_Employee_Country__c</columns>
+    <columns>Related_To__c</columns>
+    <columns>Issue__c</columns>
+    <columns>CASES.PRIORITY</columns>
+    <columns>CASES.CREATED_DATE_DATE_ONLY</columns>
+    <columns>CASES.LAST_UPDATE_DATE_ONLY</columns>
+    <columns>Days_Open_del__c</columns>
+    <filterScope>Queue</filterScope>
+    <filters>
+        <field>CASES.CLOSED</field>
+        <operation>equals</operation>
+        <value>0</value>
+    </filters>
+    <filters>
+        <field>CASES.STATUS</field>
+        <operation>equals</operation>
+        <value>New</value>
+    </filters>
+    <label>IM Employees Support Cases IMNA Queue</label>
+    <queue>IM_Employees_Support_Cases_IMNA_Queue</queue>
+    <sharedTo>
+        <group>Global_Salesforce_com_Team</group>
+    </sharedTo>
+</ListView>

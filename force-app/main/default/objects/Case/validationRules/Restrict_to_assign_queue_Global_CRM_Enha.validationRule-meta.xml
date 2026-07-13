@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Restrict_to_assign_queue_Global_CRM_Enha</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+ISCHANGED(OwnerId),
+Owner:Queue.QueueName = &quot;Global CRM Enhancement Requests&quot;)</errorConditionFormula>
+    <errorMessage>For new enhancements, please submit a request via the Salesforce Enhancement google form.</errorMessage>
+</ValidationRule>

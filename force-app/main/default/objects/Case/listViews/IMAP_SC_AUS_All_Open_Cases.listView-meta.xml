@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IMAP_SC_AUS_All_Open_Cases</fullName>
+    <columns>CASES.CASE_NUMBER</columns>
+    <columns>CASES.ORIGIN</columns>
+    <columns>IME_SC_Case_Email__c</columns>
+    <columns>IME_SC_Category__c</columns>
+    <columns>IME_SC_Sub_Category__c</columns>
+    <columns>CASES.SUBJECT</columns>
+    <columns>ACCOUNT.NAME</columns>
+    <columns>CORE.USERS.ALIAS</columns>
+    <columns>CASES.STATUS</columns>
+    <columns>End_Time_Cutoff_SLA__c</columns>
+    <columns>CASES.CREATED_DATE</columns>
+    <columns>PARENT.CASE_NUMBER</columns>
+    <columns>UPDATEDBY_USER.ALIAS</columns>
+    <columns>CASES.LAST_UPDATE</columns>
+    <division>*</division>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>CASES.STATUS</field>
+        <operation>notEqual</operation>
+        <value>Closed</value>
+    </filters>
+    <filters>
+        <field>IME_SC_Country__c</field>
+        <operation>equals</operation>
+        <value>Australia</value>
+    </filters>
+    <filters>
+        <field>CASES.RECORDTYPE</field>
+        <operation>equals</operation>
+        <value>Case.IME_SC_Case</value>
+    </filters>
+    <label>IMAP SC AUS All Open Cases</label>
+    <language>en_US</language>
+    <sharedTo>
+        <group>IMAP_SC_AUS_GRP_COMPLAINTS</group>
+        <group>IMAP_SC_AUS_GRP_INDEXING</group>
+        <group>IMAP_SC_AUS_GRP_NON_ORDER</group>
+        <group>IMAP_SC_AUS_GRP_ORDERS</group>
+        <group>IMAP_SC_AUS_GRP_RETENTION</group>
+        <group>IMAP_SC_AUS_GRP_SENSITIVE</group>
+        <group>IMAP_SC_AUS_Resolutions_Group</group>
+    </sharedTo>
+</ListView>

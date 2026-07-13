@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>My_4_Sales_Qualified_Leads</fullName>
+    <columns>FULL_NAME</columns>
+    <columns>LEAD.COMPANY</columns>
+    <columns>LEAD.EMAIL</columns>
+    <columns>LEAD.PHONE</columns>
+    <columns>LEAD.STATUS</columns>
+    <columns>IM_Lead_Stage__c</columns>
+    <columns>IM_Stage_4_Entered_Date__c</columns>
+    <filterScope>Mine</filterScope>
+    <filters>
+        <field>IM_Lead_Stage__c</field>
+        <operation>equals</operation>
+        <value>4-Sales Qual</value>
+    </filters>
+    <filters>
+        <field>LEAD.STATUS</field>
+        <operation>notEqual</operation>
+        <value>Nurture</value>
+    </filters>
+    <label>_My 4-Sales Qualified Leads</label>
+    <language>en_US</language>
+    <sharedTo>
+        <group>NAAllUsers</group>
+    </sharedTo>
+</ListView>

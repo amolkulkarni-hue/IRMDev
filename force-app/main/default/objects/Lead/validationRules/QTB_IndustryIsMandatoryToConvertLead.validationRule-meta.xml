@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>QTB_IndustryIsMandatoryToConvertLead</fullName>
+    <active>false</active>
+    <description>Industry field is mandatory to have any value while converting the lead</description>
+    <errorConditionFormula>AND(
+OR(RecordType.DeveloperName = &apos;Deal_Registration&apos;, RecordType.DeveloperName = &apos;NA_Account_Management_Lead&apos;),
+ISPICKVAL( IM_Industry__c,&quot;&quot;),
+ISPICKVAL(Status,&apos;Converted&apos;),IsConverted
+)</errorConditionFormula>
+    <errorMessage>Must have an Industry on Lead in order to convert</errorMessage>
+</ValidationRule>

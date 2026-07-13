@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IMLA_SC_PER_Orders_Queue_SISGDP</fullName>
+    <columns>CASES.CASE_NUMBER</columns>
+    <columns>NAME</columns>
+    <columns>CASES.SUBJECT</columns>
+    <columns>CASES.STATUS</columns>
+    <columns>CASES.PRIORITY</columns>
+    <columns>CASES.CREATED_DATE_DATE_ONLY</columns>
+    <columns>CORE.USERS.ALIAS</columns>
+    <filterScope>Queue</filterScope>
+    <filters>
+        <field>IME_SC_Case_Email__c</field>
+        <operation>contains</operation>
+        <value>bbva.com,asociacionafp.com.pe,entel.com,bancoripley.com.pe</value>
+    </filters>
+    <label>PER Orders Queue - SISGPD</label>
+    <queue>GSC_PER_Orders</queue>
+    <sharedTo>
+        <role>IMLA_SC_PER_CSM</role>
+        <role>IMLA_SC_PER_NON_ORDER_CSR</role>
+        <role>IMLA_SC_PER_NON_ORDER_CSTL</role>
+        <role>IMLA_SC_PER_ORDER_CSR</role>
+        <role>IMLA_SC_PER_ORDER_CSTL</role>
+    </sharedTo>
+</ListView>

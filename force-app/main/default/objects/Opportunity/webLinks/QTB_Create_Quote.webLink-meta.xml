@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebLink xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>QTB_Create_Quote</fullName>
+    <availability>online</availability>
+    <description>#CPQ-1 Created to auto populate fields on Quote from Opportunity #SFCPQBLG-480 Added Currency to default to Opportunity Currency
+#Added more fields to be defaulted on create quote page</description>
+    <displayType>button</displayType>
+    <encodingKey>UTF-8</encodingKey>
+    <height>600</height>
+    <linkType>url</linkType>
+    <masterLabel>Create Quote</masterLabel>
+    <openType>sidebar</openType>
+    <protected>false</protected>
+    <url>/lightning/o/SBQQ__Quote__c/new?nooverride=true&amp;recordTypeId={!$Label.QTB_QuoteRecordTypeId_Sales}&amp;defaultFieldValues=
+SBQQ__Account__c={!Opportunity.AccountId},SBQQ__Opportunity2__c={!Opportunity.Id},
+OwnerId={!Opportunity.OwnerId},
+CurrencyIsoCode={!Opportunity.CurrencyIsoCode},
+SBQQ__SubscriptionTerm__c={!$Label.QTB_Twelve_Constant},
+QTB_Late_Fees__c={!IF(LOWER(Opportunity.QTB_Billing_Country_Name__c)== $Label.QTB_BillingCountryNameFinland,
+URLENCODE(&apos;N/A&apos;),IF(OR(LOWER(Opportunity.QTB_Billing_Country_Name__c)==$Label.QTB_BillingCountryNameUS,LOWER(Opportunity.QTB_Billing_Country_Name__c) == $Label.QTB_BillingCountryNameCanada), URLENCODE(&apos;1.5%&apos;),URLENCODE(&apos;1%&apos;)))},
+QTB_IM_Country__c={!Opportunity.Billing_CountryId__c},
+QTB_Opportunity_Billing_Country__c={!Opportunity.QTB_Billing_Country_Name__c}</url>
+</WebLink>

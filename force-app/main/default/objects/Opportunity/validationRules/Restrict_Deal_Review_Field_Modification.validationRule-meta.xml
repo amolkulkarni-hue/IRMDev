@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Restrict_Deal_Review_Field_Modification</fullName>
+    <active>true</active>
+    <description>Can not update Deal Review(Accepted) field value once Opportunity is Won
+
+#21199
+#24480 -Making Applicable for all record type</description>
+    <errorConditionFormula>AND( ISCHANGED(   Deal_Review_Accepted__c   ),
+OR(
+ISPICKVAL(StageName, &apos;5 - Signed/PO in&apos;),
+ISPICKVAL(StageName, &apos;6 - Setup&apos;),
+ISPICKVAL(StageName, &apos;7 - Closed&apos;)),
+NOT(
+ISPICKVAL( PRIORVALUE(StageName), &apos;4 - Negotiate&apos;)
+),
+
+$Profile.Name &lt;&gt; &apos;System Administrator&apos;,
+$Profile.Name &lt;&gt; &apos;IM_Custom Sys Admin&apos;,
+
+NOT( $Permission.Edit_Deal_Review_Accepted_in_Stage_5_6_7 ),
+NOT($Permission.VR_Bypass_Permission)
+)</errorConditionFormula>
+    <errorDisplayField>Deal_Review_Accepted__c</errorDisplayField>
+    <errorMessage>Deal Review (Accepted) cannot be updated in Stage 5/6/7. Need help? Contact your Sales Operations Business Partner.</errorMessage>
+</ValidationRule>

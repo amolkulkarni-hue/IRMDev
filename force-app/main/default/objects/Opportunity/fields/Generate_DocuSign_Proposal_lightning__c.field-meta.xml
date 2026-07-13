@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Generate_DocuSign_Proposal_lightning__c</fullName>
+    <description>Generate Docusign Proposal for Lightning users - Case# 09154470
+Updated the formula for the below story : #10277 : Opportunity: Global Org | IMNA opportunity - GSA/Sled/Public Sector validation rules</description>
+    <externalId>false</externalId>
+    <formula>IF(
+AND(
+CONTAINS( TEXT( US_Federal_GSA_Pricing__c ) , &apos;Yes&apos;),
+TEXT( IMGS_Approval_Status__c ) = &apos;Under Review&apos;
+),
+&apos;&apos;,
+if((Manager_Approval_Needed_Hidden__c) = &apos;Yes&apos; &amp;&amp; (ISPICKVAL(Contract_Type__c, &apos;US Storage&apos;) || ISPICKVAL(Contract_Type__c, &apos;CAN Basic 100&apos;) || ISPICKVAL(Contract_Type__c, &apos;CAN Value Package&apos;) || ISPICKVAL(Contract_Type__c, &apos;Canada Storage&apos;) || ISPICKVAL(Contract_Type__c, &apos;Canada Storage French&apos;) || ISPICKVAL(Contract_Type__c, &apos;CAN Value Package French&apos;) || ISPICKVAL(Contract_Type__c, &apos;US RM Basic 100&apos;) || ISPICKVAL(Contract_Type__c, &apos;US RM Basic 100 NY&apos;) ||
+ISPICKVAL(Contract_Type__c, &apos;US Storage NY&apos;) || ISPICKVAL(Contract_Type__c, &apos;US Value Package&apos;)),
+HYPERLINK(&quot;/apex/loop__looplus?eid=&quot;&amp;Id&amp;&quot;&amp;accountId=&quot;&amp;AccountId&amp;&quot;&amp;filter=&quot;&amp;TEXT(Contract_Type__c)&amp;&quot;Yes&amp;dlpb=Generate Docusign Proposal&amp;ddplabel=%22document%22&amp;filtertype=contains&quot;, &quot;Generate DocuSign Proposal&quot;,&quot;_self&quot;),
+HYPERLINK(&quot;/apex/loop__looplus?eid=&quot;&amp;Id&amp;&quot;&amp;accountId=&quot;&amp;AccountId&amp;&quot;&amp;filter=&quot;&amp;TEXT(Contract_Type__c)&amp;&quot;No&amp;dlpb=Generate Docusign Proposal&amp;ddplabel=%22document%22&amp;ddpheight=1&amp;filtertype=contains&quot;, &quot;Generate DocuSign Proposal&quot;,&quot;_self&quot;))
+)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Generate DocuSign Proposal</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

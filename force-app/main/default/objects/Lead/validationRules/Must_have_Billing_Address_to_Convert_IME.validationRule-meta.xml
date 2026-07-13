@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Must_have_Billing_Address_to_Convert_IME</fullName>
+    <active>false</active>
+    <description>#4125</description>
+    <errorConditionFormula>AND( 
+AND(RecordType.DeveloperName =&apos;IME_Lead&apos;),
+OR(
+ISBLANK(Street),
+ISBLANK(City),
+ISBLANK(Country),
+ISBLANK(PostalCode)
+), 
+ISPICKVAL(Status,&apos;Converted&apos;) )</errorConditionFormula>
+    <errorMessage>Must have an Address on Lead in order to convert.</errorMessage>
+</ValidationRule>

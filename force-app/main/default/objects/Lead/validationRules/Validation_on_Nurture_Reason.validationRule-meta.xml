@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Validation_on_Nurture_Reason</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(  
+
+NOT($Permission.Bypass_Lead_Validation), RecordType.DeveloperName = &quot;Standard_Lead&quot;, ISCHANGED(Status), 
+
+ISPICKVAL(Status, &quot;Nurture&quot;),
+
+ ISPICKVAL(Nurture_Reason__c, &quot;&quot;) )</errorConditionFormula>
+    <errorMessage>A Nurture Reason is required.</errorMessage>
+</ValidationRule>

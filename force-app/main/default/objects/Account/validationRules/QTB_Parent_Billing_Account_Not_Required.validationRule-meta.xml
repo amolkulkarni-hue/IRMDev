@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>QTB_Parent_Billing_Account_Not_Required</fullName>
+    <active>true</active>
+    <description>If Create Parent Billing Account checkbox is checked, Parent Billing Account is not required</description>
+    <errorConditionFormula>AND(NOT($Setup.Metadata_Activation_Settings__c.Disable_VR__c &amp;&amp; OR(ISBLANK($Setup.Metadata_Activation_Settings__c.SObject_API_Name__c), CONTAINS($Setup.Metadata_Activation_Settings__c.SObject_API_Name__c, &apos;Account&apos;))), QTB_Create_Parent_Billing_Account__c = true, NOT( ISBLANK( ParentId ) ) ,RecordType.DeveloperName = $Label.QTB_AccountRecordType_Billing  )</errorConditionFormula>
+    <errorMessage>Parent Account should be null when Create Parent Billing Account is checked</errorMessage>
+</ValidationRule>

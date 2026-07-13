@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NAS_Account_Closure_DM_Rule</fullName>
+    <active>true</active>
+    <description>Allow CLAS - Data management Record type to be in NAS Account Closure DM Queue</description>
+    <errorConditionFormula>AND(NOT(OR($RecordType.DeveloperName = &quot;Case_DM&quot;)),
+Owner:Queue.Name = &quot;NAS Account Closure DM Queue&quot;)</errorConditionFormula>
+    <errorMessage>Must change case to CLAS -Data Management record type before adding to the NAS Account Closure DM Queue</errorMessage>
+</ValidationRule>

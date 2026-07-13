@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CAC_SKP_Shred_Closure_Reason</fullName>
+    <active>true</active>
+    <description>Closure Reason must exist</description>
+    <errorConditionFormula>$RecordType.Name = &apos;CAC - SKP Shred&apos;  &amp;&amp; ispickval(Closure_Reason__c ,&apos;&apos;)  &amp;&amp; (not(isblank(  Date_Termination_Request_Sent_Contracts__c ))  ||  not(isblank(Date_Final_Order_Created_in_SKP__c )))</errorConditionFormula>
+    <errorDisplayField>Closure_Reason__c</errorDisplayField>
+    <errorMessage>Closure Reason must exist</errorMessage>
+</ValidationRule>

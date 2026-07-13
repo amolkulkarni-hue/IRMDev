@@ -108,9 +108,9 @@ global class QuoteDocGeneratorEndpoint {
 
         // Return success to Logik
         Map<String, String> logikResponse = new Map<String, String>();
-        logikResponse.put('status', 'success');
-        logikResponse.put('documentsGenerated', String.valueOf(cvListToInsert.size()));
-
+        String fileUrl = URL.getOrgDomainUrl().toExternalForm() + '/lightning/r/LGK__Transaction__c/' + transactionId + '/related/AttachedContentDocuments/view';
+        logikResponse.put('publicLink', fileUrl);
+        System.debug('logikResponse: ' + logikResponse);
         return logikResponse;
     }
 }

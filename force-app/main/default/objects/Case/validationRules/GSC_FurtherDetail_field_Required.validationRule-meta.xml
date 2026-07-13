@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>GSC_FurtherDetail_field_Required</fullName>
+    <active>true</active>
+    <description>When the Sub Cat = Invoice/Line Item Question or Billing Dispute or PO Maintenance (Purchase Order Add, Update, Remove). this field is mandatory to “Resolve” case #14967</description>
+    <errorConditionFormula>OR(
+AND(
+RecordType.DeveloperName = &apos;Global_Service_Case&apos;,
+ISPICKVAL( Status , &apos;Resolved&apos;),
+ISPICKVAL( GSC_Category__c , &apos;Billing &amp; Invoice&apos; ),
+ISPICKVAL( GSC_Further_Detail__c , &apos;&apos; ),
+NOT (ISPICKVAL( GSC_Root_Cause__c,&apos;Child Case Task&apos;)),
+OR(
+ISPICKVAL( GSC_Sub_Category__c , &apos;Billing Dispute&apos; ),
+ISPICKVAL( GSC_Sub_Category__c , &apos;Invoice /Line Item Questions&apos; ),
+ISPICKVAL( GSC_Sub_Category__c , &apos;PO Maintenance (Purchase Order Add, Update, Remove)&apos; ),
+ISPICKVAL( GSC_Sub_Category__c , &apos;Payment / Allocation Enquiry&apos; ))
+),
+
+AND(
+RecordType.DeveloperName = &apos;Global_Service_Case&apos;,
+ISPICKVAL( GSC_Category__c , &apos;Amendment of Customer Details&apos; ),
+ISPICKVAL( GSC_Further_Detail__c , &apos;&apos; ),
+ISPICKVAL( GSC_Sub_Category__c , &apos;Company Name Changes&apos; ),
+ISPICKVAL( GSC_Root_Cause__c , &apos;Customer Change Request&apos; )
+)
+,
+
+AND(
+RecordType.DeveloperName = &apos;Global_Service_Case&apos;,
+ISPICKVAL( GSC_Category__c , &apos;Contract Issues&apos; ),
+ISPICKVAL( GSC_Further_Detail__c , &apos;&apos; ),
+ISPICKVAL( GSC_Sub_Category__c , &apos;Contract Discrepancy&apos; ),
+ISPICKVAL( GSC_Root_Cause__c , &apos;Non adherence to process by IM&apos; )
+),
+AND(
+RecordType.DeveloperName = &apos;Global_Service_Case&apos;,
+ISPICKVAL( Status , &apos;Resolved&apos;),
+ISPICKVAL( GSC_Category__c , &apos;Reporting&apos; ),
+ISPICKVAL( GSC_Further_Detail__c , &apos;&apos; ),
+OR(
+ISPICKVAL( GSC_Sub_Category__c , &apos;Customer Details&apos; ),
+ISPICKVAL( GSC_Sub_Category__c , &apos;Billing &amp; Invoice&apos; ),
+ISPICKVAL( GSC_Sub_Category__c , &apos;Contract Related&apos; ),
+ISPICKVAL( GSC_Sub_Category__c , &apos;Order Related&apos; ))
+)
+
+)</errorConditionFormula>
+    <errorDisplayField>GSC_Further_Detail__c</errorDisplayField>
+    <errorMessage>Further Detail field should be Required.</errorMessage>
+</ValidationRule>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Restrict_ALM_creation</fullName>
+    <active>true</active>
+    <description>#36823 - Restrict Deal Review ALM creation</description>
+    <errorConditionFormula>AND(ISNEW(),Business_Unit__c=&apos;ALM&apos;, Deal_Type_Formula__c=&apos;Renewal&apos;)</errorConditionFormula>
+    <errorMessage>ALM Opportunities cannot be submitted for Deal Review when Deal Type = Renewal. Please connect with a Business Partner for next steps</errorMessage>
+</ValidationRule>

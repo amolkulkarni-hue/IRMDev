@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Regional_Top_50_Accounts_Formula__c</fullName>
+    <description>#34453: To copy data from Country Parent Account to Sales Site and this data is further used in AccountCoverageFieldsSync Apex job to update checkbox field(Strategic_Account__c)</description>
+    <formula>IF(
+/*If Account is Country Parent, stores (Regional) Top 50 Accounts value */
+ISPICKVAL(IM_Hierarchy_Level__c, &apos;Country Parent&apos;), Strategic_Account__c,
+IF(
+/*If Account is Sales site, stores Country Parent Account&apos;s (Regional) Top 50 Accounts by traversing one level up the hierarchy*/
+AND(ISPICKVAL(IM_Hierarchy_Level__c, &apos;Sales (Site)&apos;),NOT(ISBLANK(ParentId))), Parent.Strategic_Account__c,
+IF(
+/*If Account is Parent HQ, stores Country Parent Account&apos;s (Regional) Top 50 Accounts by traversing one level up the hierarchy*/
+ISPICKVAL(IM_Hierarchy_Level__c, &apos;Parent HQ&apos;), Parent.Strategic_Account__c,Strategic_Account__c)))</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>(Regional) Top 50 Accounts(Formula)</label>
+    <trackHistory>false</trackHistory>
+    <type>Checkbox</type>
+</CustomField>

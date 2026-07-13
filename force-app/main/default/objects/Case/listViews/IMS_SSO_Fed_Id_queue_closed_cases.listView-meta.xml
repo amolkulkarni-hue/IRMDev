@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IMS_SSO_Fed_Id_queue_closed_cases</fullName>
+    <columns>CASES.CASE_NUMBER</columns>
+    <columns>CASES.SUBJECT</columns>
+    <columns>CASES.CLOSED_DATE</columns>
+    <columns>CORE.USERS.ALIAS</columns>
+    <columns>UPDATEDBY_USER.ALIAS</columns>
+    <division>*</division>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>CASES.SUBJECT</field>
+        <operation>startsWith</operation>
+        <value>Creation of new User</value>
+    </filters>
+    <filters>
+        <field>CASES.RECORDTYPE</field>
+        <operation>equals</operation>
+        <value>Case.IM_Employee_Support_Case_Closed</value>
+    </filters>
+    <filters>
+        <field>CASES.STATUS</field>
+        <operation>equals</operation>
+        <value>Closed</value>
+    </filters>
+    <label>IMS SSO Fed. Id queue_closed cases</label>
+    <language>en_US</language>
+    <sharedTo>
+        <group>IMS_Admins</group>
+    </sharedTo>
+</ListView>

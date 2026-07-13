@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Prevent_Opp_Creation_Stage_6_or_7</fullName>
+    <active>false</active>
+    <description>Prevents users from creating opportunities in stage 6 - Setup or 7 - Closed</description>
+    <errorConditionFormula>AND(NOT($Setup.Metadata_Activation_Settings__c.Disable_VR__c &amp;&amp; OR(ISBLANK($Setup.Metadata_Activation_Settings__c.SObject_API_Name__c),
+CONTAINS($Setup.Metadata_Activation_Settings__c.SObject_API_Name__c,
+&apos;SBQQ__Quote__c&apos;))),ISNEW() &amp;&amp; (ISPICKVAL( StageName , &apos;6 - Setup&apos;) || ISPICKVAL( StageName , &apos;7 - Closed&apos;)) &amp;&amp; RecordType.DeveloperName &lt;&gt; $Label.QTB_Billing_Opportunity_Record_Type
+)</errorConditionFormula>
+    <errorDisplayField>Group_Purchasing_Organization_GPO__c</errorDisplayField>
+    <errorMessage>You cannot create an opportunity at Stage 6 - Setup or 7 - Closed. Please select another opportunity stage</errorMessage>
+</ValidationRule>

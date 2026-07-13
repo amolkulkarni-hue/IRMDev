@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Primary_BDE_FORMULA__c</fullName>
+    <description>If the Account is tied to an IMGA, it will return that IMGA&apos;s Account Primary BDE, otherwise it will return the Account Primary BDE listed on the Account.
+#26452 : Account Coverage: Relabel Primary BDE, Insight Owner and Entertainment Services Owner and Hide other retired &quot;Owner&quot; fields
+
+Account Owner - Account Executive or Inside Sales Rep. - Set at the Country Parent and cascades down to the Sales Site
+
+ #26660: To copy data from Country Parent Account to Sales Site and this data is further used in AccountCoverageFieldsSync Apex job to update Text field(Primary_BDE__c)
+
+#31465: Data should not be wiped off on Orphan Sales Site Accounts</description>
+    <externalId>false</externalId>
+    <formula>IF(
+/*If Account is Country Parent, stores Primary_BDE__c value */
+ISPICKVAL(IM_Hierarchy_Level__c, &apos;Country Parent&apos;), Primary_BDE__c ,
+IF(
+/*If Account is Sales site, stores Country Parent Account&apos;s Primary_BDE__c by traversing one level up the hierarchy*/
+AND(ISPICKVAL(IM_Hierarchy_Level__c, &apos;Sales (Site)&apos;),NOT(ISBLANK(ParentId))), Parent.Primary_BDE__c,
+IF(
+/*If Account is Parent HQ, stores Country Parent Account&apos;s Primary_BDE__c by traversing one level up the hierarchy*/
+ISPICKVAL(IM_Hierarchy_Level__c, &apos;Parent HQ&apos;), Parent.Primary_BDE__c,Primary_BDE__c)))</formula>
+    <label>AE/ISR (Account Owner)(Formula)</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>OLD_INACTIVE_OPPTIES_LATAM</fullName>
+    <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 AND (6 OR 7)</booleanFilter>
+    <columns>Billing_Country__c</columns>
+    <columns>OPPORTUNITY.NAME</columns>
+    <columns>ACCOUNT.NAME</columns>
+    <columns>OPPORTUNITY.STAGE_NAME</columns>
+    <columns>OPPORTUNITY.CLOSE_DATE</columns>
+    <columns>OPPORTUNITY.AMOUNT</columns>
+    <columns>OPPORTUNITY.CREATED_DATE</columns>
+    <columns>OPPORTUNITY.LAST_ACTIVITY</columns>
+    <columns>OPPORTUNITY.NEXT_STEP</columns>
+    <columns>Sales_Region__c</columns>
+    <columns>Sales_Segment__c</columns>
+    <columns>Sales_Sub_Segment__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>OPPORTUNITY.STAGE_NAME</field>
+        <operation>equals</operation>
+        <value>1 - Qualification,2 - Solution Developed,3 - Solution Agreed,4 - Negotiate</value>
+    </filters>
+    <filters>
+        <field>OPPORTUNITY.RECORDTYPE</field>
+        <operation>equals</operation>
+        <value>Opportunity.IMLA_Standard_Opportunity</value>
+    </filters>
+    <filters>
+        <field>OPPORTUNITY.CLOSE_DATE</field>
+        <operation>equals</operation>
+        <value>THIS_FISCAL_QUARTER</value>
+    </filters>
+    <filters>
+        <field>OPPORTUNITY.FORECAST_CATEGORY</field>
+        <operation>equals</operation>
+        <value>Commit</value>
+    </filters>
+    <filters>
+        <field>OPPORTUNITY.TYPE</field>
+        <operation>equals</operation>
+        <value>New Deal,Up-Sell/Lift</value>
+    </filters>
+    <filters>
+        <field>OPPORTUNITY.LAST_ACTIVITY</field>
+        <operation>equals</operation>
+    </filters>
+    <filters>
+        <field>OPPORTUNITY.LAST_ACTIVITY</field>
+        <operation>lessThan</operation>
+        <value>LAST_90_DAYS</value>
+    </filters>
+    <label>COMMITTED OPPTIES w/o ACTIVITIES - LATAM</label>
+    <sharedTo>
+        <roleAndSubordinates>LATAM_VP</roleAndSubordinates>
+    </sharedTo>
+</ListView>

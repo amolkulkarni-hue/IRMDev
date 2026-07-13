@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CAC_StatusCustomerUnresponsive_ReqFields</fullName>
+    <active>true</active>
+    <description>(Contact Name or Is IM Employee checked), Country, Account Name, Customer ID, Category and Sub Category are required when Case status is Customer Unresponsive. For ref, check #27296 on Gitlab</description>
+    <errorConditionFormula>AND(
+$RecordType.DeveloperName = &apos;CAC_Executive_Escalations&apos;,
+OR(
+(AND(ISBLANK( ContactId ),Is_IM_Employee__c = False)),
+ISBLANK( AccountId ),
+ISPICKVAL(IME_SC_Country__c ,&quot;&quot;),
+ISBLANK(Customer_ID__c),
+ISPICKVAL(   GSC_Category__c  , &quot;&quot; ),
+ISPICKVAL(  GSC_Sub_Category__c   , &quot;&quot; )
+),
+ISPICKVAL( Status, &quot;Customer Unresponsive&quot; )
+)</errorConditionFormula>
+    <errorMessage>(Contact Name or Is IM Employee checked), Country, Account Name, Customer ID, Category and Sub Category are required to close the Case as Customer Unresponsive.</errorMessage>
+</ValidationRule>

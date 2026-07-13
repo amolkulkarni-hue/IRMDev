@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Retention_RM_Create_Case_Required_Field</fullName>
+    <active>true</active>
+    <description>Fields required to create a Retention RM case</description>
+    <errorConditionFormula>(RecordType.DeveloperName = &apos;Retention_RM&apos; || RecordType.DeveloperName = &apos;Retention_SH&apos;) &amp;&amp; ISPICKVAL(Status, &apos;Intro&apos;) &amp;&amp; (ISBLANK(Account_Retention_Owner__c) || ISBLANK(Date_Loyalty_Specialist_Assigned__c))</errorConditionFormula>
+    <errorMessage>Customer Loyalty Specialist and Date Loyalty Specialist Assigned are required to move the case to Intro status.</errorMessage>
+</ValidationRule>

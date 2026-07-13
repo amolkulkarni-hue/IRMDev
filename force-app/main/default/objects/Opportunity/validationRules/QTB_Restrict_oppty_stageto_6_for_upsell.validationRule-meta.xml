@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>QTB_Restrict_oppty_stageto_6_for_upsell</fullName>
+    <active>true</active>
+    <description>Gitlab#467 : Upsell or Rate Change value can be used only when it is amendment opportunity</description>
+    <errorConditionFormula>AND(AND(
+OR(
+$Setup.Metadata_Activation_Settings__c.SObject_API_Name__c = &apos;Opportunity&apos;,
+$Setup.Metadata_Activation_Settings__c.SObject_API_Name__c = &apos;&apos;
+),
+NOT($Setup.Metadata_Activation_Settings__c.Disable_VR__c)
+),
+OR(ISNEW(),AND(ISCHANGED( SBQQ__Contracted__c ), SBQQ__Contracted__c)),
+OR(ISPICKVAL( Type , &apos;Up-Sell&apos;), ISPICKVAL(Type, &apos;Rate Change&apos;) ),
+ISBLANK( SBQQ__AmendedContract__c ),
+NOT($Permission.VR_Bypass_Permission))</errorConditionFormula>
+    <errorDisplayField>SBQQ__AmendedContract__c</errorDisplayField>
+    <errorMessage>Upsell or Rate Change should only be used for amendment opportunities. Amended Contract is not populated.</errorMessage>
+</ValidationRule>

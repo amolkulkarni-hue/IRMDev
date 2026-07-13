@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>67.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <description>update the date and Hours</description>
+        <name>Assign_the_Values_for_Date_and_Hours</name>
+        <label>Assign the Values for Date and Hours</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Accepted_Date_Time__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$System.OriginDateTime</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Time_to_Accept_Hours__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>hoursToAccept</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <description>When the Status of Lead is Updated from &quot;New&quot; to &quot;Accepted&quot;, Accepted Date Time field is blank and record Type name is Standard lead</description>
+    <environments>Default</environments>
+    <formulas>
+        <description>hours to accept</description>
+        <name>hoursToAccept</name>
+        <dataType>Number</dataType>
+        <expression>({!$Flow.CurrentDateTime} - {!$Record.CreatedDate}) * 24</expression>
+        <scale>2</scale>
+    </formulas>
+    <interviewLabel>Update Lead Status From New To Accepted {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Update Lead Status From New To Accepted</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Assign_the_Values_for_Date_and_Hours</targetReference>
+        </connector>
+        <filterFormula>AND(
+  {!$Record.RecordType.Name} = &quot;Standard Lead&quot;,
+  ISPICKVAL(PRIORVALUE({!$Record.Status}), &quot;New&quot;),
+ISPICKVAL({!$Record.Status}, &quot;Accepted&quot;),
+ISBLANK({!$Record.Accepted_Date_Time__c})
+ 
+)</filterFormula>
+        <object>Lead</object>
+        <recordTriggerType>Update</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

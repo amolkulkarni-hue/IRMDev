@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Qual_HealthcareGPO_Required</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+  NOT(Bypass_Validation__c),
+  ISCHANGED(StageName),
+  ISPICKVAL(PRIORVALUE(StageName), &apos;Qualification&apos;),
+  ISPICKVAL(StageName, &apos;Solutioning&apos;),
+  OR(
+    Billing_Country__r.Name = &apos;United States&apos;,
+    Billing_Country__r.Name = &apos;Canada&apos;
+  ),
+  TEXT(Account.IM_Industry__c) = &apos;Health Care and Social Assistance&apos;,
+  ISPICKVAL(Group_Purchasing_Organization_GPO__c, &apos;&apos;)
+)</errorConditionFormula>
+    <errorDisplayField>Group_Purchasing_Organization_GPO__c</errorDisplayField>
+    <errorMessage>Healthcare Partner/GPO must be specified for US and Canada healthcare opportunities before advancing from Qualification.</errorMessage>
+</ValidationRule>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IME_SC_ManualCutoffValidation</fullName>
+    <active>true</active>
+    <description>Cut off Time must have a value when Manual is selected from cutoff Time Picklist.</description>
+    <errorConditionFormula>AND(NOT(ISCHANGED( IME_SC_Owner_Manager__c )), 
+NOT(ISCHANGED( IME_SC_Manager_of_Manager_OwnerId__c )), $RecordType.Name = &quot;IME SC Case&quot;, 
+ISPICKVAL (IME_SC_Cut_Off_Time__c, &apos;Manual&apos; ) , 
+ISNULL(End_Time_Cutoff_SLA__c)
+)</errorConditionFormula>
+    <errorDisplayField>End_Time_Cutoff_SLA__c</errorDisplayField>
+    <errorMessage>Please enter value for Cut off Time</errorMessage>
+</ValidationRule>

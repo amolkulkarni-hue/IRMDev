@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Lost_Comments_Required_when_Opty_is_Lost</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(ISPICKVAL(StageName,&quot;Lost&quot;), ISBLANK( IM_Lost_Comments__c ),
+OR(
+$RecordType.DeveloperName = &apos;Standard_Opportunity&apos;,
+$RecordType.DeveloperName = &apos;IMAP_Standard_Opportunity&apos;,
+$RecordType.DeveloperName = &apos;IME_Standard_Opportunity&apos;,
+$RecordType.DeveloperName = &apos;IMLA_Standard_Opportunity&apos;),
+NOT($Permission.VR_Bypass_Permission))</errorConditionFormula>
+    <errorDisplayField>IM_Lost_Comments__c</errorDisplayField>
+    <errorMessage>Please fill in a Lost Comment</errorMessage>
+</ValidationRule>

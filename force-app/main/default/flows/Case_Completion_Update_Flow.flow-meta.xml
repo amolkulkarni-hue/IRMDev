@@ -2,12 +2,6 @@
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>67.0</apiVersion>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
-    <description>Record-Triggered After Save flow on Case (Update). Fires when Status or All_Exit_Docs_Final__c changes. Queries Case_Status_Progress__c config for the current Status and Record Type, then sets Case_Completion_Pct__c. If config weight is 90+ and All_Exit_Docs_Final__c is true the percentage is set to 100. If config weight is less than 90, or docs gate has not passed, the config weight is used directly. Ends silently if no config is found for the current Status.</description>
-    <label>Case Completion Update Flow</label>
-    <processType>AutoLaunchedFlow</processType>
-    <status>Active</status>
-
-    <!-- decisions ───────────────────────────────────────────────────────── -->
     <decisions>
         <name>checkConfigFound</name>
         <label>Config Record Found?</label>
@@ -62,8 +56,9 @@
             <label>All Docs Final + High Weight — Set 100%</label>
         </rules>
     </decisions>
-
-    <!-- recordLookups ───────────────────────────────────────────────────── -->
+    <description>Record-Triggered After Save flow on Case (Update). Fires when Status or All_Exit_Docs_Final__c changes. Queries Case_Status_Progress__c config for the current Status and Record Type, then sets Case_Completion_Pct__c. If config weight is 90+ and All_Exit_Docs_Final__c is true the percentage is set to 100. If config weight is less than 90, or docs gate has not passed, the config weight is used directly. Ends silently if no config is found for the current Status.</description>
+    <label>Case Completion Update Flow</label>
+    <processType>AutoLaunchedFlow</processType>
     <recordLookups>
         <name>getRecordTypeDevName</name>
         <label>Get Case RecordType DeveloperName</label>
@@ -88,7 +83,6 @@
                 <stringValue>Case</stringValue>
             </value>
         </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>RecordType</object>
         <outputAssignments>
             <assignToReference>varCaseRTDevName</assignToReference>
@@ -119,15 +113,12 @@
                 <elementReference>$Record.Status</elementReference>
             </value>
         </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>Case_Status_Progress__c</object>
         <outputAssignments>
             <assignToReference>varConfigPct</assignToReference>
             <field>Progress_Pct__c</field>
         </outputAssignments>
     </recordLookups>
-
-    <!-- recordUpdates ───────────────────────────────────────────────────── -->
     <recordUpdates>
         <name>updateCaseCompletionFull</name>
         <label>Set Case Completion Pct to 100</label>
@@ -170,8 +161,6 @@
         </inputAssignments>
         <object>Case</object>
     </recordUpdates>
-
-    <!-- start ───────────────────────────────────────────────────────────── -->
     <start>
         <locationX>176</locationX>
         <locationY>72</locationY>
@@ -197,8 +186,7 @@
         <recordTriggerType>Update</recordTriggerType>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-
-    <!-- variables ───────────────────────────────────────────────────────── -->
+    <status>Active</status>
     <variables>
         <name>varCaseRTDevName</name>
         <dataType>String</dataType>

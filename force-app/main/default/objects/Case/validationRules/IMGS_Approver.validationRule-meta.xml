@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IMGS_Approver</fullName>
+    <active>true</active>
+    <description>The IMGS Approver can only enter themselves in the IMGS Approver field.</description>
+    <errorConditionFormula>AND (
+OR (
+ISCHANGED(IMGS_Approver__c),
+ISCHANGED (IMGS_Status__c)),
+IMGS_Approver__c &lt;&gt; $User.Id)</errorConditionFormula>
+    <errorDisplayField>IMGS_Approver__c</errorDisplayField>
+    <errorMessage>Please list yourself as the IMGS Approver in order to approve/reject this case.</errorMessage>
+</ValidationRule>

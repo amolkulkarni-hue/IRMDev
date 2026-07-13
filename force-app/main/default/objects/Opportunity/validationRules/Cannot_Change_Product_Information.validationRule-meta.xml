@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Cannot_Change_Product_Information</fullName>
+    <active>true</active>
+    <description>#21305- Changed the Formula to make this VR applicable for all profiles and to restrict users from adding Products on Won Opportunities
+#20656- Added bypass logic to edit Products in late stage</description>
+    <errorConditionFormula>AND( ISCHANGED(  Amount  ), 
+OR(
+ISPICKVAL(StageName, &apos;5 - Signed/PO in&apos;),
+ISPICKVAL(StageName, &apos;6 - Setup&apos;),
+ISPICKVAL(StageName, &apos;7 - Closed&apos;)),
+NOT(
+ISPICKVAL( PRIORVALUE(StageName), &apos;4 - Negotiate&apos;)
+),
+
+NOT( $Permission.Edit_Product_Amount_in_Late_Stage_Opp ),
+NOT($Permission.VR_Bypass_Permission)
+)</errorConditionFormula>
+    <errorMessage>You cannot update the Product details once an Opportunity has been Won. Need help? Contact your Sales Operations Business Partner.</errorMessage>
+</ValidationRule>

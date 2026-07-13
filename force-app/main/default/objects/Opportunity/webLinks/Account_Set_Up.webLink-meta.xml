@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebLink xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Account_Set_Up</fullName>
+    <availability>online</availability>
+    <description>Creates a case to setup an account.</description>
+    <displayType>button</displayType>
+    <linkType>javascript</linkType>
+    <masterLabel>Account Set Up</masterLabel>
+    <openType>onClickJavaScript</openType>
+    <protected>false</protected>
+    <url>{!REQUIRESCRIPT(&quot;/soap/ajax/15.0/connection.js&quot;)} 
+{!REQUIRESCRIPT(&quot;/soap/ajax/15.0/apex.js&quot;)} 
+
+var Id_str = &apos;{!Case.Id}&apos;;
+
+if(&apos;{!Opportunity.StageName}&apos; == &apos;Lost&apos; || 
+&apos;{!Opportunity.StageName}&apos; == &apos;Dead&apos;|| 
+&apos;{!Opportunity.StageName}&apos; == &apos;Postponed&apos;|| 
+&apos;{!Opportunity.StageName}&apos; == &apos;0 - Pre-Qualification&apos;|| 
+&apos;{!Opportunity.StageName}&apos; == &apos;1 - Qualification&apos;|| 
+&apos;{!Opportunity.StageName}&apos; == &apos;2 - Solution Developed&apos;|| 
+&apos;{!Opportunity.StageName}&apos; == &apos;3 - Solution Agreed&apos;|| 
+&apos;{!Opportunity.StageName}&apos; == &apos;4 - Negotiate&apos;|| 
+&apos;{!Opportunity.StageName}&apos; == &apos;7 - Closed&apos;) 
+{ 
+alert(&quot;You cannot create a case for account setup when the opportunity is not in Stage 5 or Stage 6 &quot;); 
+} 
+else{ 
+//look for the existance of this type of Case for the current Opportunity 
+var qry = &quot;Select Id From Case &quot;+ 
+&quot; where Subject = &apos;Account Setup&apos; &quot;+ 
+&quot; and accountId = &apos;{!Opportunity.AccountId}&apos; &quot;+ 
+&quot; and url__c like &apos;%{!Opportunity.Id}%&apos; Limit 1&quot;; 
+
+
+var resultSet 
+=sforce.connection.query(qry); 
+
+var records = resultSet.getArray(&quot;records&quot;); 
+
+if (records[0] != null) 
+{ 
+alert(&apos;An Account Setup case has already been requested for this opportunity&apos;); 
+
+} 
+else{
+var opId= &quot;{!Opportunity.Id}&quot;;
+var cas = sforce.apex.execute(&quot;IME_CreateCase&quot;,&quot;createAccountSetupCase&quot;,   {op_id:opId});
+
+var str_NewCase = &quot;select CaseNumber from Case where Id = &apos;&quot;+cas+&quot;&apos;&quot;; 
+
+var Casenum;
+Casenum = sforce.connection.query(str_NewCase);
+
+var records = Casenum.getArray(&quot;records&quot;);
+if(records.length &gt; 0)
+{
+var Id = records[0].CaseNumber;
+
+alert(&apos;New case# &apos; + Id + &apos; {!$Label.IME_SC_NEW_CASE}&apos;);
+}
+} 
+}//ENDElse</url>
+</WebLink>

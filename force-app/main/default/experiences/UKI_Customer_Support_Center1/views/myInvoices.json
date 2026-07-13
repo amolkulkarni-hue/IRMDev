@@ -1,0 +1,207 @@
+{
+  "appPageId" : "f0c590c7-a247-479b-bb7f-e164da29928d",
+  "componentName" : "siteforce:dynamicLayout",
+  "dataProviders" : [ ],
+  "id" : "2951aa53-30a3-4fb9-b4f4-7d973df6c1e8",
+  "label" : "My invoices",
+  "regions" : [ {
+    "components" : [ {
+      "componentAttributes" : {
+        "background" : "background: rgba(0,0,0,0)",
+        "backgroundOverlay" : "rgba(0,0,0,0.5)",
+        "contentAreaWidth" : 100,
+        "sectionConfig" : {
+          "UUID" : "624540a7-ffa9-4f88-9cff-ca8e757c94a3",
+          "columns" : [ {
+            "UUID" : "6b3eabe5-0f42-4bca-93a9-fa39c65bb5cc",
+            "columnKey" : "1",
+            "columnName" : "Column 1",
+            "columnWidth" : "12",
+            "seedComponents" : [ ]
+          } ]
+        },
+        "sectionHeight" : 300
+      },
+      "componentName" : "forceCommunity:section",
+      "id" : "624540a7-ffa9-4f88-9cff-ca8e757c94a3",
+      "regions" : [ {
+        "components" : [ {
+          "componentAttributes" : {
+            "richTextValue" : "<div class=\"pageHeadings\">\n    <div class=\"pageHeadingsTitle\">My Invoices</div>\n    <div class=\"pageHeadingsSubTitle\">View details of your most recent invoices below</div>\n</div>"
+          },
+          "componentName" : "forceCommunity:htmlBlock",
+          "id" : "5d3f30ff-12e3-4cf1-9598-cbb41663359c",
+          "renderPriority" : "NEUTRAL",
+          "renditionMap" : {
+            "de" : "d5ad78c1-ab84-4d73-9bf8-daf6fe8ad9f3",
+            "es" : "407362a3-5f53-4faf-aeed-9f068bf180ef",
+            "fr" : "fea9d33d-711c-4607-bdd3-6edd9f130e65"
+          },
+          "renditions" : [ {
+            "id" : "407362a3-5f53-4faf-aeed-9f068bf180ef",
+            "renditionValue" : {
+              "componentAttributes" : {
+                "richTextValue" : "<div class=\"pageHeadings\">\n    <div class=\"pageHeadingsTitle\">Mis facturas</div>\n    <div class=\"pageHeadingsSubTitle\">Vea los detalles de sus facturas más recientes a continuación</div>\n</div>"
+              }
+            },
+            "type" : "renditionComponent"
+          }, {
+            "id" : "d5ad78c1-ab84-4d73-9bf8-daf6fe8ad9f3",
+            "renditionValue" : {
+              "componentAttributes" : {
+                "richTextValue" : "<div class=\"pageHeadings\">\n    <div class=\"pageHeadingsTitle\">Meine Rechnungen</div>\n    <div class=\"pageHeadingsSubTitle\">Unten finden Sie die Details Ihrer letzten Rechnungen</div>\n</div>"
+              }
+            },
+            "type" : "renditionComponent"
+          }, {
+            "id" : "fea9d33d-711c-4607-bdd3-6edd9f130e65",
+            "renditionValue" : {
+              "componentAttributes" : {
+                "richTextValue" : "<div class=\"pageHeadings\">\n    <div class=\"pageHeadingsTitle\">Mes factures</div>\n    <div class=\"pageHeadingsSubTitle\">Consultez les détails de vos factures les plus récentes ci-dessous</div>\n</div>"
+              }
+            },
+            "type" : "renditionComponent"
+          } ],
+          "type" : "component"
+        }, {
+          "componentAttributes" : {
+            "INVOICESORTDATEFIELD" : "invoice_date",
+            "ORDERSORTDATEFIELD" : "deliveryDateTime",
+            "emptyMessage" : "You don't have any recent invoices.",
+            "filterByLabel" : "Filter by service date range",
+            "jsonConfiguration" : "[ { \"label\": \"Customer ID\", \"fieldName\": \"customer_number\", \"sortable\": \"true\" }, { \"label\": \"Invoice Number\", \"fieldName\": \"invoice_number\", \"sortable\": \"true\" }, { \"label\": \"Invoice Date\", \"fieldName\": \"invoice_date\", \"type\": \"date\", \"sortable\": \"true\", \"typeAttributes\": { \"day\": \"numeric\", \"month\": \"short\", \"year\": \"numeric\" } }, { \"label\": \"Invoice total\", \"fieldName\": \"invoiced_loc_sum\", \"sortable\": \"true\", \"type\": \"currency\", \"cellAttributes\": { \"alignment\": \"left\" } }, { \"label\": \"Invoice due date\", \"fieldName\": \"invoice_due_date\", \"type\": \"date\", \"sortable\": \"true\", \"typeAttributes\": { \"day\": \"numeric\", \"month\": \"short\", \"year\": \"numeric\" } } ]",
+            "leftButtonLabelAndLink" : "New Order Request,/irmesa/s/contactsupport",
+            "noSearchResultsFoundMessageLabel" : "That didn't return any results. Try again.",
+            "recordsToRetrieve" : "Invoices",
+            "rightButtonLabelAndLink" : "View more, /irmesa/s/my-invoices",
+            "searchLabel" : "Search",
+            "searchPlaceholder" : "My recent invoices",
+            "showFullTable" : true
+          },
+          "componentName" : "c:nf_invoicesWindow",
+          "id" : "2a31cd1f-c11e-4e8c-8f9d-93cf6902cb74",
+          "renderPriority" : "NEUTRAL",
+          "renditionMap" : {
+            "de" : "12d83d80-89db-4a24-8e6f-708efff55ab0",
+            "es" : "83506a7a-15db-4f52-9254-bdfd063525a4",
+            "fr" : "4d1bf6da-2a8d-4e3e-b7ac-b5cef1b86bfc"
+          },
+          "renditions" : [ {
+            "id" : "4d1bf6da-2a8d-4e3e-b7ac-b5cef1b86bfc",
+            "renditionValue" : {
+              "componentAttributes" : {
+                "emptyMessage" : "Vous n'avez aucune facture récente.",
+                "filterByLabel" : "Filtrer par plage de dates de service",
+                "jsonConfiguration" : "[ { \"label\": \"ID client\", \"fieldName\": \"customer_number\", \"sortable\": \"true\" }, { \"label\": \"Numéro de facture\", \"fieldName\": \"invoice_number\", \"sortable\": \"true\" }, { \"label\": \"Date de la facture\", \"fieldName\": \"invoice_date\", \"type\": \"date\", \"sortable\": \"true\", \"typeAttributes\": { \"day\": \"numeric\", \"month\": \"short\", \"year\": \"numeric\" } }, { \"label\": \"Total de la facture\", \"fieldName\": \"invoiced_loc_sum\", \"sortable\": \"true\", \"type\": \"currency\", \"cellAttributes\": { \"alignment\": \"left\" } }, { \"label\": \"Date d'échéance de la facture\", \"fieldName\": \"invoice_due_date\", \"type\": \"date\", \"sortable\": \"true\", \"typeAttributes\": { \"day\": \"numeric\", \"month\": \"short\", \"year\": \"numeric\" } } ]",
+                "leftButtonLabelAndLink" : "Nouvelle demande de commande,/irmesa/s/contactsupport",
+                "noSearchResultsFoundMessageLabel" : "Cela n'a donné aucun résultat. Réessayez.",
+                "rightButtonLabelAndLink" : "Voir plus, /irmesa/s/my-invoices",
+                "searchLabel" : "Recherche",
+                "searchPlaceholder" : "Mes factures récentes"
+              }
+            },
+            "type" : "renditionComponent"
+          }, {
+            "id" : "12d83d80-89db-4a24-8e6f-708efff55ab0",
+            "renditionValue" : {
+              "componentAttributes" : {
+                "emptyMessage" : "Sie haben keine aktuellen Rechnungen.",
+                "filterByLabel" : "Filtern nach Service-Zeitraum",
+                "jsonConfiguration" : "[ { \"label\": \"Kundennummer\", \"fieldName\": \"customer_number\", \"sortable\": \"true\" }, { \"label\": \"Rechnungsnummer\", \"fieldName\": \"invoice_number\", \"sortable\": \"true\" }, { \"label\": \"Rechnungsdatum\", \"fieldName\": \"invoice_date\", \"type\": \"date\", \"sortable\": \"true\", \"typeAttributes\": { \"day\": \"numeric\", \"month\": \"short\", \"year\": \"numeric\" } }, { \"label\": \"Rechnungssumme\", \"fieldName\": \"invoiced_loc_sum\", \"sortable\": \"true\", \"type\": \"currency\", \"cellAttributes\": { \"alignment\": \"left\" } }, { \"label\": \"Fälligkeitsdatum der Rechnung\", \"fieldName\": \"invoice_due_date\", \"type\": \"date\", \"sortable\": \"true\", \"typeAttributes\": { \"day\": \"numeric\", \"month\": \"short\", \"year\": \"numeric\" } } ]",
+                "leftButtonLabelAndLink" : "Neue Bestellanfrage,/irmesa/s/contactsupport",
+                "noSearchResultsFoundMessageLabel" : "Es wurden keine Ergebnisse zurückgegeben. Versuchen Sie es erneut.",
+                "rightButtonLabelAndLink" : "Mehr anzeigen, /irmesa/s/my-invoices",
+                "searchLabel" : "Suchen",
+                "searchPlaceholder" : "Meine letzten Rechnungen"
+              }
+            },
+            "type" : "renditionComponent"
+          }, {
+            "id" : "83506a7a-15db-4f52-9254-bdfd063525a4",
+            "renditionValue" : {
+              "componentAttributes" : {
+                "emptyMessage" : "No tienes ninguna factura reciente.",
+                "filterByLabel" : "Filtrar por rango de fechas de servicio",
+                "jsonConfiguration" : "[ { \"label\": \"Identificación del cliente\", \"fieldName\": \"customer_number\", \"sortable\": \"true\" }, { \"label\": \"Número de factura\", \"fieldName\": \"invoice_number\", \"sortable\": \"true\" }, { \"label\": \"Fecha de factura\", \"fieldName\": \"invoice_date\", \"type\": \"date\", \"sortable\": \"true\", \"typeAttributes\": { \"day\": \"numeric\", \"month\": \"short\", \"year\": \"numeric\" } }, { \"label\": \"Total de la factura\", \"fieldName\": \"invoiced_loc_sum\", \"sortable\": \"true\", \"type\": \"currency\", \"cellAttributes\": { \"alignment\": \"left\" } }, { \"label\": \"Fecha de vencimiento de la factura\", \"fieldName\": \"invoice_due_date\", \"type\": \"date\", \"sortable\": \"true\", \"typeAttributes\": { \"day\": \"numeric\", \"month\": \"short\", \"year\": \"numeric\" } } ]",
+                "leftButtonLabelAndLink" : "Solicitud de nuevo pedido,/irmesa/s/contactsupport",
+                "noSearchResultsFoundMessageLabel" : "No se han obtenido resultados. Inténtalo de nuevo.",
+                "rightButtonLabelAndLink" : "Ver más,, /irmesa/s/my-invoices",
+                "searchLabel" : "Buscar",
+                "searchPlaceholder" : "Mis facturas recientes"
+              }
+            },
+            "type" : "renditionComponent"
+          } ],
+          "type" : "component"
+        }, {
+          "componentAttributes" : {
+            "richTextValue" : "<div class=\"cust-banner\" style=\"margin-left:auto;margin-right:auto;\">\n    <div class=\"pageHeadings\">\n        <div class=\"pageHeadingsTitle\">Do you need more information about your invoice?</div>\n        <div class=\"pageHeadingsSubTitle\">Visit our Billing & payments articles.</div>\n        <div class=\"cust-button-grp\">\n        <div class=\"cust-button\"><a href=\"https://customersupport.ironmountain.com/irmesa/s/topic/0TOHr000000QqcWOAS/billing-payments?language=en_GB\">Billing & Payment</a></div>\n         <div class=\"cust-button\"><a href=\"https://pay.ironmountain.co.uk/b/6oE29169A9IN9UY000\n\">Invoice payment gateway</a></div>\n        </div>\n    </div>\n</div>"
+          },
+          "componentName" : "forceCommunity:htmlBlock",
+          "id" : "ca761a39-1dbb-442f-afab-e48454d5338c",
+          "renderPriority" : "NEUTRAL",
+          "renditionMap" : {
+            "de" : "6ead7937-be0d-430b-a937-c9f34dae55a9",
+            "es" : "74b96c07-a4a9-4e78-813d-a868b4e77b50",
+            "fr" : "4d7d0389-3d1a-4d0c-bf34-9e2f1d92fb6e"
+          },
+          "renditions" : [ {
+            "id" : "6ead7937-be0d-430b-a937-c9f34dae55a9",
+            "renditionValue" : {
+              "componentAttributes" : {
+                "richTextValue" : "<div class=\"cust-banner\" style=\"margin-left:auto;margin-right:auto;\">\n    <div class=\"pageHeadings\">\n        <div class=\"pageHeadingsTitle\">Benötigen Sie weitere Informationen zu Ihrer Rechnung?</div>\n        <div class=\"pageHeadingsSubTitle\">Besuchen Sie unsere Artikel zu Abrechnung und Zahlungen.</div>\n        <div class=\"cust-button-grp\">\n               <div class=\"cust-button\"><a href=\" https://cloud5.highradius.com/RRDMSProject/signin.do\"  target =”_blank”>Melden Sie sich bei High Radius an</a></div>\n        </div>\n    </div>\n</div>"
+              }
+            },
+            "type" : "renditionComponent"
+          }, {
+            "id" : "74b96c07-a4a9-4e78-813d-a868b4e77b50",
+            "renditionValue" : {
+              "componentAttributes" : {
+                "richTextValue" : "<div class=\"cust-banner\" style=\"margin-left:auto;margin-right:auto;\">\n    <div class=\"pageHeadings\">\n        <div class=\"pageHeadingsTitle\">¿Necesita más información sobre su factura?</div>\n        <div class=\"pageHeadingsSubTitle\">Visita nuestros artículos de Facturación y pagos.</div>\n        <div class=\"cust-button-grp\">\n        <div class=\"cust-button\"><a href=\"https://cloud5.radiusone.com/radiusoneweb/registrationThroughInvitation?ref=b29fb38e-1e2e-450c-9c3f-05b7e0fee24d\">High Radius</a></div>\n         <div class=\"cust-button\"><a href=\"https://ironmountain--uat25.sandbox.my.site.com/irmesa/s/article/Facturas-y-facturas-abiertas-uat?language=es\">Billing & Payments</a></div>\n        </div>\n    </div>\n</div>"
+              }
+            },
+            "type" : "renditionComponent"
+          }, {
+            "id" : "4d7d0389-3d1a-4d0c-bf34-9e2f1d92fb6e",
+            "renditionValue" : {
+              "componentAttributes" : {
+                "richTextValue" : "<div class=\"cust-banner\" style=\"margin-left:auto;margin-right:auto;\">\n    <div class=\"pageHeadings\">\n        <div class=\"pageHeadingsTitle\">Avez-vous besoin de plus d'informations sur votre facture ?</div>\n        <div class=\"pageHeadingsSubTitle\">Consultez nos articles sur la facturation et les paiements.</div>\n        <div class=\"cust-button-grp\">\n        <div class=\"cust-button\"><a href=\"https://cloud5.highradius.com/RRDMSProject/signin.do\">High Radius</a></div>\n         <div class=\"cust-button\"><a href=\" https://customersupport.ironmountain.com/irmesa/s/article/Comment-puis-je-acceder-a-mes-factures?language=fr\">Billing & Payments</a></div>\n        </div>\n    </div>\n</div>"
+              }
+            },
+            "type" : "renditionComponent"
+          } ],
+          "type" : "component"
+        } ],
+        "id" : "6b3eabe5-0f42-4bca-93a9-fa39c65bb5cc",
+        "regionLabel" : "Column 1",
+        "regionName" : "1",
+        "renditionMap" : { },
+        "type" : "region"
+      } ],
+      "renderPriority" : "NEUTRAL",
+      "renditionMap" : { },
+      "type" : "component"
+    } ],
+    "id" : "7f9e20a3-e131-4706-8520-0a623ce558eb",
+    "regionName" : "content",
+    "type" : "region"
+  }, {
+    "components" : [ {
+      "componentAttributes" : {
+        "customHeadTags" : "",
+        "description" : "",
+        "title" : "My invoices"
+      },
+      "componentName" : "forceCommunity:seoAssistant",
+      "id" : "2729d522-a9a4-4eac-8675-7092230cad26",
+      "renditionMap" : { },
+      "type" : "component"
+    } ],
+    "id" : "dff039ac-df1c-4308-85d1-a3812a737cd1",
+    "regionName" : "sfdcHiddenRegion",
+    "type" : "region"
+  } ],
+  "themeLayoutType" : "NKFwniTevseiLgcT9DPLmiMXBtO2S0",
+  "type" : "view",
+  "viewType" : "custom-my-invoices"
+}

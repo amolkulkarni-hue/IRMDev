@@ -1,0 +1,92 @@
+{
+  "appPageId" : "27cc1f0c-cd74-4710-b31c-83a37546035d",
+  "componentName" : "siteforce:sldsTwoCol84Layout",
+  "dataProviders" : [ ],
+  "id" : "57b930d0-3da1-4749-bc9e-3bd3cf2c2d0e",
+  "label" : "Article Detail",
+  "regions" : [ {
+    "id" : "bee65552-a1c7-473f-8853-3b7128321c8f",
+    "regionName" : "header",
+    "type" : "region"
+  }, {
+    "components" : [ {
+      "componentAttributes" : {
+        "uniqueNameOrId" : "{!urlName}"
+      },
+      "componentName" : "forceCommunity:breadcrumbs",
+      "id" : "bb034d1c-7a01-43b8-8ba3-aa08f8b4566b",
+      "renderPriority" : "NEUTRAL",
+      "renditionMap" : { },
+      "type" : "component"
+    }, {
+      "componentAttributes" : {
+        "enableVoting" : true,
+        "recordId" : "{!recordId}",
+        "showTitleInArticleHeader" : true,
+        "showTopicPills" : false,
+        "urlName" : "{!urlName}"
+      },
+      "componentName" : "selfService:singleArticleView",
+      "id" : "9c2b86b3-7ac1-4b3b-b300-58711b8d9654",
+      "renderPriority" : "NEUTRAL",
+      "renditionMap" : { },
+      "type" : "component"
+    } ],
+    "id" : "98ce30c9-ef26-4c47-a2a9-3b96fe412047",
+    "regionName" : "content",
+    "type" : "region"
+  }, {
+    "components" : [ {
+      "componentAttributes" : {
+        "richTextValue" : "<p><b style=\"font-size: 12px; color: rgb(8, 7, 7); font-family: arial;\">Can't find the answer to your question? Ask Customer Care</b></p>"
+      },
+      "componentName" : "forceCommunity:richTextInline",
+      "id" : "3b879729-63bf-4b47-a707-108912c0d5e9",
+      "renderPriority" : "NEUTRAL",
+      "renditionMap" : { },
+      "type" : "component"
+    }, {
+      "componentAttributes" : {
+        "buttonAlignment" : "center",
+        "buttonBgColor" : "",
+        "buttonBgHoverColor" : "",
+        "buttonBorderColor" : "",
+        "buttonMaxWidth" : 100,
+        "buttonRadius" : 0,
+        "buttonTextColor" : "rgb(252, 252, 252)",
+        "buttonTextHoverColor" : "",
+        "label" : "Contact Support"
+      },
+      "componentName" : "forceCommunity:contactSupportButton",
+      "id" : "009b6907-646a-4b62-98b2-392230d1865d",
+      "renderPriority" : "NEUTRAL",
+      "renditionMap" : { },
+      "type" : "component"
+    } ],
+    "id" : "1051b355-ea91-4999-97dc-363092307574",
+    "regionName" : "sidebar",
+    "type" : "region"
+  }, {
+    "id" : "b5d47a1c-46a0-477d-8bea-2299fa9fb42d",
+    "regionName" : "footer",
+    "type" : "region"
+  }, {
+    "components" : [ {
+      "componentAttributes" : {
+        "customHeadTags" : "",
+        "description" : "{!Record.Summary}",
+        "title" : "{!Record._Title}"
+      },
+      "componentName" : "forceCommunity:seoAssistant",
+      "id" : "80ec31f0-e9ed-4bd8-a89b-a86dfd1c3194",
+      "renditionMap" : { },
+      "type" : "component"
+    } ],
+    "id" : "1ac83cf0-a456-425d-b73d-a3ec635e909b",
+    "regionName" : "sfdcHiddenRegion",
+    "type" : "region"
+  } ],
+  "themeLayoutType" : "Inner",
+  "type" : "view",
+  "viewType" : "article"
+}

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>FCST_Line_Validation_to_Move_Stage_5</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+ISCHANGED(StageName),
+ISPICKVAL(StageName, &apos;5 - Signed/PO in&apos;),
+
+OR(
+ISPICKVAL(PRIORVALUE(StageName),&apos;1 - Qualification&apos;),
+ISPICKVAL(PRIORVALUE(StageName),&apos;2 - Solution Developed&apos;),
+ISPICKVAL(PRIORVALUE(StageName),&apos;3 - Solution Agreed&apos;)
+),
+
+OR(
+ISPICKVAL(Type,&apos;Up-Sell&apos;),
+ISPICKVAL(Type,&apos;New Deal&apos;)
+),
+
+Amount / CURRENCYRATE(TEXT(CurrencyIsoCode)) &gt;= 25000, NOT($Permission.VR_Bypass_Permission)
+
+)</errorConditionFormula>
+    <errorMessage>Can&apos;t reach to Stage-5 directly, Please move the opportunity to Stage-4.</errorMessage>
+</ValidationRule>

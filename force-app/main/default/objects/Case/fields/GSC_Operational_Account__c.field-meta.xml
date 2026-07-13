@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>GSC_Operational_Account__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>This field is to capture related Operational account of the case as part of US #27260</description>
+    <label>Operational Account</label>
+    <lookupFilter>
+        <active>true</active>
+        <errorMessage>Only Operational Account can be inserted</errorMessage>
+        <filterItems>
+            <field>Account.QTB_Account_Record_Type__c</field>
+            <operation>equals</operation>
+            <value>Operational Account</value>
+        </filterItems>
+        <isOptional>false</isOptional>
+    </lookupFilter>
+    <referenceTo>Account</referenceTo>
+    <relationshipLabel>Cases (Operational Account)</relationshipLabel>
+    <relationshipName>OperationalAccountCases</relationshipName>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

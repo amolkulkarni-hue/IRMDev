@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NAS_Customer_ID_to_Account_Match</fullName>
+    <active>true</active>
+    <description>Ensures NAS Case Customer IDs are for the correct Account. The rule updated for CAC Executive Escalations record type. For ref, check user story #27296 on Gitlab. Removed global service case record type Gitlab#29271</description>
+    <errorConditionFormula>AND(
+ Account.Name  &lt;&gt; &quot;&quot;,
+ Customer_ID__r.IM_Account__r.Name  &lt;&gt; &quot;&quot;,
+ Account.Name  &lt;&gt;  Customer_ID__r.IM_Account__r.Name,
+ OR(
+  AND($RecordType.DeveloperName = &quot;NAS_General_Support_Case&quot;,
+   NOT(ISPICKVAL(Type,&quot;Void Case&quot;))),
+  $RecordType.DeveloperName = &quot;CAC_Executive_Escalations&quot;,
+  $RecordType.DeveloperName = &quot;NAS_Recurring_Support_Case&quot;
+  )
+)</errorConditionFormula>
+    <errorMessage>Please ensure the Customer ID is associated to the Account</errorMessage>
+</ValidationRule>

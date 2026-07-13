@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>TCV_and_Contract_Term_Required</fullName>
+    <active>false</active>
+    <description>TCV  &amp; Contract Term (Months) fields required when moving to Stage 4</description>
+    <errorConditionFormula>AND 
+(NOT($Setup.Metadata_Activation_Settings__c.Disable_VR__c &amp;&amp; OR(ISBLANK($Setup.Metadata_Activation_Settings__c.SObject_API_Name__c),
+CONTAINS($Setup.Metadata_Activation_Settings__c.SObject_API_Name__c, &apos;Opportunity&apos;))),NOT($Permission.Bypass_Opportunity_Validations),
+OR
+(
+ISBLANK(Total_Contract_Value_TCV__c),
+ISBLANK(Contract_Term_months__c)
+),
+$Profile.Name &lt;&gt; &apos;IM_Sales_IMTN&apos;,
+
+ISPICKVAL(StageName, &apos;4 - Negotiate&apos;)
+)</errorConditionFormula>
+    <errorMessage>Total Contract Value &amp; Contract Term (months) fields are required before moving to Stage 4</errorMessage>
+</ValidationRule>

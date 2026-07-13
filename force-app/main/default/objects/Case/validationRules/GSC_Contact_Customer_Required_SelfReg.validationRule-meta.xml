@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>GSC_Contact_Customer_Required_SelfReg</fullName>
+    <active>true</active>
+    <description>Contact Name and Customer ID are required for approving the Self Registration. #29931</description>
+    <errorConditionFormula>AND(
+        $RecordType.DeveloperName = &apos;Global_Service_Case&apos;,
+        ISPICKVAL(Self_Registration_status__c, &apos;Approved&apos;),  
+        OR(
+            ISBLANK(ContactId), 
+            ISBLANK(Customer_ID__c)
+        )
+    )</errorConditionFormula>
+    <errorMessage>Contact Name and Customer ID are required for approving the Self Registration.</errorMessage>
+</ValidationRule>

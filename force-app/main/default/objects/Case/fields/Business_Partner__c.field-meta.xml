@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Business_Partner__c</fullName>
+    <description>Used by the NA Account Coverage Request report type</description>
+    <externalId>false</externalId>
+    <formula>IF(ISPICKVAL(IM_Employee_Contact__r.Sales_Sub_Segment__c,&quot;DMS&quot;),&quot;Kristen Bernier&quot;, 
+IF(ISPICKVAL(IM_Employee_Contact__r.Sales_Sub_Segment__c,&quot;Secure Shredding&quot;),&quot;Unknown&quot;, 
+IF(ISPICKVAL(IM_Employee_Contact__r.Sales_Sub_Segment__c,&quot;Government&quot;),&quot;Kristen Bernier&quot;, 
+IF(ISPICKVAL(IM_Employee_Contact__r.Sales_Sub_Segment__c,&quot;Legal&quot;),&quot;George Jouvin&quot;, 
+IF(ISPICKVAL(IM_Employee_Contact__r.Sales_Sub_Segment__c,&quot;Professional Services&quot;),&quot;Kristen Bernier&quot;, 
+IF(ISPICKVAL(IM_Employee_Contact__r.Sales_Sub_Segment__c,&quot;Healthcare&quot;),&quot;Shanna Pedrazas&quot;, 
+IF(ISPICKVAL(IM_Employee_Contact__r.Sales_Sub_Segment__c,&quot;Life Sciences&quot;),&quot;Shanna Pedrazas&quot;, 
+IF(ISPICKVAL(IM_Employee_Contact__r.Sales_Sub_Segment__c,&quot;Energy&quot;),&quot;Scott Thompson&quot;, 
+IF(ISPICKVAL(IM_Employee_Contact__r.Sales_Sub_Segment__c,&quot;Financial Services&quot;),&quot;Scott Thompson&quot;, 
+IF(ISPICKVAL(IM_Employee_Contact__r.Sales_Sub_Segment__c,&quot;Global&quot;),&quot;Andy Haak&quot;, 
+IF(ISPICKVAL(IM_Employee_Contact__r.Sales_Sub_Segment__c,&quot;Data Centers&quot;),&quot;Chris Pignone&quot;, 
+IF(ISPICKVAL(IM_Employee_Contact__r.Sales_Sub_Segment__c,&quot;Entertainment Services&quot;),&quot;Matthew Tondreau&quot;, 
+IF(ISPICKVAL(IM_Employee_Contact__r.Sales_Sub_Segment__c,&quot;Fulfillment Services&quot;),&quot;Chris Pignone&quot;, 
+IF(ISPICKVAL(IM_Employee_Contact__r.Sales_Sub_Segment__c,&quot;Data Management&quot;),&quot;Isabel Machado&quot;, 
+IF(ISPICKVAL(IM_Employee_Contact__r.Sales_Sub_Segment__c,&quot;Territory - Big South&quot;),&quot;Julie Blea&quot;, 
+IF(ISPICKVAL(IM_Employee_Contact__r.Sales_Sub_Segment__c,&quot;Territory - Chesapeake&quot;),&quot;Jonathan Martinez&quot;, 
+IF(ISPICKVAL(IM_Employee_Contact__r.Sales_Sub_Segment__c,&quot;Territory - Great Lakes&quot;),&quot;Jonathan Martinez&quot;, 
+IF(ISPICKVAL(IM_Employee_Contact__r.Sales_Sub_Segment__c,&quot;Territory - Mid South&quot;),&quot;Julie Blea&quot;, 
+IF(ISPICKVAL(IM_Employee_Contact__r.Sales_Sub_Segment__c,&quot;National Accounts - East&quot;),&quot;George Jouvin&quot;, 
+IF(ISPICKVAL(IM_Employee_Contact__r.Sales_Sub_Segment__c,&quot;Territory - Northeast&quot;),&quot;Jonathan Martinez&quot;, 
+IF(ISPICKVAL(IM_Employee_Contact__r.Sales_Sub_Segment__c,&quot;Territory - Southeast&quot;),&quot;Jonathan Martinez&quot;, 
+IF(ISPICKVAL(IM_Employee_Contact__r.Sales_Sub_Segment__c,&quot;Territory - NY Metro&quot;),&quot;Jonathan Martinez&quot;, 
+IF(ISPICKVAL(IM_Employee_Contact__r.Sales_Sub_Segment__c,&quot;Territory - Pennsylvania&quot;),&quot;Jonathan Martinez&quot;, 
+IF(ISPICKVAL(IM_Employee_Contact__r.Sales_Sub_Segment__c,&quot;Territory - Sun Coast&quot;),&quot;Julie Blea&quot;, 
+IF(ISPICKVAL(IM_Employee_Contact__r.Sales_Sub_Segment__c,&quot;Territory - Canada Central&quot;),&quot;Matt Caprio&quot;, 
+IF(ISPICKVAL(IM_Employee_Contact__r.Sales_Sub_Segment__c,&quot;Territory - Canada East&quot;),&quot;Sally O&apos;Grady&quot;, 
+IF(ISPICKVAL(IM_Employee_Contact__r.Sales_Sub_Segment__c,&quot;National Accounts - Canada&quot;),&quot;Sally O&apos;Grady&quot;, 
+IF(ISPICKVAL(IM_Employee_Contact__r.Sales_Sub_Segment__c,&quot;Territory - Canada West&quot;),&quot;Sally O&apos;Grady&quot;, 
+IF(ISPICKVAL(IM_Employee_Contact__r.Sales_Sub_Segment__c,&quot;Territory - Greater Northwest&quot;),&quot;Julie Blea&quot;, 
+IF(ISPICKVAL(IM_Employee_Contact__r.Sales_Sub_Segment__c,&quot;Territory - Great Plains&quot;),&quot;Julie Blea&quot;, 
+IF(ISPICKVAL(IM_Employee_Contact__r.Sales_Sub_Segment__c,&quot;Territory - Midwest&quot;),&quot;Julie Blea&quot;, 
+IF(ISPICKVAL(IM_Employee_Contact__r.Sales_Sub_Segment__c,&quot;Territory - Florida&quot;),&quot;Jonathan Martinez&quot;, 
+IF(ISPICKVAL(IM_Employee_Contact__r.Sales_Sub_Segment__c,&quot;Territory - Mountain West&quot;),&quot;Julie Blea&quot;, 
+IF(ISPICKVAL(IM_Employee_Contact__r.Sales_Sub_Segment__c,&quot;National Accounts - West&quot;),&quot;George Jouvin&quot;, 
+IF(ISPICKVAL(IM_Employee_Contact__r.Sales_Sub_Segment__c,&quot;Territory - Northern CA&quot;),&quot;Julie Blea&quot;, 
+IF(ISPICKVAL(IM_Employee_Contact__r.Sales_Sub_Segment__c,&quot;Territory - Red River&quot;),&quot;Julie Blea&quot;, 
+IF(ISPICKVAL(IM_Employee_Contact__r.Sales_Sub_Segment__c,&quot;Territory - Southern CA&quot;),&quot;Julie Blea&quot;, 
+IF(ISPICKVAL(IM_Employee_Contact__r.Sales_Sub_Segment__c,&quot;Territory - South TX&quot;),&quot;Julie Blea&quot;, 
+IF(ISPICKVAL(IM_Employee_Contact__r.Sales_Sub_Segment__c,&quot;SMB&quot;),&quot;Jennifer Mann&quot;, 
+&quot;Unknown&quot;)))))))))))))))))))))))))))))))))))))))</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Business Partner</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

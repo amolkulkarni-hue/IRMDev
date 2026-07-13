@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Is_Digital_Primary_Product_Line__c</fullName>
+    <description>Drives visibility of Digital BU-specific qualification fields. Do not expose on page layout. Internal use only.</description>
+    <formula>OR(ISPICKVAL(Primary_Product_Line__c, &apos;Digital Solutions&apos;), ISPICKVAL(Primary_Product_Line__c, &apos;Information Governance&apos;), ISPICKVAL(Primary_Product_Line__c, &apos;Insight&apos;),
+
+ISPICKVAL(Secondary_Product_Line__c, &apos;Digital Solutions&apos;), 
+
+ISPICKVAL(Secondary_Product_Line__c, &apos;Information Governance&apos;), ISPICKVAL(Secondary_Product_Line__c, &apos;Insight&apos;))</formula>
+    <inlineHelpText>Returns true when Primary Product Line or Primary Product Line 2 = Digital Solutions, Information Governance, or Insight. Used for Dynamic Forms visibility only.</inlineHelpText>
+    <label>Is Digital Primary Product Line</label>
+    <trackHistory>false</trackHistory>
+    <type>Checkbox</type>
+</CustomField>

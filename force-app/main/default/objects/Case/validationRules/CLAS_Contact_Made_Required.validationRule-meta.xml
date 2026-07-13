@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CLAS_Contact_Made_Required</fullName>
+    <active>true</active>
+    <description>Field Contact Made (Y/N) is required if the date first customer contact made is populated for all CLAS record types</description>
+    <errorConditionFormula>AND(
+OR(
+	$RecordType.Name = &apos;CLAS - Shred&apos;,
+	$RecordType.Name = &apos;CLAS – Data Management&apos;,
+	$RecordType.Name = &apos;CLAS - RM&apos;),
+				NOT(ISBLANK( Date_First_Customer_Contact_Attempt__c)),
+								ISPICKVAL( Contact_Made_Y_N__c , &apos;&apos;))</errorConditionFormula>
+    <errorMessage>Contact Made (Y/N) field must be populated when Date First Customer Contact Attempt is populated.</errorMessage>
+</ValidationRule>

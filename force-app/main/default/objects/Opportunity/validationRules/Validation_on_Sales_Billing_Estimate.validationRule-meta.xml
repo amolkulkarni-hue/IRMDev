@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Validation_on_Sales_Billing_Estimate</fullName>
+    <active>true</active>
+    <description>Prevent an Opportunity from advancing past the Negotiation stage when the Sales Billing Estimate field is blank.</description>
+    <errorConditionFormula>AND(
+    NOT(Bypass_Validation__c),
+    ISCHANGED(StageName),
+    ISPICKVAL(PRIORVALUE(StageName), &quot;Negotiation&quot;),
+    ISPICKVAL(StageName, &quot;Booking Verification&quot;),
+    BLANKVALUE(Total_Sales_Billing_Estimate__c, 0) &lt;= 0
+)</errorConditionFormula>
+    <errorMessage>Sales Billing Estimate must be completed before advancing beyond the Negotiation stage.</errorMessage>
+</ValidationRule>

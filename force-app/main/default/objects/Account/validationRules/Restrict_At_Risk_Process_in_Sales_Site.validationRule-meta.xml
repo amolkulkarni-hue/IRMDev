@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Restrict_At_Risk_Process_in_Sales_Site</fullName>
+    <active>true</active>
+    <description>#28487-Account: Create &apos;At-Risk&apos; fields to capture necessary details of the new At-Risk process
+#30729: New At-Risk fields can only be edited when Hierarchy Level = Sales (Site)</description>
+    <errorConditionFormula>AND(
+NOT($Setup.Metadata_Activation_Settings__c.Disable_VR__c &amp;&amp; OR(ISBLANK($Setup.Metadata_Activation_Settings__c.SObject_API_Name__c),
+CONTAINS($Setup.Metadata_Activation_Settings__c.SObject_API_Name__c, &apos;Account&apos;))),
+
+NOT(ISPICKVAL(IM_Hierarchy_Level__c,&apos;Sales (Site)&apos;)),
+
+OR(
+AND(
+ISNEW(),
+OR(
+NOT(ISBLANK(TEXT(At_Risk_Status_New__c))),
+NOT(ISBLANK(TEXT(At_Risk_Reason_Code__c))),
+NOT(ISBLANK((At_Risk_Comments__c)))
+)
+),
+OR(
+ISCHANGED(At_Risk_Status_New__c),
+ISCHANGED(At_Risk_Reason_Code__c),
+ISCHANGED(At_Risk_Comments__c))
+)
+)</errorConditionFormula>
+    <errorMessage>Only Sale (Site) Accounts can only be marked &apos;At-Risk&apos;, please update at the Child level</errorMessage>
+</ValidationRule>

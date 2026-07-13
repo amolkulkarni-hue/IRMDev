@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>PW_Order_Completed</fullName>
+    <active>true</active>
+    <description>PW Order Completed cannot be in the Future. For reference, check user story #26355 on Gitlab.</description>
+    <errorConditionFormula>(RecordType_Name__c = &quot;CLAS - RM&quot;) &amp;&amp;
+NOT(ISCHANGED(Open_Tasks__c)) &amp;&amp;
+ISCHANGED(PW_Order_Completed__c) &amp;&amp;
+NOT(ISBLANK(PW_Order_Completed__c)) &amp;&amp;
+DATEVALUE(PW_Order_Completed__c) &gt; TODAY() &amp;&amp;
+(
+  ISBLANK(PRIORVALUE(PW_Order_Completed__c)) ||
+  DATEVALUE(PW_Order_Completed__c) != DATEVALUE(PRIORVALUE(PW_Order_Completed__c))
+)</errorConditionFormula>
+    <errorDisplayField>PW_Order_Completed__c</errorDisplayField>
+    <errorMessage>PW Order Completed cannot be in the Future.</errorMessage>
+</ValidationRule>

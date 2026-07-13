@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Data_Quality_Score__c</fullName>
+    <externalId>false</externalId>
+    <formula>IF( OR(Contains(Upper(Name),&apos;TEST&apos;),
+       Contains(Name,&apos;$&apos;),
+       Contains(Name,&apos;!&apos;),
+       Contains(Name,&apos;?&apos;),
+       Contains(Name,&apos;%&apos;),
+       Contains(Upper(Name),&apos;SYSTEM USE ONLY&apos;)),20,0)+
+IF( OR( LEN(BillingCity) = 0, LEN(BillingStreet) = 0, LEN(BillingCountry) = 0), 20,0)+
+IF( LEN(Country_Parent_Formula__c) = 0, 20,0)+
+IF( LEN(Website) = 0, 20,0)+
+IF( ISPICKVAL(IM_Industry__c,&quot;&quot;), 20,0)</formula>
+    <label>Data Quality Score</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>0</scale>
+    <trackHistory>false</trackHistory>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

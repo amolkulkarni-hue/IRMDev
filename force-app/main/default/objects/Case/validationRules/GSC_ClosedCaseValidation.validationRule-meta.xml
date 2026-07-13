@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>GSC_ClosedCaseValidation</fullName>
+    <active>true</active>
+    <description>Gitlab #26422- This validation rules can be used for Closed Cases</description>
+    <errorConditionFormula>AND(
+     RecordType.DeveloperName  = &apos;Global_Service_Case&apos;,
+     ISCHANGED(ContactId),
+     OR(
+    ISPICKVAL(Status, &apos;Resolved&apos;),
+    ISPICKVAL(Status, &apos;Customer Unresponsive&apos;)),
+    NOT(ISNEW()),
+    NOT(ISCHANGED(Status))
+)</errorConditionFormula>
+    <errorMessage>You can not change the contact once the case is Resolved or Customer Unresponsive.</errorMessage>
+</ValidationRule>

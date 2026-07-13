@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Date_First_Customer_Contact_Attempt</fullName>
+    <active>true</active>
+    <errorConditionFormula>((RecordType_Name__c = &quot;CLAS - RM&quot;) || (RecordType_Name__c = &quot;CLAS – Data Management&quot;)|| (RecordType_Name__c = &quot;Retention RM&quot;)|| (RecordType_Name__c = &quot;CLAS - Shred&quot;) || (RecordType_Name__c = &quot;Retention SH&quot;) ) &amp;&amp;
+NOT(ISCHANGED(Open_Tasks__c)) &amp;&amp;
+ISCHANGED(Date_First_Customer_Contact_Attempt__c ) &amp;&amp;
+NOT(ISBLANK(Date_First_Customer_Contact_Attempt__c )) &amp;&amp;
+DATEVALUE(Date_First_Customer_Contact_Attempt__c ) != TODAY() &amp;&amp;
+	(
+	  ISBLANK(PRIORVALUE(Date_First_Customer_Contact_Attempt__c )) ||
+	  DATEVALUE(Date_First_Customer_Contact_Attempt__c ) != DATEVALUE(PRIORVALUE(Date_First_Customer_Contact_Attempt__c ))
+	)</errorConditionFormula>
+    <errorDisplayField>Date_First_Customer_Contact_Attempt__c</errorDisplayField>
+    <errorMessage>Date First Customer Contact Attempt must be today&apos;s date. It cannot be in the Past or the Future.</errorMessage>
+</ValidationRule>

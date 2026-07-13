@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Data_Quality_Description__c</fullName>
+    <externalId>false</externalId>
+    <formula>IF( Data_Quality_Score__c =0,&quot;All Account Details Captured&quot;, &quot;Missing: &quot;
+
+&amp;IF( OR(Contains(Upper(Name),&apos;TEST&apos;),
+       Contains(Name,&apos;$&apos;),
+       Contains(Name,&apos;!&apos;),
+       Contains(Name,&apos;?&apos;),
+       Contains(Name,&apos;%&apos;),
+       Contains(Upper(Name),&apos;SYSTEM USE ONLY&apos;)),&quot;Contains invalid character, &quot;,&quot;&quot;)&amp;&quot;&quot;
+
+&amp;IF( LEN(BillingCity) = 0, &quot;Billing City, &quot;,&quot;&quot;)&amp;&quot;&quot;
+&amp;IF( LEN(BillingStreet) = 0, &quot;Billing Street, &quot;,&quot;&quot;)&amp;&quot;&quot;
+&amp;IF( LEN(BillingCountry) = 0, &quot;Billing Country, &quot;,&quot;&quot;)&amp;&quot;&quot;
+&amp;IF( LEN(Country_Parent_Formula__c) = 0, &quot;Country Parent, &quot;,&quot;&quot;)&amp;&quot;&quot;
+&amp;IF( LEN(Website) = 0, &quot;Website, &quot;,&quot;&quot;)&amp;&quot;&quot;
+&amp;IF( ISPICKVAL( IM_Industry__c,&quot;&quot;),&quot;Industry, &quot;,&quot;&quot;))</formula>
+    <label>Data Quality Description</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

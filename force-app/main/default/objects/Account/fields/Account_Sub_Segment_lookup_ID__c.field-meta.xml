@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Account_Sub_Segment_lookup_ID__c</fullName>
+    <externalId>false</externalId>
+    <formula>/* 
+This formula will traverse the Account hierarchy from (including) current record all the way to the top (up to 6 levels) and 
+will display the value of the &quot;Account Sub Segment (lookup)&quot; field of the parent Account where IM_HIerarchy_Level__c field is 
+&quot;IM Group (IMGA)&quot;. If there is no such level parent in the hierarchy - will leave field blank 
+*/ 
+
+
+/*If this record is IMGA-Level, get value from itself*/ 
+/*IF(TEXT( IM_Hierarchy_Level__c )==&apos;IM Group (IMGA)&apos;, Account_segment_lookup__c , */
+
+/*If parent is IMGA-Level, get name from parent*/ 
+/*IF(TEXT( Parent.IM_Hierarchy_Level__c )==&apos;IM Group (IMGA)&apos;, Parent.Account_segment_lookup__c ,*/ 
+
+
+/*Else If second parent is IMGA-Level, get value from second parent*/ 
+/*IF(TEXT( Parent.Parent.IM_Hierarchy_Level__c )==&apos;IM Group (IMGA)&apos;, Parent.Parent.Account_segment_lookup__c , */
+
+
+/*Else If third parent is IMGA-Level, get value from third parent*/ 
+/*IF(TEXT( Parent.Parent.Parent.IM_Hierarchy_Level__c )==&apos;IM Group (IMGA)&apos;, 
+Parent.Parent.Parent.Account_segment_lookup__c , */
+
+/*Else If fourth parent is IMGA-Level, get value from fourth parent*/ 
+/*IF(TEXT( Parent.Parent.Parent.Parent.IM_Hierarchy_Level__c )==&apos;IM Group (IMGA)&apos;, 
+Parent.Parent.Parent.Parent.Account_segment_lookup__c , */
+
+/*Else If fifth parent is IMGA-Level, get value from fifth parent*/ 
+/*IF(TEXT( Parent.Parent.Parent.Parent.Parent.IM_Hierarchy_Level__c )==&apos;IM Group (IMGA)&apos;, 
+Parent.Parent.Parent.Parent.Parent.Account_segment_lookup__c , */
+
+
+/*Else (when reached up six levels, if no IMGA-level parent found - then put blank.*/ 
+/*&apos;&apos; ) 
+) 
+) 
+) 
+) 
+)*/ null</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Account Sub Segment (lookup) ID TOBE DEL</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

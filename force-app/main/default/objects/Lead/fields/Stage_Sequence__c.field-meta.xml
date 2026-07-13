@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Stage_Sequence__c</fullName>
+    <externalId>false</externalId>
+    <formula>CASE(TEXT(Status), &apos;New&apos;,1, &apos;Accepted&apos;,2, &apos;Contacted&apos;,3, &apos;Converted&apos;,4, 0)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Stage Sequence</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>2</scale>
+    <trackHistory>false</trackHistory>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

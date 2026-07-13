@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Open_Cases_48hours_issues</fullName>
+    <columns>CASES.CASE_NUMBER</columns>
+    <columns>OWNER_NAME</columns>
+    <columns>NAME</columns>
+    <columns>Issue__c</columns>
+    <columns>CASES.SUBJECT</columns>
+    <columns>CASES.STATUS</columns>
+    <columns>CASES.DIVISION</columns>
+    <columns>Days_Open_del__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>CASES.STATUS</field>
+        <operation>greaterThan</operation>
+        <value>New,In Progress,Research,Waiting for Response,On Hold,Reopened,Escalated</value>
+    </filters>
+    <filters>
+        <field>Issue__c</field>
+        <operation>notEqual</operation>
+        <value>Account Set Up,Request Contract</value>
+    </filters>
+    <filters>
+        <field>Days_Open_del__c</field>
+        <operation>greaterThan</operation>
+        <value>2</value>
+    </filters>
+    <label>Open Cases &gt; 48hours (issues only)</label>
+    <language>en_US</language>
+    <sharedTo>
+        <group>IMEAdmins</group>
+    </sharedTo>
+</ListView>

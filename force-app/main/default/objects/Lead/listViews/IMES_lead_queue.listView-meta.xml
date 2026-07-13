@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IMES_lead_queue</fullName>
+    <columns>FULL_NAME</columns>
+    <columns>LEAD.TITLE</columns>
+    <columns>IM_Functional_Area__c</columns>
+    <columns>IM_Number_of_Employees__c</columns>
+    <columns>LEAD.EMAIL</columns>
+    <columns>LEAD.COMPANY</columns>
+    <columns>LEAD.COUNTRY</columns>
+    <columns>IM_Lead_Score__c</columns>
+    <columns>Lead_Score_Image__c</columns>
+    <columns>LEAD.STATUS</columns>
+    <columns>IM_Lead_Stage__c</columns>
+    <columns>LEAD.CREATED_DATE</columns>
+    <columns>LEAD.UNREAD</columns>
+    <filterScope>Queue</filterScope>
+    <filters>
+        <field>IM_Lead_Stage__c</field>
+        <operation>equals</operation>
+        <value>2-Marketing Qual</value>
+    </filters>
+    <filters>
+        <field>LEAD.COUNTRY</field>
+        <operation>notEqual</operation>
+        <value>Zimbabwe</value>
+    </filters>
+    <label>IMES lead queue</label>
+    <queue>Entertainment_Services</queue>
+</ListView>

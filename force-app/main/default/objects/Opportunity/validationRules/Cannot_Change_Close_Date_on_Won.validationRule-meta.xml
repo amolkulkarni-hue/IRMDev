@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Cannot_Change_Close_Date_on_Won</fullName>
+    <active>true</active>
+    <description>CloseDate formerly First Bill Date, Booked Date is now First Bill Date.
+#21305- Made the Validation rule to apply for all Profiles and to lock the field on Won oppty
+#20656- Added bypass logic to edit Close Date in late stage</description>
+    <errorConditionFormula>AND(
+
+ISCHANGED(  CloseDate  ),
+
+OR(
+ISPICKVAL(StageName, &apos;5 - Signed/PO in&apos;),
+ISPICKVAL(StageName, &apos;6 - Setup&apos;),
+ISPICKVAL(StageName, &apos;7 - Closed&apos;)),
+
+NOT(ISPICKVAL( PRIORVALUE(StageName), &apos;4 - Negotiate&apos;)),
+
+$Profile.Name &lt;&gt; &apos;System Administrator&apos;,
+$Profile.Name &lt;&gt; &apos;IM_Custom Sys Admin&apos;,
+
+NOT( $Permission.Edit_Close_Date_in_Late_Stage_Opp ), 
+
+NOT($Permission.VR_Bypass_Permission)
+
+)</errorConditionFormula>
+    <errorDisplayField>CloseDate</errorDisplayField>
+    <errorMessage>You cannot update the Close Date once an Opportunity has been Won. Need help? Contact your Sales Operations Business Partner.</errorMessage>
+</ValidationRule>

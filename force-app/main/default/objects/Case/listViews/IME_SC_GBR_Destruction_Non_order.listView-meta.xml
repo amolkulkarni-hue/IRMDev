@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IME_SC_GBR_Destruction_Non_order</fullName>
+    <booleanFilter>1 AND 2 AND 3 AND 4</booleanFilter>
+    <columns>CASES.CASE_NUMBER</columns>
+    <columns>ACCOUNT.NAME</columns>
+    <columns>End_Time_Cutoff_SLA__c</columns>
+    <columns>NAME</columns>
+    <columns>CASES.STATUS</columns>
+    <columns>CASES.PRIORITY</columns>
+    <columns>CASES.CREATED_DATE</columns>
+    <columns>IME_SC_Is_Sensitive__c</columns>
+    <columns>IME_SC_Customer_AccountId__c</columns>
+    <columns>UPDATEDBY_USER.ALIAS</columns>
+    <filterScope>Queue</filterScope>
+    <filters>
+        <field>CASES.RECORDTYPE</field>
+        <operation>equals</operation>
+        <value>Case.IME_SC_Case</value>
+    </filters>
+    <filters>
+        <field>IME_SC_Country__c</field>
+        <operation>equals</operation>
+        <value>United Kingdom,Ireland,Norway</value>
+    </filters>
+    <filters>
+        <field>CASES.STATUS</field>
+        <operation>equals</operation>
+        <value>Validated</value>
+    </filters>
+    <filters>
+        <field>IME_SC_Sub_Category__c</field>
+        <operation>equals</operation>
+        <value>Destruction Issue</value>
+    </filters>
+    <label>IME SC GBR Destruction - Non order</label>
+    <language>en_US</language>
+    <queue>IME_SC_GBR_Non_Order_Queue</queue>
+    <sharedTo>
+        <group>IME_SC_GBR_Service_team_backup</group>
+        <roleAndSubordinates>IME_SC_GBR_CSM</roleAndSubordinates>
+        <roleAndSubordinates>IME_SC_GBR_CSR</roleAndSubordinates>
+        <roleAndSubordinates>IME_SC_GBR_CSTL</roleAndSubordinates>
+        <roleAndSubordinates>IME_SC_GBR_NORDICS_CED</roleAndSubordinates>
+    </sharedTo>
+</ListView>

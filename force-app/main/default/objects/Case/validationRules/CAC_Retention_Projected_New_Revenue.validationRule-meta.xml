@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CAC_Retention_Projected_New_Revenue</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+OR(
+
+$RecordType.Name = &apos;CLAS – Data Management&apos;,
+RecordType.DeveloperName = &apos;Retention_SH&apos;,RecordType.DeveloperName = &apos;Retention_RM&apos;), 
+ISPICKVAL(Proposal_Offer_Accepted__c,&apos;Yes&apos;),ISBLANK(Projected_New_Revenue__c)
+
+)</errorConditionFormula>
+    <errorDisplayField>Projected_New_Revenue__c</errorDisplayField>
+    <errorMessage>Projected New Revenue is required when a proposal is accepted.</errorMessage>
+</ValidationRule>

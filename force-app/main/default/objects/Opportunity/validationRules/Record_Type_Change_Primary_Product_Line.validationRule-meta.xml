@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Record_Type_Change_Primary_Product_Line</fullName>
+    <active>true</active>
+    <description>While changing the record type we need to make &apos;Primary Product Line&apos; as respective to the Record Type(CPQ Sales Opportunity).</description>
+    <errorConditionFormula>AND(
+AND(
+OR(
+$Setup.Metadata_Activation_Settings__c.SObject_API_Name__c = &apos;Opportunity&apos;,
+$Setup.Metadata_Activation_Settings__c.SObject_API_Name__c = &apos;&apos;
+),
+NOT($Setup.Metadata_Activation_Settings__c.Disable_VR__c)
+),IF( AND(ISCHANGED(RecordTypeId),RecordType.DeveloperName =&apos;CPQ_Sales_Opportunity&apos;),
+	If(OR(
+		ISPICKVAL( Primary_Product_Line__c , &quot;SMB Packages&quot;),
+		ISPICKVAL( Primary_Product_Line__c , &quot;Records Management&quot;),
+		ISPICKVAL( Primary_Product_Line__c , &quot;Data Management&quot;),
+		ISPICKVAL( Primary_Product_Line__c , &quot;Scan&quot;),
+		ISPICKVAL( Primary_Product_Line__c , &quot;Shred&quot;),
+		ISPICKVAL( Primary_Product_Line__c , &quot;Special Projects - Records Management &amp; Shred&quot;),
+		ISPICKVAL( Primary_Product_Line__c , &quot;Special Projects - Data Management&quot;),
+		ISPICKVAL( Primary_Product_Line__c , &quot;Special Projects - International&quot;)
+		),false,true),false),
+NOT($Permission.VR_Bypass_Permission)
+)</errorConditionFormula>
+    <errorMessage>Please select the CPQ related &apos;Primary Product Line&apos;</errorMessage>
+</ValidationRule>

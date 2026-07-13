@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>At_Risk_Reason_Code_Mandatory</fullName>
+    <active>true</active>
+    <description>#28487 - Account: Create &apos;At-Risk&apos; fields to capture necessary details of the new At-Risk process</description>
+    <errorConditionFormula>AND(
+NOT($Setup.Metadata_Activation_Settings__c.Disable_VR__c &amp;&amp; OR(ISBLANK($Setup.Metadata_Activation_Settings__c.SObject_API_Name__c),
+CONTAINS($Setup.Metadata_Activation_Settings__c.SObject_API_Name__c, &apos;Account&apos;))),
+
+OR(
+AND(
+(ISNEW()&amp;&amp; TEXT(At_Risk_Status_New__c)!=NULL),
+(ISNEW()&amp;&amp; TEXT(At_Risk_Reason_Code__c)=NULL)),
+
+AND(ISCHANGED(At_Risk_Status_New__c),TEXT(At_Risk_Status_New__c)!=NULL,TEXT( At_Risk_Reason_Code__c)=NULL))
+)</errorConditionFormula>
+    <errorDisplayField>At_Risk_Reason_Code__c</errorDisplayField>
+    <errorMessage>Please fill the At-Risk Reason Code</errorMessage>
+</ValidationRule>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Date_On_Boarder_CSA_Assigned</fullName>
+    <active>true</active>
+    <description>Date On Boarder CSA Assigned cannot be a date in the Past.</description>
+    <errorConditionFormula>((RecordType_Name__c = &quot;NCSP: SKP New Customer Setup&quot;) ||
+(RecordType_Name__c = &quot;NCSP: SKP Department Add Only&quot;) ||
+(RecordType_Name__c = &quot;NCSP: DP New Customer Setup&quot;) ||
+(RecordType_Name__c = &quot;NCSP: DMS&quot;) ||
+(RecordType_Name__c = &quot;NCSP: New Customer Setup&quot;) ||
+(RecordType_Name__c = &quot;NCSP: Tech Services New Customer Setup&quot;) )&amp;&amp;
+OR(
+	(
+	NOT(ISCHANGED(Open_Tasks__c)) &amp;&amp;
+	ISCHANGED(Date_On_Boarder_CSA_Assigned__c) &amp;&amp;
+	NOT(ISBLANK(Date_On_Boarder_CSA_Assigned__c)) &amp;&amp;
+	DATEVALUE(Date_On_Boarder_CSA_Assigned__c) &lt; TODAY() &amp;&amp;
+	(
+	  ISBLANK(PRIORVALUE(Date_On_Boarder_CSA_Assigned__c)) ||
+	  DATEVALUE(Date_On_Boarder_CSA_Assigned__c) != DATEVALUE(PRIORVALUE(Date_On_Boarder_CSA_Assigned__c))
+	)
+	),
+    (	
+	ISNEW() &amp;&amp;
+	NOT(ISBLANK(Date_On_Boarder_CSA_Assigned__c)) &amp;&amp;
+	DATEVALUE(Date_On_Boarder_CSA_Assigned__c) &lt; TODAY() 
+	) 
+)</errorConditionFormula>
+    <errorDisplayField>Date_On_Boarder_CSA_Assigned__c</errorDisplayField>
+    <errorMessage>Date On Boarder CSA Assigned cannot be a date in the Past.</errorMessage>
+</ValidationRule>

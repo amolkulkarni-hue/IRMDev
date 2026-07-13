@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>All_IME_New_Activity_Leads</fullName>
+    <columns>LEAD.STATUS</columns>
+    <columns>FULL_NAME</columns>
+    <columns>LEAD.EMAIL</columns>
+    <columns>LEAD.COMPANY</columns>
+    <columns>LEAD.CREATED_DATE</columns>
+    <columns>LEAD.LAST_UPDATE</columns>
+    <columns>IM_Lead_Score__c</columns>
+    <columns>CORE.USERS.ALIAS</columns>
+    <columns>LEAD.UNREAD</columns>
+    <columns>LEAD.CITY</columns>
+    <columns>LEAD.ZIP</columns>
+    <columns>LEAD.COUNTRY</columns>
+    <columns>LEAD.EMPLOYEES</columns>
+    <columns>IM_Number_of_Employees__c</columns>
+    <columns>IM_Product_Line__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>LEAD.STATUS</field>
+        <operation>equals</operation>
+        <value>New Activity</value>
+    </filters>
+    <filters>
+        <field>CORE.USERS.FIRST_NAME</field>
+        <operation>equals</operation>
+        <value>jesse</value>
+    </filters>
+    <label>All IME New Activity Leads</label>
+    <sharedTo>
+        <group>IMEAdmins</group>
+        <role>IMEMarketing</role>
+    </sharedTo>
+</ListView>

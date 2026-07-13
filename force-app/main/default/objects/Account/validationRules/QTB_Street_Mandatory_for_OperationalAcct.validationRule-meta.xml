@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>QTB_Street_Mandatory_for_OperationalAcct</fullName>
+    <active>true</active>
+    <description>Issue # 25285</description>
+    <errorConditionFormula>AND( ISBLANK(BillingStreet),  RecordType.DeveloperName = &apos;Operational_Account&apos; )</errorConditionFormula>
+    <errorDisplayField>BillingStreet</errorDisplayField>
+    <errorMessage>BillingStreet is mandatory for Operational Account.</errorMessage>
+</ValidationRule>

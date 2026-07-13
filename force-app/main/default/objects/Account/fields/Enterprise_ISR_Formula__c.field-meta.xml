@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Enterprise_ISR_Formula__c</fullName>
+    <description>#26660: To copy data from Country Parent Account to Sales Site and this data is further used in AccountCoverageFieldsSync Apex job to update Text field(Enterprise_ISR__c)
+#31465: Data should not be wiped off on Orphan Sales Site Accounts</description>
+    <externalId>false</externalId>
+    <formula>IF(
+/*If Account is Country Parent, stores Enterprise_ISR__c value */
+ISPICKVAL(IM_Hierarchy_Level__c, &apos;Country Parent&apos;),  Enterprise_ISR__c  ,
+IF(
+/*If Account is Sales site, stores Country Parent Account&apos;s Enterprise_ISR__c by traversing one level up the hierarchy*/
+AND(ISPICKVAL(IM_Hierarchy_Level__c, &apos;Sales (Site)&apos;),NOT(ISBLANK(ParentId))), Parent.Enterprise_ISR__c,Enterprise_ISR__c))</formula>
+    <label>Enterprise ISR(Formula)</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

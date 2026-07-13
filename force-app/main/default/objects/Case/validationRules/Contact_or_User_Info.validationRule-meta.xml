@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Contact_or_User_Info</fullName>
+    <active>true</active>
+    <description>Contact or  Salesforce user must be populated</description>
+    <errorConditionFormula>AND(
+NOT($User.Id = &apos;00580000001vIJO&apos;),
+OR(AND($RecordType.Name = &apos;NAS General Support Case&apos;,NOT(ISPICKVAL(Status,&quot;New&quot;)),NOT(ISPICKVAL(Status,&quot;Assigned&quot;)),NOT(AND($Profile.Name=&apos;NAS Support Manager TCOP&apos;,ISPICKVAL(Type,&quot;Void Case&quot;)))),
+	$RecordType.Id =&apos;01280000000BWs6&apos;),
+ISBLANK( ContactId ),
+ISBLANK( IM_Employee_Contact__c )
+)</errorConditionFormula>
+    <errorMessage>Please enter a value for either the Contact or IM Employee</errorMessage>
+</ValidationRule>
