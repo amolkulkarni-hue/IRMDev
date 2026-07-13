@@ -3,31 +3,39 @@
 // Run via: sf apex run --file scripts/apex/load_stage_progression_manual_test_record.apex -o IRMDev
 // Or paste into Developer Console > Debug > Open Execute Anonymous Window.
 //
-// Mirrors load_touch_level_manual_test_record.apex's approach for the Qualification gate
-// (all Qual_*_Required stage-gate fields pre-populated), then advances stage-by-stage with
-// separate DML updates so each transition is a real, auditable stage change (LastStageChangeDate
-// / OpportunityFieldHistory each update) rather than a single insert at the final stage.
+// The real stage-gate enforcement in this org is the active flow "NF Enforce Required
+// Stakeholder Roles by Opportunity Stage": on any StageName change it looks up active
+// Contact_Role_Requirement__mdt records for the new StageName (+ Type 'All' or matching Type)
+// and blocks the save with a custom error if a required OpportunityContactRole is missing.
+// Bypass_Validation__c does NOT suppress this flow (confirmed by testing) -- the only real way
+// to "not hit the stage gate" is to satisfy it, so all required roles are attached to the
+// Opportunity up front:
+//   Qualification (Type=All):        Champion, Economic Decision Maker / Buyer, Problem Owner
+//   Solutioning:                     (no requirement rows -- no contact-role gate)
+//   Negotiation (Type=All):          Authorized Signatory
+//   Booking Verification (Type=New): Billing Contact, Business User, Correspondence Contact
 //
-// Bypass_Validation__c = true is set for the whole run as a safety-net bypass for any Opportunity
-// validation rule this pre-populated data doesn't already satisfy -- the same sanctioned bypass
-// field IRM_ExitValidationTest.makeOpp() uses to skip Opportunity-side validations during test
-// setup. It is flipped back to false at the end so the resting record behaves normally in the UI
-// (leaving it true would silently bypass validations for ANY future edit anyone makes to this
-// record, which is not what we want for a record left behind after a demo).
+// Bypass_Validation__c = true is still set on insert as a safety-net for any other Opportunity
+// validation rule, mirroring IRM_ExitValidationTest.makeOpp()'s sanctioned use of that field.
+// Flipped back to false at the end so the resting record behaves normally in the UI.
 //
 // Safe to re-run: deletes any prior run's Opportunity first (matched by name), so you can reset
 // back to a clean starting state at any time. Reuses the existing 'SummitEdge Technologies' QA
-// Account/Contacts (Contact has an org-wide duplicate-name validation, so re-creating contacts
-// with the same First/Last Name on a new Account fails -- these are shared, reusable test fixtures).
+// Account/Contacts (created for 006gP00000CTFG5QAP) -- Contact has an org-wide duplicate-name
+// validation, so re-creating contacts with the same First/Last Name on a new Account fails.
 
 // ── Clean up any prior run ──────────────────────────────────────────────────
 delete [SELECT Id FROM Opportunity WHERE Name = 'QA Stage Progression Manual Test Opp'];
 
 // ── Reuse existing QA Account/Contacts (created for 006gP00000CTFG5QAP) ─────
 Account acc = [SELECT Id FROM Account WHERE Name = 'SummitEdge Technologies' LIMIT 1];
-Contact champion      = [SELECT Id FROM Contact WHERE AccountId = :acc.Id AND FirstName = 'QA' AND LastName = 'Champion' LIMIT 1];
-Contact economicBuyer = [SELECT Id FROM Contact WHERE AccountId = :acc.Id AND FirstName = 'QA' AND LastName = 'EconomicBuyer' LIMIT 1];
-Contact problemOwner  = [SELECT Id FROM Contact WHERE AccountId = :acc.Id AND FirstName = 'QA' AND LastName = 'ProblemOwner' LIMIT 1];
+Contact champion            = [SELECT Id FROM Contact WHERE AccountId = :acc.Id AND FirstName = 'QA' AND LastName = 'Champion' LIMIT 1];
+Contact economicBuyer       = [SELECT Id FROM Contact WHERE AccountId = :acc.Id AND FirstName = 'QA' AND LastName = 'EconomicBuyer' LIMIT 1];
+Contact problemOwner        = [SELECT Id FROM Contact WHERE AccountId = :acc.Id AND FirstName = 'QA' AND LastName = 'ProblemOwner' LIMIT 1];
+Contact authorizedSignatory = [SELECT Id FROM Contact WHERE AccountId = :acc.Id AND FirstName = 'Emily'  AND LastName = 'Carter'   LIMIT 1];
+Contact businessUser        = [SELECT Id FROM Contact WHERE AccountId = :acc.Id AND FirstName = 'Jordan' AND LastName = 'Ellis'    LIMIT 1];
+Contact correspondenceCont  = [SELECT Id FROM Contact WHERE AccountId = :acc.Id AND FirstName = 'David'  AND LastName = 'Whitmore' LIMIT 1];
+Contact billingContact      = [SELECT Id FROM Contact WHERE AccountId = :acc.Id AND FirstName = 'Rachel' AND LastName = 'Nguyen'   LIMIT 1];
 
 Id standardPricebookId = [SELECT Id FROM Pricebook2 WHERE IsStandard = true LIMIT 1].Id;
 
@@ -58,11 +66,15 @@ Opportunity opp = new Opportunity(
 );
 insert opp;
 
-// ── Opportunity Contact Roles (org VR requires these before leaving Qualification) ──
+// ── Opportunity Contact Roles — all 7 roles required across the 4 stages, attached up front ──
 insert new List<OpportunityContactRole>{
-    new OpportunityContactRole(OpportunityId = opp.Id, ContactId = champion.Id,      Role = 'Champion'),
-    new OpportunityContactRole(OpportunityId = opp.Id, ContactId = economicBuyer.Id, Role = 'Economic Decision Maker / Buyer'),
-    new OpportunityContactRole(OpportunityId = opp.Id, ContactId = problemOwner.Id,  Role = 'Problem Owner')
+    new OpportunityContactRole(OpportunityId = opp.Id, ContactId = champion.Id,            Role = 'Champion'),
+    new OpportunityContactRole(OpportunityId = opp.Id, ContactId = economicBuyer.Id,       Role = 'Economic Decision Maker / Buyer'),
+    new OpportunityContactRole(OpportunityId = opp.Id, ContactId = problemOwner.Id,        Role = 'Problem Owner'),
+    new OpportunityContactRole(OpportunityId = opp.Id, ContactId = authorizedSignatory.Id, Role = 'Authorized Signatory'),
+    new OpportunityContactRole(OpportunityId = opp.Id, ContactId = businessUser.Id,        Role = 'Business User'),
+    new OpportunityContactRole(OpportunityId = opp.Id, ContactId = correspondenceCont.Id,  Role = 'Correspondence Contact'),
+    new OpportunityContactRole(OpportunityId = opp.Id, ContactId = billingContact.Id,      Role = 'Billing Contact')
 };
 
 System.debug('=== STEP 0: Qualification (insert) ===');

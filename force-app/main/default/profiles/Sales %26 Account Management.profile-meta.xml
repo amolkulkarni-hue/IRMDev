@@ -20,11 +20,27 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>App_Constants</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>CaseCreationRuleEvaluatorAction</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>IRM_AttachFilesAction</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>IRM_CaseCompletionTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>IRM_CaseCreationEligibilityTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>IRM_CaseCreationRuleTest</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -56,6 +72,10 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>IRM_FreddySummitEdgeContactTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>IRM_LeadConversionTest</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -72,7 +92,15 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>IRM_TouchLevelProgressionTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>IRM_TouchLevelTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>IRM_UserStoryTest</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -93,6 +121,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>OpportunityHelper</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>OpportunityTriggerHandler</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -472,11 +504,6 @@
         <editable>false</editable>
         <field>Account.Channel_Program_Customer_Account_ID__c</field>
         <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Account.Client_Support__c</field>
-        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -1747,11 +1774,6 @@
         <editable>false</editable>
         <field>Account.ISR_Intro_Call_Date__c</field>
         <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Account.ITRenew_Account_Owner__c</field>
-        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -3446,6 +3468,16 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Account.WFH__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account.WL_Owner_Formula__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account.WL_Owner__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -7740,6 +7772,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Contact.IM_Role__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Contact_Role_Requirement__mdt.Active__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -7881,6 +7918,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Deal_Review__c.EMEA_Price_Desk_Approver_Comments__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Deal_Review__c.EMEA_Price_Desk_Approver__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -8071,6 +8113,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Deal_Review__c.Price_Desk_Approver_Comments__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Deal_Review__c.Price_Desk_Approver__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -8329,7 +8376,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>LGK__Transaction__c.Accepted__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -8656,6 +8703,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Lead.Budgeted_Amount__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Lead.Business_Unit_2__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -9885,6 +9937,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Lead.Primary_Product_Line__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Lead.Product_Interest__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -10071,6 +10128,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Lead.Scored_MQL_Date__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Lead.Secondary_Product_Line__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -10479,6 +10541,11 @@
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>Opportunity.Accepted_Quote_Test__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>Opportunity.AccountId</field>
         <readable>false</readable>
@@ -10680,11 +10747,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Opportunity.Business_Process_Problem_Owner__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>Opportunity.Business_Unit_2__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -10697,6 +10759,11 @@
         <editable>false</editable>
         <field>Opportunity.Buying_Commitee_Confirmed__c</field>
         <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Opportunity.Bypass_Deal_Date_Lock__c</field>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -10722,11 +10789,6 @@
         <editable>false</editable>
         <field>Opportunity.Canadian_Public_Sector__c</field>
         <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Opportunity.Champion__c</field>
-        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -10822,11 +10884,6 @@
         <editable>false</editable>
         <field>Opportunity.ConvertedFromLead__c</field>
         <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Opportunity.Correspondence_Contact__c</field>
-        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -11139,6 +11196,11 @@
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>Opportunity.Deal_Type__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>Opportunity.Deal_Validation__c</field>
         <readable>true</readable>
@@ -11207,11 +11269,6 @@
         <editable>false</editable>
         <field>Opportunity.Driver_Employee_Id__c</field>
         <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Opportunity.Economic_Decision_Maker_Buyer__c</field>
-        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -12460,11 +12517,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Opportunity.RIM360_Tracker__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>Opportunity.RIM360_Usage__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -12741,11 +12793,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Opportunity.Service_Completed_Entered_Date__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Opportunity.Service_Contact_Business_User__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -13510,6 +13557,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>OpportunityContactRole.Business_Unit__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Product_Interest_BU_Mapping__mdt.Active__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -13535,7 +13587,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Product_Interest_Business_Unit_Mapping__mdt.Product_Interest__c</field>
+        <field>Product_Interest_Business_Unit_Mapping__mdt.Product_Line__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -13659,7 +13711,15 @@
     </flowAccesses>
     <flowAccesses>
         <enabled>false</enabled>
-        <flow>Logik_Set_Primary_Oppty_Field_with_Accepted</flow>
+        <flow>Logik_Accepted_Primary_Oppty_Sync_Flow</flow>
+    </flowAccesses>
+    <flowAccesses>
+        <enabled>false</enabled>
+        <flow>Logik_Deal_Review_Approval_Flow</flow>
+    </flowAccesses>
+    <flowAccesses>
+        <enabled>false</enabled>
+        <flow>Logik_Set_Accepted_Primary_Transaction_Flow</flow>
     </flowAccesses>
     <flowAccesses>
         <enabled>false</enabled>
@@ -13687,6 +13747,10 @@
     </flowAccesses>
     <flowAccesses>
         <enabled>false</enabled>
+        <flow>Populate_Deal_Booked_Date</flow>
+    </flowAccesses>
+    <flowAccesses>
+        <enabled>false</enabled>
         <flow>Reference_Threshold_Key_Flow</flow>
     </flowAccesses>
     <flowAccesses>
@@ -13707,6 +13771,14 @@
     </flowAccesses>
     <flowAccesses>
         <enabled>false</enabled>
+        <flow>Update_Lead_Status_From_New_To_Accepted</flow>
+    </flowAccesses>
+    <flowAccesses>
+        <enabled>false</enabled>
+        <flow>Upload_Document_Checklist_Flow</flow>
+    </flowAccesses>
+    <flowAccesses>
+        <enabled>false</enabled>
         <flow>X6Sense_Buying_Stage_Field_Update</flow>
     </flowAccesses>
     <flowAccesses>
@@ -13715,6 +13787,10 @@
     </flowAccesses>
     <layoutAssignments>
         <layout>Account-IMNA Account Lightning</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Account-IMNA Account Lightning</layout>
+        <recordType>Account.Standard_Account</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Booking_Verification_Checklist_Item__c-Booking Verification Checklist Item Layout</layout>
@@ -13728,7 +13804,18 @@
         <recordType>Case.Implementation</recordType>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>Case_Creation_Rule__c-Case Creation Rule Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Contact-FFX PSA Resource Layout</layout>
+        <recordType>Contact.PSA_Resource</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>Contact-IMNA Contact Lightning</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Contact-IMNA Contact Lightning</layout>
+        <recordType>Contact.CRM_Contact</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Contact_Role_Requirement__mdt-Contact Role Requirement Layout</layout>
@@ -13753,6 +13840,10 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>Lead-IMNA Lead Lightning</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Lead-IMNA Lead Lightning</layout>
+        <recordType>Lead.Standard_Lead</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Lead-Primary Lead</layout>
@@ -13786,6 +13877,9 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>Sales_Support_Request__c-Proposal Services Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Touch_Level_Criteria__c-Touch Level Criteria Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>ironclad__Ironclad_Contract__c-ironclad__Ironclad Contract Layout</layout>
@@ -13996,6 +14090,16 @@
         <visible>false</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
+        <default>true</default>
+        <recordType>Contact.CRM_Contact</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
+        <recordType>Contact.PSA_Resource</recordType>
+        <visible>false</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
         <default>false</default>
         <recordType>Lead.Deal_Registration</recordType>
         <visible>false</visible>
@@ -14100,6 +14204,38 @@
         <visibility>DefaultOn</visibility>
     </tabVisibilities>
     <tabVisibilities>
+        <tab>Booking_Verification_Checklist_Item__c</tab>
+        <visibility>Hidden</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>Booking_Verification_Checklist__c</tab>
+        <visibility>Hidden</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>Booking_Verification_Template_Item__c</tab>
+        <visibility>Hidden</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>Booking_Verification_Template__c</tab>
+        <visibility>Hidden</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>Case_Creation_Condition__c</tab>
+        <visibility>Hidden</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>Case_Creation_Doc_Requirement__c</tab>
+        <visibility>Hidden</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>Case_Exit_Doc_Requirement__c</tab>
+        <visibility>Hidden</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>Case_Status_Progress__c</tab>
+        <visibility>Hidden</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
         <tab>Deal_Review__c</tab>
         <visibility>Hidden</visibility>
     </tabVisibilities>
@@ -14110,6 +14246,14 @@
     <tabVisibilities>
         <tab>LGK__Transaction__c</tab>
         <visibility>DefaultOn</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>Opp_Naming_Segment__c</tab>
+        <visibility>Hidden</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>Touch_Level_Condition__c</tab>
+        <visibility>Hidden</visibility>
     </tabVisibilities>
     <tabVisibilities>
         <tab>ironclad__Ironclad_Contract__c</tab>
@@ -14147,6 +14291,10 @@
     <userPermissions>
         <enabled>true</enabled>
         <name>AllowViewKnowledge</name>
+    </userPermissions>
+    <userPermissions>
+        <enabled>true</enabled>
+        <name>ChatterEnabledForUser</name>
     </userPermissions>
     <userPermissions>
         <enabled>true</enabled>
