@@ -1,5 +1,8 @@
 trigger LeadListener on Lead (after insert, after update)
 {
-    if (!LeadToAccountMatching.updatingLeads && trigger.isAfter && (trigger.isInsert || trigger.isUpdate))
-        LeadToAccountMatching.handleLeadTrigger(trigger.new,trigger.oldMap);
+    if (trigger.isAfter && (trigger.isInsert || trigger.isUpdate))
+    {
+        if (!LeadToAccountMatching.updatingLeads)
+            LeadToAccountMatching.handleLeadTrigger(trigger.new,trigger.oldMap);
+    }
 }

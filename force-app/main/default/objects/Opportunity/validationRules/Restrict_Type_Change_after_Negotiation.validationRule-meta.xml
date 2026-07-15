@@ -6,13 +6,14 @@
     <errorConditionFormula>AND(
     NOT(Bypass_Validation__c),     
     ISCHANGED(Type),
-    NOT($Permission.Edit_Deal_Type_After_Negotiation),
+    NOT($Permission.Edit_Type_After_Negotiation),
     OR(
         ISPICKVAL(StageName, &quot;Negotiation&quot;),
         ISPICKVAL(StageName, &quot;Booking Verification&quot;),
+        ISPICKVAL(StageName, &quot;Booked&quot;),
         ISPICKVAL(StageName, &quot;Setup&quot;),
-        ISPICKVAL(StageName, &quot;Closed Won&quot;),
-        ISPICKVAL(StageName, &quot;Closed Lost&quot;)
+        ISPICKVAL(StageName, &quot;Closed&quot;),
+        ISPICKVAL(StageName, &quot;Lost&quot;)
     )
 )</errorConditionFormula>
     <errorDisplayField>Type</errorDisplayField>

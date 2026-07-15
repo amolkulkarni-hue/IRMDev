@@ -12,10 +12,7 @@
     ISPICKVAL(Type, &apos;Cross-Sell/Upsell&apos;)
   ),
   Amount &gt;= 25000,
-  OR(
-    ISBLANK(Total_Sales_Billing_Estimate__c),
-    Total_Sales_Billing_Estimate__c = 0
-  )
+  BLANKVALUE(Total_Sales_Billing_Estimate__c, 0) &lt;= 1
 )</errorConditionFormula>
     <errorMessage>Total Sales Billing Estimate must be confirmed before moving this Opportunity from Negotiation to Booking Verification.</errorMessage>
 </ValidationRule>

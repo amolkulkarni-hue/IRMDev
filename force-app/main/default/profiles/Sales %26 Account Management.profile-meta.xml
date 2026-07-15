@@ -2,18 +2,18 @@
 <Profile xmlns="http://soap.sforce.com/2006/04/metadata">
     <applicationVisibilities>
         <application>IM_Sales_Console</application>
-        <default>true</default>
+        <default>false</default>
         <visible>true</visible>
     </applicationVisibilities>
     <applicationVisibilities>
         <application>standard__AgentforceStudio</application>
         <default>false</default>
-        <visible>true</visible>
+        <visible>false</visible>
     </applicationVisibilities>
     <applicationVisibilities>
         <application>standard__LightningSales</application>
-        <default>false</default>
-        <visible>false</visible>
+        <default>true</default>
+        <visible>true</visible>
     </applicationVisibilities>
     <classAccesses>
         <apexClass>AccountCoverageFieldsSyncTest</apexClass>
@@ -7832,12 +7832,22 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Deal_Review__c.Account_Segment_Text__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Deal_Review__c.Account_Segment__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Deal_Review__c.Account_SubSegment_Formula__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Deal_Review__c.Account_SubSegment_Text__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -8291,6 +8301,11 @@
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>LGK__TransactionLine__c.Business_Unit__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>LGK__TransactionLine__c.Get_Support__c</field>
         <readable>true</readable>
@@ -8404,6 +8419,21 @@
         <editable>true</editable>
         <field>LGK__TransactionLine__c.LGK__Quantity__c</field>
         <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>LGK__TransactionLine__c.Product_Class__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>LGK__TransactionLine__c.Product_Family__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>LGK__TransactionLine__c.Product_Line__c</field>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -10123,6 +10153,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Lead.Rejected__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Lead.RelatedAccountMatchingComplete__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -12197,11 +12232,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Opportunity.Opportunity_Fields_Locked__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>Opportunity.Opportunity_ID__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -13812,6 +13842,10 @@
     </flowAccesses>
     <flowAccesses>
         <enabled>false</enabled>
+        <flow>Create_Renewal_Opportunity_Flow</flow>
+    </flowAccesses>
+    <flowAccesses>
+        <enabled>false</enabled>
         <flow>Ironclad_Multi_Attachment_Flow</flow>
     </flowAccesses>
     <flowAccesses>
@@ -13857,6 +13891,10 @@
     <flowAccesses>
         <enabled>false</enabled>
         <flow>Opportunity_After_Save</flow>
+    </flowAccesses>
+    <flowAccesses>
+        <enabled>false</enabled>
+        <flow>Opportunity_After_Update</flow>
     </flowAccesses>
     <flowAccesses>
         <enabled>false</enabled>
@@ -13930,6 +13968,10 @@
         <recordType>Account.Standard_Account</recordType>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>Account-Operational Account Layout</layout>
+        <recordType>Account.Operational_Account</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>Booking_Verification_Checklist_Item__c-Booking Verification Checklist Item Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
@@ -13976,6 +14018,26 @@
         <layout>LGK__Transaction__c-LGK__Transaction Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>Lead-Admin Lead Layout</layout>
+        <recordType>Lead.Deal_Registration</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Lead-Admin Lead Layout</layout>
+        <recordType>Lead.IMAP_Lead</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Lead-Admin Lead Layout</layout>
+        <recordType>Lead.IME_Lead</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Lead-Admin Lead Layout</layout>
+        <recordType>Lead.IMLA_Lead</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Lead-Admin Lead Layout</layout>
+        <recordType>Lead.NA_Account_Management_Lead</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>Lead-IMNA Lead Lightning</layout>
     </layoutAssignments>
     <layoutAssignments>
@@ -13985,6 +14047,41 @@
     <layoutAssignments>
         <layout>Lead-Primary Lead</layout>
         <recordType>Lead.Primary_Lead</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Opportunity-Admin Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Opportunity-Admin Layout</layout>
+        <recordType>Opportunity.ANZ_Standard_Opportunity</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Opportunity-Admin Layout</layout>
+        <recordType>Opportunity.CPQ_Sales_Opportunity</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Opportunity-Admin Layout</layout>
+        <recordType>Opportunity.Deal_Registration</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Opportunity-Admin Layout</layout>
+        <recordType>Opportunity.Framework_Parent_Opportunity</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Opportunity-Admin Layout</layout>
+        <recordType>Opportunity.IMAP_Standard_Opportunity</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Opportunity-Admin Layout</layout>
+        <recordType>Opportunity.IME_Standard_Opportunity</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Opportunity-Admin Layout</layout>
+        <recordType>Opportunity.IMLA_Standard_Opportunity</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Opportunity-Admin Layout</layout>
+        <recordType>Opportunity.NA_Renewal</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Opportunity-Primary Opportunity Page</layout>
@@ -14231,6 +14328,7 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
+        <personAccountDefault>true</personAccountDefault>
         <recordType>Contact.CRM_Contact</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
@@ -14265,14 +14363,15 @@
         <visible>false</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
-        <default>true</default>
+        <default>false</default>
         <recordType>Lead.Primary_Lead</recordType>
-        <visible>true</visible>
+        <visible>false</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
-        <default>false</default>
+        <default>true</default>
+        <personAccountDefault>true</personAccountDefault>
         <recordType>Lead.Standard_Lead</recordType>
-        <visible>false</visible>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
@@ -14409,7 +14508,7 @@
     </tabVisibilities>
     <tabVisibilities>
         <tab>standard-Account</tab>
-        <visibility>Hidden</visibility>
+        <visibility>DefaultOn</visibility>
     </tabVisibilities>
     <tabVisibilities>
         <tab>standard-Case</tab>
@@ -14417,11 +14516,11 @@
     </tabVisibilities>
     <tabVisibilities>
         <tab>standard-Lead</tab>
-        <visibility>Hidden</visibility>
+        <visibility>DefaultOn</visibility>
     </tabVisibilities>
     <tabVisibilities>
         <tab>standard-Opportunity</tab>
-        <visibility>Hidden</visibility>
+        <visibility>DefaultOn</visibility>
     </tabVisibilities>
     <userLicense>Salesforce</userLicense>
     <userPermissions>

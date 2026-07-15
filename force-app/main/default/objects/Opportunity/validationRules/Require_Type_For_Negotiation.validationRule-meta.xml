@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Require_Type_For_Negotiation</fullName>
+    <active>true</active>
+    <description>A validation rule will prevent advancement into Negotiation when Type is blank.</description>
+    <errorConditionFormula>AND(
+    NOT(Bypass_Validation__c), 
+    ISCHANGED(StageName),
+				ISPICKVAL(PRIORVALUE(StageName), &quot;Solutioning&quot;),
+    ISPICKVAL(StageName, &quot;Negotiation&quot;),
+				ISPICKVAL(Type, &quot;&quot;)
+)</errorConditionFormula>
+    <errorDisplayField>Type</errorDisplayField>
+    <errorMessage>Type must be populated before an Opportunity can be advanced to the Negotiation stage.</errorMessage>
+</ValidationRule>

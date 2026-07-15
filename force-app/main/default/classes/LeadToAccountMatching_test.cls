@@ -7,22 +7,35 @@ private class LeadToAccountMatching_test
     @TestSetup
     static void createApprovedCountries()
     {
-        insert new List<IM_Country__c>{
+        List<IM_Country__c> countries = new List<IM_Country__c>{
             new IM_Country__c(Name = COUNTRY_US,Active__c = true),
             new IM_Country__c(Name = 'Canada',Active__c = true)
+        };
+
+        insert countries;
+
+        insert new List<IM_Alternative_Country_Name__c>{
+            new IM_Alternative_Country_Name__c(
+                Alternative_Name__c = COUNTRY_US,
+                IM_Country__c = countries[0].Id
+            ),
+            new IM_Alternative_Country_Name__c(
+                Alternative_Name__c = 'Canada',
+                IM_Country__c = countries[1].Id
+            )
         };
     }
 
     @isTest
-    static void exactMatchPopulatesAccountAndShippingAddress()
+    static void exactMatchPopulatesAccountAndBillingAddress()
     {
         System.runAs(createTestUser('exact'))
         {
             Account exactAccount = createSalesSite('Exact Company',COUNTRY_US);
-            exactAccount.ShippingStreet = '100 Exact Street';
-            exactAccount.ShippingCity = 'Boston';
-            exactAccount.ShippingState = 'Massachusetts';
-            exactAccount.ShippingPostalCode = '02108';
+            exactAccount.BillingStreet = '100 Exact Street';
+            exactAccount.BillingCity = 'Boston';
+            exactAccount.BillingState = 'Massachusetts';
+            exactAccount.BillingPostalCode = '02108';
             update exactAccount;
 
             Lead leadRecord = newLead('Exact Company',COUNTRY_US,null);
@@ -31,16 +44,18 @@ private class LeadToAccountMatching_test
             insert leadRecord;
 
             System.assertEquals(Limits.getQueueableJobs(),1);
+            System.assertEquals(queryMatchedLead(leadRecord.Id).RelatedAccountMatchingComplete__c,false);
             Test.stopTest();
 
             Lead matchedLead = queryMatchedLead(leadRecord.Id);
 
             System.assertEquals(matchedLead.Related_Account__c,exactAccount.Id);
-            System.assertEquals(matchedLead.Street,exactAccount.ShippingStreet);
-            System.assertEquals(matchedLead.City,exactAccount.ShippingCity);
-            System.assertEquals(matchedLead.State,exactAccount.ShippingState);
-            System.assertEquals(matchedLead.PostalCode,exactAccount.ShippingPostalCode);
-            System.assertEquals(matchedLead.Country,exactAccount.ShippingCountry);
+            System.assertEquals(matchedLead.Street,exactAccount.BillingStreet);
+            System.assertEquals(matchedLead.City,exactAccount.BillingCity);
+            System.assertEquals(matchedLead.State,exactAccount.BillingState);
+            System.assertEquals(matchedLead.PostalCode,exactAccount.BillingPostalCode);
+            System.assertEquals(matchedLead.Country,exactAccount.BillingCountry);
+            System.assertEquals(matchedLead.RelatedAccountMatchingComplete__c,true);
         }
     }
 
@@ -50,8 +65,9 @@ private class LeadToAccountMatching_test
         System.runAs(createTestUser('contact'))
         {
             Account contactAccount = createSalesSite('Contact Account',COUNTRY_US);
-            contactAccount.ShippingCity = 'Chicago';
+            contactAccount.BillingCity = 'Chicago';
             update contactAccount;
+
             createSalesSite('Lead Company',COUNTRY_US);
 
             Contact relatedContact = new Contact(
@@ -59,6 +75,7 @@ private class LeadToAccountMatching_test
                 LastName = 'Related Contact',
                 AccountId = contactAccount.Id
             );
+
             insert relatedContact;
 
             Lead leadRecord = newLead('Lead Company',COUNTRY_US,null);
@@ -113,7 +130,9 @@ private class LeadToAccountMatching_test
         {
             Account olderAccount = salesSite('Oldest Company',COUNTRY_US);
             Account newerAccount = salesSite('Oldest Company',COUNTRY_US);
+
             insert new List<Account>{olderAccount,newerAccount};
+
             Test.setCreatedDate(olderAccount.Id,Datetime.now().addYears(-2));
             Test.setCreatedDate(newerAccount.Id,Datetime.now().addYears(-1));
 
@@ -137,7 +156,7 @@ private class LeadToAccountMatching_test
         {
             Account domainAccount = salesSite('Different Account Name','Canada');
             domainAccount.Website = 'https://www.domain-match-example.com/a-page';
-            domainAccount.ShippingCity = 'Toronto';
+            domainAccount.BillingCity = 'Toronto';
             insert domainAccount;
 
             Lead leadRecord = newLead(
@@ -165,6 +184,7 @@ private class LeadToAccountMatching_test
         {
             Account fuzzyAccount = createSalesSite('Acme Corporation',COUNTRY_US);
             Lead leadRecord = newLead('Acme Corp',COUNTRY_US,null);
+
             insertWithoutMatching(new List<Lead>{leadRecord});
 
             Lead queriedLead = [
@@ -172,6 +192,7 @@ private class LeadToAccountMatching_test
                 FROM Lead
                 WHERE Id = :leadRecord.Id
             ];
+
             Set<Id> unresolvedLeadIds = new Set<Id>{queriedLead.Id};
             Map<Id,Account> matchesByLeadId = new Map<Id,Account>();
 
@@ -179,12 +200,12 @@ private class LeadToAccountMatching_test
             LeadToAccountMatching.matchFuzzyCandidateAccounts(
                 new Map<Id,Lead>{queriedLead.Id => queriedLead},
                 unresolvedLeadIds,
-                new Set<Id>(),
                 matchesByLeadId,
                 new Map<Id,Set<Id>>{
                     queriedLead.Id => new Set<Id>{fuzzyAccount.Id}
                 }
             );
+
             Test.stopTest();
 
             System.assertEquals(matchesByLeadId.get(queriedLead.Id).Id,fuzzyAccount.Id);
@@ -207,6 +228,7 @@ private class LeadToAccountMatching_test
             update leadRecord;
 
             System.assertEquals(Limits.getQueueableJobs(),0);
+            System.assertEquals(queryMatchedLead(leadRecord.Id).RelatedAccountMatchingComplete__c,false);
 
             leadRecord.Company = 'No Matching Company';
             update leadRecord;
@@ -214,10 +236,10 @@ private class LeadToAccountMatching_test
             System.assertEquals(Limits.getQueueableJobs(),1);
             Test.stopTest();
 
-            System.assertEquals(
-                queryMatchedLead(leadRecord.Id).Related_Account__c,
-                existingAccount.Id
-            );
+            Lead completedLead = queryMatchedLead(leadRecord.Id);
+
+            System.assertEquals(completedLead.Related_Account__c,existingAccount.Id);
+            System.assertEquals(completedLead.RelatedAccountMatchingComplete__c,true);
         }
     }
 
@@ -227,7 +249,9 @@ private class LeadToAccountMatching_test
         System.runAs(createTestUser('bulk'))
         {
             createSalesSite('Bulk Company',COUNTRY_US);
+
             List<Lead> leads = new List<Lead>();
+
             for (Integer index = 0; index < 200; index++)
                 leads.add(newLead('Bulk Company',COUNTRY_US,null));
 
@@ -243,6 +267,8 @@ private class LeadToAccountMatching_test
                     FROM Lead
                     WHERE Id IN :new Map<Id,Lead>(leads).keySet()
                         AND Related_Account__r.Name = 'Bulk Company'
+                        AND RelatedAccountMatchingComplete__c = true
+                    WITH SYSTEM_MODE
                 ],
                 200
             );
@@ -260,7 +286,9 @@ private class LeadToAccountMatching_test
             ),
             new Set<Id>{testUser.Id}
         );
+
         System.assertEquals(LeadToAccountMatching.parseExcludedCreatorIds(null).size(),0);
+
         System.assertEquals(
             LeadToAccountMatching.domainRank(
                 ' Example.COM ',
@@ -269,6 +297,7 @@ private class LeadToAccountMatching_test
             ),
             1
         );
+
         System.assertEquals(
             LeadToAccountMatching.domainRank(
                 'example.com',
@@ -277,6 +306,7 @@ private class LeadToAccountMatching_test
             ),
             2
         );
+
         System.assertEquals(
             LeadToAccountMatching.domainRank(
                 'example.com',
@@ -291,6 +321,7 @@ private class LeadToAccountMatching_test
     {
         String uniqueUsername = 'l2a.' + uniqueValue + '.' + Datetime.now().getTime()
             + '@stackology-tests.invalid';
+        
         User testUser = new User(
             Alias = uniqueValue.left(8),
             Country = COUNTRY_US,
@@ -308,6 +339,7 @@ private class LeadToAccountMatching_test
             TimeZoneSidKey = 'America/Los_Angeles',
             UserName = uniqueUsername
         );
+
         insert testUser;
 
         return testUser;
@@ -325,7 +357,7 @@ private class LeadToAccountMatching_test
     {
         return new Account(
             Name = name,
-            ShippingCountry = country,
+            BillingCountry = country,
             IM_Hierarchy_Level__c = SALES_SITE_LEVEL
         );
     }
@@ -361,6 +393,7 @@ private class LeadToAccountMatching_test
             'Account_Domain__c' => accountDomain,
             'DnB_Web_Address__c' => dnbDomain
         };
+        
         if (coverageUserId != null)
             values.put('Primary_BDE__c',coverageUserId);
 
@@ -369,24 +402,26 @@ private class LeadToAccountMatching_test
 
     private static void insertWithoutMatching (List<Lead> leads)
     {
-        LeadToAccountMatching.suppressEnqueue = true;
+        LeadToAccountMatching.updatingLeads = true;
+
         try
         {
             insert leads;
         }
         finally
         {
-            LeadToAccountMatching.suppressEnqueue = false;
-            LeadToAccountMatching.queuedLeadIds.clear();
+            LeadToAccountMatching.updatingLeads = false;
         }
     }
 
     private static Lead queryMatchedLead (Id leadId)
     {
         return [
-            SELECT Related_Account__c, Street, City, State, PostalCode, Country
+            SELECT Related_Account__c, RelatedAccountMatchingComplete__c,
+                Street, City, State, PostalCode, Country
             FROM Lead
             WHERE Id = :leadId
+            WITH SYSTEM_MODE
         ];
     }
 }

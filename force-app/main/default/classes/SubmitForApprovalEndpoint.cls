@@ -17,6 +17,7 @@ global with sharing class SubmitForApprovalEndpoint {
         Deal_Review__c dealReview = new Deal_Review__c();
         dealReview.Opportunity__c = (Id) payload.get('opportunityId');
         dealReview.Account__c = (Id) payload.get('accountId');
+        dealReview.Transaction__c = (Id) payload.get('transactionId');
         
         /* 
         Business_Unit__c : required
@@ -75,7 +76,7 @@ global with sharing class SubmitForApprovalEndpoint {
         insert dealReview;
 
         //Update related LGK__Transaction__c
-        update new LGK__Transaction__c(Id = (Id) payload.get('transactionId'), Deal_Review__c = (Id) dealReview.Id);
+        //update new LGK__Transaction__c(Id = (Id) payload.get('transactionId'), Deal_Review__c = (Id) dealReview.Id);
         
 
         Map<String, String> logikResponse = new Map<String, String>();
