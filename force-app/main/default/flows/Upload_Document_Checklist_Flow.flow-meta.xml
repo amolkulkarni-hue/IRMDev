@@ -7,6 +7,9 @@
         <locationY>1800</locationY>
         <actionName>IRM_AttachFilesAction</actionName>
         <actionType>apex</actionType>
+        <connector>
+            <targetReference>updateChecklistStatusFinal</targetReference>
+        </connector>
         <faultConnector>
             <targetReference>screenAttachError</targetReference>
         </faultConnector>
@@ -186,7 +189,7 @@
             <label>Is Case</label>
         </rules>
     </decisions>
-    <description>Screen Flow invoked from Case and Opportunity Quick Actions. Collects document checklist metadata, checks for a duplicate document type, creates the Document_Checklist__c record with Status=Draft, then prompts for file upload. Uploaded files are cross-linked to the parent Case/Opp. When invoked from a Case, files are also linked to the linked Opportunity.</description>
+    <description>Screen Flow invoked from Case and Opportunity Quick Actions. Collects document checklist metadata, checks for a duplicate document type, creates the Document_Checklist__c record with Status=Draft, then prompts for file upload. Uploaded files are cross-linked to the parent Case/Opp. When invoked from a Case, files are also linked to the linked Opportunity. On a successful upload, Status is automatically set to Final and Submitted Date to today; if no file is uploaded, Status stays Draft. Users can still change Status back to Draft afterward for revisions — no rule blocks that transition.</description>
     <environments>Default</environments>
     <label>Upload Document Checklist</label>
     <loops>
@@ -275,6 +278,33 @@
         </inputAssignments>
         <object>Document_Checklist__c</object>
     </recordCreates>
+    <recordUpdates>
+        <name>updateChecklistStatusFinal</name>
+        <label>Set Status = Final</label>
+        <locationX>176</locationX>
+        <locationY>1920</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>varNewDocChecklistId</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Status__c</field>
+            <value>
+                <stringValue>Final</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Submitted_Date__c</field>
+            <value>
+                <elementReference>$Flow.CurrentDate</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Document_Checklist__c</object>
+    </recordUpdates>
     <recordLookups>
         <name>checkDuplicate</name>
         <label>Check for Duplicate Document Type</label>
@@ -558,7 +588,7 @@
         </fields>
         <fields>
             <name>displayStatusDraft</name>
-            <fieldText>&lt;p&gt;&lt;b&gt;Status:&lt;/b&gt; Draft (assigned automatically)&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;b&gt;Status:&lt;/b&gt; Draft until a file is uploaded below, then automatically set to Final.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <styleProperties>
                 <verticalAlignment>

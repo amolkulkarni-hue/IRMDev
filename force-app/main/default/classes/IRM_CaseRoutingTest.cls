@@ -1,11 +1,14 @@
 /**
  * IRM_CaseRoutingTest
  * US-1500: Case Queue Routing via Support_Engagement_Case_Assignment_Flow
- * and Touch_Level_Case_Mapping__mdt
+ * and Touch_Level_Case_Mapping__c
  *
  * Flow under test: Support_Engagement_Case_Assignment_Flow (After Insert — Case)
  * Must be ACTIVE in Setup → Flows before running.
- * Requires Touch_Level_Case_Mapping__mdt records deployed (included in package).
+ * Touch_Level_Case_Mapping__c replaces the former Touch_Level_Case_Mapping__mdt Custom
+ * Metadata Type (migrated so mapping changes carry field history tracking) — as a regular
+ * custom object, its rows are seeded in @TestSetup below rather than relying on deployed
+ * CMT default records.
  */
 @IsTest
 private class IRM_CaseRoutingTest {
@@ -36,6 +39,16 @@ private class IRM_CaseRoutingTest {
         insert acc;
         // Case VR: "Please enter a value for either the Contact or IM Employee" — need ContactId
         insert new Contact(LastName = 'CaseContact', AccountId = acc.Id);
+
+        // Touch_Level_Case_Mapping__c seed data — Support_Engagement_Case_Assignment_Flow reads
+        // these by Case_Type__c to resolve the routing Queue. Intentionally no row for
+        // 'Unmapped Type'/'Unmapped Case Type' (used by the negative-path tests below).
+        insert new List<Touch_Level_Case_Mapping__c>{
+            new Touch_Level_Case_Mapping__c(Name = 'SA Assignment Mapping', Case_Type__c = 'SA Assignment', Queue_Developer_Name__c = 'Solution_Specialist_Queue', Is_Active__c = true),
+            new Touch_Level_Case_Mapping__c(Name = 'Pricing Mapping',       Case_Type__c = 'Pricing',       Queue_Developer_Name__c = 'DOC_Pricing_Queue',            Is_Active__c = true),
+            new Touch_Level_Case_Mapping__c(Name = 'Legal Review Mapping',  Case_Type__c = 'Legal Review',  Queue_Developer_Name__c = 'Legal_GCCS_Queue',             Is_Active__c = true),
+            new Touch_Level_Case_Mapping__c(Name = 'InfoSec Mapping',       Case_Type__c = 'InfoSec Security Review', Queue_Developer_Name__c = 'InfoSec_Queue',      Is_Active__c = true)
+        };
     }
 
     private static Account getAccount() {
@@ -76,7 +89,7 @@ private class IRM_CaseRoutingTest {
 
         System.assertEquals(queueId, r.OwnerId,
             'US-1500: SA Assignment Case should be routed to Solution_Specialist_Queue. OwnerId=' + r.OwnerId + ' Expected=' + queueId
-            + '. Check Touch_Level_Case_Mapping__mdt.SA_Assignment_HT is deployed and flow is active.');
+            + '. Check the Touch_Level_Case_Mapping__c seed data and that the flow is active.');
     }
 
     // ── US-1500 AC2: Pricing → DOC Pricing Queue ─────────────────────────────

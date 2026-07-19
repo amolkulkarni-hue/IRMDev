@@ -3,72 +3,31 @@
     <apiVersion>61.0</apiVersion>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <decisions>
-        <name>checkAllDocsAreFinal</name>
-        <label>Any Final Docs?</label>
+        <name>checkAllDocsFinal</name>
+        <label>All Required-For-Case Docs Final?</label>
         <locationX>176</locationX>
-        <locationY>768</locationY>
+        <locationY>288</locationY>
         <defaultConnector>
-            <targetReference>getNonFinalDocChecklists</targetReference>
+            <targetReference>updateCaseIndicatorFalse</targetReference>
         </defaultConnector>
-        <defaultConnectorLabel>Has Final Docs — Check All Final</defaultConnectorLabel>
+        <defaultConnectorLabel>Non-Final Docs Exist — Set False</defaultConnectorLabel>
         <rules>
-            <name>docsNotComplete</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>varFinalDocChecklists</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <label>No Final Docs — Stop</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>checkAreAllDocsFinal</name>
-        <label>All Docs Final?</label>
-        <locationX>176</locationX>
-        <locationY>888</locationY>
-        <defaultConnector>
-            <targetReference>getQueueId</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>All Docs Final — Create Case</defaultConnectorLabel>
-        <rules>
-            <name>nonFinalDocsStillExist</name>
+            <name>noNonFinalDocs</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>varNonFinalDocChecklists</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
-                    <booleanValue>false</booleanValue>
+                    <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
-            <label>Non-Final Docs Exist — Stop</label>
+            <connector>
+                <targetReference>updateCaseIndicatorTrue</targetReference>
+            </connector>
+            <label>No Non-Final Docs — Set True</label>
         </rules>
     </decisions>
-    <decisions>
-        <name>decisionCaseExists</name>
-        <label>Case Already Exists?</label>
-        <locationX>176</locationX>
-        <locationY>1248</locationY>
-        <defaultConnector>
-            <targetReference>createCase</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>No — Create Case</defaultConnectorLabel>
-        <rules>
-            <name>caseExists</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>varExistingCaseId</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <label>Case Already Exists — Stop</label>
-        </rules>
-    </decisions>
-    <description>Record-Triggered Flow on Document_Checklist__c (After Update). Phase 2 of 2-phase Case creation. When a Document Checklist Status changes to Final, checks whether all docs for the linked Case Creation Rule+Opportunity are Final. If yes, creates the Case with the correct Record Type, Case Type, and Queue.</description>
+    <description>Record-Triggered Flow on Document_Checklist__c (After Update). Fires when a Document Checklist's Status changes to Final and it's linked to a Case via the Case-first engine (Case__c and Case_Creation_Rule__c both populated — CaseCreationRuleEvaluatorAction sets Case__c at creation time). Maintains Case.All_Start_Docs_Final__c as a status indicator only. Case creation itself is no longer gated here — CaseCreationRuleEvaluatorAction creates the Case (Status='New') and every Document_Checklist__c together the moment the Opportunity qualifies (Case-first). This flow previously created the Case only once all "required for case" docs were Final; that gate was removed so the Case and its team are engaged immediately, while this indicator still shows document-collection progress.</description>
     <label>Case Creation Trigger Flow</label>
     <processMetadataValues>
         <name>BuilderType</name>
@@ -77,180 +36,21 @@
         </value>
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
-    <recordCreates>
-        <name>createCase</name>
-        <label>Create Case</label>
-        <locationX>176</locationX>
-        <locationY>1368</locationY>
-        <inputAssignments>
-            <field>AccountId</field>
-            <value>
-                <elementReference>varOppAccountId</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Case_Creation_Rule__c</field>
-            <value>
-                <elementReference>$Record.Case_Creation_Rule__c</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Case_Type__c</field>
-            <value>
-                <elementReference>varCaseType</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Opportunity__c</field>
-            <value>
-                <elementReference>$Record.Opportunity__c</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Origin</field>
-            <value>
-                <stringValue>Opportunity Workflow</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>OwnerId</field>
-            <value>
-                <elementReference>varQueueId</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>RecordTypeId</field>
-            <value>
-                <elementReference>varRecordTypeId</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Status</field>
-            <value>
-                <stringValue>New</stringValue>
-            </value>
-        </inputAssignments>
-        <object>Case</object>
-    </recordCreates>
-    <recordLookups>
-        <name>checkCaseAlreadyExists</name>
-        <label>Check Case Already Exists</label>
-        <locationX>176</locationX>
-        <locationY>1128</locationY>
-        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>decisionCaseExists</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Opportunity__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>$Record.Opportunity__c</elementReference>
-            </value>
-        </filters>
-        <filters>
-            <field>Case_Creation_Rule__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>$Record.Case_Creation_Rule__c</elementReference>
-            </value>
-        </filters>
-        <filters>
-            <field>IsClosed</field>
-            <operator>EqualTo</operator>
-            <value>
-                <booleanValue>false</booleanValue>
-            </value>
-        </filters>
-        <object>Case</object>
-        <outputAssignments>
-            <assignToReference>varExistingCaseId</assignToReference>
-            <field>Id</field>
-        </outputAssignments>
-    </recordLookups>
-    <recordLookups>
-        <name>getCaseCreationRule</name>
-        <label>Get Case Creation Rule</label>
-        <locationX>176</locationX>
-        <locationY>288</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>getRecordTypeId</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>$Record.Case_Creation_Rule__c</elementReference>
-            </value>
-        </filters>
-        <object>Case_Creation_Rule__c</object>
-        <outputAssignments>
-            <assignToReference>varCaseType</assignToReference>
-            <field>Case_Type__c</field>
-        </outputAssignments>
-        <outputAssignments>
-            <assignToReference>varQueueDevName</assignToReference>
-            <field>Queue_Developer_Name__c</field>
-        </outputAssignments>
-        <outputAssignments>
-            <assignToReference>varRecordTypeDevName</assignToReference>
-            <field>Record_Type_Dev_Name__c</field>
-        </outputAssignments>
-    </recordLookups>
-    <recordLookups>
-        <name>getFinalDocChecklists</name>
-        <label>Get Final Document Checklists on Opportunity</label>
-        <locationX>176</locationX>
-        <locationY>648</locationY>
-        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>checkAllDocsAreFinal</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Opportunity__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>$Record.Opportunity__c</elementReference>
-            </value>
-        </filters>
-        <filters>
-            <field>Case_Creation_Rule__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>$Record.Case_Creation_Rule__c</elementReference>
-            </value>
-        </filters>
-        <filters>
-            <field>Status__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>Final</stringValue>
-            </value>
-        </filters>
-        <object>Document_Checklist__c</object>
-        <outputReference>varFinalDocChecklists</outputReference>
-        <queriedFields>Id</queriedFields>
-        <queriedFields>DocumentType__c</queriedFields>
-    </recordLookups>
     <recordLookups>
         <name>getNonFinalDocChecklists</name>
-        <label>Get Non-Final Document Checklists on Opportunity</label>
+        <label>Get Non-Final Required-For-Case Checklists</label>
         <locationX>176</locationX>
-        <locationY>828</locationY>
+        <locationY>168</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>checkAreAllDocsFinal</targetReference>
+            <targetReference>checkAllDocsFinal</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
-            <field>Opportunity__c</field>
+            <field>Case__c</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>$Record.Opportunity__c</elementReference>
+                <elementReference>$Record.Case__c</elementReference>
             </value>
         </filters>
         <filters>
@@ -271,127 +71,53 @@
         <outputReference>varNonFinalDocChecklists</outputReference>
         <queriedFields>Id</queriedFields>
     </recordLookups>
-    <recordLookups>
-        <name>getParentOpportunity</name>
-        <label>Get Parent Opportunity</label>
-        <locationX>176</locationX>
-        <locationY>168</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>getCaseCreationRule</targetReference>
-        </connector>
+    <recordUpdates>
+        <name>updateCaseIndicatorFalse</name>
+        <label>Set All Start Docs Final = false</label>
+        <locationX>308</locationX>
+        <locationY>408</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>$Record.Opportunity__c</elementReference>
+                <elementReference>$Record.Case__c</elementReference>
             </value>
         </filters>
-        <object>Opportunity</object>
-        <outputAssignments>
-            <assignToReference>varOppAccountId</assignToReference>
-            <field>AccountId</field>
-        </outputAssignments>
-        <outputAssignments>
-            <assignToReference>varOppStageName</assignToReference>
-            <field>StageName</field>
-        </outputAssignments>
-    </recordLookups>
-    <recordLookups>
-        <name>getQueueId</name>
-        <label>Get Queue by Developer Name</label>
-        <locationX>176</locationX>
-        <locationY>1008</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>checkCaseAlreadyExists</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Type</field>
-            <operator>EqualTo</operator>
+        <inputAssignments>
+            <field>All_Start_Docs_Final__c</field>
             <value>
-                <stringValue>Queue</stringValue>
+                <booleanValue>false</booleanValue>
             </value>
-        </filters>
-        <filters>
-            <field>DeveloperName</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>varQueueDevName</elementReference>
-            </value>
-        </filters>
-        <object>Group</object>
-        <outputAssignments>
-            <assignToReference>varQueueId</assignToReference>
-            <field>Id</field>
-        </outputAssignments>
-    </recordLookups>
-    <recordLookups>
-        <name>getRecordTypeId</name>
-        <label>Get Case Record Type ID</label>
+        </inputAssignments>
+        <object>Case</object>
+    </recordUpdates>
+    <recordUpdates>
+        <name>updateCaseIndicatorTrue</name>
+        <label>Set All Start Docs Final = true</label>
         <locationX>176</locationX>
         <locationY>408</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>getRequiredDocTypes</targetReference>
-        </connector>
         <filterLogic>and</filterLogic>
         <filters>
-            <field>DeveloperName</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>varRecordTypeDevName</elementReference>
-            </value>
-        </filters>
-        <filters>
-            <field>SobjectType</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>Case</stringValue>
-            </value>
-        </filters>
-        <object>RecordType</object>
-        <outputAssignments>
-            <assignToReference>varRecordTypeId</assignToReference>
             <field>Id</field>
-        </outputAssignments>
-    </recordLookups>
-    <recordLookups>
-        <name>getRequiredDocTypes</name>
-        <label>Get Required For Case Doc Requirements</label>
-        <locationX>176</locationX>
-        <locationY>528</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>getFinalDocChecklists</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Rule__c</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>$Record.Case_Creation_Rule__c</elementReference>
+                <elementReference>$Record.Case__c</elementReference>
             </value>
         </filters>
-        <filters>
-            <field>Is_Required_For_Case__c</field>
-            <operator>EqualTo</operator>
+        <inputAssignments>
+            <field>All_Start_Docs_Final__c</field>
             <value>
                 <booleanValue>true</booleanValue>
             </value>
-        </filters>
-        <object>Case_Creation_Doc_Requirement__c</object>
-        <outputReference>varRequiredDocRequirements</outputReference>
-        <queriedFields>Id</queriedFields>
-        <queriedFields>Document_Type__c</queriedFields>
-    </recordLookups>
+        </inputAssignments>
+        <object>Case</object>
+    </recordUpdates>
     <start>
         <locationX>176</locationX>
         <locationY>48</locationY>
         <connector>
-            <targetReference>getParentOpportunity</targetReference>
+            <targetReference>getNonFinalDocChecklists</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -409,7 +135,7 @@
             </value>
         </filters>
         <filters>
-            <field>Opportunity__c</field>
+            <field>Case__c</field>
             <operator>IsNull</operator>
             <value>
                 <booleanValue>false</booleanValue>
@@ -428,83 +154,11 @@
     </start>
     <status>Active</status>
     <variables>
-        <name>varCaseType</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>varExistingCaseId</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>varFinalDocChecklists</name>
-        <dataType>SObject</dataType>
-        <isCollection>true</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <objectType>Document_Checklist__c</objectType>
-    </variables>
-    <variables>
         <name>varNonFinalDocChecklists</name>
         <dataType>SObject</dataType>
         <isCollection>true</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <objectType>Document_Checklist__c</objectType>
-    </variables>
-    <variables>
-        <name>varOppAccountId</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>varOppStageName</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>varQueueDevName</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>varQueueId</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>varRecordTypeDevName</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>varRecordTypeId</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>varRequiredDocRequirements</name>
-        <dataType>SObject</dataType>
-        <isCollection>true</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <objectType>Case_Creation_Doc_Requirement__c</objectType>
     </variables>
 </Flow>

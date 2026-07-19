@@ -1,7 +1,68 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>67.0</apiVersion>
+    <actionCalls>
+        <name>callNotifyOpportunityOwner</name>
+        <label>Notify Opportunity Owner</label>
+        <locationX>176</locationX>
+        <locationY>1248</locationY>
+        <actionName>IRM_NotifyOpportunityOwnerAction</actionName>
+        <actionType>apex</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>requests</name>
+            <value>
+                <elementReference>varNotifyRequests</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>IRM_NotifyOpportunityOwnerAction</nameSegment>
+        <offset>0</offset>
+    </actionCalls>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <name>assignNotifyRequest</name>
+        <label>Build Notify Request and Append</label>
+        <locationX>176</locationX>
+        <locationY>1128</locationY>
+        <assignmentItems>
+            <assignToReference>varNotifyRequest.opportunityId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Opportunity__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varNotifyRequest.opportunityOwnerId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>varOpportunityOwnerId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varNotifyRequest.recordId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>loopCreatedExitChecklists.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varNotifyRequest.recordLabel</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Document Checklist</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varNotifyRequests</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>varNotifyRequest</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>loopCreatedExitChecklists</targetReference>
+        </connector>
+    </assignments>
     <assignments>
         <name>assignChecklistToCollection</name>
         <label>Build Checklist Record and Append</label>
@@ -54,6 +115,28 @@
         </connector>
     </assignments>
     <decisions>
+        <name>checkHasOpportunityOwner</name>
+        <label>Opportunity Owner Found?</label>
+        <locationX>176</locationX>
+        <locationY>888</locationY>
+        <defaultConnectorLabel>No Owner — End</defaultConnectorLabel>
+        <rules>
+            <name>hasOwner</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>varOpportunityOwnerId</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>getCreatedExitChecklists</targetReference>
+            </connector>
+            <label>Owner Found — Notify</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>checkRequirementsExist</name>
         <label>Exit Doc Requirements Found?</label>
         <locationX>176</locationX>
@@ -75,8 +158,22 @@
             <label>Requirements Found — Loop</label>
         </rules>
     </decisions>
-    <description>Record-Triggered Flow on Case (After Insert). When a Case is created with a Case_Type__c, looks up active Case_Exit_Doc_Requirement__c config records matching the Case RecordType and Case Type, then bulk-creates Draft Document_Checklist__c records linked to the Case for each matching requirement. These Draft records must reach Final status before the Case can be closed (enforced by Case_Exit_Document_Validation_Flow).</description>
+    <description>Record-Triggered Flow on Case (After Insert). When a Case is created with a Case_Type__c, looks up active Case_Exit_Doc_Requirement__c config records matching the Case RecordType and Case Type, then bulk-creates Draft Document_Checklist__c records linked to the Case for each matching requirement. These Draft records must reach Final status before the Case can be closed (enforced by Case_Exit_Document_Validation_Flow). If the Case is linked to an Opportunity, notifies the Opportunity owner (Chatter + bell, via IRM_NotifyOpportunityOwnerAction) for each Document Checklist created.</description>
     <label>Case Exit Doc Checklist Creation Flow</label>
+    <loops>
+        <name>loopCreatedExitChecklists</name>
+        <label>Loop: Newly Created Exit Checklists</label>
+        <locationX>176</locationX>
+        <locationY>1008</locationY>
+        <collectionReference>varCreatedExitChecklists</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>assignNotifyRequest</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>callNotifyOpportunityOwner</targetReference>
+        </noMoreValuesConnector>
+    </loops>
     <loops>
         <name>loopExitDocRequirements</name>
         <label>Loop: Exit Doc Requirements</label>
@@ -97,8 +194,55 @@
         <label>Create Exit Document Checklists</label>
         <locationX>176</locationX>
         <locationY>648</locationY>
+        <connector>
+            <targetReference>getCaseOpportunityOwner</targetReference>
+        </connector>
         <inputReference>varChecklistsToCreate</inputReference>
     </recordCreates>
+    <recordLookups>
+        <name>getCaseOpportunityOwner</name>
+        <label>Get Opportunity Owner</label>
+        <locationX>176</locationX>
+        <locationY>768</locationY>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>checkHasOpportunityOwner</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Opportunity__c</elementReference>
+            </value>
+        </filters>
+        <object>Opportunity</object>
+        <outputAssignments>
+            <assignToReference>varOpportunityOwnerId</assignToReference>
+            <field>OwnerId</field>
+        </outputAssignments>
+    </recordLookups>
+    <recordLookups>
+        <name>getCreatedExitChecklists</name>
+        <label>Get Newly Created Exit Checklists</label>
+        <locationX>176</locationX>
+        <locationY>888</locationY>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>loopCreatedExitChecklists</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Case__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </filters>
+        <object>Document_Checklist__c</object>
+        <outputReference>varCreatedExitChecklists</outputReference>
+        <queriedFields>Id</queriedFields>
+    </recordLookups>
     <recordLookups>
         <name>getExitDocRequirements</name>
         <label>Get Exit Doc Requirements for Case Type</label>
@@ -194,6 +338,14 @@
         <objectType>Document_Checklist__c</objectType>
     </variables>
     <variables>
+        <name>varCreatedExitChecklists</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Document_Checklist__c</objectType>
+    </variables>
+    <variables>
         <name>varExitDocRequirements</name>
         <dataType>SObject</dataType>
         <isCollection>true</isCollection>
@@ -208,6 +360,29 @@
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <objectType>Document_Checklist__c</objectType>
+    </variables>
+    <variables>
+        <name>varNotifyRequest</name>
+        <apexClass>IRM_NotifyOpportunityOwnerAction.Request</apexClass>
+        <dataType>Apex</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>varNotifyRequests</name>
+        <apexClass>IRM_NotifyOpportunityOwnerAction.Request</apexClass>
+        <dataType>Apex</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>varOpportunityOwnerId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
     </variables>
     <variables>
         <name>varRecordTypeDevName</name>

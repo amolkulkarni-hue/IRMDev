@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Require_Justification_When_Bypassed</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(Bypass_Requirement__c, ISBLANK(Bypass_Justification__c))</errorConditionFormula>
+    <errorMessage>A written justification is required in Bypass Justification when Bypass Requirement is checked.</errorMessage>
+</ValidationRule>

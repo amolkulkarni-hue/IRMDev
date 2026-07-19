@@ -69,8 +69,15 @@ public with sharing class CaseCreationRuleEvaluatorAction {
 
     // Orchestration entry point — called from OpportunityTriggerHandler.AfterInsert/AfterUpdate.
     // Runs in an After-context (unlike TouchLevelEvaluatorAction, which runs Before-save) because
-    // it creates Document_Checklist__c records on a different object, which needs the
+    // it creates Case and Document_Checklist__c records on different objects, which needs the
     // Opportunity's real Id and is a natural post-save side effect.
+    //
+    // Case-first: the Case (Status='New') and every Document_Checklist__c for a matched rule are
+    // created together, in this same transaction, the moment the Opportunity qualifies — Case
+    // creation is no longer gated behind any document being marked Final (that gate previously
+    // lived in Case_Creation_Trigger_Flow, which now only maintains a docs-final status indicator
+    // on the Case). Both new Cases and new Document Checklists trigger an owner notification via
+    // IRM_NotifyOpportunityOwnerAction.
     public static void createEligibleChecklistsAfterSave(List<Opportunity> newOpps, Map<Id, Opportunity> oldMap) {
         if (newOpps == null || newOpps.isEmpty()) return;
 
@@ -96,9 +103,11 @@ public with sharing class CaseCreationRuleEvaluatorAction {
         }
         if (relevantOpps.isEmpty()) return;
 
-        // Collect every (Opportunity, Rule, DocType) candidate first, then dedupe in one bulk
-        // query against existing Document_Checklist__c rows before inserting survivors.
-        List<Document_Checklist__c> candidates = new List<Document_Checklist__c>();
+        // Pass 1 — collect every matched (Opportunity, Rule) pair. This determines which Cases
+        // need to exist; Document_Checklist__c candidates are built afterward, once each pair's
+        // Case Id is known.
+        Map<String, Opportunity> matchedPairOpp = new Map<String, Opportunity>();
+        Map<String, Case_Creation_Rule__c> matchedPairRule = new Map<String, Case_Creation_Rule__c>();
         Set<Id> candidateOppIds = new Set<Id>();
         Set<Id> candidateRuleIds = new Set<Id>();
 
@@ -108,48 +117,187 @@ public with sharing class CaseCreationRuleEvaluatorAction {
 
             for (Case_Creation_Rule__c rule : stageRules) {
                 if (!ruleMatches(rule, opp)) continue;
-
-                List<SObject> docReqs = rule.getSObjects('Doc_Requirements__r');
-                if (docReqs == null) continue;
-                for (SObject dr : docReqs) {
-                    if ((Boolean) dr.get('Is_Required_To_Start__c') != true) continue;
-                    Document_Checklist__c dc = new Document_Checklist__c(
-                        Opportunity__c        = opp.Id,
-                        Case_Creation_Rule__c  = rule.Id,
-                        DocumentType__c        = (String) dr.get('Document_Type__c'),
-                        Document_Category__c   = mapDocCategory((String) dr.get('Document_Category__c')),
-                        Status__c              = 'Draft'
-                    );
-                    candidates.add(dc);
-                    candidateOppIds.add(opp.Id);
-                    candidateRuleIds.add(rule.Id);
-                }
+                String key = pairKey(opp.Id, rule.Id);
+                matchedPairOpp.put(key, opp);
+                matchedPairRule.put(key, rule);
+                candidateOppIds.add(opp.Id);
+                candidateRuleIds.add(rule.Id);
             }
         }
-        if (candidates.isEmpty()) return;
+        if (matchedPairOpp.isEmpty()) return;
 
-        Set<String> existingKeys = new Set<String>();
+        // ── Resolve or create the Case for every matched pair ──
+        Map<String, Id> pairKeyToCaseId = new Map<String, Id>();
+        for (Case existing : [
+            SELECT Id, Opportunity__c, Case_Creation_Rule__c
+            FROM Case
+            WHERE Opportunity__c IN :candidateOppIds
+              AND Case_Creation_Rule__c IN :candidateRuleIds
+              AND IsClosed = false
+        ]) {
+            pairKeyToCaseId.put(pairKey(existing.Opportunity__c, existing.Case_Creation_Rule__c), existing.Id);
+        }
+
+        List<String> pairKeysNeedingCase = new List<String>();
+        for (String key : matchedPairOpp.keySet()) {
+            if (!pairKeyToCaseId.containsKey(key)) pairKeysNeedingCase.add(key);
+        }
+        if (!pairKeysNeedingCase.isEmpty()) {
+            createCasesForPairs(pairKeysNeedingCase, matchedPairOpp, matchedPairRule, pairKeyToCaseId);
+        }
+
+        // Pass 2 — build every Document_Checklist__c candidate now that each pair's Case Id is
+        // resolved. Every Doc_Requirements__r row becomes a checklist (both Is_Required_To_Start__c
+        // and Is_Required_For_Case__c) since the Case already exists — there's no longer a
+        // "docs needed before the Case can exist" distinction to gate on.
+        List<Document_Checklist__c> checklistCandidates = new List<Document_Checklist__c>();
+        List<Opportunity> checklistCandidateOpp = new List<Opportunity>(); // same-index owner lookup
+        for (String key : matchedPairOpp.keySet()) {
+            Case_Creation_Rule__c rule = matchedPairRule.get(key);
+            List<SObject> docReqs = rule.getSObjects('Doc_Requirements__r');
+            if (docReqs == null) continue;
+            Opportunity opp = matchedPairOpp.get(key);
+            Id caseId = pairKeyToCaseId.get(key);
+            for (SObject dr : docReqs) {
+                Document_Checklist__c dc = new Document_Checklist__c(
+                    Opportunity__c        = opp.Id,
+                    Case_Creation_Rule__c  = rule.Id,
+                    DocumentType__c        = (String) dr.get('Document_Type__c'),
+                    Document_Category__c   = mapDocCategory((String) dr.get('Document_Category__c')),
+                    Status__c              = 'Draft'
+                );
+                if (caseId != null) dc.Case__c = caseId;
+                checklistCandidates.add(dc);
+                checklistCandidateOpp.add(opp);
+            }
+        }
+        if (checklistCandidates.isEmpty()) return;
+
+        Set<String> existingChecklistKeys = new Set<String>();
         for (Document_Checklist__c existing : [
             SELECT Opportunity__c, Case_Creation_Rule__c, DocumentType__c
             FROM Document_Checklist__c
             WHERE Opportunity__c IN :candidateOppIds AND Case_Creation_Rule__c IN :candidateRuleIds
         ]) {
-            existingKeys.add(dedupeKey(existing.Opportunity__c, existing.Case_Creation_Rule__c, existing.DocumentType__c));
+            existingChecklistKeys.add(dedupeKey(existing.Opportunity__c, existing.Case_Creation_Rule__c, existing.DocumentType__c));
         }
 
-        List<Document_Checklist__c> toInsert = new List<Document_Checklist__c>();
-        for (Document_Checklist__c dc : candidates) {
+        List<Document_Checklist__c> checklistsToInsert = new List<Document_Checklist__c>();
+        List<Opportunity> ownerOppForInsert = new List<Opportunity>();
+        for (Integer i = 0; i < checklistCandidates.size(); i++) {
+            Document_Checklist__c dc = checklistCandidates[i];
             String key = dedupeKey(dc.Opportunity__c, dc.Case_Creation_Rule__c, dc.DocumentType__c);
-            if (!existingKeys.contains(key)) {
-                existingKeys.add(key); // guard against duplicate candidates within this same batch
-                toInsert.add(dc);
+            if (!existingChecklistKeys.contains(key)) {
+                existingChecklistKeys.add(key); // guard against duplicate candidates within this same batch
+                checklistsToInsert.add(dc);
+                ownerOppForInsert.add(checklistCandidateOpp[i]);
             }
         }
-        if (!toInsert.isEmpty()) {
+        if (!checklistsToInsert.isEmpty()) {
             // Partial success — a single misconfigured Doc Requirement (e.g. missing
             // Document_Category__c) fails only that row, not the whole batch.
-            Database.insert(toInsert, false);
+            Database.insert(checklistsToInsert, false);
         }
+
+        notifyOpportunityOwners(matchedPairOpp, pairKeysNeedingCase, pairKeyToCaseId, checklistsToInsert, ownerOppForInsert);
+    }
+
+    private static String pairKey(Id oppId, Id ruleId) {
+        return oppId + '|' + ruleId;
+    }
+
+    // Bulk-resolves RecordTypeId (by Record_Type_Dev_Name__c) and Queue OwnerId (by
+    // Queue_Developer_Name__c) once for every distinct developer name across the pairs that need
+    // a new Case, then inserts them partial-success — mirrors the two lookups
+    // Case_Creation_Trigger_Flow previously performed per-record.
+    private static void createCasesForPairs(
+            List<String> pairKeysNeedingCase,
+            Map<String, Opportunity> matchedPairOpp,
+            Map<String, Case_Creation_Rule__c> matchedPairRule,
+            Map<String, Id> pairKeyToCaseId) {
+
+        Set<String> recordTypeDevNames = new Set<String>();
+        Set<String> queueDevNames = new Set<String>();
+        for (String key : pairKeysNeedingCase) {
+            Case_Creation_Rule__c rule = matchedPairRule.get(key);
+            if (String.isNotBlank(rule.Record_Type_Dev_Name__c)) recordTypeDevNames.add(rule.Record_Type_Dev_Name__c);
+            if (String.isNotBlank(rule.Queue_Developer_Name__c)) queueDevNames.add(rule.Queue_Developer_Name__c);
+        }
+
+        Map<String, Id> recordTypeIdByDevName = new Map<String, Id>();
+        for (RecordType rt : [SELECT Id, DeveloperName FROM RecordType WHERE SObjectType = 'Case' AND DeveloperName IN :recordTypeDevNames]) {
+            recordTypeIdByDevName.put(rt.DeveloperName, rt.Id);
+        }
+        Map<String, Id> queueIdByDevName = new Map<String, Id>();
+        for (Group g : [SELECT Id, DeveloperName FROM Group WHERE Type = 'Queue' AND DeveloperName IN :queueDevNames]) {
+            queueIdByDevName.put(g.DeveloperName, g.Id);
+        }
+
+        List<Case> casesToInsert = new List<Case>();
+        for (String key : pairKeysNeedingCase) {
+            Opportunity opp = matchedPairOpp.get(key);
+            Case_Creation_Rule__c rule = matchedPairRule.get(key);
+            Case c = new Case(
+                AccountId             = opp.AccountId,
+                Opportunity__c        = opp.Id,
+                Case_Creation_Rule__c = rule.Id,
+                Case_Type__c          = rule.Case_Type__c,
+                Origin                = 'Opportunity Workflow',
+                Status                = 'New'
+            );
+            Id rtId = recordTypeIdByDevName.get(rule.Record_Type_Dev_Name__c);
+            if (rtId != null) c.RecordTypeId = rtId;
+            Id queueId = queueIdByDevName.get(rule.Queue_Developer_Name__c);
+            if (queueId != null) c.OwnerId = queueId;
+            casesToInsert.add(c);
+        }
+
+        Database.insert(casesToInsert, false); // populates Id in-place on successful rows
+        for (Integer i = 0; i < casesToInsert.size(); i++) {
+            if (casesToInsert[i].Id != null) {
+                pairKeyToCaseId.put(pairKeysNeedingCase[i], casesToInsert[i].Id);
+            }
+        }
+    }
+
+    // Notifies each affected Opportunity's owner (Chatter + bell, via IRM_NotifyOpportunityOwnerAction)
+    // once per newly created Case and once per newly created Document_Checklist__c — never for
+    // pairs that resolved to a pre-existing open Case, and never for deduped checklist candidates.
+    private static void notifyOpportunityOwners(
+            Map<String, Opportunity> matchedPairOpp,
+            List<String> pairKeysNeedingCase,
+            Map<String, Id> pairKeyToCaseId,
+            List<Document_Checklist__c> insertedChecklists,
+            List<Opportunity> ownerOppForInsert) {
+
+        List<IRM_NotifyOpportunityOwnerAction.Request> requests = new List<IRM_NotifyOpportunityOwnerAction.Request>();
+
+        for (String key : pairKeysNeedingCase) {
+            Id caseId = pairKeyToCaseId.get(key);
+            if (caseId == null) continue; // Case insert failed for this pair
+            Opportunity opp = matchedPairOpp.get(key);
+            if (opp.OwnerId == null) continue;
+            requests.add(makeNotifyRequest(opp.Id, opp.OwnerId, caseId, 'Case'));
+        }
+
+        for (Integer i = 0; i < insertedChecklists.size(); i++) {
+            Document_Checklist__c dc = insertedChecklists[i];
+            if (dc.Id == null) continue; // failed insert row
+            Opportunity opp = ownerOppForInsert[i];
+            if (opp.OwnerId == null) continue;
+            requests.add(makeNotifyRequest(opp.Id, opp.OwnerId, dc.Id, 'Document Checklist'));
+        }
+
+        if (!requests.isEmpty()) IRM_NotifyOpportunityOwnerAction.notify(requests);
+    }
+
+    private static IRM_NotifyOpportunityOwnerAction.Request makeNotifyRequest(Id oppId, Id oppOwnerId, Id recordId, String recordLabel) {
+        IRM_NotifyOpportunityOwnerAction.Request req = new IRM_NotifyOpportunityOwnerAction.Request();
+        req.opportunityId = oppId;
+        req.opportunityOwnerId = oppOwnerId;
+        req.recordId = recordId;
+        req.recordLabel = recordLabel;
+        return req;
     }
 
     // Opportunity field API names referenced by any active Case_Creation_Condition__c, plus

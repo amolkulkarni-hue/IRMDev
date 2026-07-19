@@ -16,12 +16,20 @@
  * TouchLevelEvaluatorAction.recalculateBeforeSave() (Apex), not a Flow — Touch_Level_Recalculation_Flow
  * has been retired (see manifest/destructiveChanges).
  *
+ * Case creation is Case-first: CaseCreationRuleEvaluatorAction (Apex, called from
+ * OpportunityTriggerHandler.AfterInsert/AfterUpdate) creates the Case and every Document
+ * Checklist together the moment an Opportunity qualifies. Case_Creation_Trigger_Flow no
+ * longer creates the Case — it only maintains the Case.All_Start_Docs_Final__c indicator.
+ *
  * Flows under test (must be ACTIVE in Setup → Flows before running):
- *   Case_Creation_Eligibility_Flow          (After Save – Opportunity; scaffold — Phase 1)
- *   Case_Creation_Trigger_Flow              (After Update – Document_Checklist__c; Phase 2)
+ *   Case_Creation_Trigger_Flow              (After Update – Document_Checklist__c; docs-final indicator only)
  *   Support_Engagement_Case_Assignment_Flow (After Insert – Case)
  *   Case_Exit_Document_Validation_Flow      (Before Update – Case)
  *   Reference_Threshold_Key_Flow            (Before Save – Reference_Threshold__c)
+ *
+ * Touch_Level_Case_Mapping__c (a regular custom object, migrated off the former
+ * Touch_Level_Case_Mapping__mdt Custom Metadata Type) is seeded in @TestSetup below —
+ * Support_Engagement_Case_Assignment_Flow reads it by Case_Type__c to resolve the routing Queue.
  */
 @IsTest
 private class IRM_UserStoryTest {
@@ -120,9 +128,18 @@ private class IRM_UserStoryTest {
         insert new Case_Creation_Doc_Requirement__c(
             Rule__c                   = saRule.Id,
             Document_Type__c          = 'Solution Assessment',
+            Document_Category__c      = 'Scoping and Technical Documents',
             Is_Required_To_Start__c   = true,
             Is_Required_For_Case__c   = true
         );
+
+        // Touch_Level_Case_Mapping__c seed data — Support_Engagement_Case_Assignment_Flow reads
+        // these by Case_Type__c to resolve the routing Queue for US-1500 below.
+        insert new List<Touch_Level_Case_Mapping__c>{
+            new Touch_Level_Case_Mapping__c(Name = 'SA Assignment Mapping', Case_Type__c = 'SA Assignment', Queue_Developer_Name__c = 'Solution_Specialist_Queue', Is_Active__c = true),
+            new Touch_Level_Case_Mapping__c(Name = 'Pricing Mapping',       Case_Type__c = 'Pricing',       Queue_Developer_Name__c = 'DOC_Pricing_Queue',            Is_Active__c = true),
+            new Touch_Level_Case_Mapping__c(Name = 'Legal Review Mapping',  Case_Type__c = 'Legal Review',  Queue_Developer_Name__c = 'Legal_GCCS_Queue',             Is_Active__c = true)
+        };
     }
 
     private static Account getAccount() {
@@ -340,65 +357,59 @@ private class IRM_UserStoryTest {
     }
 
     // ─────────────────────────────────────────────────────────────────────────
-    // US-1136: Phase 2 — Case created when all required docs reach Final
+    // US-1136: Case-first — Case + Document Checklist created together when the
+    // Opportunity qualifies; Case_Creation_Trigger_Flow only maintains the
+    // All_Start_Docs_Final__c status indicator once required-for-case docs go Final.
     // ─────────────────────────────────────────────────────────────────────────
 
     @IsTest
-    static void test_US1136_phase2_caseCreatedWhenAllDocsFinal() {
-        Account acc   = getAccount();
-        Opportunity opp = makeOpp('Qualification', 600000);
-        Case_Creation_Rule__c rule = [SELECT Id FROM Case_Creation_Rule__c LIMIT 1];
-
-        Document_Checklist__c doc = new Document_Checklist__c(
-            Opportunity__c        = opp.Id,
-            Case_Creation_Rule__c = rule.Id,
-            Status__c             = 'Draft'
-        );
-        insert doc;
-
-        Integer casesBefore = [SELECT COUNT() FROM Case WHERE AccountId = :acc.Id];
-
+    static void test_US1136_caseFirst_caseCreatedImmediatelyOnQualifyingOpp() {
         Test.startTest();
-        doc.Status__c = 'Final';
-        update doc;
+        Opportunity opp = makeOpp('Qualification', 600000);
         Test.stopTest();
 
-        Integer casesAfter = [SELECT COUNT() FROM Case WHERE AccountId = :acc.Id];
-        System.assert(casesAfter > casesBefore,
-            'US-1136 Phase 2: Finalising all required Document Checklists should trigger Case creation');
-
-        Case created = [SELECT Id, Case_Type__c, OwnerId FROM Case WHERE AccountId = :acc.Id LIMIT 1];
-        System.assertEquals('SA Assignment', created.Case_Type__c,
-            'US-1136 Phase 2: Created Case should have the correct Case Type from the rule');
+        List<Case> cases = [SELECT Id, Case_Type__c, Status FROM Case WHERE Opportunity__c = :opp.Id];
+        System.assertEquals(1, cases.size(),
+            'US-1136 Case-first: the Case should be created immediately when the Opportunity qualifies.');
+        System.assertEquals('New', cases[0].Status);
+        System.assertEquals('SA Assignment', cases[0].Case_Type__c,
+            'US-1136 Case-first: Created Case should have the correct Case Type from the rule');
     }
 
     @IsTest
-    static void test_US1136_phase2_caseNotCreatedWhenSomeDocsPending() {
-        Account acc   = getAccount();
+    static void test_US1136_caseFirst_allStartDocsFinalIndicatorTracksDocStatus() {
         Opportunity opp = makeOpp('Qualification', 600000);
         Case_Creation_Rule__c rule = [SELECT Id FROM Case_Creation_Rule__c LIMIT 1];
-
-        // Two docs — only finalise one
-        Document_Checklist__c doc1 = new Document_Checklist__c(
-            Opportunity__c = opp.Id,
-            Case_Creation_Rule__c = rule.Id, Status__c = 'Draft'
-        );
-        Document_Checklist__c doc2 = new Document_Checklist__c(
-            Opportunity__c = opp.Id,
-            Case_Creation_Rule__c = rule.Id, Status__c = 'Draft'
-        );
-        insert new List<Document_Checklist__c>{ doc1, doc2 };
-
-        Integer casesBefore = [SELECT COUNT() FROM Case WHERE AccountId = :acc.Id];
+        Case createdCase = [SELECT Id FROM Case WHERE Opportunity__c = :opp.Id];
+        Document_Checklist__c doc = [
+            SELECT Id FROM Document_Checklist__c
+            WHERE Opportunity__c = :opp.Id AND Case_Creation_Rule__c = :rule.Id LIMIT 1
+        ];
 
         Test.startTest();
-        doc1.Status__c = 'Final'; // one of two — not all done
-        update doc1;
+        doc.Status__c = 'Final';
+        doc.Submitted_Date__c = Date.today();
+        update doc;
         Test.stopTest();
 
-        Integer casesAfter = [SELECT COUNT() FROM Case WHERE AccountId = :acc.Id];
-        System.assertEquals(casesBefore, casesAfter,
-            'US-1136 Phase 2: Case should NOT be created while any required Document Checklist is still Draft');
+        Case afterFinal = [SELECT Id, All_Start_Docs_Final__c FROM Case WHERE Id = :createdCase.Id];
+        System.assertEquals(true, afterFinal.All_Start_Docs_Final__c,
+            'US-1136 Case-first: All_Start_Docs_Final__c should be true once every required-for-case doc is Final.');
+    }
+
+    @IsTest
+    static void test_US1136_caseFirst_noDuplicateCaseOnReEvaluation() {
+        Opportunity opp = makeOpp('Qualification', 600000);
+        Integer casesAfterInsert = [SELECT COUNT() FROM Case WHERE Opportunity__c = :opp.Id];
+
+        Test.startTest();
+        opp.Amount = 700000; // still matches — Amount is a watched field, re-triggers evaluation
+        update opp;
+        Test.stopTest();
+
+        Integer casesAfterUpdate = [SELECT COUNT() FROM Case WHERE Opportunity__c = :opp.Id];
+        System.assertEquals(casesAfterInsert, casesAfterUpdate,
+            'US-1136 Case-first: re-evaluating an Opportunity that still matches the same rule must not create a second Case.');
     }
 
     // ─────────────────────────────────────────────────────────────────────────
@@ -557,7 +568,7 @@ private class IRM_UserStoryTest {
     }
 
     // ─────────────────────────────────────────────────────────────────────────
-    // US-1500: Case Queue Routing via Touch_Level_Case_Mapping__mdt
+    // US-1500: Case Queue Routing via Touch_Level_Case_Mapping__c
     // AC: When a Case is inserted, OwnerId is set to the queue mapped by Case Type
     // ─────────────────────────────────────────────────────────────────────────
 
