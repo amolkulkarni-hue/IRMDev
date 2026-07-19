@@ -127,7 +127,7 @@ private class IRM_UserStoryTest {
         );
         insert new Case_Creation_Doc_Requirement__c(
             Rule__c                   = saRule.Id,
-            Document_Type__c          = 'Solution Assessment',
+            Document_Type__c          = 'Business Problem Statement',
             Document_Category__c      = 'Scoping and Technical Documents',
             Is_Required_To_Start__c   = true,
             Is_Required_For_Case__c   = true
@@ -320,7 +320,7 @@ private class IRM_UserStoryTest {
         System.assertEquals('SA Assignment',            (String) mr.get('caseType'));
         System.assertEquals('Deal_Support',             (String) mr.get('recordTypeDeveloperName'));
         System.assertEquals('Solution_Specialist_Queue',(String) mr.get('queueDeveloperName'));
-        System.assert(((String) mr.get('requiredDocTypes')).contains('Solution Assessment'),
+        System.assert(((String) mr.get('requiredDocTypes')).contains('Business Problem Statement'),
             'Phase 1: Required-to-start doc type should be in the response');
     }
 

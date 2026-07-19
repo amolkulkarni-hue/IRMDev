@@ -40,6 +40,9 @@ private class IRM_DocChecklistTest {
             new SVStatus__c(Name = 'Add-On',     Amount__c = 0, Stage__c = 'Qualification', SetupOwnerId = UserInfo.getOrganizationId()),
             new SVStatus__c(Name = 'Expansion',  Amount__c = 0, Stage__c = 'Qualification', SetupOwnerId = UserInfo.getOrganizationId())
         };
+        // Correctly-named SVStatus__c row (Name must be exactly 'SVStatusPassed') — prevents the
+        // SVStatus.cls line 39 NPE on Amount/Type/StageName Opportunity updates.
+        insert new SVStatus__c(Name = 'SVStatusPassed', Amount__c = 0, SetupOwnerId = UserInfo.getOrganizationId());
         Account acc = new Account(
             Name = 'IRM Doc Test Co',
             BillingCountry = 'United States', BillingState = 'NY', BillingPostalCode = '11209'
@@ -64,7 +67,7 @@ private class IRM_DocChecklistTest {
             Field_API_Name__c = 'Amount', Operator__c = 'GREATER_OR_EQUAL', Value__c = '500000'
         );
         insert new Case_Creation_Doc_Requirement__c(
-            Rule__c = rule.Id, Document_Type__c = 'Solution Assessment',
+            Rule__c = rule.Id, Document_Type__c = 'Business Problem Statement',
             Document_Category__c = 'Scoping and Technical Documents',
             Is_Required_To_Start__c = true, Is_Required_For_Case__c = true
         );
