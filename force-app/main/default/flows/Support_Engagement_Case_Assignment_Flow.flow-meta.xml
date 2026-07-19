@@ -46,7 +46,7 @@
             <label>Queue Not Found</label>
         </rules>
     </decisions>
-    <description>Record-Triggered Flow on Case (After Insert). Fires when a new Case is created with a Type value. Looks up Touch_Level_Case_Mapping__c by Case Type, resolves the matching Queue, and assigns Case OwnerId. (Migrated from the Touch_Level_Case_Mapping__mdt Custom Metadata Type so mapping changes carry field history tracking.)</description>
+    <description>Record-Triggered Flow on Case (After Insert). Fires when a new Case is created with a Type value. Looks up Touch_Level_Case_Routing__c by Case Type, resolves the matching Queue, and assigns Case OwnerId. (Migrated from the Touch_Level_Case_Mapping__mdt Custom Metadata Type so mapping changes carry field history tracking.)</description>
     <label>Support Engagement Case Assignment Flow</label>
     <processMetadataValues>
         <name>BuilderType</name>
@@ -79,7 +79,7 @@
                 <booleanValue>true</booleanValue>
             </value>
         </filters>
-        <object>Touch_Level_Case_Mapping__c</object>
+        <object>Touch_Level_Case_Routing__c</object>
         <outputAssignments>
             <assignToReference>varMappedQueueDevName</assignToReference>
             <field>Queue_Developer_Name__c</field>

@@ -20,8 +20,8 @@ private class IRM_NotifyOpportunityOwnerActionTest {
         return [SELECT Id, OwnerId FROM Opportunity LIMIT 1];
     }
 
-    private static IRM_NotifyOpportunityOwnerAction.Request makeRequest(Id oppId, Id ownerId, Id recordId, String label) {
-        IRM_NotifyOpportunityOwnerAction.Request req = new IRM_NotifyOpportunityOwnerAction.Request();
+    private static IRM_NotifyOpportunityOwnerRequest makeRequest(Id oppId, Id ownerId, Id recordId, String label) {
+        IRM_NotifyOpportunityOwnerRequest req = new IRM_NotifyOpportunityOwnerRequest();
         req.opportunityId = oppId;
         req.opportunityOwnerId = ownerId;
         req.recordId = recordId;
@@ -34,7 +34,7 @@ private class IRM_NotifyOpportunityOwnerActionTest {
         Opportunity opp = getOpp();
 
         Test.startTest();
-        IRM_NotifyOpportunityOwnerAction.notify(new List<IRM_NotifyOpportunityOwnerAction.Request>{
+        IRM_NotifyOpportunityOwnerAction.notify(new List<IRM_NotifyOpportunityOwnerRequest>{
             makeRequest(opp.Id, opp.OwnerId, opp.Id, 'Case')
         });
         Test.stopTest();
@@ -47,7 +47,7 @@ private class IRM_NotifyOpportunityOwnerActionTest {
     static void test_notify_bulkCreatesOneFeedItemPerRequest() {
         Opportunity opp = getOpp();
 
-        List<IRM_NotifyOpportunityOwnerAction.Request> requests = new List<IRM_NotifyOpportunityOwnerAction.Request>{
+        List<IRM_NotifyOpportunityOwnerRequest> requests = new List<IRM_NotifyOpportunityOwnerRequest>{
             makeRequest(opp.Id, opp.OwnerId, opp.Id, 'Case'),
             makeRequest(opp.Id, opp.OwnerId, opp.Id, 'Document Checklist'),
             makeRequest(opp.Id, opp.OwnerId, opp.Id, 'Document Checklist')
@@ -65,7 +65,7 @@ private class IRM_NotifyOpportunityOwnerActionTest {
     static void test_notify_nullOrEmptyListIsNoOp() {
         Test.startTest();
         IRM_NotifyOpportunityOwnerAction.notify(null);
-        IRM_NotifyOpportunityOwnerAction.notify(new List<IRM_NotifyOpportunityOwnerAction.Request>());
+        IRM_NotifyOpportunityOwnerAction.notify(new List<IRM_NotifyOpportunityOwnerRequest>());
         Test.stopTest();
 
         System.assertEquals(0, [SELECT COUNT() FROM FeedItem],
@@ -77,7 +77,7 @@ private class IRM_NotifyOpportunityOwnerActionTest {
         Opportunity opp = getOpp();
 
         Test.startTest();
-        IRM_NotifyOpportunityOwnerAction.notify(new List<IRM_NotifyOpportunityOwnerAction.Request>{
+        IRM_NotifyOpportunityOwnerAction.notify(new List<IRM_NotifyOpportunityOwnerRequest>{
             makeRequest(null, opp.OwnerId, opp.Id, 'Case'),
             makeRequest(opp.Id, null, opp.Id, 'Case'),
             makeRequest(opp.Id, opp.OwnerId, null, 'Case')
@@ -93,7 +93,7 @@ private class IRM_NotifyOpportunityOwnerActionTest {
         Opportunity opp = getOpp();
 
         Test.startTest();
-        IRM_NotifyOpportunityOwnerAction.notifyInvocable(new List<IRM_NotifyOpportunityOwnerAction.Request>{
+        IRM_NotifyOpportunityOwnerAction.notifyInvocable(new List<IRM_NotifyOpportunityOwnerRequest>{
             makeRequest(opp.Id, opp.OwnerId, opp.Id, 'Case')
         });
         Test.stopTest();

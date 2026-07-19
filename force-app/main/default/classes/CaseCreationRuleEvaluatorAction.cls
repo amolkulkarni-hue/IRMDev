@@ -270,7 +270,7 @@ public with sharing class CaseCreationRuleEvaluatorAction {
             List<Document_Checklist__c> insertedChecklists,
             List<Opportunity> ownerOppForInsert) {
 
-        List<IRM_NotifyOpportunityOwnerAction.Request> requests = new List<IRM_NotifyOpportunityOwnerAction.Request>();
+        List<IRM_NotifyOpportunityOwnerRequest> requests = new List<IRM_NotifyOpportunityOwnerRequest>();
 
         for (String key : pairKeysNeedingCase) {
             Id caseId = pairKeyToCaseId.get(key);
@@ -291,8 +291,8 @@ public with sharing class CaseCreationRuleEvaluatorAction {
         if (!requests.isEmpty()) IRM_NotifyOpportunityOwnerAction.notify(requests);
     }
 
-    private static IRM_NotifyOpportunityOwnerAction.Request makeNotifyRequest(Id oppId, Id oppOwnerId, Id recordId, String recordLabel) {
-        IRM_NotifyOpportunityOwnerAction.Request req = new IRM_NotifyOpportunityOwnerAction.Request();
+    private static IRM_NotifyOpportunityOwnerRequest makeNotifyRequest(Id oppId, Id oppOwnerId, Id recordId, String recordLabel) {
+        IRM_NotifyOpportunityOwnerRequest req = new IRM_NotifyOpportunityOwnerRequest();
         req.opportunityId = oppId;
         req.opportunityOwnerId = oppOwnerId;
         req.recordId = recordId;

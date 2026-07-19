@@ -27,7 +27,7 @@
  *   Case_Exit_Document_Validation_Flow      (Before Update – Case)
  *   Reference_Threshold_Key_Flow            (Before Save – Reference_Threshold__c)
  *
- * Touch_Level_Case_Mapping__c (a regular custom object, migrated off the former
+ * Touch_Level_Case_Routing__c (a regular custom object, migrated off the former
  * Touch_Level_Case_Mapping__mdt Custom Metadata Type) is seeded in @TestSetup below —
  * Support_Engagement_Case_Assignment_Flow reads it by Case_Type__c to resolve the routing Queue.
  */
@@ -133,12 +133,12 @@ private class IRM_UserStoryTest {
             Is_Required_For_Case__c   = true
         );
 
-        // Touch_Level_Case_Mapping__c seed data — Support_Engagement_Case_Assignment_Flow reads
+        // Touch_Level_Case_Routing__c seed data — Support_Engagement_Case_Assignment_Flow reads
         // these by Case_Type__c to resolve the routing Queue for US-1500 below.
-        insert new List<Touch_Level_Case_Mapping__c>{
-            new Touch_Level_Case_Mapping__c(Name = 'SA Assignment Mapping', Case_Type__c = 'SA Assignment', Queue_Developer_Name__c = 'Solution_Specialist_Queue', Is_Active__c = true),
-            new Touch_Level_Case_Mapping__c(Name = 'Pricing Mapping',       Case_Type__c = 'Pricing',       Queue_Developer_Name__c = 'DOC_Pricing_Queue',            Is_Active__c = true),
-            new Touch_Level_Case_Mapping__c(Name = 'Legal Review Mapping',  Case_Type__c = 'Legal Review',  Queue_Developer_Name__c = 'Legal_GCCS_Queue',             Is_Active__c = true)
+        insert new List<Touch_Level_Case_Routing__c>{
+            new Touch_Level_Case_Routing__c(Name = 'SA Assignment Mapping', Case_Type__c = 'SA Assignment', Queue_Developer_Name__c = 'Solution_Specialist_Queue', Is_Active__c = true),
+            new Touch_Level_Case_Routing__c(Name = 'Pricing Mapping',       Case_Type__c = 'Pricing',       Queue_Developer_Name__c = 'DOC_Pricing_Queue',            Is_Active__c = true),
+            new Touch_Level_Case_Routing__c(Name = 'Legal Review Mapping',  Case_Type__c = 'Legal Review',  Queue_Developer_Name__c = 'Legal_GCCS_Queue',             Is_Active__c = true)
         };
     }
 
@@ -568,7 +568,7 @@ private class IRM_UserStoryTest {
     }
 
     // ─────────────────────────────────────────────────────────────────────────
-    // US-1500: Case Queue Routing via Touch_Level_Case_Mapping__c
+    // US-1500: Case Queue Routing via Touch_Level_Case_Routing__c
     // AC: When a Case is inserted, OwnerId is set to the queue mapped by Case Type
     // ─────────────────────────────────────────────────────────────────────────
 
