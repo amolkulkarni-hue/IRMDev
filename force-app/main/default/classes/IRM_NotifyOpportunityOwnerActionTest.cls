@@ -7,11 +7,28 @@ private class IRM_NotifyOpportunityOwnerActionTest {
 
     @TestSetup
     static void setup() {
-        Account acc = new Account(Name = 'IRM Notify Test Co');
+        IM_Country__c testCountry = new IM_Country__c(Name = 'United States');
+        insert testCountry;
+        insert new IM_Alternative_Country_Name__c(
+            IM_Country__c = testCountry.Id, Alternative_Name__c = 'United States'
+        );
+        // Required by OpportunityHelper.createOpportunityShare (Country_Settings__c and
+        // Opportunity_Security__c are list custom settings read during Opportunity AfterInsert)
+        insert new Country_Settings__c(Name = 'United States', Object_Name__c = 'Opportunity', SetupOwnerId = UserInfo.getOrganizationId());
+        insert new List<Opportunity_Security__c>{
+            new Opportunity_Security__c(Name = 'Primary CDE',          Field_Name__c = 'Primary_CDE__c',            Object_Name__c = 'Account',     Visibility_Access_Level__c = 'R', SetupOwnerId = UserInfo.getOrganizationId()),
+            new Opportunity_Security__c(Name = 'Original Lead Owner',  Field_Name__c = 'IM_Original_Lead_Owner__c', Object_Name__c = 'Opportunity', Visibility_Access_Level__c = 'W', SetupOwnerId = UserInfo.getOrganizationId()),
+            new Opportunity_Security__c(Name = 'Primary BDE',          Field_Name__c = 'Primary_BDE__c',            Object_Name__c = 'Account',     Visibility_Access_Level__c = 'W', SetupOwnerId = UserInfo.getOrganizationId())
+        };
+        Account acc = new Account(
+            Name = 'IRM Notify Test Co',
+            BillingCountry = 'United States', BillingState = 'NY', BillingPostalCode = '11209'
+        );
         insert acc;
         Opportunity opp = new Opportunity(
             Name = 'IRM Notify Test Opp', AccountId = acc.Id,
-            StageName = 'Qualification', CloseDate = Date.today().addDays(30), Amount = 100000
+            StageName = 'Qualification', CloseDate = Date.today().addDays(30), Amount = 100000,
+            Bypass_Validation__c = true
         );
         insert opp;
     }
