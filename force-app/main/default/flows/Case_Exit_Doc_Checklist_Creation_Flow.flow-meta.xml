@@ -5,64 +5,41 @@
         <name>callNotifyOpportunityOwner</name>
         <label>Notify Opportunity Owner</label>
         <locationX>176</locationX>
-        <locationY>1248</locationY>
+        <locationY>1128</locationY>
         <actionName>IRM_NotifyOpportunityOwnerAction</actionName>
         <actionType>apex</actionType>
+        <connector>
+            <targetReference>loopCreatedExitChecklists</targetReference>
+        </connector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
-            <name>requests</name>
+            <name>opportunityId</name>
             <value>
-                <elementReference>varNotifyRequests</elementReference>
+                <elementReference>$Record.Opportunity__c</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>opportunityOwnerId</name>
+            <value>
+                <elementReference>varOpportunityOwnerId</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>recordId</name>
+            <value>
+                <elementReference>loopCreatedExitChecklists.Id</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>recordLabel</name>
+            <value>
+                <stringValue>Document Checklist</stringValue>
             </value>
         </inputParameters>
         <nameSegment>IRM_NotifyOpportunityOwnerAction</nameSegment>
         <offset>0</offset>
     </actionCalls>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
-    <assignments>
-        <name>assignNotifyRequest</name>
-        <label>Build Notify Request and Append</label>
-        <locationX>176</locationX>
-        <locationY>1128</locationY>
-        <assignmentItems>
-            <assignToReference>varNotifyRequest.opportunityId</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>$Record.Opportunity__c</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>varNotifyRequest.opportunityOwnerId</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>varOpportunityOwnerId</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>varNotifyRequest.recordId</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>loopCreatedExitChecklists.Id</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>varNotifyRequest.recordLabel</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Document Checklist</stringValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>varNotifyRequests</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <elementReference>varNotifyRequest</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>loopCreatedExitChecklists</targetReference>
-        </connector>
-    </assignments>
     <assignments>
         <name>assignChecklistToCollection</name>
         <label>Build Checklist Record and Append</label>
@@ -168,11 +145,8 @@
         <collectionReference>varCreatedExitChecklists</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
-            <targetReference>assignNotifyRequest</targetReference>
-        </nextValueConnector>
-        <noMoreValuesConnector>
             <targetReference>callNotifyOpportunityOwner</targetReference>
-        </noMoreValuesConnector>
+        </nextValueConnector>
     </loops>
     <loops>
         <name>loopExitDocRequirements</name>
@@ -360,22 +334,6 @@
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <objectType>Document_Checklist__c</objectType>
-    </variables>
-    <variables>
-        <name>varNotifyRequest</name>
-        <apexClass>IRM_NotifyOpportunityOwnerRequest</apexClass>
-        <dataType>Apex</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>varNotifyRequests</name>
-        <apexClass>IRM_NotifyOpportunityOwnerRequest</apexClass>
-        <dataType>Apex</dataType>
-        <isCollection>true</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
     </variables>
     <variables>
         <name>varOpportunityOwnerId</name>
