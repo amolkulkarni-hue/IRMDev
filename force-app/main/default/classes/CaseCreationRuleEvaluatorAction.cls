@@ -252,10 +252,59 @@ public with sharing class CaseCreationRuleEvaluatorAction {
             casesToInsert.add(c);
         }
 
-        Database.insert(casesToInsert, false); // populates Id in-place on successful rows
+        // Explicitly suppress the default assignment rule on this DML. This alone does not fully
+        // protect us — see the Queueable re-assert below — but it is still correct practice for
+        // any assignment rule explicitly requested by this DML itself.
+        Database.DMLOptions dmlOpts = new Database.DMLOptions();
+        dmlOpts.optAllOrNone = false;
+        dmlOpts.assignmentRuleHeader.useDefaultRule = false;
+        Database.insert(casesToInsert, dmlOpts); // populates Id in-place on successful rows
         for (Integer i = 0; i < casesToInsert.size(); i++) {
             if (casesToInsert[i].Id != null) {
                 pairKeyToCaseId.put(pairKeysNeedingCase[i], casesToInsert[i].Id);
+            }
+        }
+
+        // A calling REST request's Sforce-Auto-Assign header (default TRUE when the caller doesn't
+        // set it — e.g. Data Loader, integrations, or the UI's own save request) applies
+        // transitively to this nested Case insert and silently overrides the queue OwnerId set
+        // above with whatever the org's active native Case Assignment Rule falls back to.
+        // Database.DMLOptions cannot suppress an inherited header — per Salesforce docs,
+        // useDefaultRule=false "does not disable other existing assignment rules on the object."
+        // Re-asserting ownership from a Queueable escapes the inherited header because the async
+        // job runs in its own transaction, outside the original request context.
+        Map<Id, Id> caseIdToIntendedOwnerId = new Map<Id, Id>();
+        for (Case c : casesToInsert) {
+            if (c.Id != null && c.OwnerId != null) {
+                caseIdToIntendedOwnerId.put(c.Id, c.OwnerId);
+            }
+        }
+        if (!caseIdToIntendedOwnerId.isEmpty()) {
+            System.enqueueJob(new ReassertCaseOwnerJob(caseIdToIntendedOwnerId));
+        }
+    }
+
+    // Corrects Case.OwnerId back to the queue this engine assigned, in case an inherited
+    // Sforce-Auto-Assign header caused the org's active Case Assignment Rule to override it
+    // during the original insert (see createCasesForPairs above).
+    public class ReassertCaseOwnerJob implements Queueable {
+        private Map<Id, Id> caseIdToIntendedOwnerId;
+
+        public ReassertCaseOwnerJob(Map<Id, Id> caseIdToIntendedOwnerId) {
+            this.caseIdToIntendedOwnerId = caseIdToIntendedOwnerId;
+        }
+
+        public void execute(QueueableContext ctx) {
+            List<Case> casesToFix = new List<Case>();
+            for (Case c : [SELECT Id, OwnerId FROM Case WHERE Id IN :caseIdToIntendedOwnerId.keySet()]) {
+                Id intendedOwnerId = caseIdToIntendedOwnerId.get(c.Id);
+                if (intendedOwnerId != null && c.OwnerId != intendedOwnerId) {
+                    c.OwnerId = intendedOwnerId;
+                    casesToFix.add(c);
+                }
+            }
+            if (!casesToFix.isEmpty()) {
+                update casesToFix;
             }
         }
     }
