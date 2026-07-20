@@ -135,7 +135,7 @@
             <label>Requirements Found — Loop</label>
         </rules>
     </decisions>
-    <description>Record-Triggered Flow on Case (After Insert). When a Case is created with a Case_Type__c, looks up active Case_Exit_Doc_Requirement__c config records matching the Case RecordType and Case Type, then bulk-creates Draft Document_Checklist__c records linked to the Case for each matching requirement. These Draft records must reach Final status before the Case can be closed (enforced by Case_Exit_Document_Validation_Flow). If the Case is linked to an Opportunity, notifies the Opportunity owner (Chatter + bell, via IRM_NotifyOpportunityOwnerAction) for each Document Checklist created.</description>
+    <description>Record-Triggered Flow on Case (After Insert). When a Case is created with a Type value, looks up active Case_Exit_Doc_Requirement__c config records matching the Case RecordType and Case Type (standard Case.Type field — the routing/case-creation engine no longer uses the custom Case_Type__c field), then bulk-creates Draft Document_Checklist__c records linked to the Case for each matching requirement. These Draft records must reach Final status before the Case can be closed (enforced by Case_Exit_Document_Validation_Flow). If the Case is linked to an Opportunity, notifies the Opportunity owner (Chatter + bell, via IRM_NotifyOpportunityOwnerAction) for each Document Checklist created.</description>
     <label>Case Exit Doc Checklist Creation Flow</label>
     <loops>
         <name>loopCreatedExitChecklists</name>
@@ -238,7 +238,7 @@
             <field>Case_Type__c</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>$Record.Case_Type__c</elementReference>
+                <elementReference>$Record.Type</elementReference>
             </value>
         </filters>
         <filters>
@@ -292,7 +292,7 @@
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
-            <field>Case_Type__c</field>
+            <field>Type</field>
             <operator>IsNull</operator>
             <value>
                 <booleanValue>false</booleanValue>

@@ -72,20 +72,20 @@ private class IRM_CaseRoutingTest {
     @IsTest
     static void test_saAssignmentRoutedToSolutionSpecialistQueue() {
         Id queueId = getQueueId('Solution_Specialist_Queue');
-        System.debug('TEST: Inserting Case with Case_Type__c=SA Assignment. Expect OwnerId=' + queueId);
+        System.debug('TEST: Inserting Case with Type=SA Assignment. Expect OwnerId=' + queueId);
         System.assert(queueId != null,
             'PRE-CONDITION: Solution_Specialist_Queue must exist in org. Was the queue deployment successful?');
 
         Test.startTest();
         Case c = new Case(
             AccountId = getAccount().Id, ContactId = getContactId(),
-            Subject = 'SA Routing Test', Case_Type__c = 'SA Assignment', Status = 'New'
+            Subject = 'SA Routing Test', Type = 'SA Assignment', Status = 'New'
         );
         insert c;
         Test.stopTest();
 
-        Case r = [SELECT Id, OwnerId, Case_Type__c FROM Case WHERE Id = :c.Id];
-        System.debug('RESULT: Case Id=' + r.Id + ' | Case_Type__c=' + r.Case_Type__c + ' | OwnerId=' + r.OwnerId + ' | Expected=' + queueId);
+        Case r = [SELECT Id, OwnerId, Type FROM Case WHERE Id = :c.Id];
+        System.debug('RESULT: Case Id=' + r.Id + ' | Type=' + r.Type + ' | OwnerId=' + r.OwnerId + ' | Expected=' + queueId);
 
         System.assertEquals(queueId, r.OwnerId,
             'US-1500: SA Assignment Case should be routed to Solution_Specialist_Queue. OwnerId=' + r.OwnerId + ' Expected=' + queueId
@@ -97,13 +97,13 @@ private class IRM_CaseRoutingTest {
     @IsTest
     static void test_pricingRoutedToDOCPricingQueue() {
         Id queueId = getQueueId('DOC_Pricing_Queue');
-        System.debug('TEST: Inserting Case with Case_Type__c=Pricing. Expect OwnerId=' + queueId);
+        System.debug('TEST: Inserting Case with Type=Pricing. Expect OwnerId=' + queueId);
         System.assert(queueId != null, 'PRE-CONDITION: DOC_Pricing_Queue must exist in org.');
 
         Test.startTest();
         Case c = new Case(
             AccountId = getAccount().Id, ContactId = getContactId(),
-            Subject = 'Pricing Routing Test', Case_Type__c = 'Pricing', Status = 'New'
+            Subject = 'Pricing Routing Test', Type = 'Pricing', Status = 'New'
         );
         insert c;
         Test.stopTest();
@@ -120,13 +120,13 @@ private class IRM_CaseRoutingTest {
     @IsTest
     static void test_legalReviewRoutedToLegalGCCSQueue() {
         Id queueId = getQueueId('Legal_GCCS_Queue');
-        System.debug('TEST: Inserting Case with Case_Type__c=Legal Review. Expect OwnerId=' + queueId);
+        System.debug('TEST: Inserting Case with Type=Legal Review. Expect OwnerId=' + queueId);
         System.assert(queueId != null, 'PRE-CONDITION: Legal_GCCS_Queue must exist in org.');
 
         Test.startTest();
         Case c = new Case(
             AccountId = getAccount().Id, ContactId = getContactId(),
-            Subject = 'Legal Routing Test', Case_Type__c = 'Legal Review', Status = 'New'
+            Subject = 'Legal Routing Test', Type = 'Legal Review', Status = 'New'
         );
         insert c;
         Test.stopTest();
@@ -143,13 +143,13 @@ private class IRM_CaseRoutingTest {
     @IsTest
     static void test_infoSecRoutedToInfoSecQueue() {
         Id queueId = getQueueId('InfoSec_Queue');
-        System.debug('TEST: Inserting Case with Case_Type__c=InfoSec Security Review. Expect OwnerId=' + queueId);
+        System.debug('TEST: Inserting Case with Type=InfoSec Security Review. Expect OwnerId=' + queueId);
         System.assert(queueId != null, 'PRE-CONDITION: InfoSec_Queue must exist in org.');
 
         Test.startTest();
         Case c = new Case(
             AccountId = getAccount().Id, ContactId = getContactId(),
-            Subject = 'InfoSec Routing Test', Case_Type__c = 'InfoSec Security Review', Status = 'New'
+            Subject = 'InfoSec Routing Test', Type = 'InfoSec Security Review', Status = 'New'
         );
         insert c;
         Test.stopTest();
@@ -165,7 +165,9 @@ private class IRM_CaseRoutingTest {
 
     @IsTest
     static void test_unmappedCaseTypeDoesNotError() {
-        System.debug('TEST: Inserting Case with Case_Type__c=Unmapped Type. No CMT record for this. Expect successful insert, no routing applied.');
+        // 'Booking Verification' is a real, active Type value with no Touch_Level_Case_Routing__c
+        // mapping row seeded above — exercises the "no mapping found" path without an invalid picklist value.
+        System.debug('TEST: Inserting Case with Type=Booking Verification. No mapping row for this. Expect successful insert, no routing applied.');
 
         Test.startTest();
         Boolean errored = false;
@@ -173,7 +175,7 @@ private class IRM_CaseRoutingTest {
         try {
             c = new Case(
                 AccountId = getAccount().Id, ContactId = getContactId(),
-                Subject = 'Unmapped Routing Test', Case_Type__c = 'Unmapped Type', Status = 'New'
+                Subject = 'Unmapped Routing Test', Type = 'Booking Verification', Status = 'New'
             );
             insert c;
         } catch (Exception e) {
@@ -183,7 +185,7 @@ private class IRM_CaseRoutingTest {
         Test.stopTest();
 
         System.assertEquals(false, errored,
-            'US-1500: Case with unmapped Case Type should insert without error. Flow should handle missing CMT gracefully.');
+            'US-1500: Case with an unmapped Type should insert without error. Flow should handle missing mapping gracefully.');
         System.assertNotEquals(null, [SELECT Id FROM Case WHERE Id = :c.Id].Id,
             'US-1500: Case should exist after insert.');
     }
@@ -201,7 +203,7 @@ private class IRM_CaseRoutingTest {
         for (Integer i = 0; i < 200; i++) {
             cases.add(new Case(
                 AccountId = acc.Id, ContactId = contactId,
-                Subject = 'Bulk Case ' + i, Case_Type__c = 'SA Assignment', Status = 'New'
+                Subject = 'Bulk Case ' + i, Type = 'SA Assignment', Status = 'New'
             ));
         }
 

@@ -241,7 +241,7 @@ public with sharing class CaseCreationRuleEvaluatorAction {
                 AccountId             = opp.AccountId,
                 Opportunity__c        = opp.Id,
                 Case_Creation_Rule__c = rule.Id,
-                Case_Type__c          = rule.Case_Type__c,
+                Type                  = rule.Case_Type__c,
                 Origin                = 'Opportunity Workflow',
                 Status                = 'New'
             );

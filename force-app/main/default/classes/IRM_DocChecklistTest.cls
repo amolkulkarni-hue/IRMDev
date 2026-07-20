@@ -160,11 +160,11 @@ private class IRM_DocChecklistTest {
         Opportunity opp = makeQualifyingOpp('Case-First Test', 600000);
         Test.stopTest();
 
-        List<Case> cases = [SELECT Id, Case_Type__c, Status FROM Case WHERE Opportunity__c = :opp.Id];
+        List<Case> cases = [SELECT Id, Type, Status FROM Case WHERE Opportunity__c = :opp.Id];
         System.assertEquals(1, cases.size(),
             'Case-first: the Case should be created immediately when the Opportunity qualifies, before any document is Final.');
         System.assertEquals('New', cases[0].Status, 'Case-first: newly created Case should be Status=New.');
-        System.assertEquals('SA Assignment', cases[0].Case_Type__c);
+        System.assertEquals('SA Assignment', cases[0].Type);
 
         List<Document_Checklist__c> checklists = [
             SELECT Id, Status__c, Case__c FROM Document_Checklist__c WHERE Opportunity__c = :opp.Id AND Case_Creation_Rule__c = :rule.Id

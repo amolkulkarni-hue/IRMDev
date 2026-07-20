@@ -8,7 +8,8 @@
  * Pre-existing org fields assumed present (not in this deployment package):
  *   Opportunity: Touch_Level__c, Touch_Level_Calculated__c
  *   Opportunity: Touch_Level_Override__c, Touch_Level_Override_Reason__c (deployed)
- *   Case:        Case_Type__c, Opportunity__c
+ *   Case:        Type (standard field — the routing/case-creation engine no longer uses
+ *                the custom Case_Type__c field), Opportunity__c
  *   Document_Checklist__c: Status__c (picklist: Draft/Final/Archived), Opportunity__c
  *   Reference_Threshold__c: Financial_Year__c, Region__c, Cluster__c, Country__c, Volume_Profile__c
  *
@@ -29,7 +30,8 @@
  *
  * Touch_Level_Case_Routing__c (a regular custom object, migrated off the former
  * Touch_Level_Case_Mapping__mdt Custom Metadata Type) is seeded in @TestSetup below —
- * Support_Engagement_Case_Assignment_Flow reads it by Case_Type__c to resolve the routing Queue.
+ * Support_Engagement_Case_Assignment_Flow reads it by Case_Type__c (Touch_Level_Case_Routing__c's
+ * own field) matched against the triggering Case's standard Type field.
  */
 @IsTest
 private class IRM_UserStoryTest {
@@ -155,7 +157,8 @@ private class IRM_UserStoryTest {
             StageName   = stage,
             CloseDate   = Date.today().addDays(30),
             Pricebook2Id = Test.getStandardPricebookId(),
-            Amount      = amount
+            Amount      = amount,
+            Bypass_Validation__c = true
         );
         insert opp;
         return opp;
@@ -368,11 +371,11 @@ private class IRM_UserStoryTest {
         Opportunity opp = makeOpp('Qualification', 600000);
         Test.stopTest();
 
-        List<Case> cases = [SELECT Id, Case_Type__c, Status FROM Case WHERE Opportunity__c = :opp.Id];
+        List<Case> cases = [SELECT Id, Type, Status FROM Case WHERE Opportunity__c = :opp.Id];
         System.assertEquals(1, cases.size(),
             'US-1136 Case-first: the Case should be created immediately when the Opportunity qualifies.');
         System.assertEquals('New', cases[0].Status);
-        System.assertEquals('SA Assignment', cases[0].Case_Type__c,
+        System.assertEquals('SA Assignment', cases[0].Type,
             'US-1136 Case-first: Created Case should have the correct Case Type from the rule');
     }
 
@@ -420,9 +423,10 @@ private class IRM_UserStoryTest {
     @IsTest
     static void test_US1501_draftStatusAllowed() {
         Case_Creation_Rule__c rule = [SELECT Id FROM Case_Creation_Rule__c LIMIT 1];
+        Opportunity opp = makeOpp('Qualification', 100000); // below the 500k rule threshold — no Case-first side effects
         Test.startTest();
         Document_Checklist__c doc = new Document_Checklist__c(
-            Case_Creation_Rule__c = rule.Id, Status__c = 'Draft'
+            Opportunity__c = opp.Id, Case_Creation_Rule__c = rule.Id, Status__c = 'Draft'
         );
         insert doc;
         Test.stopTest();
@@ -435,13 +439,15 @@ private class IRM_UserStoryTest {
     @IsTest
     static void test_US1501_finalStatusAllowed() {
         Case_Creation_Rule__c rule = [SELECT Id FROM Case_Creation_Rule__c LIMIT 1];
+        Opportunity opp = makeOpp('Qualification', 100000);
         Document_Checklist__c doc = new Document_Checklist__c(
-            Case_Creation_Rule__c = rule.Id, Status__c = 'Draft'
+            Opportunity__c = opp.Id, Case_Creation_Rule__c = rule.Id, Status__c = 'Draft'
         );
         insert doc;
 
         Test.startTest();
         doc.Status__c = 'Final';
+        doc.Submitted_Date__c = Date.today();
         update doc;
         Test.stopTest();
 
@@ -453,19 +459,22 @@ private class IRM_UserStoryTest {
     @IsTest
     static void test_US1501_archivedStatusAllowed() {
         Case_Creation_Rule__c rule = [SELECT Id FROM Case_Creation_Rule__c LIMIT 1];
+        Opportunity opp = makeOpp('Qualification', 100000);
         Document_Checklist__c doc = new Document_Checklist__c(
-            Case_Creation_Rule__c = rule.Id, Status__c = 'Final'
+            Opportunity__c = opp.Id, Case_Creation_Rule__c = rule.Id, Status__c = 'Final',
+            Submitted_Date__c = Date.today()
         );
         insert doc;
 
         Test.startTest();
-        doc.Status__c = 'Archived';
+        doc.Status__c = 'Archived/Do Not Use';
+        doc.Notes__c = 'Archiving document.';
         update doc;
         Test.stopTest();
 
-        System.assertEquals('Archived',
+        System.assertEquals('Archived/Do Not Use',
             [SELECT Status__c FROM Document_Checklist__c WHERE Id = :doc.Id].Status__c,
-            'US-1501: Archived is a valid Document Checklist status');
+            'US-1501: Archived/Do Not Use is a valid Document Checklist status');
     }
 
     // ─────────────────────────────────────────────────────────────────────────
@@ -482,6 +491,7 @@ private class IRM_UserStoryTest {
 
         Case c = new Case(
             AccountId    = acc.Id,
+            ContactId    = [SELECT Id FROM Contact LIMIT 1].Id,
             Subject      = 'Exit Validation Test',
             Status       = 'In Progress',
             Opportunity__c = opp.Id
@@ -514,6 +524,7 @@ private class IRM_UserStoryTest {
 
         Case c = new Case(
             AccountId    = acc.Id,
+            ContactId    = [SELECT Id FROM Contact LIMIT 1].Id,
             Subject      = 'All Docs Final Test',
             Status       = 'In Progress',
             Opportunity__c = opp.Id
@@ -546,6 +557,7 @@ private class IRM_UserStoryTest {
 
         Case c = new Case(
             AccountId    = acc.Id,
+            ContactId    = [SELECT Id FROM Contact LIMIT 1].Id,
             Subject      = 'No Docs Test',
             Status       = 'In Progress',
             Opportunity__c = opp.Id
@@ -575,6 +587,7 @@ private class IRM_UserStoryTest {
     @IsTest
     static void test_US1500_saAssignmentCaseRoutedToSolutionSpecialistQueue() {
         Account acc = getAccount();
+        Id contactId = [SELECT Id FROM Contact LIMIT 1].Id;
         Group ssQueue = [SELECT Id FROM Group
                          WHERE DeveloperName = 'Solution_Specialist_Queue'
                            AND Type = 'Queue' LIMIT 1];
@@ -582,8 +595,9 @@ private class IRM_UserStoryTest {
         Test.startTest();
         Case c = new Case(
             AccountId    = acc.Id,
+            ContactId    = contactId,
             Subject      = 'SA Assignment Routing Test',
-            Case_Type__c = 'SA Assignment',
+            Type         = 'SA Assignment',
             Status       = 'New'
         );
         insert c;
@@ -597,6 +611,7 @@ private class IRM_UserStoryTest {
     @IsTest
     static void test_US1500_pricingCaseRoutedToDOCPricingQueue() {
         Account acc = getAccount();
+        Id contactId = [SELECT Id FROM Contact LIMIT 1].Id;
         Group docQueue = [SELECT Id FROM Group
                           WHERE DeveloperName = 'DOC_Pricing_Queue'
                             AND Type = 'Queue' LIMIT 1];
@@ -604,8 +619,9 @@ private class IRM_UserStoryTest {
         Test.startTest();
         Case c = new Case(
             AccountId    = acc.Id,
+            ContactId    = contactId,
             Subject      = 'Pricing Routing Test',
-            Case_Type__c = 'Pricing',
+            Type         = 'Pricing',
             Status       = 'New'
         );
         insert c;
@@ -619,6 +635,7 @@ private class IRM_UserStoryTest {
     @IsTest
     static void test_US1500_legalCaseRoutedToLegalGCCSQueue() {
         Account acc = getAccount();
+        Id contactId = [SELECT Id FROM Contact LIMIT 1].Id;
         Group legalQueue = [SELECT Id FROM Group
                             WHERE DeveloperName = 'Legal_GCCS_Queue'
                               AND Type = 'Queue' LIMIT 1];
@@ -626,8 +643,9 @@ private class IRM_UserStoryTest {
         Test.startTest();
         Case c = new Case(
             AccountId    = acc.Id,
+            ContactId    = contactId,
             Subject      = 'Legal Review Routing Test',
-            Case_Type__c = 'Legal Review',
+            Type         = 'Legal Review',
             Status       = 'New'
         );
         insert c;
@@ -641,21 +659,25 @@ private class IRM_UserStoryTest {
     @IsTest
     static void test_US1500_caseInsertsSuccessfullyWithUnmappedType() {
         Account acc = getAccount();
+        Id contactId = [SELECT Id FROM Contact LIMIT 1].Id;
 
         Test.startTest();
+        // 'Booking Verification' is a real, active Type value with no Touch_Level_Case_Routing__c
+        // mapping row seeded above — exercises the "no mapping found" path without an invalid picklist value.
         Case c = new Case(
             AccountId    = acc.Id,
+            ContactId    = contactId,
             Subject      = 'Unmapped Type Test',
-            Case_Type__c = 'Unmapped Case Type',
+            Type         = 'Booking Verification',
             Status       = 'New'
         );
         insert c;
         Test.stopTest();
 
-        // Should not error — flow simply skips routing when no CMT record found
+        // Should not error — flow simply skips routing when no mapping row is found
         System.assertNotEquals(null,
             [SELECT Id FROM Case WHERE Id = :c.Id].Id,
-            'US-1500: Case should insert even when Case Type has no CMT mapping');
+            'US-1500: Case should insert even when Type has no routing mapping');
     }
 
     // ─────────────────────────────────────────────────────────────────────────
@@ -671,10 +693,10 @@ private class IRM_UserStoryTest {
         Reference_Threshold__c rt = new Reference_Threshold__c(
             Name             = 'Test Threshold',
             Financial_Year__c = 'FY2026',
-            Region__c        = 'AMER',
-            Cluster__c       = 'East',
-            Country__c       = 'USA',
-            Volume_Profile__c = 'Large'
+            Region__c        = 'LATAM',
+            Cluster__c       = 'ANZ',
+            Country__c       = 'Mexico',
+            Volume_Profile__c = 'High Volume / High Value'
         );
         insert rt;
         Test.stopTest();
@@ -683,18 +705,18 @@ private class IRM_UserStoryTest {
         System.assertNotEquals(null, r.Unique_Key__c,
             'Reference_Threshold_Key_Flow: Unique_Key__c should be auto-populated on insert');
         System.assert(r.Unique_Key__c.contains('FY2026'), 'Key should contain Financial Year');
-        System.assert(r.Unique_Key__c.contains('AMER'),   'Key should contain Region');
-        System.assert(r.Unique_Key__c.contains('East'),   'Key should contain Cluster');
-        System.assert(r.Unique_Key__c.contains('USA'),    'Key should contain Country');
-        System.assert(r.Unique_Key__c.contains('Large'),  'Key should contain Volume Profile');
+        System.assert(r.Unique_Key__c.contains('LATAM'),  'Key should contain Region');
+        System.assert(r.Unique_Key__c.contains('ANZ'),    'Key should contain Cluster');
+        System.assert(r.Unique_Key__c.contains('Mexico'), 'Key should contain Country');
+        System.assert(r.Unique_Key__c.contains('High Volume / High Value'), 'Key should contain Volume Profile');
     }
 
     @IsTest
     static void test_referenceThreshold_keyUpdatesOnFieldChange() {
         Reference_Threshold__c rt = new Reference_Threshold__c(
             Name = 'Key Update Test',
-            Financial_Year__c = 'FY2025', Region__c = 'EMEA',
-            Cluster__c = 'West', Country__c = 'UK', Volume_Profile__c = 'Medium'
+            Financial_Year__c = 'FY2025', Region__c = 'Europe',
+            Cluster__c = 'APAC', Country__c = 'United Kingdom', Volume_Profile__c = 'Low Volume / Low Value'
         );
         insert rt;
 
@@ -714,7 +736,7 @@ private class IRM_UserStoryTest {
     static void test_referenceThreshold_duplicateKeyRejected() {
         insert new Reference_Threshold__c(
             Name = 'Original', Financial_Year__c = 'FY2026',
-            Region__c = 'AMER', Cluster__c = 'East', Country__c = 'USA', Volume_Profile__c = 'Large'
+            Region__c = 'LATAM', Cluster__c = 'ANZ', Country__c = 'Mexico', Volume_Profile__c = 'High Volume / High Value'
         );
 
         Test.startTest();
@@ -722,7 +744,7 @@ private class IRM_UserStoryTest {
         try {
             insert new Reference_Threshold__c(
                 Name = 'Duplicate', Financial_Year__c = 'FY2026',
-                Region__c = 'AMER', Cluster__c = 'East', Country__c = 'USA', Volume_Profile__c = 'Large'
+                Region__c = 'LATAM', Cluster__c = 'ANZ', Country__c = 'Mexico', Volume_Profile__c = 'High Volume / High Value'
             );
         } catch (DmlException e) {
             rejected = true;
@@ -767,6 +789,7 @@ private class IRM_UserStoryTest {
     @IsTest
     static void test_bulk_200CasesRoutedToQueue() {
         Account acc = getAccount();
+        Id contactId = [SELECT Id FROM Contact LIMIT 1].Id;
         Group ssQueue = [SELECT Id FROM Group
                          WHERE DeveloperName = 'Solution_Specialist_Queue'
                            AND Type = 'Queue' LIMIT 1];
@@ -775,8 +798,9 @@ private class IRM_UserStoryTest {
         for (Integer i = 0; i < 200; i++) {
             cases.add(new Case(
                 AccountId    = acc.Id,
+                ContactId    = contactId,
                 Subject      = 'Bulk Case ' + i,
-                Case_Type__c = 'SA Assignment',
+                Type         = 'SA Assignment',
                 Status       = 'New'
             ));
         }
