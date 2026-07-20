@@ -426,7 +426,8 @@ private class IRM_UserStoryTest {
         Opportunity opp = makeOpp('Qualification', 100000); // below the 500k rule threshold — no Case-first side effects
         Test.startTest();
         Document_Checklist__c doc = new Document_Checklist__c(
-            Opportunity__c = opp.Id, Case_Creation_Rule__c = rule.Id, Status__c = 'Draft'
+            Opportunity__c = opp.Id, Case_Creation_Rule__c = rule.Id, Status__c = 'Draft',
+            Document_Category__c = 'Scoping & Technical'
         );
         insert doc;
         Test.stopTest();
@@ -441,7 +442,8 @@ private class IRM_UserStoryTest {
         Case_Creation_Rule__c rule = [SELECT Id FROM Case_Creation_Rule__c LIMIT 1];
         Opportunity opp = makeOpp('Qualification', 100000);
         Document_Checklist__c doc = new Document_Checklist__c(
-            Opportunity__c = opp.Id, Case_Creation_Rule__c = rule.Id, Status__c = 'Draft'
+            Opportunity__c = opp.Id, Case_Creation_Rule__c = rule.Id, Status__c = 'Draft',
+            Document_Category__c = 'Scoping & Technical'
         );
         insert doc;
 
@@ -462,7 +464,7 @@ private class IRM_UserStoryTest {
         Opportunity opp = makeOpp('Qualification', 100000);
         Document_Checklist__c doc = new Document_Checklist__c(
             Opportunity__c = opp.Id, Case_Creation_Rule__c = rule.Id, Status__c = 'Final',
-            Submitted_Date__c = Date.today()
+            Document_Category__c = 'Scoping & Technical', Submitted_Date__c = Date.today()
         );
         insert doc;
 
@@ -500,7 +502,7 @@ private class IRM_UserStoryTest {
 
         // Non-Final doc linked to the Opportunity
         insert new Document_Checklist__c(
-            Opportunity__c = opp.Id, Status__c = 'Draft'
+            Opportunity__c = opp.Id, Status__c = 'Draft', Document_Category__c = 'Scoping & Technical'
         );
 
         Test.startTest();
@@ -533,7 +535,8 @@ private class IRM_UserStoryTest {
 
         // All docs are Final
         insert new Document_Checklist__c(
-            Opportunity__c = opp.Id, Status__c = 'Final'
+            Opportunity__c = opp.Id, Status__c = 'Final',
+            Document_Category__c = 'Scoping & Technical', Submitted_Date__c = Date.today()
         );
 
         Test.startTest();
@@ -696,7 +699,8 @@ private class IRM_UserStoryTest {
             Region__c        = 'LATAM',
             Cluster__c       = 'ANZ',
             Country__c       = 'Mexico',
-            Volume_Profile__c = 'High Volume / High Value'
+            Volume_Profile__c = 'High Volume / High Value',
+            Large_Deal__c    = 500000
         );
         insert rt;
         Test.stopTest();
@@ -716,7 +720,8 @@ private class IRM_UserStoryTest {
         Reference_Threshold__c rt = new Reference_Threshold__c(
             Name = 'Key Update Test',
             Financial_Year__c = 'FY2025', Region__c = 'Europe',
-            Cluster__c = 'APAC', Country__c = 'United Kingdom', Volume_Profile__c = 'Low Volume / Low Value'
+            Cluster__c = 'APAC', Country__c = 'United Kingdom', Volume_Profile__c = 'Low Volume / Low Value',
+            Large_Deal__c = 250000
         );
         insert rt;
 
@@ -736,7 +741,8 @@ private class IRM_UserStoryTest {
     static void test_referenceThreshold_duplicateKeyRejected() {
         insert new Reference_Threshold__c(
             Name = 'Original', Financial_Year__c = 'FY2026',
-            Region__c = 'LATAM', Cluster__c = 'ANZ', Country__c = 'Mexico', Volume_Profile__c = 'High Volume / High Value'
+            Region__c = 'LATAM', Cluster__c = 'ANZ', Country__c = 'Mexico', Volume_Profile__c = 'High Volume / High Value',
+            Large_Deal__c = 500000
         );
 
         Test.startTest();
@@ -744,7 +750,8 @@ private class IRM_UserStoryTest {
         try {
             insert new Reference_Threshold__c(
                 Name = 'Duplicate', Financial_Year__c = 'FY2026',
-                Region__c = 'LATAM', Cluster__c = 'ANZ', Country__c = 'Mexico', Volume_Profile__c = 'High Volume / High Value'
+                Region__c = 'LATAM', Cluster__c = 'ANZ', Country__c = 'Mexico', Volume_Profile__c = 'High Volume / High Value',
+                Large_Deal__c = 500000
             );
         } catch (DmlException e) {
             rejected = true;
