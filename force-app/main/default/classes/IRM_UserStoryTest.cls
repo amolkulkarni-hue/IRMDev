@@ -500,9 +500,9 @@ private class IRM_UserStoryTest {
         );
         insert c;
 
-        // Non-Final doc linked to the Opportunity
+        // Non-Final doc linked to the Case — Case_Exit_Document_Validation_Flow matches on Case__c
         insert new Document_Checklist__c(
-            Opportunity__c = opp.Id, Status__c = 'Draft', Document_Category__c = 'Scoping & Technical'
+            Case__c = c.Id, Opportunity__c = opp.Id, Status__c = 'Draft', Document_Category__c = 'Scoping & Technical'
         );
 
         Test.startTest();
@@ -533,9 +533,9 @@ private class IRM_UserStoryTest {
         );
         insert c;
 
-        // All docs are Final
+        // All docs are Final — linked to the Case, matching Case_Exit_Document_Validation_Flow's Case__c filter
         insert new Document_Checklist__c(
-            Opportunity__c = opp.Id, Status__c = 'Final',
+            Case__c = c.Id, Opportunity__c = opp.Id, Status__c = 'Final',
             Document_Category__c = 'Scoping & Technical', Submitted_Date__c = Date.today()
         );
 
@@ -712,7 +712,8 @@ private class IRM_UserStoryTest {
         System.assert(r.Unique_Key__c.contains('LATAM'),  'Key should contain Region');
         System.assert(r.Unique_Key__c.contains('ANZ'),    'Key should contain Cluster');
         System.assert(r.Unique_Key__c.contains('Mexico'), 'Key should contain Country');
-        System.assert(r.Unique_Key__c.contains('High Volume / High Value'), 'Key should contain Volume Profile');
+        // Reference_Threshold_Key_Flow's formula only substitutes spaces with underscores (not slashes)
+        System.assert(r.Unique_Key__c.contains('High_Volume_/_High_Value'), 'Key should contain Volume Profile');
     }
 
     @IsTest
