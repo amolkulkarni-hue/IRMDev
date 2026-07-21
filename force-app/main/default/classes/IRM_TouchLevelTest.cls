@@ -276,4 +276,51 @@ private class IRM_TouchLevelTest {
         System.assertNotEquals(null, r.Touch_Level_Calculated__c,
             'Override: Touch_Level_Calculated__c should be set on insert. Got null.');
     }
+
+    // ── Audit fields: Calculation_Stage__c / Last_Calculated__c populated on recalculation ──
+
+    @IsTest
+    static void test_auditFieldsPopulatedOnCalculation() {
+        Test.startTest();
+        Opportunity opp = buildOpp('Qualification', 600000);
+        insert opp;
+        Test.stopTest();
+
+        Opportunity r = [
+            SELECT Touch_Level_Calculation_Stage__c, Touch_Level_Last_Calculated__c
+            FROM Opportunity WHERE Id = :opp.Id
+        ];
+        System.assertEquals('Qualification', r.Touch_Level_Calculation_Stage__c,
+            'Touch_Level_Calculation_Stage__c should record the stage at time of calculation. Got: ' + r.Touch_Level_Calculation_Stage__c);
+        System.assertNotEquals(null, r.Touch_Level_Last_Calculated__c,
+            'Touch_Level_Last_Calculated__c should be stamped on calculation. Got null.');
+    }
+
+    // ── Override audit fields: Override_Date__c / Override_By__c populated ──────
+
+    @IsTest
+    static void test_overrideAuditFieldsPopulated() {
+        Opportunity opp = buildOpp('Qualification', 150000);
+        insert opp;
+
+        Test.startTest();
+        // Mirror applyOverride step in Touch_Level_Override_Flow, including the audit fields
+        // it now sets (Touch_Level_Override_Date__c = $Flow.CurrentDateTime, Touch_Level_Override_By__c = $User.Id)
+        opp.Touch_Level_Override__c        = true;
+        opp.Touch_Level_Override_Reason__c = 'Escalated by VP Sales — strategic account';
+        opp.Touch_Level__c                 = 'High Touch';
+        opp.Touch_Level_Override_Date__c   = System.now();
+        opp.Touch_Level_Override_By__c     = UserInfo.getUserId();
+        update opp;
+        Test.stopTest();
+
+        Opportunity r = [
+            SELECT Touch_Level_Override_Date__c, Touch_Level_Override_By__c
+            FROM Opportunity WHERE Id = :opp.Id
+        ];
+        System.assertNotEquals(null, r.Touch_Level_Override_Date__c,
+            'Touch_Level_Override_Date__c should be populated when an override is applied. Got null.');
+        System.assertEquals(UserInfo.getUserId(), r.Touch_Level_Override_By__c,
+            'Touch_Level_Override_By__c should record the overriding user. Got: ' + r.Touch_Level_Override_By__c);
+    }
 }

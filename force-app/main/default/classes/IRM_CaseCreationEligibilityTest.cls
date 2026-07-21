@@ -229,4 +229,27 @@ private class IRM_CaseCreationEligibilityTest {
         System.assertEquals(1, checklistCount(opp.Id, rule.Id, 'Legal Risk Sign-off'),
             'The properly-configured checklist in the same batch should still be created despite the other row failing');
     }
+
+    // ── Scenario 6: Opportunity_Touch_Level__c is stamped on the created Case ──
+
+    @IsTest
+    static void test_opportunityTouchLevelStampedOnCase() {
+        Case_Creation_Rule__c rule = makeRule('Test Type TL', null); // unconditional
+
+        Test.startTest();
+        Opportunity opp = buildOpp('Data Centers', 50000);
+        insert opp;
+        Test.stopTest();
+
+        Opportunity savedOpp = [SELECT Touch_Level__c FROM Opportunity WHERE Id = :opp.Id];
+        Case createdCase = [
+            SELECT Opportunity_Touch_Level__c FROM Case
+            WHERE Opportunity__c = :opp.Id AND Case_Creation_Rule__c = :rule.Id
+            LIMIT 1
+        ];
+
+        System.assertEquals(savedOpp.Touch_Level__c, createdCase.Opportunity_Touch_Level__c,
+            'Case.Opportunity_Touch_Level__c should be stamped with the Opportunity\'s Touch Level at Case creation time. Got: '
+            + createdCase.Opportunity_Touch_Level__c);
+    }
 }

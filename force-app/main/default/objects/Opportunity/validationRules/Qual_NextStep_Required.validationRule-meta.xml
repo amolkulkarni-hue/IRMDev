@@ -8,10 +8,10 @@
 				ISPICKVAL(StageName, &apos;Solutioning&apos;), 
 				OR( 
 							ISPICKVAL(Touch_Level__c, &apos;High Touch&apos;), 
-							ISPICKVAL(Touch_Level__c, &apos;Standard Touch&apos;) 
+							ISPICKVAL(Touch_Level__c, &apos;Medium Touch&apos;) 
 				), 
 				ISBLANK(NextStep) 
 )</errorConditionFormula>
     <errorDisplayField>NextStep</errorDisplayField>
-    <errorMessage>Next Step is required for Standard Touch and High Touch opportunities before advancing from Qualification.</errorMessage>
+    <errorMessage>Next Step is required for Medium Touch and High Touch opportunities before advancing from Qualification.</errorMessage>
 </ValidationRule>

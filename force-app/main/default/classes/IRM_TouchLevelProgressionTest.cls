@@ -174,6 +174,11 @@ private class IRM_TouchLevelProgressionTest {
 
         addOcrRoles(opp.Id);
 
+        // Qual_NextStep_Required / Qual_NextStepDate_Required now correctly gate Medium Touch
+        // (not just High Touch — see Is_Standard_or_High_Touch__c fix) on this transition, since
+        // Amount=50000 recalculates to Medium Touch in Solutioning per this test's criteria setup.
+        opp.NextStep = 'Schedule solution review';
+        opp.Next_Step_Date__c = Date.today().addDays(7);
         opp.StageName = 'Solutioning'; // Amount unchanged
         update opp;
         Opportunity afterStageChange = [SELECT Touch_Level__c FROM Opportunity WHERE Id = :opp.Id];
@@ -305,6 +310,52 @@ private class IRM_TouchLevelProgressionTest {
             'Ineligible record type should never be classified — Touch_Level_Calculated__c should stay blank');
         System.assertEquals(null, inMemoryOpp.Touch_Level_Criteria_Matched__c,
             'Ineligible record type should never be classified — Touch_Level_Criteria_Matched__c should stay blank');
+    }
+
+    // ── Bug fix: Qual_NextStep(Date)_Required now correctly gates Medium Touch, not just High
+    // Touch — Is_Standard_or_High_Touch__c previously referenced a nonexistent 'Standard Touch'
+    // picklist value, so this gate silently never fired for Medium Touch opportunities. ──
+
+    @IsTest
+    static void test_mediumTouchGate_blocksQualToSolutioningWithoutNextStep() {
+        Opportunity opp = buildOpp('Qualification', 50000, 'New');
+
+        Test.startTest();
+        insert opp;
+        addOcrRoles(opp.Id);
+
+        opp.StageName = 'Solutioning'; // recalculates to Medium Touch; NextStep/Next_Step_Date__c left blank
+        Boolean dmlFailed = false;
+        try {
+            update opp;
+        } catch (DmlException e) {
+            dmlFailed = true;
+            System.assert(e.getMessage().contains('Next Step'),
+                'Expected a Qual_NextStep(Date)_Required error. Got: ' + e.getMessage());
+        }
+        Test.stopTest();
+
+        System.assert(dmlFailed,
+            'Medium Touch opportunities should now be blocked from Qualification->Solutioning without NextStep/Next Step Date');
+    }
+
+    @IsTest
+    static void test_mediumTouchGate_allowsQualToSolutioningWithNextStep() {
+        Opportunity opp = buildOpp('Qualification', 50000, 'New');
+
+        Test.startTest();
+        insert opp;
+        addOcrRoles(opp.Id);
+
+        opp.NextStep = 'Schedule solution review';
+        opp.Next_Step_Date__c = Date.today().addDays(7);
+        opp.StageName = 'Solutioning';
+        update opp; // must not throw
+        Test.stopTest();
+
+        Opportunity r = [SELECT Touch_Level__c FROM Opportunity WHERE Id = :opp.Id];
+        System.assertEquals('Medium Touch', r.Touch_Level__c,
+            'Sanity check: this scenario should recalculate to Medium Touch');
     }
 
     @IsTest

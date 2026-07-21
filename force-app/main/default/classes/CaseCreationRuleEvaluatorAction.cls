@@ -238,12 +238,13 @@ public with sharing class CaseCreationRuleEvaluatorAction {
             Opportunity opp = matchedPairOpp.get(key);
             Case_Creation_Rule__c rule = matchedPairRule.get(key);
             Case c = new Case(
-                AccountId             = opp.AccountId,
-                Opportunity__c        = opp.Id,
-                Case_Creation_Rule__c = rule.Id,
-                Type                  = rule.Case_Type__c,
-                Origin                = 'Opportunity Workflow',
-                Status                = 'New'
+                AccountId               = opp.AccountId,
+                Opportunity__c          = opp.Id,
+                Case_Creation_Rule__c   = rule.Id,
+                Type                    = rule.Case_Type__c,
+                Origin                  = 'Opportunity Workflow',
+                Status                  = 'New',
+                Opportunity_Touch_Level__c = opp.Touch_Level__c
             );
             Id rtId = recordTypeIdByDevName.get(rule.Record_Type_Dev_Name__c);
             if (rtId != null) c.RecordTypeId = rtId;

@@ -86,6 +86,8 @@ public with sharing class TouchLevelEvaluatorAction {
             opp.Touch_Level_Calculated__c = calculated.touchLevel;
             opp.Touch_Level__c = finalTouchLevel;
             opp.Touch_Level_Criteria_Matched__c = calculated.matchedCriteriaName;
+            opp.Touch_Level_Calculation_Stage__c = opp.StageName;
+            opp.Touch_Level_Last_Calculated__c = System.now();
         }
     }
 
