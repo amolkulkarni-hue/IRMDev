@@ -24,14 +24,16 @@
  *
  * Flows under test (must be ACTIVE in Setup → Flows before running):
  *   Case_Creation_Trigger_Flow              (After Update – Document_Checklist__c; docs-final indicator only)
- *   Support_Engagement_Case_Assignment_Flow (After Insert – Case)
  *   Case_Exit_Document_Validation_Flow      (Before Update – Case)
  *   Reference_Threshold_Key_Flow            (Before Save – Reference_Threshold__c)
  *
- * Touch_Level_Case_Routing__c (a regular custom object, migrated off the former
- * Touch_Level_Case_Mapping__mdt Custom Metadata Type) is seeded in @TestSetup below —
- * Support_Engagement_Case_Assignment_Flow reads it by Case_Type__c (Touch_Level_Case_Routing__c's
- * own field) matched against the triggering Case's standard Type field.
+ * Case queue assignment (US-1500) is a single source of truth: Case_Creation_Rule__c.Queue_Developer_Name__c,
+ * resolved and stamped onto Case.OwnerId at creation time by CaseCreationRuleEvaluatorAction.createCasesForPairs
+ * (with ReassertCaseOwnerJob, a Queueable, correcting OwnerId if an inherited Sforce-Auto-Assign header lets
+ * the org's native Case Assignment Rule override it during the insert). Support_Engagement_Case_Assignment_Flow
+ * and Touch_Level_Case_Routing__c (a second, independent Case.Type-keyed queue lookup) have been retired —
+ * they duplicated this resolution and could drift out of sync with Case_Creation_Rule__c (see
+ * manifest/destructiveChanges).
  */
 @IsTest
 private class IRM_UserStoryTest {
@@ -134,14 +136,6 @@ private class IRM_UserStoryTest {
             Is_Required_To_Start__c   = true,
             Is_Required_For_Case__c   = true
         );
-
-        // Touch_Level_Case_Routing__c seed data — Support_Engagement_Case_Assignment_Flow reads
-        // these by Case_Type__c to resolve the routing Queue for US-1500 below.
-        insert new List<Touch_Level_Case_Routing__c>{
-            new Touch_Level_Case_Routing__c(Name = 'SA Assignment Mapping', Case_Type__c = 'SA Assignment', Queue_Developer_Name__c = 'Solution_Specialist_Queue', Is_Active__c = true),
-            new Touch_Level_Case_Routing__c(Name = 'Pricing Mapping',       Case_Type__c = 'Pricing',       Queue_Developer_Name__c = 'DOC_Pricing_Queue',            Is_Active__c = true),
-            new Touch_Level_Case_Routing__c(Name = 'Legal Review Mapping',  Case_Type__c = 'Legal Review',  Queue_Developer_Name__c = 'Legal_GCCS_Queue',             Is_Active__c = true)
-        };
     }
 
     private static Account getAccount() {
@@ -583,104 +577,120 @@ private class IRM_UserStoryTest {
     }
 
     // ─────────────────────────────────────────────────────────────────────────
-    // US-1500: Case Queue Routing via Touch_Level_Case_Routing__c
-    // AC: When a Case is inserted, OwnerId is set to the queue mapped by Case Type
+    // US-1500: Case Queue Routing via Case_Creation_Rule__c.Queue_Developer_Name__c
+    // AC: When a Support Team Engagement Case is created off a matched Case_Creation_Rule__c,
+    //     OwnerId is set to that rule's Queue_Developer_Name__c (single source of truth —
+    //     Touch_Level_Case_Routing__c / Support_Engagement_Case_Assignment_Flow retired).
     // ─────────────────────────────────────────────────────────────────────────
 
     @IsTest
     static void test_US1500_saAssignmentCaseRoutedToSolutionSpecialistQueue() {
-        Account acc = getAccount();
-        Id contactId = [SELECT Id FROM Contact LIMIT 1].Id;
+        // Reuses the 'SA Assignment' Case_Creation_Rule__c seeded in @TestSetup
+        // (Stage=Qualification, Amount >= 500000, Queue=Solution_Specialist_Queue).
         Group ssQueue = [SELECT Id FROM Group
                          WHERE DeveloperName = 'Solution_Specialist_Queue'
                            AND Type = 'Queue' LIMIT 1];
 
         Test.startTest();
-        Case c = new Case(
-            AccountId    = acc.Id,
-            ContactId    = contactId,
-            Subject      = 'SA Assignment Routing Test',
-            Type         = 'SA Assignment',
-            Status       = 'New'
-        );
-        insert c;
+        Opportunity opp = makeOpp('Qualification', 600000);
         Test.stopTest();
 
-        System.assertEquals(ssQueue.Id,
-            [SELECT OwnerId FROM Case WHERE Id = :c.Id].OwnerId,
+        Case c = [SELECT OwnerId FROM Case WHERE Opportunity__c = :opp.Id AND Type = 'SA Assignment' LIMIT 1];
+        System.assertEquals(ssQueue.Id, c.OwnerId,
             'US-1500: SA Assignment Case should be routed to Solution_Specialist_Queue');
     }
 
     @IsTest
     static void test_US1500_pricingCaseRoutedToDOCPricingQueue() {
-        Account acc = getAccount();
-        Id contactId = [SELECT Id FROM Contact LIMIT 1].Id;
         Group docQueue = [SELECT Id FROM Group
                           WHERE DeveloperName = 'DOC_Pricing_Queue'
                             AND Type = 'Queue' LIMIT 1];
 
-        Test.startTest();
-        Case c = new Case(
-            AccountId    = acc.Id,
-            ContactId    = contactId,
-            Subject      = 'Pricing Routing Test',
-            Type         = 'Pricing',
-            Status       = 'New'
+        Case_Creation_Rule__c pricingRule = new Case_Creation_Rule__c(
+            Stage__c                = 'Qualification',
+            Case_Type__c            = 'Pricing',
+            Record_Type_Dev_Name__c = 'Deal_Support',
+            Queue_Developer_Name__c = 'DOC_Pricing_Queue',
+            Logic_Expression__c     = '1',
+            Is_Active__c            = true,
+            Priority__c             = 20
         );
-        insert c;
+        insert pricingRule;
+        insert new Case_Creation_Condition__c(
+            Rule__c = pricingRule.Id, Condition_Number__c = 1,
+            Field_API_Name__c = 'Amount', Operator__c = 'GREATER_OR_EQUAL', Value__c = '200000'
+        );
+
+        Test.startTest();
+        // Amount is below the shared 'SA Assignment' rule's 500000 threshold so only Pricing matches.
+        Opportunity opp = makeOpp('Qualification', 250000);
         Test.stopTest();
 
-        System.assertEquals(docQueue.Id,
-            [SELECT OwnerId FROM Case WHERE Id = :c.Id].OwnerId,
+        Case c = [SELECT OwnerId FROM Case WHERE Opportunity__c = :opp.Id AND Type = 'Pricing' LIMIT 1];
+        System.assertEquals(docQueue.Id, c.OwnerId,
             'US-1500: Pricing Case should be routed to DOC_Pricing_Queue');
     }
 
     @IsTest
     static void test_US1500_legalCaseRoutedToLegalGCCSQueue() {
-        Account acc = getAccount();
-        Id contactId = [SELECT Id FROM Contact LIMIT 1].Id;
         Group legalQueue = [SELECT Id FROM Group
                             WHERE DeveloperName = 'Legal_GCCS_Queue'
                               AND Type = 'Queue' LIMIT 1];
 
-        Test.startTest();
-        Case c = new Case(
-            AccountId    = acc.Id,
-            ContactId    = contactId,
-            Subject      = 'Legal Review Routing Test',
-            Type         = 'Legal Review',
-            Status       = 'New'
+        Case_Creation_Rule__c legalRule = new Case_Creation_Rule__c(
+            Stage__c                = 'Qualification',
+            Case_Type__c            = 'Legal Review',
+            Record_Type_Dev_Name__c = 'Deal_Support',
+            Queue_Developer_Name__c = 'Legal_GCCS_Queue',
+            Logic_Expression__c     = '1',
+            Is_Active__c            = true,
+            Priority__c             = 30
         );
-        insert c;
+        insert legalRule;
+        insert new Case_Creation_Condition__c(
+            Rule__c = legalRule.Id, Condition_Number__c = 1,
+            Field_API_Name__c = 'Amount', Operator__c = 'GREATER_OR_EQUAL', Value__c = '300000'
+        );
+
+        Test.startTest();
+        // Amount is below the shared 'SA Assignment' rule's 500000 threshold so only Legal Review matches.
+        Opportunity opp = makeOpp('Qualification', 350000);
         Test.stopTest();
 
-        System.assertEquals(legalQueue.Id,
-            [SELECT OwnerId FROM Case WHERE Id = :c.Id].OwnerId,
+        Case c = [SELECT OwnerId FROM Case WHERE Opportunity__c = :opp.Id AND Type = 'Legal Review' LIMIT 1];
+        System.assertEquals(legalQueue.Id, c.OwnerId,
             'US-1500: Legal Review Case should be routed to Legal_GCCS_Queue');
     }
 
     @IsTest
-    static void test_US1500_caseInsertsSuccessfullyWithUnmappedType() {
-        Account acc = getAccount();
-        Id contactId = [SELECT Id FROM Contact LIMIT 1].Id;
+    static void test_US1500_caseCreatedSuccessfullyWithUnresolvableQueueDevName() {
+        // Rule references a queue Developer Name that doesn't exist in the org —
+        // exercises the "no queue resolved" path (createCasesForPairs leaves OwnerId
+        // unset when queueIdByDevName has no match) without an invalid picklist value.
+        Case_Creation_Rule__c badQueueRule = new Case_Creation_Rule__c(
+            Stage__c                = 'Qualification',
+            Case_Type__c            = 'Booking Verification',
+            Record_Type_Dev_Name__c = 'Deal_Support',
+            Queue_Developer_Name__c = 'Nonexistent_Queue_Xyz',
+            Logic_Expression__c     = '1',
+            Is_Active__c            = true,
+            Priority__c             = 40
+        );
+        insert badQueueRule;
+        insert new Case_Creation_Condition__c(
+            Rule__c = badQueueRule.Id, Condition_Number__c = 1,
+            Field_API_Name__c = 'Amount', Operator__c = 'GREATER_OR_EQUAL', Value__c = '400000'
+        );
 
         Test.startTest();
-        // 'Booking Verification' is a real, active Type value with no Touch_Level_Case_Routing__c
-        // mapping row seeded above — exercises the "no mapping found" path without an invalid picklist value.
-        Case c = new Case(
-            AccountId    = acc.Id,
-            ContactId    = contactId,
-            Subject      = 'Unmapped Type Test',
-            Type         = 'Booking Verification',
-            Status       = 'New'
-        );
-        insert c;
+        Opportunity opp = makeOpp('Qualification', 450000);
         Test.stopTest();
 
-        // Should not error — flow simply skips routing when no mapping row is found
-        System.assertNotEquals(null,
-            [SELECT Id FROM Case WHERE Id = :c.Id].Id,
-            'US-1500: Case should insert even when Type has no routing mapping');
+        Case c = [SELECT Id, OwnerId FROM Case WHERE Opportunity__c = :opp.Id AND Type = 'Booking Verification' LIMIT 1];
+        System.assertNotEquals(null, c.Id,
+            'US-1500: Case should still be created even when its rule\'s Queue_Developer_Name__c does not resolve to a real queue');
+        System.assertNotEquals(null, c.OwnerId,
+            'US-1500: Case should fall back to a default owner (not error) when the queue cannot be resolved');
     }
 
     // ─────────────────────────────────────────────────────────────────────────
@@ -797,27 +807,33 @@ private class IRM_UserStoryTest {
     @IsTest
     static void test_bulk_200CasesRoutedToQueue() {
         Account acc = getAccount();
-        Id contactId = [SELECT Id FROM Contact LIMIT 1].Id;
         Group ssQueue = [SELECT Id FROM Group
                          WHERE DeveloperName = 'Solution_Specialist_Queue'
                            AND Type = 'Queue' LIMIT 1];
 
-        List<Case> cases = new List<Case>();
+        // Reuses the shared 'SA Assignment' Case_Creation_Rule__c (Amount >= 500000) from @TestSetup.
+        List<Opportunity> opps = new List<Opportunity>();
         for (Integer i = 0; i < 200; i++) {
-            cases.add(new Case(
-                AccountId    = acc.Id,
-                ContactId    = contactId,
-                Subject      = 'Bulk Case ' + i,
-                Type         = 'SA Assignment',
-                Status       = 'New'
+            opps.add(new Opportunity(
+                Name      = 'Bulk Queue Opp ' + i,
+                AccountId = acc.Id,
+                RecordTypeId = App_Constants.STD_OPPORTUNITY_RECTYPE_ID,
+                Type      = 'New Deal',
+                StageName = 'Qualification',
+                CloseDate = Date.today().addDays(30),
+                Pricebook2Id = Test.getStandardPricebookId(),
+                Amount    = 600000,
+                Bypass_Validation__c = true
             ));
         }
 
         Test.startTest();
-        insert cases;
+        insert opps;
         Test.stopTest();
 
-        for (Case r : [SELECT OwnerId FROM Case WHERE AccountId = :acc.Id]) {
+        List<Case> cases = [SELECT OwnerId FROM Case WHERE Opportunity__c IN :opps AND Type = 'SA Assignment'];
+        System.assertEquals(200, cases.size(), 'Bulk: every Opportunity should produce its SA Assignment Case');
+        for (Case r : cases) {
             System.assertEquals(ssQueue.Id, r.OwnerId,
                 'Bulk: every SA Assignment case should be routed to Solution_Specialist_Queue');
         }
