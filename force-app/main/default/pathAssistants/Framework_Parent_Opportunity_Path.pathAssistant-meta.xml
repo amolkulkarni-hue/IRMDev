@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PathAssistant xmlns="http://soap.sforce.com/2006/04/metadata">
+    <active>true</active>
+    <entityName>Opportunity</entityName>
+    <fieldName>StageName</fieldName>
+    <masterLabel>Framework Parent Opportunity Path</masterLabel>
+    <pathAssistantSteps>
+        <fieldNames>AccountId</fieldNames>
+        <fieldNames>Amount</fieldNames>
+        <fieldNames>CloseDate</fieldNames>
+        <fieldNames>Type</fieldNames>
+        <info>&lt;p&gt;Confirm scope of framework: BUs covered, contract duration, pricing model.&lt;/p&gt;</info>
+        <picklistValueName>Qualification</picklistValueName>
+    </pathAssistantSteps>
+    <pathAssistantSteps>
+        <fieldNames>Contract_Start_Date__c</fieldNames>
+        <fieldNames>Contract_End_Date__c</fieldNames>
+        <fieldNames>Framework_Status__c</fieldNames>
+        <info>&lt;p&gt;Work with Deal Desk to finalize pricing tiers and contract structure.&lt;/p&gt;</info>
+        <picklistValueName>Solutioning</picklistValueName>
+    </pathAssistantSteps>
+    <pathAssistantSteps>
+        <info>&lt;p&gt;Ensure Legal Review Support Engagement Case is open and active.&lt;/p&gt;</info>
+        <picklistValueName>Negotiation</picklistValueName>
+    </pathAssistantSteps>
+    <pathAssistantSteps>
+        <info>&lt;p&gt;All mandatory BV checklist items must be Approved before advancing.&lt;/p&gt;</info>
+        <picklistValueName>Booking Verification</picklistValueName>
+    </pathAssistantSteps>
+    <pathAssistantSteps>
+        <fieldNames>Framework_Status__c</fieldNames>
+        <info>&lt;p&gt;Framework Status is now Active. Child opportunities may now be linked.&lt;/p&gt;</info>
+        <picklistValueName>Booked</picklistValueName>
+    </pathAssistantSteps>
+    <pathAssistantSteps>
+        <info>&lt;p&gt;Document the reason the framework agreement did not proceed for future reference.&lt;/p&gt;</info>
+        <picklistValueName>Lost</picklistValueName>
+    </pathAssistantSteps>
+    <recordTypeName>Framework_Parent_Opportunity</recordTypeName>
+</PathAssistant>

@@ -277,6 +277,48 @@ private class CaseCreationRuleEvaluatorActionTest {
         System.assertEquals(true, results[0].hasMatches, 'OR logic: one passing condition should match');
     }
 
+    // ──────────────────────────────────────────────────────────
+    // ReassertCaseOwnerJob (added in the Case queue routing consolidation) — corrects
+    // Case.OwnerId back to the intended queue when a caller's inherited Sforce-Auto-Assign
+    // header lets the org's native Case Assignment Rule silently override it.
+    // ──────────────────────────────────────────────────────────
+
+    @IsTest
+    static void testReassertCaseOwnerJob_correctsOverriddenOwner() {
+        Group queue = [SELECT Id FROM Group WHERE Type = 'Queue' LIMIT 1];
+
+        Case c = new Case(Status = 'New', OwnerId = UserInfo.getUserId());
+        insert c;
+
+        Map<Id, Id> caseIdToIntendedOwnerId = new Map<Id, Id>{ c.Id => queue.Id };
+
+        Test.startTest();
+        System.enqueueJob(new CaseCreationRuleEvaluatorAction.ReassertCaseOwnerJob(caseIdToIntendedOwnerId));
+        Test.stopTest();
+
+        Case result = [SELECT OwnerId FROM Case WHERE Id = :c.Id];
+        System.assertEquals(queue.Id, result.OwnerId,
+            'ReassertCaseOwnerJob should correct OwnerId back to the intended queue.');
+    }
+
+    @IsTest
+    static void testReassertCaseOwnerJob_noOpWhenOwnerAlreadyCorrect() {
+        Group queue = [SELECT Id FROM Group WHERE Type = 'Queue' LIMIT 1];
+
+        Case c = new Case(Status = 'New', OwnerId = queue.Id);
+        insert c;
+
+        Map<Id, Id> caseIdToIntendedOwnerId = new Map<Id, Id>{ c.Id => queue.Id };
+
+        Test.startTest();
+        System.enqueueJob(new CaseCreationRuleEvaluatorAction.ReassertCaseOwnerJob(caseIdToIntendedOwnerId));
+        Test.stopTest();
+
+        Case result = [SELECT OwnerId FROM Case WHERE Id = :c.Id];
+        System.assertEquals(queue.Id, result.OwnerId,
+            'OwnerId already matching the intended queue should be left unchanged.');
+    }
+
     @IsTest
     static void testNullOpportunityId() {
         Test.startTest();

@@ -115,4 +115,181 @@ private class IRM_FrameworkParentOpportunityTest {
         System.assertEquals(3, roles.size(),
             'All 3 Qualification (Type=All) stage-gate roles should be attached: Champion, Economic Decision Maker / Buyer, Problem Owner.');
     }
+
+    // ──────────────────────────────────────────────────────────
+    // FW-02 AC2 / FW-03 AC3 / FW-03 AC4 — new validation rule coverage
+    // (Framework_Stage_Requires_Booking_Verification, Framework_Parent_Must_Be_Active,
+    // Framework_Child_Type_Restriction — see IRM_Touch_Level_Classification_SDD Section 21)
+    // ──────────────────────────────────────────────────────────
+
+    private static Opportunity buildChildOpp() {
+        return new Opportunity(
+            Name = 'Sample Framework Child Opportunity',
+            AccountId = getAccountId(),
+            RecordTypeId = App_Constants.STD_OPPORTUNITY_RECTYPE_ID,
+            Type = 'New',
+            StageName = 'Qualification',
+            CloseDate = Date.today().addDays(30),
+            Pricebook2Id = Test.getStandardPricebookId(),
+            Amount = 100000,
+            Bypass_Validation__c = true
+        );
+    }
+
+    @IsTest
+    static void test_bookingVerificationGate_blocksDirectJumpToBooked() {
+        Opportunity opp = buildFrameworkOpp();
+        insert opp;
+        addOcrRoles(opp.Id);
+        opp.StageName = 'Solutioning'; update opp;
+        opp.StageName = 'Negotiation'; update opp;
+
+        Test.startTest();
+        opp.StageName = 'Booked';
+        Boolean threw = false;
+        try {
+            update opp;
+        } catch (DmlException e) {
+            threw = true;
+            System.assert(e.getMessage().contains('must pass through Booking Verification'),
+                'Expected the Framework_Stage_Requires_Booking_Verification error, got: ' + e.getMessage());
+        }
+        Test.stopTest();
+
+        System.assert(threw, 'Jumping directly from Negotiation to Booked should be blocked.');
+    }
+
+    @IsTest
+    static void test_bookingVerificationGate_allowsBookedAfterBookingVerification() {
+        Opportunity opp = buildFrameworkOpp();
+        insert opp;
+        addOcrRoles(opp.Id);
+        opp.StageName = 'Solutioning'; update opp;
+        opp.StageName = 'Negotiation'; update opp;
+        opp.StageName = 'Booking Verification'; update opp;
+
+        Test.startTest();
+        opp.StageName = 'Booked';
+        update opp;
+        Test.stopTest();
+
+        Opportunity result = [SELECT StageName FROM Opportunity WHERE Id = :opp.Id];
+        System.assertEquals('Booked', result.StageName,
+            'Moving to Booked directly from Booking Verification should be allowed.');
+    }
+
+    private static Id createBookedActiveFrameworkParent() {
+        Opportunity parent = buildFrameworkOpp();
+        insert parent;
+        addOcrRoles(parent.Id);
+        parent.StageName = 'Solutioning'; update parent;
+        parent.StageName = 'Negotiation'; update parent;
+        parent.StageName = 'Booking Verification'; update parent;
+        parent.StageName = 'Booked';
+        parent.Framework_Status__c = 'Active';
+        update parent;
+        return parent.Id;
+    }
+
+    @IsTest
+    static void test_childLinkage_blocksWhenParentNotBooked() {
+        Opportunity parent = buildFrameworkOpp();
+        insert parent; // still at Qualification — not Booked
+
+        Opportunity child = buildChildOpp();
+        child.IM_Parent_Opportunity__c = parent.Id;
+
+        Test.startTest();
+        Boolean threw = false;
+        try {
+            insert child;
+        } catch (DmlException e) {
+            threw = true;
+            System.assert(e.getMessage().contains('must be Booked (Closed Won) and have Framework Status = Active'),
+                'Expected the Framework_Parent_Must_Be_Active error, got: ' + e.getMessage());
+        }
+        Test.stopTest();
+
+        System.assert(threw, 'Linking a child to a non-Booked Framework Parent should be blocked.');
+    }
+
+    @IsTest
+    static void test_childLinkage_blocksWhenParentBookedButNotActive() {
+        Opportunity parent = buildFrameworkOpp();
+        insert parent;
+        addOcrRoles(parent.Id);
+        parent.StageName = 'Solutioning'; update parent;
+        parent.StageName = 'Negotiation'; update parent;
+        parent.StageName = 'Booking Verification'; update parent;
+        parent.StageName = 'Booked'; update parent; // Booked but Framework_Status__c left blank (not Active)
+
+        Opportunity child = buildChildOpp();
+        child.IM_Parent_Opportunity__c = parent.Id;
+
+        Test.startTest();
+        Boolean threw = false;
+        try {
+            insert child;
+        } catch (DmlException e) {
+            threw = true;
+        }
+        Test.stopTest();
+
+        System.assert(threw, 'Linking a child to a Booked-but-not-Active Framework Parent should be blocked.');
+    }
+
+    @IsTest
+    static void test_childLinkage_allowsWhenParentBookedAndActive() {
+        Id parentId = createBookedActiveFrameworkParent();
+
+        Opportunity child = buildChildOpp();
+        child.IM_Parent_Opportunity__c = parentId;
+
+        Test.startTest();
+        insert child;
+        Test.stopTest();
+
+        Opportunity result = [SELECT IM_Parent_Opportunity__c FROM Opportunity WHERE Id = :child.Id];
+        System.assertEquals(parentId, result.IM_Parent_Opportunity__c,
+            'Linking a child to a Booked and Active Framework Parent should be allowed.');
+    }
+
+    @IsTest
+    static void test_childTypeRestriction_blocksRenewalWhenLinkedToParent() {
+        Id parentId = createBookedActiveFrameworkParent();
+
+        Opportunity child = buildChildOpp();
+        child.Type = 'Renewal';
+        child.IM_Parent_Opportunity__c = parentId;
+
+        Test.startTest();
+        Boolean threw = false;
+        try {
+            insert child;
+        } catch (DmlException e) {
+            threw = true;
+            System.assert(e.getMessage().contains('may not use Deal Type = Renewal'),
+                'Expected the Framework_Child_Type_Restriction error, got: ' + e.getMessage());
+        }
+        Test.stopTest();
+
+        System.assert(threw, 'A child linked to a Framework Parent should not be allowed Type = Renewal.');
+    }
+
+    @IsTest
+    static void test_childTypeRestriction_allowsNewWhenLinkedToParent() {
+        Id parentId = createBookedActiveFrameworkParent();
+
+        Opportunity child = buildChildOpp();
+        child.Type = 'New'; // default on buildChildOpp(), set explicitly here for clarity
+        child.IM_Parent_Opportunity__c = parentId;
+
+        Test.startTest();
+        insert child;
+        Test.stopTest();
+
+        Opportunity result = [SELECT Type FROM Opportunity WHERE Id = :child.Id];
+        System.assertEquals('New', result.Type,
+            'A child linked to a Framework Parent should be allowed Type = New.');
+    }
 }
