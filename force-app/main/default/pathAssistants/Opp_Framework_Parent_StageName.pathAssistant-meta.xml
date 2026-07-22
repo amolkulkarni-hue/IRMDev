@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PathAssistant xmlns="http://soap.sforce.com/2006/04/metadata">
+    <active>true</active>
+    <entityName>Opportunity</entityName>
+    <fieldName>StageName</fieldName>
+    <masterLabel>Framework Parent Opportunity Path</masterLabel>
+    <pathAssistantSteps>
+        <info>&lt;p&gt;Opportunity is booked and won. Handover to Implementation and CARE teams.&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Confirm all cases are closed&lt;/li&gt;&lt;li&gt;Initiate implementation handover&lt;/li&gt;&lt;li&gt;Update CRM with final deal value and booking reference&lt;/li&gt;&lt;/ul&gt;</info>
+        <picklistValueName>Booked</picklistValueName>
+    </pathAssistantSteps>
+    <pathAssistantSteps>
+        <info>&lt;p&gt;Deal is confirmed. Booking Verification checklist must be completed before the opportunity can be booked or closed.&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Complete Booking Verification checklist items&lt;/li&gt;&lt;li&gt;Ensure all document checklists are in Final status&lt;/li&gt;&lt;li&gt;Open B2B/Implementation case if applicable&lt;/li&gt;&lt;/ul&gt;</info>
+        <picklistValueName>Booking Verification</picklistValueName>
+    </pathAssistantSteps>
+    <pathAssistantSteps>
+        <info>&lt;p&gt;Opportunity is closed and won. Confirm all post-close steps are complete.&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Confirm all cases are closed&lt;/li&gt;&lt;li&gt;Verify final booking reference is recorded&lt;/li&gt;&lt;/ul&gt;</info>
+        <picklistValueName>Closed</picklistValueName>
+    </pathAssistantSteps>
+    <pathAssistantSteps>
+        <info>&lt;p&gt;Opportunity is lost. Document the loss reason and close any open support cases.&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Close all open Cases linked to this Opportunity&lt;/li&gt;&lt;li&gt;Record the loss reason accurately for forecasting&lt;/li&gt;&lt;/ul&gt;</info>
+        <picklistValueName>Lost</picklistValueName>
+    </pathAssistantSteps>
+    <pathAssistantSteps>
+        <info>&lt;p&gt;Commercial terms are being negotiated with the customer. Ensure all deal approvals are in flight.&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Confirm legal and commercial approvals are underway&lt;/li&gt;&lt;li&gt;Keep Deal Desk updated on any changes to commercial terms&lt;/li&gt;&lt;li&gt;Do not progress until all Pending Approval cases are resolved&lt;/li&gt;&lt;/ul&gt;</info>
+        <picklistValueName>Negotiation</picklistValueName>
+    </pathAssistantSteps>
+    <pathAssistantSteps>
+        <info>&lt;p&gt;Opportunity is being qualified. Confirm customer fit, IRM product alignment, and deal size to determine Touch Level.&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Complete all qualification fields — Touch Level classification runs on save&lt;/li&gt;&lt;li&gt;Confirm Large Deal flag if applicable&lt;/li&gt;&lt;li&gt;Engage Deal Desk for High Touch opportunities&lt;/li&gt;&lt;/ul&gt;</info>
+        <picklistValueName>Qualification</picklistValueName>
+    </pathAssistantSteps>
+    <pathAssistantSteps>
+        <info>&lt;p&gt;Solution design and proposal development. Work with Core Group Specialists to complete required support cases and document checklists.&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Ensure all required support cases are open and assigned&lt;/li&gt;&lt;li&gt;Track document checklist completion — all must reach Final before progressing&lt;/li&gt;&lt;li&gt;Co-ordinate with Legal, Pricing, and InfoSec teams as needed&lt;/li&gt;&lt;/ul&gt;</info>
+        <picklistValueName>Solutioning</picklistValueName>
+    </pathAssistantSteps>
+    <recordTypeName>Framework_Parent_Opportunity</recordTypeName>
+</PathAssistant>
