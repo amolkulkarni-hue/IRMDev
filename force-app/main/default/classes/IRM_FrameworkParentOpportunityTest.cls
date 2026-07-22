@@ -37,11 +37,14 @@ private class IRM_FrameworkParentOpportunityTest {
             BillingCountry = 'United States', BillingState = 'NY', BillingPostalCode = '11209'
         );
         insert acc;
-        // 3 Contacts for the Qualification (Type=All) stage-gate roles
+        // 3 Contacts for the Qualification (Type=All) stage-gate roles, plus 1 for the
+        // Negotiation stage-gate role (NF_Enforce_Required_Stakeholder_Roles_by_Opportunity_Stage)
         insert new List<Contact>{
             new Contact(LastName = 'Champion',      AccountId = acc.Id),
             new Contact(LastName = 'EconomicBuyer',  AccountId = acc.Id),
-            new Contact(LastName = 'ProblemOwner',   AccountId = acc.Id)
+            new Contact(LastName = 'ProblemOwner',   AccountId = acc.Id),
+            new Contact(LastName = 'AuthorizedSignatory', AccountId = acc.Id),
+            new Contact(LastName = 'CorrespondenceContact', AccountId = acc.Id)
         };
     }
 
@@ -80,13 +83,32 @@ private class IRM_FrameworkParentOpportunityTest {
         );
     }
 
+    private static Id getContactIdByLastName(String lastName) {
+        return [SELECT Id FROM Contact WHERE LastName = :lastName LIMIT 1].Id;
+    }
+
     private static void addOcrRoles(Id oppId) {
-        List<Contact> contacts = [SELECT Id FROM Contact ORDER BY LastName];
         insert new List<OpportunityContactRole>{
-            new OpportunityContactRole(OpportunityId = oppId, ContactId = contacts[0].Id, Role = 'Champion'),
-            new OpportunityContactRole(OpportunityId = oppId, ContactId = contacts[1].Id, Role = 'Economic Decision Maker / Buyer'),
-            new OpportunityContactRole(OpportunityId = oppId, ContactId = contacts[2].Id, Role = 'Problem Owner')
+            new OpportunityContactRole(OpportunityId = oppId, ContactId = getContactIdByLastName('Champion'), Role = 'Champion'),
+            new OpportunityContactRole(OpportunityId = oppId, ContactId = getContactIdByLastName('EconomicBuyer'), Role = 'Economic Decision Maker / Buyer'),
+            new OpportunityContactRole(OpportunityId = oppId, ContactId = getContactIdByLastName('ProblemOwner'), Role = 'Problem Owner')
         };
+    }
+
+    // Required by NF_Enforce_Required_Stakeholder_Roles_by_Opportunity_Stage before a
+    // Framework Parent Opportunity can advance to Negotiation.
+    private static void addAuthorizedSignatoryRole(Id oppId) {
+        insert new OpportunityContactRole(
+            OpportunityId = oppId, ContactId = getContactIdByLastName('AuthorizedSignatory'), Role = 'Authorized Signatory'
+        );
+    }
+
+    // Required by NF_Enforce_Required_Stakeholder_Roles_by_Opportunity_Stage before a
+    // Framework Parent Opportunity can advance to Booking Verification.
+    private static void addCorrespondenceContactRole(Id oppId) {
+        insert new OpportunityContactRole(
+            OpportunityId = oppId, ContactId = getContactIdByLastName('CorrespondenceContact'), Role = 'Correspondence Contact'
+        );
     }
 
     @IsTest
@@ -142,6 +164,7 @@ private class IRM_FrameworkParentOpportunityTest {
         insert opp;
         addOcrRoles(opp.Id);
         opp.StageName = 'Solutioning'; update opp;
+        addAuthorizedSignatoryRole(opp.Id);
         opp.StageName = 'Negotiation'; update opp;
 
         Test.startTest();
@@ -165,7 +188,9 @@ private class IRM_FrameworkParentOpportunityTest {
         insert opp;
         addOcrRoles(opp.Id);
         opp.StageName = 'Solutioning'; update opp;
+        addAuthorizedSignatoryRole(opp.Id);
         opp.StageName = 'Negotiation'; update opp;
+        addCorrespondenceContactRole(opp.Id);
         opp.StageName = 'Booking Verification'; update opp;
 
         Test.startTest();
@@ -178,16 +203,26 @@ private class IRM_FrameworkParentOpportunityTest {
             'Moving to Booked directly from Booking Verification should be allowed.');
     }
 
+    // Calls Test.startTest() itself (can only be invoked once per test method) so the final
+    // stage transition — which triggers several org-wide Opportunity automations — gets a fresh
+    // governor-limit context. Callers must NOT call Test.startTest() themselves; they should
+    // call Test.stopTest() after their own action instead.
     private static Id createBookedActiveFrameworkParent() {
         Opportunity parent = buildFrameworkOpp();
         insert parent;
         addOcrRoles(parent.Id);
         parent.StageName = 'Solutioning'; update parent;
+        addAuthorizedSignatoryRole(parent.Id);
         parent.StageName = 'Negotiation'; update parent;
+        addCorrespondenceContactRole(parent.Id);
         parent.StageName = 'Booking Verification'; update parent;
+
+        Test.startTest();
         parent.StageName = 'Booked';
         parent.Framework_Status__c = 'Active';
         update parent;
+        Test.stopTest();
+
         return parent.Id;
     }
 
@@ -219,14 +254,17 @@ private class IRM_FrameworkParentOpportunityTest {
         insert parent;
         addOcrRoles(parent.Id);
         parent.StageName = 'Solutioning'; update parent;
+        addAuthorizedSignatoryRole(parent.Id);
         parent.StageName = 'Negotiation'; update parent;
+        addCorrespondenceContactRole(parent.Id);
         parent.StageName = 'Booking Verification'; update parent;
+
+        Test.startTest();
         parent.StageName = 'Booked'; update parent; // Booked but Framework_Status__c left blank (not Active)
 
         Opportunity child = buildChildOpp();
         child.IM_Parent_Opportunity__c = parent.Id;
 
-        Test.startTest();
         Boolean threw = false;
         try {
             insert child;
@@ -244,10 +282,7 @@ private class IRM_FrameworkParentOpportunityTest {
 
         Opportunity child = buildChildOpp();
         child.IM_Parent_Opportunity__c = parentId;
-
-        Test.startTest();
         insert child;
-        Test.stopTest();
 
         Opportunity result = [SELECT IM_Parent_Opportunity__c FROM Opportunity WHERE Id = :child.Id];
         System.assertEquals(parentId, result.IM_Parent_Opportunity__c,
@@ -262,7 +297,6 @@ private class IRM_FrameworkParentOpportunityTest {
         child.Type = 'Renewal';
         child.IM_Parent_Opportunity__c = parentId;
 
-        Test.startTest();
         Boolean threw = false;
         try {
             insert child;
@@ -271,7 +305,6 @@ private class IRM_FrameworkParentOpportunityTest {
             System.assert(e.getMessage().contains('may not use Deal Type = Renewal'),
                 'Expected the Framework_Child_Type_Restriction error, got: ' + e.getMessage());
         }
-        Test.stopTest();
 
         System.assert(threw, 'A child linked to a Framework Parent should not be allowed Type = Renewal.');
     }
@@ -283,10 +316,7 @@ private class IRM_FrameworkParentOpportunityTest {
         Opportunity child = buildChildOpp();
         child.Type = 'New'; // default on buildChildOpp(), set explicitly here for clarity
         child.IM_Parent_Opportunity__c = parentId;
-
-        Test.startTest();
         insert child;
-        Test.stopTest();
 
         Opportunity result = [SELECT Type FROM Opportunity WHERE Id = :child.Id];
         System.assertEquals('New', result.Type,

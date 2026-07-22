@@ -31,6 +31,10 @@ private class CaseCreationRuleEvaluatorActionTest {
         );
         insert acc;
 
+        // Satisfies the Contact_or_User_Info validation rule (Case requires either
+        // ContactId or IM_Employee_Contact__c) for the ReassertCaseOwnerJob tests below.
+        insert new Contact(LastName = 'ReassertOwnerJobTestContact', AccountId = acc.Id);
+
         Opportunity opp = new Opportunity(
             Name = 'Test Opp',
             AccountId = acc.Id,
@@ -285,9 +289,10 @@ private class CaseCreationRuleEvaluatorActionTest {
 
     @IsTest
     static void testReassertCaseOwnerJob_correctsOverriddenOwner() {
-        Group queue = [SELECT Id FROM Group WHERE Type = 'Queue' LIMIT 1];
+        Group queue = [SELECT Id FROM Group WHERE DeveloperName = 'Solution_Specialist_Queue' AND Type = 'Queue' LIMIT 1];
+        Id contactId = [SELECT Id FROM Contact LIMIT 1].Id;
 
-        Case c = new Case(Status = 'New', OwnerId = UserInfo.getUserId());
+        Case c = new Case(Status = 'New', OwnerId = UserInfo.getUserId(), ContactId = contactId);
         insert c;
 
         Map<Id, Id> caseIdToIntendedOwnerId = new Map<Id, Id>{ c.Id => queue.Id };
@@ -303,9 +308,10 @@ private class CaseCreationRuleEvaluatorActionTest {
 
     @IsTest
     static void testReassertCaseOwnerJob_noOpWhenOwnerAlreadyCorrect() {
-        Group queue = [SELECT Id FROM Group WHERE Type = 'Queue' LIMIT 1];
+        Group queue = [SELECT Id FROM Group WHERE DeveloperName = 'Solution_Specialist_Queue' AND Type = 'Queue' LIMIT 1];
+        Id contactId = [SELECT Id FROM Contact LIMIT 1].Id;
 
-        Case c = new Case(Status = 'New', OwnerId = queue.Id);
+        Case c = new Case(Status = 'New', OwnerId = queue.Id, ContactId = contactId);
         insert c;
 
         Map<Id, Id> caseIdToIntendedOwnerId = new Map<Id, Id>{ c.Id => queue.Id };
