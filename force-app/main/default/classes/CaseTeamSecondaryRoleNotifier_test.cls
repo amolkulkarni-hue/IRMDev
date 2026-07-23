@@ -6,6 +6,13 @@ private class CaseTeamSecondaryRoleNotifier_test {
         insert testContact;
         Case testCase = new Case(Subject = subject, ContactId = testContact.Id);
         insert testCase;
+
+        // Existing org automation may auto-add the running user to the Case Team on insert;
+        // clear it so the test's own CaseTeamMember insert (with a specific role) doesn't collide.
+        delete [
+            SELECT Id FROM CaseTeamMember
+            WHERE ParentId = :testCase.Id AND MemberId = :UserInfo.getUserId()
+        ];
         return testCase;
     }
 
