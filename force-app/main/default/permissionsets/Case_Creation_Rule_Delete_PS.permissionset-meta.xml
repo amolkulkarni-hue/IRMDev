@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
-    <description>Delete access to Case Creation Rule records (including its child object). Includes the child Case_Creation_Condition__c and Case_Creation_Doc_Requirement__c records maintained on a Case Creation Rule's related lists.</description>
+    <description>Delete access to Case Creation Rule (+ child) records. Also grants Edit (platform-required for Delete); no field-level edit exposed.</description>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Case Creation Rule - Delete PS</label>
     <objectPermissions>
         <allowCreate>false</allowCreate>
         <allowDelete>true</allowDelete>
-        <allowEdit>false</allowEdit>
+        <allowEdit>true</allowEdit>
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
         <object>Case_Creation_Rule__c</object>
@@ -16,7 +16,7 @@
     <objectPermissions>
         <allowCreate>false</allowCreate>
         <allowDelete>true</allowDelete>
-        <allowEdit>false</allowEdit>
+        <allowEdit>true</allowEdit>
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
         <object>Case_Creation_Condition__c</object>
@@ -26,7 +26,7 @@
     <objectPermissions>
         <allowCreate>false</allowCreate>
         <allowDelete>true</allowDelete>
-        <allowEdit>false</allowEdit>
+        <allowEdit>true</allowEdit>
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
         <object>Case_Creation_Doc_Requirement__c</object>

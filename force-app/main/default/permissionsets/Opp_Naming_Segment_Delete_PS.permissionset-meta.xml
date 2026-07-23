@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
-    <description>Delete access to Opportunity Naming Segment records.</description>
+    <description>Delete access to Opportunity Naming Segment records. Also grants Edit (platform-required for Delete); no field-level edit exposed.</description>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Opportunity Naming Segment - Delete PS</label>
     <objectPermissions>
         <allowCreate>false</allowCreate>
         <allowDelete>true</allowDelete>
-        <allowEdit>false</allowEdit>
+        <allowEdit>true</allowEdit>
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
         <object>Opp_Naming_Segment__c</object>
