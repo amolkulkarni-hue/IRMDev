@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <description>Send Email Alert to the newly added Case Team Member when their Case Team Role is one of the secondary engagement roles (Legal, Compliance, Risk, Privacy, Partner, CARE, etc.)</description>
+        <name>Send_Email_Alert_To_Case_Team_Member</name>
+        <label>Send Email Alert To Case Team Member</label>
+        <locationX>176</locationX>
+        <locationY>323</locationY>
+        <actionName>emailSimple</actionName>
+        <actionType>emailSimple</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>senderType</name>
+            <value>
+                <stringValue>CurrentUser</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>emailSubject</name>
+            <value>
+                <elementReference>SubjectForCaseTeamNotification</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>emailBody</name>
+            <value>
+                <elementReference>BodyForCaseTeamNotification</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>sendRichBody</name>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>recipientId</name>
+            <value>
+                <elementReference>$Record.MemberId</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>emailSimple</nameSegment>
+    </actionCalls>
+    <apiVersion>62.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <environments>Default</environments>
+    <interviewLabel>Case Team Member Secondary Role Notification {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Case Team Member Secondary Role Notification</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Send_Email_Alert_To_Case_Team_Member</targetReference>
+        </connector>
+        <filterFormula>OR(
+{!$Record.TeamRole.Name} = &quot;Legal Reviewer&quot;,
+{!$Record.TeamRole.Name} = &quot;Legal Approver&quot;,
+{!$Record.TeamRole.Name} = &quot;Compliance Advisor&quot;,
+{!$Record.TeamRole.Name} = &quot;Risk Advisor&quot;,
+{!$Record.TeamRole.Name} = &quot;Privacy Advisor&quot;,
+{!$Record.TeamRole.Name} = &quot;Channel Partner Advisor&quot;,
+{!$Record.TeamRole.Name} = &quot;CARE Onboarding Specialist&quot;,
+{!$Record.TeamRole.Name} = &quot;Operations Coordinator&quot;,
+{!$Record.TeamRole.Name} = &quot;Customer Delivery Liaison&quot;,
+{!$Record.TeamRole.Name} = &quot;Finance Reviewer&quot;,
+{!$Record.TeamRole.Name} = &quot;B2B Analyst&quot;,
+{!$Record.TeamRole.Name} = &quot;Implementation Specialist&quot;
+)</filterFormula>
+        <object>CaseTeamMember</object>
+        <recordTriggerType>Create</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+    <textTemplates>
+        <name>BodyForCaseTeamNotification</name>
+        <isViewedAsPlainText>false</isViewedAsPlainText>
+        <text>&lt;p&gt;You have been added to Case {!$Record.Parent.CaseNumber} (&quot;{!$Record.Parent.Subject}&quot;) as {!$Record.TeamRole.Name}.&lt;/p&gt;&lt;p&gt;You can view this Case from the &quot;My Case Teams&quot; list view on the Cases tab.&lt;/p&gt;</text>
+    </textTemplates>
+    <textTemplates>
+        <name>SubjectForCaseTeamNotification</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>You've been added to Case {!$Record.Parent.CaseNumber} as {!$Record.TeamRole.Name}</text>
+    </textTemplates>
+    <triggerOrder>1</triggerOrder>
+</Flow>
