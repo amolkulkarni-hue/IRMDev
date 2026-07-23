@@ -1,4 +1,7 @@
-public class CaseTeamMemberTriggerHandler implements ITriggerHandler {
+public class CaseTeamSecondaryRoleNotificationScheduler implements Schedulable {
+
+    @TestVisible
+    private static final String CHECKPOINT_NAME = 'CaseTeamSecondaryRoleNotification';
 
     private static final Set<String> SECONDARY_ROLE_NAMES = new Set<String>{
         'Legal Reviewer', 'Legal Approver', 'Compliance Advisor', 'Risk Advisor',
@@ -7,38 +10,44 @@ public class CaseTeamMemberTriggerHandler implements ITriggerHandler {
         'B2B Analyst', 'Implementation Specialist'
     };
 
-    public void BeforeInsert(List<SObject> newItems) {
+    public void execute(SchedulableContext context) {
+        run();
     }
 
-    public void AfterInsert(List<SObject> newItems) {
-        notifySecondaryRoleMembers((List<CaseTeamMember>) newItems);
-    }
+    @TestVisible
+    private void run() {
+        Datetime runStartedAt = Datetime.now();
+        Case_Team_Notification_Checkpoint__c checkpoint = getOrCreateCheckpoint();
+        Datetime sinceDatetime = checkpoint.Last_Run_DateTime__c != null
+            ? checkpoint.Last_Run_DateTime__c
+            : runStartedAt.addDays(-1);
 
-    public void BeforeUpdate(Map<Id, SObject> newItems, Map<Id, SObject> oldItems) {
-    }
-
-    public void AfterUpdate(Map<Id, SObject> newItems, Map<Id, SObject> oldItems) {
-    }
-
-    public void BeforeDelete(Map<Id, SObject> oldItems) {
-    }
-
-    public void AfterDelete(Map<Id, SObject> oldItems) {
-    }
-
-    public void AfterUndelete(Map<Id, SObject> oldItems) {
-    }
-
-    public Boolean IsDisabled() {
-        return false;
-    }
-
-    private void notifySecondaryRoleMembers(List<CaseTeamMember> newItems) {
         List<CaseTeamMember> members = [
             SELECT Id, MemberId, TeamRole.Name, Parent.CaseNumber, Parent.Subject
             FROM CaseTeamMember
-            WHERE Id IN :newItems AND TeamRole.Name IN :SECONDARY_ROLE_NAMES
+            WHERE CreatedDate > :sinceDatetime AND TeamRole.Name IN :SECONDARY_ROLE_NAMES
         ];
+
+        sendNotifications(members);
+
+        checkpoint.Last_Run_DateTime__c = runStartedAt;
+        upsert checkpoint;
+    }
+
+    private Case_Team_Notification_Checkpoint__c getOrCreateCheckpoint() {
+        List<Case_Team_Notification_Checkpoint__c> existing = [
+            SELECT Id, Last_Run_DateTime__c
+            FROM Case_Team_Notification_Checkpoint__c
+            WHERE Name = :CHECKPOINT_NAME
+            LIMIT 1
+        ];
+        if (!existing.isEmpty()) {
+            return existing[0];
+        }
+        return new Case_Team_Notification_Checkpoint__c(Name = CHECKPOINT_NAME);
+    }
+
+    private void sendNotifications(List<CaseTeamMember> members) {
         if (members.isEmpty()) {
             return;
         }
