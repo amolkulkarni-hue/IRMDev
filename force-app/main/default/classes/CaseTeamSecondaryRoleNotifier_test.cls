@@ -1,10 +1,17 @@
 @isTest
-private class CaseTeamSecondaryRoleNotificationScheduler_test {
+private class CaseTeamSecondaryRoleNotifier_test {
+
+    private static Case createTestCase(String subject) {
+        Contact testContact = new Contact(LastName = 'CaseTeamNotifierTestContact');
+        insert testContact;
+        Case testCase = new Case(Subject = subject, ContactId = testContact.Id);
+        insert testCase;
+        return testCase;
+    }
 
     @isTest
     static void firstRunNotifiesExistingSecondaryRoleMembersWithinLookbackWindow() {
-        Case testCase = new Case(Subject = 'Test case for scheduled secondary team notification');
-        insert testCase;
+        Case testCase = createTestCase('Test case for scheduled secondary team notification');
 
         CaseTeamRole role = [SELECT Id FROM CaseTeamRole WHERE Name = 'Compliance Advisor' LIMIT 1];
         insert new CaseTeamMember(
@@ -16,7 +23,7 @@ private class CaseTeamSecondaryRoleNotificationScheduler_test {
         Integer emailInvocationsBefore = Limits.getEmailInvocations();
 
         Test.startTest();
-        new CaseTeamSecondaryRoleNotificationScheduler().run();
+        new CaseTeamSecondaryRoleNotifier().run();
         Test.stopTest();
 
         System.assertEquals(
@@ -27,7 +34,7 @@ private class CaseTeamSecondaryRoleNotificationScheduler_test {
 
         Case_Team_Notification_Checkpoint__c checkpoint = [
             SELECT Last_Run_DateTime__c FROM Case_Team_Notification_Checkpoint__c
-            WHERE Name = :CaseTeamSecondaryRoleNotificationScheduler.CHECKPOINT_NAME
+            WHERE Name = :CaseTeamSecondaryRoleNotifier.CHECKPOINT_NAME
             LIMIT 1
         ];
         System.assertNotEquals(null, checkpoint.Last_Run_DateTime__c, 'Checkpoint should be recorded after a run');
@@ -35,8 +42,7 @@ private class CaseTeamSecondaryRoleNotificationScheduler_test {
 
     @isTest
     static void secondRunDoesNotReNotifyAlreadyProcessedMembers() {
-        Case testCase = new Case(Subject = 'Test case for checkpoint dedup');
-        insert testCase;
+        Case testCase = createTestCase('Test case for checkpoint dedup');
 
         CaseTeamRole role = [SELECT Id FROM CaseTeamRole WHERE Name = 'Risk Advisor' LIMIT 1];
         insert new CaseTeamMember(
@@ -46,9 +52,9 @@ private class CaseTeamSecondaryRoleNotificationScheduler_test {
         );
 
         Test.startTest();
-        new CaseTeamSecondaryRoleNotificationScheduler().run();
+        new CaseTeamSecondaryRoleNotifier().run();
         Integer emailInvocationsAfterFirstRun = Limits.getEmailInvocations();
-        new CaseTeamSecondaryRoleNotificationScheduler().run();
+        new CaseTeamSecondaryRoleNotifier().run();
         Test.stopTest();
 
         System.assertEquals(
@@ -60,8 +66,7 @@ private class CaseTeamSecondaryRoleNotificationScheduler_test {
 
     @isTest
     static void nonSecondaryRoleMemberIsNotNotified() {
-        Case testCase = new Case(Subject = 'Test case for non-secondary role');
-        insert testCase;
+        Case testCase = createTestCase('Test case for non-secondary role');
 
         CaseTeamRole role = [SELECT Id FROM CaseTeamRole WHERE Name = 'Case View' LIMIT 1];
         insert new CaseTeamMember(
@@ -73,7 +78,7 @@ private class CaseTeamSecondaryRoleNotificationScheduler_test {
         Integer emailInvocationsBefore = Limits.getEmailInvocations();
 
         Test.startTest();
-        new CaseTeamSecondaryRoleNotificationScheduler().run();
+        new CaseTeamSecondaryRoleNotifier().run();
         Test.stopTest();
 
         System.assertEquals(
