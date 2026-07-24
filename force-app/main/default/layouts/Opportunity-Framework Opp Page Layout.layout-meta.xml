@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Layout xmlns="http://soap.sforce.com/2006/04/metadata">
-    <excludeButtons>SmartFillEnrich</excludeButtons>
+    <excludeButtons>OpenSlackRecordChannel</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <feedLayout>
         <autocollapsePublisher>true</autocollapsePublisher>
@@ -144,10 +144,6 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Eligible_for_Counterparty_Paper__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Required</behavior>
-                <field>Primary_Product_Interest__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -412,13 +408,18 @@
         <fields>ironclad__Workflow_Status__c</fields>
         <fields>CREATED_DATE</fields>
         <relatedList>ironclad__Ironclad_Workflow__c.Opportunity__c</relatedList>
+        <sortField>CREATED_DATE</sortField>
+        <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
         <fields>ironclad__Account__c</fields>
         <fields>ironclad__Contract_Type__c</fields>
         <fields>ironclad__CounterpartySignedId__c</fields>
+        <fields>CREATED_DATE</fields>
         <relatedList>ironclad__Ironclad_Contract__c.Opportunity__c</relatedList>
+        <sortField>CREATED_DATE</sortField>
+        <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
         <relatedList>RelatedFileList</relatedList>
