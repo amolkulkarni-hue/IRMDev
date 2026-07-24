@@ -60,7 +60,15 @@
         <connector>
             <targetReference>Check_Reparented</targetReference>
         </connector>
-        <filterFormula>NOT(ISBLANK({!$Record.IM_Parent_Opportunity__c})) AND (ISNEW() OR ISCHANGED({!$Record.Amount}) OR ISCHANGED({!$Record.StageName}) OR ISCHANGED({!$Record.IM_Parent_Opportunity__c}))</filterFormula>
+        <filterFormula>AND(
+NOT(ISBLANK({!$Record.IM_Parent_Opportunity__c})),
+OR(
+ISNEW(),
+ISCHANGED({!$Record.Amount}),
+ISCHANGED({!$Record.StageName}),
+ISCHANGED({!$Record.IM_Parent_Opportunity__c})
+)
+)</filterFormula>
         <object>Opportunity</object>
         <recordTriggerType>CreateAndUpdate</recordTriggerType>
         <triggerType>RecordAfterSave</triggerType>
