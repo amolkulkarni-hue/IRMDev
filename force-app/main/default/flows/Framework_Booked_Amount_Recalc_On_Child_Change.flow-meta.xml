@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>67.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <decisions>
+        <name>Check_Reparented</name>
+        <label>Check Reparented</label>
+        <locationX>176</locationX>
+        <locationY>215</locationY>
+        <defaultConnector>
+            <targetReference>Recalculate_Current_Parent</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Amount/Stage Change or Create</defaultConnectorLabel>
+        <rules>
+            <name>Was_Reparented</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>IsReparented</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Recalculate_Old_Parent_On_Reparent</targetReference>
+            </connector>
+            <label>Was Reparented</label>
+        </rules>
+    </decisions>
+    <environments>Default</environments>
+    <formulas>
+        <name>IsReparented</name>
+        <dataType>Boolean</dataType>
+        <expression>ISCHANGED({!$Record.IM_Parent_Opportunity__c})</expression>
+    </formulas>
+    <interviewLabel>Framework Booked Amount Recalc On Child Change {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Framework Booked Amount Recalc On Child Change</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Check_Reparented</targetReference>
+        </connector>
+        <filterFormula>NOT(ISBLANK({!$Record.IM_Parent_Opportunity__c})) AND (ISNEW() OR ISCHANGED({!$Record.Amount}) OR ISCHANGED({!$Record.StageName}) OR ISCHANGED({!$Record.IM_Parent_Opportunity__c}))</filterFormula>
+        <object>Opportunity</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+    <subflows>
+        <name>Recalculate_Old_Parent_On_Reparent</name>
+        <label>Recalculate Old Parent On Reparent</label>
+        <locationX>50</locationX>
+        <locationY>323</locationY>
+        <connector>
+            <targetReference>Recalculate_New_Parent_On_Reparent</targetReference>
+        </connector>
+        <flowName>Recalculate_Framework_Booked_Amount</flowName>
+        <inputAssignments>
+            <name>parentOpportunityId</name>
+            <value>
+                <elementReference>$Record__Prior.IM_Parent_Opportunity__c</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <subflows>
+        <name>Recalculate_New_Parent_On_Reparent</name>
+        <label>Recalculate New Parent On Reparent</label>
+        <locationX>50</locationX>
+        <locationY>431</locationY>
+        <flowName>Recalculate_Framework_Booked_Amount</flowName>
+        <inputAssignments>
+            <name>parentOpportunityId</name>
+            <value>
+                <elementReference>$Record.IM_Parent_Opportunity__c</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <subflows>
+        <name>Recalculate_Current_Parent</name>
+        <label>Recalculate Current Parent</label>
+        <locationX>303</locationX>
+        <locationY>323</locationY>
+        <flowName>Recalculate_Framework_Booked_Amount</flowName>
+        <inputAssignments>
+            <name>parentOpportunityId</name>
+            <value>
+                <elementReference>$Record.IM_Parent_Opportunity__c</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+</Flow>
