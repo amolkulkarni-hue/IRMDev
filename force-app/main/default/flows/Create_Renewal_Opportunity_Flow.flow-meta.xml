@@ -46,6 +46,20 @@
                 <stringValue>Renewal</stringValue>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>renewalOppty.RecordTypeId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Standard_Record_Type.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>renewalOppty.Name</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>TBD</stringValue>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Check_Object_Type</targetReference>
         </connector>
@@ -81,7 +95,7 @@
             <assignToReference>renewalOppty.Billing_Country__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Get_Account_Record.BillingCountry</elementReference>
+                <elementReference>Get_IM_Billing_Country.Id</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -109,10 +123,10 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>renewalOppty.IME_Contract__c</assignToReference>
+            <assignToReference>renewalOppty.ContractId</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Get_Opportunity_Record.IME_Contract__c</elementReference>
+                <elementReference>Get_Opportunity_Record.ContractId</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -174,6 +188,29 @@
             <stringValue>{&quot;location&quot;:&quot;top&quot;,&quot;type&quot;:&quot;simple&quot;}</stringValue>
         </value>
     </customProperties>
+    <decisions>
+        <description>Check if oppty created succesfully</description>
+        <name>Check_if_oppty_created_succesfully</name>
+        <label>Check if oppty created succesfully</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Created</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>renewalOppty.Id</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>FinalScreen</targetReference>
+            </connector>
+            <label>Created</label>
+        </rules>
+    </decisions>
     <decisions>
         <description>Check Object Type</description>
         <name>Check_Object_Type</name>
@@ -242,6 +279,9 @@
         <label>Create Renewal Opportunity</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
+        <connector>
+            <targetReference>Check_if_oppty_created_succesfully</targetReference>
+        </connector>
         <inputReference>renewalOppty</inputReference>
     </recordCreates>
     <recordLookups>
@@ -252,7 +292,7 @@
         <locationY>0</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Update_Renewal_Oppty_from_Source_Account</targetReference>
+            <targetReference>Get_IM_Billing_Country</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -264,6 +304,27 @@
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>Account</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_IM_Billing_Country</name>
+        <label>Get IM Billing Country</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Update_Renewal_Oppty_from_Source_Account</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Name</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Account_Record.BillingCountry</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>IM_Country__c</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
@@ -288,6 +349,36 @@
         <object>Opportunity</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
+    <recordLookups>
+        <description>Get Standard Record Type</description>
+        <name>Get_Standard_Record_Type</name>
+        <label>Get Standard Record Type</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Assign_Renewal_Oppty_defaults</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>SobjectType</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Opportunity</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Standard_Opportunity</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>RecordType</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <runInMode>SystemModeWithSharing</runInMode>
     <screens>
         <name>CreateRenewalOppty</name>
         <label>CreateRenewalOppty</label>
@@ -337,20 +428,6 @@
                     <fieldType>ObjectProvided</fieldType>
                     <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
-                    <objectFieldReference>renewalOppty.Deal_Review_Status__c</objectFieldReference>
-                    <styleProperties>
-                        <verticalAlignment>
-                            <stringValue>top</stringValue>
-                        </verticalAlignment>
-                        <width>
-                            <stringValue>12</stringValue>
-                        </width>
-                    </styleProperties>
-                </fields>
-                <fields>
-                    <fieldType>ObjectProvided</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-                    <isRequired>false</isRequired>
                     <objectFieldReference>renewalOppty.NextStep</objectFieldReference>
                     <styleProperties>
                         <verticalAlignment>
@@ -378,6 +455,20 @@
                         </width>
                     </styleProperties>
                 </fields>
+                <fields>
+                    <fieldType>ObjectProvided</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+                    <isRequired>false</isRequired>
+                    <objectFieldReference>renewalOppty.Decision_Process_Defined__c</objectFieldReference>
+                    <styleProperties>
+                        <verticalAlignment>
+                            <stringValue>top</stringValue>
+                        </verticalAlignment>
+                        <width>
+                            <stringValue>12</stringValue>
+                        </width>
+                    </styleProperties>
+                </fields>
                 <inputParameters>
                     <name>width</name>
                     <value>
@@ -393,21 +484,7 @@
                     <fieldType>ObjectProvided</fieldType>
                     <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
-                    <objectFieldReference>renewalOppty.CloseDate</objectFieldReference>
-                    <styleProperties>
-                        <verticalAlignment>
-                            <stringValue>top</stringValue>
-                        </verticalAlignment>
-                        <width>
-                            <stringValue>12</stringValue>
-                        </width>
-                    </styleProperties>
-                </fields>
-                <fields>
-                    <fieldType>ObjectProvided</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-                    <isRequired>false</isRequired>
-                    <objectFieldReference>renewalOppty.Decision_Process_Defined__c</objectFieldReference>
+                    <objectFieldReference>renewalOppty.Deal_Review_Status__c</objectFieldReference>
                     <styleProperties>
                         <verticalAlignment>
                             <stringValue>top</stringValue>
@@ -481,14 +558,62 @@
                 </width>
             </styleProperties>
         </fields>
+        <fields>
+            <name>IRMCountryHelp</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;Country name must match the approved IRM country list exactly, including spelling and punctuation. &lt;/span&gt;&lt;a href=&quot;/lightning/o/IM_Country__c/list?filterName=Copy_of_All&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot; style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;&lt;strong&gt;View the approved country list here&lt;/strong&gt;&lt;/a&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>Account</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <nextOrFinishButtonLabel>Submit</nextOrFinishButtonLabel>
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>FinalScreen</name>
+        <label>FinalScreen</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>showSuccessMessage</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;Renewal opportunity has been created successfully. &lt;/span&gt;&lt;a href=&quot;/{!renewalOppty.Id}&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot; style=&quot;font-size: 14px;&quot;&gt;Renewal Opportunity&lt;/a&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>false</showHeader>
     </screens>
     <start>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Assign_Renewal_Oppty_defaults</targetReference>
+            <targetReference>Get_Standard_Record_Type</targetReference>
         </connector>
     </start>
     <status>Draft</status>

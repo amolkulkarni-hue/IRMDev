@@ -3,9 +3,9 @@ public without sharing class LeadToAccountMatching implements Queueable
     private static final String SALES_SITE_LEVEL = 'Sales (Site)';
     private static final String FUZZY_DUPLICATE_RULE_NAME = 'L2ACompanyNameFuzzyCountry';
     private static final String LOG_PREFIX = 'LeadToAccountMatching | ';
-    private static Set<Id> excludedCreatorIds = parseExcludedCreatorIds(Label.L2AMatchingExcludedCreatedByUsers);
 
-    public static Boolean updatingLeads = false;
+    @TestVisible
+    private static Set<Id> excludedCreatorIds = parseExcludedCreatorIds(Label.L2AMatchingExcludedCreatedByUsers);
 
     private final Set<Id> leadIds;
 
@@ -14,26 +14,14 @@ public without sharing class LeadToAccountMatching implements Queueable
         this.leadIds = leadIds;
     }
 
-    public static void handleLeadTrigger (List<Lead> triggerList, Map<Id,Lead> oldMap)
+    public static void handleLeadTrigger (List<Lead> triggerList)
     {
-        if (Limits.getQueueableJobs() >= Limits.getLimitQueueableJobs())
-        {
-            System.debug(LoggingLevel.WARN,LOG_PREFIX + 'skipping trigger because Queueable capacity is exhausted: ' + Limits.getQueueableJobs() + ' of ' + Limits.getLimitQueueableJobs() + ' jobs used');
-            return;
-        }
-
         Set<Id> leadIdsToQueue = new Set<Id>();
 
         for (Lead l : triggerList)
         {
-            if (trigger.isInsert ||
-                l.Related_Contact__c != oldMap.get(l.Id).Related_Contact__c ||
-                l.Company != oldMap.get(l.Id).Company ||
-                l.Country != oldMap.get(l.Id).Country ||
-                l.Domain__c != oldMap.get(l.Id).Domain__c)
-            {
+            if (l.Related_Account__c == null)
                 leadIdsToQueue.add(l.Id);
-            }
         }
 
         System.debug(LoggingLevel.DEBUG,LOG_PREFIX + 'trigger evaluated ' + triggerList.size() + ' Leads; queueing IDs ' + leadIdsToQueue);
@@ -47,10 +35,14 @@ public without sharing class LeadToAccountMatching implements Queueable
         System.debug(LoggingLevel.DEBUG,LOG_PREFIX + 'Queueable ' + context.getJobId() + ' started for Lead IDs ' + leadIds);
 
         Map<Id,Lead> leadsById = new Map<Id,Lead>([
-            SELECT Id, Company, Country, Domain__c, Related_Contact__c, Related_Account__c,
-                Street, City, State, PostalCode
+            SELECT Id, Company, Country, Domain__c, Related_Contact__c,
+                Related_Contact__r.Account.Id, Related_Contact__r.Account.BillingStreet,
+                Related_Contact__r.Account.BillingCity, Related_Contact__r.Account.BillingState,
+                Related_Contact__r.Account.BillingPostalCode, Related_Contact__r.Account.BillingCountry,
+                Related_Contact__r.Account.IM_Hierarchy_Level__c, Related_Contact__r.Account.CreatedById
             FROM Lead
             WHERE Id IN :leadIds
+                AND Related_Account__c = null
             WITH SYSTEM_MODE
         ]);
 
@@ -105,60 +97,22 @@ public without sharing class LeadToAccountMatching implements Queueable
 
     private static void matchRelatedContactAccounts (Map<Id,Lead> leadsById, Set<Id> unresolvedLeadIds, Map<Id,Account> matchesByLeadId)
     {
-        Set<Id> contactIds = new Set<Id>();
-
         for (Id leadId : unresolvedLeadIds)
         {
-            Id contactId = leadsById.get(leadId).Related_Contact__c;
+            Lead leadRecord = leadsById.get(leadId);
+            Account relatedAccount = leadRecord.Related_Contact__r.Account;
+            Boolean accountQualifies = isQualifyingAccount(relatedAccount);
 
-            if (contactId != null)
-                contactIds.add(contactId);
-        }
-
-        if (contactIds.isEmpty())
-        {
-            System.debug(LoggingLevel.DEBUG,LOG_PREFIX + 'Related Contact stage found no Contact IDs');
-            return;
-        }
-
-        Map<Id,Account> accountsByContactId = new Map<Id,Account>();
-        for (Contact relatedContact : [
-            SELECT Id, Account.Id, Account.BillingStreet, Account.BillingCity,
-                Account.BillingState, Account.BillingPostalCode, Account.BillingCountry,
-                Account.IM_Hierarchy_Level__c, Account.CreatedById
-            FROM Contact
-            WHERE Id IN :contactIds
-            WITH SYSTEM_MODE
-        ])
-        {
-            Boolean accountQualifies = isQualifyingAccount(relatedContact.Account);
-
-            System.debug(LoggingLevel.DEBUG,LOG_PREFIX + 'Related Contact ' + relatedContact.Id + ' has Account ' + relatedContact.Account.Id + ' [hierarchy=' + relatedContact.Account.IM_Hierarchy_Level__c + ', createdBy=' + relatedContact.Account.CreatedById + ', qualifies=' + accountQualifies + ']');
+            System.debug(LoggingLevel.DEBUG,LOG_PREFIX + 'Lead ' + leadId + ' has Related Contact ' + leadRecord.Related_Contact__c + ' with Account ' + leadRecord.Related_Contact__r.Account.Id + ' [hierarchy=' + leadRecord.Related_Contact__r.Account.IM_Hierarchy_Level__c + ', createdBy=' + leadRecord.Related_Contact__r.Account.CreatedById + ', qualifies=' + accountQualifies + ']');
 
             if (accountQualifies)
-                accountsByContactId.put(relatedContact.Id,relatedContact.Account);
-        }
-
-        System.debug(LoggingLevel.DEBUG,LOG_PREFIX + 'Related Contact stage queried Contact IDs ' + contactIds + '; qualifying Contact IDs ' + accountsByContactId.keySet());
-
-        Set<Id> matchedLeadIds = new Set<Id>();
-
-        for (Id leadId : unresolvedLeadIds)
-        {
-            Account relatedAccount = accountsByContactId.get(
-                leadsById.get(leadId).Related_Contact__c
-            );
-
-            if (relatedAccount != null)
-            {
                 matchesByLeadId.put(leadId,relatedAccount);
-                matchedLeadIds.add(leadId);
-            }
         }
 
-        unresolvedLeadIds.removeAll(matchedLeadIds);
+        unresolvedLeadIds.removeAll(matchesByLeadId.keySet());
     }
 
+    @TestVisible
     private static void matchExactNameAndCountry (Map<Id,Lead> leadsById, Set<Id> unresolvedLeadIds, Map<Id,Account> matchesByLeadId)
     {
         if (unresolvedLeadIds.isEmpty())
@@ -170,17 +124,15 @@ public without sharing class LeadToAccountMatching implements Queueable
         for (Id leadId : unresolvedLeadIds)
         {
             Lead leadRecord = leadsById.get(leadId);
+            companies.add(leadRecord.Company);
 
-            if (String.isNotBlank(leadRecord.Company) && String.isNotBlank(leadRecord.Country))
-            {
-                companies.add(leadRecord.Company);
+            if (String.isNotBlank(leadRecord.Country))
                 countries.add(leadRecord.Country);
-            }
         }
 
         System.debug(LoggingLevel.DEBUG,LOG_PREFIX + 'exact-match inputs: companies ' + companies + '; countries ' + countries);
 
-        if (companies.isEmpty() || countries.isEmpty())
+        if (countries.isEmpty())
             return;
 
         Map<String,List<Account>> candidatesByNameAndCountry = new Map<String,List<Account>>();
@@ -216,6 +168,7 @@ public without sharing class LeadToAccountMatching implements Queueable
         );
     }
 
+    @TestVisible
     private static void matchFuzzyNameAndCountry (Map<Id,Lead> leadsById, Set<Id> unresolvedLeadIds, Map<Id,Account> matchesByLeadId)
     {
         if (unresolvedLeadIds.isEmpty())
@@ -260,15 +213,15 @@ public without sharing class LeadToAccountMatching implements Queueable
 
         System.debug(LoggingLevel.DEBUG,LOG_PREFIX + 'fuzzy candidate Account IDs by Lead ' + accountIdsByLeadId);
 
-        if (!accountIdsByLeadId.isEmpty())
-        {
-            matchFuzzyCandidateAccounts(
-                leadsById,
-                unresolvedLeadIds,
-                matchesByLeadId,
-                accountIdsByLeadId
-            );
-        }
+        if (accountIdsByLeadId.isEmpty())
+            return;
+
+        matchFuzzyCandidateAccounts(
+            leadsById,
+            unresolvedLeadIds,
+            matchesByLeadId,
+            accountIdsByLeadId
+        );
     }
 
     @TestVisible
@@ -293,8 +246,6 @@ public without sharing class LeadToAccountMatching implements Queueable
 
         System.debug(LoggingLevel.DEBUG,LOG_PREFIX + 'qualifying fuzzy candidate Account IDs ' + qualifyingAccountsById.keySet());
 
-        Set<Id> matchedLeadIds = new Set<Id>();
-
         for (Id leadId : accountIdsByLeadId.keySet())
         {
             List<Account> candidates = new List<Account>();
@@ -308,13 +259,10 @@ public without sharing class LeadToAccountMatching implements Queueable
             Account bestMatch = chooseBestAccount(leadsById.get(leadId),candidates);
 
             if (bestMatch != null)
-            {
                 matchesByLeadId.put(leadId,bestMatch);
-                matchedLeadIds.add(leadId);
-            }
         }
 
-        unresolvedLeadIds.removeAll(matchedLeadIds);
+        unresolvedLeadIds.removeAll(matchesByLeadId.keySet());
     }
 
     private static void matchDomains (Map<Id,Lead> leadsById, Set<Id> unresolvedLeadIds, Map<Id,Account> matchesByLeadId)
@@ -375,8 +323,6 @@ public without sharing class LeadToAccountMatching implements Queueable
 
     private static void matchFromCandidateMap (Map<Id,Lead> leadsById, Set<Id> unresolvedLeadIds, Map<String,List<Account>> candidatesByKey, Boolean useNameAndCountryKey, Map<Id,Account> matchesByLeadId)
     {
-        Set<Id> matchedLeadIds = new Set<Id>();
-
         for (Id leadId : unresolvedLeadIds)
         {
             Lead leadRecord = leadsById.get(leadId);
@@ -391,13 +337,10 @@ public without sharing class LeadToAccountMatching implements Queueable
             );
 
             if (bestMatch != null)
-            {
                 matchesByLeadId.put(leadId,bestMatch);
-                matchedLeadIds.add(leadId);
-            }
         }
 
-        unresolvedLeadIds.removeAll(matchedLeadIds);
+        unresolvedLeadIds.removeAll(matchesByLeadId.keySet());
     }
 
     @TestVisible
@@ -476,10 +419,7 @@ public without sharing class LeadToAccountMatching implements Queueable
         if (candidateDomainRank != bestDomainRank)
             return candidateDomainRank < bestDomainRank;
 
-        if (candidate.CreatedDate != currentBest.CreatedDate)
-            return candidate.CreatedDate < currentBest.CreatedDate;
-
-        return false;
+        return candidate.CreatedDate < currentBest.CreatedDate;
     }
 
     private static Boolean hasActiveSalesCoverage (Account accountRecord)
@@ -527,19 +467,19 @@ public without sharing class LeadToAccountMatching implements Queueable
         {
             String candidateValue = rawValue.trim();
 
-            if (!String.isBlank(candidateValue))
-            {
-                try
-                {
-                    Id candidateId = (Id)candidateValue;
+            if (String.isBlank(candidateValue))
+                continue;
 
-                    if (candidateId.getSObjectType() == User.SObjectType)
-                        excludedCreatorIds.add(candidateId);
-                    else
-                        System.debug(LoggingLevel.WARN,LOG_PREFIX + 'ignored non-User excluded-creator ID ' + candidateValue);
-                }
-                catch (Exception invalidId) { System.debug(LoggingLevel.WARN,LOG_PREFIX + 'ignored invalid excluded-creator ID ' + candidateValue + ': ' + invalidId.getMessage()); }
+            try
+            {
+                Id candidateId = (Id)candidateValue;
+
+                if (candidateId.getSObjectType() == User.SObjectType)
+                    excludedCreatorIds.add(candidateId);
+                else
+                    System.debug(LoggingLevel.WARN,LOG_PREFIX + 'ignored non-User excluded-creator ID ' + candidateValue);
             }
+            catch (Exception invalidId) { System.debug(LoggingLevel.WARN,LOG_PREFIX + 'ignored invalid excluded-creator ID ' + candidateValue + ': ' + invalidId.getMessage()); }
         }
 
         return excludedCreatorIds;
@@ -566,6 +506,7 @@ public without sharing class LeadToAccountMatching implements Queueable
         return String.isNotBlank(value) ? value.trim().toLowerCase() : null;
     }
 
+    @TestVisible
     private static void updateProcessedLeads (Map<Id,Lead> leadsById, Map<Id,Account> matchesByLeadId)
     {
         List<Lead> leadsToUpdate = new List<Lead>();
@@ -594,10 +535,30 @@ public without sharing class LeadToAccountMatching implements Queueable
 
         System.debug(LoggingLevel.DEBUG,LOG_PREFIX + 'prepared Lead updates ' + leadsToUpdate);
 
-        updatingLeads = true;
-        try { update as system leadsToUpdate; }
-        finally { updatingLeads = false; }
+        List<Database.SaveResult> updateResults = Database.update(leadsToUpdate,false,AccessLevel.SYSTEM_MODE);
 
-        System.debug(LoggingLevel.DEBUG,LOG_PREFIX + 'completed updates for ' + leadsToUpdate.size() + ' Leads');
+        Integer successfulUpdates = 0;
+
+        for (Integer index = 0; index < updateResults.size(); index++)
+        {
+            Database.SaveResult updateResult = updateResults[index];
+
+            if (updateResult.isSuccess())
+                successfulUpdates++;
+            else
+            {
+                for (Database.Error updateError : updateResult.getErrors())
+                {
+                    System.debug(
+                        LoggingLevel.ERROR,
+                        LOG_PREFIX + 'failed to update Lead ' + leadsToUpdate[index].Id
+                            + ': ' + updateError.getStatusCode() + ' - ' + updateError.getMessage()
+                            + '; fields ' + updateError.getFields()
+                    );
+                }
+            }
+        }
+
+        System.debug(LoggingLevel.DEBUG,LOG_PREFIX + 'completed updates for ' + successfulUpdates + ' of ' + leadsToUpdate.size() + ' Leads');
     }
 }

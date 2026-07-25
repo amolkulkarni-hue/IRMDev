@@ -3,11 +3,9 @@
     <fullName>Qual_CustomerOutcome_Required</fullName>
     <active>true</active>
     <errorConditionFormula>AND(
-  NOT(Bypass_Validation__c),
-  ISCHANGED(StageName),
-  ISPICKVAL(PRIORVALUE(StageName),&apos;Qualification&apos;),
-  ISPICKVAL(StageName, &apos;Solutioning&apos;),
-  ISBLANK(Customer_Outcome_Predefined__c)
+    NOT(Bypass_Validation__c),
+    NOT(ISPICKVAL(StageName, &quot;Qualification&quot;)),
+    ISBLANK(Customer_Outcome_Predefined__c)
 )</errorConditionFormula>
     <errorDisplayField>Customer_Outcome_Predefined__c</errorDisplayField>
     <errorMessage>Customer Outcome Predefined is required before advancing from Qualification. Please enter a value.</errorMessage>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Validate_Authority</fullName>
-    <active>true</active>
+    <active>false</active>
     <description>Make sure an Authority value is entered</description>
     <errorConditionFormula>AND( Authority__c  = TRUE,ISBLANK(  Authority_Contact__c ))</errorConditionFormula>
     <errorDisplayField>Authority_Contact__c</errorDisplayField>
