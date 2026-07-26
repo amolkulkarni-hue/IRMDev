@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Field_API_Name__c</fullName>
-    <description>The Opportunity field API name to evaluate at runtime (e.g. IsPriorCustomer__c, Amount, StageName). Evaluated via dynamic sObject.get(fieldApiName).</description>
+    <description>Either a direct Opportunity field API name (e.g. IsPriorCustomer__c, Amount, StageName) or an Account field via relationship dot-notation (e.g. Account.Tier__c, Account.Industry) — matching SOQL relationship syntax. Evaluated via dynamic sObject.get(fieldApiName), traversing the Account relationship when present.</description>
     <externalId>false</externalId>
     <label>Field API Name</label>
     <length>255</length>

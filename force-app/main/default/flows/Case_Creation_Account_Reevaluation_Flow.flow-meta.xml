@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>reevaluateTouchLevel</name>
+        <label>Reevaluate Touch Level For Account Changes</label>
+        <locationX>176</locationX>
+        <locationY>168</locationY>
+        <actionName>TouchLevelAccountReevaluationAction</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>reevaluateCaseCreation</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>newAccount</name>
+            <value>
+                <elementReference>$Record</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>oldAccount</name>
+            <value>
+                <elementReference>$Record__Prior</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>TouchLevelAccountReevaluationAction</nameSegment>
+    </actionCalls>
+    <actionCalls>
+        <name>reevaluateCaseCreation</name>
+        <label>Reevaluate Case Creation For Account Changes</label>
+        <locationX>176</locationX>
+        <locationY>288</locationY>
+        <actionName>CaseCreationAccountReevaluationAction</actionName>
+        <actionType>apex</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>newAccount</name>
+            <value>
+                <elementReference>$Record</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>oldAccount</name>
+            <value>
+                <elementReference>$Record__Prior</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>CaseCreationAccountReevaluationAction</nameSegment>
+    </actionCalls>
+    <apiVersion>67.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <description>Record-Triggered Flow on Account (After Save, Update only). Fires on every Account update with no field-specific entry filter — the watched-Account-field diff happens inside the two Apex actions (TouchLevelEvaluatorAction / CaseCreationRuleEvaluatorAction), not here, so a new "Account.&lt;field&gt;" condition never requires this Flow's entry criteria to be updated. Calls TouchLevelAccountReevaluationAction first (so Opportunity.Touch_Level__c is fresh), then CaseCreationAccountReevaluationAction, for every open Opportunity on the changed Account.</description>
+    <label>Case Creation Account Reevaluation Flow</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>176</locationX>
+        <locationY>48</locationY>
+        <connector>
+            <targetReference>reevaluateTouchLevel</targetReference>
+        </connector>
+        <object>Account</object>
+        <recordTriggerType>Update</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>
