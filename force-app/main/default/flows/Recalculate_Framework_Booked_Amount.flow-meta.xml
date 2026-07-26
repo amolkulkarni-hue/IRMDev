@@ -3,26 +3,26 @@
     <apiVersion>67.0</apiVersion>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <assignments>
-        <name>Initialize_Sum</name>
-        <label>Initialize Sum</label>
-        <locationX>176</locationX>
-        <locationY>323</locationY>
+        <name>Add_Child_Amount_To_Open_Sum</name>
+        <label>Add Child Amount To Open Sum</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <assignmentItems>
-            <assignToReference>varSumAmount</assignToReference>
-            <operator>Assign</operator>
+            <assignToReference>varSumOpenAmount</assignToReference>
+            <operator>Add</operator>
             <value>
-                <numberValue>0.0</numberValue>
+                <elementReference>Iterate_Child_Opportunities_Open.Amount</elementReference>
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Iterate_Child_Opportunities</targetReference>
+            <targetReference>Iterate_Child_Opportunities_Open</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>Add_Child_Amount_To_Sum</name>
         <label>Add Child Amount To Sum</label>
-        <locationX>176</locationX>
-        <locationY>431</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <assignmentItems>
             <assignToReference>varSumAmount</assignToReference>
             <operator>Add</operator>
@@ -37,8 +37,8 @@
     <assignments>
         <name>Build_Parent_Update_Record</name>
         <label>Build Parent Update Record</label>
-        <locationX>176</locationX>
-        <locationY>539</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <assignmentItems>
             <assignToReference>varParentUpdate.Id</assignToReference>
             <operator>Assign</operator>
@@ -53,15 +53,54 @@
                 <elementReference>varSumAmount</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varParentUpdate.Open_Pipeline_Amount__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>varSumOpenAmount</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Update_Parent_Booked_Amount</targetReference>
         </connector>
     </assignments>
     <assignments>
+        <name>Initialize_Open_Sum</name>
+        <label>Initialize Open Sum</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>varSumOpenAmount</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <numberValue>0.0</numberValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Iterate_Child_Opportunities_Open</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Initialize_Sum</name>
+        <label>Initialize Sum</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>varSumAmount</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <numberValue>0.0</numberValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Iterate_Child_Opportunities</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>No_Op_Swallow_Fault</name>
         <label>No Op - Swallow Fault</label>
-        <locationX>440</locationX>
-        <locationY>539</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <assignmentItems>
             <assignToReference>varSumAmount</assignToReference>
             <operator>Assign</operator>
@@ -73,8 +112,8 @@
     <decisions>
         <name>Check_Parent_Id_Present</name>
         <label>Check Parent Id Present</label>
-        <locationX>176</locationX>
-        <locationY>215</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <defaultConnectorLabel>Blank - Do Nothing</defaultConnectorLabel>
         <rules>
             <name>Parent_Id_Provided</name>
@@ -98,12 +137,26 @@
     <loops>
         <name>Iterate_Child_Opportunities</name>
         <label>Iterate Child Opportunities</label>
-        <locationX>176</locationX>
-        <locationY>431</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <collectionReference>Get_Child_Opportunities</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
             <targetReference>Add_Child_Amount_To_Sum</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>Get_Child_Opportunities_Open</targetReference>
+        </noMoreValuesConnector>
+    </loops>
+    <loops>
+        <name>Iterate_Child_Opportunities_Open</name>
+        <label>Iterate Child Opportunities Open</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <collectionReference>Get_Child_Opportunities_Open</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>Add_Child_Amount_To_Open_Sum</targetReference>
         </nextValueConnector>
         <noMoreValuesConnector>
             <targetReference>Build_Parent_Update_Record</targetReference>
@@ -131,8 +184,8 @@
     <recordLookups>
         <name>Get_Child_Opportunities</name>
         <label>Get Child Opportunities</label>
-        <locationX>176</locationX>
-        <locationY>323</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Initialize_Sum</targetReference>
@@ -172,24 +225,89 @@
         <queriedFields>Amount</queriedFields>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
+    <recordLookups>
+        <name>Get_Child_Opportunities_Open</name>
+        <label>Get Child Opportunities Open</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Initialize_Open_Sum</targetReference>
+        </connector>
+        <filterLogic>1 AND (2 OR 3 OR 4 OR 5) AND 6</filterLogic>
+        <filters>
+            <field>IM_Parent_Opportunity__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>parentOpportunityId</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>StageName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Qualification</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>StageName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Solutioning</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>StageName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Negotiation</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>StageName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Booking Verification</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Id</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <elementReference>excludeChildId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>Opportunity</object>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>Amount</queriedFields>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
     <recordUpdates>
         <name>Update_Parent_Booked_Amount</name>
         <label>Update Parent Booked Amount</label>
-        <locationX>176</locationX>
-        <locationY>647</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <faultConnector>
             <targetReference>No_Op_Swallow_Fault</targetReference>
         </faultConnector>
         <inputReference>varParentUpdate</inputReference>
     </recordUpdates>
     <start>
-        <locationX>50</locationX>
+        <locationX>0</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Check_Parent_Id_Present</targetReference>
         </connector>
     </start>
     <status>Active</status>
+    <variables>
+        <name>excludeChildId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
     <variables>
         <name>parentOpportunityId</name>
         <dataType>String</dataType>
@@ -198,11 +316,12 @@
         <isOutput>false</isOutput>
     </variables>
     <variables>
-        <name>excludeChildId</name>
-        <dataType>String</dataType>
+        <name>varParentUpdate</name>
+        <dataType>SObject</dataType>
         <isCollection>false</isCollection>
-        <isInput>true</isInput>
+        <isInput>false</isInput>
         <isOutput>false</isOutput>
+        <objectType>Opportunity</objectType>
     </variables>
     <variables>
         <name>varSumAmount</name>
@@ -213,11 +332,11 @@
         <scale>2</scale>
     </variables>
     <variables>
-        <name>varParentUpdate</name>
-        <dataType>SObject</dataType>
+        <name>varSumOpenAmount</name>
+        <dataType>Currency</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
-        <objectType>Opportunity</objectType>
+        <scale>2</scale>
     </variables>
 </Flow>

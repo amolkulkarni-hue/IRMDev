@@ -140,7 +140,7 @@ private class IRM_FrameworkParentOpportunityTest {
 
     // ──────────────────────────────────────────────────────────
     // FW-02 AC2 / FW-03 AC3 / FW-03 AC4 — new validation rule coverage
-    // (Framework_Stage_Requires_Booking_Verification, Framework_Parent_Must_Be_Active,
+    // (Framework_Booking_Verification_Gate, Framework_Parent_Must_Be_Active,
     // Framework_Child_Type_Restriction — see IRM_Touch_Level_Classification_SDD Section 21)
     // ──────────────────────────────────────────────────────────
 
@@ -159,7 +159,7 @@ private class IRM_FrameworkParentOpportunityTest {
     }
 
     @IsTest
-    static void test_bookingVerificationGate_blocksDirectJumpToBooked() {
+    static void test_bookingVerificationGate_blocksDirectJumpToClosed() {
         Opportunity opp = buildFrameworkOpp();
         insert opp;
         addOcrRoles(opp.Id);
@@ -168,22 +168,43 @@ private class IRM_FrameworkParentOpportunityTest {
         opp.StageName = 'Negotiation'; update opp;
 
         Test.startTest();
-        opp.StageName = 'Booked';
+        opp.StageName = 'Closed';
         Boolean threw = false;
         try {
             update opp;
         } catch (DmlException e) {
             threw = true;
             System.assert(e.getMessage().contains('must pass through Booking Verification'),
-                'Expected the Framework_Stage_Requires_Booking_Verification error, got: ' + e.getMessage());
+                'Expected the Framework_Booking_Verification_Gate error, got: ' + e.getMessage());
         }
         Test.stopTest();
 
-        System.assert(threw, 'Jumping directly from Negotiation to Booked should be blocked.');
+        System.assert(threw, 'Jumping directly from Negotiation to Closed should be blocked.');
     }
 
     @IsTest
-    static void test_bookingVerificationGate_allowsBookedAfterBookingVerification() {
+    static void test_bookingVerificationGate_allowsClosedAfterBookingVerification() {
+        Opportunity opp = buildFrameworkOpp();
+        insert opp;
+        addOcrRoles(opp.Id);
+        opp.StageName = 'Solutioning'; update opp;
+        addAuthorizedSignatoryRole(opp.Id);
+        opp.StageName = 'Negotiation'; update opp;
+        addCorrespondenceContactRole(opp.Id);
+        opp.StageName = 'Booking Verification'; update opp;
+
+        Test.startTest();
+        opp.StageName = 'Closed';
+        update opp;
+        Test.stopTest();
+
+        Opportunity result = [SELECT StageName FROM Opportunity WHERE Id = :opp.Id];
+        System.assertEquals('Closed', result.StageName,
+            'Moving to Closed directly from Booking Verification should be allowed.');
+    }
+
+    @IsTest
+    static void test_bookedStageNoLongerValidForFrameworkParent() {
         Opportunity opp = buildFrameworkOpp();
         insert opp;
         addOcrRoles(opp.Id);
@@ -195,19 +216,56 @@ private class IRM_FrameworkParentOpportunityTest {
 
         Test.startTest();
         opp.StageName = 'Booked';
-        update opp;
+        Boolean threw = false;
+        try {
+            update opp;
+        } catch (DmlException e) {
+            threw = true;
+            System.assert(e.getMessage().contains('Booked'),
+                'Expected a restricted-picklist-value error naming Booked, got: ' + e.getMessage());
+        }
         Test.stopTest();
 
-        Opportunity result = [SELECT StageName FROM Opportunity WHERE Id = :opp.Id];
-        System.assertEquals('Booked', result.StageName,
-            'Moving to Booked directly from Booking Verification should be allowed.');
+        System.assert(threw, 'Booked should no longer be a valid StageName for the Framework_Parent_Opportunity record type — it moves directly from Booking Verification to Closed.');
+    }
+
+    // Proves the Framework-Parent branch fixed in VR_Opp_S1_Type (and its S1/S2/S3 siblings) now
+    // treats Negotiation -> Booking Verification as the checkpoint for required fields, instead of
+    // the old Negotiation -> Booked skip. Asserts loosely on the DmlException containing "Type"
+    // rather than one specific rule's exact message: depending on the running user's custom
+    // permission assignments, Restrict_Type_Change_after_Negotiation (which also gates on Type
+    // changing at/after Negotiation) could plausibly be the rule that surfaces first instead of
+    // VR_Opp_S1_Type — either way proves the edge is now enforced, which is what the fix changed.
+    @IsTest
+    static void test_typeRequired_firesOnNegotiationToBookingVerificationForFrameworkParent() {
+        Opportunity opp = buildFrameworkOpp();
+        insert opp;
+        addOcrRoles(opp.Id);
+        opp.StageName = 'Solutioning'; update opp;
+        addAuthorizedSignatoryRole(opp.Id);
+        opp.StageName = 'Negotiation'; update opp;
+
+        Test.startTest();
+        opp.Type = null;
+        opp.StageName = 'Booking Verification';
+        Boolean threw = false;
+        try {
+            update opp;
+        } catch (DmlException e) {
+            threw = true;
+            System.assert(e.getMessage().contains('Type'),
+                'Expected a Type-related validation error, got: ' + e.getMessage());
+        }
+        Test.stopTest();
+
+        System.assert(threw, 'A Framework Parent moving from Negotiation to Booking Verification without a Type should be blocked (previously this required-field check only fired on the Negotiation-to-Booked edge, which Framework Parent no longer uses).');
     }
 
     // Calls Test.startTest() itself (can only be invoked once per test method) so the final
     // stage transition — which triggers several org-wide Opportunity automations — gets a fresh
     // governor-limit context. Callers must NOT call Test.startTest() themselves; they should
     // call Test.stopTest() after their own action instead.
-    private static Id createBookedActiveFrameworkParent() {
+    private static Id createClosedActiveFrameworkParent() {
         Opportunity parent = buildFrameworkOpp();
         insert parent;
         addOcrRoles(parent.Id);
@@ -218,7 +276,7 @@ private class IRM_FrameworkParentOpportunityTest {
         parent.StageName = 'Booking Verification'; update parent;
 
         Test.startTest();
-        parent.StageName = 'Booked';
+        parent.StageName = 'Closed';
         parent.Framework_Status__c = 'Active';
         update parent;
         Test.stopTest();
@@ -227,9 +285,9 @@ private class IRM_FrameworkParentOpportunityTest {
     }
 
     @IsTest
-    static void test_childLinkage_blocksWhenParentNotBooked() {
+    static void test_childLinkage_blocksWhenParentNotClosed() {
         Opportunity parent = buildFrameworkOpp();
-        insert parent; // still at Qualification — not Booked
+        insert parent; // still at Qualification — not Closed
 
         Opportunity child = buildChildOpp();
         child.IM_Parent_Opportunity__c = parent.Id;
@@ -240,16 +298,16 @@ private class IRM_FrameworkParentOpportunityTest {
             insert child;
         } catch (DmlException e) {
             threw = true;
-            System.assert(e.getMessage().contains('must be Booked (Closed Won) and have Framework Status = Active'),
+            System.assert(e.getMessage().contains('must be Closed (Closed Won) and have Framework Status = Active'),
                 'Expected the Framework_Parent_Must_Be_Active error, got: ' + e.getMessage());
         }
         Test.stopTest();
 
-        System.assert(threw, 'Linking a child to a non-Booked Framework Parent should be blocked.');
+        System.assert(threw, 'Linking a child to a non-Closed Framework Parent should be blocked.');
     }
 
     @IsTest
-    static void test_childLinkage_blocksWhenParentBookedButNotActive() {
+    static void test_childLinkage_blocksWhenParentClosedButNotActive() {
         Opportunity parent = buildFrameworkOpp();
         insert parent;
         addOcrRoles(parent.Id);
@@ -260,7 +318,7 @@ private class IRM_FrameworkParentOpportunityTest {
         parent.StageName = 'Booking Verification'; update parent;
 
         Test.startTest();
-        parent.StageName = 'Booked'; update parent; // Booked but Framework_Status__c left blank (not Active)
+        parent.StageName = 'Closed'; update parent; // Closed but Framework_Status__c left blank (not Active)
 
         Opportunity child = buildChildOpp();
         child.IM_Parent_Opportunity__c = parent.Id;
@@ -273,12 +331,12 @@ private class IRM_FrameworkParentOpportunityTest {
         }
         Test.stopTest();
 
-        System.assert(threw, 'Linking a child to a Booked-but-not-Active Framework Parent should be blocked.');
+        System.assert(threw, 'Linking a child to a Closed-but-not-Active Framework Parent should be blocked.');
     }
 
     @IsTest
-    static void test_childLinkage_allowsWhenParentBookedAndActive() {
-        Id parentId = createBookedActiveFrameworkParent();
+    static void test_childLinkage_allowsWhenParentClosedAndActive() {
+        Id parentId = createClosedActiveFrameworkParent();
 
         Opportunity child = buildChildOpp();
         child.IM_Parent_Opportunity__c = parentId;
@@ -286,12 +344,12 @@ private class IRM_FrameworkParentOpportunityTest {
 
         Opportunity result = [SELECT IM_Parent_Opportunity__c FROM Opportunity WHERE Id = :child.Id];
         System.assertEquals(parentId, result.IM_Parent_Opportunity__c,
-            'Linking a child to a Booked and Active Framework Parent should be allowed.');
+            'Linking a child to a Closed and Active Framework Parent should be allowed.');
     }
 
     @IsTest
     static void test_childTypeRestriction_blocksRenewalWhenLinkedToParent() {
-        Id parentId = createBookedActiveFrameworkParent();
+        Id parentId = createClosedActiveFrameworkParent();
 
         Opportunity child = buildChildOpp();
         child.Type = 'Renewal';
@@ -311,7 +369,7 @@ private class IRM_FrameworkParentOpportunityTest {
 
     @IsTest
     static void test_childTypeRestriction_allowsNewWhenLinkedToParent() {
-        Id parentId = createBookedActiveFrameworkParent();
+        Id parentId = createClosedActiveFrameworkParent();
 
         Opportunity child = buildChildOpp();
         child.Type = 'New'; // default on buildChildOpp(), set explicitly here for clarity
@@ -321,5 +379,31 @@ private class IRM_FrameworkParentOpportunityTest {
         Opportunity result = [SELECT Type FROM Opportunity WHERE Id = :child.Id];
         System.assertEquals('New', result.Type,
             'A child linked to a Framework Parent should be allowed Type = New.');
+    }
+
+    // FW-05: Framework_Booked_Amount__c and Open_Pipeline_Amount__c are computed by the same
+    // Recalculate_Framework_Booked_Amount subflow in one pass. Children are inserted directly at
+    // their target stage (rather than via a multi-step StageName update) since the shared
+    // PRIORVALUE(StageName)-based checklist rules only evaluate on stage *changes*, not inserts.
+    @IsTest
+    static void test_rollup_computesBookedAmountAndOpenPipelineAmountIndependently() {
+        Id parentId = createClosedActiveFrameworkParent();
+
+        Opportunity bookedChild = buildChildOpp();
+        bookedChild.IM_Parent_Opportunity__c = parentId;
+        bookedChild.StageName = 'Booked';
+        bookedChild.Amount = 40000;
+        insert bookedChild;
+
+        Opportunity openChild = buildChildOpp();
+        openChild.IM_Parent_Opportunity__c = parentId;
+        openChild.Amount = 25000; // default StageName = 'Qualification', an open stage
+        insert openChild;
+
+        Opportunity result = [SELECT Framework_Booked_Amount__c, Open_Pipeline_Amount__c FROM Opportunity WHERE Id = :parentId];
+        System.assertEquals(40000, result.Framework_Booked_Amount__c,
+            'Framework_Booked_Amount__c should sum only the Booked child.');
+        System.assertEquals(25000, result.Open_Pipeline_Amount__c,
+            'Open_Pipeline_Amount__c should sum only the open (Qualification) child.');
     }
 }
