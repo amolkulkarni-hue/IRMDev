@@ -8,7 +8,7 @@ public with sharing class TouchLevelAccountReevaluationAction {
 
     @InvocableMethod(
         label='Reevaluate Touch Level For Account Changes'
-        description='Recomputes Touch Level for a changed Account''s open, eligible Opportunities when a watched Account field changed.'
+        description='Recomputes Touch Level for the open, eligible Opportunities of a changed Account when a watched Account field changed.'
         category='IRM Touch Level'
     )
     public static void reevaluateForAccountChanges(List<TouchLevelAccountReevaluationRequest> requests) {

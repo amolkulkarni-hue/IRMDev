@@ -7,7 +7,7 @@ public with sharing class CaseCreationAccountReevaluationAction {
 
     @InvocableMethod(
         label='Reevaluate Case Creation For Account Changes'
-        description='Re-evaluates Case Creation Rules for a changed Account''s open Opportunities when a watched Account field changed.'
+        description='Re-evaluates Case Creation Rules for the open Opportunities of a changed Account when a watched Account field changed.'
         category='IRM Touch Level'
     )
     public static void reevaluateForAccountChanges(List<CaseCreationAccountReevaluationRequest> requests) {
