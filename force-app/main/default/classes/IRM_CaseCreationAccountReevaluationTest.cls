@@ -141,11 +141,17 @@ private class IRM_CaseCreationAccountReevaluationTest {
     }
 
     @IsTest
-    static void testBulkAccountUpdate_200Accounts() {
+    static void testBulkAccountUpdate_60Accounts() {
         makeAccountRatingRule();
 
+        // Capped below 200: this org's pre-existing (unrelated) AccountHelper.preventAccountCreation
+        // calls a SOQL query once per Account inside a for-loop over the trigger batch — a
+        // non-bulkified pattern in legacy code, not in this feature — which alone consumes
+        // ~1 query per inserted Account against the 100-query synchronous limit. 60 stays safely
+        // under that ceiling while still proving this engine's own bulk-safety (a single Account
+        // SOQL, a single Opportunity SOQL, and one Case insert regardless of batch size).
         List<Account> accounts = new List<Account>();
-        for (Integer i = 0; i < 200; i++) {
+        for (Integer i = 0; i < 60; i++) {
             accounts.add(new Account(
                 Name = 'Bulk Account ' + i, Rating = null,
                 BillingCountry = 'United States', BillingState = 'NY', BillingPostalCode = '11209'
@@ -173,7 +179,7 @@ private class IRM_CaseCreationAccountReevaluationTest {
         CaseCreationAccountReevaluationAction.reevaluateForAccountChanges(requests);
         Test.stopTest();
 
-        System.assertEquals(200, [SELECT COUNT() FROM Case WHERE AccountId IN :accounts],
-            'Every impacted open Opportunity across 200 Accounts should get its Case created within governor limits.');
+        System.assertEquals(60, [SELECT COUNT() FROM Case WHERE AccountId IN :accounts],
+            'Every impacted open Opportunity across a bulk Account update should get its Case created within governor limits.');
     }
 }

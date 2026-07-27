@@ -138,9 +138,12 @@ public with sharing class CaseCreationRuleEvaluatorAction {
         // Attaches each Opportunity's Account snapshot (only the fields any active
         // Case_Creation_Condition__c actually references via "Account.<field>") so
         // evaluateCondition can traverse it — a no-op query when no rule references Account.
-        attachAccountData(relevantOpps, watchedAccountFields);
+        // Returns a (possibly cloned) list rather than mutating relevantOpps in place: in the
+        // AfterInsert/AfterUpdate context this runs in, relevantOpps are Trigger.new records,
+        // which are read-only — putSObject() on them throws System.FinalException.
+        List<Opportunity> oppsWithAccountData = attachAccountData(relevantOpps, watchedAccountFields);
 
-        evaluateAndCreateForOpportunities(relevantOpps, rulesByStage);
+        evaluateAndCreateForOpportunities(oppsWithAccountData, rulesByStage);
     }
 
     // Re-evaluation entry point for Account-driven changes — called from the
@@ -164,8 +167,8 @@ public with sharing class CaseCreationRuleEvaluatorAction {
         List<Opportunity> openOpps = Database.query(oppSoql);
         if (openOpps.isEmpty()) return;
 
-        attachAccountData(openOpps, watchedAccountFields);
-        evaluateAndCreateForOpportunities(openOpps, rulesByStage);
+        List<Opportunity> oppsWithAccountData = attachAccountData(openOpps, watchedAccountFields);
+        evaluateAndCreateForOpportunities(oppsWithAccountData, rulesByStage);
     }
 
     // Callable core for Account-driven re-evaluation — exposed as a Flow action via the
@@ -202,18 +205,23 @@ public with sharing class CaseCreationRuleEvaluatorAction {
     }
 
     // Queries only the Account fields any active Case_Creation_Condition__c references
-    // (via "Account.<field>") and attaches each result onto its Opportunity's in-memory
-    // "Account" relationship via putSObject — letting evaluateCondition traverse it exactly
-    // as it would a real SOQL relationship query, without needing to re-query Opportunity
-    // itself (its trigger-context fields are already correct and must not be replaced).
-    private static void attachAccountData(List<Opportunity> opps, Set<String> watchedAccountFields) {
-        if (watchedAccountFields == null || watchedAccountFields.isEmpty() || opps.isEmpty()) return;
+    // (via "Account.<field>") and returns each Opportunity with that data attached onto its
+    // in-memory "Account" relationship via putSObject — letting evaluateCondition traverse
+    // it exactly as it would a real SOQL relationship query.
+    //
+    // Returns a new list rather than mutating opps in place: callers may be passing
+    // AfterInsert/AfterUpdate Trigger.new records, which are read-only in Apex —
+    // putSObject() directly on them throws System.FinalException ("Record is read-only").
+    // Cloning first (preserving Id) sidesteps that without affecting the real records being
+    // saved; Opportunities with no watched-Account-field data to attach pass through as-is.
+    private static List<Opportunity> attachAccountData(List<Opportunity> opps, Set<String> watchedAccountFields) {
+        if (watchedAccountFields == null || watchedAccountFields.isEmpty() || opps.isEmpty()) return opps;
 
         Set<Id> accountIds = new Set<Id>();
         for (Opportunity opp : opps) {
             if (opp.AccountId != null) accountIds.add(opp.AccountId);
         }
-        if (accountIds.isEmpty()) return;
+        if (accountIds.isEmpty()) return opps;
 
         Set<String> selectFields = new Set<String>{ 'Id' };
         selectFields.addAll(watchedAccountFields);
@@ -221,10 +229,18 @@ public with sharing class CaseCreationRuleEvaluatorAction {
             + ' FROM Account WHERE Id IN :accountIds';
         Map<Id, Account> acctById = new Map<Id, Account>((List<Account>) Database.query(acctSoql));
 
+        List<Opportunity> result = new List<Opportunity>();
         for (Opportunity opp : opps) {
             Account acct = opp.AccountId == null ? null : acctById.get(opp.AccountId);
-            if (acct != null) opp.putSObject('Account', acct);
+            if (acct == null) {
+                result.add(opp);
+                continue;
+            }
+            Opportunity writableCopy = opp.clone(true, true, true, true);
+            writableCopy.putSObject('Account', acct);
+            result.add(writableCopy);
         }
+        return result;
     }
 
     // Shared evaluate+create core — matches every relevantOpp against its stage's active
