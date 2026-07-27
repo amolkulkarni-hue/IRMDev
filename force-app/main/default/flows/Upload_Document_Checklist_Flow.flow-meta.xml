@@ -278,33 +278,6 @@
         </inputAssignments>
         <object>Document_Checklist__c</object>
     </recordCreates>
-    <recordUpdates>
-        <name>updateChecklistStatusFinal</name>
-        <label>Set Status = Final</label>
-        <locationX>176</locationX>
-        <locationY>1920</locationY>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>varNewDocChecklistId</elementReference>
-            </value>
-        </filters>
-        <inputAssignments>
-            <field>Status__c</field>
-            <value>
-                <stringValue>Final</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Submitted_Date__c</field>
-            <value>
-                <elementReference>$Flow.CurrentDate</elementReference>
-            </value>
-        </inputAssignments>
-        <object>Document_Checklist__c</object>
-    </recordUpdates>
     <recordLookups>
         <name>checkDuplicate</name>
         <label>Check for Duplicate Document Type</label>
@@ -386,6 +359,33 @@
         <outputReference>varDocChecklistLinks</outputReference>
         <queriedFields>Id</queriedFields>
     </recordLookups>
+    <recordUpdates>
+        <name>updateChecklistStatusFinal</name>
+        <label>Set Status = Final</label>
+        <locationX>176</locationX>
+        <locationY>1920</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>varNewDocChecklistId</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Status__c</field>
+            <value>
+                <stringValue>Final</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Submitted_Date__c</field>
+            <value>
+                <elementReference>$Flow.CurrentDate</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Document_Checklist__c</object>
+    </recordUpdates>
     <screens>
         <name>screenAttachError</name>
         <label>File Attachment Error</label>

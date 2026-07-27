@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>QTB_RecordType_Cha_Primary_Product_StOpp</fullName>
-    <active>true</active>
+    <active>false</active>
     <description>While changing the record type we need to make &apos;Primary Product Line&apos; as respective to the Record Type(Standard Opportunity).</description>
     <errorConditionFormula>AND(
 AND(
@@ -30,5 +30,6 @@ ISPICKVAL( Primary_Product_Line__c , &quot;SMB Packages&quot;)
 ),false,true),false),
 NOT($Permission.VR_Bypass_Permission)
 )</errorConditionFormula>
+    <errorDisplayField>No_of_Forecast_Billing_Month__c</errorDisplayField>
     <errorMessage>Please select the Standard Opportunity related &apos;Primary Product Line&apos;</errorMessage>
 </ValidationRule>

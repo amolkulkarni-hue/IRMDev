@@ -1,18 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
-    <description>Read-only access (all fields visible) to Booking Verification Checklist records (including its child object). Includes the child Booking_Verification_Checklist_Item__c records maintained on a Checklist's related list.</description>
+    <description>Read-only access (all fields visible) to Booking Verification Checklist records (including its child object). Includes the child Booking_Verification_Checklist_Item__c records maintained on a Checklist&apos;s related list.</description>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Booking Verification Checklist - Read PS</label>
-    <objectPermissions>
-        <allowCreate>false</allowCreate>
-        <allowDelete>false</allowDelete>
-        <allowEdit>false</allowEdit>
-        <allowRead>true</allowRead>
-        <modifyAllRecords>false</modifyAllRecords>
-        <object>Booking_Verification_Checklist__c</object>
-        <viewAllFields>true</viewAllFields>
-        <viewAllRecords>false</viewAllRecords>
-    </objectPermissions>
     <objectPermissions>
         <allowCreate>false</allowCreate>
         <allowDelete>false</allowDelete>
@@ -23,12 +13,22 @@
         <viewAllFields>true</viewAllFields>
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
+    <objectPermissions>
+        <allowCreate>false</allowCreate>
+        <allowDelete>false</allowDelete>
+        <allowEdit>false</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>Booking_Verification_Checklist__c</object>
+        <viewAllFields>true</viewAllFields>
+        <viewAllRecords>false</viewAllRecords>
+    </objectPermissions>
     <tabSettings>
-        <tab>Booking_Verification_Checklist__c</tab>
+        <tab>Booking_Verification_Checklist_Item__c</tab>
         <visibility>Visible</visibility>
     </tabSettings>
     <tabSettings>
-        <tab>Booking_Verification_Checklist_Item__c</tab>
+        <tab>Booking_Verification_Checklist__c</tab>
         <visibility>Visible</visibility>
     </tabSettings>
 </PermissionSet>

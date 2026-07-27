@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>VR_Opp_S1_Is_Insight_Being_Proposed</fullName>
+    <active>true</active>
+    <description>Requires Is Insight Being Proposed? to be populated when Primary Product Line = Digitization, from Stage 1 onward through Closed.</description>
+    <errorConditionFormula>AND(
+    NOT($Permission.Bypass_Opportunity_Validation),
+
+    OR(
+        RecordType.DeveloperName = &quot;Standard_Opportunity&quot;,
+        RecordType.DeveloperName = &quot;Framework_Parent_Opportunity&quot;
+    ),
+
+    OR(
+        ISPICKVAL(Type, &quot;New Deal&quot;),
+        ISPICKVAL(Type, &quot;Cross-Sell/Upsell&quot;)
+    ),
+
+    OR(
+        ISPICKVAL(Touch_Level__c, &quot;High Touch&quot;),
+        ISPICKVAL(Touch_Level__c, &quot;Medium Touch&quot;),
+        ISPICKVAL(Touch_Level__c, &quot;Low Touch&quot;),
+        ISPICKVAL(Touch_Level__c, &quot;No Touch&quot;)
+    ),
+
+    ISPICKVAL(Business_Unit__c, &quot;Digital&quot;),
+
+    OR(
+        AND(
+            ISPICKVAL(PRIORVALUE(StageName), &quot;Qualification&quot;),
+            ISPICKVAL(StageName, &quot;Solutioning&quot;)
+        ),
+        AND(
+            ISPICKVAL(PRIORVALUE(StageName), &quot;Solutioning&quot;),
+            ISPICKVAL(StageName, &quot;Negotiation&quot;)
+        ),
+        IF(
+            RecordType.DeveloperName = &quot;Framework_Parent_Opportunity&quot;,
+            AND(
+                ISPICKVAL(PRIORVALUE(StageName), &quot;Negotiation&quot;),
+                ISPICKVAL(StageName, &quot;Booked&quot;)
+            ),
+            AND(
+                ISPICKVAL(PRIORVALUE(StageName), &quot;Negotiation&quot;),
+                ISPICKVAL(StageName, &quot;Booking Verification&quot;)
+            )
+        ),
+        AND(
+            ISPICKVAL(PRIORVALUE(StageName), &quot;Booking Verification&quot;),
+            ISPICKVAL(StageName, &quot;Booked&quot;)
+        ),
+        AND(
+            ISPICKVAL(PRIORVALUE(StageName), &quot;Booked&quot;),
+            ISPICKVAL(StageName, &quot;Setup&quot;)
+        ),
+        ISPICKVAL(StageName, &quot;Closed&quot;)
+    ),
+
+    ISPICKVAL(Primary_Product_Line__c, &quot;Digitization&quot;),
+
+    NOT(INCLUDES(Is_InSight_being_proposed__c, &quot;No&quot;))
+)</errorConditionFormula>
+    <errorMessage>Please indicate whether Insight is being proposed. Need help? Contact your Sales Operations Business Partner.</errorMessage>
+</ValidationRule>

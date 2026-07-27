@@ -1,21 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
-    <description>Create access and field-level permissions to populate Booking Verification Template records (including its child object). Includes the child Booking_Verification_Template_Item__c records maintained on a Template's related list.</description>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Booking_Verification_Template__c.Country__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Booking_Verification_Template__c.Description__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Booking_Verification_Template__c.Template_Owner__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
+    <description>Create access and field-level permissions to populate Booking Verification Template records (including its child object). Includes the child Booking_Verification_Template_Item__c records maintained on a Template&apos;s related list.</description>
     <fieldPermissions>
         <editable>true</editable>
         <field>Booking_Verification_Template_Item__c.Description__c</field>
@@ -36,6 +21,21 @@
         <field>Booking_Verification_Template_Item__c.Sequence_Number__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Booking_Verification_Template__c.Country__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Booking_Verification_Template__c.Description__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Booking_Verification_Template__c.Template_Owner__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Booking Verification Template - Create PS</label>
     <objectPermissions>
@@ -44,7 +44,7 @@
         <allowEdit>false</allowEdit>
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
-        <object>Booking_Verification_Template__c</object>
+        <object>Booking_Verification_Template_Item__c</object>
         <viewAllFields>false</viewAllFields>
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
@@ -54,7 +54,7 @@
         <allowEdit>false</allowEdit>
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
-        <object>Booking_Verification_Template_Item__c</object>
+        <object>Booking_Verification_Template__c</object>
         <viewAllFields>false</viewAllFields>
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>

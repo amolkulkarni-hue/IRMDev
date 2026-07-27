@@ -1,5 +1,5 @@
 @isTest
-private class LeadToAccountMatching_test
+private without sharing class LeadToAccountMatching_test
 {
     private static final String SALES_SITE_LEVEL = 'Sales (Site)';
     private static final String COUNTRY_US = 'United States';
@@ -12,9 +12,9 @@ private class LeadToAccountMatching_test
             new IM_Country__c(Name = 'Canada',Active__c = true)
         };
 
-        insert countries;
+        insert as system countries;
 
-        insert new List<IM_Alternative_Country_Name__c>{
+        insert as system new List<IM_Alternative_Country_Name__c>{
             new IM_Alternative_Country_Name__c(
                 Alternative_Name__c = COUNTRY_US,
                 IM_Country__c = countries[0].Id
@@ -36,11 +36,11 @@ private class LeadToAccountMatching_test
             exactAccount.BillingCity = 'Boston';
             exactAccount.BillingState = 'Massachusetts';
             exactAccount.BillingPostalCode = '02108';
-            update exactAccount;
+            update as system exactAccount;
 
             Account domainAccount = salesSite('Domain Fallback Company','Canada');
             domainAccount.Website = 'https://exact-priority-example.com';
-            insert domainAccount;
+            insert as system domainAccount;
 
             Lead leadRecord = newLead(
                 'Exact Company',
@@ -54,7 +54,7 @@ private class LeadToAccountMatching_test
             leadRecord.PostalCode = '00000';
 
             Test.startTest();
-            insert leadRecord;
+            insert as system leadRecord;
 
             System.assertEquals(Limits.getQueueableJobs(),1);
             System.assertEquals(queryMatchedLead(leadRecord.Id).RelatedAccountMatchingComplete__c,false);
@@ -80,7 +80,7 @@ private class LeadToAccountMatching_test
         {
             Account contactAccount = createSalesSite('Contact Account',COUNTRY_US);
             contactAccount.BillingCity = 'Chicago';
-            update contactAccount;
+            update as system contactAccount;
 
             createSalesSite('Lead Company',COUNTRY_US);
 
@@ -90,13 +90,13 @@ private class LeadToAccountMatching_test
                 AccountId = contactAccount.Id
             );
 
-            insert relatedContact;
+            insert as system relatedContact;
 
             Lead leadRecord = newLead('Lead Company',COUNTRY_US,null);
             leadRecord.Related_Contact__c = relatedContact.Id;
 
             Test.startTest();
-            insert leadRecord;
+            insert as system leadRecord;
             Test.stopTest();
 
             Lead matchedLead = queryMatchedLead(leadRecord.Id);
@@ -130,7 +130,7 @@ private class LeadToAccountMatching_test
                 COUNTRY_US
             );
 
-            insert nonSalesAccount;
+            insert as system nonSalesAccount;
 
             Account eligibleNonSalesFallback = createSalesSite(
                 'Non-Sales Contact Company',
@@ -159,7 +159,7 @@ private class LeadToAccountMatching_test
                 LastName = 'No Account Contact'
             );
 
-            insert new List<Contact>{
+            insert as system new List<Contact>{
                 excludedContact,
                 nonSalesContact,
                 noAccountContact
@@ -193,7 +193,7 @@ private class LeadToAccountMatching_test
 
             Test.startTest();
 
-            insert new List<Lead>{
+            insert as system new List<Lead>{
                 excludedContactLead,
                 nonSalesContactLead,
                 noAccountContactLead
@@ -353,7 +353,7 @@ private class LeadToAccountMatching_test
             Account olderAccount = salesSite('Oldest Company',COUNTRY_US);
             Account newerAccount = salesSite('Oldest Company',COUNTRY_US);
 
-            insert new List<Account>{olderAccount,newerAccount};
+            insert as system new List<Account>{olderAccount,newerAccount};
 
             Test.setCreatedDate(olderAccount.Id,Datetime.now().addYears(-2));
             Test.setCreatedDate(newerAccount.Id,Datetime.now().addYears(-1));
@@ -361,7 +361,7 @@ private class LeadToAccountMatching_test
             Lead leadRecord = newLead('Oldest Company',COUNTRY_US,null);
 
             Test.startTest();
-            insert leadRecord;
+            insert as system leadRecord;
             Test.stopTest();
 
             System.assertEquals(
@@ -378,7 +378,7 @@ private class LeadToAccountMatching_test
         User matchingUser = createTestUser('domain');
         Account excludedDomainAccount;
 
-        insert new PermissionSetAssignment(
+        insert as system new PermissionSetAssignment(
             AssigneeId = matchingUser.Id,
             PermissionSetId = [
                 SELECT Id
@@ -392,7 +392,7 @@ private class LeadToAccountMatching_test
         {
             excludedDomainAccount = salesSite('Excluded Domain Account','Canada');
             excludedDomainAccount.Website = 'https://domain-match-example.com';
-            insert excludedDomainAccount;
+            insert as system excludedDomainAccount;
         }
 
         System.runAs(matchingUser)
@@ -400,7 +400,7 @@ private class LeadToAccountMatching_test
             Account domainAccount = salesSite('Different Account Name','Canada');
             domainAccount.Website = 'https://www.domain-match-example.com/a-page';
             domainAccount.BillingCity = 'Toronto';
-            insert domainAccount;
+            insert as system domainAccount;
 
             Account nonSalesDomainAccount = operationalAccount(
                 'Non-Sales Domain Account',
@@ -408,7 +408,7 @@ private class LeadToAccountMatching_test
             );
 
             nonSalesDomainAccount.Website = 'https://domain-match-example.com';
-            insert nonSalesDomainAccount;
+            insert as system nonSalesDomainAccount;
 
             DNBConnect__D_B_Connect_Company_Profile__c priorityDnbProfile =
                 new DNBConnect__D_B_Connect_Company_Profile__c(
@@ -430,7 +430,7 @@ private class LeadToAccountMatching_test
                 'dnb-only-example.com'
             );
 
-            insert new List<DNBConnect__D_B_Connect_Company_Profile__c>{
+            insert as system new List<DNBConnect__D_B_Connect_Company_Profile__c>{
                 priorityDnbProfile,
                 fallbackDnbProfile
             };
@@ -447,11 +447,11 @@ private class LeadToAccountMatching_test
             fallbackDnbAccount.DNBConnect__D_B_Connect_Company_Profile__c =
                 fallbackDnbProfile.Id;
 
-            insert new List<Account>{priorityDnbAccount,fallbackDnbAccount};
+            insert as system new List<Account>{priorityDnbAccount,fallbackDnbAccount};
 
             priorityDnbAccount.Website = 'https://priority-dnb-nonmatch.example';
             fallbackDnbAccount.Website = 'https://fallback-dnb-nonmatch.example';
-            update new List<Account>{priorityDnbAccount,fallbackDnbAccount};
+            update as system new List<Account>{priorityDnbAccount,fallbackDnbAccount};
 
             Map<Id,Account> queriedDnbAccountsById = new Map<Id,Account>([
                 SELECT Account_Domain__c, DnB_Web_Address__c
@@ -497,7 +497,7 @@ private class LeadToAccountMatching_test
             LeadToAccountMatching.excludedCreatorIds = new Set<Id>{excludedUser.Id};
 
             Test.startTest();
-            insert new List<Lead>{accountDomainLead,dnbDomainLead};
+            insert as system new List<Lead>{accountDomainLead,dnbDomainLead};
 
             System.assertEquals(Limits.getQueueableJobs(),1);
 
@@ -525,6 +525,55 @@ private class LeadToAccountMatching_test
     }
 
     @isTest
+    static void personalDomainsDoNotMatchOrInfluenceTiebreakers()
+    {
+        System.runAs(createTestUser('personalDomain'))
+        {
+            Account personalDomainAccount = salesSite(
+                'Consumer Mailbox Record',
+                'Canada'
+            );
+
+            personalDomainAccount.Website = 'https://gmail.com';
+            insert as system personalDomainAccount;
+
+            Lead leadRecord = newLead(
+                'Unrelated Prospect Company',
+                COUNTRY_US,
+                'person@GMAIL.COM'
+            );
+
+            Test.startTest();
+            insert as system leadRecord;
+            Test.stopTest();
+
+            Lead processedLead = queryMatchedLead(leadRecord.Id);
+
+            System.assertEquals(processedLead.Related_Account__c,null);
+            System.assertEquals(processedLead.RelatedAccountMatchingComplete__c,true);
+            System.assertEquals(
+                LeadToAccountMatching.domainRank(
+                    ' GMAIL.COM ',
+                    'gmail.com',
+                    'gmail.com'
+                ),
+                3
+            );
+
+            System.assertEquals(
+                LeadToAccountMatching.chooseBestAccount(
+                    leadWithDomain('gmail.com'),
+                    new List<Account>{
+                        comparisonAccount('No Domain',null,null,null),
+                        comparisonAccount('Personal Domain',null,'gmail.com',null)
+                    }
+                ).Name,
+                'No Domain'
+            );
+        }
+    }
+
+    @isTest
     static void fuzzyCandidatesAreQualifiedAndSelected()
     {
         User excludedUser = createTestUser('fuzzyExcluded');
@@ -543,17 +592,17 @@ private class LeadToAccountMatching_test
                 COUNTRY_US
             );
 
-            insert nonSalesFuzzyAccount;
+            insert as system nonSalesFuzzyAccount;
 
             Account fuzzyAccount = createSalesSite('Acme Corporation',COUNTRY_US);
             fuzzyAccount.BillingCity = 'Fuzzy City';
             fuzzyAccount.Primary_BDE__c = matchingUser.Id;
-            update fuzzyAccount;
+            update as system fuzzyAccount;
 
             Account domainAccount = salesSite('Domain Fallback Account','Canada');
             domainAccount.BillingCity = 'Domain City';
             domainAccount.Website = 'https://fuzzy-priority-example.com';
-            insert domainAccount;
+            insert as system domainAccount;
 
             Lead leadRecord = newLead(
                 'Acme Corp',
@@ -582,9 +631,9 @@ private class LeadToAccountMatching_test
                 DuplicateRuleId = duplicateRuleId
             );
 
-            insert duplicateSet;
+            insert as system duplicateSet;
 
-            insert new List<DuplicateRecordItem>{
+            insert as system new List<DuplicateRecordItem>{
                 new DuplicateRecordItem(
                     DuplicateRecordSetId = duplicateSet.Id,
                     RecordId = leadRecord.Id
@@ -607,9 +656,9 @@ private class LeadToAccountMatching_test
                 DuplicateRuleId = duplicateRuleId
             );
 
-            insert noAccountDuplicateSet;
+            insert as system noAccountDuplicateSet;
 
-            insert new List<DuplicateRecordItem>{
+            insert as system new List<DuplicateRecordItem>{
                 new DuplicateRecordItem(
                     DuplicateRecordSetId = noAccountDuplicateSet.Id,
                     RecordId = leadRecord.Id
@@ -661,13 +710,13 @@ private class LeadToAccountMatching_test
             leadRecord.PostalCode = '12345';
 
             Test.startTest();
-            insert leadRecord;
+            insert as system leadRecord;
 
             System.assertEquals(Limits.getQueueableJobs(),0);
             System.assertEquals(queryMatchedLead(leadRecord.Id).RelatedAccountMatchingComplete__c,true);
 
             leadRecord.Company = 'No Matching Company';
-            update leadRecord;
+            update as system leadRecord;
 
             System.assertEquals(Limits.getQueueableJobs(),0);
 
@@ -698,7 +747,7 @@ private class LeadToAccountMatching_test
                 AccountId = relatedAccount.Id
             );
 
-            insert relatedContact;
+            insert as system relatedContact;
 
             Lead leadRecord = newLead(
                 'Original Update Company',
@@ -714,7 +763,7 @@ private class LeadToAccountMatching_test
             leadRecord.Email = 'lead@updated-input-example.com';
 
             Test.startTest();
-            update leadRecord;
+            update as system leadRecord;
 
             System.assertEquals(Limits.getQueueableJobs(),0);
 
@@ -736,7 +785,7 @@ private class LeadToAccountMatching_test
 
             Test.startTest();
             accountRecord.BillingCity = 'Updated City';
-            update accountRecord;
+            update as system accountRecord;
             Test.stopTest();
 
             System.assertEquals(
@@ -758,7 +807,7 @@ private class LeadToAccountMatching_test
             Lead leadRecord = newLead('Deleted Lead Company',COUNTRY_US,null);
 
             Test.startTest();
-            insert leadRecord;
+            insert as system leadRecord;
 
             System.assertEquals(Limits.getQueueableJobs(),1);
 
@@ -846,7 +895,7 @@ private class LeadToAccountMatching_test
                 salesSite('Bulk Beta','Canada')
             };
 
-            insert matchingAccounts;
+            insert as system matchingAccounts;
 
             Map<String,Id> accountIdsByPair = new Map<String,Id>{
                 'Bulk Alpha|' + COUNTRY_US => matchingAccounts[0].Id,
@@ -871,7 +920,7 @@ private class LeadToAccountMatching_test
             }
 
             Test.startTest();
-            insert leads;
+            insert as system leads;
 
             System.assertEquals(Limits.getQueueableJobs(),1);
 
@@ -975,7 +1024,7 @@ private class LeadToAccountMatching_test
             UserName = uniqueUsername
         );
 
-        insert testUser;
+        insert as system testUser;
 
         return testUser;
     }
@@ -983,7 +1032,7 @@ private class LeadToAccountMatching_test
     private static Account createSalesSite (String name, String country)
     {
         Account accountRecord = salesSite(name,country);
-        insert accountRecord;
+        insert as system accountRecord;
 
         return accountRecord;
     }
@@ -1022,7 +1071,8 @@ private class LeadToAccountMatching_test
             Company = company,
             Status = 'New',
             Country = country,
-            Email = email
+            Email = email,
+            Product_Interest__c = 'Data Centers'
         );
     }
 
@@ -1056,7 +1106,7 @@ private class LeadToAccountMatching_test
         for (Lead leadRecord : leads)
             leadRecord.Related_Account__c = relatedAccountId;
 
-        insert leads;
+        insert as system leads;
 
         for (Lead leadRecord : leads)
         {
@@ -1064,7 +1114,7 @@ private class LeadToAccountMatching_test
             leadRecord.RelatedAccountMatchingComplete__c = false;
         }
 
-        update leads;
+        update as system leads;
     }
 
     private static Lead queryMatchedLead (Id leadId)

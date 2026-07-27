@@ -157,6 +157,10 @@
                 <behavior>Edit</behavior>
                 <field>Converted_Lead__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>BV_Stage_Gate_Bypass__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -826,7 +830,6 @@
             <relatedList>RelatedOpportunitySalesTeam</relatedList>
         </relatedLists>
         <relatedLists>
-            <fields>ContactName</fields>
             <relatedList>RelatedContactRoleList</relatedList>
         </relatedLists>
         <relatedLists>
@@ -936,11 +939,12 @@
     </relatedLists>
     <relatedLists>
         <fields>SplitOwner</fields>
-        <fields>SplitType</fields>
         <fields>SplitPercentage</fields>
         <fields>SplitAmount</fields>
-        <fields>SplitNote</fields>
+        <fields>SplitOwnerID__c</fields>
         <relatedList>RelatedOpportunitySplits</relatedList>
+        <sortField>SplitPercentage</sortField>
+        <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
         <relatedList>RelatedCompetitorList</relatedList>
@@ -956,12 +960,10 @@
     <relatedLists>
         <fields>ContactName</fields>
         <fields>Role</fields>
-        <fields>ContactTitle</fields>
         <fields>IsPrimary</fields>
-        <fields>ContactPhone</fields>
-        <fields>ContactEmail</fields>
-        <fields>ContactAccountName</fields>
         <relatedList>RelatedContactRoleList</relatedList>
+        <sortField>IsPrimary</sortField>
+        <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
         <excludeButtons>New</excludeButtons>

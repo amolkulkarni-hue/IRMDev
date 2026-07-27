@@ -5,8 +5,8 @@
     <decisions>
         <name>Check_Reparented</name>
         <label>Check Reparented</label>
-        <locationX>176</locationX>
-        <locationY>215</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <defaultConnector>
             <targetReference>Recalculate_Current_Parent</targetReference>
         </defaultConnector>
@@ -55,7 +55,7 @@
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
     <start>
-        <locationX>50</locationX>
+        <locationX>0</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Check_Reparented</targetReference>
@@ -75,10 +75,36 @@ ISCHANGED({!$Record.IM_Parent_Opportunity__c})
     </start>
     <status>Active</status>
     <subflows>
+        <name>Recalculate_Current_Parent</name>
+        <label>Recalculate Current Parent</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <flowName>Recalculate_Framework_Booked_Amount</flowName>
+        <inputAssignments>
+            <name>parentOpportunityId</name>
+            <value>
+                <elementReference>$Record.IM_Parent_Opportunity__c</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <subflows>
+        <name>Recalculate_New_Parent_On_Reparent</name>
+        <label>Recalculate New Parent On Reparent</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <flowName>Recalculate_Framework_Booked_Amount</flowName>
+        <inputAssignments>
+            <name>parentOpportunityId</name>
+            <value>
+                <elementReference>$Record.IM_Parent_Opportunity__c</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <subflows>
         <name>Recalculate_Old_Parent_On_Reparent</name>
         <label>Recalculate Old Parent On Reparent</label>
-        <locationX>50</locationX>
-        <locationY>323</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <connector>
             <targetReference>Recalculate_New_Parent_On_Reparent</targetReference>
         </connector>
@@ -87,32 +113,6 @@ ISCHANGED({!$Record.IM_Parent_Opportunity__c})
             <name>parentOpportunityId</name>
             <value>
                 <elementReference>$Record__Prior.IM_Parent_Opportunity__c</elementReference>
-            </value>
-        </inputAssignments>
-    </subflows>
-    <subflows>
-        <name>Recalculate_New_Parent_On_Reparent</name>
-        <label>Recalculate New Parent On Reparent</label>
-        <locationX>50</locationX>
-        <locationY>431</locationY>
-        <flowName>Recalculate_Framework_Booked_Amount</flowName>
-        <inputAssignments>
-            <name>parentOpportunityId</name>
-            <value>
-                <elementReference>$Record.IM_Parent_Opportunity__c</elementReference>
-            </value>
-        </inputAssignments>
-    </subflows>
-    <subflows>
-        <name>Recalculate_Current_Parent</name>
-        <label>Recalculate Current Parent</label>
-        <locationX>303</locationX>
-        <locationY>323</locationY>
-        <flowName>Recalculate_Framework_Booked_Amount</flowName>
-        <inputAssignments>
-            <name>parentOpportunityId</name>
-            <value>
-                <elementReference>$Record.IM_Parent_Opportunity__c</elementReference>
             </value>
         </inputAssignments>
     </subflows>

@@ -467,7 +467,7 @@
         <dataType>Picklist</dataType>
         <displayField xsi:nil="true"/>
         <object xsi:nil="true"/>
-        <picklistField>Actual_Product_Interest__c</picklistField>
+        <picklistField>Product_Interest__c</picklistField>
         <picklistObject>Lead</picklistObject>
     </dynamicChoiceSets>
     <environments>Default</environments>
@@ -498,12 +498,6 @@
             <isGoTo>true</isGoTo>
             <targetReference>Assign_ErrorMessage</targetReference>
         </faultConnector>
-        <inputAssignments>
-            <field>Actual_Product_Interest__c</field>
-            <value>
-                <elementReference>PrimaryProductOfInterest</elementReference>
-            </value>
-        </inputAssignments>
         <inputAssignments>
             <field>City</field>
             <value>
@@ -556,6 +550,12 @@
             <field>PostalCode</field>
             <value>
                 <elementReference>PostalCode</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Product_Interest__c</field>
+            <value>
+                <elementReference>PrimaryProductOfInterest</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>

@@ -79,7 +79,7 @@
             <name>Yes1</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>$Record.Primary_Product_Interest__c</leftValueReference>
+                <leftValueReference>$Record.Product_Interest__c</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
@@ -127,7 +127,7 @@
             <field>Product_Interest__c</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>$Record.Primary_Product_Interest__c</elementReference>
+                <elementReference>$Record.Product_Interest__c</elementReference>
             </value>
         </filters>
         <filters>
@@ -147,7 +147,9 @@
         <connector>
             <targetReference>Primary_Product_Interest_Populated</targetReference>
         </connector>
-        <filterFormula>ISCHANGED({!$Record.Primary_Product_Interest__c})</filterFormula>
+        <filterFormula>OR( ISNEW() ,
+ISCHANGED({!$Record.Product_Interest__c}) 
+)</filterFormula>
         <object>Lead</object>
         <recordTriggerType>CreateAndUpdate</recordTriggerType>
         <triggerType>RecordBeforeSave</triggerType>

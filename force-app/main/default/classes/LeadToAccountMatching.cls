@@ -274,9 +274,9 @@ public without sharing class LeadToAccountMatching implements Queueable
 
         for (Id leadId : unresolvedLeadIds)
         {
-            String domain = leadsById.get(leadId).Domain__c;
+            String domain = matchableDomain(leadsById.get(leadId).Domain__c);
 
-            if (String.isNotBlank(domain))
+            if (domain != null)
                 leadDomains.add(domain);
         }
 
@@ -284,6 +284,16 @@ public without sharing class LeadToAccountMatching implements Queueable
 
         if (leadDomains.isEmpty())
             return;
+
+        // querying company profiles first for the sake of ensuring an optimized account query based on indexed fields
+        Set<Id> companyProfileIds = new Map<Id,DNBConnect__D_B_Connect_Company_Profile__c>([
+            SELECT Id
+            FROM DNBConnect__D_B_Connect_Company_Profile__c
+            WHERE organization_website_address_domain_1__c IN :leadDomains
+            WITH SYSTEM_MODE
+        ]).keySet();
+
+        System.debug(LoggingLevel.DEBUG,LOG_PREFIX + 'domain-match D&B Company Profile IDs ' + companyProfileIds);
 
         Map<String,List<Account>> candidatesByDomain = new Map<String,List<Account>>();
 
@@ -295,13 +305,14 @@ public without sharing class LeadToAccountMatching implements Queueable
             FROM Account
             WHERE IM_Hierarchy_Level__c = :SALES_SITE_LEVEL
                 AND CreatedById NOT IN :excludedCreatorIds
-                AND (Account_Domain__c IN :leadDomains OR DnB_Web_Address__c IN :leadDomains)
+                AND (Account_Domain__c IN :leadDomains
+                    OR DNBConnect__D_B_Connect_Company_Profile__c IN :companyProfileIds)
             WITH SYSTEM_MODE
         ])
         {
             Set<String> candidateDomains = new Set<String>{
-                normalize(candidate.Account_Domain__c),
-                normalize(candidate.DnB_Web_Address__c)
+                matchableDomain(candidate.Account_Domain__c),
+                matchableDomain(candidate.DnB_Web_Address__c)
             };
 
             candidateDomains.remove(null);
@@ -332,7 +343,7 @@ public without sharing class LeadToAccountMatching implements Queueable
                 candidatesByKey.get(
                     useNameAndCountryKey
                     ? compoundKey(leadRecord.Company,leadRecord.Country)
-                    : normalize(leadRecord.Domain__c)
+                    : matchableDomain(leadRecord.Domain__c)
                 )
             );
 
@@ -434,12 +445,12 @@ public without sharing class LeadToAccountMatching implements Queueable
     @TestVisible
     private static Integer domainRank (String leadDomain, String accountDomain, String dnbWebAddress)
     {
-        String normalizedLeadDomain = normalize(leadDomain);
+        String normalizedLeadDomain = matchableDomain(leadDomain);
 
-        if (normalizedLeadDomain != null && normalizedLeadDomain == normalize(accountDomain))
+        if (normalizedLeadDomain != null && normalizedLeadDomain == matchableDomain(accountDomain))
             return 1;
 
-        if (normalizedLeadDomain != null && normalizedLeadDomain == normalize(dnbWebAddress))
+        if (normalizedLeadDomain != null && normalizedLeadDomain == matchableDomain(dnbWebAddress))
             return 2;
 
         return 3;
@@ -506,6 +517,16 @@ public without sharing class LeadToAccountMatching implements Queueable
         return String.isNotBlank(value) ? value.trim().toLowerCase() : null;
     }
 
+    private static String matchableDomain (String value)
+    {
+        String domain = normalize(value);
+
+        if (personalDomains.contains(domain))
+            return null;
+
+        return domain;
+    }
+
     @TestVisible
     private static void updateProcessedLeads (Map<Id,Lead> leadsById, Map<Id,Account> matchesByLeadId)
     {
@@ -561,4 +582,108 @@ public without sharing class LeadToAccountMatching implements Queueable
 
         System.debug(LoggingLevel.DEBUG,LOG_PREFIX + 'completed updates for ' + successfulUpdates + ' of ' + leadsToUpdate.size() + ' Leads');
     }
+
+    private static Set<String> personalDomains = new Set<String>
+    {
+        'aim.com',
+        'alice.it',
+        'aliceadsl.fr',
+        'aol.com',
+        'arcor.de',
+        'att.net',
+        'bellsouth.net',
+        'bigpond.com',
+        'bigpond.net.au',
+        'bluewin.ch',
+        'blueyonder.co.uk',
+        'bol.com.br',
+        'centurytel.net',
+        'charter.net',
+        'chello.nl',
+        'club-internet.fr',
+        'comcast.net',
+        'cox.net',
+        'earthlink.net',
+        'facebook.com',
+        'free.fr',
+        'freenet.de',
+        'frontiernet.net',
+        'gmail.com',
+        'gmx.de',
+        'gmx.net',
+        'googlemail.com',
+        'hetnet.nl',
+        'home.nl',
+        'hotmail.co.uk',
+        'hotmail.com',
+        'hotmail.de',
+        'hotmail.es',
+        'hotmail.fr',
+        'hotmail.it',
+        'ig.com.br',
+        'juno.com',
+        'laposte.net',
+        'libero.it',
+        'live.ca',
+        'live.co.uk',
+        'live.com',
+        'live.com.au',
+        'live.fr',
+        'live.it',
+        'live.nl',
+        'mac.com',
+        'mail.com',
+        'mail.ru',
+        'me.com',
+        'msn.com',
+        'neuf.fr',
+        'ntlworld.com',
+        'optonline.net',
+        'optusnet.com.au',
+        'orange.fr',
+        'outlook.com',
+        'planet.nl',
+        'qq.com',
+        'rambler.ru',
+        'rediffmail.com',
+        'rocketmail.com',
+        'sbcglobal.net',
+        'sfr.fr',
+        'shaw.ca',
+        'sky.com',
+        'skynet.be',
+        'sympatico.ca',
+        'telenet.be',
+        'terra.com.br',
+        'tin.it',
+        'tiscali.co.uk',
+        'tiscali.it',
+        't-online.de',
+        'uol.com.br',
+        'verizon.net',
+        'virgilio.it',
+        'voila.fr',
+        'wanadoo.fr',
+        'web.de',
+        'windstream.net',
+        'yahoo.ca',
+        'yahoo.co.id',
+        'yahoo.co.in',
+        'yahoo.co.jp',
+        'yahoo.co.uk',
+        'yahoo.com',
+        'yahoo.com.ar',
+        'yahoo.com.au',
+        'yahoo.com.br',
+        'yahoo.com.mx',
+        'yahoo.com.sg',
+        'yahoo.de',
+        'yahoo.es',
+        'yahoo.fr',
+        'yahoo.in',
+        'yahoo.it',
+        'yandex.ru',
+        'ymail.com',
+        'zonnet.nl'
+    };
 }

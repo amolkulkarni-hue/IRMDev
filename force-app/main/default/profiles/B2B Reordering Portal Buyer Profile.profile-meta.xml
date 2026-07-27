@@ -28,6 +28,18 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>CaseCreationRuleEvaluatorActionTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>CleanupConfigLineItemsBatch</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>CleanupConfigLineItemsBatchTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>IRM_AttachFilesAction</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -45,6 +57,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>IRM_CaseExitDocCreationTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>IRM_CaseRoutingTest</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -84,6 +100,18 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>IRM_NotifyOpportunityOwnerAction</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>IRM_NotifyOpportunityOwnerActionTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>IRM_NotifyOpportunityOwnerRequest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>IRM_OppAutoNameTest</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -109,6 +137,18 @@
     </classAccesses>
     <classAccesses>
         <apexClass>IroncladAttachmentController</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>LGK_TransactionHelper</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>LGK_TransactionHelperTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>LGK_TransactionTriggerHandler</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -153,6 +193,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>SubmitForApprovalEndpointTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>SyncChildOppTeamsAndSplits</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -3856,9 +3900,9 @@
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Booking_Verification_Checklist_Item__c.Is_Mandatory__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -3953,6 +3997,16 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Case.All_Exit_Docs_Final__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Case.All_Start_Docs_Display__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Case.All_Start_Docs_Final__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -7787,6 +7841,46 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Case_Creation_Condition__c.Value__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Case_Creation_Doc_Requirement__c.Document_Category__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Case_Creation_Doc_Requirement__c.Is_Required_For_Case__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Case_Creation_Doc_Requirement__c.Is_Required_To_Start__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Case_Creation_Rule__c.Is_Active__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Case_Creation_Rule__c.Logic_Expression__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Case_Creation_Rule__c.Notes__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Case_Creation_Rule__c.Priority__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Case_Exit_Doc_Requirement__c.Document_Category__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -7828,6 +7922,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Contact_Role_Requirement__mdt.Type__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>DNBConnect__D_B_Connect_Company_Profile__c.organization_website_address_domain_1__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -8261,14 +8360,74 @@
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>Document_Checklist__c.Approved_Date__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Document_Checklist__c.Booking_Verification_Checklist__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Document_Checklist__c.Bypass_Justification__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Document_Checklist__c.Bypass_Requirement__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Document_Checklist__c.Case_Creation_Rule__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Document_Checklist__c.Case_Type_Context__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Document_Checklist__c.Case__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Document_Checklist__c.DocumentType__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Document_Checklist__c.Due_Date__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Document_Checklist__c.IsRequired__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Document_Checklist__c.Notes__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Document_Checklist__c.Opportunity__c</field>
         <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Document_Checklist__c.Stage__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Document_Checklist__c.Submitted_Date__c</field>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -8313,6 +8472,21 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>LGK__TransactionLine__c.Business_Unit__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>LGK__TransactionLine__c.Current_Price__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>LGK__TransactionLine__c.Expert_Price__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>LGK__TransactionLine__c.Floor_Price__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -8447,7 +8621,22 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>LGK__TransactionLine__c.Target_Price__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>LGK__Transaction__c.ACV__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>LGK__Transaction__c.ALM_BU_EAA__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>LGK__Transaction__c.ALM_BU_TAA__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -8478,6 +8667,16 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>LGK__Transaction__c.Deal_Review__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>LGK__Transaction__c.Digital_BU_EAA__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>LGK__Transaction__c.Digital_BU_TAA__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -8617,6 +8816,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>LGK__Transaction__c.MAS_BU_EAA__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>LGK__Transaction__c.MAS_BU_TAA__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>LGK__Transaction__c.Net_Total__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -8628,6 +8837,21 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>LGK__Transaction__c.Proposed_Revenue_Investment__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>LGK__Transaction__c.RIM_BU_EAA__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>LGK__Transaction__c.RIM_BU_TAA__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>LGK__Transaction__c.Support_Data_Raw__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -8673,6 +8897,26 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>LGK__Transaction__c.Total_Contract_Value__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>LGK__Transaction__c.Total_EAA__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>LGK__Transaction__c.Total_TAA__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>LGK__Transaction__c.W_L_BU_EAA__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>LGK__Transaction__c.W_L_BU_TAA__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -9887,6 +10131,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Lead.Multi_Business_Unit__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Lead.Need_Confirmed__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -10152,16 +10401,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Lead.Primary_Product_Interest__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Lead.Product_Interest__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>Lead.Pronouns</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -10178,6 +10417,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Lead.Rating</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Lead.Re_engaged_Lead__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -10697,6 +10941,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Leader_Follower_Mapping__c.Billcode_Product_Code__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Leader_Follower_Mapping__c.Follower_Billcode__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -10722,12 +10971,22 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Leader_Follower_Mapping__c.New_SF_Product_Name__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Leader_Follower_Mapping__c.Originating_Org__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Leader_Follower_Mapping__c.QPI_Quote__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Leader_Follower_Mapping__c.SF_Product_Code__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -10808,6 +11067,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Opportunity.Accepted_Quote_Test__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Opportunity.Accepted_Quote__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -10908,6 +11172,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Opportunity.B2B_Analyst__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Opportunity.BV_Stage_Gate_Bypass__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -11121,9 +11390,19 @@
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>Opportunity.Contract_End_Date__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Opportunity.Contract_Number__c</field>
         <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Opportunity.Contract_Start_Date__c</field>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -11153,6 +11432,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Opportunity.Converted_Lead__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Opportunity.Counterparty_Signature_Date__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -11234,6 +11518,16 @@
         <editable>false</editable>
         <field>Opportunity.Current_Year_Revenue__c</field>
         <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Opportunity.Custom_Demo_POC__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Opportunity.Custom_Solution_Required__c</field>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -11567,6 +11861,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Opportunity.Eligible_for_Countyparty_Paper__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Opportunity.Eligible_for_Negotiation__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -11633,6 +11932,16 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Opportunity.Forecast_Owner__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Opportunity.Framework_Booked_Amount__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Opportunity.Framework_Status__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -12287,11 +12596,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Opportunity.Multi_Business_Unit__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>Opportunity.Multiple_Markets__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -12509,6 +12813,11 @@
         <editable>true</editable>
         <field>Opportunity.Partner_Deal_Expiration_Date__c</field>
         <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Opportunity.Payment_Terms__c</field>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -13867,7 +14176,32 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>OpportunitySplit.CreatedByRole__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>OpportunitySplit.IsSystemGenerated__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>OpportunityTeamMember.CreatedByRole_c__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>OpportunityTeamMember.IsSystemGenerated__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Opportunity_Product_Line__c.Business_Unit__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Opportunity_Product_Line__c.EAA_Source__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -13877,12 +14211,27 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Opportunity_Product_Line__c.Is_Locked__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Opportunity_Product_Line__c.Is_Primary__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Opportunity_Product_Line__c.OPL_Sync_Key__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Opportunity_Product_Line__c.Product_Line__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Opportunity_Product_Line__c.TAA_Source__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -13918,6 +14267,56 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Sales_Revenue_Forecast__c.Delay_Reasons_B2B_Billing_Outlook__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Touch_Level_Case_Routing__c.Case_Type__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Touch_Level_Case_Routing__c.Is_Active__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Touch_Level_Case_Routing__c.Queue_Developer_Name__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Touch_Level_Case_Routing__c.Record_Type_Developer_Name__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Touch_Level_Case_Routing__c.Stage__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Touch_Level_Case_Routing__c.Touch_Level__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Touch_Level_Condition__c.Value__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Touch_Level_Criteria__c.Is_Active__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Touch_Level_Criteria__c.Logic_Expression__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Touch_Level_Criteria__c.Notes__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -14067,7 +14466,15 @@
     </fieldPermissions>
     <flowAccesses>
         <enabled>false</enabled>
+        <flow>Account_Update_on_Account_Coverage_fields</flow>
+    </flowAccesses>
+    <flowAccesses>
+        <enabled>false</enabled>
         <flow>Active_Pipeline_Flag_and_AWS_Deal_Registration_Notification</flow>
+    </flowAccesses>
+    <flowAccesses>
+        <enabled>false</enabled>
+        <flow>Add_Global_Managing_Director_as_Overlay_Split</flow>
     </flowAccesses>
     <flowAccesses>
         <enabled>false</enabled>
@@ -14080,6 +14487,10 @@
     <flowAccesses>
         <enabled>false</enabled>
         <flow>Case_Exit_Document_Validation_Flow</flow>
+    </flowAccesses>
+    <flowAccesses>
+        <enabled>false</enabled>
+        <flow>Change_of_Contacts_Ownership</flow>
     </flowAccesses>
     <flowAccesses>
         <enabled>false</enabled>
@@ -14099,7 +14510,31 @@
     </flowAccesses>
     <flowAccesses>
         <enabled>false</enabled>
+        <flow>Ironclad_Update_Close_Date_when_counterparty_signs</flow>
+    </flowAccesses>
+    <flowAccesses>
+        <enabled>false</enabled>
         <flow>Ironclad_Workflow_Triggers_Opportunity_Stage</flow>
+    </flowAccesses>
+    <flowAccesses>
+        <enabled>false</enabled>
+        <flow>Ironclad_clear_Close_Date_when_workflow_reverts_from_Signature</flow>
+    </flowAccesses>
+    <flowAccesses>
+        <enabled>false</enabled>
+        <flow>LGK__CopyLogikTransaction</flow>
+    </flowAccesses>
+    <flowAccesses>
+        <enabled>false</enabled>
+        <flow>LGK__CreateLogikTransactionRecordTrigger</flow>
+    </flowAccesses>
+    <flowAccesses>
+        <enabled>false</enabled>
+        <flow>LGK__LogikOpportunityLineSyncDelete</flow>
+    </flowAccesses>
+    <flowAccesses>
+        <enabled>false</enabled>
+        <flow>LGK__LogikOpportunityLineSyncUpsert</flow>
     </flowAccesses>
     <flowAccesses>
         <enabled>false</enabled>
@@ -14135,7 +14570,19 @@
     </flowAccesses>
     <flowAccesses>
         <enabled>false</enabled>
+        <flow>Logik_ai_Opportunity_Line_Sync_Upsert_V2</flow>
+    </flowAccesses>
+    <flowAccesses>
+        <enabled>false</enabled>
         <flow>NF_Enforce_Required_Stakeholder_Roles_by_Opportunity_Stage</flow>
+    </flowAccesses>
+    <flowAccesses>
+        <enabled>false</enabled>
+        <flow>New_Accounts_Transfer_ownership_to_System_ID</flow>
+    </flowAccesses>
+    <flowAccesses>
+        <enabled>false</enabled>
+        <flow>OppTeamRoles_OnOppSave</flow>
     </flowAccesses>
     <flowAccesses>
         <enabled>false</enabled>
@@ -14147,6 +14594,10 @@
     </flowAccesses>
     <flowAccesses>
         <enabled>false</enabled>
+        <flow>Opportunity_Auto_Assign_Solution_Executive_to_Opportunity_Overlay</flow>
+    </flowAccesses>
+    <flowAccesses>
+        <enabled>false</enabled>
         <flow>Opportunity_Auto_Name_Update_Flow</flow>
     </flowAccesses>
     <flowAccesses>
@@ -14155,7 +14606,19 @@
     </flowAccesses>
     <flowAccesses>
         <enabled>false</enabled>
+        <flow>Opportunity_Booking_Verification_Gate</flow>
+    </flowAccesses>
+    <flowAccesses>
+        <enabled>false</enabled>
         <flow>Opportunity_Naming_Subflow</flow>
+    </flowAccesses>
+    <flowAccesses>
+        <enabled>false</enabled>
+        <flow>Opportunity_OppOwnerRevSplit_OnOppSave</flow>
+    </flowAccesses>
+    <flowAccesses>
+        <enabled>false</enabled>
+        <flow>Opportunity_OppTeamRoles_OnOppSave</flow>
     </flowAccesses>
     <flowAccesses>
         <enabled>false</enabled>
@@ -14163,7 +14626,15 @@
     </flowAccesses>
     <flowAccesses>
         <enabled>false</enabled>
+        <flow>Opportunity_Split_Update_Custom_fields</flow>
+    </flowAccesses>
+    <flowAccesses>
+        <enabled>false</enabled>
         <flow>Opportunity_Stage_Date_Updates</flow>
+    </flowAccesses>
+    <flowAccesses>
+        <enabled>false</enabled>
+        <flow>Oppty_Split_Push_Member_to_Opportunity_SplitField</flow>
     </flowAccesses>
     <flowAccesses>
         <enabled>false</enabled>
@@ -14180,6 +14651,10 @@
     <flowAccesses>
         <enabled>false</enabled>
         <flow>Reference_Threshold_Key_Flow</flow>
+    </flowAccesses>
+    <flowAccesses>
+        <enabled>false</enabled>
+        <flow>Support_Engagement_Case_Assignment_Flow</flow>
     </flowAccesses>
     <flowAccesses>
         <enabled>false</enabled>
@@ -14389,6 +14864,12 @@
         <layout>OpportunityContactRole-Opportunity Contact Role Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>OpportunitySplit-Layout de Divisão de oportunidade</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>OpportunityTeamMember-Opportunity Team Member Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>Opportunity_Product_Line__c-Opportunity Product Line Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
@@ -14396,9 +14877,6 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>Product_Interest_BU_Mapping__mdt-Product Interest Business Unit Mapping Layout</layout>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>Touch_Level_Case_Mapping__mdt-Touch Level Case Mapping Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Touch_Level_Criteria__c-Touch Level Criteria Layout</layout>
@@ -14735,11 +15213,6 @@
         <recordType>Opportunity.Standard_Opportunity</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
-    <recordTypeVisibilities>
-        <default>false</default>
-        <recordType>Opportunity.Standard_Opportunity_Record_type</recordType>
-        <visible>false</visible>
-    </recordTypeVisibilities>
     <tabVisibilities>
         <tab>Blueprint_Page</tab>
         <visibility>DefaultOn</visibility>
@@ -14769,6 +15242,10 @@
         <visibility>Hidden</visibility>
     </tabVisibilities>
     <tabVisibilities>
+        <tab>Case_Creation_Rule__c</tab>
+        <visibility>Hidden</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
         <tab>Case_Exit_Doc_Requirement__c</tab>
         <visibility>Hidden</visibility>
     </tabVisibilities>
@@ -14778,6 +15255,10 @@
     </tabVisibilities>
     <tabVisibilities>
         <tab>Deal_Review__c</tab>
+        <visibility>Hidden</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>Document_Checklist__c</tab>
         <visibility>Hidden</visibility>
     </tabVisibilities>
     <tabVisibilities>
@@ -14797,7 +15278,15 @@
         <visibility>Hidden</visibility>
     </tabVisibilities>
     <tabVisibilities>
+        <tab>Touch_Level_Case_Routing__c</tab>
+        <visibility>Hidden</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
         <tab>Touch_Level_Condition__c</tab>
+        <visibility>Hidden</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>Touch_Level_Criteria__c</tab>
         <visibility>Hidden</visibility>
     </tabVisibilities>
     <tabVisibilities>

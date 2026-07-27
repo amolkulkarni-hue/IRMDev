@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>VR_Opp_S1_Close_Date</fullName>
+    <active>true</active>
+    <description>Requires Close Date to be populated and be today or a future date, leaving Stage 1 and through every later stage and once Closed.</description>
+    <errorConditionFormula>AND(
+    NOT($Permission.Bypass_Opportunity_Validation),
+
+    OR(
+        RecordType.DeveloperName = &quot;Standard_Opportunity&quot;,
+        RecordType.DeveloperName = &quot;Framework_Parent_Opportunity&quot;
+    ),
+
+    OR(
+        ISPICKVAL(Type, &quot;New Deal&quot;),
+        ISPICKVAL(Type, &quot;Renewal&quot;),
+        ISPICKVAL(Type, &quot;Cross-Sell/Upsell&quot;)
+    ),
+
+    OR(
+        ISPICKVAL(Touch_Level__c, &quot;High Touch&quot;),
+        ISPICKVAL(Touch_Level__c, &quot;Medium Touch&quot;),
+        ISPICKVAL(Touch_Level__c, &quot;Low Touch&quot;),
+        ISPICKVAL(Touch_Level__c, &quot;No Touch&quot;)
+    ),
+
+    OR(
+        ISPICKVAL(Business_Unit__c, &quot;RIM&quot;),
+        ISPICKVAL(Business_Unit__c, &quot;Digital&quot;),
+        ISPICKVAL(Business_Unit__c, &quot;ALM&quot;)
+    ),
+
+    NOT(ISPICKVAL(StageName, &quot;Closed&quot;)),
+
+    OR(
+        ISBLANK(CloseDate),
+        CloseDate &lt; TODAY()
+    )
+)</errorConditionFormula>
+    <errorMessage>Please enter a Close Date that is later than today before proceeding. Need help? Contact your Sales Operations Business Partner.</errorMessage>
+</ValidationRule>

@@ -4,35 +4,12 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
-                    <name>actionNames</name>
-                    <valueList>
-                        <valueListItems>
-                            <value>Edit</value>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>Opportunity.Upload_Document_Checklist</value>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>Opportunity.Override_Touch_Level</value>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>Opportunity.Create_Quote</value>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>PrintableView</value>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>Opportunity.Create_Renewal_Opportunity</value>
-                        </valueListItems>
-                    </valueList>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
                     <name>collapsed</name>
                     <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>enableActionsConfiguration</name>
-                    <value>true</value>
+                    <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>enableActionsInNative</name>
@@ -51,7 +28,7 @@
                     <value>3</value>
                 </componentInstanceProperties>
                 <componentName>force:highlightsPanel</componentName>
-                <identifier>force_highlightsPanel</identifier>
+                <identifier>force_highlightsPanel2</identifier>
             </componentInstance>
         </itemInstances>
         <name>header</name>
@@ -274,8 +251,8 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.Multi_Business_Unit__c</fieldItem>
-                <identifier>RecordMulti_Business_Unit_cField</identifier>
+                <fieldItem>Record.Multi_BU_Flag__c</fieldItem>
+                <identifier>RecordMulti_BU_Flag_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -291,7 +268,7 @@
                     <criteria>
                         <leftValue>{!Record.Type}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>New</rightValue>
+                        <rightValue>New Deal</rightValue>
                     </criteria>
                     <criteria>
                         <leftValue>{!Record.Type}</leftValue>
@@ -324,7 +301,7 @@
                     <criteria>
                         <leftValue>{!Record.Type}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>New</rightValue>
+                        <rightValue>New Deal</rightValue>
                     </criteria>
                     <criteria>
                         <leftValue>{!Record.Type}</leftValue>
@@ -332,9 +309,9 @@
                         <rightValue>Cross-Sell/Upsell</rightValue>
                     </criteria>
                     <criteria>
-                        <leftValue>{!Record.Type}</leftValue>
+                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>Framework</rightValue>
+                        <rightValue>Framework_Parent_Opportunity</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -377,7 +354,7 @@
             <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
-                    <value>required</value>
+                    <value>none</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.Business_Problem_Evidenced__c</fieldItem>
                 <identifier>RecordBusiness_Problem_Evidenced_cField</identifier>
@@ -386,7 +363,7 @@
                     <criteria>
                         <leftValue>{!Record.Type}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>New</rightValue>
+                        <rightValue>New Deal</rightValue>
                     </criteria>
                     <criteria>
                         <leftValue>{!Record.Type}</leftValue>
@@ -394,9 +371,9 @@
                         <rightValue>Cross-Sell/Upsell</rightValue>
                     </criteria>
                     <criteria>
-                        <leftValue>{!Record.Type}</leftValue>
+                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>Framework</rightValue>
+                        <rightValue>Framework_Parent_Opportunity</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -405,7 +382,7 @@
             <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
-                    <value>required</value>
+                    <value>none</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.Customer_Outcome_Predefined__c</fieldItem>
                 <identifier>RecordCustomer_Outcome_Predefined_cField</identifier>
@@ -414,7 +391,7 @@
                     <criteria>
                         <leftValue>{!Record.Type}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>New</rightValue>
+                        <rightValue>New Deal</rightValue>
                     </criteria>
                     <criteria>
                         <leftValue>{!Record.Type}</leftValue>
@@ -422,9 +399,9 @@
                         <rightValue>Cross-Sell/Upsell</rightValue>
                     </criteria>
                     <criteria>
-                        <leftValue>{!Record.Type}</leftValue>
+                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>Framework</rightValue>
+                        <rightValue>Framework_Parent_Opportunity</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -442,7 +419,7 @@
                     <criteria>
                         <leftValue>{!Record.Type}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>New</rightValue>
+                        <rightValue>New Deal</rightValue>
                     </criteria>
                     <criteria>
                         <leftValue>{!Record.Type}</leftValue>
@@ -450,9 +427,9 @@
                         <rightValue>Cross-Sell/Upsell</rightValue>
                     </criteria>
                     <criteria>
-                        <leftValue>{!Record.Type}</leftValue>
+                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>Framework</rightValue>
+                        <rightValue>Framework_Parent_Opportunity</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -470,7 +447,7 @@
                     <criteria>
                         <leftValue>{!Record.Type}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>New</rightValue>
+                        <rightValue>New Deal</rightValue>
                     </criteria>
                     <criteria>
                         <leftValue>{!Record.Type}</leftValue>
@@ -478,9 +455,9 @@
                         <rightValue>Cross-Sell/Upsell</rightValue>
                     </criteria>
                     <criteria>
-                        <leftValue>{!Record.Type}</leftValue>
+                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>Framework</rightValue>
+                        <rightValue>Framework_Parent_Opportunity</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -503,7 +480,7 @@
                     <criteria>
                         <leftValue>{!Record.Type}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>New</rightValue>
+                        <rightValue>New Deal</rightValue>
                     </criteria>
                     <criteria>
                         <leftValue>{!Record.Type}</leftValue>
@@ -511,9 +488,9 @@
                         <rightValue>Cross-Sell/Upsell</rightValue>
                     </criteria>
                     <criteria>
-                        <leftValue>{!Record.Type}</leftValue>
+                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>Framework</rightValue>
+                        <rightValue>Framework_Parent_Opportunity</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -531,7 +508,7 @@
                     <criteria>
                         <leftValue>{!Record.Type}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>New</rightValue>
+                        <rightValue>New Deal</rightValue>
                     </criteria>
                     <criteria>
                         <leftValue>{!Record.Type}</leftValue>
@@ -539,9 +516,9 @@
                         <rightValue>Cross-Sell/Upsell</rightValue>
                     </criteria>
                     <criteria>
-                        <leftValue>{!Record.Type}</leftValue>
+                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>Framework</rightValue>
+                        <rightValue>Framework_Parent_Opportunity</rightValue>
                     </criteria>
                     <criteria>
                         <leftValue>{!Record.Business_Unit__c}</leftValue>
@@ -574,7 +551,7 @@
                     <criteria>
                         <leftValue>{!Record.Type}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>New</rightValue>
+                        <rightValue>New Deal</rightValue>
                     </criteria>
                     <criteria>
                         <leftValue>{!Record.Type}</leftValue>
@@ -582,9 +559,9 @@
                         <rightValue>Cross-Sell/Upsell</rightValue>
                     </criteria>
                     <criteria>
-                        <leftValue>{!Record.Type}</leftValue>
+                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>Framework</rightValue>
+                        <rightValue>Framework_Parent_Opportunity</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -612,7 +589,7 @@
                     <criteria>
                         <leftValue>{!Record.Type}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>New</rightValue>
+                        <rightValue>New Deal</rightValue>
                     </criteria>
                     <criteria>
                         <leftValue>{!Record.Type}</leftValue>
@@ -620,9 +597,9 @@
                         <rightValue>Cross-Sell/Upsell</rightValue>
                     </criteria>
                     <criteria>
-                        <leftValue>{!Record.Type}</leftValue>
+                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>Framework</rightValue>
+                        <rightValue>Framework_Parent_Opportunity</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -645,7 +622,7 @@
                     <criteria>
                         <leftValue>{!Record.Type}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>New</rightValue>
+                        <rightValue>New Deal</rightValue>
                     </criteria>
                     <criteria>
                         <leftValue>{!Record.Type}</leftValue>
@@ -653,9 +630,32 @@
                         <rightValue>Cross-Sell/Upsell</rightValue>
                     </criteria>
                     <criteria>
-                        <leftValue>{!Record.Type}</leftValue>
+                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>Framework</rightValue>
+                        <rightValue>Framework_Parent_Opportunity</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Cloud_Provider__c</fieldItem>
+                <identifier>RecordCloud_Provider_cField2</identifier>
+                <visibilityRule>
+                    <booleanFilter>1 AND 2</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.Business_Unit__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Digital</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Primary_Product_Line__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Digitization</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -678,7 +678,7 @@
                     <criteria>
                         <leftValue>{!Record.Type}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>New</rightValue>
+                        <rightValue>New Deal</rightValue>
                     </criteria>
                     <criteria>
                         <leftValue>{!Record.Type}</leftValue>
@@ -686,9 +686,9 @@
                         <rightValue>Cross-Sell/Upsell</rightValue>
                     </criteria>
                     <criteria>
-                        <leftValue>{!Record.Type}</leftValue>
+                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>Framework</rightValue>
+                        <rightValue>Framework_Parent_Opportunity</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -697,7 +697,7 @@
             <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
-                    <value>required</value>
+                    <value>none</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.Is_InSight_being_proposed__c</fieldItem>
                 <identifier>RecordIs_InSight_being_proposed_cField</identifier>
@@ -706,7 +706,7 @@
                     <criteria>
                         <leftValue>{!Record.Primary_Product_Line__c}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>Digital Solutions</rightValue>
+                        <rightValue>Digitization</rightValue>
                     </criteria>
                     <criteria>
                         <leftValue>{!Record.Business_Unit__c}</leftValue>
@@ -716,7 +716,7 @@
                     <criteria>
                         <leftValue>{!Record.Type}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>New</rightValue>
+                        <rightValue>New Deal</rightValue>
                     </criteria>
                     <criteria>
                         <leftValue>{!Record.Type}</leftValue>
@@ -724,9 +724,9 @@
                         <rightValue>Cross-Sell/Upsell</rightValue>
                     </criteria>
                     <criteria>
-                        <leftValue>{!Record.Type}</leftValue>
+                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>Framework</rightValue>
+                        <rightValue>Framework_Parent_Opportunity</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -772,7 +772,7 @@
                     <criteria>
                         <leftValue>{!Record.Type}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>New</rightValue>
+                        <rightValue>New Deal</rightValue>
                     </criteria>
                     <criteria>
                         <leftValue>{!Record.Type}</leftValue>
@@ -793,8 +793,8 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.Deal_Review_Accepted__c</fieldItem>
-                <identifier>RecordDeal_Review_Accepted_cField4</identifier>
+                <fieldItem>Record.Accepted_Quote__c</fieldItem>
+                <identifier>RecordAccepted_Quote_cField2</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -810,7 +810,7 @@
                     <criteria>
                         <leftValue>{!Record.Type}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>New</rightValue>
+                        <rightValue>New Deal</rightValue>
                     </criteria>
                     <criteria>
                         <leftValue>{!Record.Type}</leftValue>
@@ -838,7 +838,7 @@
                     <criteria>
                         <leftValue>{!Record.Type}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>New</rightValue>
+                        <rightValue>New Deal</rightValue>
                     </criteria>
                     <criteria>
                         <leftValue>{!Record.Business_Unit__c}</leftValue>
@@ -881,7 +881,7 @@
                     <criteria>
                         <leftValue>{!Record.Type}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>New</rightValue>
+                        <rightValue>New Deal</rightValue>
                     </criteria>
                     <criteria>
                         <leftValue>{!Record.Type}</leftValue>
@@ -889,9 +889,9 @@
                         <rightValue>Cross-Sell/Upsell</rightValue>
                     </criteria>
                     <criteria>
-                        <leftValue>{!Record.Type}</leftValue>
+                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>Framework</rightValue>
+                        <rightValue>Framework_Parent_Opportunity</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -909,7 +909,7 @@
                     <criteria>
                         <leftValue>{!Record.Type}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>New</rightValue>
+                        <rightValue>New Deal</rightValue>
                     </criteria>
                     <criteria>
                         <leftValue>{!Record.Type}</leftValue>
@@ -917,9 +917,9 @@
                         <rightValue>Cross-Sell/Upsell</rightValue>
                     </criteria>
                     <criteria>
-                        <leftValue>{!Record.Type}</leftValue>
+                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>Framework</rightValue>
+                        <rightValue>Framework_Parent_Opportunity</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -941,7 +941,7 @@
                     <criteria>
                         <leftValue>{!Record.Type}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>New</rightValue>
+                        <rightValue>New Deal</rightValue>
                     </criteria>
                     <criteria>
                         <leftValue>{!Record.Type}</leftValue>
@@ -949,9 +949,9 @@
                         <rightValue>Cross-Sell/Upsell</rightValue>
                     </criteria>
                     <criteria>
-                        <leftValue>{!Record.Type}</leftValue>
+                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>Framework</rightValue>
+                        <rightValue>Framework_Parent_Opportunity</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -969,7 +969,7 @@
                     <criteria>
                         <leftValue>{!Record.Type}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>New</rightValue>
+                        <rightValue>New Deal</rightValue>
                     </criteria>
                     <criteria>
                         <leftValue>{!Record.Type}</leftValue>
@@ -977,9 +977,9 @@
                         <rightValue>Cross-Sell/Upsell</rightValue>
                     </criteria>
                     <criteria>
-                        <leftValue>{!Record.Type}</leftValue>
+                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>Framework</rightValue>
+                        <rightValue>Framework_Parent_Opportunity</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -997,7 +997,7 @@
                     <criteria>
                         <leftValue>{!Record.Type}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>New</rightValue>
+                        <rightValue>New Deal</rightValue>
                     </criteria>
                     <criteria>
                         <leftValue>{!Record.Type}</leftValue>
@@ -1005,9 +1005,9 @@
                         <rightValue>Cross-Sell/Upsell</rightValue>
                     </criteria>
                     <criteria>
-                        <leftValue>{!Record.Type}</leftValue>
+                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>Framework</rightValue>
+                        <rightValue>Framework_Parent_Opportunity</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -1016,26 +1016,16 @@
             <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
-                    <value>required</value>
+                    <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.Cloud_Provider__c</fieldItem>
-                <identifier>RecordCloud_Provider_cField</identifier>
+                <fieldItem>Record.Internal_Approvals_Received__c</fieldItem>
+                <identifier>RecordInternal_Approvals_Received_cField2</identifier>
                 <visibilityRule>
-                    <booleanFilter>1 AND 2 AND (3 OR 4 OR 5)</booleanFilter>
-                    <criteria>
-                        <leftValue>{!Record.Primary_Product_Line__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Digital Solutions</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Business_Unit__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Digital</rightValue>
-                    </criteria>
+                    <booleanFilter>(1 OR 2 OR 3) AND 4</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.Type}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>New</rightValue>
+                        <rightValue>New Deal</rightValue>
                     </criteria>
                     <criteria>
                         <leftValue>{!Record.Type}</leftValue>
@@ -1043,9 +1033,37 @@
                         <rightValue>Cross-Sell/Upsell</rightValue>
                     </criteria>
                     <criteria>
-                        <leftValue>{!Record.Type}</leftValue>
+                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>Framework</rightValue>
+                        <rightValue>Framework_Parent_Opportunity</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Amount}</leftValue>
+                        <operator>GE</operator>
+                        <rightValue>25000</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Cloud_Provider__c</fieldItem>
+                <identifier>RecordCloud_Provider_cField</identifier>
+                <visibilityRule>
+                    <booleanFilter>1 AND 2</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.Business_Unit__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Digital</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Primary_Product_Line__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Digitization</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -1075,6 +1093,13 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.Marketplace_Details__c</fieldItem>
                 <identifier>RecordMarketplace_Details_cField2</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Business_Unit__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Digital</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <name>Facet-34c22479-814c-4d5c-86e7-34b14e057370</name>
@@ -1128,7 +1153,7 @@
                     <criteria>
                         <leftValue>{!Record.Type}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>New</rightValue>
+                        <rightValue>New Deal</rightValue>
                     </criteria>
                     <criteria>
                         <leftValue>{!Record.Type}</leftValue>
@@ -1204,13 +1229,6 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.Reason_for_win_loss_exclusion__c</fieldItem>
                 <identifier>RecordReason_for_win_loss_exclusion_cField3</identifier>
-                <visibilityRule>
-                    <criteria>
-                        <leftValue>{!Record.Exclude_from_Win_Loss_Feedback__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>true</rightValue>
-                    </criteria>
-                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -1221,6 +1239,16 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.PO_Required__c</fieldItem>
                 <identifier>RecordPO_Required_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Counterparty_Signature_Date__c</fieldItem>
+                <identifier>RecordCounterparty_Signature_Date__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-5018a42b-e85f-4312-802c-376cc75515b0</name>
@@ -1239,7 +1267,7 @@
                     <criteria>
                         <leftValue>{!Record.StageName}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>Booking Verification</rightValue>
+                        <rightValue>Negotiation</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -1267,7 +1295,7 @@
                     <criteria>
                         <leftValue>{!Record.Type}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>New</rightValue>
+                        <rightValue>New Deal</rightValue>
                     </criteria>
                     <criteria>
                         <leftValue>{!Record.Type}</leftValue>
@@ -1275,9 +1303,9 @@
                         <rightValue>Cross-Sell/Upsell</rightValue>
                     </criteria>
                     <criteria>
-                        <leftValue>{!Record.Type}</leftValue>
+                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>Framework</rightValue>
+                        <rightValue>Framework_Parent_Opportunity</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -1291,11 +1319,11 @@
                 <fieldItem>Record.Final_Pricing_Terms_Proposed__c</fieldItem>
                 <identifier>RecordFinal_Pricing_Terms_Proposed_cField2</identifier>
                 <visibilityRule>
-                    <booleanFilter>1 AND 2 AND 3</booleanFilter>
+                    <booleanFilter>1 OR 2 OR 3</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.Type}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>New</rightValue>
+                        <rightValue>New Deal</rightValue>
                     </criteria>
                     <criteria>
                         <leftValue>{!Record.Type}</leftValue>
@@ -1303,9 +1331,9 @@
                         <rightValue>Cross-Sell/Upsell</rightValue>
                     </criteria>
                     <criteria>
-                        <leftValue>{!Record.Type}</leftValue>
+                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>Framework</rightValue>
+                        <rightValue>Framework_Parent_Opportunity</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -1323,7 +1351,7 @@
                     <criteria>
                         <leftValue>{!Record.Type}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>New</rightValue>
+                        <rightValue>New Deal</rightValue>
                     </criteria>
                     <criteria>
                         <leftValue>{!Record.Type}</leftValue>
@@ -1331,9 +1359,9 @@
                         <rightValue>Cross-Sell/Upsell</rightValue>
                     </criteria>
                     <criteria>
-                        <leftValue>{!Record.Type}</leftValue>
+                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>Framework</rightValue>
+                        <rightValue>Framework_Parent_Opportunity</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -1351,7 +1379,35 @@
                     <criteria>
                         <leftValue>{!Record.Type}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>New</rightValue>
+                        <rightValue>New Deal</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Type}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Cross-Sell/Upsell</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Framework_Parent_Opportunity</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Exclude_from_Win_Loss_Feedback__c</fieldItem>
+                <identifier>RecordExclude_from_Win_Loss_Feedback_cField3</identifier>
+                <visibilityRule>
+                    <booleanFilter>1 OR 2 OR 3 OR 4</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.Type}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>New Deal</rightValue>
                     </criteria>
                     <criteria>
                         <leftValue>{!Record.Type}</leftValue>
@@ -1361,7 +1417,12 @@
                     <criteria>
                         <leftValue>{!Record.Type}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>Framework</rightValue>
+                        <rightValue>Renewal</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.QTB_Opp_Record_Type__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Framework_Parent_Opportunity</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -1391,72 +1452,6 @@
             </componentInstance>
         </itemInstances>
         <name>Facet-8f7befbe-8c59-414b-8560-b678a016fe13</name>
-        <type>Facet</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.IM_Lost_Comments__c</fieldItem>
-                <identifier>RecordIM_Lost_Comments_cField2</identifier>
-                <visibilityRule>
-                    <criteria>
-                        <leftValue>{!Record.StageName}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Lost</rightValue>
-                    </criteria>
-                </visibilityRule>
-            </fieldInstance>
-        </itemInstances>
-        <name>Facet-b1387075-9d42-42f8-adb6-b810c725ab04</name>
-        <type>Facet</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.IM_Reason_Lost__c</fieldItem>
-                <identifier>RecordIM_Reason_Lost_cField3</identifier>
-                <visibilityRule>
-                    <criteria>
-                        <leftValue>{!Record.StageName}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Lost</rightValue>
-                    </criteria>
-                </visibilityRule>
-            </fieldInstance>
-        </itemInstances>
-        <name>Facet-4964d301-ccbc-43a7-8f1e-3e1365bdb5af</name>
-        <type>Facet</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>body</name>
-                    <value>Facet-b1387075-9d42-42f8-adb6-b810c725ab04</value>
-                </componentInstanceProperties>
-                <componentName>flexipage:column</componentName>
-                <identifier>flexipage_column5</identifier>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>body</name>
-                    <value>Facet-4964d301-ccbc-43a7-8f1e-3e1365bdb5af</value>
-                </componentInstanceProperties>
-                <componentName>flexipage:column</componentName>
-                <identifier>flexipage_column6</identifier>
-            </componentInstance>
-        </itemInstances>
-        <name>Facet-72c0ec78-68da-4ebf-b449-7e334b45b770</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
@@ -1589,7 +1584,7 @@
                     <criteria>
                         <leftValue>{!Record.Type}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>New</rightValue>
+                        <rightValue>New Deal</rightValue>
                     </criteria>
                     <criteria>
                         <leftValue>{!Record.Type}</leftValue>
@@ -1627,7 +1622,7 @@
                     <criteria>
                         <leftValue>{!Record.Type}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>New</rightValue>
+                        <rightValue>New Deal</rightValue>
                     </criteria>
                     <criteria>
                         <leftValue>{!Record.Type}</leftValue>
@@ -1736,8 +1731,8 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.Deal_Review_Accepted__c</fieldItem>
-                <identifier>RecordDeal_Review_Accepted_cField</identifier>
+                <fieldItem>Record.Accepted_Quote__c</fieldItem>
+                <identifier>RecordAccepted_Quote_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -1753,7 +1748,7 @@
                     <criteria>
                         <leftValue>{!Record.Type}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>New</rightValue>
+                        <rightValue>New Deal</rightValue>
                     </criteria>
                     <criteria>
                         <leftValue>{!Record.Type}</leftValue>
@@ -1781,7 +1776,7 @@
                     <criteria>
                         <leftValue>{!Record.Type}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>New</rightValue>
+                        <rightValue>New Deal</rightValue>
                     </criteria>
                     <criteria>
                         <leftValue>{!Record.Business_Unit__c}</leftValue>
@@ -1789,6 +1784,16 @@
                         <rightValue>RIM</rightValue>
                     </criteria>
                 </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Payment_Terms__c</fieldItem>
+                <identifier>RecordPayment_Terms_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-7f107125-4558-469c-bb8e-8a68d25fd816</name>
@@ -1819,7 +1824,7 @@
             <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
-                    <value>none</value>
+                    <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.IMGS_Approval_Status__c</fieldItem>
                 <identifier>RecordIMGS_Approval_Status_cField</identifier>
@@ -1859,6 +1864,26 @@
                 <identifier>RecordPO_Required_cField2</identifier>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Eligible_for_Negotiation__c</fieldItem>
+                <identifier>RecordEligible_for_Negotiation_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Eligible_for_Countyparty_Paper__c</fieldItem>
+                <identifier>RecordEligible_for_Countyparty_Paper_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-d746657e-507b-4246-8b53-acbeae7b3f6c</name>
         <type>Facet</type>
     </flexiPageRegions>
@@ -1893,173 +1918,8 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.ALM_In_My_Number__c</fieldItem>
-                <identifier>RecordALM_In_My_Number_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.ALM_SVP_In_My_Number__c</fieldItem>
-                <identifier>RecordALM_SVP_In_My_Number_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.ALM_VP_In_My_Number__c</fieldItem>
-                <identifier>RecordALM_VP_In_My_Number_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.DBU_SVP_In_My_Number__c</fieldItem>
-                <identifier>RecordDBU_SVP_In_My_Number_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.DBU_VP_In_My_Number__c</fieldItem>
-                <identifier>RecordDBU_VP_In_My_Number_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.DBU_Director_In_My_Number__c</fieldItem>
-                <identifier>RecordDBU_Director_In_My_Number_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.Director_In_My_Number__c</fieldItem>
-                <identifier>RecordDirector_In_My_Number_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <name>Facet-7575aa32-af22-42cb-9420-1a9e45d88d57</name>
-        <type>Facet</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.RIM_Director_In_My_Number__c</fieldItem>
-                <identifier>RecordRIM_Director_In_My_Number_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.RIM_SVP_In_My_Number__c</fieldItem>
-                <identifier>RecordRIM_SVP_In_My_Number_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.RIM_VP_In_My_Number__c</fieldItem>
-                <identifier>RecordRIM_VP_In_My_Number_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.SVP_In_My_Number__c</fieldItem>
-                <identifier>RecordSVP_In_My_Number_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.VP_In_My_Number__c</fieldItem>
-                <identifier>RecordVP_In_My_Number_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <name>Facet-7a6ecaeb-4f1a-4dfa-9e3f-d3fe36375221</name>
-        <type>Facet</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>body</name>
-                    <value>Facet-7575aa32-af22-42cb-9420-1a9e45d88d57</value>
-                </componentInstanceProperties>
-                <componentName>flexipage:column</componentName>
-                <identifier>flexipage_column25</identifier>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>body</name>
-                    <value>Facet-7a6ecaeb-4f1a-4dfa-9e3f-d3fe36375221</value>
-                </componentInstanceProperties>
-                <componentName>flexipage:column</componentName>
-                <identifier>flexipage_column26</identifier>
-            </componentInstance>
-        </itemInstances>
-        <name>Facet-c73ee668-4be0-429b-9bb7-8ef5cb64734d</name>
-        <type>Facet</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
                 <fieldItem>Record.NextStep</fieldItem>
                 <identifier>RecordNextStepField6</identifier>
-                <visibilityRule>
-                    <booleanFilter>1 OR 2</booleanFilter>
-                    <criteria>
-                        <leftValue>{!Record.Touch_Level__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>High Touch</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Touch_Level__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Medium Touch</rightValue>
-                    </criteria>
-                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -2070,13 +1930,6 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.Next_Step_Date__c</fieldItem>
                 <identifier>RecordNext_Step_Date_cField3</identifier>
-                <visibilityRule>
-                    <criteria>
-                        <leftValue>{!Record.Is_Standard_or_High_Touch__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>true</rightValue>
-                    </criteria>
-                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -2087,19 +1940,6 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.Exclude_from_Win_Loss_Feedback__c</fieldItem>
                 <identifier>RecordExclude_from_Win_Loss_Feedback_cField</identifier>
-                <visibilityRule>
-                    <booleanFilter>1 OR 2</booleanFilter>
-                    <criteria>
-                        <leftValue>{!Record.StageName}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Booking Verification</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.StageName}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Lost</rightValue>
-                    </criteria>
-                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -2110,13 +1950,6 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.Reason_for_win_loss_exclusion__c</fieldItem>
                 <identifier>RecordReason_for_win_loss_exclusion_cField</identifier>
-                <visibilityRule>
-                    <criteria>
-                        <leftValue>{!Record.Exclude_from_Win_Loss_Feedback__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>true</rightValue>
-                    </criteria>
-                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -2127,13 +1960,6 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.Win_Reason__c</fieldItem>
                 <identifier>RecordWin_Reason_cField</identifier>
-                <visibilityRule>
-                    <criteria>
-                        <leftValue>{!Record.StageName}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Booking Verification</rightValue>
-                    </criteria>
-                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -2156,18 +1982,21 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.Days_at_Stage_5__c</fieldItem>
-                <identifier>RecordDays_at_Stage_5_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.SUBS_Days_To_Close__c</fieldItem>
-                <identifier>RecordSUBS_Days_To_Close_cField</identifier>
+                <fieldItem>Record.Deal_Booked_Date__c</fieldItem>
+                <identifier>RecordDeal_Booked_Date_cField2</identifier>
+                <visibilityRule>
+                    <booleanFilter>1 OR 2</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.Type}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>New Deal</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Type}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Cross-Sell/Upsell</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -2178,6 +2007,16 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.Deal_Completed_Date__c</fieldItem>
                 <identifier>RecordDeal_Completed_Date_cField2</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.SUBS_Days_To_Close__c</fieldItem>
+                <identifier>RecordSUBS_Days_To_Close_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -2198,13 +2037,6 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.IM_Lost_Comments__c</fieldItem>
                 <identifier>RecordIM_Lost_Comments_cField</identifier>
-                <visibilityRule>
-                    <criteria>
-                        <leftValue>{!Record.StageName}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Lost</rightValue>
-                    </criteria>
-                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -2215,13 +2047,6 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.IM_Reason_Lost__c</fieldItem>
                 <identifier>RecordIM_Reason_Lost_cField2</identifier>
-                <visibilityRule>
-                    <criteria>
-                        <leftValue>{!Record.StageName}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Lost</rightValue>
-                    </criteria>
-                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <name>Facet-b3739439-77c5-461d-b033-e305adaa6944</name>
@@ -2258,36 +2083,6 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.Has_Acceleration_Attribution__c</fieldItem>
-                <identifier>RecordHas_Acceleration_Attribution_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.Has_ABM_Attribution__c</fieldItem>
-                <identifier>RecordHas_ABM_Attribution_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.Has_Standard_Attribution__c</fieldItem>
-                <identifier>RecordHas_Standard_Attribution_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
                 <fieldItem>Record.Primary_Product_Interest__c</fieldItem>
                 <identifier>RecordPrimary_Product_Interest_cField</identifier>
             </fieldInstance>
@@ -2296,26 +2091,6 @@
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.Lead_Source_Most_Recent__c</fieldItem>
-                <identifier>RecordLead_Source_Most_Recent_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.IM_Lead_Source_Most_Recent_Details__c</fieldItem>
-                <identifier>RecordIM_Lead_Source_Most_Recent_Details_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
         <itemInstances>
             <fieldInstance>
                 <fieldInstanceProperties>
@@ -2360,8 +2135,60 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.Multi_Business_Unit__c</fieldItem>
-                <identifier>RecordMulti_Business_Unit_cField3</identifier>
+                <fieldItem>Record.IM_Lost_Comments__c</fieldItem>
+                <identifier>RecordIM_Lost_Comments_cField2</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <name>Facet-b1387075-9d42-42f8-adb6-b810c725ab04</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.IM_Reason_Lost__c</fieldItem>
+                <identifier>RecordIM_Reason_Lost_cField3</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <name>Facet-4964d301-ccbc-43a7-8f1e-3e1365bdb5af</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-b1387075-9d42-42f8-adb6-b810c725ab04</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:column</componentName>
+                <identifier>flexipage_column5</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-4964d301-ccbc-43a7-8f1e-3e1365bdb5af</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:column</componentName>
+                <identifier>flexipage_column6</identifier>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-72c0ec78-68da-4ebf-b449-7e334b45b770</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Multi_BU_Flag__c</fieldItem>
+                <identifier>RecordMulti_BU_Flag_cField2</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -2382,7 +2209,7 @@
             <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
-                    <value>none</value>
+                    <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.Business_Unit__c</fieldItem>
                 <identifier>RecordBusiness_Unit_cField</identifier>
@@ -2401,7 +2228,7 @@
                     <criteria>
                         <leftValue>{!Record.Type}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>New</rightValue>
+                        <rightValue>New Deal</rightValue>
                     </criteria>
                     <criteria>
                         <leftValue>{!Record.Type}</leftValue>
@@ -2409,9 +2236,9 @@
                         <rightValue>Cross-Sell/Upsell</rightValue>
                     </criteria>
                     <criteria>
-                        <leftValue>{!Record.Type}</leftValue>
+                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>Framework</rightValue>
+                        <rightValue>Framework_Parent_Opportunity</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -2457,7 +2284,7 @@
                     <criteria>
                         <leftValue>{!Record.Type}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>New</rightValue>
+                        <rightValue>New Deal</rightValue>
                     </criteria>
                     <criteria>
                         <leftValue>{!Record.Type}</leftValue>
@@ -2477,40 +2304,10 @@
                 <identifier>RecordIM_Servicing_Region_cField</identifier>
             </fieldInstance>
         </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.Cluster__c</fieldItem>
-                <identifier>RecordCluster_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.Sub_Cluster__c</fieldItem>
-                <identifier>RecordSub_Cluster_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
         <name>Facet-b8a3b5a2-ab23-4b36-881e-7bf52a41a3c6</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.Region__c</fieldItem>
-                <identifier>RecordRegion_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
         <itemInstances>
             <fieldInstance>
                 <fieldInstanceProperties>
@@ -2534,7 +2331,7 @@
                     <criteria>
                         <leftValue>{!Record.Type}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>New</rightValue>
+                        <rightValue>New Deal</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -2575,6 +2372,29 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.OwnerId</fieldItem>
                 <identifier>RecordOwnerIdField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.IM_Parent_Opportunity__c</fieldItem>
+                <identifier>RecordIM_Parent_Opportunity_cField</identifier>
+                <visibilityRule>
+                    <booleanFilter>1 OR 2</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.Type}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>New Deal</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Type}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Cross-Sell/Upsell</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -2633,15 +2453,8 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.Total_Booked_Amount__c</fieldItem>
-                <identifier>RecordTotal_Booked_Amount_cField</identifier>
-                <visibilityRule>
-                    <criteria>
-                        <leftValue>{!Record.Type}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Framework</rightValue>
-                    </criteria>
-                </visibilityRule>
+                <fieldItem>Record.Contract_End_Date__c</fieldItem>
+                <identifier>RecordContract_End_Date_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-b633085d-447d-4c27-b458-cf2aa920699d</name>
@@ -2682,29 +2495,6 @@
             <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.Deal_Booked_Date__c</fieldItem>
-                <identifier>RecordDeal_Booked_Date_cField2</identifier>
-                <visibilityRule>
-                    <booleanFilter>1 OR 2</booleanFilter>
-                    <criteria>
-                        <leftValue>{!Record.Type}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>New</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Type}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Cross-Sell/Upsell</rightValue>
-                    </criteria>
-                </visibilityRule>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
                     <value>required</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.ForecastCategoryName</fieldItem>
@@ -2717,19 +2507,91 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.IM_Parent_Opportunity__c</fieldItem>
-                <identifier>RecordIM_Parent_Opportunity_cField</identifier>
+                <fieldItem>Record.Total_Booked_Amount__c</fieldItem>
+                <identifier>RecordTotal_Booked_Amount_cField</identifier>
                 <visibilityRule>
-                    <booleanFilter>1 OR 2</booleanFilter>
                     <criteria>
-                        <leftValue>{!Record.Type}</leftValue>
+                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>New</rightValue>
+                        <rightValue>Framework_Parent_Opportunity</rightValue>
                     </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Framework_Status__c</fieldItem>
+                <identifier>RecordFramework_Status_cField</identifier>
+                <visibilityRule>
                     <criteria>
-                        <leftValue>{!Record.Type}</leftValue>
+                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>Cross-Sell/Upsell</rightValue>
+                        <rightValue>Framework_Parent_Opportunity</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Framework_Booked_Amount__c</fieldItem>
+                <identifier>RecordFramework_Booked_Amount_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Framework_Parent_Opportunity</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Touch_Level__c</fieldItem>
+                <identifier>RecordTouch_Level_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Touch_Level_Override__c</fieldItem>
+                <identifier>RecordTouch_Level_Override_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Touch_Level_Override__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>true</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Touch_Level_Override_Reason__c</fieldItem>
+                <identifier>RecordTouch_Level_Override_Reason_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Touch_Level_Override__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>true</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -2775,7 +2637,7 @@
                     <criteria>
                         <leftValue>{!Record.Type}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>New</rightValue>
+                        <rightValue>New Deal</rightValue>
                     </criteria>
                     <criteria>
                         <leftValue>{!Record.Type}</leftValue>
@@ -2783,9 +2645,9 @@
                         <rightValue>Cross-Sell/Upsell</rightValue>
                     </criteria>
                     <criteria>
-                        <leftValue>{!Record.Type}</leftValue>
+                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>Framework</rightValue>
+                        <rightValue>Framework_Parent_Opportunity</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -2803,7 +2665,7 @@
                     <criteria>
                         <leftValue>{!Record.Type}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>New</rightValue>
+                        <rightValue>New Deal</rightValue>
                     </criteria>
                     <criteria>
                         <leftValue>{!Record.Type}</leftValue>
@@ -2811,9 +2673,9 @@
                         <rightValue>Cross-Sell/Upsell</rightValue>
                     </criteria>
                     <criteria>
-                        <leftValue>{!Record.Type}</leftValue>
+                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>Framework</rightValue>
+                        <rightValue>Framework_Parent_Opportunity</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -2831,7 +2693,7 @@
                     <criteria>
                         <leftValue>{!Record.Type}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>New</rightValue>
+                        <rightValue>New Deal</rightValue>
                     </criteria>
                     <criteria>
                         <leftValue>{!Record.Type}</leftValue>
@@ -2839,9 +2701,9 @@
                         <rightValue>Cross-Sell/Upsell</rightValue>
                     </criteria>
                     <criteria>
-                        <leftValue>{!Record.Type}</leftValue>
+                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>Framework</rightValue>
+                        <rightValue>Framework_Parent_Opportunity</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -2859,7 +2721,7 @@
                     <criteria>
                         <leftValue>{!Record.Type}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>New</rightValue>
+                        <rightValue>New Deal</rightValue>
                     </criteria>
                     <criteria>
                         <leftValue>{!Record.Type}</leftValue>
@@ -2867,9 +2729,9 @@
                         <rightValue>Cross-Sell/Upsell</rightValue>
                     </criteria>
                     <criteria>
-                        <leftValue>{!Record.Type}</leftValue>
+                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>Framework</rightValue>
+                        <rightValue>Framework_Parent_Opportunity</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -2887,7 +2749,7 @@
                     <criteria>
                         <leftValue>{!Record.Type}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>New</rightValue>
+                        <rightValue>New Deal</rightValue>
                     </criteria>
                     <criteria>
                         <leftValue>{!Record.Type}</leftValue>
@@ -2895,9 +2757,9 @@
                         <rightValue>Cross-Sell/Upsell</rightValue>
                     </criteria>
                     <criteria>
-                        <leftValue>{!Record.Type}</leftValue>
+                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>Framework</rightValue>
+                        <rightValue>Framework_Parent_Opportunity</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -2915,7 +2777,7 @@
                     <criteria>
                         <leftValue>{!Record.Type}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>New</rightValue>
+                        <rightValue>New Deal</rightValue>
                     </criteria>
                     <criteria>
                         <leftValue>{!Record.Type}</leftValue>
@@ -2923,9 +2785,9 @@
                         <rightValue>Cross-Sell/Upsell</rightValue>
                     </criteria>
                     <criteria>
-                        <leftValue>{!Record.Type}</leftValue>
+                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>Framework</rightValue>
+                        <rightValue>Framework_Parent_Opportunity</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -2943,7 +2805,7 @@
                     <criteria>
                         <leftValue>{!Record.Type}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>New</rightValue>
+                        <rightValue>New Deal</rightValue>
                     </criteria>
                     <criteria>
                         <leftValue>{!Record.Type}</leftValue>
@@ -2951,9 +2813,9 @@
                         <rightValue>Cross-Sell/Upsell</rightValue>
                     </criteria>
                     <criteria>
-                        <leftValue>{!Record.Type}</leftValue>
+                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>Framework</rightValue>
+                        <rightValue>Framework_Parent_Opportunity</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -2971,7 +2833,7 @@
                     <criteria>
                         <leftValue>{!Record.Type}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>New</rightValue>
+                        <rightValue>New Deal</rightValue>
                     </criteria>
                     <criteria>
                         <leftValue>{!Record.Type}</leftValue>
@@ -2979,9 +2841,9 @@
                         <rightValue>Cross-Sell/Upsell</rightValue>
                     </criteria>
                     <criteria>
-                        <leftValue>{!Record.Type}</leftValue>
+                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>Framework</rightValue>
+                        <rightValue>Framework_Parent_Opportunity</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -3003,7 +2865,7 @@
                     <criteria>
                         <leftValue>{!Record.Type}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>New</rightValue>
+                        <rightValue>New Deal</rightValue>
                     </criteria>
                     <criteria>
                         <leftValue>{!Record.Type}</leftValue>
@@ -3011,9 +2873,9 @@
                         <rightValue>Cross-Sell/Upsell</rightValue>
                     </criteria>
                     <criteria>
-                        <leftValue>{!Record.Type}</leftValue>
+                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>Framework</rightValue>
+                        <rightValue>Framework_Parent_Opportunity</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -3031,7 +2893,7 @@
                     <criteria>
                         <leftValue>{!Record.Type}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>New</rightValue>
+                        <rightValue>New Deal</rightValue>
                     </criteria>
                     <criteria>
                         <leftValue>{!Record.Type}</leftValue>
@@ -3039,9 +2901,9 @@
                         <rightValue>Cross-Sell/Upsell</rightValue>
                     </criteria>
                     <criteria>
-                        <leftValue>{!Record.Type}</leftValue>
+                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>Framework</rightValue>
+                        <rightValue>Framework_Parent_Opportunity</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -3059,7 +2921,7 @@
                     <criteria>
                         <leftValue>{!Record.Type}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>New</rightValue>
+                        <rightValue>New Deal</rightValue>
                     </criteria>
                     <criteria>
                         <leftValue>{!Record.Type}</leftValue>
@@ -3067,9 +2929,9 @@
                         <rightValue>Cross-Sell/Upsell</rightValue>
                     </criteria>
                     <criteria>
-                        <leftValue>{!Record.Type}</leftValue>
+                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>Framework</rightValue>
+                        <rightValue>Framework_Parent_Opportunity</rightValue>
                     </criteria>
                     <criteria>
                         <leftValue>{!Record.Amount}</leftValue>
@@ -3092,7 +2954,7 @@
                     <criteria>
                         <leftValue>{!Record.Type}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>New</rightValue>
+                        <rightValue>New Deal</rightValue>
                     </criteria>
                     <criteria>
                         <leftValue>{!Record.Type}</leftValue>
@@ -3100,9 +2962,9 @@
                         <rightValue>Cross-Sell/Upsell</rightValue>
                     </criteria>
                     <criteria>
-                        <leftValue>{!Record.Type}</leftValue>
+                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>Framework</rightValue>
+                        <rightValue>Framework_Parent_Opportunity</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -3120,7 +2982,7 @@
                     <criteria>
                         <leftValue>{!Record.Type}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>New</rightValue>
+                        <rightValue>New Deal</rightValue>
                     </criteria>
                     <criteria>
                         <leftValue>{!Record.Type}</leftValue>
@@ -3128,9 +2990,9 @@
                         <rightValue>Cross-Sell/Upsell</rightValue>
                     </criteria>
                     <criteria>
-                        <leftValue>{!Record.Type}</leftValue>
+                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>Framework</rightValue>
+                        <rightValue>Framework_Parent_Opportunity</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -3148,7 +3010,7 @@
                     <criteria>
                         <leftValue>{!Record.Type}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>New</rightValue>
+                        <rightValue>New Deal</rightValue>
                     </criteria>
                     <criteria>
                         <leftValue>{!Record.Type}</leftValue>
@@ -3156,9 +3018,9 @@
                         <rightValue>Cross-Sell/Upsell</rightValue>
                     </criteria>
                     <criteria>
-                        <leftValue>{!Record.Type}</leftValue>
+                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>Framework</rightValue>
+                        <rightValue>Framework_Parent_Opportunity</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -3176,7 +3038,7 @@
                     <criteria>
                         <leftValue>{!Record.Type}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>New</rightValue>
+                        <rightValue>New Deal</rightValue>
                     </criteria>
                     <criteria>
                         <leftValue>{!Record.Type}</leftValue>
@@ -3184,9 +3046,9 @@
                         <rightValue>Cross-Sell/Upsell</rightValue>
                     </criteria>
                     <criteria>
-                        <leftValue>{!Record.Type}</leftValue>
+                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>Framework</rightValue>
+                        <rightValue>Framework_Parent_Opportunity</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -3237,7 +3099,7 @@
                     <criteria>
                         <leftValue>{!Record.Type}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>New</rightValue>
+                        <rightValue>New Deal</rightValue>
                     </criteria>
                     <criteria>
                         <leftValue>{!Record.Type}</leftValue>
@@ -3245,9 +3107,9 @@
                         <rightValue>Cross-Sell/Upsell</rightValue>
                     </criteria>
                     <criteria>
-                        <leftValue>{!Record.Type}</leftValue>
+                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>Framework</rightValue>
+                        <rightValue>Framework_Parent_Opportunity</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -3283,7 +3145,7 @@
                     <criteria>
                         <leftValue>{!Record.Type}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>New</rightValue>
+                        <rightValue>New Deal</rightValue>
                     </criteria>
                     <criteria>
                         <leftValue>{!Record.Type}</leftValue>
@@ -3291,9 +3153,9 @@
                         <rightValue>Cross-Sell/Upsell</rightValue>
                     </criteria>
                     <criteria>
-                        <leftValue>{!Record.Type}</leftValue>
+                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>Framework</rightValue>
+                        <rightValue>Framework_Parent_Opportunity</rightValue>
                     </criteria>
                     <criteria>
                         <leftValue>{!Record.Business_Unit__c}</leftValue>
@@ -3326,7 +3188,7 @@
                     <criteria>
                         <leftValue>{!Record.Type}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>New</rightValue>
+                        <rightValue>New Deal</rightValue>
                     </criteria>
                     <criteria>
                         <leftValue>{!Record.Type}</leftValue>
@@ -3334,9 +3196,9 @@
                         <rightValue>Cross-Sell/Upsell</rightValue>
                     </criteria>
                     <criteria>
-                        <leftValue>{!Record.Type}</leftValue>
+                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>Framework</rightValue>
+                        <rightValue>Framework_Parent_Opportunity</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -3364,7 +3226,7 @@
                     <criteria>
                         <leftValue>{!Record.Type}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>New</rightValue>
+                        <rightValue>New Deal</rightValue>
                     </criteria>
                     <criteria>
                         <leftValue>{!Record.Type}</leftValue>
@@ -3372,9 +3234,9 @@
                         <rightValue>Cross-Sell/Upsell</rightValue>
                     </criteria>
                     <criteria>
-                        <leftValue>{!Record.Type}</leftValue>
+                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>Framework</rightValue>
+                        <rightValue>Framework_Parent_Opportunity</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -3397,7 +3259,7 @@
                     <criteria>
                         <leftValue>{!Record.Type}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>New</rightValue>
+                        <rightValue>New Deal</rightValue>
                     </criteria>
                     <criteria>
                         <leftValue>{!Record.Type}</leftValue>
@@ -3405,9 +3267,9 @@
                         <rightValue>Cross-Sell/Upsell</rightValue>
                     </criteria>
                     <criteria>
-                        <leftValue>{!Record.Type}</leftValue>
+                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>Framework</rightValue>
+                        <rightValue>Framework_Parent_Opportunity</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -3430,7 +3292,7 @@
                     <criteria>
                         <leftValue>{!Record.Type}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>New</rightValue>
+                        <rightValue>New Deal</rightValue>
                     </criteria>
                     <criteria>
                         <leftValue>{!Record.Type}</leftValue>
@@ -3438,9 +3300,9 @@
                         <rightValue>Cross-Sell/Upsell</rightValue>
                     </criteria>
                     <criteria>
-                        <leftValue>{!Record.Type}</leftValue>
+                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>Framework</rightValue>
+                        <rightValue>Framework_Parent_Opportunity</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -3458,7 +3320,7 @@
                     <criteria>
                         <leftValue>{!Record.Primary_Product_Line__c}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>Digital Solutions</rightValue>
+                        <rightValue>Digitization</rightValue>
                     </criteria>
                     <criteria>
                         <leftValue>{!Record.Business_Unit__c}</leftValue>
@@ -3468,7 +3330,7 @@
                     <criteria>
                         <leftValue>{!Record.Type}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>New</rightValue>
+                        <rightValue>New Deal</rightValue>
                     </criteria>
                     <criteria>
                         <leftValue>{!Record.Type}</leftValue>
@@ -3476,9 +3338,9 @@
                         <rightValue>Cross-Sell/Upsell</rightValue>
                     </criteria>
                     <criteria>
-                        <leftValue>{!Record.Type}</leftValue>
+                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>Framework</rightValue>
+                        <rightValue>Framework_Parent_Opportunity</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -3496,31 +3358,16 @@
                 <fieldItem>Record.Cloud_Provider__c</fieldItem>
                 <identifier>RecordCloud_Provider_cField3</identifier>
                 <visibilityRule>
-                    <booleanFilter>1 AND 2 AND (3 OR 4 OR 5)</booleanFilter>
-                    <criteria>
-                        <leftValue>{!Record.Primary_Product_Line__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Digital Solutions</rightValue>
-                    </criteria>
+                    <booleanFilter>1 AND 2</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.Business_Unit__c}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>Digital</rightValue>
                     </criteria>
                     <criteria>
-                        <leftValue>{!Record.Type}</leftValue>
+                        <leftValue>{!Record.Primary_Product_Line__c}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>New</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Type}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Cross-Sell/Upsell</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Type}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Framework</rightValue>
+                        <rightValue>Digitization</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -3556,6 +3403,33 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.Marketplace_Details__c</fieldItem>
                 <identifier>RecordMarketplace_Details_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Business_Unit__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Digital</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Custom_Demo_POC__c</fieldItem>
+                <identifier>RecordCustom_Demo_POC_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Custom_Solution_Required__c</fieldItem>
+                <identifier>RecordCustom_Solution_Required_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-8b0607c3-08e9-41bd-8523-d0c87db7f793</name>
@@ -3630,16 +3504,6 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.LastModifiedById</fieldItem>
-                <identifier>RecordLastModifiedByIdField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
                 <fieldItem>Record.Record_ID_18_Digit__c</fieldItem>
                 <identifier>RecordRecord_ID_18_Digit_cField</identifier>
             </fieldInstance>
@@ -3654,6 +3518,10 @@
                 <identifier>RecordIM_Original_Lead_Owner_cField</identifier>
             </fieldInstance>
         </itemInstances>
+        <name>Facet-f2c1cff1-fb70-49fa-86d6-6cc329e820ae</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
         <itemInstances>
             <fieldInstance>
                 <fieldInstanceProperties>
@@ -3680,95 +3548,11 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.LeadSource</fieldItem>
-                <identifier>RecordLeadSourceField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
                 <fieldItem>Record.Created_Date__c</fieldItem>
                 <identifier>RecordCreated_Date_cField</identifier>
             </fieldInstance>
         </itemInstances>
-        <name>Facet-f2c1cff1-fb70-49fa-86d6-6cc329e820ae</name>
-        <type>Facet</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.Stage_1_Duration__c</fieldItem>
-                <identifier>RecordStage_1_Duration_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.Stage_2_Duration__c</fieldItem>
-                <identifier>RecordStage_2_Duration_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.Stage_3_Duration__c</fieldItem>
-                <identifier>RecordStage_3_Duration_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.Stage_4_Duration__c</fieldItem>
-                <identifier>RecordStage_4_Duration_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.Stage_5_Duration__c</fieldItem>
-                <identifier>RecordStage_5_Duration_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.Stage_6_Duration__c</fieldItem>
-                <identifier>RecordStage_6_Duration_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.Stage_7_Duration__c</fieldItem>
-                <identifier>RecordStage_7_Duration_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <name>Facet-bc22fc21-6d9f-474a-995f-1a48e8519c29</name>
+        <name>Facet-7f136149-1435-4ed5-b7fb-21ae6d02bc22</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
@@ -3786,10 +3570,10 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>body</name>
-                    <value>Facet-bc22fc21-6d9f-474a-995f-1a48e8519c29</value>
+                    <value>Facet-7f136149-1435-4ed5-b7fb-21ae6d02bc22</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:column</componentName>
-                <identifier>flexipage_column46</identifier>
+                <identifier>flexipage_column9</identifier>
             </componentInstance>
         </itemInstances>
         <name>Facet-7b01958a-cdaa-4fd3-9281-70746d0e97e2</name>
@@ -3812,8 +3596,8 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.Accepted_Quote_Test__c</fieldItem>
-                <identifier>RecordAccepted_Quote_Test_cField</identifier>
+                <fieldItem>Record.Accepted_Quote__c</fieldItem>
+                <identifier>RecordAccepted_Quote_cField3</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-e99b4f34-4337-4cda-bba0-a67f6de44a2e</name>
@@ -3937,31 +3721,6 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>columns</name>
-                    <value>Facet-72c0ec78-68da-4ebf-b449-7e334b45b770</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>horizontalAlignment</name>
-                    <value>false</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>label</name>
-                    <value>Lost</value>
-                </componentInstanceProperties>
-                <componentName>flexipage:fieldSection</componentName>
-                <identifier>flexipage_fieldSection3</identifier>
-                <visibilityRule>
-                    <criteria>
-                        <leftValue>{!Record.StageName}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Lost</rightValue>
-                    </criteria>
-                </visibilityRule>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>columns</name>
                     <value>Facet-f36eb268-3757-46ca-acec-5ae74c75196f</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
@@ -3998,24 +3757,6 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>columns</name>
-                    <value>Facet-c73ee668-4be0-429b-9bb7-8ef5cb64734d</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>horizontalAlignment</name>
-                    <value>false</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>label</name>
-                    <value>Forecast</value>
-                </componentInstanceProperties>
-                <componentName>flexipage:fieldSection</componentName>
-                <identifier>flexipage_fieldSection13</identifier>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>columns</name>
                     <value>Facet-80a8bc5f-6cf4-4760-842d-e27908300b8e</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
@@ -4046,6 +3787,24 @@
                 </componentInstanceProperties>
                 <componentName>flexipage:fieldSection</componentName>
                 <identifier>flexipage_fieldSection15</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>columns</name>
+                    <value>Facet-72c0ec78-68da-4ebf-b449-7e334b45b770</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>label</name>
+                    <value>Lost</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:fieldSection</componentName>
+                <identifier>flexipage_fieldSection3</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -4217,11 +3976,27 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
-                    <name>context</name>
-                    <value>RECORD</value>
+                    <name>parentFieldApiName</name>
+                    <value>Opportunity.Id</value>
                 </componentInstanceProperties>
-                <componentName>forceChatter:publisher</componentName>
-                <identifier>forceChatter_publisher</identifier>
+                <componentInstanceProperties>
+                    <name>relatedListApiName</name>
+                    <value>LGK__OpportunityTransactions__r</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relatedListComponentOverride</name>
+                    <value>NONE</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>rowsToDisplay</name>
+                    <value>10</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>showActionBar</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentName>force:relatedListSingleContainer</componentName>
+                <identifier>force_relatedListSingleContainer</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -4268,88 +4043,74 @@
                 <identifier>force_relatedListContainer2</identifier>
             </componentInstance>
         </itemInstances>
+        <name>Facet-267cd2fb-5963-4492-af6e-111618855e73</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentName>forceChatter:recordFeedContainer</componentName>
+                <identifier>forceChatter_recordFeedContainer</identifier>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-69044011-e238-4f94-a801-73566f08ad40</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
-                    <name>parentFieldApiName</name>
-                    <value>Opportunity.Id</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>relatedListApiName</name>
-                    <value>Ironclad_Workflows__r</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>relatedListComponentOverride</name>
-                    <value>NONE</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>rowsToDisplay</name>
-                    <value>10</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>showActionBar</name>
+                    <name>active</name>
                     <value>true</value>
                 </componentInstanceProperties>
-                <componentName>force:relatedListSingleContainer</componentName>
-                <identifier>force_relatedListSingleContainer2</identifier>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-267cd2fb-5963-4492-af6e-111618855e73</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>title</name>
+                    <value>Standard.Tab.relatedLists</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:tab</componentName>
+                <identifier>flexipage_tab</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
-                    <name>parentFieldApiName</name>
-                    <value>Opportunity.Id</value>
+                    <name>body</name>
+                    <value>Facet-69044011-e238-4f94-a801-73566f08ad40</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
-                    <name>relatedListApiName</name>
-                    <value>Ironclad_Contracts__r</value>
+                    <name>title</name>
+                    <value>Standard.Tab.eduActivities</value>
                 </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>relatedListComponentOverride</name>
-                    <value>NONE</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>rowsToDisplay</name>
-                    <value>10</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>showActionBar</name>
-                    <value>true</value>
-                </componentInstanceProperties>
-                <componentName>force:relatedListSingleContainer</componentName>
-                <identifier>force_relatedListSingleContainer3</identifier>
+                <componentName>flexipage:tab</componentName>
+                <identifier>flexipage_tab2</identifier>
             </componentInstance>
         </itemInstances>
+        <name>Facet-43b1b45b-7932-435d-bda9-a56ea2e6318b</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
-                    <name>parentFieldApiName</name>
-                    <value>Opportunity.Id</value>
+                    <name>label</name>
+                    <value>Tabs</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
-                    <name>relatedListApiName</name>
-                    <value>OpportunityLineItems</value>
+                    <name>tabs</name>
+                    <value>Facet-43b1b45b-7932-435d-bda9-a56ea2e6318b</value>
                 </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>relatedListComponentOverride</name>
-                    <value>NONE</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>rowsToDisplay</name>
-                    <value>10</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>showActionBar</name>
-                    <value>true</value>
-                </componentInstanceProperties>
-                <componentName>force:relatedListSingleContainer</componentName>
-                <identifier>force_relatedListSingleContainer</identifier>
+                <componentName>flexipage:tabset</componentName>
+                <identifier>flexipage_tabset</identifier>
             </componentInstance>
         </itemInstances>
         <name>sidebar</name>
         <type>Region</type>
     </flexiPageRegions>
-    <masterLabel>Global Opp Lightning</masterLabel>
+    <masterLabel>Sales Opportunity Lightning Page</masterLabel>
     <sobjectType>Opportunity</sobjectType>
     <template>
         <name>flexipage:recordHomeWithSubheaderTemplateDesktop</name>

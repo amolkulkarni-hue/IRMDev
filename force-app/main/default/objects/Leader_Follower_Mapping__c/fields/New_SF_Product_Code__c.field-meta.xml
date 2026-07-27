@@ -1,27 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>New_SF_Product_Code__c</fullName>
-    <deleteConstraint>SetNull</deleteConstraint>
+    <externalId>false</externalId>
+    <formula>New_SF_Product_Name__r.ProductCode</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>New SF Product Code</label>
-    <lookupFilter>
-        <active>true</active>
-        <booleanFilter>1 OR 2</booleanFilter>
-        <filterItems>
-            <field>Product2.RecordType.Name</field>
-            <operation>equals</operation>
-            <value>IMNA Product</value>
-        </filterItems>
-        <filterItems>
-            <field>Product2.RecordType.Name</field>
-            <operation>equals</operation>
-            <value>Global Sales Product</value>
-        </filterItems>
-        <isOptional>false</isOptional>
-    </lookupFilter>
-    <referenceTo>Product2</referenceTo>
-    <relationshipLabel>Billcode Maps (New SF Product Code)</relationshipLabel>
-    <relationshipName>Billcode_Maps</relationshipName>
     <required>false</required>
     <trackTrending>false</trackTrending>
-    <type>Lookup</type>
+    <type>Text</type>
+    <unique>false</unique>
 </CustomField>

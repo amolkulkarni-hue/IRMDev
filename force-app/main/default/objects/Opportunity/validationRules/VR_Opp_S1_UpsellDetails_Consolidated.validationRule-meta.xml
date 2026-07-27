@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>VR_Opp_S1_UpsellDetails_Consolidated</fullName>
+    <active>true</active>
+    <description>Requires Billing Account, Unit of Measure, Up-Sell Detail, Up-Sell Oracle Account ID, Up-Sell Quantity, and Upsell Customer ID to be populated for Cross-Sell/Upsell Opportunities from Stage 1 onward through Closed.</description>
+    <errorConditionFormula>AND(
+    NOT($Permission.Bypass_Opportunity_Validation),
+
+    OR(
+        RecordType.DeveloperName = &quot;Standard_Opportunity&quot;,
+        RecordType.DeveloperName = &quot;Framework_Parent_Opportunity&quot;
+    ),
+
+    ISPICKVAL(Type, &quot;Cross-Sell/Upsell&quot;),
+
+    OR(
+        ISPICKVAL(Touch_Level__c, &quot;High Touch&quot;),
+        ISPICKVAL(Touch_Level__c, &quot;Medium Touch&quot;),
+        ISPICKVAL(Touch_Level__c, &quot;Low Touch&quot;),
+        ISPICKVAL(Touch_Level__c, &quot;No Touch&quot;)
+    ),
+
+    OR(
+        ISPICKVAL(Business_Unit__c, &quot;RIM&quot;),
+        ISPICKVAL(Business_Unit__c, &quot;Digital&quot;),
+        ISPICKVAL(Business_Unit__c, &quot;ALM&quot;)
+    ),
+
+    OR(
+        AND(
+            ISPICKVAL(PRIORVALUE(StageName), &quot;Qualification&quot;),
+            ISPICKVAL(StageName, &quot;Solutioning&quot;)
+        ),
+        AND(
+            ISPICKVAL(PRIORVALUE(StageName), &quot;Solutioning&quot;),
+            ISPICKVAL(StageName, &quot;Negotiation&quot;)
+        ),
+        IF(
+            RecordType.DeveloperName = &quot;Framework_Parent_Opportunity&quot;,
+            AND(
+                ISPICKVAL(PRIORVALUE(StageName), &quot;Negotiation&quot;),
+                ISPICKVAL(StageName, &quot;Booked&quot;)
+            ),
+            AND(
+                ISPICKVAL(PRIORVALUE(StageName), &quot;Negotiation&quot;),
+                ISPICKVAL(StageName, &quot;Booking Verification&quot;)
+            )
+        ),
+        AND(
+            ISPICKVAL(PRIORVALUE(StageName), &quot;Booking Verification&quot;),
+            ISPICKVAL(StageName, &quot;Booked&quot;)
+        ),
+        AND(
+            ISPICKVAL(PRIORVALUE(StageName), &quot;Booked&quot;),
+            ISPICKVAL(StageName, &quot;Setup&quot;)
+        ),
+        ISPICKVAL(StageName, &quot;Closed&quot;)
+    ),
+
+    OR(
+        ISBLANK(Billing_Account__c),
+        ISPICKVAL(IM_Unit_of_Measure__c, &quot;&quot;),
+        ISBLANK(IM_Up_Sell_Detail__c),
+        ISBLANK(IM_Up_Sell_Sold_To__c),
+        ISBLANK(IM_Up_Sell_Quantity__c),
+        ISBLANK(Upsell_Customer_ID__c)
+    )
+)</errorConditionFormula>
+    <errorDisplayField>Billing_Account__c</errorDisplayField>
+    <errorMessage>Please complete Billing Account, Unit of Measure, Up-Sell Detail, Up-Sell Oracle Account ID, Up-Sell Quantity, and Upsell Customer ID before proceeding. Need help? Contact your Sales Operations Business Partner.</errorMessage>
+</ValidationRule>

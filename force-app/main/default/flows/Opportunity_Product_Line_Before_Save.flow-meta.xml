@@ -8,7 +8,7 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignmentItems>
-            <assignToReference>$Record.Product_Family__c</assignToReference>
+            <assignToReference>$Record.Business_Unit__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>Get_Product_BU_Mapping.Business_Unit__c</elementReference>
@@ -21,8 +21,8 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <customErrorMessages>
-            <errorMessage>No match found.</errorMessage>
-            <fieldSelection>Product_Family__c</fieldSelection>
+            <errorMessage>No match found for the selected Product Family.</errorMessage>
+            <fieldSelection>Business_Unit__c</fieldSelection>
             <isFieldError>true</isFieldError>
         </customErrorMessages>
     </customErrors>
@@ -130,5 +130,5 @@
         <recordTriggerType>CreateAndUpdate</recordTriggerType>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
 </Flow>

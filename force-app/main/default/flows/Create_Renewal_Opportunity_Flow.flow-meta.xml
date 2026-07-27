@@ -22,6 +22,20 @@
                 <elementReference>Total_Contract_Value_TCV</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>renewalOppty.Contract_Term_months__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Contract_Term_months</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>renewalOppty.NextStep</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Next_Step</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Create_Renewal_Opportunity</targetReference>
         </connector>
@@ -411,10 +425,13 @@
                     </styleProperties>
                 </fields>
                 <fields>
-                    <fieldType>ObjectProvided</fieldType>
+                    <name>Contract_Term_months</name>
+                    <dataType>Number</dataType>
+                    <fieldText>Contract Term (months)</fieldText>
+                    <fieldType>InputField</fieldType>
                     <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-                    <isRequired>false</isRequired>
-                    <objectFieldReference>renewalOppty.Contract_Term_months__c</objectFieldReference>
+                    <isRequired>true</isRequired>
+                    <scale>0</scale>
                     <styleProperties>
                         <verticalAlignment>
                             <stringValue>top</stringValue>
@@ -425,10 +442,12 @@
                     </styleProperties>
                 </fields>
                 <fields>
-                    <fieldType>ObjectProvided</fieldType>
+                    <name>Next_Step</name>
+                    <dataType>String</dataType>
+                    <fieldText>Next Step</fieldText>
+                    <fieldType>InputField</fieldType>
                     <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-                    <isRequired>false</isRequired>
-                    <objectFieldReference>renewalOppty.NextStep</objectFieldReference>
+                    <isRequired>true</isRequired>
                     <styleProperties>
                         <verticalAlignment>
                             <stringValue>top</stringValue>
@@ -616,7 +635,7 @@
             <targetReference>Get_Standard_Record_Type</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <variables>
         <description>record id</description>
         <name>recordId</name>

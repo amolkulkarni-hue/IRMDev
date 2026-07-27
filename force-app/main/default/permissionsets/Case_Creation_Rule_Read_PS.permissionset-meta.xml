@@ -1,18 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
-    <description>Read-only access (all fields visible) to Case Creation Rule records (including its child object). Includes the child Case_Creation_Condition__c and Case_Creation_Doc_Requirement__c records maintained on a Case Creation Rule's related lists.</description>
+    <description>Read-only access (all fields visible) to Case Creation Rule records (including its child object). Includes the child Case_Creation_Condition__c and Case_Creation_Doc_Requirement__c records maintained on a Case Creation Rule&apos;s related lists.</description>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Case Creation Rule - Read PS</label>
-    <objectPermissions>
-        <allowCreate>false</allowCreate>
-        <allowDelete>false</allowDelete>
-        <allowEdit>false</allowEdit>
-        <allowRead>true</allowRead>
-        <modifyAllRecords>false</modifyAllRecords>
-        <object>Case_Creation_Rule__c</object>
-        <viewAllFields>true</viewAllFields>
-        <viewAllRecords>false</viewAllRecords>
-    </objectPermissions>
     <objectPermissions>
         <allowCreate>false</allowCreate>
         <allowDelete>false</allowDelete>
@@ -33,16 +23,26 @@
         <viewAllFields>true</viewAllFields>
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
-    <tabSettings>
-        <tab>Case_Creation_Rule__c</tab>
-        <visibility>Visible</visibility>
-    </tabSettings>
+    <objectPermissions>
+        <allowCreate>false</allowCreate>
+        <allowDelete>false</allowDelete>
+        <allowEdit>false</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>Case_Creation_Rule__c</object>
+        <viewAllFields>true</viewAllFields>
+        <viewAllRecords>false</viewAllRecords>
+    </objectPermissions>
     <tabSettings>
         <tab>Case_Creation_Condition__c</tab>
         <visibility>Visible</visibility>
     </tabSettings>
     <tabSettings>
         <tab>Case_Creation_Doc_Requirement__c</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
+    <tabSettings>
+        <tab>Case_Creation_Rule__c</tab>
         <visibility>Visible</visibility>
     </tabSettings>
 </PermissionSet>

@@ -62,6 +62,10 @@
                 <behavior>Edit</behavior>
                 <field>Converted_Lead__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>BV_Stage_Gate_Bypass__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -822,25 +826,20 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
-        <fields>Forecast_Revenue_Date__c</fields>
-        <fields>Sales_Billing_Estimate__c</fields>
-        <fields>Actual_Billings__c</fields>
-        <fields>Updated_Billing_Outlook__c</fields>
-        <fields>Actual_Billing_Total__c</fields>
-        <fields>Billing_Outlook_Total__c</fields>
-        <fields>Revenue_Gap__c</fields>
+        <fields>Forecast_Revenue_Month__c</fields>
+        <fields>Total_Annual_Amount__c</fields>
         <relatedList>Sales_Revenue_Forecast__c.Forecast_Opportunity__c</relatedList>
+        <sortField>Forecast_Revenue_Month__c</sortField>
+        <sortOrder>Asc</sortOrder>
     </relatedLists>
     <relatedLists>
         <excludeButtons>AddContactRole</excludeButtons>
         <fields>ContactName</fields>
         <fields>Role</fields>
-        <fields>ContactTitle</fields>
         <fields>IsPrimary</fields>
-        <fields>ContactPhone</fields>
-        <fields>ContactEmail</fields>
-        <fields>ContactAccountName</fields>
         <relatedList>RelatedContactRoleList</relatedList>
+        <sortField>IsPrimary</sortField>
+        <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
         <excludeButtons>AddProduct</excludeButtons>

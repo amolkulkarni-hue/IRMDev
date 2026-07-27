@@ -179,6 +179,18 @@
             </value>
         </filters>
         <inputAssignments>
+            <field>Touch_Level_Override_By__c</field>
+            <value>
+                <elementReference>$User.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Touch_Level_Override_Date__c</field>
+            <value>
+                <elementReference>$Flow.CurrentDateTime</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Touch_Level_Override_Reason__c</field>
             <value>
                 <elementReference>overrideReason</elementReference>
@@ -194,18 +206,6 @@
             <field>Touch_Level__c</field>
             <value>
                 <elementReference>selectNewTouchLevel</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Touch_Level_Override_Date__c</field>
-            <value>
-                <elementReference>$Flow.CurrentDateTime</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Touch_Level_Override_By__c</field>
-            <value>
-                <elementReference>$User.Id</elementReference>
             </value>
         </inputAssignments>
         <object>Opportunity</object>
