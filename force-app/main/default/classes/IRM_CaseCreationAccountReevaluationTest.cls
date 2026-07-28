@@ -180,18 +180,16 @@ private class IRM_CaseCreationAccountReevaluationTest {
         }
         insert opps;
 
-        // Real DML, matching the after-save timing the Flow provides in production — condition
-        // evaluation re-queries the Account fresh, so the value must actually be committed.
         for (Account acc : accounts) acc.Rating = 'Hot';
-        update accounts;
 
-        List<CaseCreationAccountReevaluationRequest> requests = new List<CaseCreationAccountReevaluationRequest>();
-        for (Account acc : accounts) {
-            requests.add(makeRequest(acc.Id, null, 'Hot'));
-        }
-
+        // Real DML through the real, Active Case_Creation_Account_Reevaluation_Flow — not a
+        // direct Apex call to the action — since that Flow already fires automatically on this
+        // update. Calling the action directly afterward as well would double-execute the
+        // reevaluation (once via the Flow, once explicitly), which is a test artifact, not
+        // production behavior. Test.startTest() resets governor limits immediately before this
+        // bulk update, the heaviest DML in the test.
         Test.startTest();
-        CaseCreationAccountReevaluationAction.reevaluateForAccountChanges(requests);
+        update accounts;
         Test.stopTest();
 
         System.assertEquals(10, [SELECT COUNT() FROM Case WHERE AccountId IN :accounts],

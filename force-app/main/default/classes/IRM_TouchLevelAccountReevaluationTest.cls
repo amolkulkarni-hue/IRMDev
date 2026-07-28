@@ -188,18 +188,17 @@ private class IRM_TouchLevelAccountReevaluationTest {
         }
         insert opps;
 
-        // Real DML, matching the after-save timing the Flow provides in production — condition
-        // evaluation re-queries the Account fresh, so the value must actually be committed.
         for (Account acc : accounts) acc.Industry = 'Technology';
-        update accounts;
 
-        List<TouchLevelAccountReevaluationRequest> requests = new List<TouchLevelAccountReevaluationRequest>();
-        for (Account acc : accounts) {
-            requests.add(makeRequest(acc.Id, null, 'Technology'));
-        }
-
+        // Real DML through the real, Active Case_Creation_Account_Reevaluation_Flow — not a
+        // direct Apex call to the action — since that Flow already fires automatically on this
+        // update. Calling the action directly afterward as well would double-execute the
+        // reevaluation (once via the Flow, once explicitly) and, worse, double the Opportunity
+        // update cascade this engine deliberately re-triggers through the normal Opportunity
+        // trigger. Test.startTest() resets governor limits immediately before this bulk update,
+        // the heaviest DML in the test.
         Test.startTest();
-        TouchLevelAccountReevaluationAction.reevaluateForAccountChanges(requests);
+        update accounts;
         Test.stopTest();
 
         Integer highTouchCount = [
