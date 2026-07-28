@@ -81,6 +81,12 @@ private class IRM_CaseCreationAccountReevaluationTest {
         // doesn't match yet, so no Case should exist.
         System.assertEquals(0, [SELECT COUNT() FROM Case WHERE Opportunity__c = :opp.Id]);
 
+        // The real Flow only calls the invocable after the Account is already saved, so
+        // condition evaluation (which re-queries the Account fresh) sees the new value —
+        // mirror that here with a real DML update, not just an in-memory request snapshot.
+        acc.Rating = 'Hot';
+        update acc;
+
         Test.startTest();
         CaseCreationAccountReevaluationAction.reevaluateForAccountChanges(
             new List<CaseCreationAccountReevaluationRequest>{ makeRequest(acc.Id, null, 'Hot') });
@@ -114,6 +120,9 @@ private class IRM_CaseCreationAccountReevaluationTest {
         Account acc = makeAccount('No Dup Test Co', null);
         Opportunity opp = makeOpp('No Dup Opp', acc.Id, 'Qualification');
 
+        acc.Rating = 'Hot';
+        update acc;
+
         Test.startTest();
         CaseCreationAccountReevaluationAction.reevaluateForAccountChanges(
             new List<CaseCreationAccountReevaluationRequest>{ makeRequest(acc.Id, null, 'Hot') });
@@ -141,17 +150,18 @@ private class IRM_CaseCreationAccountReevaluationTest {
     }
 
     @IsTest
-    static void testBulkAccountUpdate_60Accounts() {
+    static void testBulkAccountUpdate_25Accounts() {
         makeAccountRatingRule();
 
-        // Capped below 200: this org's pre-existing (unrelated) AccountHelper.preventAccountCreation
-        // calls a SOQL query once per Account inside a for-loop over the trigger batch — a
-        // non-bulkified pattern in legacy code, not in this feature — which alone consumes
-        // ~1 query per inserted Account against the 100-query synchronous limit. 60 stays safely
-        // under that ceiling while still proving this engine's own bulk-safety (a single Account
-        // SOQL, a single Opportunity SOQL, and one Case insert regardless of batch size).
+        // Capped well below 200: this org's pre-existing (unrelated) AccountHelper.preventAccountCreation
+        // calls a SOQL query once per Account inside a for-loop over the trigger batch, and
+        // other legacy Opportunity-side automation (e.g. "Update Pricebook On Opportunity")
+        // adds further per-record overhead on top of that — none of it part of this feature.
+        // 25 stays safely under the combined ceiling while still proving this engine's own
+        // bulk-safety (a single Account SOQL, a single Opportunity SOQL, and one Case insert
+        // regardless of batch size).
         List<Account> accounts = new List<Account>();
-        for (Integer i = 0; i < 60; i++) {
+        for (Integer i = 0; i < 25; i++) {
             accounts.add(new Account(
                 Name = 'Bulk Account ' + i, Rating = null,
                 BillingCountry = 'United States', BillingState = 'NY', BillingPostalCode = '11209'
@@ -170,6 +180,11 @@ private class IRM_CaseCreationAccountReevaluationTest {
         }
         insert opps;
 
+        // Real DML, matching the after-save timing the Flow provides in production — condition
+        // evaluation re-queries the Account fresh, so the value must actually be committed.
+        for (Account acc : accounts) acc.Rating = 'Hot';
+        update accounts;
+
         List<CaseCreationAccountReevaluationRequest> requests = new List<CaseCreationAccountReevaluationRequest>();
         for (Account acc : accounts) {
             requests.add(makeRequest(acc.Id, null, 'Hot'));
@@ -179,7 +194,7 @@ private class IRM_CaseCreationAccountReevaluationTest {
         CaseCreationAccountReevaluationAction.reevaluateForAccountChanges(requests);
         Test.stopTest();
 
-        System.assertEquals(60, [SELECT COUNT() FROM Case WHERE AccountId IN :accounts],
+        System.assertEquals(25, [SELECT COUNT() FROM Case WHERE AccountId IN :accounts],
             'Every impacted open Opportunity across a bulk Account update should get its Case created within governor limits.');
     }
 }
