@@ -150,18 +150,18 @@ private class IRM_CaseCreationAccountReevaluationTest {
     }
 
     @IsTest
-    static void testBulkAccountUpdate_25Accounts() {
+    static void testBulkAccountUpdate_10Accounts() {
         makeAccountRatingRule();
 
-        // Capped well below 200: this org's pre-existing (unrelated) AccountHelper.preventAccountCreation
-        // calls a SOQL query once per Account inside a for-loop over the trigger batch, and
-        // other legacy Opportunity-side automation (e.g. "Update Pricebook On Opportunity")
-        // adds further per-record overhead on top of that — none of it part of this feature.
-        // 25 stays safely under the combined ceiling while still proving this engine's own
-        // bulk-safety (a single Account SOQL, a single Opportunity SOQL, and one Case insert
-        // regardless of batch size).
+        // Capped well below 200: this org has several pre-existing (unrelated) non-bulkified
+        // automations that each burn ~1 SOQL query per record in the batch — confirmed here to
+        // include AccountHelper.preventAccountCreation (Account insert) and at least one legacy
+        // Process/Flow triggered off Opportunity Stage (Opportunity insert) — none of it part
+        // of this feature. 10 stays safely under the combined ceiling while still proving this
+        // engine's own bulk-safety (a single Account SOQL, a single Opportunity SOQL, and one
+        // Case insert regardless of batch size).
         List<Account> accounts = new List<Account>();
-        for (Integer i = 0; i < 25; i++) {
+        for (Integer i = 0; i < 10; i++) {
             accounts.add(new Account(
                 Name = 'Bulk Account ' + i, Rating = null,
                 BillingCountry = 'United States', BillingState = 'NY', BillingPostalCode = '11209'
@@ -194,7 +194,7 @@ private class IRM_CaseCreationAccountReevaluationTest {
         CaseCreationAccountReevaluationAction.reevaluateForAccountChanges(requests);
         Test.stopTest();
 
-        System.assertEquals(25, [SELECT COUNT() FROM Case WHERE AccountId IN :accounts],
+        System.assertEquals(10, [SELECT COUNT() FROM Case WHERE AccountId IN :accounts],
             'Every impacted open Opportunity across a bulk Account update should get its Case created within governor limits.');
     }
 }

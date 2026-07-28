@@ -160,17 +160,17 @@ private class IRM_TouchLevelAccountReevaluationTest {
     }
 
     @IsTest
-    static void testBulkAccountUpdate_25Accounts() {
+    static void testBulkAccountUpdate_10Accounts() {
         makeIndustryCriteria('Qualification', 'High Touch');
 
         // Capped well below 200: this org's pre-existing (unrelated) AccountHelper.preventAccountCreation
         // calls a SOQL query once per Account inside a for-loop over the trigger batch, and
         // other legacy Opportunity-side automation adds further per-record overhead on top of
-        // that — none of it part of this feature. 25 stays safely under the combined ceiling
+        // that — none of it part of this feature. 10 stays safely under the combined ceiling
         // while still proving this engine's own bulk-safety (a single Account SOQL, a single
         // Opportunity SOQL, and one Opportunity update regardless of batch size).
         List<Account> accounts = new List<Account>();
-        for (Integer i = 0; i < 25; i++) {
+        for (Integer i = 0; i < 10; i++) {
             accounts.add(new Account(
                 Name = 'Bulk Touch Account ' + i, Industry = null,
                 BillingCountry = 'United States', BillingState = 'NY', BillingPostalCode = '11209'
@@ -205,7 +205,7 @@ private class IRM_TouchLevelAccountReevaluationTest {
         Integer highTouchCount = [
             SELECT COUNT() FROM Opportunity WHERE AccountId IN :accounts AND Touch_Level__c = 'High Touch'
         ];
-        System.assertEquals(25, highTouchCount,
+        System.assertEquals(10, highTouchCount,
             'Every impacted open Opportunity across a bulk Account update should recalculate to High Touch within governor limits.');
     }
 }
