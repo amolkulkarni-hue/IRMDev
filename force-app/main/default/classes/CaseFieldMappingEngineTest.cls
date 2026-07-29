@@ -62,8 +62,14 @@ private class CaseFieldMappingEngineTest {
 
     private static Case_Field_Mapping__c makeMapping(
             String recordTypeDevName, String sourceObject, String sourceFieldPath, String targetField) {
+        return makeMapping(recordTypeDevName, null, sourceObject, sourceFieldPath, targetField);
+    }
+
+    private static Case_Field_Mapping__c makeMapping(
+            String recordTypeDevName, String caseType, String sourceObject, String sourceFieldPath, String targetField) {
         Case_Field_Mapping__c m = new Case_Field_Mapping__c(
             Record_Type_Developer_Name__c = recordTypeDevName,
+            Case_Type__c = caseType,
             Source_Object__c = sourceObject,
             Source_Field_Path__c = sourceFieldPath,
             Target_Field_API_Name__c = targetField,
@@ -74,8 +80,13 @@ private class CaseFieldMappingEngineTest {
     }
 
     private static Case makeCase(Id recordTypeId, Id opportunityId, Id accountId, Id contactId) {
+        return makeCase(recordTypeId, null, opportunityId, accountId, contactId);
+    }
+
+    private static Case makeCase(Id recordTypeId, String caseType, Id opportunityId, Id accountId, Id contactId) {
         Case c = new Case(
             Status = 'New',
+            Type = caseType,
             ContactId = contactId,
             RecordTypeId = recordTypeId,
             Opportunity__c = opportunityId,
@@ -199,6 +210,51 @@ private class CaseFieldMappingEngineTest {
         Case result = [SELECT Account_Closing_Admin_Fee__c FROM Case WHERE Id = :dealSupport.Id];
         System.assertEquals(null, result.Account_Closing_Admin_Fee__c,
             'A mapping scoped to B2B_Implementation should not leak onto a Deal_Support Case.');
+    }
+
+    @IsTest
+    static void testCaseTypeScopedMapping_appliesOnlyToMatchingCaseType() {
+        Opportunity opp = getOpp();
+        // Scoped to Deal_Support + Case Type 'Legal' specifically — a Record Type that, per
+        // the sheet, spans many unrelated Case Types (Bid Management, Legal, InfoSecurity,
+        // etc.), so a Legal-only field must not leak onto an InfoSecurity Case sharing the
+        // same Record Type.
+        makeMapping('Deal_Support', 'Legal', 'Opportunity', 'Amount', 'Account_Closing_Admin_Fee__c');
+
+        Case legalCase = makeCase(App_Constants.DEAL_SUPPORT_CASE_RECTYPE_ID, 'Legal', opp.Id, opp.AccountId, getContact().Id);
+        Case infoSecCase = makeCase(App_Constants.DEAL_SUPPORT_CASE_RECTYPE_ID, 'InfoSecurity', opp.Id, opp.AccountId, getContact().Id);
+
+        Test.startTest();
+        applyToCases(new List<Id>{ legalCase.Id, infoSecCase.Id });
+        Test.stopTest();
+
+        Map<Id, Case> resultsById = new Map<Id, Case>(
+            [SELECT Account_Closing_Admin_Fee__c FROM Case WHERE Id IN :new Set<Id>{ legalCase.Id, infoSecCase.Id }]);
+        System.assertEquals(opp.Amount, resultsById.get(legalCase.Id).Account_Closing_Admin_Fee__c,
+            'A mapping scoped to Case Type Legal should apply to a Legal Case.');
+        System.assertEquals(null, resultsById.get(infoSecCase.Id).Account_Closing_Admin_Fee__c,
+            'A mapping scoped to Case Type Legal must not leak onto an InfoSecurity Case sharing the same Record Type.');
+    }
+
+    @IsTest
+    static void testBlankCaseType_appliesToEveryCaseTypeWithinRecordType() {
+        Opportunity opp = getOpp();
+        // Blank Case_Type__c => applies to every Case Type within Deal_Support.
+        makeMapping('Deal_Support', null, 'Opportunity', 'Amount', 'Account_Closing_Admin_Fee__c');
+
+        Case legalCase = makeCase(App_Constants.DEAL_SUPPORT_CASE_RECTYPE_ID, 'Legal', opp.Id, opp.AccountId, getContact().Id);
+        Case infoSecCase = makeCase(App_Constants.DEAL_SUPPORT_CASE_RECTYPE_ID, 'InfoSecurity', opp.Id, opp.AccountId, getContact().Id);
+
+        Test.startTest();
+        applyToCases(new List<Id>{ legalCase.Id, infoSecCase.Id });
+        Test.stopTest();
+
+        Map<Id, Case> resultsById = new Map<Id, Case>(
+            [SELECT Account_Closing_Admin_Fee__c FROM Case WHERE Id IN :new Set<Id>{ legalCase.Id, infoSecCase.Id }]);
+        System.assertEquals(opp.Amount, resultsById.get(legalCase.Id).Account_Closing_Admin_Fee__c,
+            'A Case-Type-blank mapping should apply regardless of Case Type.');
+        System.assertEquals(opp.Amount, resultsById.get(infoSecCase.Id).Account_Closing_Admin_Fee__c,
+            'A Case-Type-blank mapping should apply regardless of Case Type.');
     }
 
     @IsTest

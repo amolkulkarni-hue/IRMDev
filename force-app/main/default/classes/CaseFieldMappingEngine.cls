@@ -35,6 +35,10 @@ public with sharing class CaseFieldMappingEngine {
     // than risking a single bad config row breaking the shared dynamic SOQL query below.
     private class ResolvedMapping {
         public String recordTypeDevName; // '' (UNIVERSAL_BUCKET) if blank on the config row
+        public String caseType;          // '' (UNIVERSAL_BUCKET) if blank on the config row — a Record
+                                          // Type can span many Case Types (e.g. Deal_Support covers Bid
+                                          // Management, Legal, InfoSecurity, etc.), so this narrows a
+                                          // mapping to just one of them when needed.
         public String sourceObject;      // 'Opportunity' or 'Account'
         public String relationshipName;  // null => direct field on the Source Object
         public String field;
@@ -57,7 +61,7 @@ public with sharing class CaseFieldMappingEngine {
         if (caseIds.isEmpty()) return;
 
         List<Case> cases = [
-            SELECT Id, RecordTypeId, Opportunity__c, AccountId
+            SELECT Id, RecordTypeId, Type, Opportunity__c, AccountId
             FROM Case
             WHERE Id IN :caseIds
               AND RecordTypeId IN :ELIGIBLE_RECORD_TYPES
@@ -74,8 +78,6 @@ public with sharing class CaseFieldMappingEngine {
         List<ResolvedMapping> resolved = resolveMappings(rawMappings, oppDescribe, acctDescribe);
         if (resolved.isEmpty()) return;
 
-        Map<String, List<ResolvedMapping>> mappingsByRecordType = groupByRecordType(resolved);
-
         Set<Id> oppIds = new Set<Id>();
         Set<Id> acctIds = new Set<Id>();
         for (Case c : cases) {
@@ -90,9 +92,10 @@ public with sharing class CaseFieldMappingEngine {
         for (Case c : cases) {
             String recordTypeDevName = RECTYPE_ID_TO_DEV_NAME.get(c.RecordTypeId);
             List<ResolvedMapping> applicable = new List<ResolvedMapping>();
-            if (mappingsByRecordType.containsKey(UNIVERSAL_BUCKET)) applicable.addAll(mappingsByRecordType.get(UNIVERSAL_BUCKET));
-            if (recordTypeDevName != null && mappingsByRecordType.containsKey(recordTypeDevName)) {
-                applicable.addAll(mappingsByRecordType.get(recordTypeDevName));
+            for (ResolvedMapping rm : resolved) {
+                Boolean recordTypeMatches = rm.recordTypeDevName == UNIVERSAL_BUCKET || rm.recordTypeDevName == recordTypeDevName;
+                Boolean caseTypeMatches = rm.caseType == UNIVERSAL_BUCKET || rm.caseType == c.Type;
+                if (recordTypeMatches && caseTypeMatches) applicable.add(rm);
             }
             if (applicable.isEmpty()) continue;
 
@@ -132,21 +135,10 @@ public with sharing class CaseFieldMappingEngine {
 
     private static List<Case_Field_Mapping__c> queryActiveMappings() {
         return [
-            SELECT Id, Record_Type_Developer_Name__c, Source_Object__c, Source_Field_Path__c, Target_Field_API_Name__c
+            SELECT Id, Record_Type_Developer_Name__c, Case_Type__c, Source_Object__c, Source_Field_Path__c, Target_Field_API_Name__c
             FROM Case_Field_Mapping__c
             WHERE Is_Active__c = true
         ];
-    }
-
-    private static Map<String, List<ResolvedMapping>> groupByRecordType(List<ResolvedMapping> resolved) {
-        Map<String, List<ResolvedMapping>> byRecordType = new Map<String, List<ResolvedMapping>>();
-        for (ResolvedMapping rm : resolved) {
-            if (!byRecordType.containsKey(rm.recordTypeDevName)) {
-                byRecordType.put(rm.recordTypeDevName, new List<ResolvedMapping>());
-            }
-            byRecordType.get(rm.recordTypeDevName).add(rm);
-        }
-        return byRecordType;
     }
 
     // Resolves every active Case_Field_Mapping__c row against the real Opportunity/Account
@@ -179,6 +171,7 @@ public with sharing class CaseFieldMappingEngine {
             }
 
             rm.recordTypeDevName = String.isBlank(raw.Record_Type_Developer_Name__c) ? UNIVERSAL_BUCKET : raw.Record_Type_Developer_Name__c.trim();
+            rm.caseType = String.isBlank(raw.Case_Type__c) ? UNIVERSAL_BUCKET : raw.Case_Type__c.trim();
             rm.sourceObject = raw.Source_Object__c;
             rm.targetField = raw.Target_Field_API_Name__c;
             results.add(rm);
