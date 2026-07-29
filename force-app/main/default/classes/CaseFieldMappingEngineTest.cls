@@ -85,7 +85,7 @@ private class CaseFieldMappingEngineTest {
         return c;
     }
 
-    private static void applyToCases(Id... caseIds) {
+    private static void applyToCases(List<Id> caseIds) {
         List<CaseFieldMappingEngine.Request> requests = new List<CaseFieldMappingEngine.Request>();
         for (Id caseId : caseIds) {
             CaseFieldMappingEngine.Request req = new CaseFieldMappingEngine.Request();
@@ -106,7 +106,7 @@ private class CaseFieldMappingEngineTest {
         Case c = makeCase(App_Constants.DEAL_SUPPORT_CASE_RECTYPE_ID, opp.Id, opp.AccountId, getContact().Id);
 
         Test.startTest();
-        applyToCases(c.Id);
+        applyToCases(new List<Id>{ c.Id });
         Test.stopTest();
 
         Case result = [SELECT Account_Closing_Admin_Fee__c FROM Case WHERE Id = :c.Id];
@@ -121,7 +121,7 @@ private class CaseFieldMappingEngineTest {
         Case c = makeCase(App_Constants.DEAL_SUPPORT_CASE_RECTYPE_ID, opp.Id, opp.AccountId, getContact().Id);
 
         Test.startTest();
-        applyToCases(c.Id);
+        applyToCases(new List<Id>{ c.Id });
         Test.stopTest();
 
         Case result = [SELECT Billing_City__c FROM Case WHERE Id = :c.Id];
@@ -139,7 +139,7 @@ private class CaseFieldMappingEngineTest {
         Case c = makeCase(App_Constants.DEAL_SUPPORT_CASE_RECTYPE_ID, opp.Id, opp.AccountId, getContact().Id);
 
         Test.startTest();
-        applyToCases(c.Id);
+        applyToCases(new List<Id>{ c.Id });
         Test.stopTest();
 
         Case result = [SELECT Billing_Division__c FROM Case WHERE Id = :c.Id];
@@ -155,7 +155,7 @@ private class CaseFieldMappingEngineTest {
         Case c = makeCase(App_Constants.DEAL_SUPPORT_CASE_RECTYPE_ID, opp.Id, opp.AccountId, getContact().Id);
 
         Test.startTest();
-        applyToCases(c.Id);
+        applyToCases(new List<Id>{ c.Id });
         Test.stopTest();
 
         Case result = [SELECT Billing_Department__c FROM Case WHERE Id = :c.Id];
@@ -174,7 +174,7 @@ private class CaseFieldMappingEngineTest {
         Case dealSupport = makeCase(App_Constants.DEAL_SUPPORT_CASE_RECTYPE_ID, opp.Id, opp.AccountId, contactId);
 
         Test.startTest();
-        applyToCases(b2b.Id, dealSupport.Id);
+        applyToCases(new List<Id>{ b2b.Id, dealSupport.Id });
         Test.stopTest();
 
         Map<Id, Case> resultsById = new Map<Id, Case>(
@@ -193,7 +193,7 @@ private class CaseFieldMappingEngineTest {
         Case dealSupport = makeCase(App_Constants.DEAL_SUPPORT_CASE_RECTYPE_ID, opp.Id, opp.AccountId, getContact().Id);
 
         Test.startTest();
-        applyToCases(dealSupport.Id);
+        applyToCases(new List<Id>{ dealSupport.Id });
         Test.stopTest();
 
         Case result = [SELECT Account_Closing_Admin_Fee__c FROM Case WHERE Id = :dealSupport.Id];
@@ -212,7 +212,7 @@ private class CaseFieldMappingEngineTest {
         Case ineligibleCase = makeCase(retentionRecordTypeId, opp.Id, opp.AccountId, getContact().Id);
 
         Test.startTest();
-        applyToCases(ineligibleCase.Id);
+        applyToCases(new List<Id>{ ineligibleCase.Id });
         Test.stopTest();
 
         Case result = [SELECT Account_Closing_Admin_Fee__c FROM Case WHERE Id = :ineligibleCase.Id];
@@ -228,7 +228,7 @@ private class CaseFieldMappingEngineTest {
         Case c = makeCase(App_Constants.DEAL_SUPPORT_CASE_RECTYPE_ID, opp.Id, opp.AccountId, getContact().Id);
 
         Test.startTest();
-        applyToCases(c.Id);
+        applyToCases(new List<Id>{ c.Id });
         Test.stopTest();
 
         Case result = [SELECT Billing_City__c FROM Case WHERE Id = :c.Id];
@@ -244,7 +244,7 @@ private class CaseFieldMappingEngineTest {
         Case c = makeCase(App_Constants.DEAL_SUPPORT_CASE_RECTYPE_ID, opp.Id, opp.AccountId, getContact().Id);
 
         Test.startTest();
-        applyToCases(c.Id);
+        applyToCases(new List<Id>{ c.Id });
         Test.stopTest();
 
         Case result = [SELECT Billing_Division__c, Billing_City__c FROM Case WHERE Id = :c.Id];

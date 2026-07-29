@@ -68,8 +68,8 @@ public with sharing class CaseFieldMappingEngine {
         List<Case_Field_Mapping__c> rawMappings = queryActiveMappings();
         if (rawMappings.isEmpty()) return;
 
-        Schema.DescribeSObjectResult oppDescribe = Schema.SObjectType.Opportunity.getDescribe();
-        Schema.DescribeSObjectResult acctDescribe = Schema.SObjectType.Account.getDescribe();
+        Schema.DescribeSObjectResult oppDescribe = Schema.SObjectType.Opportunity;
+        Schema.DescribeSObjectResult acctDescribe = Schema.SObjectType.Account;
 
         List<ResolvedMapping> resolved = resolveMappings(rawMappings, oppDescribe, acctDescribe);
         if (resolved.isEmpty()) return;
@@ -270,8 +270,8 @@ public with sharing class CaseFieldMappingEngine {
     // deploy, or ad hoc from anonymous Apex.
     public static List<String> validateActiveMappings() {
         List<String> problems = new List<String>();
-        Schema.DescribeSObjectResult oppDescribe = Schema.SObjectType.Opportunity.getDescribe();
-        Schema.DescribeSObjectResult acctDescribe = Schema.SObjectType.Account.getDescribe();
+        Schema.DescribeSObjectResult oppDescribe = Schema.SObjectType.Opportunity;
+        Schema.DescribeSObjectResult acctDescribe = Schema.SObjectType.Account;
         Map<String, Schema.SObjectField> caseFieldMap = Schema.SObjectType.Case.fields.getMap();
 
         for (Case_Field_Mapping__c raw : queryActiveMappings()) {
