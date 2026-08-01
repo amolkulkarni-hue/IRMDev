@@ -52,13 +52,6 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>varUpdateRIMLine.EAA_Source__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Seller Estimate</stringValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
             <assignToReference>colLinesToUpdate</assignToReference>
             <operator>Add</operator>
             <value>
@@ -100,20 +93,6 @@
             <operator>Assign</operator>
             <value>
                 <booleanValue>true</booleanValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>varNewRIMLine.EAA_Source__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Seller Estimate</stringValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>varNewRIMLine.OPL_Sync_Key__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Formula_RIM_Sync_Key</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -177,13 +156,6 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>varUpdateALMLine.EAA_Source__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Seller Estimate</stringValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
             <assignToReference>colLinesToUpdate</assignToReference>
             <operator>Add</operator>
             <value>
@@ -225,20 +197,6 @@
             <operator>Assign</operator>
             <value>
                 <booleanValue>true</booleanValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>varNewALMLine.EAA_Source__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Seller Estimate</stringValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>varNewALMLine.OPL_Sync_Key__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Formula_ALM_Sync_Key</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -302,13 +260,6 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>varUpdateDigitalLine.EAA_Source__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Seller Estimate</stringValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
             <assignToReference>colLinesToUpdate</assignToReference>
             <operator>Add</operator>
             <value>
@@ -350,20 +301,6 @@
             <operator>Assign</operator>
             <value>
                 <booleanValue>true</booleanValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>varNewDigitalLine.EAA_Source__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Seller Estimate</stringValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>varNewDigitalLine.OPL_Sync_Key__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Formula_Digital_Sync_Key</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -677,21 +614,6 @@
         </rules>
     </decisions>
     <environments>Default</environments>
-    <formulas>
-        <name>Formula_RIM_Sync_Key</name>
-        <dataType>String</dataType>
-        <expression>{!recordId} &amp; "_RIM"</expression>
-    </formulas>
-    <formulas>
-        <name>Formula_ALM_Sync_Key</name>
-        <dataType>String</dataType>
-        <expression>{!recordId} &amp; "_ALM"</expression>
-    </formulas>
-    <formulas>
-        <name>Formula_Digital_Sync_Key</name>
-        <dataType>String</dataType>
-        <expression>{!recordId} &amp; "_Digital"</expression>
-    </formulas>
     <interviewLabel>Manage Business Unit Lines {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Business Unit Line Management</label>
     <processMetadataValues>

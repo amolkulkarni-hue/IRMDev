@@ -45,13 +45,6 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>varWinningProductLine</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Find_Highest_EAA_Line.Product_Line__c</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
             <assignToReference>varWinningProductFamily</assignToReference>
             <operator>Assign</operator>
             <value>
@@ -226,7 +219,7 @@
     <formulas>
         <name>Formula_Primary_Product_Interest</name>
         <dataType>String</dataType>
-        <expression>IF(NOT(ISBLANK({!varWinningProductLine})), {!varWinningProductLine}, IF(NOT(ISBLANK({!varWinningProductFamily})), {!varWinningProductFamily}, TEXT({!$Record.Opportunity__r.Primary_Product_Interest__c})))</expression>
+        <expression>IF(NOT(ISBLANK({!varWinningProductFamily})), {!varWinningProductFamily}, TEXT({!$Record.Opportunity__r.Primary_Product_Interest__c}))</expression>
     </formulas>
     <interviewLabel>Primary BU Recalculation {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Primary BU Recalculation</label>
@@ -385,13 +378,6 @@
     </variables>
     <variables>
         <name>varWinningBusinessUnit</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>varWinningProductLine</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
