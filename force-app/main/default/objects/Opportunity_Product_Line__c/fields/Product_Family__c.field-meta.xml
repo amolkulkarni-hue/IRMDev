@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Product_Family__c</fullName>
-    <description>The high-level product grouping that determines the Business Unit. Seller must select at minimum a Product Family — Product Line is optional.</description>
-    <inlineHelpText>Select the product family that best represents the product interest in this deal. This determines the Business Unit automatically. You do not need to select a Product Line if the deal is at an early stage.</inlineHelpText>
+    <description>Optional, descriptive product grouping within the selected Business Unit. Not required to save a line — Business Unit is the required field on this object.</description>
+    <inlineHelpText>Optional. If you know more detail than just the Business Unit, select a Product Family here — choices are filtered to the Business Unit you selected above.</inlineHelpText>
     <label>Product Family</label>
-    <required>true</required>
-    <trackHistory>false</trackHistory>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>

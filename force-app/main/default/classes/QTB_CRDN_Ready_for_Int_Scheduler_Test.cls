@@ -336,7 +336,7 @@ private with sharing class QTB_CRDN_Ready_for_Int_Scheduler_Test {
 		blng__Account__r.QTB_Contract_Entity__r.QTB_Legal_Entity_Number__c, QTB_Transferred_to_Invoice_Compliance__c, QTB_Purchase_Order__c, blng__Account__r.QTB_Contract_Entity__r.QTB_Tax_Applicability__c,
 		recordTypeId, blng__Account__r.QTB_Market__r.QTB_State__c, QTB_Ready_for_Integration__c, QTB_Ready_for_Integration_Status__c From blng__CreditNote__c where blng__Status__c = 'Posted'];
         
-         QTB_CRDN_Ready_for_Int_Scheduler obj = new QTB_CRDN_Ready_for_Int_Scheduler(crdtIDs);
+         QTB_CRDN_Ready_for_Int_Scheduler obj = new QTB_CRDN_Ready_for_Int_Scheduler(crdtIDs, new List<QTB_CustomInvoiceNumber__c>());
         String sch = '10 0 * * * ?';
         String jobID = System.schedule('Schedule to update Invoice', sch,obj);
                

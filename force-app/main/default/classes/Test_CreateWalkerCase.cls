@@ -23,9 +23,9 @@ public class Test_CreateWalkerCase{
         insert con;
         
         CX_Survey_Details__c cx = new CX_Survey_Details__c(
-            Name='Test Class for Trigger', Program__c='Program', Contact__c=con.id, FollowUp_Reason__c='Bad Response',
+            Program__c='Program', Contact__c=con.id, FollowUp_Reason__c='Bad Response',
             Respondent_ID__c = 007008, SS_Template_ID__c = 008007, Survey_Type__c='Relationship', FollowUp_Type__c='Manual'
-            
+
         );
         insert cx;
         
