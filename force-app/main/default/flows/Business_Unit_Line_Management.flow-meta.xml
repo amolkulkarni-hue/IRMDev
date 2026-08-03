@@ -3,328 +3,175 @@
     <apiVersion>67.0</apiVersion>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <assignments>
-        <name>Assign_RIM_Remove</name>
-        <label>Assign RIM Remove</label>
+        <name>Assign_New_Line</name>
+        <label>Assign New Line</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignmentItems>
-            <assignToReference>varUpdateRIMLine</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Get_RIM_Line</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>varUpdateRIMLine.Is_Active__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <booleanValue>false</booleanValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>colLinesToUpdate</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <elementReference>varUpdateRIMLine</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Decision_ALM_Action</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Assign_RIM_Update</name>
-        <label>Assign RIM Update</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>varUpdateRIMLine</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Get_RIM_Line</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>varUpdateRIMLine.EAA__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Input_RIM_EAA</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>colLinesToUpdate</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <elementReference>varUpdateRIMLine</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Decision_ALM_Action</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Assign_RIM_Create</name>
-        <label>Assign RIM Create</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>varNewRIMLine.Opportunity__c</assignToReference>
+            <assignToReference>varNewLine.Opportunity__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>recordId</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>varNewRIMLine.Business_Unit__c</assignToReference>
+            <assignToReference>varNewLine.Business_Unit__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>RIM</stringValue>
+                <elementReference>Input_New_BU</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>varNewRIMLine.EAA__c</assignToReference>
+            <assignToReference>varNewLine.EAA__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Input_RIM_EAA</elementReference>
+                <elementReference>Input_New_EAA</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>varNewRIMLine.Is_Active__c</assignToReference>
+            <assignToReference>varNewLine.Product_Family__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Input_New_Product_Family</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varNewLine.Product_Line__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Input_New_Product_Line</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varNewLine.Is_Active__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <booleanValue>true</booleanValue>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>colLinesToCreate</assignToReference>
-            <operator>Add</operator>
+            <assignToReference>varPendingDml</assignToReference>
+            <operator>Assign</operator>
             <value>
-                <elementReference>varNewRIMLine</elementReference>
+                <stringValue>Create</stringValue>
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Decision_ALM_Action</targetReference>
+            <targetReference>Get_Opportunity_Recheck</targetReference>
         </connector>
     </assignments>
     <assignments>
-        <name>Assign_ALM_Remove</name>
-        <label>Assign ALM Remove</label>
+        <name>Assign_Update_Line_Base</name>
+        <label>Assign Update Line Base</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignmentItems>
-            <assignToReference>varUpdateALMLine</assignToReference>
+            <assignToReference>varUpdateLine</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Get_ALM_Line</elementReference>
+                <elementReference>Get_Selected_Line</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>varUpdateALMLine.Is_Active__c</assignToReference>
+            <assignToReference>varUpdateLine.EAA__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Input_Edit_EAA</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varUpdateLine.Product_Family__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Input_Edit_Product_Family</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varUpdateLine.Product_Line__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Input_Edit_Product_Line</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varPendingDml</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Update</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Decision_Check_Deactivate</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_Deactivate_Line</name>
+        <label>Assign Deactivate Line</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>varUpdateLine.Is_Active__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <booleanValue>false</booleanValue>
             </value>
         </assignmentItems>
-        <assignmentItems>
-            <assignToReference>colLinesToUpdate</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <elementReference>varUpdateALMLine</elementReference>
-            </value>
-        </assignmentItems>
         <connector>
-            <targetReference>Decision_Digital_Action</targetReference>
+            <targetReference>Get_Opportunity_Recheck</targetReference>
         </connector>
     </assignments>
     <assignments>
-        <name>Assign_ALM_Update</name>
-        <label>Assign ALM Update</label>
+        <name>Assign_Append_Grid_Row</name>
+        <label>Assign Append Grid Row</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignmentItems>
-            <assignToReference>varUpdateALMLine</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Get_ALM_Line</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>varUpdateALMLine.EAA__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Input_ALM_EAA</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>colLinesToUpdate</assignToReference>
+            <assignToReference>varGridHtml</assignToReference>
             <operator>Add</operator>
             <value>
-                <elementReference>varUpdateALMLine</elementReference>
+                <elementReference>Formula_Grid_Row</elementReference>
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Decision_Digital_Action</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Assign_ALM_Create</name>
-        <label>Assign ALM Create</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>varNewALMLine.Opportunity__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>recordId</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>varNewALMLine.Business_Unit__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>ALM</stringValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>varNewALMLine.EAA__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Input_ALM_EAA</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>varNewALMLine.Is_Active__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <booleanValue>true</booleanValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>colLinesToCreate</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <elementReference>varNewALMLine</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Decision_Digital_Action</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Assign_Digital_Remove</name>
-        <label>Assign Digital Remove</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>varUpdateDigitalLine</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Get_Digital_Line</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>varUpdateDigitalLine.Is_Active__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <booleanValue>false</booleanValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>colLinesToUpdate</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <elementReference>varUpdateDigitalLine</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Create_New_Lines</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Assign_Digital_Update</name>
-        <label>Assign Digital Update</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>varUpdateDigitalLine</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Get_Digital_Line</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>varUpdateDigitalLine.EAA__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Input_Digital_EAA</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>colLinesToUpdate</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <elementReference>varUpdateDigitalLine</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Create_New_Lines</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Assign_Digital_Create</name>
-        <label>Assign Digital Create</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>varNewDigitalLine.Opportunity__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>recordId</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>varNewDigitalLine.Business_Unit__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Digital</stringValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>varNewDigitalLine.EAA__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Input_Digital_EAA</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>varNewDigitalLine.Is_Active__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <booleanValue>true</booleanValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>colLinesToCreate</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <elementReference>varNewDigitalLine</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Create_New_Lines</targetReference>
+            <targetReference>Loop_Build_Grid</targetReference>
         </connector>
     </assignments>
     <decisions>
-        <name>Decision_Is_Qualification</name>
-        <label>Is Opportunity in Qualification?</label>
+        <name>Decision_Has_Lines</name>
+        <label>Does the Opportunity Have Any Active Lines?</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnector>
-            <targetReference>Screen_ReadOnly</targetReference>
+            <targetReference>Decision_Editable_Empty</targetReference>
         </defaultConnector>
-        <defaultConnectorLabel>No — Read Only</defaultConnectorLabel>
+        <defaultConnectorLabel>No Lines Yet</defaultConnectorLabel>
         <rules>
-            <name>Is_Qualification</name>
+            <name>Has_Lines</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>colActiveLines</leftValueReference>
+                <operator>IsEmpty</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Loop_Build_Grid</targetReference>
+            </connector>
+            <label>Has Lines</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Decision_Editable_Empty</name>
+        <label>Is Opportunity Editable? (No Lines Yet)</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Screen_Nothing_To_Show</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Not Editable</defaultConnectorLabel>
+        <rules>
+            <name>Empty_Is_Qualification</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>Get_Opportunity.StageName</leftValueReference>
@@ -334,9 +181,109 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Screen_Manage_Lines</targetReference>
+                <targetReference>Screen_Add_Line</targetReference>
             </connector>
-            <label>Yes — Editable</label>
+            <label>Editable</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Decision_Editable_Grid</name>
+        <label>Is Opportunity Editable? (Has Lines)</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Screen_View_Grid_ReadOnly</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Not Editable</defaultConnectorLabel>
+        <rules>
+            <name>Grid_Is_Qualification</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Opportunity.StageName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Qualification</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Screen_Manage_Grid</targetReference>
+            </connector>
+            <label>Editable</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Decision_Route_Action</name>
+        <label>Edit or Add?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Get_Selected_Line</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Edit Existing</defaultConnectorLabel>
+        <rules>
+            <name>Route_Add</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Select_Action</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Add</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Screen_Add_Line</targetReference>
+            </connector>
+            <label>Add New</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Decision_BU_Already_Active</name>
+        <label>Is This Business Unit Already Active?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Assign_New_Line</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Not Yet Active</defaultConnectorLabel>
+        <rules>
+            <name>BU_Already_Active</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Existing_Line_For_BU.Id</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Screen_BU_Already_Exists_Error</targetReference>
+            </connector>
+            <label>Already Active</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Decision_Check_Deactivate</name>
+        <label>Deactivate This Line?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Get_Opportunity_Recheck</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Stay Active</defaultConnectorLabel>
+        <rules>
+            <name>Should_Deactivate</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Input_Edit_Set_Inactive</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_Deactivate_Line</targetReference>
+            </connector>
+            <label>Deactivate</label>
         </rules>
     </decisions>
     <decisions>
@@ -345,7 +292,7 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnector>
-            <targetReference>Decision_RIM_Action</targetReference>
+            <targetReference>Decision_Route_Dml</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Still Qualification</defaultConnectorLabel>
         <rules>
@@ -365,257 +312,140 @@
         </rules>
     </decisions>
     <decisions>
-        <name>Decision_RIM_Action</name>
-        <label>What Changed for RIM?</label>
+        <name>Decision_Route_Dml</name>
+        <label>Create or Update?</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnector>
-            <targetReference>Decision_ALM_Action</targetReference>
+            <targetReference>Update_Line</targetReference>
         </defaultConnector>
-        <defaultConnectorLabel>No Change</defaultConnectorLabel>
+        <defaultConnectorLabel>Update</defaultConnectorLabel>
         <rules>
-            <name>RIM_Remove</name>
+            <name>Route_Create</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Input_RIM_Remove</leftValueReference>
+                <leftValueReference>varPendingDml</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>Get_RIM_Line.Id</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
+                    <stringValue>Create</stringValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Assign_RIM_Remove</targetReference>
+                <targetReference>Create_New_Line</targetReference>
             </connector>
-            <label>Remove</label>
-        </rules>
-        <rules>
-            <name>RIM_Update</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Get_RIM_Line.Id</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>Input_RIM_EAA</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>Input_RIM_Remove</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Assign_RIM_Update</targetReference>
-            </connector>
-            <label>Update Existing</label>
-        </rules>
-        <rules>
-            <name>RIM_Create</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Get_RIM_Line.Id</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>Input_RIM_EAA</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Assign_RIM_Create</targetReference>
-            </connector>
-            <label>Create New</label>
+            <label>Create</label>
         </rules>
     </decisions>
-    <decisions>
-        <name>Decision_ALM_Action</name>
-        <label>What Changed for ALM?</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <defaultConnector>
-            <targetReference>Decision_Digital_Action</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>No Change</defaultConnectorLabel>
-        <rules>
-            <name>ALM_Remove</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Input_ALM_Remove</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>Get_ALM_Line.Id</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Assign_ALM_Remove</targetReference>
-            </connector>
-            <label>Remove</label>
-        </rules>
-        <rules>
-            <name>ALM_Update</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Get_ALM_Line.Id</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>Input_ALM_EAA</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>Input_ALM_Remove</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Assign_ALM_Update</targetReference>
-            </connector>
-            <label>Update Existing</label>
-        </rules>
-        <rules>
-            <name>ALM_Create</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Get_ALM_Line.Id</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>Input_ALM_EAA</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Assign_ALM_Create</targetReference>
-            </connector>
-            <label>Create New</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>Decision_Digital_Action</name>
-        <label>What Changed for Digital?</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <defaultConnector>
-            <targetReference>Create_New_Lines</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>No Change</defaultConnectorLabel>
-        <rules>
-            <name>Digital_Remove</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Input_Digital_Remove</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>Get_Digital_Line.Id</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Assign_Digital_Remove</targetReference>
-            </connector>
-            <label>Remove</label>
-        </rules>
-        <rules>
-            <name>Digital_Update</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Get_Digital_Line.Id</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>Input_Digital_EAA</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>Input_Digital_Remove</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Assign_Digital_Update</targetReference>
-            </connector>
-            <label>Update Existing</label>
-        </rules>
-        <rules>
-            <name>Digital_Create</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Get_Digital_Line.Id</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>Input_Digital_EAA</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Assign_Digital_Create</targetReference>
-            </connector>
-            <label>Create New</label>
-        </rules>
-    </decisions>
+    <choices>
+        <name>Choice_Edit_Line</name>
+        <choiceText>Edit an existing Business Unit line</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Edit</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Choice_Add_Line</name>
+        <choiceText>Add a new Business Unit line</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Add</stringValue>
+        </value>
+    </choices>
+    <dynamicChoiceSets>
+        <name>ChoiceSet_Select_Line</name>
+        <dataType>String</dataType>
+        <displayField>Business_Unit__c</displayField>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Opportunity__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Is_Active__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <object>Opportunity_Product_Line__c</object>
+        <sortField>CreatedDate</sortField>
+        <sortOrder>Asc</sortOrder>
+        <valueField>Id</valueField>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>ChoiceSet_BU</name>
+        <dataType>Picklist</dataType>
+        <picklistField>Business_Unit__c</picklistField>
+        <picklistObject>Opportunity_Product_Line__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>ChoiceSet_Product_Family</name>
+        <dataType>Picklist</dataType>
+        <picklistField>Product_Family__c</picklistField>
+        <picklistObject>Opportunity_Product_Line__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>ChoiceSet_Product_Line</name>
+        <dataType>Picklist</dataType>
+        <picklistField>Product_Line__c</picklistField>
+        <picklistObject>Opportunity_Product_Line__c</picklistObject>
+    </dynamicChoiceSets>
     <environments>Default</environments>
+    <formulas>
+        <name>Formula_Row_BU</name>
+        <dataType>String</dataType>
+        <expression>TEXT({!Loop_Build_Grid.Business_Unit__c})</expression>
+    </formulas>
+    <formulas>
+        <name>Formula_Row_Product_Family</name>
+        <dataType>String</dataType>
+        <expression>TEXT({!Loop_Build_Grid.Product_Family__c})</expression>
+    </formulas>
+    <formulas>
+        <name>Formula_Row_Product_Line</name>
+        <dataType>String</dataType>
+        <expression>TEXT({!Loop_Build_Grid.Product_Line__c})</expression>
+    </formulas>
+    <formulas>
+        <name>Formula_Row_EAA</name>
+        <dataType>String</dataType>
+        <expression>TEXT({!Loop_Build_Grid.EAA__c})</expression>
+    </formulas>
+    <formulas>
+        <name>Formula_Row_Primary</name>
+        <dataType>String</dataType>
+        <expression>IF({!Loop_Build_Grid.Is_Primary__c}, "Yes", "No")</expression>
+    </formulas>
+    <formulas>
+        <name>Formula_Row_Active</name>
+        <dataType>String</dataType>
+        <expression>IF({!Loop_Build_Grid.Is_Active__c}, "Yes", "No")</expression>
+    </formulas>
+    <formulas>
+        <name>Formula_Grid_Row</name>
+        <dataType>String</dataType>
+        <expression>"&lt;tr&gt;&lt;td&gt;" &amp; {!Formula_Row_BU} &amp; "&lt;/td&gt;&lt;td&gt;" &amp; {!Formula_Row_Product_Family} &amp; "&lt;/td&gt;&lt;td&gt;" &amp; {!Formula_Row_Product_Line} &amp; "&lt;/td&gt;&lt;td&gt;" &amp; {!Formula_Row_EAA} &amp; "&lt;/td&gt;&lt;td&gt;" &amp; {!Formula_Row_Primary} &amp; "&lt;/td&gt;&lt;td&gt;" &amp; {!Formula_Row_Active} &amp; "&lt;/td&gt;&lt;/tr&gt;"</expression>
+    </formulas>
     <interviewLabel>Manage Business Unit Lines {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Business Unit Line Management</label>
+    <loops>
+        <name>Loop_Build_Grid</name>
+        <label>Loop Build Grid</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <collectionReference>colActiveLines</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>Assign_Append_Grid_Row</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>Decision_Editable_Grid</targetReference>
+        </noMoreValuesConnector>
+    </loops>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -636,21 +466,8 @@
     </processMetadataValues>
     <processType>Flow</processType>
     <recordCreates>
-        <name>Create_New_Lines</name>
-        <label>Create New Lines</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <connector>
-            <targetReference>Update_Existing_Lines</targetReference>
-        </connector>
-        <faultConnector>
-            <targetReference>Screen_DML_Error</targetReference>
-        </faultConnector>
-        <inputReference>colLinesToCreate</inputReference>
-    </recordCreates>
-    <recordUpdates>
-        <name>Update_Existing_Lines</name>
-        <label>Update Existing Lines</label>
+        <name>Create_New_Line</name>
+        <label>Create New Line</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <connector>
@@ -659,7 +476,20 @@
         <faultConnector>
             <targetReference>Screen_DML_Error</targetReference>
         </faultConnector>
-        <inputReference>colLinesToUpdate</inputReference>
+        <inputReference>varNewLine</inputReference>
+    </recordCreates>
+    <recordUpdates>
+        <name>Update_Line</name>
+        <label>Update Line</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Screen_Confirmation</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Screen_DML_Error</targetReference>
+        </faultConnector>
+        <inputReference>varUpdateLine</inputReference>
     </recordUpdates>
     <recordLookups>
         <name>Get_Opportunity</name>
@@ -668,7 +498,7 @@
         <locationY>0</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Get_RIM_Line</targetReference>
+            <targetReference>Get_Active_Lines</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -683,13 +513,43 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
-        <name>Get_RIM_Line</name>
-        <label>Get RIM Line</label>
+        <name>Get_Active_Lines</name>
+        <label>Get Active Lines</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Get_ALM_Line</targetReference>
+            <targetReference>Decision_Has_Lines</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Opportunity__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Is_Active__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>Opportunity_Product_Line__c</object>
+        <sortField>CreatedDate</sortField>
+        <sortOrder>Asc</sortOrder>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_Existing_Line_For_BU</name>
+        <label>Get Existing Line For BU</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Decision_BU_Already_Active</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -703,7 +563,7 @@
             <field>Business_Unit__c</field>
             <operator>EqualTo</operator>
             <value>
-                <stringValue>RIM</stringValue>
+                <elementReference>Input_New_BU</elementReference>
             </value>
         </filters>
         <filters>
@@ -718,69 +578,20 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
-        <name>Get_ALM_Line</name>
-        <label>Get ALM Line</label>
+        <name>Get_Selected_Line</name>
+        <label>Get Selected Line</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Get_Digital_Line</targetReference>
+            <targetReference>Screen_Edit_Line</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
-            <field>Opportunity__c</field>
+            <field>Id</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>recordId</elementReference>
-            </value>
-        </filters>
-        <filters>
-            <field>Business_Unit__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>ALM</stringValue>
-            </value>
-        </filters>
-        <filters>
-            <field>Is_Active__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <booleanValue>true</booleanValue>
-            </value>
-        </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>Opportunity_Product_Line__c</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
-    <recordLookups>
-        <name>Get_Digital_Line</name>
-        <label>Get Digital Line</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Decision_Is_Qualification</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Opportunity__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>recordId</elementReference>
-            </value>
-        </filters>
-        <filters>
-            <field>Business_Unit__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>Digital</stringValue>
-            </value>
-        </filters>
-        <filters>
-            <field>Is_Active__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <booleanValue>true</booleanValue>
+                <elementReference>Select_Line_To_Edit</elementReference>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
@@ -809,7 +620,23 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <screens>
-        <name>Screen_ReadOnly</name>
+        <name>Screen_Nothing_To_Show</name>
+        <label>No Business Unit Lines</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>Text_Nothing_To_Show</name>
+            <fieldText>&lt;p&gt;No Business Unit lines have been added for this Opportunity.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Screen_View_Grid_ReadOnly</name>
         <label>Business Unit Lines (Read Only)</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
@@ -822,46 +649,55 @@
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
-            <name>Text_RIM_ReadOnly</name>
-            <fieldText>&lt;p&gt;Records Management (RIM) — Eligible Annual Amount: {!Get_RIM_Line.EAA__c}&lt;/p&gt;</fieldText>
+            <name>Text_Grid_ReadOnly</name>
+            <fieldText>&lt;table border=&quot;1&quot; cellpadding=&quot;4&quot;&gt;&lt;tr&gt;&lt;th&gt;Business Unit&lt;/th&gt;&lt;th&gt;Product Family&lt;/th&gt;&lt;th&gt;Product Line&lt;/th&gt;&lt;th&gt;EAA&lt;/th&gt;&lt;th&gt;Primary BU&lt;/th&gt;&lt;th&gt;Active&lt;/th&gt;&lt;/tr&gt;{!varGridHtml}&lt;/table&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>Get_RIM_Line.Id</leftValueReference>
-                    <operator>IsNull</operator>
-                    <rightValue>
-                        <booleanValue>false</booleanValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Screen_Manage_Grid</name>
+        <label>Manage Business Unit Lines</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Decision_Route_Action</targetReference>
+        </connector>
+        <fields>
+            <name>Text_Grid</name>
+            <fieldText>&lt;table border=&quot;1&quot; cellpadding=&quot;4&quot;&gt;&lt;tr&gt;&lt;th&gt;Business Unit&lt;/th&gt;&lt;th&gt;Product Family&lt;/th&gt;&lt;th&gt;Product Line&lt;/th&gt;&lt;th&gt;EAA&lt;/th&gt;&lt;th&gt;Primary BU&lt;/th&gt;&lt;th&gt;Active&lt;/th&gt;&lt;/tr&gt;{!varGridHtml}&lt;/table&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
-            <name>Text_ALM_ReadOnly</name>
-            <fieldText>&lt;p&gt;ALM — Eligible Annual Amount: {!Get_ALM_Line.EAA__c}&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>Get_ALM_Line.Id</leftValueReference>
-                    <operator>IsNull</operator>
-                    <rightValue>
-                        <booleanValue>false</booleanValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
+            <name>Select_Action</name>
+            <choiceReferences>Choice_Edit_Line</choiceReferences>
+            <choiceReferences>Choice_Add_Line</choiceReferences>
+            <dataType>String</dataType>
+            <defaultValue>
+                <elementReference>Choice_Edit_Line</elementReference>
+            </defaultValue>
+            <fieldText>What would you like to do?</fieldText>
+            <fieldType>RadioButtons</fieldType>
+            <isRequired>true</isRequired>
         </fields>
         <fields>
-            <name>Text_Digital_ReadOnly</name>
-            <fieldText>&lt;p&gt;Digital — Eligible Annual Amount: {!Get_Digital_Line.EAA__c}&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
+            <name>Select_Line_To_Edit</name>
+            <choiceReferences>ChoiceSet_Select_Line</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Select a Business Unit line to edit</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>Get_Digital_Line.Id</leftValueReference>
-                    <operator>IsNull</operator>
+                    <leftValueReference>Select_Action</leftValueReference>
+                    <operator>EqualTo</operator>
                     <rightValue>
-                        <booleanValue>false</booleanValue>
+                        <stringValue>Edit</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -870,119 +706,130 @@
         <showHeader>true</showHeader>
     </screens>
     <screens>
-        <name>Screen_Manage_Lines</name>
-        <label>Manage Business Unit Lines</label>
+        <name>Screen_Add_Line</name>
+        <label>Add a Business Unit Line</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <connector>
-            <targetReference>Get_Opportunity_Recheck</targetReference>
+            <targetReference>Get_Existing_Line_For_BU</targetReference>
         </connector>
         <fields>
-            <name>Text_Manage_Header</name>
-            <fieldText>&lt;p&gt;Enter an Eligible Annual Amount to create or update a Business Unit line. Leave a field blank if that Business Unit isn't part of this deal.&lt;/p&gt;</fieldText>
+            <name>Input_New_BU</name>
+            <choiceReferences>ChoiceSet_BU</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Business Unit</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>Input_New_EAA</name>
+            <dataType>Currency</dataType>
+            <fieldText>Eligible Annual Amount</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>true</isRequired>
+            <validationRule>
+                <formulaExpression>{!Input_New_EAA} &gt;= 0</formulaExpression>
+                <errorMessage>Eligible Annual Amount cannot be negative.</errorMessage>
+            </validationRule>
+        </fields>
+        <fields>
+            <name>Input_New_Product_Family</name>
+            <choiceReferences>ChoiceSet_Product_Family</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Product Family (optional)</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <fields>
+            <name>Input_New_Product_Line</name>
+            <choiceReferences>ChoiceSet_Product_Line</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Product Line (optional)</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Screen_Edit_Line</name>
+        <label>Edit Business Unit Line</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Assign_Update_Line_Base</targetReference>
+        </connector>
+        <fields>
+            <name>Text_Edit_BU</name>
+            <fieldText>&lt;p&gt;Business Unit: {!Get_Selected_Line.Business_Unit__c}&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
-            <name>Input_RIM_EAA</name>
+            <name>Input_Edit_EAA</name>
             <dataType>Currency</dataType>
             <defaultValue>
-                <elementReference>Get_RIM_Line.EAA__c</elementReference>
+                <elementReference>Get_Selected_Line.EAA__c</elementReference>
             </defaultValue>
-            <fieldText>Records Management (RIM) — Eligible Annual Amount</fieldText>
+            <fieldText>Eligible Annual Amount</fieldText>
             <fieldType>InputField</fieldType>
-            <isRequired>false</isRequired>
+            <isRequired>true</isRequired>
             <validationRule>
-                <formulaExpression>OR(ISBLANK({!Input_RIM_EAA}), {!Input_RIM_EAA} &gt;= 0)</formulaExpression>
+                <formulaExpression>{!Input_Edit_EAA} &gt;= 0</formulaExpression>
                 <errorMessage>Eligible Annual Amount cannot be negative.</errorMessage>
             </validationRule>
         </fields>
         <fields>
-            <name>Input_RIM_Remove</name>
-            <dataType>Boolean</dataType>
+            <name>Input_Edit_Product_Family</name>
+            <choiceReferences>ChoiceSet_Product_Family</choiceReferences>
+            <dataType>String</dataType>
             <defaultValue>
-                <booleanValue>false</booleanValue>
+                <elementReference>Get_Selected_Line.Product_Family__c</elementReference>
             </defaultValue>
-            <fieldText>Remove the RIM line</fieldText>
-            <fieldType>InputField</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>Get_RIM_Line.Id</leftValueReference>
-                    <operator>IsNull</operator>
-                    <rightValue>
-                        <booleanValue>false</booleanValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>Input_ALM_EAA</name>
-            <dataType>Currency</dataType>
-            <defaultValue>
-                <elementReference>Get_ALM_Line.EAA__c</elementReference>
-            </defaultValue>
-            <fieldText>ALM — Eligible Annual Amount</fieldText>
-            <fieldType>InputField</fieldType>
+            <fieldText>Product Family (optional)</fieldText>
+            <fieldType>DropdownBox</fieldType>
             <isRequired>false</isRequired>
-            <validationRule>
-                <formulaExpression>OR(ISBLANK({!Input_ALM_EAA}), {!Input_ALM_EAA} &gt;= 0)</formulaExpression>
-                <errorMessage>Eligible Annual Amount cannot be negative.</errorMessage>
-            </validationRule>
         </fields>
         <fields>
-            <name>Input_ALM_Remove</name>
-            <dataType>Boolean</dataType>
+            <name>Input_Edit_Product_Line</name>
+            <choiceReferences>ChoiceSet_Product_Line</choiceReferences>
+            <dataType>String</dataType>
             <defaultValue>
-                <booleanValue>false</booleanValue>
+                <elementReference>Get_Selected_Line.Product_Line__c</elementReference>
             </defaultValue>
-            <fieldText>Remove the ALM line</fieldText>
-            <fieldType>InputField</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>Get_ALM_Line.Id</leftValueReference>
-                    <operator>IsNull</operator>
-                    <rightValue>
-                        <booleanValue>false</booleanValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>Input_Digital_EAA</name>
-            <dataType>Currency</dataType>
-            <defaultValue>
-                <elementReference>Get_Digital_Line.EAA__c</elementReference>
-            </defaultValue>
-            <fieldText>Digital — Eligible Annual Amount</fieldText>
-            <fieldType>InputField</fieldType>
+            <fieldText>Product Line (optional)</fieldText>
+            <fieldType>DropdownBox</fieldType>
             <isRequired>false</isRequired>
-            <validationRule>
-                <formulaExpression>OR(ISBLANK({!Input_Digital_EAA}), {!Input_Digital_EAA} &gt;= 0)</formulaExpression>
-                <errorMessage>Eligible Annual Amount cannot be negative.</errorMessage>
-            </validationRule>
         </fields>
         <fields>
-            <name>Input_Digital_Remove</name>
+            <name>Input_Edit_Set_Inactive</name>
             <dataType>Boolean</dataType>
             <defaultValue>
                 <booleanValue>false</booleanValue>
             </defaultValue>
-            <fieldText>Remove the Digital line</fieldText>
+            <fieldText>Set this line to Inactive</fieldText>
             <fieldType>InputField</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>Get_Digital_Line.Id</leftValueReference>
-                    <operator>IsNull</operator>
-                    <rightValue>
-                        <booleanValue>false</booleanValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Screen_BU_Already_Exists_Error</name>
+        <label>Business Unit Already Active</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>Text_BU_Already_Exists_Error</name>
+            <fieldText>&lt;p&gt;This Business Unit already has an active line on this Opportunity. Reopen this action and choose &quot;Edit an existing Business Unit line&quot; instead.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
@@ -1051,7 +898,7 @@
         <isOutput>false</isOutput>
     </variables>
     <variables>
-        <name>colLinesToCreate</name>
+        <name>colActiveLines</name>
         <dataType>SObject</dataType>
         <objectType>Opportunity_Product_Line__c</objectType>
         <isCollection>true</isCollection>
@@ -1059,15 +906,14 @@
         <isOutput>false</isOutput>
     </variables>
     <variables>
-        <name>colLinesToUpdate</name>
-        <dataType>SObject</dataType>
-        <objectType>Opportunity_Product_Line__c</objectType>
-        <isCollection>true</isCollection>
+        <name>varGridHtml</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
     </variables>
     <variables>
-        <name>varNewRIMLine</name>
+        <name>varNewLine</name>
         <dataType>SObject</dataType>
         <objectType>Opportunity_Product_Line__c</objectType>
         <isCollection>false</isCollection>
@@ -1075,7 +921,7 @@
         <isOutput>false</isOutput>
     </variables>
     <variables>
-        <name>varNewALMLine</name>
+        <name>varUpdateLine</name>
         <dataType>SObject</dataType>
         <objectType>Opportunity_Product_Line__c</objectType>
         <isCollection>false</isCollection>
@@ -1083,33 +929,8 @@
         <isOutput>false</isOutput>
     </variables>
     <variables>
-        <name>varNewDigitalLine</name>
-        <dataType>SObject</dataType>
-        <objectType>Opportunity_Product_Line__c</objectType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>varUpdateRIMLine</name>
-        <dataType>SObject</dataType>
-        <objectType>Opportunity_Product_Line__c</objectType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>varUpdateALMLine</name>
-        <dataType>SObject</dataType>
-        <objectType>Opportunity_Product_Line__c</objectType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>varUpdateDigitalLine</name>
-        <dataType>SObject</dataType>
-        <objectType>Opportunity_Product_Line__c</objectType>
+        <name>varPendingDml</name>
+        <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
