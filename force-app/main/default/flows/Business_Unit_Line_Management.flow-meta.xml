@@ -69,7 +69,7 @@
             <assignToReference>varUpdateLine</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Get_Selected_Line</elementReference>
+                <elementReference>varSelectedRow</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -121,19 +121,19 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Assign_Append_Grid_Row</name>
-        <label>Assign Append Grid Row</label>
+        <name>Assign_Set_Selected_Row</name>
+        <label>Assign Set Selected Row</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignmentItems>
-            <assignToReference>varGridHtml</assignToReference>
-            <operator>Add</operator>
+            <assignToReference>varSelectedRow</assignToReference>
+            <operator>Assign</operator>
             <value>
-                <elementReference>Formula_Grid_Row</elementReference>
+                <elementReference>Loop_Get_Selected</elementReference>
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Loop_Build_Grid</targetReference>
+            <targetReference>Loop_Get_Selected</targetReference>
         </connector>
     </assignments>
     <decisions>
@@ -156,7 +156,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Loop_Build_Grid</targetReference>
+                <targetReference>Decision_Editable_Grid</targetReference>
             </connector>
             <label>Has Lines</label>
         </rules>
@@ -217,7 +217,7 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnector>
-            <targetReference>Get_Selected_Line</targetReference>
+            <targetReference>Loop_Get_Selected</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Edit Existing</defaultConnectorLabel>
         <rules>
@@ -336,6 +336,31 @@
             <label>Create</label>
         </rules>
     </decisions>
+    <decisions>
+        <name>Decision_Has_Selection</name>
+        <label>Was a Line Selected?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Screen_Edit_Line</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Line Selected</defaultConnectorLabel>
+        <rules>
+            <name>No_Selection</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>varSelectedRow.Id</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Screen_No_Selection_Error</targetReference>
+            </connector>
+            <label>No Selection</label>
+        </rules>
+    </decisions>
     <choices>
         <name>Choice_Edit_Line</name>
         <choiceText>Edit an existing Business Unit line</choiceText>
@@ -352,30 +377,6 @@
             <stringValue>Add</stringValue>
         </value>
     </choices>
-    <dynamicChoiceSets>
-        <name>ChoiceSet_Select_Line</name>
-        <dataType>String</dataType>
-        <displayField>Business_Unit__c</displayField>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Opportunity__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>recordId</elementReference>
-            </value>
-        </filters>
-        <filters>
-            <field>Is_Active__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <booleanValue>true</booleanValue>
-            </value>
-        </filters>
-        <object>Opportunity_Product_Line__c</object>
-        <sortField>CreatedDate</sortField>
-        <sortOrder>Asc</sortOrder>
-        <valueField>Id</valueField>
-    </dynamicChoiceSets>
     <dynamicChoiceSets>
         <name>ChoiceSet_BU</name>
         <dataType>Picklist</dataType>
@@ -395,55 +396,20 @@
         <picklistObject>Opportunity_Product_Line__c</picklistObject>
     </dynamicChoiceSets>
     <environments>Default</environments>
-    <formulas>
-        <name>Formula_Row_BU</name>
-        <dataType>String</dataType>
-        <expression>TEXT({!Loop_Build_Grid.Business_Unit__c})</expression>
-    </formulas>
-    <formulas>
-        <name>Formula_Row_Product_Family</name>
-        <dataType>String</dataType>
-        <expression>TEXT({!Loop_Build_Grid.Product_Family__c})</expression>
-    </formulas>
-    <formulas>
-        <name>Formula_Row_Product_Line</name>
-        <dataType>String</dataType>
-        <expression>TEXT({!Loop_Build_Grid.Product_Line__c})</expression>
-    </formulas>
-    <formulas>
-        <name>Formula_Row_EAA</name>
-        <dataType>String</dataType>
-        <expression>TEXT({!Loop_Build_Grid.EAA__c})</expression>
-    </formulas>
-    <formulas>
-        <name>Formula_Row_Primary</name>
-        <dataType>String</dataType>
-        <expression>IF({!Loop_Build_Grid.Is_Primary__c}, "Yes", "No")</expression>
-    </formulas>
-    <formulas>
-        <name>Formula_Row_Active</name>
-        <dataType>String</dataType>
-        <expression>IF({!Loop_Build_Grid.Is_Active__c}, "Yes", "No")</expression>
-    </formulas>
-    <formulas>
-        <name>Formula_Grid_Row</name>
-        <dataType>String</dataType>
-        <expression>"&lt;tr&gt;&lt;td&gt;" &amp; {!Formula_Row_BU} &amp; "&lt;/td&gt;&lt;td&gt;" &amp; {!Formula_Row_Product_Family} &amp; "&lt;/td&gt;&lt;td&gt;" &amp; {!Formula_Row_Product_Line} &amp; "&lt;/td&gt;&lt;td&gt;" &amp; {!Formula_Row_EAA} &amp; "&lt;/td&gt;&lt;td&gt;" &amp; {!Formula_Row_Primary} &amp; "&lt;/td&gt;&lt;td&gt;" &amp; {!Formula_Row_Active} &amp; "&lt;/td&gt;&lt;/tr&gt;"</expression>
-    </formulas>
     <interviewLabel>Manage Business Unit Lines {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Business Unit Line Management</label>
     <loops>
-        <name>Loop_Build_Grid</name>
-        <label>Loop Build Grid</label>
+        <name>Loop_Get_Selected</name>
+        <label>Loop Get Selected</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
-        <collectionReference>colActiveLines</collectionReference>
+        <collectionReference>colSelectedRows</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
-            <targetReference>Assign_Append_Grid_Row</targetReference>
+            <targetReference>Assign_Set_Selected_Row</targetReference>
         </nextValueConnector>
         <noMoreValuesConnector>
-            <targetReference>Decision_Editable_Grid</targetReference>
+            <targetReference>Decision_Has_Selection</targetReference>
         </noMoreValuesConnector>
     </loops>
     <processMetadataValues>
@@ -579,27 +545,6 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
-        <name>Get_Selected_Line</name>
-        <label>Get Selected Line</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Screen_Edit_Line</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>Select_Line_To_Edit</elementReference>
-            </value>
-        </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>Opportunity_Product_Line__c</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
-    <recordLookups>
         <name>Get_Opportunity_Recheck</name>
         <label>Get Opportunity (Re-check Stage)</label>
         <locationX>0</locationX>
@@ -650,9 +595,50 @@
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
-            <name>Text_Grid_ReadOnly</name>
-            <fieldText>&lt;table border=&quot;1&quot; cellpadding=&quot;4&quot;&gt;&lt;tr&gt;&lt;th&gt;Business Unit&lt;/th&gt;&lt;th&gt;Product Family&lt;/th&gt;&lt;th&gt;Product Line&lt;/th&gt;&lt;th&gt;EAA&lt;/th&gt;&lt;th&gt;Primary BU&lt;/th&gt;&lt;th&gt;Active&lt;/th&gt;&lt;/tr&gt;{!varGridHtml}&lt;/table&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
+            <name>DataTable_Lines_ReadOnly</name>
+            <extensionName>flowruntime:datatable</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <dataTypeMappings>
+                <typeName>T</typeName>
+                <typeValue>Opportunity_Product_Line__c</typeValue>
+            </dataTypeMappings>
+            <inputParameters>
+                <name>label</name>
+                <value>
+                    <stringValue>Business Unit Lines</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>tableData</name>
+                <value>
+                    <elementReference>colActiveLines</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>columns</name>
+                <value>
+                    <stringValue>[{&quot;apiName&quot;:&quot;Business_Unit__c&quot;,&quot;label&quot;:&quot;Business Unit&quot;,&quot;type&quot;:&quot;text&quot;},{&quot;apiName&quot;:&quot;Product_Family__c&quot;,&quot;label&quot;:&quot;Product Family&quot;,&quot;type&quot;:&quot;text&quot;},{&quot;apiName&quot;:&quot;Product_Line__c&quot;,&quot;label&quot;:&quot;Product Line&quot;,&quot;type&quot;:&quot;text&quot;},{&quot;apiName&quot;:&quot;EAA__c&quot;,&quot;label&quot;:&quot;EAA&quot;,&quot;type&quot;:&quot;currency&quot;},{&quot;apiName&quot;:&quot;Is_Primary__c&quot;,&quot;label&quot;:&quot;Primary BU&quot;,&quot;type&quot;:&quot;boolean&quot;},{&quot;apiName&quot;:&quot;Is_Active__c&quot;,&quot;label&quot;:&quot;Active&quot;,&quot;type&quot;:&quot;boolean&quot;}]</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>selectionMode</name>
+                <value>
+                    <stringValue>MULTI_SELECT</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>minRowSelection</name>
+                <value>
+                    <numberValue>0.0</numberValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>maxRowSelection</name>
+                <value>
+                    <numberValue>0.0</numberValue>
+                </value>
+            </inputParameters>
+            <storeOutputAutomatically>false</storeOutputAutomatically>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
@@ -669,9 +655,54 @@
             <targetReference>Decision_Route_Action</targetReference>
         </connector>
         <fields>
-            <name>Text_Grid</name>
-            <fieldText>&lt;table border=&quot;1&quot; cellpadding=&quot;4&quot;&gt;&lt;tr&gt;&lt;th&gt;Business Unit&lt;/th&gt;&lt;th&gt;Product Family&lt;/th&gt;&lt;th&gt;Product Line&lt;/th&gt;&lt;th&gt;EAA&lt;/th&gt;&lt;th&gt;Primary BU&lt;/th&gt;&lt;th&gt;Active&lt;/th&gt;&lt;/tr&gt;{!varGridHtml}&lt;/table&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
+            <name>DataTable_Lines</name>
+            <extensionName>flowruntime:datatable</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <dataTypeMappings>
+                <typeName>T</typeName>
+                <typeValue>Opportunity_Product_Line__c</typeValue>
+            </dataTypeMappings>
+            <inputParameters>
+                <name>label</name>
+                <value>
+                    <stringValue>Business Unit Lines — check a row to edit it</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>tableData</name>
+                <value>
+                    <elementReference>colActiveLines</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>columns</name>
+                <value>
+                    <stringValue>[{&quot;apiName&quot;:&quot;Business_Unit__c&quot;,&quot;label&quot;:&quot;Business Unit&quot;,&quot;type&quot;:&quot;text&quot;},{&quot;apiName&quot;:&quot;Product_Family__c&quot;,&quot;label&quot;:&quot;Product Family&quot;,&quot;type&quot;:&quot;text&quot;},{&quot;apiName&quot;:&quot;Product_Line__c&quot;,&quot;label&quot;:&quot;Product Line&quot;,&quot;type&quot;:&quot;text&quot;},{&quot;apiName&quot;:&quot;EAA__c&quot;,&quot;label&quot;:&quot;EAA&quot;,&quot;type&quot;:&quot;currency&quot;},{&quot;apiName&quot;:&quot;Is_Primary__c&quot;,&quot;label&quot;:&quot;Primary BU&quot;,&quot;type&quot;:&quot;boolean&quot;},{&quot;apiName&quot;:&quot;Is_Active__c&quot;,&quot;label&quot;:&quot;Active&quot;,&quot;type&quot;:&quot;boolean&quot;}]</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>selectionMode</name>
+                <value>
+                    <stringValue>MULTI_SELECT</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>minRowSelection</name>
+                <value>
+                    <numberValue>0.0</numberValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>maxRowSelection</name>
+                <value>
+                    <numberValue>1.0</numberValue>
+                </value>
+            </inputParameters>
+            <outputParameters>
+                <assignToReference>colSelectedRows</assignToReference>
+                <name>selectedRows</name>
+            </outputParameters>
+            <storeOutputAutomatically>false</storeOutputAutomatically>
         </fields>
         <fields>
             <name>Select_Action</name>
@@ -684,24 +715,6 @@
             <fieldText>What would you like to do?</fieldText>
             <fieldType>RadioButtons</fieldType>
             <isRequired>true</isRequired>
-        </fields>
-        <fields>
-            <name>Select_Line_To_Edit</name>
-            <choiceReferences>ChoiceSet_Select_Line</choiceReferences>
-            <dataType>String</dataType>
-            <fieldText>Select a Business Unit line to edit</fieldText>
-            <fieldType>DropdownBox</fieldType>
-            <isRequired>true</isRequired>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>Select_Action</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>Edit</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
@@ -768,14 +781,14 @@
         </connector>
         <fields>
             <name>Text_Edit_BU</name>
-            <fieldText>&lt;p&gt;Business Unit: {!Get_Selected_Line.Business_Unit__c}&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Business Unit: {!varSelectedRow.Business_Unit__c}&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
             <name>Input_Edit_EAA</name>
             <dataType>Currency</dataType>
             <defaultValue>
-                <elementReference>Get_Selected_Line.EAA__c</elementReference>
+                <elementReference>varSelectedRow.EAA__c</elementReference>
             </defaultValue>
             <fieldText>Eligible Annual Amount</fieldText>
             <fieldType>InputField</fieldType>
@@ -790,7 +803,7 @@
             <choiceReferences>ChoiceSet_Product_Family</choiceReferences>
             <dataType>String</dataType>
             <defaultValue>
-                <elementReference>Get_Selected_Line.Product_Family__c</elementReference>
+                <elementReference>varSelectedRow.Product_Family__c</elementReference>
             </defaultValue>
             <fieldText>Product Family (optional)</fieldText>
             <fieldType>DropdownBox</fieldType>
@@ -801,7 +814,7 @@
             <choiceReferences>ChoiceSet_Product_Line</choiceReferences>
             <dataType>String</dataType>
             <defaultValue>
-                <elementReference>Get_Selected_Line.Product_Line__c</elementReference>
+                <elementReference>varSelectedRow.Product_Line__c</elementReference>
             </defaultValue>
             <fieldText>Product Line (optional)</fieldText>
             <fieldType>DropdownBox</fieldType>
@@ -815,6 +828,22 @@
             </defaultValue>
             <fieldText>Set this line to Inactive</fieldText>
             <fieldType>InputField</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Screen_No_Selection_Error</name>
+        <label>No Line Selected</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>Text_No_Selection_Error</name>
+            <fieldText>&lt;p&gt;No Business Unit line was selected. Reopen this action and check the row you want to edit before choosing &quot;Edit an existing Business Unit line&quot;.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
@@ -907,8 +936,17 @@
         <isOutput>false</isOutput>
     </variables>
     <variables>
-        <name>varGridHtml</name>
-        <dataType>String</dataType>
+        <name>colSelectedRows</name>
+        <dataType>SObject</dataType>
+        <objectType>Opportunity_Product_Line__c</objectType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>varSelectedRow</name>
+        <dataType>SObject</dataType>
+        <objectType>Opportunity_Product_Line__c</objectType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
