@@ -100,4 +100,66 @@ private class BusinessUnitLineGridControllerTest {
 
         System.assertEquals(true, threwExpectedError, 'Negative EAA should be rejected');
     }
+
+    @IsTest
+    static void testCreateLineInsertsNewLine() {
+        Opportunity opp = [SELECT Id FROM Opportunity LIMIT 1];
+
+        Opportunity_Product_Line__c newLine = new Opportunity_Product_Line__c(
+            Business_Unit__c = 'ALM',
+            EAA__c = 15000,
+            Product_Family__c = 'Software'
+        );
+
+        Test.startTest();
+        BusinessUnitLineGridController.createLine(opp.Id, JSON.serialize(newLine));
+        Test.stopTest();
+
+        List<Opportunity_Product_Line__c> allLinesForOpp = [
+            SELECT Business_Unit__c, EAA__c, Is_Active__c
+            FROM Opportunity_Product_Line__c
+            WHERE Opportunity__c = :opp.Id
+        ];
+        System.assertEquals(2, allLinesForOpp.size(), 'Expected 2 lines total, found: ' + JSON.serialize(allLinesForOpp));
+
+        List<Opportunity_Product_Line__c> almLines = [
+            SELECT Business_Unit__c, EAA__c, Is_Active__c
+            FROM Opportunity_Product_Line__c
+            WHERE Opportunity__c = :opp.Id AND Business_Unit__c = 'ALM'
+        ];
+        System.assertEquals(1, almLines.size(), 'Expected 1 ALM line, found: ' + JSON.serialize(allLinesForOpp));
+        System.assertEquals(15000, almLines[0].EAA__c);
+        System.assertEquals(true, almLines[0].Is_Active__c);
+    }
+
+    @IsTest
+    static void testCreateLineRejectsDuplicateActiveBu() {
+        Opportunity opp = [SELECT Id FROM Opportunity LIMIT 1];
+
+        Opportunity_Product_Line__c duplicateLine = new Opportunity_Product_Line__c(
+            Business_Unit__c = 'RIM',
+            EAA__c = 5000
+        );
+
+        Boolean threwExpectedError = false;
+        Test.startTest();
+        try {
+            BusinessUnitLineGridController.createLine(opp.Id, JSON.serialize(duplicateLine));
+        } catch (AuraHandledException e) {
+            threwExpectedError = true;
+        }
+        Test.stopTest();
+
+        System.assertEquals(true, threwExpectedError, 'Duplicate active Business Unit should be rejected');
+    }
+
+    @IsTest
+    static void testGetPicklistOptionsReturnsActiveValues() {
+        Test.startTest();
+        Map<String, List<String>> options = BusinessUnitLineGridController.getPicklistOptions();
+        Test.stopTest();
+
+        System.assertEquals(true, options.containsKey('Business_Unit__c'));
+        System.assertEquals(true, options.get('Business_Unit__c').contains('RIM'));
+    }
 }
