@@ -1,0 +1,15 @@
+<template>
+    <template if:true={hasLines}>
+        <lightning-datatable
+                key-field="Id"
+                data={lines}
+                columns={columns}
+                draft-values={draftValues}
+                onsave={handleSave}
+                hide-checkbox-column>
+        </lightning-datatable>
+    </template>
+    <template if:false={hasLines}>
+        <p>No active Business Unit lines for this Opportunity.</p>
+    </template>
+</template>
