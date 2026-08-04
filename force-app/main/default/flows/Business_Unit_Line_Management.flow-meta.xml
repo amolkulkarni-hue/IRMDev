@@ -49,91 +49,8 @@
                 <booleanValue>true</booleanValue>
             </value>
         </assignmentItems>
-        <assignmentItems>
-            <assignToReference>varPendingDml</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Create</stringValue>
-            </value>
-        </assignmentItems>
         <connector>
             <targetReference>Get_Opportunity_Recheck</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Assign_Update_Line_Base</name>
-        <label>Assign Update Line Base</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>varUpdateLine</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>varSelectedRow</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>varUpdateLine.EAA__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Input_Edit_EAA</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>varUpdateLine.Product_Family__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Input_Edit_Product_Family</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>varUpdateLine.Product_Line__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Input_Edit_Product_Line</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>varPendingDml</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Update</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Decision_Check_Deactivate</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Assign_Deactivate_Line</name>
-        <label>Assign Deactivate Line</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>varUpdateLine.Is_Active__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <booleanValue>false</booleanValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Get_Opportunity_Recheck</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Assign_Set_Selected_Row</name>
-        <label>Assign Set Selected Row</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>varSelectedRow</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Loop_Get_Selected</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Loop_Get_Selected</targetReference>
         </connector>
     </assignments>
     <decisions>
@@ -212,31 +129,6 @@
         </rules>
     </decisions>
     <decisions>
-        <name>Decision_Route_Action</name>
-        <label>Edit or Add?</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <defaultConnector>
-            <targetReference>Loop_Get_Selected</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Edit</defaultConnectorLabel>
-        <rules>
-            <name>Route_Add</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Select_Action</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Add</stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Screen_Add_Line</targetReference>
-            </connector>
-            <label>Add New</label>
-        </rules>
-    </decisions>
-    <decisions>
         <name>Decision_BU_Already_Active</name>
         <label>Is This Business Unit Already Active?</label>
         <locationX>0</locationX>
@@ -262,37 +154,12 @@
         </rules>
     </decisions>
     <decisions>
-        <name>Decision_Check_Deactivate</name>
-        <label>Deactivate This Line?</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <defaultConnector>
-            <targetReference>Get_Opportunity_Recheck</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Stay Active</defaultConnectorLabel>
-        <rules>
-            <name>Should_Deactivate</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Input_Edit_Set_Inactive</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Assign_Deactivate_Line</targetReference>
-            </connector>
-            <label>Deactivate</label>
-        </rules>
-    </decisions>
-    <decisions>
         <name>Decision_Stage_Still_Qualification</name>
         <label>Is Opportunity Still in Qualification?</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnector>
-            <targetReference>Decision_Route_Dml</targetReference>
+            <targetReference>Create_New_Line</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Still Qualification</defaultConnectorLabel>
         <rules>
@@ -311,72 +178,6 @@
             <label>Stage Changed — Stop</label>
         </rules>
     </decisions>
-    <decisions>
-        <name>Decision_Route_Dml</name>
-        <label>Create or Update?</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <defaultConnector>
-            <targetReference>Update_Line</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Update</defaultConnectorLabel>
-        <rules>
-            <name>Route_Create</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>varPendingDml</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Create</stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Create_New_Line</targetReference>
-            </connector>
-            <label>Create</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>Decision_Has_Selection</name>
-        <label>Was a Line Selected?</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <defaultConnector>
-            <targetReference>Screen_Edit_Line</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Line Selected</defaultConnectorLabel>
-        <rules>
-            <name>No_Selection</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>varSelectedRow.Id</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Screen_No_Selection_Error</targetReference>
-            </connector>
-            <label>No Selection</label>
-        </rules>
-    </decisions>
-    <choices>
-        <name>Choice_Edit_Line</name>
-        <choiceText>Edit an existing Business Unit line</choiceText>
-        <dataType>String</dataType>
-        <value>
-            <stringValue>Edit</stringValue>
-        </value>
-    </choices>
-    <choices>
-        <name>Choice_Add_Line</name>
-        <choiceText>Add a new Business Unit line</choiceText>
-        <dataType>String</dataType>
-        <value>
-            <stringValue>Add</stringValue>
-        </value>
-    </choices>
     <dynamicChoiceSets>
         <name>ChoiceSet_BU</name>
         <dataType>Picklist</dataType>
@@ -398,20 +199,6 @@
     <environments>Default</environments>
     <interviewLabel>Manage Business Unit Lines {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Business Unit Line Management</label>
-    <loops>
-        <name>Loop_Get_Selected</name>
-        <label>Loop Get Selected</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <collectionReference>colSelectedRows</collectionReference>
-        <iterationOrder>Asc</iterationOrder>
-        <nextValueConnector>
-            <targetReference>Assign_Set_Selected_Row</targetReference>
-        </nextValueConnector>
-        <noMoreValuesConnector>
-            <targetReference>Decision_Has_Selection</targetReference>
-        </noMoreValuesConnector>
-    </loops>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -444,19 +231,6 @@
         </faultConnector>
         <inputReference>varNewLine</inputReference>
     </recordCreates>
-    <recordUpdates>
-        <name>Update_Line</name>
-        <label>Update Line</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <connector>
-            <targetReference>Screen_Confirmation</targetReference>
-        </connector>
-        <faultConnector>
-            <targetReference>Screen_DML_Error</targetReference>
-        </faultConnector>
-        <inputReference>varUpdateLine</inputReference>
-    </recordUpdates>
     <recordLookups>
         <name>Get_Opportunity</name>
         <label>Get Opportunity</label>
@@ -667,86 +441,16 @@
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
-        <connector>
-            <targetReference>Decision_Route_Action</targetReference>
-        </connector>
         <fields>
-            <name>DataTable_Lines</name>
-            <dataTypeMappings>
-                <typeName>T</typeName>
-                <typeValue>Opportunity_Product_Line__c</typeValue>
-            </dataTypeMappings>
-            <extensionName>flowruntime:datatable</extensionName>
+            <name>BU_Line_Grid</name>
+            <extensionName>c:businessUnitLineGrid</extensionName>
             <fieldType>ComponentInstance</fieldType>
             <inputParameters>
-                <name>label</name>
+                <name>recordId</name>
                 <value>
-                    <stringValue>Business Unit Lines — check a row to edit it</stringValue>
+                    <elementReference>recordId</elementReference>
                 </value>
             </inputParameters>
-            <inputParameters>
-                <name>selectionMode</name>
-                <value>
-                    <stringValue>MULTI_SELECT</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>minRowSelection</name>
-                <value>
-                    <numberValue>0.0</numberValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>tableData</name>
-                <value>
-                    <elementReference>colActiveLines</elementReference>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>columns</name>
-                <value>
-                    <stringValue>[{&quot;apiName&quot;:&quot;Business_Unit__c&quot;,&quot;guid&quot;:&quot;column-bu02&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:false,&quot;customHeaderLabel&quot;:&quot;&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:0,&quot;label&quot;:&quot;Business Unit&quot;,&quot;type&quot;:&quot;text&quot;},{&quot;apiName&quot;:&quot;Product_Family__c&quot;,&quot;guid&quot;:&quot;column-pf02&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:false,&quot;customHeaderLabel&quot;:&quot;&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:1,&quot;label&quot;:&quot;Product Family&quot;,&quot;type&quot;:&quot;text&quot;},{&quot;apiName&quot;:&quot;Product_Line__c&quot;,&quot;guid&quot;:&quot;column-pl02&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:false,&quot;customHeaderLabel&quot;:&quot;&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:2,&quot;label&quot;:&quot;Product Line&quot;,&quot;type&quot;:&quot;text&quot;},{&quot;apiName&quot;:&quot;EAA__c&quot;,&quot;guid&quot;:&quot;column-ea02&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:false,&quot;customHeaderLabel&quot;:&quot;&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:3,&quot;label&quot;:&quot;EAA&quot;,&quot;type&quot;:&quot;currency&quot;},{&quot;apiName&quot;:&quot;Is_Primary__c&quot;,&quot;guid&quot;:&quot;column-ip02&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:false,&quot;customHeaderLabel&quot;:&quot;&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:4,&quot;label&quot;:&quot;Primary BU&quot;,&quot;type&quot;:&quot;boolean&quot;},{&quot;apiName&quot;:&quot;Is_Active__c&quot;,&quot;guid&quot;:&quot;column-ia02&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:false,&quot;customHeaderLabel&quot;:&quot;&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:5,&quot;label&quot;:&quot;Active&quot;,&quot;type&quot;:&quot;boolean&quot;}]</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>shouldDisplayLabel</name>
-                <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>maxRowSelection</name>
-                <value>
-                    <numberValue>1.0</numberValue>
-                </value>
-            </inputParameters>
-            <outputParameters>
-                <assignToReference>colSelectedRows</assignToReference>
-                <name>selectedRows</name>
-            </outputParameters>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isRequired>true</isRequired>
-            <storeOutputAutomatically>false</storeOutputAutomatically>
-            <styleProperties>
-                <verticalAlignment>
-                    <stringValue>top</stringValue>
-                </verticalAlignment>
-                <width>
-                    <stringValue>12</stringValue>
-                </width>
-            </styleProperties>
-        </fields>
-        <fields>
-            <name>Select_Action</name>
-            <choiceReferences>Choice_Edit_Line</choiceReferences>
-            <choiceReferences>Choice_Add_Line</choiceReferences>
-            <dataType>String</dataType>
-            <defaultValue>
-                <elementReference>Choice_Edit_Line</elementReference>
-            </defaultValue>
-            <fieldText>What would you like to do?</fieldText>
-            <fieldType>RadioButtons</fieldType>
-            <isRequired>true</isRequired>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
@@ -801,86 +505,6 @@
         <showHeader>true</showHeader>
     </screens>
     <screens>
-        <name>Screen_Edit_Line</name>
-        <label>Edit Business Unit Line</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <allowBack>false</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>false</allowPause>
-        <connector>
-            <targetReference>Assign_Update_Line_Base</targetReference>
-        </connector>
-        <fields>
-            <name>Text_Edit_BU</name>
-            <fieldText>&lt;p&gt;Business Unit: {!varSelectedRow.Business_Unit__c}&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <fields>
-            <name>Input_Edit_EAA</name>
-            <dataType>Currency</dataType>
-            <defaultValue>
-                <elementReference>varSelectedRow.EAA__c</elementReference>
-            </defaultValue>
-            <fieldText>Eligible Annual Amount</fieldText>
-            <fieldType>InputField</fieldType>
-            <isRequired>true</isRequired>
-            <validationRule>
-                <formulaExpression>{!Input_Edit_EAA} &gt;= 0</formulaExpression>
-                <errorMessage>Eligible Annual Amount cannot be negative.</errorMessage>
-            </validationRule>
-        </fields>
-        <fields>
-            <name>Input_Edit_Product_Family</name>
-            <choiceReferences>ChoiceSet_Product_Family</choiceReferences>
-            <dataType>String</dataType>
-            <defaultValue>
-                <elementReference>varSelectedRow.Product_Family__c</elementReference>
-            </defaultValue>
-            <fieldText>Product Family (optional)</fieldText>
-            <fieldType>DropdownBox</fieldType>
-            <isRequired>false</isRequired>
-        </fields>
-        <fields>
-            <name>Input_Edit_Product_Line</name>
-            <choiceReferences>ChoiceSet_Product_Line</choiceReferences>
-            <dataType>String</dataType>
-            <defaultValue>
-                <elementReference>varSelectedRow.Product_Line__c</elementReference>
-            </defaultValue>
-            <fieldText>Product Line (optional)</fieldText>
-            <fieldType>DropdownBox</fieldType>
-            <isRequired>false</isRequired>
-        </fields>
-        <fields>
-            <name>Input_Edit_Set_Inactive</name>
-            <dataType>Boolean</dataType>
-            <defaultValue>
-                <booleanValue>false</booleanValue>
-            </defaultValue>
-            <fieldText>Set this line to Inactive</fieldText>
-            <fieldType>InputField</fieldType>
-        </fields>
-        <showFooter>true</showFooter>
-        <showHeader>true</showHeader>
-    </screens>
-    <screens>
-        <name>Screen_No_Selection_Error</name>
-        <label>No Line Selected</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <allowBack>false</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>false</allowPause>
-        <fields>
-            <name>Text_No_Selection_Error</name>
-            <fieldText>&lt;p&gt;No Business Unit line was selected. Reopen this action and check the row you want to edit before choosing &quot;Edit an existing Business Unit line&quot;.&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <showFooter>true</showFooter>
-        <showHeader>true</showHeader>
-    </screens>
-    <screens>
         <name>Screen_BU_Already_Exists_Error</name>
         <label>Business Unit Already Active</label>
         <locationX>0</locationX>
@@ -890,7 +514,7 @@
         <allowPause>false</allowPause>
         <fields>
             <name>Text_BU_Already_Exists_Error</name>
-            <fieldText>&lt;p&gt;This Business Unit already has an active line on this Opportunity. Reopen this action and choose &quot;Edit an existing Business Unit line&quot; instead.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;This Business Unit already has an active line on this Opportunity. Use &quot;Edit Business Unit Line&quot; to update it instead.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
@@ -968,40 +592,9 @@
         <isOutput>false</isOutput>
     </variables>
     <variables>
-        <name>colSelectedRows</name>
-        <dataType>SObject</dataType>
-        <objectType>Opportunity_Product_Line__c</objectType>
-        <isCollection>true</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>varSelectedRow</name>
-        <dataType>SObject</dataType>
-        <objectType>Opportunity_Product_Line__c</objectType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
         <name>varNewLine</name>
         <dataType>SObject</dataType>
         <objectType>Opportunity_Product_Line__c</objectType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>varUpdateLine</name>
-        <dataType>SObject</dataType>
-        <objectType>Opportunity_Product_Line__c</objectType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>varPendingDml</name>
-        <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
