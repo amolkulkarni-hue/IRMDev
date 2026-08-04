@@ -596,16 +596,28 @@
         </fields>
         <fields>
             <name>DataTable_Lines_ReadOnly</name>
-            <extensionName>flowruntime:datatable</extensionName>
-            <fieldType>ComponentInstance</fieldType>
             <dataTypeMappings>
                 <typeName>T</typeName>
                 <typeValue>Opportunity_Product_Line__c</typeValue>
             </dataTypeMappings>
+            <extensionName>flowruntime:datatable</extensionName>
+            <fieldType>ComponentInstance</fieldType>
             <inputParameters>
                 <name>label</name>
                 <value>
                     <stringValue>Business Unit Lines</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>selectionMode</name>
+                <value>
+                    <stringValue>NO_SELECTION</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>minRowSelection</name>
+                <value>
+                    <numberValue>0.0</numberValue>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -617,19 +629,13 @@
             <inputParameters>
                 <name>columns</name>
                 <value>
-                    <stringValue>[{&quot;fieldName&quot;:&quot;Business_Unit__c&quot;,&quot;label&quot;:&quot;Business Unit&quot;,&quot;type&quot;:&quot;text&quot;},{&quot;fieldName&quot;:&quot;Product_Family__c&quot;,&quot;label&quot;:&quot;Product Family&quot;,&quot;type&quot;:&quot;text&quot;},{&quot;fieldName&quot;:&quot;Product_Line__c&quot;,&quot;label&quot;:&quot;Product Line&quot;,&quot;type&quot;:&quot;text&quot;},{&quot;fieldName&quot;:&quot;EAA__c&quot;,&quot;label&quot;:&quot;EAA&quot;,&quot;type&quot;:&quot;currency&quot;},{&quot;fieldName&quot;:&quot;Is_Primary__c&quot;,&quot;label&quot;:&quot;Primary BU&quot;,&quot;type&quot;:&quot;boolean&quot;},{&quot;fieldName&quot;:&quot;Is_Active__c&quot;,&quot;label&quot;:&quot;Active&quot;,&quot;type&quot;:&quot;boolean&quot;}]</stringValue>
+                    <stringValue>[{&quot;apiName&quot;:&quot;Business_Unit__c&quot;,&quot;guid&quot;:&quot;column-bu01&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:false,&quot;customHeaderLabel&quot;:&quot;&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:0,&quot;label&quot;:&quot;Business Unit&quot;,&quot;type&quot;:&quot;text&quot;},{&quot;apiName&quot;:&quot;Product_Family__c&quot;,&quot;guid&quot;:&quot;column-pf01&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:false,&quot;customHeaderLabel&quot;:&quot;&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:1,&quot;label&quot;:&quot;Product Family&quot;,&quot;type&quot;:&quot;text&quot;},{&quot;apiName&quot;:&quot;Product_Line__c&quot;,&quot;guid&quot;:&quot;column-pl01&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:false,&quot;customHeaderLabel&quot;:&quot;&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:2,&quot;label&quot;:&quot;Product Line&quot;,&quot;type&quot;:&quot;text&quot;},{&quot;apiName&quot;:&quot;EAA__c&quot;,&quot;guid&quot;:&quot;column-ea01&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:false,&quot;customHeaderLabel&quot;:&quot;&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:3,&quot;label&quot;:&quot;EAA&quot;,&quot;type&quot;:&quot;currency&quot;},{&quot;apiName&quot;:&quot;Is_Primary__c&quot;,&quot;guid&quot;:&quot;column-ip01&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:false,&quot;customHeaderLabel&quot;:&quot;&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:4,&quot;label&quot;:&quot;Primary BU&quot;,&quot;type&quot;:&quot;boolean&quot;},{&quot;apiName&quot;:&quot;Is_Active__c&quot;,&quot;guid&quot;:&quot;column-ia01&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:false,&quot;customHeaderLabel&quot;:&quot;&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:5,&quot;label&quot;:&quot;Active&quot;,&quot;type&quot;:&quot;boolean&quot;}]</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>
-                <name>selectionMode</name>
+                <name>shouldDisplayLabel</name>
                 <value>
-                    <stringValue>MULTI_SELECT</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>minRowSelection</name>
-                <value>
-                    <numberValue>0.0</numberValue>
+                    <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -638,7 +644,17 @@
                     <numberValue>0.0</numberValue>
                 </value>
             </inputParameters>
-            <storeOutputAutomatically>false</storeOutputAutomatically>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
@@ -656,28 +672,16 @@
         </connector>
         <fields>
             <name>DataTable_Lines</name>
-            <extensionName>flowruntime:datatable</extensionName>
-            <fieldType>ComponentInstance</fieldType>
             <dataTypeMappings>
                 <typeName>T</typeName>
                 <typeValue>Opportunity_Product_Line__c</typeValue>
             </dataTypeMappings>
+            <extensionName>flowruntime:datatable</extensionName>
+            <fieldType>ComponentInstance</fieldType>
             <inputParameters>
                 <name>label</name>
                 <value>
                     <stringValue>Business Unit Lines — check a row to edit it</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>tableData</name>
-                <value>
-                    <elementReference>colActiveLines</elementReference>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>columns</name>
-                <value>
-                    <stringValue>[{&quot;fieldName&quot;:&quot;Business_Unit__c&quot;,&quot;label&quot;:&quot;Business Unit&quot;,&quot;type&quot;:&quot;text&quot;},{&quot;fieldName&quot;:&quot;Product_Family__c&quot;,&quot;label&quot;:&quot;Product Family&quot;,&quot;type&quot;:&quot;text&quot;},{&quot;fieldName&quot;:&quot;Product_Line__c&quot;,&quot;label&quot;:&quot;Product Line&quot;,&quot;type&quot;:&quot;text&quot;},{&quot;fieldName&quot;:&quot;EAA__c&quot;,&quot;label&quot;:&quot;EAA&quot;,&quot;type&quot;:&quot;currency&quot;},{&quot;fieldName&quot;:&quot;Is_Primary__c&quot;,&quot;label&quot;:&quot;Primary BU&quot;,&quot;type&quot;:&quot;boolean&quot;},{&quot;fieldName&quot;:&quot;Is_Active__c&quot;,&quot;label&quot;:&quot;Active&quot;,&quot;type&quot;:&quot;boolean&quot;}]</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -693,6 +697,24 @@
                 </value>
             </inputParameters>
             <inputParameters>
+                <name>tableData</name>
+                <value>
+                    <elementReference>colActiveLines</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>columns</name>
+                <value>
+                    <stringValue>[{&quot;apiName&quot;:&quot;Business_Unit__c&quot;,&quot;guid&quot;:&quot;column-bu02&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:false,&quot;customHeaderLabel&quot;:&quot;&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:0,&quot;label&quot;:&quot;Business Unit&quot;,&quot;type&quot;:&quot;text&quot;},{&quot;apiName&quot;:&quot;Product_Family__c&quot;,&quot;guid&quot;:&quot;column-pf02&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:false,&quot;customHeaderLabel&quot;:&quot;&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:1,&quot;label&quot;:&quot;Product Family&quot;,&quot;type&quot;:&quot;text&quot;},{&quot;apiName&quot;:&quot;Product_Line__c&quot;,&quot;guid&quot;:&quot;column-pl02&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:false,&quot;customHeaderLabel&quot;:&quot;&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:2,&quot;label&quot;:&quot;Product Line&quot;,&quot;type&quot;:&quot;text&quot;},{&quot;apiName&quot;:&quot;EAA__c&quot;,&quot;guid&quot;:&quot;column-ea02&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:false,&quot;customHeaderLabel&quot;:&quot;&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:3,&quot;label&quot;:&quot;EAA&quot;,&quot;type&quot;:&quot;currency&quot;},{&quot;apiName&quot;:&quot;Is_Primary__c&quot;,&quot;guid&quot;:&quot;column-ip02&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:false,&quot;customHeaderLabel&quot;:&quot;&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:4,&quot;label&quot;:&quot;Primary BU&quot;,&quot;type&quot;:&quot;boolean&quot;},{&quot;apiName&quot;:&quot;Is_Active__c&quot;,&quot;guid&quot;:&quot;column-ia02&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:false,&quot;customHeaderLabel&quot;:&quot;&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:5,&quot;label&quot;:&quot;Active&quot;,&quot;type&quot;:&quot;boolean&quot;}]</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>shouldDisplayLabel</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
                 <name>maxRowSelection</name>
                 <value>
                     <numberValue>1.0</numberValue>
@@ -702,7 +724,17 @@
                 <assignToReference>colSelectedRows</assignToReference>
                 <name>selectedRows</name>
             </outputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
             <storeOutputAutomatically>false</storeOutputAutomatically>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
         </fields>
         <fields>
             <name>Select_Action</name>
