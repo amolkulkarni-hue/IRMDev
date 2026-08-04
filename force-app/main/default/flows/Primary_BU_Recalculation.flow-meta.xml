@@ -219,7 +219,7 @@
     <formulas>
         <name>Formula_Primary_Product_Interest</name>
         <dataType>String</dataType>
-        <expression>IF(NOT(ISBLANK({!varWinningProductFamily})), {!varWinningProductFamily}, TEXT({!$Record.Opportunity__r.Primary_Product_Interest__c}))</expression>
+        <expression>TEXT({!$Record.Opportunity__r.Primary_Product_Interest__c})</expression>
     </formulas>
     <interviewLabel>Primary BU Recalculation {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Primary BU Recalculation</label>
