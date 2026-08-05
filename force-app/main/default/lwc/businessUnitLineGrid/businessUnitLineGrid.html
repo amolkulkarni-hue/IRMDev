@@ -10,6 +10,61 @@
         </lightning-datatable>
     </template>
     <template if:false={hasLines}>
-        <p>No active Business Unit lines for this Opportunity.</p>
+        <p class="slds-m-bottom_small">No active Business Unit lines for this Opportunity.</p>
+    </template>
+
+    <lightning-button
+            label="Add BU Line"
+            icon-name="utility:add"
+            onclick={handleShowAddForm}
+            class="slds-m-top_small"
+            disabled={showAddForm}>
+    </lightning-button>
+
+    <template if:true={showAddForm}>
+        <div class="slds-box slds-m-top_small">
+            <lightning-combobox
+                    label="Business Unit"
+                    value={newLine.Business_Unit__c}
+                    options={businessUnitOptions}
+                    data-field="Business_Unit__c"
+                    onchange={handleNewLineFieldChange}
+                    required>
+            </lightning-combobox>
+            <lightning-input
+                    type="number"
+                    step="0.01"
+                    label="Eligible Annual Amount"
+                    data-field="EAA__c"
+                    onchange={handleNewLineFieldChange}
+                    required>
+            </lightning-input>
+            <lightning-combobox
+                    label="Product Family (optional)"
+                    value={newLine.Product_Family__c}
+                    options={productFamilyOptions}
+                    data-field="Product_Family__c"
+                    onchange={handleNewLineFieldChange}>
+            </lightning-combobox>
+            <lightning-combobox
+                    label="Product Line (optional)"
+                    value={newLine.Product_Line__c}
+                    options={productLineOptions}
+                    data-field="Product_Line__c"
+                    onchange={handleNewLineFieldChange}>
+            </lightning-combobox>
+            <div class="slds-m-top_small">
+                <lightning-button
+                        label="Cancel"
+                        onclick={handleCancelAdd}
+                        class="slds-m-right_x-small">
+                </lightning-button>
+                <lightning-button
+                        variant="brand"
+                        label="Save"
+                        onclick={handleSaveNewLine}>
+                </lightning-button>
+            </div>
+        </div>
     </template>
 </template>
