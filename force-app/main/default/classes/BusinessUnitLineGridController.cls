@@ -69,23 +69,4 @@ public with sharing class BusinessUnitLineGridController {
 
         insert decision.getRecords();
     }
-
-    @AuraEnabled(cacheable=true)
-    public static Map<String, List<String>> getPicklistOptions() {
-        Map<String, List<String>> options = new Map<String, List<String>>();
-        options.put('Business_Unit__c', activeValues(Opportunity_Product_Line__c.Business_Unit__c));
-        options.put('Product_Family__c', activeValues(Opportunity_Product_Line__c.Product_Family__c));
-        options.put('Product_Line__c', activeValues(Opportunity_Product_Line__c.Product_Line__c));
-        return options;
-    }
-
-    private static List<String> activeValues(Schema.SObjectField field) {
-        List<String> values = new List<String>();
-        for (Schema.PicklistEntry entry : field.getDescribe().getPicklistValues()) {
-            if (entry.isActive()) {
-                values.add(entry.getValue());
-            }
-        }
-        return values;
-    }
 }

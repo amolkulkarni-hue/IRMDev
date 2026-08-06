@@ -1,10 +1,11 @@
 import { LightningElement, api, wire } from 'lwc';
 import { refreshApex } from '@salesforce/apex';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
+import { getObjectInfo, getPicklistValuesByRecordType } from 'lightning/uiObjectInfoApi';
+import OPPORTUNITY_PRODUCT_LINE_OBJECT from '@salesforce/schema/Opportunity_Product_Line__c';
 import getActiveLines from '@salesforce/apex/BusinessUnitLineGridController.getActiveLines';
 import saveDraftValues from '@salesforce/apex/BusinessUnitLineGridController.saveDraftValues';
 import createLine from '@salesforce/apex/BusinessUnitLineGridController.createLine';
-import getPicklistOptions from '@salesforce/apex/BusinessUnitLineGridController.getPicklistOptions';
 
 const COLUMNS = [
     { label: 'Business Unit', fieldName: 'Business_Unit__c', type: 'text', editable: false },
@@ -25,26 +26,29 @@ export default class BusinessUnitLineGrid extends LightningElement {
     showAddForm = false;
     newLine = {};
 
-    businessUnitOptions = [];
-    productFamilyOptions = [];
-    productLineOptions = [];
+    objectInfo;
+    picklistFieldValues;
 
     @wire(getActiveLines, { opportunityId: '$recordId' })
     wiredLines(result) {
         this.wiredLinesResult = result;
     }
 
-    @wire(getPicklistOptions)
-    wiredPicklistOptions({ data }) {
+    @wire(getObjectInfo, { objectApiName: OPPORTUNITY_PRODUCT_LINE_OBJECT })
+    wiredObjectInfo({ data }) {
         if (data) {
-            this.businessUnitOptions = this.toOptions(data.Business_Unit__c);
-            this.productFamilyOptions = this.toOptions(data.Product_Family__c);
-            this.productLineOptions = this.toOptions(data.Product_Line__c);
+            this.objectInfo = data;
         }
     }
 
-    toOptions(values) {
-        return (values || []).map((value) => ({ label: value, value }));
+    @wire(getPicklistValuesByRecordType, {
+        objectApiName: OPPORTUNITY_PRODUCT_LINE_OBJECT,
+        recordTypeId: '$objectInfo.defaultRecordTypeId'
+    })
+    wiredPicklistValues({ data }) {
+        if (data) {
+            this.picklistFieldValues = data.picklistFieldValues;
+        }
     }
 
     get lines() {
@@ -53,6 +57,46 @@ export default class BusinessUnitLineGrid extends LightningElement {
 
     get hasLines() {
         return this.lines.length > 0;
+    }
+
+    get businessUnitOptions() {
+        return this.picklistFieldValues ? this.picklistFieldValues.Business_Unit__c.values : [];
+    }
+
+    get productFamilyOptions() {
+        return this.dependentOptions('Product_Family__c', this.newLine.Business_Unit__c);
+    }
+
+    get productLineOptions() {
+        return this.dependentOptions('Product_Line__c', this.newLine.Product_Family__c);
+    }
+
+    get productFamilyDisabled() {
+        return !this.newLine.Business_Unit__c;
+    }
+
+    get productLineDisabled() {
+        return !this.newLine.Product_Family__c;
+    }
+
+    get productFamilyPlaceholder() {
+        return this.productFamilyDisabled ? 'Select a Business Unit first' : 'Select Product Family';
+    }
+
+    get productLinePlaceholder() {
+        return this.productLineDisabled ? 'Select a Product Family first' : 'Select Product Line';
+    }
+
+    dependentOptions(fieldApiName, controllingValue) {
+        if (!this.picklistFieldValues || !controllingValue) {
+            return [];
+        }
+        const field = this.picklistFieldValues[fieldApiName];
+        const controllerIndex = field.controllerValues[controllingValue];
+        if (controllerIndex === undefined) {
+            return [];
+        }
+        return field.values.filter((entry) => entry.validFor.includes(controllerIndex));
     }
 
     handleSave(event) {
@@ -82,7 +126,15 @@ export default class BusinessUnitLineGrid extends LightningElement {
     handleNewLineFieldChange(event) {
         const field = event.target.dataset.field;
         const value = field === 'EAA__c' ? Number(event.target.value) : event.target.value;
-        this.newLine = { ...this.newLine, [field]: value };
+
+        const updated = { ...this.newLine, [field]: value };
+        if (field === 'Business_Unit__c') {
+            updated.Product_Family__c = undefined;
+            updated.Product_Line__c = undefined;
+        } else if (field === 'Product_Family__c') {
+            updated.Product_Line__c = undefined;
+        }
+        this.newLine = updated;
     }
 
     handleSaveNewLine() {
@@ -99,8 +151,18 @@ export default class BusinessUnitLineGrid extends LightningElement {
     }
 
     extractErrorMessage(error) {
-        if (error && error.body && error.body.message) {
-            return error.body.message;
+        if (!error) {
+            return 'An unknown error occurred.';
+        }
+        const body = error.body;
+        if (Array.isArray(body) && body.length > 0 && body[0].message) {
+            return body[0].message;
+        }
+        if (body && body.message) {
+            return body.message;
+        }
+        if (error.message) {
+            return error.message;
         }
         return 'An unknown error occurred.';
     }

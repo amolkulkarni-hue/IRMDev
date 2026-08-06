@@ -69,7 +69,7 @@ private class BusinessUnitLineGridControllerTest {
         Opportunity_Product_Line__c line = [SELECT Id FROM Opportunity_Product_Line__c LIMIT 1];
 
         List<Opportunity_Product_Line__c> draft = new List<Opportunity_Product_Line__c>{
-            new Opportunity_Product_Line__c(Id = line.Id, EAA__c = 25000, Product_Family__c = 'Software')
+            new Opportunity_Product_Line__c(Id = line.Id, EAA__c = 25000, Product_Family__c = 'Data Management')
         };
 
         Test.startTest();
@@ -78,7 +78,7 @@ private class BusinessUnitLineGridControllerTest {
 
         Opportunity_Product_Line__c updated = [SELECT EAA__c, Product_Family__c FROM Opportunity_Product_Line__c WHERE Id = :line.Id];
         System.assertEquals(25000, updated.EAA__c);
-        System.assertEquals('Software', updated.Product_Family__c);
+        System.assertEquals('Data Management', updated.Product_Family__c);
     }
 
     @IsTest
@@ -108,7 +108,7 @@ private class BusinessUnitLineGridControllerTest {
         Opportunity_Product_Line__c newLine = new Opportunity_Product_Line__c(
             Business_Unit__c = 'ALM',
             EAA__c = 15000,
-            Product_Family__c = 'Software'
+            Product_Family__c = 'DM SITAD'
         );
 
         Test.startTest();
@@ -151,15 +151,5 @@ private class BusinessUnitLineGridControllerTest {
         Test.stopTest();
 
         System.assertEquals(true, threwExpectedError, 'Duplicate active Business Unit should be rejected');
-    }
-
-    @IsTest
-    static void testGetPicklistOptionsReturnsActiveValues() {
-        Test.startTest();
-        Map<String, List<String>> options = BusinessUnitLineGridController.getPicklistOptions();
-        Test.stopTest();
-
-        System.assertEquals(true, options.containsKey('Business_Unit__c'));
-        System.assertEquals(true, options.get('Business_Unit__c').contains('RIM'));
     }
 }

@@ -41,17 +41,21 @@
             </lightning-input>
             <lightning-combobox
                     label="Product Family (optional)"
+                    placeholder={productFamilyPlaceholder}
                     value={newLine.Product_Family__c}
                     options={productFamilyOptions}
                     data-field="Product_Family__c"
-                    onchange={handleNewLineFieldChange}>
+                    onchange={handleNewLineFieldChange}
+                    disabled={productFamilyDisabled}>
             </lightning-combobox>
             <lightning-combobox
                     label="Product Line (optional)"
+                    placeholder={productLinePlaceholder}
                     value={newLine.Product_Line__c}
                     options={productLineOptions}
                     data-field="Product_Line__c"
-                    onchange={handleNewLineFieldChange}>
+                    onchange={handleNewLineFieldChange}
+                    disabled={productLineDisabled}>
             </lightning-combobox>
             <div class="slds-m-top_small">
                 <lightning-button
