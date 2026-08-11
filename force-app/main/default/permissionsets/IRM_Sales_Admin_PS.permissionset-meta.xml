@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <description>IRM Sales Admin. Full CRUD on all IRM custom objects. Full field access on Opportunity, Case, Document Checklist, and Reference Threshold. Manages Touch Level criteria, Case Creation rules, and Reference Thresholds.</description>
+    <classAccesses>
+        <apexClass>BusinessUnitLineGridController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
     <fieldPermissions>
         <editable>true</editable>
         <field>Case.Accepted_By__c</field>
@@ -204,6 +208,16 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Document_Checklist__c.Submitted_Date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Opportunity_Product_Line__c.Business_Unit__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Opportunity_Product_Line__c.EAA__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
