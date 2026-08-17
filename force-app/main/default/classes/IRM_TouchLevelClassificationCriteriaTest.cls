@@ -62,6 +62,12 @@ private class IRM_TouchLevelClassificationCriteriaTest {
             Type = 'Active', Sales_Strategic_Account__c = false, Sector__c = 'Public Sector'
         );
 
+        // Drives Eligible_for_Counterparty_Paper__c / Eligible_for_Negotiation__c (formula
+        // fields keyed off IM_Legal_Entity__r.Region__c/Country__c + Opportunity.Amount).
+        insert new IM_Legal_Entity__c(
+            Name = 'IRM TLC Test Legal Entity - US', Region__c = 'North America', Country__c = 'United States'
+        );
+
         Id frameworkRT = Schema.SObjectType.Opportunity.getRecordTypeInfosByDeveloperName()
             .get('Framework_Parent_Opportunity').getRecordTypeId();
         Id standardRT = Schema.SObjectType.Opportunity.getRecordTypeInfosByDeveloperName()
@@ -152,6 +158,9 @@ private class IRM_TouchLevelClassificationCriteriaTest {
     }
     private static Id sectorAcctId() {
         return [SELECT Id FROM Account WHERE Name = 'IRM TLC Test Co - Sector'].Id;
+    }
+    private static Id usLegalEntityId() {
+        return [SELECT Id FROM IM_Legal_Entity__c WHERE Name = 'IRM TLC Test Legal Entity - US'].Id;
     }
     private static Id stdRT() {
         if (standardRecordTypeId == null) {
@@ -293,28 +302,41 @@ private class IRM_TouchLevelClassificationCriteriaTest {
         System.assertEquals('High Touch', touchLevelOf(opp.Id), 'Custom_Solution_Required__c=true should classify High Touch');
     }
 
+    // Eligible_for_Counterparty_Paper__c and Eligible_for_Negotiation__c are formula Checkbox
+    // fields (region/country-scoped Amount thresholds off IM_Legal_Entity__r) — not directly
+    // assignable in Apex. Drive them via their real inputs instead.
+
     @IsTest
     static void test_eligibleForCounterpartyPaper_isHighTouch() {
+        // North America / United States threshold for Eligible_for_Counterparty_Paper__c is
+        // Amount >= 500000.
         Opportunity opp = baseOpp('Qualification', controlAcctId(), stdRT());
-        opp.Eligible_for_Counterparty_Paper__c = true;
+        opp.IM_Legal_Entity__c = usLegalEntityId();
+        opp.Amount = 600000;
 
         Test.startTest();
         insert opp;
         Test.stopTest();
 
-        System.assertEquals('High Touch', touchLevelOf(opp.Id), 'Eligible_for_Counterparty_Paper__c=true should classify High Touch');
+        System.assertEquals('High Touch', touchLevelOf(opp.Id),
+            'Eligible_for_Counterparty_Paper__c (US, Amount>=500k) should classify High Touch');
     }
 
     @IsTest
     static void test_eligibleForNegotiation_isHighTouch() {
+        // North America / United States threshold for Eligible_for_Negotiation__c is
+        // Amount >= 250000, below the 500000 Counterparty Paper threshold — isolates this
+        // branch from the previous test's condition.
         Opportunity opp = baseOpp('Qualification', controlAcctId(), stdRT());
-        opp.Eligible_for_Negotiation__c = true;
+        opp.IM_Legal_Entity__c = usLegalEntityId();
+        opp.Amount = 300000;
 
         Test.startTest();
         insert opp;
         Test.stopTest();
 
-        System.assertEquals('High Touch', touchLevelOf(opp.Id), 'Eligible_for_Negotiation__c=true should classify High Touch');
+        System.assertEquals('High Touch', touchLevelOf(opp.Id),
+            'Eligible_for_Negotiation__c (US, Amount>=250k, <500k) should classify High Touch');
     }
 
     // ── Medium Touch at Qualification ────────────────────────────────────────
@@ -400,7 +422,7 @@ private class IRM_TouchLevelClassificationCriteriaTest {
         Test.stopTest();
 
         System.assertEquals('High Touch', touchLevelOf(opp.Id),
-            "Payment_Terms__c='60' (NOT_IN 30/45/90) should classify High Touch at Solutioning");
+            'Payment_Terms__c=\'60\' (NOT_IN 30/45/90) should classify High Touch at Solutioning');
     }
 
     @IsTest
@@ -413,7 +435,7 @@ private class IRM_TouchLevelClassificationCriteriaTest {
         Test.stopTest();
 
         System.assertEquals('No Touch', touchLevelOf(opp.Id),
-            "Payment_Terms__c='30' is in the excluded set — should not classify High Touch. Got: "
+            'Payment_Terms__c=\'30\' is in the excluded set — should not classify High Touch. Got: '
             + touchLevelOf(opp.Id));
     }
 
