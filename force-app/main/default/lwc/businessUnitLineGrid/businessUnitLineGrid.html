@@ -1,0 +1,74 @@
+<template>
+    <template if:true={hasLines}>
+        <lightning-datatable
+                key-field="Id"
+                data={lines}
+                columns={columns}
+                draft-values={draftValues}
+                onsave={handleSave}
+                hide-checkbox-column>
+        </lightning-datatable>
+    </template>
+    <template if:false={hasLines}>
+        <p class="slds-m-bottom_small">No active Business Unit lines for this Opportunity.</p>
+    </template>
+
+    <lightning-button
+            label="Add BU Line"
+            icon-name="utility:add"
+            onclick={handleShowAddForm}
+            class="slds-m-top_small"
+            disabled={showAddForm}>
+    </lightning-button>
+
+    <template if:true={showAddForm}>
+        <div class="slds-box slds-m-top_small">
+            <lightning-combobox
+                    label="Business Unit"
+                    value={newLine.Business_Unit__c}
+                    options={businessUnitOptions}
+                    data-field="Business_Unit__c"
+                    onchange={handleNewLineFieldChange}
+                    required>
+            </lightning-combobox>
+            <lightning-input
+                    type="number"
+                    step="0.01"
+                    label="Eligible Annual Amount"
+                    data-field="EAA__c"
+                    onchange={handleNewLineFieldChange}
+                    required>
+            </lightning-input>
+            <lightning-combobox
+                    label="Product Family (optional)"
+                    placeholder={productFamilyPlaceholder}
+                    value={newLine.Product_Family__c}
+                    options={productFamilyOptions}
+                    data-field="Product_Family__c"
+                    onchange={handleNewLineFieldChange}
+                    disabled={productFamilyDisabled}>
+            </lightning-combobox>
+            <lightning-combobox
+                    label="Product Line (optional)"
+                    placeholder={productLinePlaceholder}
+                    value={newLine.Product_Line__c}
+                    options={productLineOptions}
+                    data-field="Product_Line__c"
+                    onchange={handleNewLineFieldChange}
+                    disabled={productLineDisabled}>
+            </lightning-combobox>
+            <div class="slds-m-top_small">
+                <lightning-button
+                        label="Cancel"
+                        onclick={handleCancelAdd}
+                        class="slds-m-right_x-small">
+                </lightning-button>
+                <lightning-button
+                        variant="brand"
+                        label="Save"
+                        onclick={handleSaveNewLine}>
+                </lightning-button>
+            </div>
+        </div>
+    </template>
+</template>

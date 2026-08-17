@@ -11,7 +11,7 @@
             <assignToReference>$Record.Business_Unit__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>GetProduct_Interest_Business_Unit_Mapping_Metadata.Business_Unit__c</elementReference>
+                <elementReference>Get_Product_Interest_Business_Unit_Mapping_Metadata.Business_Unit__c</elementReference>
             </value>
         </assignmentItems>
     </assignments>
@@ -23,6 +23,22 @@
         <assignmentItems>
             <assignToReference>$Record.Business_Unit__c</assignToReference>
             <operator>Assign</operator>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>Update_Business_Unit</name>
+        <label>Update Business Unit</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Business_Unit__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue></stringValue>
+            </value>
         </assignmentItems>
     </assignments>
     <decisions>
@@ -38,7 +54,7 @@
             <name>Yes</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>GetProduct_Interest_Business_Unit_Mapping_Metadata</leftValueReference>
+                <leftValueReference>Get_Product_Interest_Business_Unit_Mapping_Metadata</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
@@ -51,25 +67,28 @@
         </rules>
     </decisions>
     <decisions>
-        <name>Is_Actual_Product_Interest</name>
-        <label>Is Actual Product Interest ?</label>
+        <name>Primary_Product_Interest_Populated</name>
+        <label>Primary Product Interest Populated ?</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <defaultConnector>
+            <targetReference>Update_Business_Unit</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
         <rules>
-            <name>Not_Null</name>
+            <name>Yes1</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>$Record.Actual_Product_Interest__c</leftValueReference>
+                <leftValueReference>$Record.Product_Interest__c</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>GetProduct_Interest_Business_Unit_Mapping_Metadata</targetReference>
+                <targetReference>Get_Product_Interest_Business_Unit_Mapping_Metadata</targetReference>
             </connector>
-            <label>Not Null</label>
+            <label>Yes</label>
         </rules>
     </decisions>
     <environments>Default</environments>
@@ -95,8 +114,8 @@
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
     <recordLookups>
-        <name>GetProduct_Interest_Business_Unit_Mapping_Metadata</name>
-        <label>GetProduct Interest Business Unit Mapping Metadata</label>
+        <name>Get_Product_Interest_Business_Unit_Mapping_Metadata</name>
+        <label>Get Product Interest Business Unit Mapping Metadata</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
@@ -108,7 +127,7 @@
             <field>Product_Interest__c</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>$Record.Actual_Product_Interest__c</elementReference>
+                <elementReference>$Record.Product_Interest__c</elementReference>
             </value>
         </filters>
         <filters>
@@ -119,16 +138,18 @@
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>Product_Interest_Business_Unit_Mapping__mdt</object>
+        <object>Product_Interest_BU_Mapping__mdt</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <start>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Is_Actual_Product_Interest</targetReference>
+            <targetReference>Primary_Product_Interest_Populated</targetReference>
         </connector>
-        <filterFormula>(ISCHANGED({!$Record.Actual_Product_Interest__c}) || ISNEW())</filterFormula>
+        <filterFormula>OR( ISNEW() ,
+ISCHANGED({!$Record.Product_Interest__c}) 
+)</filterFormula>
         <object>Lead</object>
         <recordTriggerType>CreateAndUpdate</recordTriggerType>
         <triggerType>RecordBeforeSave</triggerType>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Prevent_Edits_When_Locked</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+    PRIORVALUE(Is_Locked__c) = TRUE,
+    NOT($Permission.Bypass_OPL_Lock)
+)</errorConditionFormula>
+    <errorMessage>This Opportunity Product Line is locked because the Opportunity is closed and cannot be modified.</errorMessage>
+</ValidationRule>

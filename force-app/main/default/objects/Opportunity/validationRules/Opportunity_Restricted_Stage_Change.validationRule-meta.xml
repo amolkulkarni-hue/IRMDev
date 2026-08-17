@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Opportunity_Restricted_Stage_Change</fullName>
+    <active>true</active>
+    <description>Prevents unauthorized users from changing Opportunity Stage once Booking Verification has been reached, for Standard and Framework Opportunities only. Booking Verification Access covers Stage changes out of Booking Verification/Booked.</description>
+    <errorConditionFormula>AND(
+    ISCHANGED(StageName),
+    NOT($Permission.Bypass_Opportunity_Validation),
+    OR(
+ RecordType.DeveloperName = &quot;Standard_Opportunity&quot;,
+RecordType.DeveloperName = &quot;Framework_Parent_Opportunity&quot;
+    ),
+    OR(
+        AND(
+            OR(
+                PRIORVALUE(StageName) = &quot;Booking Verification&quot;,
+                PRIORVALUE(StageName) = &quot;Booked&quot;
+            ),
+            NOT($Permission.Booking_Verification_Access)
+        ),
+        AND(
+            OR(
+                PRIORVALUE(StageName) = &quot;Setup&quot;,
+                PRIORVALUE(StageName) = &quot;Closed&quot;,
+                PRIORVALUE(StageName) = &quot;Lost&quot;
+            ),
+            NOT($Permission.Downstream_Stage_Progression)
+        )
+    )
+)</errorConditionFormula>
+    <errorMessage>This Opportunity has reached a restricted stage and its Stage can no longer be changed by Sellers.</errorMessage>
+</ValidationRule>
