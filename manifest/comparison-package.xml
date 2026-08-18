@@ -3,7 +3,10 @@
     <types>
         <members>BusinessUnitLineGridController</members>
         <members>BusinessUnitLineGridControllerTest</members>
+        <members>CleanupConfigLineItemsBatch</members>
+        <members>CleanupConfigLineItemsBatchTest</members>
         <members>GCPAuthUtility</members>
+        <members>GCPAuthUtilityTest</members>
         <members>IroncladAttachmentControllerTest</members>
         <members>LeadToAccountMatching</members>
         <members>LeadToAccountMatching_test</members>
@@ -13,6 +16,8 @@
         <members>OPLSyncActionTest</members>
         <members>PrimaryBURecalcAction</members>
         <members>PrimaryBURecalcActionTest</members>
+        <members>QuoteDocGeneratorEndpointTest</members>
+        <members>SubmitForApprovalEndpointTest</members>
         <members>SyncChildOppTeamsAndSplits</members>
         <members>SyncChildOppTeamsAndSplitsTest</members>
         <name>ApexClass</name>
@@ -34,18 +39,43 @@
     </types>
     <types>
         <members>Account.Sector__c</members>
+        <members>Case.Accepted_By__c</members>
         <members>Case.All_Start_Docs_Display__c</members>
+        <members>Case.All_Start_Docs_Final__c</members>
+        <members>Case.Cancellation_Reason__c</members>
+        <members>Case.Case_Creation_Rule__c</members>
+        <members>Case.Days_Open__c</members>
         <members>Case.Opp_Stage_At_Creation__c</members>
+        <members>Case.Opportunity_Touch_Level__c</members>
+        <members>Case.Opportunity__c</members>
+        <members>Case.Rejection_Reason__c</members>
+        <members>Case.SLA_Breach__c</members>
+        <members>Deal_Review__c.Account_Segment_Text__c</members>
+        <members>Deal_Review__c.Account_SubSegment_Text__c</members>
+        <members>Deal_Review__c.EMEA_Price_Desk_Approver__c</members>
+        <members>Deal_Review__c.Price_Desk_Approver__c</members>
+        <members>Deal_Review__c.Transaction__c</members>
+        <members>Document_Checklist__c.Bypass_Justification__c</members>
+        <members>Document_Checklist__c.Bypass_Requirement__c</members>
         <members>Lead.IM_Industry__c</members>
         <members>Lead.IM_Sales_Event__c</members>
         <members>Locked_Opportunity_Field__mdt.Active__c</members>
         <members>Locked_Opportunity_Field__mdt.Field_API_Name__c</members>
         <members>Opportunity.Amount_USD__c</members>
-        <members>Opportunity.Business_Case_Justified__c</members>
-        <members>Opportunity.Buying_Commitee_Confirmed__c</members>
+        <members>Opportunity.Business_Unit__c</members>
         <members>Opportunity.Deal_Review_Status__c</members>
         <members>Opportunity.Includes_Storage__c</members>
+        <members>Opportunity.Multi_BU_Flag__c</members>
         <members>Opportunity.Opportunity_Fields_Locked__c</members>
+        <members>Opportunity.Touch_Level_Calculated__c</members>
+        <members>Opportunity.Touch_Level_Calculation_Stage__c</members>
+        <members>Opportunity.Touch_Level_Criteria_Matched__c</members>
+        <members>Opportunity.Touch_Level_Last_Calculated__c</members>
+        <members>Opportunity.Touch_Level_Override_By__c</members>
+        <members>Opportunity.Touch_Level_Override_Date__c</members>
+        <members>Opportunity.Touch_Level_Override_Reason__c</members>
+        <members>Opportunity.Touch_Level_Override__c</members>
+        <members>Opportunity.Touch_Level__c</members>
         <members>OpportunityLineItem.Opportunity_Product_Line__c</members>
         <members>OpportunityTeamMember.CreatedByRole__c</members>
         <members>Opportunity_Product_Line__c.Business_Unit__c</members>
@@ -58,6 +88,12 @@
         <members>Opportunity_Product_Line__c.Opportunity__c</members>
         <members>Opportunity_Product_Line__c.Product_Family__c</members>
         <members>Opportunity_Product_Line__c.Product_Line__c</members>
+        <members>Touch_Level_Case_Routing__c.Case_Type__c</members>
+        <members>Touch_Level_Case_Routing__c.Is_Active__c</members>
+        <members>Touch_Level_Case_Routing__c.Queue_Developer_Name__c</members>
+        <members>Touch_Level_Case_Routing__c.Record_Type_Developer_Name__c</members>
+        <members>Touch_Level_Case_Routing__c.Stage__c</members>
+        <members>Touch_Level_Case_Routing__c.Touch_Level__c</members>
         <name>CustomField</name>
     </types>
     <types>
@@ -243,7 +279,6 @@
         <members>Sales_Ops_Lead_Edit_PS</members>
         <members>Sales_Ops_Lead_Read_PS</members>
         <members>Sales_Ops_Opportunity_Edit_PS</members>
-        <members>Sales_Ops_Opportunity_Read_PS</members>
         <name>PermissionSet</name>
     </types>
     <types>
@@ -297,10 +332,6 @@
         <name>PermissionSetGroup</name>
     </types>
     <types>
-        <members>IM_Custom Sys Admin</members>
-        <name>Profile</name>
-    </types>
-    <types>
         <members>New_Leads</members>
         <name>Queue</name>
     </types>
@@ -309,10 +340,9 @@
         <name>QuickAction</name>
     </types>
     <types>
+        <members>Account.Standard_Account</members>
         <members>Lead.Primary_Lead</members>
         <members>Lead.Standard_Lead</members>
-        <members>Opportunity.Incubation_Record_type</members>
-        <members>Opportunity.Renewal_Record_Type</members>
         <name>RecordType</name>
     </types>
     <types>

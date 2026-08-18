@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>All_Start_Docs_Final__c</fullName>
+    <defaultValue>true</defaultValue>
+    <description>Flow-managed checkbox. True when all Document_Checklist__c records the Case-first engine linked to this Case (Case__c = Case.Id, Case_Creation_Rule__c not null — i.e. Is_Required_For_Case__c docs from Case_Creation_Doc_Requirement__c) have Status = Final, or when none are linked. Maintained by Case_Creation_Trigger_Flow. Status indicator only — since Case creation is Case-first, this no longer gates Case creation, only shows document-collection progress on an already-created Case.</description>
+    <label>All Start Docs Final</label>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>
