@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Bookings_Closeness__c</fullName>
+    <description>#26453: If Opportunity is Closed Won and Close Date is in Past 2 Years then Stores True else stores False</description>
+    <formula>IF(
+AND(NOT(ISBLANK(CloseDate)),IsWon,IsClosed), 
+IF((Today()-CloseDate)/365&lt;=2,True,False),null)</formula>
+    <label>Bookings Closeness</label>
+    <trackHistory>false</trackHistory>
+    <type>Checkbox</type>
+</CustomField>

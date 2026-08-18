@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Is_InSight_being_proposed__c</fullName>
+    <description>Required if Primary Product Line equals Digital Solutions</description>
+    <inlineHelpText>Required if Primary Product Line equals Digital Solutions</inlineHelpText>
+    <label>Is InSight being proposed?</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <controllingField>Primary_Product_Line__c</controllingField>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Yes - InSight Enterprise Edition is part of the proposal</fullName>
+                <default>false</default>
+                <label>Yes - InSight Enterprise Edition is part of the proposal</label>
+            </value>
+            <value>
+                <fullName>Yes - InSight Essential Edition is part of the proposal</fullName>
+                <default>false</default>
+                <label>Yes - InSight Essential Edition is part of the proposal</label>
+            </value>
+            <value>
+                <fullName>No - Using Hyland Software due to feature requirements</fullName>
+                <default>false</default>
+                <label>No - Using Hyland Software due to feature requirements</label>
+            </value>
+            <value>
+                <fullName>No - Using other IRM product</fullName>
+                <default>false</default>
+                <label>No - Using other IRM product</label>
+            </value>
+            <value>
+                <fullName>No - Price</fullName>
+                <default>false</default>
+                <label>No - Price</label>
+            </value>
+            <value>
+                <fullName>No - Missing Feature</fullName>
+                <default>false</default>
+                <label>No - Missing Feature</label>
+            </value>
+            <value>
+                <fullName>No - Customer has internal solution</fullName>
+                <default>false</default>
+                <label>No - Customer has internal solution</label>
+            </value>
+            <value>
+                <fullName>No - Other</fullName>
+                <default>false</default>
+                <label>No - Other</label>
+            </value>
+            <value>
+                <fullName>Yes - InSight Standard</fullName>
+                <default>false</default>
+                <label>Yes - InSight Standard</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>4</visibleLines>
+</CustomField>

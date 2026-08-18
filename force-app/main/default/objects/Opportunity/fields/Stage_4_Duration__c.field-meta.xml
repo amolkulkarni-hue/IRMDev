@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Stage_4_Duration__c</fullName>
+    <externalId>false</externalId>
+    <formula>IF( 
+NOT(ISBLANK(IM_Stage_4_Entered_Date__c)) &amp;&amp; 
+NOT(ISBLANK(IM_Stage_5_Entered_Date__c)), 
+IM_Stage_5_Entered_Date__c - IM_Stage_4_Entered_Date__c, 
+
+IF( 
+NOT(ISBLANK(IM_Stage_4_Entered_Date__c)) &amp;&amp; 
+ISBLANK(IM_Stage_5_Entered_Date__c) &amp;&amp; 
+NOT(ISBLANK(IM_Stage_6_Entered_Date__c)), 
+IM_Stage_6_Entered_Date__c - IM_Stage_4_Entered_Date__c, 
+
+IF( 
+NOT(ISBLANK(IM_Stage_4_Entered_Date__c)) &amp;&amp; 
+ISBLANK(IM_Stage_5_Entered_Date__c) &amp;&amp; 
+ISBLANK(IM_Stage_6_Entered_Date__c) &amp;&amp; 
+NOT(ISBLANK(IM_Stage_7_Entered_Date__c)), 
+IM_Stage_7_Entered_Date__c - IM_Stage_4_Entered_Date__c,	
+
+IF( 
+NOT(ISBLANK(IM_Stage_4_Entered_Date__c)) &amp;&amp; 
+ISBLANK(IM_Stage_5_Entered_Date__c) &amp;&amp; 
+ISBLANK(IM_Stage_6_Entered_Date__c) &amp;&amp;
+ISBLANK(IM_Stage_7_Entered_Date__c), 
+TODAY() - IM_Stage_4_Entered_Date__c, 
+
+NULL	
+)	
+) 
+) 
+)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Stage 4 Duration</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>0</scale>
+    <trackHistory>false</trackHistory>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

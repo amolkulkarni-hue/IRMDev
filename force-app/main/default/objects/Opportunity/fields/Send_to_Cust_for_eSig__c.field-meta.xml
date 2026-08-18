@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Send_to_Cust_for_eSig__c</fullName>
+    <description>1) Button &quot;Create Pkg for eSignature&quot; used for Territory sales reps for generating docusign proposals. 
+2) references static resource IMAGE(&quot;/resource/1433875272000/Send_Package_for_eSignature_Code&quot;)</description>
+    <externalId>false</externalId>
+    <formula>(HYPERLINK(&quot;/apex/DL_VF_Working_On?id=&quot;&amp;Id, IMAGE(&quot;/resource/1440701404000/Send_Package_for_eSignature_Code&quot;, 
+&quot;Send Proposal for eSignature&quot;), &quot;_self&quot;))</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>&lt;font color=&quot;white&quot;&gt;Docusign Create pkg</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

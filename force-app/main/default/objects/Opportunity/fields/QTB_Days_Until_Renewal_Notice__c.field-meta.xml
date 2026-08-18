@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>QTB_Days_Until_Renewal_Notice__c</fullName>
+    <description>GITLAB #1375 Countdown of days remaining until the Renewal Notice Date</description>
+    <externalId>false</externalId>
+    <formula>IF(ISPICKVAL(Type ,&apos;Renewal&apos;),QTB_Renewal_Notice_Date__c - TODAY(),NULL)</formula>
+    <label>Days Until Renewal Notice</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>0</scale>
+    <trackHistory>false</trackHistory>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

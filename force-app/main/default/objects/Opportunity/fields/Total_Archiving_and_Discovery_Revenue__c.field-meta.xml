@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Total_Archiving_and_Discovery_Revenue__c</fullName>
+    <inlineHelpText>Sum of all digital archiving and discovery revenue associated to this opportunity</inlineHelpText>
+    <label>Total Archiving and Discovery Revenue</label>
+    <summarizedField>OpportunityLineItem.TotalPrice</summarizedField>
+    <summaryFilterItems>
+        <field>OpportunityLineItem.Product_Class__c</field>
+        <operation>equals</operation>
+        <value>Digital Archiving and Discovery</value>
+    </summaryFilterItems>
+    <summaryForeignKey>OpportunityLineItem.OpportunityId</summaryForeignKey>
+    <summaryOperation>sum</summaryOperation>
+    <trackHistory>false</trackHistory>
+    <type>Summary</type>
+</CustomField>

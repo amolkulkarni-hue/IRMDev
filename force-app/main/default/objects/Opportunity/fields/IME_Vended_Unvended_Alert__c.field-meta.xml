@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IME_Vended_Unvended_Alert__c</fullName>
+    <description>Alerts the user to populate the vended / unvended textfield if Opportunity has at least one product where Product Class is equal to records management</description>
+    <externalId>false</externalId>
+    <formula>IF( 
+
+IME_Num_of_Storage_Boxes__c &gt; 0,
+
+IF(
+ IME_Number_of_Record_Management_Products__c = 0,
+ &quot;&quot;,
+ IF(
+   AND(
+     IME_Number_of_Record_Management_Products__c &gt; 0,
+     ISPICKVAL( IME_Vended_Unvended__c , &quot;&quot;)
+   ),
+   IMAGE(&quot;/img/msg_icons/error16.png&quot; , &quot;Error&quot;)&amp; &quot; &quot; &amp; $Label.IME_Vended_ErrorMessage,
+   IMAGE(&quot;/img/msg_icons/confirm16.png&quot;, &quot;Success&quot;)&amp; &quot; &quot;
+ )
+),
+
+&quot;&quot;
+
+)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Vended/Unvended Alert</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

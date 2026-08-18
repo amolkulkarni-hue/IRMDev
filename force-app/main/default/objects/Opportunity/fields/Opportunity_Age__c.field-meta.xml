@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Opportunity_Age__c</fullName>
+    <description>This field will calculate the age in number of days of an opportunity based on the following conditions: 
+1.) Lost, and Dead opportunities will be calculated based on the time transpired from Create Date to Date Lost or Date Dead respectively and if available 
+2.) Stages 5, 6, and 7 that have been sent to NCSP will be calculated based on the time transpired from Create Date to Sent to NCSP Date. 
+3.) For Stage 6 or 7 that were not sent to NCSP, the calculation will be from the Create Date to the Stage 6 Entered Date, unless Stage 6 was skipped and then it will be calculated based on the Create Date to the Stage 7 Entered Date. 
+4.) The remaining opportunities that don&apos;t meet these conditions (including all open opportunities) will be calculated by Create Date to Today&apos;s Date.</description>
+    <externalId>false</externalId>
+    <formula>IF(ISPICKVAL(StageName, &apos;Lost&apos;) &amp;&amp; NOT(ISBLANK(Date_Lost__c)), Date_Lost__c - DATEVALUE(CreatedDate), 
+IF(ISPICKVAL(StageName, &apos;Dead&apos;) &amp;&amp; NOT(ISBLANK(Date_Dead__c)), Date_Dead__c - DATEVALUE(CreatedDate), 
+IF(((ISPICKVAL(StageName, &apos;5 - Signed/PO in&apos;)) || (ISPICKVAL(StageName, &apos;6 - Setup&apos;)) || (ISPICKVAL(StageName, &apos;7 - Closed&apos;))) &amp;&amp; NOT(ISBLANK(Sent_to_NCSP_Date__c)), Sent_to_NCSP_Date__c - DATEVALUE(CreatedDate), 
+IF(((ISPICKVAL(StageName, &apos;6 - Setup&apos;)) || (ISPICKVAL(StageName, &apos;7 - Closed&apos;))) &amp;&amp; ISBLANK(Sent_to_NCSP_Date__c) &amp;&amp; NOT(ISBLANK(IM_Stage_6_Entered_Date__c)), IM_Stage_6_Entered_Date__c - DATEVALUE(CreatedDate), 
+IF(((ISPICKVAL(StageName, &apos;6 - Setup&apos;)) || (ISPICKVAL(StageName, &apos;7 - Closed&apos;))) &amp;&amp; ISBLANK(Sent_to_NCSP_Date__c) &amp;&amp; ISBLANK(IM_Stage_6_Entered_Date__c), IM_Stage_7_Entered_Date__c - DATEVALUE(CreatedDate), 
+Now()-CreatedDate )))))</formula>
+    <label>Opportunity Age</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>0</scale>
+    <trackHistory>false</trackHistory>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

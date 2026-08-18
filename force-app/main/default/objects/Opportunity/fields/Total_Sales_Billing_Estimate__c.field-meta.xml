@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Total_Sales_Billing_Estimate__c</fullName>
+    <description>Sum of all the Sales Billing Estimates for this opportunity</description>
+    <label>Total Sales Billing Estimate</label>
+    <summarizedField>Sales_Revenue_Forecast__c.Sales_Billing_Estimate__c</summarizedField>
+    <summaryForeignKey>Sales_Revenue_Forecast__c.Forecast_Opportunity__c</summaryForeignKey>
+    <summaryOperation>sum</summaryOperation>
+    <trackHistory>false</trackHistory>
+    <type>Summary</type>
+</CustomField>

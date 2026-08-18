@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Is_Healthcare_Industry__c</fullName>
+    <description>Mirrors Account IM_Industry__c to Opportunity for use in Dynamic Forms visibility rule on Healthcare Partner/GPO field. Required because Dynamic Forms does not support cross-object field references. Do not expose on page layout. Internal use only.</description>
+    <formula>TEXT(Account.IM_Industry__c) = &apos;Health Care and Social Assistance&apos;</formula>
+    <inlineHelpText>Returns true when associated Account IM_Industry__c = Health Care and Social Assistance. Used for Dynamic Forms visibility only.</inlineHelpText>
+    <label>Is Healthcare Industry</label>
+    <trackHistory>false</trackHistory>
+    <type>Checkbox</type>
+</CustomField>

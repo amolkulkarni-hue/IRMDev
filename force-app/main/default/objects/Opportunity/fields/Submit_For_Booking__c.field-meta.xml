@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Submit_For_Booking__c</fullName>
+    <description>NCSP &quot;Submit For Booking&quot; button for lightning.
+Case #09154470
+#20466: Added Deal Validation logic for oppty over 25k USD
+
+Gitlab story #20039 : Added logic to hide Submit for booking hyperlink if opportunity type is Framework
+
+#23015: Included currency conversion logic for Oppty over 25k USD and Renewals will have Submit for Booking in Stage 5
+#31518: Opportunity: Update visibility to &quot;Submit For Booking&quot; link for United States and Canada Opps</description>
+    <externalId>false</externalId>
+    <formula>IF(ISPICKVAL(Type,&apos;Framework&apos;),&apos;&apos;,
+IF(
+OR(
+(ISPICKVAL(StageName,&apos;5 - Signed/PO in&apos;) &amp;&amp; ISPICKVAL(Type,&apos;Renewal&apos;) &amp;&amp; RecordType.Name=&apos;Standard Opportunity&apos; &amp;&amp; ( (Amount / CURRENCYRATE(TEXT(CurrencyIsoCode))) &lt; 25000 || ISPICKVAL(Deal_Validation__c,&apos;Pass&apos;))) ,
+(ISPICKVAL(StageName,&apos;5 - Signed/PO in&apos;) &amp;&amp; ISPICKVAL(Type,&apos;Renewal&apos;) &amp;&amp; RecordType.Name!=&apos;Standard Opportunity&apos;)
+),
+HYPERLINK(&quot;/apex/renewalOppWizard2_step1_Lightning?oppId=&quot;+ Id, &quot;Submit for Booking&quot;),
+IF(Owner_isActive__c!=TRUE,
+&apos;&apos;,
+/* START_NGUYEN_05.11.22_GIT:8783 - added condition to exclude SITAD */
+IF((Owner_Commis__c=null || Owner_Commis__c=&apos; &apos; &amp;&amp; NOT(ISPICKVAL(Primary_Product_Line__c, &quot;DM SITAD&quot;))), &apos;&apos;,
+
+/* END_NGUYEN_05.11.22_GIT:8783 */
+
+IF(
+OR(
+(ISPICKVAL(StageName,&apos;5 - Signed/PO in&apos;) &amp;&amp; RecordType.Name=&apos;Standard Opportunity&apos; &amp;&amp; ISPICKVAL(Type,&apos;Up-Sell/Lift&apos;) &amp;&amp;(QTB_Billing_Country_Name__c=&apos;United States&apos; || QTB_Billing_Country_Name__c=&apos;Canada&apos;)&amp;&amp;( (Amount / CURRENCYRATE(TEXT(CurrencyIsoCode))) &lt; 25000 || ISPICKVAL(Deal_Validation__c,&apos;Pass&apos;))),
+(ISPICKVAL(StageName,&apos;5 - Signed/PO in&apos;) &amp;&amp; RecordType.Name!=&apos;Standard Opportunity&apos;&amp;&amp; ISPICKVAL(Type,&apos;Up-Sell/Lift&apos;) &amp;&amp;(QTB_Billing_Country_Name__c=&apos;United States&apos; || QTB_Billing_Country_Name__c=&apos;Canada&apos;))
+),
+HYPERLINK(&quot;/apex/NCSPSell_LiftWizard_CompletedOrder_Lng?Id=&quot;+ Id, &quot;Submit for Booking&quot;),
+IF(
+OR(
+ISPICKVAL(StageName,&apos;5 - Signed/PO in&apos;) &amp;&amp; RecordType.Name=&apos;Standard Opportunity&apos; &amp;&amp; (( (Amount / CURRENCYRATE(TEXT(CurrencyIsoCode))) &lt; 25000) || (ISPICKVAL(Deal_Validation__c,&apos;Pass&apos;))),
+ISPICKVAL(StageName,&apos;5 - Signed/PO in&apos;) &amp;&amp; RecordType.Name!=&apos;Standard Opportunity&apos;
+),
+HYPERLINK(&quot;/apex/NCSPWizard_Step1_Lightning?oppId=&quot;+ Id, &quot;Submit for Booking&quot;),
+&apos;&apos;
+)
+)
+)
+)
+)
+)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Submit For Booking</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

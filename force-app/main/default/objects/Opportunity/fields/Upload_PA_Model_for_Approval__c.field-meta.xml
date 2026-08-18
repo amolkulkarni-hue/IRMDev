@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Upload_PA_Model_for_Approval__c</fullName>
+    <description>Upload PA Model for Approval for Lightning users - Case# 09154470
+#19274 Field label (Upload PA Model for Approval) renamed to Upload PA Model.</description>
+    <externalId>false</externalId>
+    <formula>IF(
+AND(
+CONTAINS( TEXT( US_Federal_GSA_Pricing__c ) , &apos;Yes&apos;),
+TEXT( IMGS_Approval_Status__c ) = &apos;Under Review&apos;
+),
+&apos;&apos;,
+HYPERLINK(&quot;/apex/IRM_ScheduleAWizard_Lightning?id=&quot;+ Id+&quot;&amp;Step=STEP_VIEW_STEP1&quot;, &quot;Upload PA Model&quot;)
+)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Upload PA Model</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

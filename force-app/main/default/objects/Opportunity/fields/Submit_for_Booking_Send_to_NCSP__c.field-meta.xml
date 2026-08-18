@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Submit_for_Booking_Send_to_NCSP__c</fullName>
+    <description>35312 : Booking Verification: Expand Booking Verification to UKI &amp; hide Submit For Booking until Passed</description>
+    <externalId>false</externalId>
+    <formula>IF(
+OR(
+/* Condition 1: For UK and Ireland */
+
+AND(
+OR(QTB_Billing_Country_Name__c=&apos;United Kingdom&apos;, QTB_Billing_Country_Name__c=&apos;Ireland&apos;),
+OR(RecordType.Name=&apos;Standard Opportunity&apos;, RecordType.Name=&apos;IMLA Standard Opportunity&apos;, 
+RecordType.Name=&apos;IME Standard Opportunity&apos;, RecordType.Name=&apos;IMAP Standard Opportunity&apos;),
+OR(Amount / CURRENCYRATE(TEXT(CurrencyIsoCode)) &lt; 5000, 
+ ISPICKVAL(Deal_Validation__c,&apos;Pass&apos;)),
+ISPICKVAL(StageName,&apos;5 - Signed/PO in&apos;)
+),
+
+/* Condition 2: Other Countries As it is */
+
+QTB_Billing_Country_Name__c=&apos;France&apos;, QTB_Billing_Country_Name__c=&apos;Belgium&apos;,
+QTB_Billing_Country_Name__c=&apos;Netherlands&apos;, QTB_Billing_Country_Name__c=&apos;Sweden&apos;, QTB_Billing_Country_Name__c=&apos;Denmark&apos;
+),
+
+IF(ISPICKVAL(Type,&apos;Renewal&apos;),
+HYPERLINK(&quot;/apex/renewalOppWizard2_step1_Lightning?oppId=&quot;+ Id, &quot;Submit for Booking&quot;),
+
+IF(Owner_isActive__c!=TRUE, &apos;&apos;, IF(ISPICKVAL(StageName,&apos;5 - Signed/PO in&apos;),
+HYPERLINK(&quot;/apex/NCSPWizard_Step2_Lightning?oppId=&quot;+ Id, &quot;Submit for Booking&quot;),
+&apos;&apos; ) ) ),
+&apos;&apos;
+)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Submit for Booking(Send to NCSP)</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>
