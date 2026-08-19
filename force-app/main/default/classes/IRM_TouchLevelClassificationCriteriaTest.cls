@@ -44,7 +44,7 @@ private class IRM_TouchLevelClassificationCriteriaTest {
         insert new Account(
             Name = 'IRM TLC Test Co - Control', RecordTypeId = standardAcctRecordTypeId,
             BillingCountry = 'United States', BillingState = 'NY', BillingPostalCode = '11209',
-            Type = 'Active', Sales_Strategic_Account__c = false, Sector__c = 'Services'
+            Type = 'Inactive', Sales_Strategic_Account__c = false, Sector__c = 'Services'
         );
 
         // Strategic Account: Sales_Strategic_Account__c = true, Sector = BFSI (both are
@@ -142,12 +142,19 @@ private class IRM_TouchLevelClassificationCriteriaTest {
         // (Cross-Sell/Upsell, New Deal, Renewal) is itself one of the conditions under test,
         // so a "neutral" default would contaminate the very branches being isolated. Tests
         // that care about Type set it explicitly.
-        return new Opportunity(
+        Opportunity opp = new Opportunity(
             Name = 'TLC Test Opp', AccountId = acctId,
             RecordTypeId = recordTypeId,
             StageName = stage, CloseDate = Date.today().addDays(30),
             Pricebook2Id = Test.getStandardPricebookId(), Amount = 50000
         );
+        // Validation rule requires Contract_Term_months__c before an Opportunity can be AT
+        // Negotiation or Booking Verification (inserting directly at that stage hits the same
+        // gate as moving into it).
+        if (stage == 'Negotiation' || stage == 'Booking Verification' || stage == 'Setup') {
+            opp.Contract_Term_months__c = 12;
+        }
+        return opp;
     }
 
     private static Id controlAcctId() {
