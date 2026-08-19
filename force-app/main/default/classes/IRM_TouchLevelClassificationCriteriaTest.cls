@@ -97,7 +97,10 @@ private class IRM_TouchLevelClassificationCriteriaTest {
         sHtConditions.add(new List<String>{ 'Type', 'EQUALS', 'New Deal' });
         sHtConditions.add(new List<String>{ 'Custom_Demo_POC__c', 'IS_TRUE', null });
         sHtConditions.add(new List<String>{ 'Payment_Terms__c', 'NOT_IN', '30,45,90' });
-        String htLogicExtended = htLogicBase + ' OR 11 OR 12 OR 13 OR 14';
+        // Guard condition 15: without it, a blank Payment_Terms__c reads as '' which
+        // satisfies NOT_IN and incorrectly fires High Touch (see test_blankPaymentTerms_doesNotClassifyHighTouch below).
+        sHtConditions.add(new List<String>{ 'Payment_Terms__c', 'IS_NOT_NULL', null });
+        String htLogicExtended = htLogicBase + ' OR 11 OR 12 OR 13 OR (14 AND 15)';
         insertCriteria('Solutioning', 'High Touch', 1, htLogicExtended, sHtConditions);
 
         // Negotiation carries the exact same High Touch set forward — nothing new defined at
@@ -113,8 +116,9 @@ private class IRM_TouchLevelClassificationCriteriaTest {
 
         List<List<String>> sMtConditions = new List<List<String>>(qMtConditions);
         sMtConditions.add(new List<String>{ 'Payment_Terms__c', 'NOT_IN', '30,45,90' });
-        insertCriteria('Solutioning', 'Medium Touch', 2, '1 OR 2 OR 3', sMtConditions);
-        insertCriteria('Negotiation', 'Medium Touch', 2, '1 OR 2 OR 3', sMtConditions);
+        sMtConditions.add(new List<String>{ 'Payment_Terms__c', 'IS_NOT_NULL', null });
+        insertCriteria('Solutioning', 'Medium Touch', 2, '1 OR 2 OR (3 AND 4)', sMtConditions);
+        insertCriteria('Negotiation', 'Medium Touch', 2, '1 OR 2 OR (3 AND 4)', sMtConditions);
     }
 
     private static void insertCriteria(String stage, String touchLevel, Integer priority,
@@ -470,8 +474,8 @@ private class IRM_TouchLevelClassificationCriteriaTest {
     static void test_mediumTouchConditionCarriesForwardToNegotiation() {
         Opportunity opp = baseOpp('Negotiation', controlAcctId(), stdRT());
         opp.Remarketing_Required__c = 'Yes';
-        // Negotiation's criteria also carries a Payment_Terms__c NOT_IN condition (see the
-        // KNOWN GAP test below) — set a standard value so this test isolates Remarketing_Required__c.
+        // Negotiation's criteria also carries a Payment_Terms__c NOT_IN condition — set a
+        // standard value so this test isolates Remarketing_Required__c.
         opp.Payment_Terms__c = '30';
 
         Test.startTest();
@@ -483,20 +487,15 @@ private class IRM_TouchLevelClassificationCriteriaTest {
             + 'still classify Medium Touch at Negotiation via cumulative carry-forward');
     }
 
-    // ── KNOWN GAP: blank Payment_Terms__c is misclassified ───────────────────
+    // ── Regression guard: blank Payment_Terms__c must NOT be misclassified ───
     //
     // NOT_IN's "not in the set" semantics treat a blank field as satisfying the condition
-    // (empty string is not in {'30','45','90'}), so any Opportunity that hasn't had Payment
-    // Terms set yet at Solutioning/Negotiation/Booking Verification/Setup gets escalated to
-    // High Touch (and would independently also satisfy the Medium Touch lane's copy of this
-    // same condition) purely because the field is unset — not because terms are genuinely
-    // non-standard. This is a real gap in the currently-active IRMDEV criteria
-    // (TLC-S-HT-001/TLC-N-HT-001/TLC-BV-HT-001/TLC-ST-HT-001 and the Medium Touch equivalents),
-    // not a test artifact. This test documents CURRENT behavior so a future intentional fix
-    // (e.g. guarding with an added Payment_Terms__c IS_NOT_NULL condition) shows up as an
-    // intentional, visible test change rather than a silent behavior shift.
+    // (empty string is not in {'30','45','90'}), which used to escalate any Opportunity with
+    // unset Payment Terms to High/Medium Touch at Solutioning/Negotiation/Booking
+    // Verification/Setup — fixed by ANDing a Payment_Terms__c IS_NOT_NULL guard onto the
+    // NOT_IN condition (2026-08-18). This test locks in the fixed behavior.
     @IsTest
-    static void test_KNOWNGAP_blankPaymentTerms_isMisclassifiedHighTouchAtSolutioning() {
+    static void test_blankPaymentTerms_doesNotClassifyHighTouch() {
         Opportunity opp = baseOpp('Solutioning', controlAcctId(), stdRT());
         // Payment_Terms__c intentionally left blank.
 
@@ -504,10 +503,9 @@ private class IRM_TouchLevelClassificationCriteriaTest {
         insert opp;
         Test.stopTest();
 
-        System.assertEquals('High Touch', touchLevelOf(opp.Id),
-            'KNOWN GAP: blank Payment_Terms__c currently satisfies NOT_IN (30/45/90) and '
-            + 'incorrectly classifies High Touch. If this assertion starts failing, it likely '
-            + 'means the gap was fixed — update/remove this test rather than treating it as a regression.');
+        System.assertEquals('No Touch', touchLevelOf(opp.Id),
+            'Blank Payment_Terms__c should NOT satisfy the NOT_IN condition now that it is '
+            + 'guarded with IS_NOT_NULL. Got: ' + touchLevelOf(opp.Id));
     }
 
     // ── Priority / first-match-wins when both lanes would match ──────────────
