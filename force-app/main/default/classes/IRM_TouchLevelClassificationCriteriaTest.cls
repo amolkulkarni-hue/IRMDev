@@ -470,6 +470,9 @@ private class IRM_TouchLevelClassificationCriteriaTest {
     static void test_mediumTouchConditionCarriesForwardToNegotiation() {
         Opportunity opp = baseOpp('Negotiation', controlAcctId(), stdRT());
         opp.Remarketing_Required__c = 'Yes';
+        // Negotiation's criteria also carries a Payment_Terms__c NOT_IN condition (see the
+        // KNOWN GAP test below) — set a standard value so this test isolates Remarketing_Required__c.
+        opp.Payment_Terms__c = '30';
 
         Test.startTest();
         insert opp;
@@ -478,6 +481,33 @@ private class IRM_TouchLevelClassificationCriteriaTest {
         System.assertEquals('Medium Touch', touchLevelOf(opp.Id),
             'Remarketing_Required__c=Yes (Qualification-original Medium Touch condition) should '
             + 'still classify Medium Touch at Negotiation via cumulative carry-forward');
+    }
+
+    // ── KNOWN GAP: blank Payment_Terms__c is misclassified ───────────────────
+    //
+    // NOT_IN's "not in the set" semantics treat a blank field as satisfying the condition
+    // (empty string is not in {'30','45','90'}), so any Opportunity that hasn't had Payment
+    // Terms set yet at Solutioning/Negotiation/Booking Verification/Setup gets escalated to
+    // High Touch (and would independently also satisfy the Medium Touch lane's copy of this
+    // same condition) purely because the field is unset — not because terms are genuinely
+    // non-standard. This is a real gap in the currently-active IRMDEV criteria
+    // (TLC-S-HT-001/TLC-N-HT-001/TLC-BV-HT-001/TLC-ST-HT-001 and the Medium Touch equivalents),
+    // not a test artifact. This test documents CURRENT behavior so a future intentional fix
+    // (e.g. guarding with an added Payment_Terms__c IS_NOT_NULL condition) shows up as an
+    // intentional, visible test change rather than a silent behavior shift.
+    @IsTest
+    static void test_KNOWNGAP_blankPaymentTerms_isMisclassifiedHighTouchAtSolutioning() {
+        Opportunity opp = baseOpp('Solutioning', controlAcctId(), stdRT());
+        // Payment_Terms__c intentionally left blank.
+
+        Test.startTest();
+        insert opp;
+        Test.stopTest();
+
+        System.assertEquals('High Touch', touchLevelOf(opp.Id),
+            'KNOWN GAP: blank Payment_Terms__c currently satisfies NOT_IN (30/45/90) and '
+            + 'incorrectly classifies High Touch. If this assertion starts failing, it likely '
+            + 'means the gap was fixed — update/remove this test rather than treating it as a regression.');
     }
 
     // ── Priority / first-match-wins when both lanes would match ──────────────
