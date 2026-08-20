@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Grants edit access to the Touch Level override fields on Opportunity (Touch_Level__c, Touch_Level_Override__c, Touch_Level_Override_By__c, Touch_Level_Override_Date__c, Touch_Level_Override_Reason__c) so Deal Desk can process manual Touch Level overrides. Deliberately excludes the 6 system-calculated Touch Level fields (Touch_Level_Calculated__c, Touch_Level_Calculation_Stage__c, Touch_Level_Criteria_Matched__c, Touch_Level_Last_Calculated__c, Business_Unit__c, Multi_BU_Flag__c), which remain automation-only. Relies on base Opportunity Edit access granted elsewhere (e.g. Opportunity_Update_PS).</description>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Opportunity.Touch_Level__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Opportunity.Touch_Level_Override__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Opportunity.Touch_Level_Override_By__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Opportunity.Touch_Level_Override_Date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Opportunity.Touch_Level_Override_Reason__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Opportunity Touch Level Override PS</label>
+</PermissionSet>
