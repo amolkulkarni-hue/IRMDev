@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>INFOSEC_Data_Types_In_Scope__c</fullName>
+    <description>The categories of sensitive data in scope for this request.</description>
+    <inlineHelpText>Select all data types in scope.</inlineHelpText>
+    <label>Data Types In Scope</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>PII</fullName>
+                <default>false</default>
+                <label>PII</label>
+            </value>
+            <value>
+                <fullName>PHI (HIPAA)</fullName>
+                <default>false</default>
+                <label>PHI (HIPAA)</label>
+            </value>
+            <value>
+                <fullName>PCI</fullName>
+                <default>false</default>
+                <label>PCI</label>
+            </value>
+            <value>
+                <fullName>IP (Intellectual Property)</fullName>
+                <default>false</default>
+                <label>IP (Intellectual Property)</label>
+            </value>
+            <value>
+                <fullName>SLED/Gov Data</fullName>
+                <default>false</default>
+                <label>SLED/Gov Data</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>4</visibleLines>
+</CustomField>

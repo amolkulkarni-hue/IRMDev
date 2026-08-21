@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Requester_Info_Complete__c</fullName>
+    <description>Dispatches to the per-section Requester-Info-Complete field based on the parent Case&apos;s Type. Case Types with no seller-filled Requester fields yet default to true (never blocks Submit).</description>
+    <formula>IF(TEXT(Case__r.Type) = &quot;InfoSecurity&quot;, INFOSEC_Requester_Info_Complete__c,
+IF(TEXT(Case__r.Type) = &quot;Bid Management&quot;, BM_Requester_Info_Complete__c,
+IF(TEXT(Case__r.Type) = &quot;Remarketing&quot;, RMKT_Requester_Info_Complete__c,
+IF(TEXT(Case__r.Type) = &quot;Solution Architects&quot;, SA_Requester_Info_Complete__c,
+IF(TEXT(Case__r.Type) = &quot;Deal Desk&quot;, DD_Requester_Info_Complete__c,
+IF(TEXT(Case__r.Type) = &quot;Revenue Management&quot;, REVMGMT_Requester_Info_Complete__c,
+IF(TEXT(Case__r.Type) = &quot;Legal&quot;, LEGAL_Requester_Info_Complete__c,
+true)))))))</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <inlineHelpText>System field — reflects whether all requester-facing fields for this Case&apos;s type are filled in.</inlineHelpText>
+    <label>Requester Info Complete</label>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

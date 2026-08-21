@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>SA_Requester_Info_Complete__c</fullName>
+    <description>Field to check if all required Solution Architects Case-Requester fields are populated.</description>
+    <formula>AND(
+			NOT(ISBLANK(TEXT(SA_Target_Start_Date__c))),
+			NOT(ISBLANK(TEXT(SA_Customers_Business_Objectives__c))),
+			NOT(ISBLANK(TEXT(SA_Expected_Outcome__c))),
+			NOT(ISBLANK(TEXT(SA_IRMs_Unique_Value__c))),
+			NOT(ISBLANK(TEXT(SA_RFx__c)))
+)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <inlineHelpText>Required Solution Architects Case-Requester fields are populated.</inlineHelpText>
+    <label>Requester Info Complete</label>
+    <trackHistory>false</trackHistory>
+    <type>Checkbox</type>
+</CustomField>

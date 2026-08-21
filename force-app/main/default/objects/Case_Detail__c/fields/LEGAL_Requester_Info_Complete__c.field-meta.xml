@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>LEGAL_Requester_Info_Complete__c</fullName>
+    <description>Field to check if all required Legal Case-Requester fields are populated.</description>
+    <formula>AND(
+			NOT(ISBLANK(TEXT(LEGAL_Revenue_Type__c))),
+			NOT(ISBLANK(TEXT(LEGAL_Date_Needed__c)))
+)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <inlineHelpText>Required Legal Case-Requester fields are populated.</inlineHelpText>
+    <label>Requester Info Complete</label>
+    <trackHistory>false</trackHistory>
+    <type>Checkbox</type>
+</CustomField>

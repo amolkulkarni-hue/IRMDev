@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>INFOSEC_Compliance_Certs_Required__c</fullName>
+    <description>The compliance certifications the customer requires for this engagement.</description>
+    <inlineHelpText>Select all required compliance certifications.</inlineHelpText>
+    <label>Compliance Certifications Required</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>SOC 2 Type II</fullName>
+                <default>false</default>
+                <label>SOC 2 Type II</label>
+            </value>
+            <value>
+                <fullName>ISO 27001</fullName>
+                <default>false</default>
+                <label>ISO 27001</label>
+            </value>
+            <value>
+                <fullName>FedRAMP</fullName>
+                <default>false</default>
+                <label>FedRAMP</label>
+            </value>
+            <value>
+                <fullName>HIPAA BAA</fullName>
+                <default>false</default>
+                <label>HIPAA BAA</label>
+            </value>
+            <value>
+                <fullName>GDPR DPA</fullName>
+                <default>false</default>
+                <label>GDPR DPA</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>4</visibleLines>
+</CustomField>
