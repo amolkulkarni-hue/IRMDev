@@ -4,10 +4,10 @@
     <description>Field to check if all required Solution Architects Case-Requester fields are populated.</description>
     <formula>AND(
 			NOT(ISBLANK(TEXT(SA_Target_Start_Date__c))),
-			NOT(ISBLANK(TEXT(SA_Customers_Business_Objectives__c))),
-			NOT(ISBLANK(TEXT(SA_Expected_Outcome__c))),
-			NOT(ISBLANK(TEXT(SA_IRMs_Unique_Value__c))),
-			NOT(ISBLANK(TEXT(SA_RFx__c)))
+			NOT(ISBLANK(SA_Customers_Business_Objectives__c)),
+			NOT(ISBLANK(SA_Expected_Outcome__c)),
+			NOT(ISBLANK(SA_IRMs_Unique_Value__c)),
+			NOT(ISBLANK(SA_RFx__c))
 )</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <inlineHelpText>Required Solution Architects Case-Requester fields are populated.</inlineHelpText>

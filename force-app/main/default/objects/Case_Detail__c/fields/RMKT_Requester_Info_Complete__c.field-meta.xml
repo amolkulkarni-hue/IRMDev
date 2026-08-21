@@ -3,11 +3,11 @@
     <fullName>RMKT_Requester_Info_Complete__c</fullName>
     <description>Field to check if all required Remarketing Case-Requester fields are populated.</description>
     <formula>AND(
-			NOT(ISBLANK(TEXT(RMKT_Asset_Type__c))),
+			NOT(ISBLANK(RMKT_Asset_Type__c)),
 			NOT(ISBLANK(TEXT(RMKT_Nature_Of_Request__c))),
 			NOT(ISBLANK(TEXT(RMKT_Condition_Notes__c))),
 			NOT(ISBLANK(TEXT(RMKT_Due_Date__c))),
-			NOT(ISBLANK(TEXT(RMKT_Request_Type__c))),
+			NOT(ISBLANK(RMKT_Request_Type__c)),
 			NOT(ISBLANK(TEXT(RMKT_Take_Out_Time_Frame__c)))
 )</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
