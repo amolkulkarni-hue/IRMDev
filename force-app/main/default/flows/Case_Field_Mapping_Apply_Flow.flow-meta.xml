@@ -31,7 +31,7 @@
                 <leftValueReference>varCaseRecordTypeDevName</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>B2B_Implementation</stringValue>
+                    <stringValue>Post_Sale_Support</stringValue>
                 </rightValue>
             </conditions>
             <conditions>
@@ -47,7 +47,7 @@
             </connector>
         </rules>
     </decisions>
-    <description>Record-Triggered Flow on Case (After Insert), Asynchronous Path only — nothing runs in the Case-insert transaction itself. Filters to Cases linked to an Opportunity, resolves the Case&apos;s Record Type Developer Name, and — only for B2B_Implementation or Deal_Support — calls CaseFieldMappingEngine.applyMappings to copy configured Opportunity/Account field values onto the Case (see Case_Field_Mapping__c). The Record Type check here is a declarative first gate; CaseFieldMappingEngine re-checks its own ELIGIBLE_RECORD_TYPES allow-list independently.</description>
+    <description>Record-Triggered Flow on Case (After Insert), Asynchronous Path only — nothing runs in the Case-insert transaction itself. Filters to Cases linked to an Opportunity, resolves the Case&apos;s Record Type Developer Name, and — only for Post_Sale_Support or Deal_Support — calls CaseFieldMappingEngine.applyMappings to copy configured Opportunity/Account field values onto the Case (see Case_Field_Mapping__c). The Record Type check here is a declarative first gate; CaseFieldMappingEngine re-checks its own ELIGIBLE_RECORD_TYPES allow-list independently.</description>
     <label>Case Field Mapping Apply Flow</label>
     <processMetadataValues>
         <name>BuilderType</name>

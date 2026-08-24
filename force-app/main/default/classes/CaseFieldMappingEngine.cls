@@ -17,7 +17,7 @@ public with sharing class CaseFieldMappingEngine {
     // Case_Field_Mapping__c.Record_Type_Developer_Name__c values these two Record Type Ids
     // correspond to — used to bucket mappings without an extra Schema call per Case.
     private static final Map<Id, String> RECTYPE_ID_TO_DEV_NAME = new Map<Id, String>{
-        App_Constants.B2B_IMPLEMENTATION_CASE_RECTYPE_ID => 'B2B_Implementation',
+        App_Constants.B2B_IMPLEMENTATION_CASE_RECTYPE_ID => 'Post_Sale_Support',
         App_Constants.DEAL_SUPPORT_CASE_RECTYPE_ID => 'Deal_Support'
     };
 

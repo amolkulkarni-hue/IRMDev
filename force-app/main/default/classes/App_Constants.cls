@@ -52,6 +52,6 @@ public with sharing class App_Constants {
      public static final string IME_ADDENDUMEXTENSION_DEVELOPENAME = 'IME_Addendum_Extension';
 
     /* --- Case Object Record Type Ids (used by CaseFieldMappingEngine's eligibility gate) --- */
-    public static final Id B2B_IMPLEMENTATION_CASE_RECTYPE_ID = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('B2B_Implementation').getRecordTypeId();
+    public static final Id B2B_IMPLEMENTATION_CASE_RECTYPE_ID = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('Post_Sale_Support').getRecordTypeId();
     public static final Id DEAL_SUPPORT_CASE_RECTYPE_ID = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('Deal_Support').getRecordTypeId();
 }

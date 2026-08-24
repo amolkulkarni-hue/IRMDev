@@ -191,7 +191,7 @@ private class CaseFieldMappingEngineTest {
         Map<Id, Case> resultsById = new Map<Id, Case>(
             [SELECT Account_Closing_Admin_Fee__c FROM Case WHERE Id IN :new Set<Id>{ b2b.Id, dealSupport.Id }]);
         System.assertEquals(opp.Amount, resultsById.get(b2b.Id).Account_Closing_Admin_Fee__c,
-            'Universal mapping should apply to B2B_Implementation Cases.');
+            'Universal mapping should apply to Post_Sale_Support Cases.');
         System.assertEquals(opp.Amount, resultsById.get(dealSupport.Id).Account_Closing_Admin_Fee__c,
             'Universal mapping should apply to Deal_Support Cases.');
     }
@@ -199,8 +199,8 @@ private class CaseFieldMappingEngineTest {
     @IsTest
     static void testRecordTypeScopedMapping_doesNotApplyToOtherEligibleRecordType() {
         Opportunity opp = getOpp();
-        // Scoped only to B2B_Implementation.
-        makeMapping('B2B_Implementation', 'Opportunity', 'Amount', 'Account_Closing_Admin_Fee__c');
+        // Scoped only to Post_Sale_Support.
+        makeMapping('Post_Sale_Support', 'Opportunity', 'Amount', 'Account_Closing_Admin_Fee__c');
         Case dealSupport = makeCase(App_Constants.DEAL_SUPPORT_CASE_RECTYPE_ID, opp.Id, opp.AccountId, getContact().Id);
 
         Test.startTest();
@@ -209,7 +209,7 @@ private class CaseFieldMappingEngineTest {
 
         Case result = [SELECT Account_Closing_Admin_Fee__c FROM Case WHERE Id = :dealSupport.Id];
         System.assertEquals(null, result.Account_Closing_Admin_Fee__c,
-            'A mapping scoped to B2B_Implementation should not leak onto a Deal_Support Case.');
+            'A mapping scoped to Post_Sale_Support should not leak onto a Deal_Support Case.');
     }
 
     @IsTest
