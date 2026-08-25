@@ -93,7 +93,7 @@ private class IRM_CaseCreationEligibilityTest {
         );
         insert new Case_Creation_Doc_Requirement__c(
             Rule__c = rule.Id, Document_Type__c = 'Business Problem Statement',
-            Document_Category__c = 'Scoping and Technical Documents',
+            Document_Category__c = 'Scoping & Technical',
             Is_Required_To_Start__c = true, Is_Required_For_Case__c = true
         );
 
@@ -122,7 +122,7 @@ private class IRM_CaseCreationEligibilityTest {
         );
         insert new Case_Creation_Doc_Requirement__c(
             Rule__c = rule.Id, Document_Type__c = 'Business Problem Statement',
-            Document_Category__c = 'Scoping and Technical Documents',
+            Document_Category__c = 'Scoping & Technical',
             Is_Required_To_Start__c = true, Is_Required_For_Case__c = true
         );
 
@@ -151,7 +151,7 @@ private class IRM_CaseCreationEligibilityTest {
         );
         insert new Case_Creation_Doc_Requirement__c(
             Rule__c = rule.Id, Document_Type__c = 'Technical Scoping Form',
-            Document_Category__c = 'Scoping and Technical Documents',
+            Document_Category__c = 'Scoping & Technical',
             Is_Required_To_Start__c = true, Is_Required_For_Case__c = true
         );
 
@@ -179,13 +179,13 @@ private class IRM_CaseCreationEligibilityTest {
         Case_Creation_Rule__c ruleX = makeRule('Test Type X', null); // unconditional
         insert new Case_Creation_Doc_Requirement__c(
             Rule__c = ruleX.Id, Document_Type__c = 'Financial Sign-off',
-            Document_Category__c = 'Approval and Sign-off Documents',
+            Document_Category__c = 'Approvals & Sign-off',
             Is_Required_To_Start__c = true, Is_Required_For_Case__c = true
         );
         Case_Creation_Rule__c ruleY = makeRule('Test Type Y', null); // unconditional
         insert new Case_Creation_Doc_Requirement__c(
             Rule__c = ruleY.Id, Document_Type__c = 'Governing Agreement',
-            Document_Category__c = 'Contract and Legal Documents',
+            Document_Category__c = 'Contract & Legal',
             Is_Required_To_Start__c = true, Is_Required_For_Case__c = true
         );
 
@@ -212,7 +212,7 @@ private class IRM_CaseCreationEligibilityTest {
         );
         insert new Case_Creation_Doc_Requirement__c(
             Rule__c = rule.Id, Document_Type__c = 'Legal Risk Sign-off',
-            Document_Category__c = 'Approval and Sign-off Documents',
+            Document_Category__c = 'Approvals & Sign-off',
             Is_Required_To_Start__c = true, Is_Required_For_Case__c = true
         );
 

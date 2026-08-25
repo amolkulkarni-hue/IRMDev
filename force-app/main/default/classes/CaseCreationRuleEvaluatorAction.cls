@@ -313,7 +313,7 @@ public with sharing class CaseCreationRuleEvaluatorAction {
                     Opportunity__c        = opp.Id,
                     Case_Creation_Rule__c  = rule.Id,
                     DocumentType__c        = (String) dr.get('Document_Type__c'),
-                    Document_Category__c   = mapDocCategory((String) dr.get('Document_Category__c')),
+                    Document_Category__c   = (String) dr.get('Document_Category__c'),
                     Status__c              = 'Draft'
                 );
                 if (caseId != null) dc.Case__c = caseId;
@@ -515,26 +515,6 @@ public with sharing class CaseCreationRuleEvaluatorAction {
 
     private static String dedupeKey(Id oppId, Id ruleId, String docType) {
         return oppId + '|' + ruleId + '|' + docType;
-    }
-
-    // Case_Creation_Doc_Requirement__c.Document_Category__c and Document_Checklist__c.Document_Category__c
-    // are two distinct picklists with different value sets despite representing the same
-    // concept (e.g. 'Scoping and Technical Documents' vs 'Scoping & Technical') — translate
-    // between them rather than copying the raw value across.
-    private static final Map<String, String> DOC_CATEGORY_TRANSLATION = new Map<String, String>{
-        'RFx and Bid Documents'                  => 'RFx & Bid Management',
-        'Scoping and Technical Documents'        => 'Scoping & Technical',
-        'Statement of Work (SOW) Documents'      => 'SOW & Contracts',
-        'Pricing and Financial Documents'        => 'Pricing & Financial',
-        'Contract and Legal Documents'           => 'Contract & Legal',
-        'Compliance, Risk and Privacy Documents' => 'Compliance, Risk & Privacy',
-        'Approval and Sign-off Documents'        => 'Approvals & Sign-off',
-        'Onboarding and Setup Documents'         => 'Onboarding & Setup',
-        'Booking Verification Documents'         => 'Booking Verification'
-    };
-
-    private static String mapDocCategory(String docReqCategory) {
-        return DOC_CATEGORY_TRANSLATION.get(docReqCategory);
     }
 
     private static Boolean hasRelevantFieldChanged(Opportunity newOpp, Opportunity oldOpp, Set<String> watchedFields) {

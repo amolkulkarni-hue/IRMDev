@@ -68,7 +68,7 @@ private class IRM_DocChecklistTest {
         );
         insert new Case_Creation_Doc_Requirement__c(
             Rule__c = rule.Id, Document_Type__c = 'Business Problem Statement',
-            Document_Category__c = 'Scoping and Technical Documents',
+            Document_Category__c = 'Scoping & Technical',
             Is_Required_To_Start__c = true, Is_Required_For_Case__c = true
         );
     }
@@ -220,7 +220,7 @@ private class IRM_DocChecklistTest {
         // Second required-for-case doc on the same rule
         insert new Case_Creation_Doc_Requirement__c(
             Rule__c = rule.Id, Document_Type__c = 'Technical Scoping Form',
-            Document_Category__c = 'Scoping and Technical Documents',
+            Document_Category__c = 'Scoping & Technical',
             Is_Required_To_Start__c = false, Is_Required_For_Case__c = true
         );
 

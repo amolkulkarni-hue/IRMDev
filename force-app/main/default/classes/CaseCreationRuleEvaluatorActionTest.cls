@@ -103,8 +103,8 @@ private class CaseCreationRuleEvaluatorActionTest {
         Case_Creation_Rule__c rule = makeRule('Qualification', 'RFP/Bid Management',
             'Deal_Support', 'Bid_Management_Queue', null);
         makeCondition(rule.Id, 1, 'Amount', 'GREATER_THAN', '100000');
-        makeDocReq(rule.Id, 'RFx/Bid', true, true);
-        makeDocReq(rule.Id, 'SOW', false, true);
+        makeDocReq(rule.Id, 'RFP (Request for Proposal)', true, true);
+        makeDocReq(rule.Id, 'Standardized SOW Template', false, true);
 
         Test.startTest();
         CaseCreationRuleEvaluatorAction.Request req = new CaseCreationRuleEvaluatorAction.Request();
@@ -125,9 +125,9 @@ private class CaseCreationRuleEvaluatorActionTest {
         Map<String, Object> mr = (Map<String, Object>) matched[0];
         System.assertEquals('RFP/Bid Management', mr.get('caseType'));
         // requiredDocTypes should contain only Is_Required_To_Start__c docs
-        System.assert(((String) mr.get('requiredDocTypes')).contains('RFx/Bid'));
+        System.assert(((String) mr.get('requiredDocTypes')).contains('RFP (Request for Proposal)'));
         // SOW is not Is_Required_To_Start__c
-        System.assert(!((String) mr.get('requiredDocTypes')).contains('SOW'));
+        System.assert(!((String) mr.get('requiredDocTypes')).contains('Standardized SOW Template'));
     }
 
     @IsTest
@@ -204,11 +204,11 @@ private class CaseCreationRuleEvaluatorActionTest {
         makeCondition(rule.Id, 1, 'Amount', 'GREATER_THAN', '100000');
 
         // Is_Required_To_Start = true, Is_Required_For_Case = true
-        makeDocReq(rule.Id, 'RFx/Bid', true, true);
+        makeDocReq(rule.Id, 'RFP (Request for Proposal)', true, true);
         // Is_Required_To_Start = false, Is_Required_For_Case = true
-        makeDocReq(rule.Id, 'SOW', false, true);
+        makeDocReq(rule.Id, 'Standardized SOW Template', false, true);
         // Is_Required_To_Start = true, Is_Required_For_Case = false
-        makeDocReq(rule.Id, 'NDA', true, false);
+        makeDocReq(rule.Id, 'Governing Agreement', true, false);
 
         Test.startTest();
         CaseCreationRuleEvaluatorAction.Request req = new CaseCreationRuleEvaluatorAction.Request();
@@ -224,15 +224,15 @@ private class CaseCreationRuleEvaluatorActionTest {
         String startDocs = (String) mr.get('requiredDocTypes');
         String caseDocs = (String) mr.get('requiredForCaseDocTypes');
 
-        // requiredDocTypes: RFx/Bid + NDA (Is_Required_To_Start = true)
-        System.assert(startDocs.contains('RFx/Bid'));
-        System.assert(startDocs.contains('NDA'));
-        System.assert(!startDocs.contains('SOW'));
+        // requiredDocTypes: RFP (Request for Proposal) + Governing Agreement (Is_Required_To_Start = true)
+        System.assert(startDocs.contains('RFP (Request for Proposal)'));
+        System.assert(startDocs.contains('Governing Agreement'));
+        System.assert(!startDocs.contains('Standardized SOW Template'));
 
-        // requiredForCaseDocTypes: RFx/Bid + SOW (Is_Required_For_Case = true)
-        System.assert(caseDocs.contains('RFx/Bid'));
-        System.assert(caseDocs.contains('SOW'));
-        System.assert(!caseDocs.contains('NDA'));
+        // requiredForCaseDocTypes: RFP (Request for Proposal) + Standardized SOW Template (Is_Required_For_Case = true)
+        System.assert(caseDocs.contains('RFP (Request for Proposal)'));
+        System.assert(caseDocs.contains('Standardized SOW Template'));
+        System.assert(!caseDocs.contains('Governing Agreement'));
     }
 
     @IsTest

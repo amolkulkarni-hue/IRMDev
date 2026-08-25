@@ -52,7 +52,7 @@ private class IRM_CaseCreationRuleTest {
         );
         insert new Case_Creation_Doc_Requirement__c(
             Rule__c = saRule.Id, Document_Type__c = 'Solution Assessment',
-            Document_Category__c = 'Scoping and Technical Documents',
+            Document_Category__c = 'Scoping & Technical',
             Is_Required_To_Start__c = true, Is_Required_For_Case__c = true
         );
 
@@ -65,8 +65,8 @@ private class IRM_CaseCreationRuleTest {
         );
         insert pricingRule;
         insert new Case_Creation_Doc_Requirement__c(
-            Rule__c = pricingRule.Id, Document_Type__c = 'Pricing Sheet',
-            Document_Category__c = 'Pricing and Financial Documents',
+            Rule__c = pricingRule.Id, Document_Type__c = 'Pricing Documentation',
+            Document_Category__c = 'Pricing & Financial',
             Is_Required_To_Start__c = true, Is_Required_For_Case__c = true
         );
     }

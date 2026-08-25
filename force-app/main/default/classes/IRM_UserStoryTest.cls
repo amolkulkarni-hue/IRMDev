@@ -132,7 +132,7 @@ private class IRM_UserStoryTest {
         insert new Case_Creation_Doc_Requirement__c(
             Rule__c                   = saRule.Id,
             Document_Type__c          = 'Business Problem Statement',
-            Document_Category__c      = 'Scoping and Technical Documents',
+            Document_Category__c      = 'Scoping & Technical',
             Is_Required_To_Start__c   = true,
             Is_Required_For_Case__c   = true
         );
