@@ -78,7 +78,7 @@ private class IRM_CaseCreationEligibilityTest {
     private static Integer checklistCount(Id oppId, Id ruleId, String docType) {
         return [
             SELECT COUNT() FROM Document_Checklist__c
-            WHERE Opportunity__c = :oppId AND Case_Creation_Rule__c = :ruleId AND DocumentType__c = :docType
+            WHERE Opportunity__c = :oppId AND Case_Creation_Rule__c = :ruleId AND Doc_Type__c = :docType
         ];
     }
 
@@ -92,8 +92,8 @@ private class IRM_CaseCreationEligibilityTest {
             Field_API_Name__c = 'Primary_Product_Line__c', Operator__c = 'EQUALS', Value__c = 'Secure Shredding'
         );
         insert new Case_Creation_Doc_Requirement__c(
-            Rule__c = rule.Id, Document_Type__c = 'Business Problem Statement',
-            Document_Category__c = 'Scoping & Technical',
+            Rule__c = rule.Id, Doc_Type__c = 'Business Problem Statement',
+            Doc_Category__c = 'Scoping & Technical',
             Is_Required_To_Start__c = true, Is_Required_For_Case__c = true
         );
 
@@ -121,8 +121,8 @@ private class IRM_CaseCreationEligibilityTest {
             Field_API_Name__c = 'Primary_Product_Line__c', Operator__c = 'EQUALS', Value__c = 'Secure Shredding'
         );
         insert new Case_Creation_Doc_Requirement__c(
-            Rule__c = rule.Id, Document_Type__c = 'Business Problem Statement',
-            Document_Category__c = 'Scoping & Technical',
+            Rule__c = rule.Id, Doc_Type__c = 'Business Problem Statement',
+            Doc_Category__c = 'Scoping & Technical',
             Is_Required_To_Start__c = true, Is_Required_For_Case__c = true
         );
 
@@ -150,8 +150,8 @@ private class IRM_CaseCreationEligibilityTest {
             Field_API_Name__c = 'Amount', Operator__c = 'GREATER_OR_EQUAL', Value__c = '100000'
         );
         insert new Case_Creation_Doc_Requirement__c(
-            Rule__c = rule.Id, Document_Type__c = 'Technical Scoping Form',
-            Document_Category__c = 'Scoping & Technical',
+            Rule__c = rule.Id, Doc_Type__c = 'Technical Scoping Form',
+            Doc_Category__c = 'Scoping & Technical',
             Is_Required_To_Start__c = true, Is_Required_For_Case__c = true
         );
 
@@ -178,14 +178,14 @@ private class IRM_CaseCreationEligibilityTest {
     static void test_multipleSimultaneousRuleMatches() {
         Case_Creation_Rule__c ruleX = makeRule('Test Type X', null); // unconditional
         insert new Case_Creation_Doc_Requirement__c(
-            Rule__c = ruleX.Id, Document_Type__c = 'Financial Sign-off',
-            Document_Category__c = 'Approvals & Sign-off',
+            Rule__c = ruleX.Id, Doc_Type__c = 'Financial Sign-off',
+            Doc_Category__c = 'Approvals & Sign-off',
             Is_Required_To_Start__c = true, Is_Required_For_Case__c = true
         );
         Case_Creation_Rule__c ruleY = makeRule('Test Type Y', null); // unconditional
         insert new Case_Creation_Doc_Requirement__c(
-            Rule__c = ruleY.Id, Document_Type__c = 'Governing Agreement',
-            Document_Category__c = 'Contract & Legal',
+            Rule__c = ruleY.Id, Doc_Type__c = 'Governing Agreement',
+            Doc_Category__c = 'Contract & Legal',
             Is_Required_To_Start__c = true, Is_Required_For_Case__c = true
         );
 
@@ -206,13 +206,13 @@ private class IRM_CaseCreationEligibilityTest {
     static void test_resilience_missingDocCategoryDoesNotBlockOtherChecklists() {
         Case_Creation_Rule__c rule = makeRule('Test Type Z', null); // unconditional
         insert new Case_Creation_Doc_Requirement__c(
-            Rule__c = rule.Id, Document_Type__c = 'Risk Mitigation Plan',
-            Document_Category__c = null, // intentionally missing — Document_Category__c is required
+            Rule__c = rule.Id, Doc_Type__c = 'Risk Mitigation Plan',
+            Doc_Category__c = null, // intentionally missing — Doc_Category__c is required
             Is_Required_To_Start__c = true, Is_Required_For_Case__c = true
         );
         insert new Case_Creation_Doc_Requirement__c(
-            Rule__c = rule.Id, Document_Type__c = 'Legal Risk Sign-off',
-            Document_Category__c = 'Approvals & Sign-off',
+            Rule__c = rule.Id, Doc_Type__c = 'Legal Risk Sign-off',
+            Doc_Category__c = 'Approvals & Sign-off',
             Is_Required_To_Start__c = true, Is_Required_For_Case__c = true
         );
 
@@ -225,7 +225,7 @@ private class IRM_CaseCreationEligibilityTest {
         System.assertNotEquals(null, saved.Id, 'The Opportunity insert itself must succeed despite one misconfigured doc requirement');
 
         System.assertEquals(0, checklistCount(opp.Id, rule.Id, 'Risk Mitigation Plan'),
-            'The checklist missing a required Document_Category__c should fail to insert (partial success), not exist');
+            'The checklist missing a required Doc_Category__c should fail to insert (partial success), not exist');
         System.assertEquals(1, checklistCount(opp.Id, rule.Id, 'Legal Risk Sign-off'),
             'The properly-configured checklist in the same batch should still be created despite the other row failing');
     }

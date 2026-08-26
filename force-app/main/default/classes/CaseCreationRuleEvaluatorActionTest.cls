@@ -84,7 +84,7 @@ private class CaseCreationRuleEvaluatorActionTest {
             Id ruleId, String docType, Boolean requiredToStart, Boolean requiredForCase) {
         Case_Creation_Doc_Requirement__c dr = new Case_Creation_Doc_Requirement__c(
             Rule__c = ruleId,
-            Document_Type__c = docType,
+            Doc_Type__c = docType,
             Is_Required_To_Start__c = requiredToStart,
             Is_Required_For_Case__c = requiredForCase
         );

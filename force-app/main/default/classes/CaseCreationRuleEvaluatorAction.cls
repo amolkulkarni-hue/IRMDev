@@ -312,8 +312,8 @@ public with sharing class CaseCreationRuleEvaluatorAction {
                 Document_Checklist__c dc = new Document_Checklist__c(
                     Opportunity__c        = opp.Id,
                     Case_Creation_Rule__c  = rule.Id,
-                    DocumentType__c        = (String) dr.get('Document_Type__c'),
-                    Document_Category__c   = (String) dr.get('Document_Category__c'),
+                    Doc_Type__c            = (String) dr.get('Doc_Type__c'),
+                    Doc_Category__c        = (String) dr.get('Doc_Category__c'),
                     Status__c              = 'Draft'
                 );
                 if (caseId != null) dc.Case__c = caseId;
@@ -325,18 +325,18 @@ public with sharing class CaseCreationRuleEvaluatorAction {
 
         Set<String> existingChecklistKeys = new Set<String>();
         for (Document_Checklist__c existing : [
-            SELECT Opportunity__c, Case_Creation_Rule__c, DocumentType__c
+            SELECT Opportunity__c, Case_Creation_Rule__c, Doc_Type__c
             FROM Document_Checklist__c
             WHERE Opportunity__c IN :candidateOppIds AND Case_Creation_Rule__c IN :candidateRuleIds
         ]) {
-            existingChecklistKeys.add(dedupeKey(existing.Opportunity__c, existing.Case_Creation_Rule__c, existing.DocumentType__c));
+            existingChecklistKeys.add(dedupeKey(existing.Opportunity__c, existing.Case_Creation_Rule__c, existing.Doc_Type__c));
         }
 
         List<Document_Checklist__c> checklistsToInsert = new List<Document_Checklist__c>();
         List<Opportunity> ownerOppForInsert = new List<Opportunity>();
         for (Integer i = 0; i < checklistCandidates.size(); i++) {
             Document_Checklist__c dc = checklistCandidates[i];
-            String key = dedupeKey(dc.Opportunity__c, dc.Case_Creation_Rule__c, dc.DocumentType__c);
+            String key = dedupeKey(dc.Opportunity__c, dc.Case_Creation_Rule__c, dc.Doc_Type__c);
             if (!existingChecklistKeys.contains(key)) {
                 existingChecklistKeys.add(key); // guard against duplicate candidates within this same batch
                 checklistsToInsert.add(dc);
@@ -345,7 +345,7 @@ public with sharing class CaseCreationRuleEvaluatorAction {
         }
         if (!checklistsToInsert.isEmpty()) {
             // Partial success — a single misconfigured Doc Requirement (e.g. missing
-            // Document_Category__c) fails only that row, not the whole batch.
+            // Doc_Category__c) fails only that row, not the whole batch.
             Database.insert(checklistsToInsert, false);
         }
 
@@ -549,7 +549,7 @@ public with sharing class CaseCreationRuleEvaluatorAction {
             List<SObject> docReqs = rule.getSObjects('Doc_Requirements__r');
             if (docReqs != null) {
                 for (SObject dr : docReqs) {
-                    String docType = (String) dr.get('Document_Type__c');
+                    String docType = (String) dr.get('Doc_Type__c');
                     if ((Boolean) dr.get('Is_Required_To_Start__c')) startDocs.add(docType);
                     if ((Boolean) dr.get('Is_Required_For_Case__c'))  caseDocs.add(docType);
                 }
@@ -573,7 +573,7 @@ public with sharing class CaseCreationRuleEvaluatorAction {
             '       Queue_Developer_Name__c, Logic_Expression__c, Priority__c, ' +
             '(SELECT Id, Condition_Number__c, Field_API_Name__c, Operator__c, Value__c ' +
             ' FROM Conditions__r ORDER BY Condition_Number__c ASC), ' +
-            '(SELECT Id, Document_Type__c, Document_Category__c, Is_Required_To_Start__c, Is_Required_For_Case__c ' +
+            '(SELECT Id, Doc_Type__c, Doc_Category__c, Is_Required_To_Start__c, Is_Required_For_Case__c ' +
             ' FROM Doc_Requirements__r) ' +
             'FROM Case_Creation_Rule__c ' +
             'WHERE Is_Active__c = true ' +
