@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Doc_Type__c</fullName>
-    <description>Document type, dependent on Doc_Category__c. Global-value-set-backed replacement for the legacy Document Type field on this object.</description>
+    <description>Document type, dependent on Doc_Category__c. Global-value-set-backed replacement for the legacy Document Type field on this object. Not required at the field level (unlike the legacy field) because a restricted dependent picklist rejects any real value when Doc_Category__c is blank — marking this required would force every config record to have both fields set, which would remove the ability to represent an intentionally incomplete/in-progress config record.</description>
     <label>Document Type</label>
-    <required>true</required>
+    <required>false</required>
     <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
