@@ -80,11 +80,20 @@ private class CaseCreationRuleEvaluatorActionTest {
         return cond;
     }
 
+    // Doc_Type__c is a restricted picklist dependent on Doc_Category__c — every value
+    // used by this test's makeDocReq() calls needs its matching category here.
+    private static final Map<String, String> DOC_TYPE_TO_CATEGORY = new Map<String, String>{
+        'RFP (Request for Proposal)' => 'RFx & Bid Management',
+        'Standardized SOW Template'  => 'SOW & Contracts',
+        'Governing Agreement'        => 'Contract & Legal'
+    };
+
     private static Case_Creation_Doc_Requirement__c makeDocReq(
             Id ruleId, String docType, Boolean requiredToStart, Boolean requiredForCase) {
         Case_Creation_Doc_Requirement__c dr = new Case_Creation_Doc_Requirement__c(
             Rule__c = ruleId,
             Doc_Type__c = docType,
+            Doc_Category__c = DOC_TYPE_TO_CATEGORY.get(docType),
             Is_Required_To_Start__c = requiredToStart,
             Is_Required_For_Case__c = requiredForCase
         );

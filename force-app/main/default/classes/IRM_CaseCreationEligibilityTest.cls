@@ -206,8 +206,13 @@ private class IRM_CaseCreationEligibilityTest {
     static void test_resilience_missingDocCategoryDoesNotBlockOtherChecklists() {
         Case_Creation_Rule__c rule = makeRule('Test Type Z', null); // unconditional
         insert new Case_Creation_Doc_Requirement__c(
-            Rule__c = rule.Id, Doc_Type__c = 'Risk Mitigation Plan',
-            Doc_Category__c = null, // intentionally missing — Doc_Category__c is required
+            // Doc_Type__c is now a restricted picklist dependent on Doc_Category__c, so a
+            // type value paired with a null category would fail right here instead of at
+            // the intended point (the downstream Document_Checklist__c insert). Leaving both
+            // null keeps this record insertable while still producing a Document_Checklist__c
+            // candidate that fails required-field validation on Doc_Category__c.
+            Rule__c = rule.Id, Doc_Type__c = null,
+            Doc_Category__c = null, // intentionally missing — Doc_Category__c is required on Document_Checklist__c
             Is_Required_To_Start__c = true, Is_Required_For_Case__c = true
         );
         insert new Case_Creation_Doc_Requirement__c(
