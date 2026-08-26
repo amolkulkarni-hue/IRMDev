@@ -3,7 +3,9 @@
     <fullName>Framework_Child_Type_Restriction</fullName>
     <active>true</active>
     <description>FW-03 AC4 (IRM_Touch_Level_Classification_SDD Section 21.3.4): When a child opportunity is linked to a Framework Parent, Deal Type (Type field) cannot be Renewal. Renewal is a Framework Parent-level agreement.</description>
-    <errorConditionFormula>AND(NOT(ISBLANK(IM_Parent_Opportunity__c)), ISPICKVAL(Type, &quot;Renewal&quot;))</errorConditionFormula>
+    <errorConditionFormula>AND(RecordType.DeveloperName = &quot;Framework_Parent_Opportunity&quot;,
+				NOT(ISBLANK(IM_Parent_Opportunity__c)), 
+				ISPICKVAL(Type, &quot;Renewal&quot;))</errorConditionFormula>
     <errorDisplayField>Type</errorDisplayField>
     <errorMessage>Framework Child Opportunities may not use Deal Type = Renewal. Use New or Cross-sell/Upsell.</errorMessage>
 </ValidationRule>

@@ -1,0 +1,3241 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ReportType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <baseObject>Account</baseObject>
+    <category>accounts</category>
+    <deployed>true</deployed>
+    <description>Accounts with Relationship Maps with Stakeholders</description>
+    <join>
+        <join>
+            <outerJoin>false</outerJoin>
+            <relationship>TSPC__Nodes__r</relationship>
+        </join>
+        <outerJoin>false</outerJoin>
+        <relationship>TSPC__AccountMaps__r</relationship>
+    </join>
+    <label>Accounts with CP: Account Maps with Stakeholders</label>
+    <sections>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride># Customers</displayNameOverride>
+            <field>Customers__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride># of Accounts</displayNameOverride>
+            <field>of_Accounts__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride># of BoB Coverage Records</displayNameOverride>
+            <field>of_BoB_Coverage_Records__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride># of Terminated Customer Accounts</displayNameOverride>
+            <field>of_Terminated_Customer_Accounts__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Account Address</displayNameOverride>
+            <field>Account_Address__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Account Balance</displayNameOverride>
+            <field>QTB_Account_Balance__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Account Currency</displayNameOverride>
+            <field>CurrencyIsoCode</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Account Division</displayNameOverride>
+            <field>Division</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Account Domain</displayNameOverride>
+            <field>Account_Domain__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Account ID</displayNameOverride>
+            <field>Id</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>true</checkedByDefault>
+            <displayNameOverride>Account Name</displayNameOverride>
+            <field>Name</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Account Name (Local)</displayNameOverride>
+            <field>NameLocal</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Account Number</displayNameOverride>
+            <field>AccountNumber</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Account Owner</displayNameOverride>
+            <field>Owner</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Account Record Type</displayNameOverride>
+            <field>RecordType</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Account Segment</displayNameOverride>
+            <field>Account_Segment_Formula__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Account Segment (Picklist)</displayNameOverride>
+            <field>Account_Segment__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Account Site</displayNameOverride>
+            <field>Site</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Account Source</displayNameOverride>
+            <field>AccountSource</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Account Sub-Segment</displayNameOverride>
+            <field>Account_Sub_Segment_Formula__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Account Sub Segment (lookup) ID</displayNameOverride>
+            <field>Account_Sub_Segment_lookup_ID__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Account Sub-Segment (Picklist)</displayNameOverride>
+            <field>Account_Sub_Segment__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Account Sub-Segment lookup</displayNameOverride>
+            <field>Account_segment_lookup__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Acquired Company</displayNameOverride>
+            <field>Acquired_Company__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Acquisition ID</displayNameOverride>
+            <field>Recall_Old_ID__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Acquisition Match Date</displayNameOverride>
+            <field>Recall_Match_Date__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Acquisition Match Type</displayNameOverride>
+            <field>Recall_Match_Type__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Add BEIs To Existing Batches</displayNameOverride>
+            <field>pse__Add_BEIs_To_Existing_Batches__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Additional Info for Relationship Manager</displayNameOverride>
+            <field>Additional_Info_for_Relationship_Manager__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Ad-Hoc Order</displayNameOverride>
+            <field>QTB_AdHocOrder__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>AE/ISR (Account Owner)</displayNameOverride>
+            <field>Primary_BDE__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>AE/ISR (Account Owner): # of Users</displayNameOverride>
+            <field>Primary_BDE__c.of_Users__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>AE/ISR (Account Owner): Active</displayNameOverride>
+            <field>Primary_BDE__c.IsActive</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>AE/ISR (Account Owner): Country</displayNameOverride>
+            <field>Primary_BDE__c.Country</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>AE/ISR (Account Owner): Director</displayNameOverride>
+            <field>Primary_BDE__c.IM_RSM__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>AE/ISR (Account Owner): Email</displayNameOverride>
+            <field>Primary_BDE__c.Email</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>AE/ISR (Account Owner): Employee Number</displayNameOverride>
+            <field>Primary_BDE__c.EmployeeNumber</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>AE/ISR (Account Owner): IS Seller</displayNameOverride>
+            <field>Primary_BDE__c.IM_Area__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>AE/ISR (Account Owner): Manager</displayNameOverride>
+            <field>Primary_BDE__c.Manager</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>AE/ISR (Account Owner): Region</displayNameOverride>
+            <field>Primary_BDE__c.Region__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>AE/ISR (Account Owner): Role</displayNameOverride>
+            <field>Primary_BDE__c.UserRole</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>AE/ISR (Account Owner): Role Type</displayNameOverride>
+            <field>Primary_BDE__c.Role_Type__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>AE/ISR (Account Owner): SVP</displayNameOverride>
+            <field>Primary_BDE__c.SVP__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>AE/ISR (Account Owner): User ID</displayNameOverride>
+            <field>Primary_BDE__c.Id</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>AE/ISR (Account Owner): VP</displayNameOverride>
+            <field>Primary_BDE__c.IM_VP__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>ALM PME</displayNameOverride>
+            <field>DM_Cloud_Sales_Rep__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>ALM Priority Account To be Deleted</displayNameOverride>
+            <field>ALM_Priority_Account__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>ALM SDE</displayNameOverride>
+            <field>DMS_Owner__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Annual Revenue</displayNameOverride>
+            <field>AnnualRevenue</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>API Account Name</displayNameOverride>
+            <field>QTB_API_Account_Name__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Apply Invoice Minimum Charges</displayNameOverride>
+            <field>QTB_Apply_Invoice_Minimum_Charges__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Apply Minimum Storage Charges</displayNameOverride>
+            <field>QTB_Apply_Minimum_Storage_Charges__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Apply Work Order Minimum Charges</displayNameOverride>
+            <field>QTB_Apply_Work_Order_Minimum_Charges__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Authorizations</displayNameOverride>
+            <field>IM_Authorizations__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Bandwidth</displayNameOverride>
+            <field>Bandwidth__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Bill Cycle Day</displayNameOverride>
+            <field>QTB_Bill_Cycle_Day__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Bill Forward Type</displayNameOverride>
+            <field>QTB_Bill_Forward_Type__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Billing Account Invoice Name</displayNameOverride>
+            <field>QTB_Billing_Account_Invoice_Name__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Billing Account Number</displayNameOverride>
+            <field>Bill_To_Site_Number__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Address</displayNameOverride>
+            <field>BillingAddress</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Billing Address 2</displayNameOverride>
+            <field>Billing_Address_2__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Billing Address 3</displayNameOverride>
+            <field>Billing_Address_3__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Billing Address Record Type</displayNameOverride>
+            <field>CloudingoAgent__BAR__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Billing Address Status</displayNameOverride>
+            <field>CloudingoAgent__BAS__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Billing Address Vacancy</displayNameOverride>
+            <field>CloudingoAgent__BAV__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Billing Address Validated</displayNameOverride>
+            <field>fferpcore__IsBillingAddressValidated__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Billing Address Validated Reference</displayNameOverride>
+            <field>fferpcore__MaterializedBillingAddressValidated__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>City</displayNameOverride>
+            <field>BillingCity</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Country</displayNameOverride>
+            <field>BillingCountry</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Billing County</displayNameOverride>
+            <field>Billing_County__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Billing Frequency</displayNameOverride>
+            <field>QTB_Billing_Frequency__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Billing Geocode Accuracy</displayNameOverride>
+            <field>BillingGeocodeAccuracy</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Billing Latitude</displayNameOverride>
+            <field>BillingLatitude</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Billing Longitude</displayNameOverride>
+            <field>BillingLongitude</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Billing Residential Delivery Indicator</displayNameOverride>
+            <field>CloudingoAgent__BRDI__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>State/Province/County</displayNameOverride>
+            <field>BillingState</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Street</displayNameOverride>
+            <field>BillingStreet</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Billing Timezone</displayNameOverride>
+            <field>CloudingoAgent__BTZ__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Billing Type</displayNameOverride>
+            <field>Billing_Type__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Zip/Postal Code</displayNameOverride>
+            <field>BillingPostalCode</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Bill To Contact</displayNameOverride>
+            <field>blng__BillToContact__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Brief Account History</displayNameOverride>
+            <field>Brief_Account_History__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Business Review History</displayNameOverride>
+            <field>Formal_Business_Review_History__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>CageCode</displayNameOverride>
+            <field>QTB_CageCode__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Canadian Public Sector</displayNameOverride>
+            <field>Canadian_Public_Sector__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Channel Program – Customer Account ID</displayNameOverride>
+            <field>Channel_Program_Customer_Account_ID__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Collector Name</displayNameOverride>
+            <field>QTB_Collector_Name__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Combine Asset Quantities</displayNameOverride>
+            <field>SBQQ__AssetQuantitiesCombined__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Combine Co-Termed Contracts</displayNameOverride>
+            <field>SBQQ__CoTermedContractsCombined__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Company Name</displayNameOverride>
+            <field>Company_Name__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Consolidation Flag</displayNameOverride>
+            <field>QTB_Consolidation_Flag__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Contract Address 1</displayNameOverride>
+            <field>Contract_Address_1__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Contract Address 2</displayNameOverride>
+            <field>Contract_Address_2__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Contract Address 3</displayNameOverride>
+            <field>Contract_Address_3__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Contract Address 4</displayNameOverride>
+            <field>Contract_Address_4__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Contract Auto-Renewal</displayNameOverride>
+            <field>Contract_Auto_Renewal__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Contract City</displayNameOverride>
+            <field>Contract_City__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Contract Co-Termination</displayNameOverride>
+            <field>SBQQ__ContractCoTermination__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Contract Country</displayNameOverride>
+            <field>Contract_Country__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Contract County</displayNameOverride>
+            <field>Contract_County__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Contract End Date</displayNameOverride>
+            <field>Contract_End_Date__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Contract Exists</displayNameOverride>
+            <field>Contract_Exists__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Contract Floor</displayNameOverride>
+            <field>Contract_Floor__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Contract Legal Entity</displayNameOverride>
+            <field>QTB_Contract_Entity__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>ContractNumber</displayNameOverride>
+            <field>QTB_ContractNumber__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Contract Postal Code</displayNameOverride>
+            <field>Contract_Postal_Code__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Contract Start Date</displayNameOverride>
+            <field>Contract_Start_Date__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Contract State</displayNameOverride>
+            <field>Contract_State__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Contract Status</displayNameOverride>
+            <field>Contract_Status__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Contract Term (Months)</displayNameOverride>
+            <field>Contract_Term_Months__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Contract Up for Renewal in Next 6 Months</displayNameOverride>
+            <field>Contract_Up_for_Renewal_in_Next_6_Months__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Conversion Generation</displayNameOverride>
+            <field>QTB_Conversion_Generation__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Converted From Lead</displayNameOverride>
+            <field>Converted_From_Lead__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Co-Termination Event</displayNameOverride>
+            <field>SBQQ__CoTerminationEvent__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Count of Contact</displayNameOverride>
+            <field>Count_of_Contact__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Count of Red CIDs</displayNameOverride>
+            <field>Count_of_Red_Cids__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Country Parent</displayNameOverride>
+            <field>Country_Parent_Formula__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Country Parent ID</displayNameOverride>
+            <field>Country_Parent_ID__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>CountryParentIDText</displayNameOverride>
+            <field>CountryParentIDText__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>CountryParentNameText</displayNameOverride>
+            <field>CountryParentNameText__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>CP: Last Update Date</displayNameOverride>
+            <field>TSPC__CPLastUpdateDate__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>CP: Photo URL</displayNameOverride>
+            <field>TSPC__PhotoUrl__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>CP: Primary Account Plan</displayNameOverride>
+            <field>TSPC__CPAccountPlan__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Created By</displayNameOverride>
+            <field>CreatedBy</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Created Date</displayNameOverride>
+            <field>CreatedDate</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Create Operating System Account</displayNameOverride>
+            <field>QTB_Create_Operating_System_Account__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Create Parent Billing Account</displayNameOverride>
+            <field>QTB_Create_Parent_Billing_Account__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Current DB&amp;R Solution</displayNameOverride>
+            <field>Current_DB_R_Solution__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Current Records Mgmt Solution</displayNameOverride>
+            <field>Current_Records_Mgmt_Solution__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Current Scanning Solution</displayNameOverride>
+            <field>Current_Scanning_Solution__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Current Shred Solution</displayNameOverride>
+            <field>Current_Shred_Solution__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Current Vendor</displayNameOverride>
+            <field>Current_Vendor__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Customer Classification Picklist</displayNameOverride>
+            <field>QTB_Customer_Classification__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Customer District</displayNameOverride>
+            <field>QTB_Customer_District__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Customer Number</displayNameOverride>
+            <field>QTB_Customer_Number__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Customer Profile Id</displayNameOverride>
+            <field>blng__CustomerProfileId__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Customer Success Manager</displayNameOverride>
+            <field>Tele_CDE__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>D&amp;B Address 1</displayNameOverride>
+            <field>DnB_Address_1__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>D&amp;B Address 2</displayNameOverride>
+            <field>DnB_Address_2__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>D&amp;B City/Locality</displayNameOverride>
+            <field>DnB_City__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>D&amp;B Country</displayNameOverride>
+            <field>DnB_Country__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>D&amp;B County</displayNameOverride>
+            <field>DnB_County__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>D&amp;B Domestic Ultimate Name</displayNameOverride>
+            <field>DnB_Domestic_Ultimate_Name__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>D&amp;B Global Ultimate Employees</displayNameOverride>
+            <field>DnB_Global_Ultimate_Employees__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>D&amp;B Global Ultimate Name</displayNameOverride>
+            <field>DnB_Global_Ultimate_Name__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>D&amp;B Global Ultimate Revenue (USD)</displayNameOverride>
+            <field>DnB_Global_Ultimate_Sales_MM_USD__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>D&amp;B Match Confidence Code</displayNameOverride>
+            <field>DNBConnect__D_B_Match_Confidence_Code__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>D&amp;B Parent Name</displayNameOverride>
+            <field>DnB_Parent_Name__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>D&amp;B Phone</displayNameOverride>
+            <field>DnB_Phone__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>D&amp;B Registration Number</displayNameOverride>
+            <field>DnB_Registration_Number__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>D&amp;B Global Domestic Employees</displayNameOverride>
+            <field>DnB_Site_Company_Employees__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>D&amp;B Site (Company) NAIC</displayNameOverride>
+            <field>DnB_Site_Company_NAIC__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>D&amp;B Site (Company) Trade Style Name</displayNameOverride>
+            <field>DnB_Site_Company_Name__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>D&amp;B Site (Company) SIC</displayNameOverride>
+            <field>DnB_Site_Company_SIC__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>D&amp;B State/Province</displayNameOverride>
+            <field>DnB_State_Province__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>D&amp;B Web Address</displayNameOverride>
+            <field>DnB_Web_Address__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>D&amp;B Zip/Postal Code</displayNameOverride>
+            <field>DnB_Zip_Postal_Code__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Data Backup &amp; Recovery Details</displayNameOverride>
+            <field>Data_Backup_Recovery_Details__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Data Backup &amp; Recovery Vendor (Other)</displayNameOverride>
+            <field>Data_Backup_Recovery_Vendor_Other__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Data Management</displayNameOverride>
+            <field>QTB_Data_Management__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Data Quality Description</displayNameOverride>
+            <field>Data_Quality_Description__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Data Quality Score</displayNameOverride>
+            <field>Data_Quality_Score__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>DB&amp;R Coverage</displayNameOverride>
+            <field>DB_R_Coverage__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>DBR Segment</displayNameOverride>
+            <field>DBR_Segment__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>DBR Top 25</displayNameOverride>
+            <field>DBR_Top_25__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>DBU SDE</displayNameOverride>
+            <field>Information_Governance_Rep__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Default Opportunity</displayNameOverride>
+            <field>SBQQ__DefaultOpportunity__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Default Payment Type</displayNameOverride>
+            <field>blng__DefaultPaymentType__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Department</displayNameOverride>
+            <field>QTB_Department__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Description</displayNameOverride>
+            <field>Description</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Digital Partner Engaged</displayNameOverride>
+            <field>IM_Digital_Partner_Engaged__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Digital Sales Segment</displayNameOverride>
+            <field>IM_Digital_Sales_Segment__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Display Custom Product Names</displayNameOverride>
+            <field>QTB_Display_Custom_Product_Names__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Disputed Invoice</displayNameOverride>
+            <field>QTB_Disputed_Invoice__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Division</displayNameOverride>
+            <field>IME_Display_Division__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Division</displayNameOverride>
+            <field>QTB_Division__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>DM Contract Indicators</displayNameOverride>
+            <field>DBR_Price__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>DM Geography or Industry</displayNameOverride>
+            <field>DBR_Service__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>DPU Rate (Avg)</displayNameOverride>
+            <field>DPU_Rate_Avg__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Dunning/Collection</displayNameOverride>
+            <field>QTB_Dunning_Collection__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>DXP ID</displayNameOverride>
+            <field>DXP_ID__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>EDI Identifier</displayNameOverride>
+            <field>QTB_EDI_Identifier__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>EDI Provider</displayNameOverride>
+            <field>QTB_EDI_Provider__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Verified No of Employees</displayNameOverride>
+            <field>NumberOfEmployees</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Employee Size Range</displayNameOverride>
+            <field>IM_Number_of_Employees__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Engagement Level (People.ai)</displayNameOverride>
+            <field>peopleai__EngagementLevel__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Exemption Certificate</displayNameOverride>
+            <field>fferpcore__ExemptionCertificate__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Explain any Non-Standard Reporting</displayNameOverride>
+            <field>Explain_any_Non_Standard_Reporting__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Explain any Non-Standard Requirements</displayNameOverride>
+            <field>Explain_any_Non_Standard_Requirements__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Fax</displayNameOverride>
+            <field>Fax</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>First Touch (People.ai)</displayNameOverride>
+            <field>peopleai__FirstTouch__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>FSO</displayNameOverride>
+            <field>QTB_FSO__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Global Account Manager</displayNameOverride>
+            <field>Global_Account_Manager__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Global Account Representative</displayNameOverride>
+            <field>Global_Account_Director__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Global Industries</displayNameOverride>
+            <field>Global_Account__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Global Managing Director</displayNameOverride>
+            <field>Global_IMGA_Owner__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Gong Count</displayNameOverride>
+            <field>Gong__Gong_Count__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>GST Supply Type</displayNameOverride>
+            <field>QTB_GST_Supply_Type__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Hierarchy ID</displayNameOverride>
+            <field>Hierarchy_ID__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Hierarchy Level</displayNameOverride>
+            <field>IM_Hierarchy_Level__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>High Level Key</displayNameOverride>
+            <field>High_Level_Key__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>High Level Name</displayNameOverride>
+            <field>High_Level_Name__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Hold Billing</displayNameOverride>
+            <field>QTB_Hold_Billing__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>HoldInd</displayNameOverride>
+            <field>QTB_HoldInd__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Hold Invoice</displayNameOverride>
+            <field>QTB_Hold_Invoice__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>HoldRequester</displayNameOverride>
+            <field>QTB_HoldRequester__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Hosted in Cloud?</displayNameOverride>
+            <field>Hosted_in_Cloud__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Ignore Parent Contracted Prices</displayNameOverride>
+            <field>SBQQ__IgnoreParentContractedPrices__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>IMCompany</displayNameOverride>
+            <field>QTB_IMCompany__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>IM Country Code</displayNameOverride>
+            <field>IM_Country_Code__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>IME Sales Segment</displayNameOverride>
+            <field>IME_Sales_Segment__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>IMFS ID</displayNameOverride>
+            <field>IMFS_ID__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>IMFS Type</displayNameOverride>
+            <field>IMFS_Type__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>IMGA (Lookup)</displayNameOverride>
+            <field>IMGA_Lookup__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>IMGA Account Flag</displayNameOverride>
+            <field>IMGA_Account_Flag__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>IMGA Id</displayNameOverride>
+            <field>IMGA_Id__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>IMGA Model Run Date</displayNameOverride>
+            <field>IMGA_Model_Run_Date__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>IMGA Name/Account Name</displayNameOverride>
+            <field>IMGA_Name_Account_Name__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>IMGA Party Number Generator</displayNameOverride>
+            <field>QTB_IMGA_Party_Number_Generator__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>IM Group (IMGA)</displayNameOverride>
+            <field>IM_IMGA_Indexed__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>IM Sector</displayNameOverride>
+            <field>IM_Sector__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>IM Sub Sector</displayNameOverride>
+            <field>IM_Sub_Sector__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>In Collections</displayNameOverride>
+            <field>QTB_In_Collections__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Industry</displayNameOverride>
+            <field>Industry</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Industry</displayNameOverride>
+            <field>IM_Industry__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Invoice Delivery Options</displayNameOverride>
+            <field>QTB_Invoice_Delivery_Options__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Invoice Detail Options</displayNameOverride>
+            <field>QTB_Invoice_Detail_Options__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Invoice Minimum Charges</displayNameOverride>
+            <field>QTB_Invoice_Minimum_Charges__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Invoice Minimum Start Date</displayNameOverride>
+            <field>QTB_Invoice_Minimum_Start_Date__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Invoice Notes</displayNameOverride>
+            <field>QTB_Invoice_Notes__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Invoice Options</displayNameOverride>
+            <field>QTB_Invoice_Options__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Iron Mtn Grouping (IMGA)</displayNameOverride>
+            <field>IM_IMGA__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Is Account Sanctioned?</displayNameOverride>
+            <field>QTB_Is_Account_Sanctioned__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Is Parent Billing Account Flag</displayNameOverride>
+            <field>QTB_Is_Parent_Billing_Account__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Key Account - RM</displayNameOverride>
+            <field>Key_Account__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Language</displayNameOverride>
+            <field>QTB_Language__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Last Activity</displayNameOverride>
+            <field>LastActivityDate</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Last Aggregation Batch Date</displayNameOverride>
+            <field>Last_Aggregation_Batch_Date__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Last Email Received Date (People.ai)</displayNameOverride>
+            <field>peopleai__LastEmailReceivedDate__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Last Email Received From (People.ai)</displayNameOverride>
+            <field>peopleai__LastEmailReceivedFrom__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Last Email Sent Date (People.ai)</displayNameOverride>
+            <field>peopleai__LastEmailSentDate__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Last Email Sent From (People.ai)</displayNameOverride>
+            <field>peopleai__LastEmailSentFrom__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Last Meeting Date (People.ai)</displayNameOverride>
+            <field>peopleai__LastMeetingDate__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Last Modified By</displayNameOverride>
+            <field>LastModifiedBy</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Last Modified Date</displayNameOverride>
+            <field>LastModifiedDate</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Last QBR Completed</displayNameOverride>
+            <field>Last_QBR_Completed__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Last Touch (People.ai)</displayNameOverride>
+            <field>peopleai__LastTouch__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Lead Conversion Flag</displayNameOverride>
+            <field>IM_Lead_Conversion_Flag__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Legacy Source System</displayNameOverride>
+            <field>QTB_DM_Source_System__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Legacy Source System ID</displayNameOverride>
+            <field>QTB_DM_Source_ID__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Legacy SourceSystem Reference</displayNameOverride>
+            <field>DM_SourceSystem_Reference__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Legacy Tape Quantity</displayNameOverride>
+            <field>Legacy_Tape_Quantity__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Legal Entity</displayNameOverride>
+            <field>QTB_Legal_Entity__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Legal Entity Country</displayNameOverride>
+            <field>QTB_Legal_Entity_Country__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Level 1</displayNameOverride>
+            <field>QTB_Level_1__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Level 2</displayNameOverride>
+            <field>QTB_Level_2__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Level 3</displayNameOverride>
+            <field>QTB_Level_3__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Library Service Owner</displayNameOverride>
+            <field>Library_Services_BDE__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>LinkedIn Company Id</displayNameOverride>
+            <field>LID__LinkedIn_Company_Id__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Manhattan ID</displayNameOverride>
+            <field>Manhattan_ID__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Manual Usage Processing Flag</displayNameOverride>
+            <field>QTB_Manual_Usage_Processing_Flag__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>MAS Owner</displayNameOverride>
+            <field>Primary_Local_Market_Rep_1__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Minimum Charges Start Date</displayNameOverride>
+            <field>QTB_Minimum_Charges_Start_Date__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Minimum Storage Charges</displayNameOverride>
+            <field>QTB_Minimum_Storage_Charges__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>NAICS Code</displayNameOverride>
+            <field>IM_NAICS_Code__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>National Identification Number</displayNameOverride>
+            <field>IME_National_Identification_Number__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Next Meeting Date (People.ai)</displayNameOverride>
+            <field>peopleai__NextMeetingDate__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>NumberofActiveCARollup</displayNameOverride>
+            <field>NumberofCustomerAccountsRollup__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Number Of Customer Accounts</displayNameOverride>
+            <field>CustomerAcctCounter__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>NumberofInactiveCARollup</displayNameOverride>
+            <field>NumberofPreviousRollup__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Number of Locations</displayNameOverride>
+            <field>Number_of_Locations__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Number of Opportunities</displayNameOverride>
+            <field>OpportunityCounter__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>NumberofOpportunitiesinGroup1</displayNameOverride>
+            <field>NumberofOpportunitiesinGroup1__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>NumberofOpportunitiesinGroup2</displayNameOverride>
+            <field>NumberofOpportunitiesinGroup2__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Number of PC</displayNameOverride>
+            <field>Number_of_PC__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Number of Servers</displayNameOverride>
+            <field>Number_of_Servers__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>On-Account Credits</displayNameOverride>
+            <field>QTB_On_Account_Credits__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Operational Account Number</displayNameOverride>
+            <field>Ship_To_Site_Number__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Originating Org</displayNameOverride>
+            <field>Originating_Org__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Output VAT/GST Code</displayNameOverride>
+            <field>fferpcore__OutputVatCode__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Ownership</displayNameOverride>
+            <field>Ownership</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Parent Account</displayNameOverride>
+            <field>Parent</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Parent Account</displayNameOverride>
+            <field>QTB_Parent_Account__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Parent Billing Account Reference</displayNameOverride>
+            <field>QTB_Parent_Billing_Account_Ref__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Partner Coverage</displayNameOverride>
+            <field>IM_Partner_Coverage__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Partner Flag</displayNameOverride>
+            <field>IM_Partner_Flag__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Partner Manager</displayNameOverride>
+            <field>IM_Partner_Manager__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Partner Overview</displayNameOverride>
+            <field>IM_Partner_Overview__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Partner Overview (Formula)</displayNameOverride>
+            <field>Partner_Overview_Formula__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Partner Status</displayNameOverride>
+            <field>IM_Partner_Status__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Partner Type</displayNameOverride>
+            <field>IM_Partner_Type__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Partner Type Formula</displayNameOverride>
+            <field>Partner_Type_Formula__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Party ID</displayNameOverride>
+            <field>Party_ID__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Party Number</displayNameOverride>
+            <field>Party_Number__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Party Number Generator</displayNameOverride>
+            <field>QTB_Party_Number_Generator__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Payable Customer Model</displayNameOverride>
+            <field>QTB_Payable_Customer_Model__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Payment Terms</displayNameOverride>
+            <field>Payment_Terms__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>PC Backup PAIN</displayNameOverride>
+            <field>PC_Backup_PAIN__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Phone</displayNameOverride>
+            <field>Phone</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Platform BillingOS</displayNameOverride>
+            <field>QTB_Platform_BillingOS__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Postal Code</displayNameOverride>
+            <field>Postal_Code2__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Post-Petition Bankruptcy</displayNameOverride>
+            <field>QTB_Post_Petition_Bankruptcy__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Pre-Petition Bankruptcy</displayNameOverride>
+            <field>QTB_Pre_Petition_Bankruptcy__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Preserve Bundle Structure</displayNameOverride>
+            <field>SBQQ__PreserveBundle__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Price Hold End</displayNameOverride>
+            <field>SBQQ__PriceHoldEnd__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Primary Local Market Rep 1 (Formula)</displayNameOverride>
+            <field>Primary_Local_Market_Rep_1_Formula__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Procurement has Current Contract</displayNameOverride>
+            <field>Procurement_has_Current_Contract__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Profile Class Picklist</displayNameOverride>
+            <field>QTB_Profile_Class__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Profiling Grade</displayNameOverride>
+            <field>Profiling_Grade__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Program Designation</displayNameOverride>
+            <field>Program_Designation__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Purpose</displayNameOverride>
+            <field>QTB_Purpose__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Rating</displayNameOverride>
+            <field>Rating</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Reason Code</displayNameOverride>
+            <field>QTB_Reason_Code__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Record ID (18 Digit)</displayNameOverride>
+            <field>Record_ID_18_Digit__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Records Management</displayNameOverride>
+            <field>QTB_Records_Management__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Records Mgmt Details</displayNameOverride>
+            <field>Records_Mgmt_Details__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Records Mgmt Vendor (Other)</displayNameOverride>
+            <field>Records_Mgmt_Vendor_Other__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Record Type</displayNameOverride>
+            <field>QTB_Account_Record_Type__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Registration Number</displayNameOverride>
+            <field>Registration_Number__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Registration Number Updated</displayNameOverride>
+            <field>Registration_Number_Updated__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Related Billing Account</displayNameOverride>
+            <field>Related_Billing_Account__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Related Operational Account</displayNameOverride>
+            <field>Related_Operational_Account__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Renewal Model</displayNameOverride>
+            <field>SBQQ__RenewalModel__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Renewal Pricing Method</displayNameOverride>
+            <field>SBQQ__RenewalPricingMethod__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Results URL</displayNameOverride>
+            <field>Walker_URL__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Retention Requirements</displayNameOverride>
+            <field>Retention_Requirements__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Revenue District</displayNameOverride>
+            <field>QTB_Market__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>RM Contract Indicators</displayNameOverride>
+            <field>RM_Price__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>RM Customer Behavior</displayNameOverride>
+            <field>RM_Relationship__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>RM Geography or Industry</displayNameOverride>
+            <field>RM_Service__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>RM Segment</displayNameOverride>
+            <field>RM_Segment__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Sales Account ExtID</displayNameOverride>
+            <field>QTB_Sales_Account_ExtID__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Sales Account ID</displayNameOverride>
+            <field>Account_ID__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Sales Account Number</displayNameOverride>
+            <field>Account_Number_Sales_text__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Sales Account Number Generator</displayNameOverride>
+            <field>QTB_Sales_Account_Number_Generator__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Salesforce ID</displayNameOverride>
+            <field>IM_External_ID__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Sales Segment</displayNameOverride>
+            <field>IM_Sales_Segment__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Sales Segment (Formula)</displayNameOverride>
+            <field>IM_Sales_Segment_Formula__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Sales Tax Status</displayNameOverride>
+            <field>fferpcore__SalesTaxStatus__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Scan</displayNameOverride>
+            <field>QTB_scan__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Scan Details</displayNameOverride>
+            <field>Scan_Details__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Scanning Vendor (Other)</displayNameOverride>
+            <field>Scanning_Vendor_Other__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Segment</displayNameOverride>
+            <field>Segment__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Send Dunning Flag</displayNameOverride>
+            <field>QTB_Send_Dunning__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Send Statements Flag</displayNameOverride>
+            <field>QTB_Send_Statements__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Sensitive to Relationship Owner Change</displayNameOverride>
+            <field>Sensitive_to_Relationship_Owner_Change__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Sensitive to Relationship Owner Changes</displayNameOverride>
+            <field>Sensitive_to_Relationship_Owner_Changes__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Server Backup PAIN</displayNameOverride>
+            <field>Server_Backup_PAIN__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Server Operating System</displayNameOverride>
+            <field>Server_Operating_System__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Services Billing Time Period Type</displayNameOverride>
+            <field>pse__Services_Billing_Time_Period_Type__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>SEZ Customer</displayNameOverride>
+            <field>QTB_SEZ_Customer__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Share of Wallet (DM)</displayNameOverride>
+            <field>Share_of_Wallet_DM__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Share of Wallet (RM)</displayNameOverride>
+            <field>Share_of_Wallet_RM__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Shipping Address</displayNameOverride>
+            <field>ShippingAddress</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Shipping Address Record Type</displayNameOverride>
+            <field>CloudingoAgent__SAR__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Shipping Address Status</displayNameOverride>
+            <field>CloudingoAgent__SAS__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Shipping Address Vacancy</displayNameOverride>
+            <field>CloudingoAgent__SAV__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Shipping Address Validated</displayNameOverride>
+            <field>fferpcore__IsShippingAddressValidated__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Shipping Address Validated Reference</displayNameOverride>
+            <field>fferpcore__MaterializedShippingAddressValidated__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Shipping City</displayNameOverride>
+            <field>ShippingCity</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Shipping Country</displayNameOverride>
+            <field>ShippingCountry</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Shipping Geocode Accuracy</displayNameOverride>
+            <field>ShippingGeocodeAccuracy</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Shipping Latitude</displayNameOverride>
+            <field>ShippingLatitude</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Shipping Longitude</displayNameOverride>
+            <field>ShippingLongitude</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Shipping Residential Delivery Indicator</displayNameOverride>
+            <field>CloudingoAgent__SRDI__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Shipping State/Province</displayNameOverride>
+            <field>ShippingState</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Shipping Street</displayNameOverride>
+            <field>ShippingStreet</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Shipping Timezone</displayNameOverride>
+            <field>CloudingoAgent__STZ__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Shipping Zip/Postal Code</displayNameOverride>
+            <field>ShippingPostalCode</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Show Box/Cube Totals</displayNameOverride>
+            <field>QTB_Show_Box_Cube_Totals__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Show Tax Per Transaction</displayNameOverride>
+            <field>QTB_Show_Tax_Per_Transaction__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Show Zero Charges</displayNameOverride>
+            <field>QTB_Show_Zero_Charges__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Shred</displayNameOverride>
+            <field>QTB_shred__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Shred Contract Indicators</displayNameOverride>
+            <field>Shred_Price__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Shred Customer Behavior</displayNameOverride>
+            <field>Shred_Relationship__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Shred Details</displayNameOverride>
+            <field>Shred_Details__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Shred Geography or Industry</displayNameOverride>
+            <field>Shred_Service__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Shred Segment</displayNameOverride>
+            <field>Shred_Segment__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Shred Vendor (Other)</displayNameOverride>
+            <field>Shred_Vendor_Other__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>SIC Code</displayNameOverride>
+            <field>Sic</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Signed NDA on File</displayNameOverride>
+            <field>Signed_NDA_on_File__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>SITAD</displayNameOverride>
+            <field>QTB_SITAD__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Source Company</displayNameOverride>
+            <field>Company_Customer_Chile__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Source Opportunity</displayNameOverride>
+            <field>QTB_Source_Opportunity__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Source Order</displayNameOverride>
+            <field>QTB_Source_Order__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Special Tax Condition</displayNameOverride>
+            <field>QTB_Special_Tax_Condition__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Split Invoice Flag</displayNameOverride>
+            <field>QTB_Split_Invoice_Flag__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Standard Invoice Delivery</displayNameOverride>
+            <field>QTB_Standard_Invoice_Flag__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>State/County &amp; Zip Code</displayNameOverride>
+            <field>State_County_Zip_Code__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Tax Code 1</displayNameOverride>
+            <field>fferpcore__TaxCode1__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Tax Code 2</displayNameOverride>
+            <field>fferpcore__TaxCode2__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Tax Code 3</displayNameOverride>
+            <field>fferpcore__TaxCode3__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Tax Country Code</displayNameOverride>
+            <field>fferpcore__TaxCountryCode__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Tax-Exempt</displayNameOverride>
+            <field>SBQQ__TaxExempt__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Tax Exemption Expiration Date</displayNameOverride>
+            <field>QTB_Tax_Exemption_Expiration_Date__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Tax Exemption Type</displayNameOverride>
+            <field>QTB_Tax_Exemption_Type__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Tax ID</displayNameOverride>
+            <field>QTB_Tax_ID__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Tax Registration</displayNameOverride>
+            <field>QTB_Tax_Registration__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Tax Registration Number</displayNameOverride>
+            <field>fferpcore__VatRegistrationNumber__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Tax Status</displayNameOverride>
+            <field>fferpcore__VatStatus__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Tax Threshold Amount</displayNameOverride>
+            <field>QTB_Tax_Threshold_Amount__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Customer Success Manager (Formula)</displayNameOverride>
+            <field>Tele_CDE_Formula__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Ticker Symbol</displayNameOverride>
+            <field>TickerSymbol</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Time Spent in Seconds (People.ai)</displayNameOverride>
+            <field>peopleai__TimeSpent__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Total # of Unique Service Addresses</displayNameOverride>
+            <field>Total_of_Unique_Service_Addresses__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Total Active Pipeline - Open</displayNameOverride>
+            <field>Total_Active_Pipeline_Open__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Total Bookings</displayNameOverride>
+            <field>Total_Booked_Won__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Total Cubic Feet</displayNameOverride>
+            <field>Total_Cubic_Feet__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Total Inactive Pipeline</displayNameOverride>
+            <field>Total_Inactive_Pipeline__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Total Storage in GB</displayNameOverride>
+            <field>Total_Storage_in_GB__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Total Time Spent (People.ai)</displayNameOverride>
+            <field>peopleai__TotalTimeSpent__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Type</displayNameOverride>
+            <field>Type</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Unapplied Payments</displayNameOverride>
+            <field>QTB_Unapplied_Payments__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Validated Billing City</displayNameOverride>
+            <field>fferpcore__ValidatedBillingCity__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Validated Billing Country</displayNameOverride>
+            <field>fferpcore__ValidatedBillingCountry__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Validated Billing State/Province</displayNameOverride>
+            <field>fferpcore__ValidatedBillingState__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Validated Billing Street</displayNameOverride>
+            <field>fferpcore__ValidatedBillingStreet__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Validated Billing Zip/Postal Code</displayNameOverride>
+            <field>fferpcore__ValidatedBillingPostalCode__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Validated Shipping City</displayNameOverride>
+            <field>fferpcore__ValidatedShippingCity__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Validated Shipping Country</displayNameOverride>
+            <field>fferpcore__ValidatedShippingCountry__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Validated Shipping State/Province</displayNameOverride>
+            <field>fferpcore__ValidatedShippingState__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Validated Shipping Street</displayNameOverride>
+            <field>fferpcore__ValidatedShippingStreet__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Validated Shipping Zip/Postal Code</displayNameOverride>
+            <field>fferpcore__ValidatedShippingPostalCode__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Virtual Environment</displayNameOverride>
+            <field>Virtual_Environment__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Walker Mapped Account</displayNameOverride>
+            <field>Walker_Mapped_Account__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Website</displayNameOverride>
+            <field>Website</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>WFH</displayNameOverride>
+            <field>WFH__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>What&apos;s Being Shredded?</displayNameOverride>
+            <field>Whats_Being_Shredded__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>What&apos;s in the Box (Records Mgmt)?</displayNameOverride>
+            <field>Whats_in_the_Box_Records_Mgmt__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>What&apos;s in the Box (Scan)?</displayNameOverride>
+            <field>Whats_in_the_Box_Scan__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>What&apos;s on the Server?</displayNameOverride>
+            <field>What_s_on_the_Server__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Work Order Minimum Charges</displayNameOverride>
+            <field>QTB_Work_Order_Minimum_Charges__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Work Order Minimum Start Date</displayNameOverride>
+            <field>QTB_Work_Order_Minimum_Start_Date__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Work Order Tier Flag</displayNameOverride>
+            <field>QTB_Work_Order_Tier_Flag__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Work Order Tiering Start Date</displayNameOverride>
+            <field>QTB_WorkOrderTieringStartDate__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Country_of_Parent_Account__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>NameCountryKey__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Is_Sales_Site__c</field>
+            <table>Account</table>
+        </columns>
+        <masterLabel>Accounts</masterLabel>
+    </sections>
+    <sections>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride># Stakeholders</displayNameOverride>
+            <field>TSPC__NodeCount__c</field>
+            <table>Account.TSPC__AccountMaps__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>CP: Account Map ID</displayNameOverride>
+            <field>Id</field>
+            <table>Account.TSPC__AccountMaps__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Created By</displayNameOverride>
+            <field>CreatedBy</field>
+            <table>Account.TSPC__AccountMaps__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Created Date</displayNameOverride>
+            <field>CreatedDate</field>
+            <table>Account.TSPC__AccountMaps__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Currency</displayNameOverride>
+            <field>CurrencyIsoCode</field>
+            <table>Account.TSPC__AccountMaps__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Deployed</displayNameOverride>
+            <field>TSPC__IsDeployed__c</field>
+            <table>Account.TSPC__AccountMaps__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>EID</displayNameOverride>
+            <field>TSPC__EId__c</field>
+            <table>Account.TSPC__AccountMaps__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Last Activity</displayNameOverride>
+            <field>TSPC__LastActivity__c</field>
+            <table>Account.TSPC__AccountMaps__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Last Modified By</displayNameOverride>
+            <field>LastModifiedBy</field>
+            <table>Account.TSPC__AccountMaps__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Last Modified Date</displayNameOverride>
+            <field>LastModifiedDate</field>
+            <table>Account.TSPC__AccountMaps__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>true</checkedByDefault>
+            <displayNameOverride>Name</displayNameOverride>
+            <field>Name</field>
+            <table>Account.TSPC__AccountMaps__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Node Last Activity</displayNameOverride>
+            <field>TSPC__NodeLastModifiedDate__c</field>
+            <table>Account.TSPC__AccountMaps__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Owner</displayNameOverride>
+            <field>Owner</field>
+            <table>Account.TSPC__AccountMaps__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Primary</displayNameOverride>
+            <field>TSPC__IsPrimary__c</field>
+            <table>Account.TSPC__AccountMaps__r</table>
+        </columns>
+        <masterLabel>CP: Account Maps</masterLabel>
+    </sections>
+    <sections>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Color</displayNameOverride>
+            <field>TSPC__Color__c</field>
+            <table>Account.TSPC__AccountMaps__r.TSPC__Nodes__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Contact</displayNameOverride>
+            <field>TSPC__Contact__c</field>
+            <table>Account.TSPC__AccountMaps__r.TSPC__Nodes__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>CP: Account Map Node ID</displayNameOverride>
+            <field>Id</field>
+            <table>Account.TSPC__AccountMaps__r.TSPC__Nodes__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Created By</displayNameOverride>
+            <field>CreatedBy</field>
+            <table>Account.TSPC__AccountMaps__r.TSPC__Nodes__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Created Date</displayNameOverride>
+            <field>CreatedDate</field>
+            <table>Account.TSPC__AccountMaps__r.TSPC__Nodes__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Currency</displayNameOverride>
+            <field>CurrencyIsoCode</field>
+            <table>Account.TSPC__AccountMaps__r.TSPC__Nodes__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Decision Influence</displayNameOverride>
+            <field>TSPC__SupportStatus__c</field>
+            <table>Account.TSPC__AccountMaps__r.TSPC__Nodes__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Description</displayNameOverride>
+            <field>TSPC__Description__c</field>
+            <table>Account.TSPC__AccountMaps__r.TSPC__Nodes__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Display Name</displayNameOverride>
+            <field>TSPC__DisplayName__c</field>
+            <table>Account.TSPC__AccountMaps__r.TSPC__Nodes__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>EID</displayNameOverride>
+            <field>TSPC__EId__c</field>
+            <table>Account.TSPC__AccountMaps__r.TSPC__Nodes__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Ghost</displayNameOverride>
+            <field>TSPC__IsGhost__c</field>
+            <table>Account.TSPC__AccountMaps__r.TSPC__Nodes__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Ghost Title</displayNameOverride>
+            <field>TSPC__GhostTitle__c</field>
+            <table>Account.TSPC__AccountMaps__r.TSPC__Nodes__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Goal</displayNameOverride>
+            <field>TSPC__Goal__c</field>
+            <table>Account.TSPC__AccountMaps__r.TSPC__Nodes__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Hash</displayNameOverride>
+            <field>TSPC__Hash__c</field>
+            <table>Account.TSPC__AccountMaps__r.TSPC__Nodes__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Icon</displayNameOverride>
+            <field>TSPC__Icon__c</field>
+            <table>Account.TSPC__AccountMaps__r.TSPC__Nodes__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>In-Map Account</displayNameOverride>
+            <field>TSPC__Account__c</field>
+            <table>Account.TSPC__AccountMaps__r.TSPC__Nodes__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>In-Map Reports To</displayNameOverride>
+            <field>TSPC__ReportsTo__c</field>
+            <table>Account.TSPC__AccountMaps__r.TSPC__Nodes__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Label</displayNameOverride>
+            <field>TSPC__Label__c</field>
+            <table>Account.TSPC__AccountMaps__r.TSPC__Nodes__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Last Activity Date</displayNameOverride>
+            <field>LastActivityDate</field>
+            <table>Account.TSPC__AccountMaps__r.TSPC__Nodes__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Last Modified By</displayNameOverride>
+            <field>LastModifiedBy</field>
+            <table>Account.TSPC__AccountMaps__r.TSPC__Nodes__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Last Modified Date</displayNameOverride>
+            <field>LastModifiedDate</field>
+            <table>Account.TSPC__AccountMaps__r.TSPC__Nodes__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Mapped</displayNameOverride>
+            <field>TSPC__IsMapped__c</field>
+            <table>Account.TSPC__AccountMaps__r.TSPC__Nodes__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>true</checkedByDefault>
+            <displayNameOverride>Name</displayNameOverride>
+            <field>Name</field>
+            <table>Account.TSPC__AccountMaps__r.TSPC__Nodes__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Power</displayNameOverride>
+            <field>TSPC__HasPower__c</field>
+            <table>Account.TSPC__AccountMaps__r.TSPC__Nodes__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Relationship</displayNameOverride>
+            <field>TSPC__Relationship__c</field>
+            <table>Account.TSPC__AccountMaps__r.TSPC__Nodes__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Role</displayNameOverride>
+            <field>TSPC__Role__c</field>
+            <table>Account.TSPC__AccountMaps__r.TSPC__Nodes__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Sibling Sort Order</displayNameOverride>
+            <field>TSPC__SiblingSortOrder__c</field>
+            <table>Account.TSPC__AccountMaps__r.TSPC__Nodes__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Submap</displayNameOverride>
+            <field>TSPC__Submap__c</field>
+            <table>Account.TSPC__AccountMaps__r.TSPC__Nodes__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>SUPPORT STATUS - PROMOTER STATUS</displayNameOverride>
+            <field>TSPC__DecisionStatus__c</field>
+            <table>Account.TSPC__AccountMaps__r.TSPC__Nodes__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Type</displayNameOverride>
+            <field>TSPC__Type__c</field>
+            <table>Account.TSPC__AccountMaps__r.TSPC__Nodes__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>User</displayNameOverride>
+            <field>TSPC__User__c</field>
+            <table>Account.TSPC__AccountMaps__r.TSPC__Nodes__r</table>
+        </columns>
+        <masterLabel>CP: Account Map Nodes (Map)</masterLabel>
+    </sections>
+    <sections>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>CP: Primary Account Plan</displayNameOverride>
+            <field>TSPC__Account__c.TSPC__CPAccountPlan__c</field>
+            <table>Account.TSPC__AccountMaps__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Account</displayNameOverride>
+            <field>TSPC__Account__c.TSPC__CPAccountPlan__c.TSPC__Account__c</field>
+            <table>Account.TSPC__AccountMaps__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Account Plan Name</displayNameOverride>
+            <field>TSPC__Account__c.TSPC__CPAccountPlan__c.Name</field>
+            <table>Account.TSPC__AccountMaps__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Completed At</displayNameOverride>
+            <field>TSPC__Account__c.TSPC__CPAccountPlan__c.TSPC__CompletedDateTime__c</field>
+            <table>Account.TSPC__AccountMaps__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>CP: Account Plan ID</displayNameOverride>
+            <field>TSPC__Account__c.TSPC__CPAccountPlan__c.Id</field>
+            <table>Account.TSPC__AccountMaps__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Created By</displayNameOverride>
+            <field>TSPC__Account__c.TSPC__CPAccountPlan__c.CreatedBy</field>
+            <table>Account.TSPC__AccountMaps__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Created Date</displayNameOverride>
+            <field>TSPC__Account__c.TSPC__CPAccountPlan__c.CreatedDate</field>
+            <table>Account.TSPC__AccountMaps__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Current</displayNameOverride>
+            <field>TSPC__Account__c.TSPC__CPAccountPlan__c.TSPC__IsCurrent__c</field>
+            <table>Account.TSPC__AccountMaps__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Description</displayNameOverride>
+            <field>TSPC__Account__c.TSPC__CPAccountPlan__c.TSPC__Description__c</field>
+            <table>Account.TSPC__AccountMaps__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Division</displayNameOverride>
+            <field>TSPC__Account__c.TSPC__CPAccountPlan__c.Division</field>
+            <table>Account.TSPC__AccountMaps__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>EID</displayNameOverride>
+            <field>TSPC__Account__c.TSPC__CPAccountPlan__c.TSPC__EId__c</field>
+            <table>Account.TSPC__AccountMaps__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>End Date</displayNameOverride>
+            <field>TSPC__Account__c.TSPC__CPAccountPlan__c.TSPC__EndDate__c</field>
+            <table>Account.TSPC__AccountMaps__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Following Plan</displayNameOverride>
+            <field>TSPC__Account__c.TSPC__CPAccountPlan__c.TSPC__FollowingPlan__c</field>
+            <table>Account.TSPC__AccountMaps__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Last Activity Date</displayNameOverride>
+            <field>TSPC__Account__c.TSPC__CPAccountPlan__c.LastActivityDate</field>
+            <table>Account.TSPC__AccountMaps__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Last Modified: Scorecard</displayNameOverride>
+            <field>TSPC__Account__c.TSPC__CPAccountPlan__c.TSPC__ModStampSC__c</field>
+            <table>Account.TSPC__AccountMaps__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Last Modified: Whitespace</displayNameOverride>
+            <field>TSPC__Account__c.TSPC__CPAccountPlan__c.TSPC__ModStampWS__c</field>
+            <table>Account.TSPC__AccountMaps__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Last Modified By</displayNameOverride>
+            <field>TSPC__Account__c.TSPC__CPAccountPlan__c.LastModifiedBy</field>
+            <table>Account.TSPC__AccountMaps__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Last Modified Date</displayNameOverride>
+            <field>TSPC__Account__c.TSPC__CPAccountPlan__c.LastModifiedDate</field>
+            <table>Account.TSPC__AccountMaps__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Previous Plan</displayNameOverride>
+            <field>TSPC__Account__c.TSPC__CPAccountPlan__c.TSPC__PreviousPlan__c</field>
+            <table>Account.TSPC__AccountMaps__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Primary</displayNameOverride>
+            <field>TSPC__Account__c.TSPC__CPAccountPlan__c.TSPC__IsPrimary__c</field>
+            <table>Account.TSPC__AccountMaps__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Primary Thread</displayNameOverride>
+            <field>TSPC__Account__c.TSPC__CPAccountPlan__c.TSPC__IsPrimaryThread__c</field>
+            <table>Account.TSPC__AccountMaps__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Scorecard: Score</displayNameOverride>
+            <field>TSPC__Account__c.TSPC__CPAccountPlan__c.TSPC__SC_Score__c</field>
+            <table>Account.TSPC__AccountMaps__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Scorecard: Score %</displayNameOverride>
+            <field>TSPC__Account__c.TSPC__CPAccountPlan__c.TSPC__SC_ScoreRatio__c</field>
+            <table>Account.TSPC__AccountMaps__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Start Date</displayNameOverride>
+            <field>TSPC__Account__c.TSPC__CPAccountPlan__c.TSPC__StartDate__c</field>
+            <table>Account.TSPC__AccountMaps__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Status</displayNameOverride>
+            <field>TSPC__Account__c.TSPC__CPAccountPlan__c.TSPC__Status__c</field>
+            <table>Account.TSPC__AccountMaps__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Template</displayNameOverride>
+            <field>TSPC__Account__c.TSPC__CPAccountPlan__c.TSPC__Template__c</field>
+            <table>Account.TSPC__AccountMaps__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Thread</displayNameOverride>
+            <field>TSPC__Account__c.TSPC__CPAccountPlan__c.TSPC__ThreadGuid__c</field>
+            <table>Account.TSPC__AccountMaps__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Thread (Source)</displayNameOverride>
+            <field>TSPC__Account__c.TSPC__CPAccountPlan__c.TSPC__ThreadSourceGuid__c</field>
+            <table>Account.TSPC__AccountMaps__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Timeframe</displayNameOverride>
+            <field>TSPC__Account__c.TSPC__CPAccountPlan__c.TSPC__Timeframe__c</field>
+            <table>Account.TSPC__AccountMaps__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Timeframe Period</displayNameOverride>
+            <field>TSPC__Account__c.TSPC__CPAccountPlan__c.TSPC__TimeframePeriodLabel__c</field>
+            <table>Account.TSPC__AccountMaps__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Timeframe Period ID</displayNameOverride>
+            <field>TSPC__Account__c.TSPC__CPAccountPlan__c.TSPC__TimeframePeriodId__c</field>
+            <table>Account.TSPC__AccountMaps__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Whitespace: # Opportunities</displayNameOverride>
+            <field>TSPC__Account__c.TSPC__CPAccountPlan__c.TSPC__WS_OpportunityCount__c</field>
+            <table>Account.TSPC__AccountMaps__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Whitespace: Initiatives Count</displayNameOverride>
+            <field>TSPC__Account__c.TSPC__CPAccountPlan__c.TSPC__WS_InitiativeCount__c</field>
+            <table>Account.TSPC__AccountMaps__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Whitespace: Initiatives Count</displayNameOverride>
+            <field>TSPC__Account__c.TSPC__CPAccountPlan__c.TSPC__WS_InitiativesCount__c</field>
+            <table>Account.TSPC__AccountMaps__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Whitespace: Item Count</displayNameOverride>
+            <field>TSPC__Account__c.TSPC__CPAccountPlan__c.TSPC__WS_ItemCount__c</field>
+            <table>Account.TSPC__AccountMaps__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Whitespace: Related Opportunities</displayNameOverride>
+            <field>TSPC__Account__c.TSPC__CPAccountPlan__c.TSPC__WS_OpportunityRelationCount__c</field>
+            <table>Account.TSPC__AccountMaps__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Responsible</displayNameOverride>
+            <field>TSPC__Account__c.TSPC__CPAccountPlan__c.TSPC__User__c</field>
+            <table>Account.TSPC__AccountMaps__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Responsible : # of Users</displayNameOverride>
+            <field>TSPC__Account__c.TSPC__CPAccountPlan__c.TSPC__User__c.of_Users__c</field>
+            <table>Account.TSPC__AccountMaps__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Responsible : Active</displayNameOverride>
+            <field>TSPC__Account__c.TSPC__CPAccountPlan__c.TSPC__User__c.IsActive</field>
+            <table>Account.TSPC__AccountMaps__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Responsible : Country</displayNameOverride>
+            <field>TSPC__Account__c.TSPC__CPAccountPlan__c.TSPC__User__c.Country</field>
+            <table>Account.TSPC__AccountMaps__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Responsible : Director</displayNameOverride>
+            <field>TSPC__Account__c.TSPC__CPAccountPlan__c.TSPC__User__c.IM_RSM__c</field>
+            <table>Account.TSPC__AccountMaps__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Responsible : Email</displayNameOverride>
+            <field>TSPC__Account__c.TSPC__CPAccountPlan__c.TSPC__User__c.Email</field>
+            <table>Account.TSPC__AccountMaps__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Responsible : Employee Number</displayNameOverride>
+            <field>TSPC__Account__c.TSPC__CPAccountPlan__c.TSPC__User__c.EmployeeNumber</field>
+            <table>Account.TSPC__AccountMaps__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Responsible : IS Seller</displayNameOverride>
+            <field>TSPC__Account__c.TSPC__CPAccountPlan__c.TSPC__User__c.IM_Area__c</field>
+            <table>Account.TSPC__AccountMaps__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Responsible : Manager</displayNameOverride>
+            <field>TSPC__Account__c.TSPC__CPAccountPlan__c.TSPC__User__c.Manager</field>
+            <table>Account.TSPC__AccountMaps__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Responsible : Region</displayNameOverride>
+            <field>TSPC__Account__c.TSPC__CPAccountPlan__c.TSPC__User__c.Region__c</field>
+            <table>Account.TSPC__AccountMaps__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Responsible : Role</displayNameOverride>
+            <field>TSPC__Account__c.TSPC__CPAccountPlan__c.TSPC__User__c.UserRole</field>
+            <table>Account.TSPC__AccountMaps__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Responsible : Role Type</displayNameOverride>
+            <field>TSPC__Account__c.TSPC__CPAccountPlan__c.TSPC__User__c.Role_Type__c</field>
+            <table>Account.TSPC__AccountMaps__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Responsible : Sales Segment</displayNameOverride>
+            <field>TSPC__Account__c.TSPC__CPAccountPlan__c.TSPC__User__c.Sales_Segment__c</field>
+            <table>Account.TSPC__AccountMaps__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Responsible : Sales Sub-Segment</displayNameOverride>
+            <field>TSPC__Account__c.TSPC__CPAccountPlan__c.TSPC__User__c.Sales_Sub_Segment__c</field>
+            <table>Account.TSPC__AccountMaps__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Responsible : SVP</displayNameOverride>
+            <field>TSPC__Account__c.TSPC__CPAccountPlan__c.TSPC__User__c.SVP__c</field>
+            <table>Account.TSPC__AccountMaps__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Responsible : User ID</displayNameOverride>
+            <field>TSPC__Account__c.TSPC__CPAccountPlan__c.TSPC__User__c.Id</field>
+            <table>Account.TSPC__AccountMaps__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Responsible : VP</displayNameOverride>
+            <field>TSPC__Account__c.TSPC__CPAccountPlan__c.TSPC__User__c.IM_VP__c</field>
+            <table>Account.TSPC__AccountMaps__r</table>
+        </columns>
+        <masterLabel>CP: Primary Account Plan</masterLabel>
+    </sections>
+</ReportType>

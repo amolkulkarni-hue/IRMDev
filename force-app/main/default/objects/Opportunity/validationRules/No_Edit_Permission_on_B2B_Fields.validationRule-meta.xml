@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>No_Edit_Permission_on_B2B_Fields</fullName>
-    <active>true</active>
+    <active>false</active>
     <description>#15118 : Book to Bill | Implementation Team: Only IM_Sales_IMTN profile to have edit access to B2B related fields</description>
     <errorConditionFormula>AND(
 	NOT( $Setup.HasB2BFieldsEditPermission__c.Has_Edit_Access__c),        

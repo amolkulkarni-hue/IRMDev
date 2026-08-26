@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>SA_AI_Usage__c</fullName>
+    <description>How AI will be used in the final solution. Same condition as Preferred Cloud Provider.</description>
+    <label>AI Usage</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Standard OCR for full-text search</fullName>
+                <default>false</default>
+                <label>Standard OCR for full-text search</label>
+            </value>
+            <value>
+                <fullName>Document extraction</fullName>
+                <default>false</default>
+                <label>Document extraction</label>
+            </value>
+            <value>
+                <fullName>Document classification for multiple document types</fullName>
+                <default>false</default>
+                <label>Document classification for multiple document types</label>
+            </value>
+            <value>
+                <fullName>Human In The Loop Validation</fullName>
+                <default>false</default>
+                <label>Human In The Loop Validation</label>
+            </value>
+            <value>
+                <fullName>Embedding and Agentic Automation</fullName>
+                <default>false</default>
+                <label>Embedding and Agentic Automation</label>
+            </value>
+            <value>
+                <fullName>None</fullName>
+                <default>false</default>
+                <label>None</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>4</visibleLines>
+</CustomField>

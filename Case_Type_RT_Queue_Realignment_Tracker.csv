@@ -1,0 +1,40 @@
+Jira Story #,Type,Parent Object,Name,API Name,Org Delta (New/Updated/Deleted)
+IMICC9S-1729,Record Type,Case,Post Sales Support,B2B_Implementation,Updated
+IMICC9S-1729,Record Type,Case,Deal Support,Deal_Support,Updated
+IMICC9S-1729,Standard Value Set Value,Case.Type,Solution Architects,Solution Architects,New
+IMICC9S-1729,Standard Value Set Value,Case.Type,Deal Desk,Deal Desk,New
+IMICC9S-1729,Standard Value Set Value,Case.Type,GCCS,GCCS,New
+IMICC9S-1729,Standard Value Set Value,Case.Type,Managed Services Program,Managed Services Program,New
+IMICC9S-1729,Standard Value Set Value,Case.Type,Finance,Finance,New
+IMICC9S-1729,Queue,Case,Post Sales Support Queue,Post_Sales_Support_Queue,New
+IMICC9S-1729,Queue,Case,Bid Management Queue,Bid_Management_Queue,New
+IMICC9S-1729,Queue,Case,Solution Architects Queue,Solution_Architects_Queue,New
+IMICC9S-1729,Queue,Case,Remarketing Queue,Remarketing_Queue,New
+IMICC9S-1729,Queue,Case,Deal Desk Queue,Deal_Desk_Queue,New
+IMICC9S-1729,Queue,Case,InfoSec Queue,InfoSec_Queue,New
+IMICC9S-1729,Queue,Case,Revenue Management Queue,Revenue_Management_Queue,New
+IMICC9S-1729,Queue,Case,Legal / GCCS Queue,Legal_GCCS_Queue,New
+IMICC9S-1729,Queue,Case,Managed Services Queue,Managed_Services_Queue,New
+IMICC9S-1729,Queue,Case,Finance Commercial Queue,Finance_Commercial_Queue,New
+IMICC9S-1729,Custom Object,Touch_Level_Case_Routing__c,Touch Level Case Routing,Touch_Level_Case_Routing__c,Deleted
+IMICC9S-1729,Custom Tab,Touch_Level_Case_Routing__c,Touch Level Case Routing,Touch_Level_Case_Routing__c,Deleted
+IMICC9S-1729,Flow,Case,Support Engagement Case Assignment Flow,Support_Engagement_Case_Assignment_Flow,Deleted
+IMICC9S-1729,Flow,Opportunity,Touch Level Recalculation Flow,Touch_Level_Recalculation_Flow,Deleted
+IMICC9S-1729,Apex Class,Case,IRM Case Routing Test,IRM_CaseRoutingTest,Deleted
+IMICC9S-1729,Permission Set,Touch_Level_Case_Routing__c,Touch Level Case Routing Create PS,Touch_Level_Case_Routing_Create_PS,Deleted
+IMICC9S-1729,Permission Set,Touch_Level_Case_Routing__c,Touch Level Case Routing Read PS,Touch_Level_Case_Routing_Read_PS,Deleted
+IMICC9S-1729,Permission Set,Touch_Level_Case_Routing__c,Touch Level Case Routing Update PS,Touch_Level_Case_Routing_Update_PS,Deleted
+IMICC9S-1729,Permission Set,Touch_Level_Case_Routing__c,Touch Level Case Routing Delete PS,Touch_Level_Case_Routing_Delete_PS,Deleted
+IMICC9S-1729,Permission Set Group,Case,62 Persona PSGs (Touch_Level_Case_Routing_*_PS component reference removed),Various,Updated
+IMICC9S-1729,Case Creation Rule (data),Case_Creation_Rule__c,B2B / Implementation -> Post_Sales_Support_Queue,aKVWJ00000FYEMT4A5,New (migrated from IRMDEV aKagP00000003NrSAI; Queue remapped from Implementation_Queue, Case_Type__c corrected to match new picklist label)
+IMICC9S-1729,Case Creation Rule (data),Case_Creation_Rule__c,RFP / Bid Management -> Bid_Management_Queue,aKVWJ00000FYEMU4A5,New (migrated from IRMDEV aKagP00000003NlSAI; Queue unchanged, Case_Type__c corrected to match new picklist label)
+IMICC9S-1729,Case Creation Rule (data),Case_Creation_Rule__c,Remarketing -> Remarketing_Queue,aKVWJ00000FYEMV4A5,New (migrated from IRMDEV aKagP00000003NqSAI as-is)
+IMICC9S-1729,Case Creation Rule (data),Case_Creation_Rule__c,Revenue Management -> Revenue_Management_Queue,aKVWJ00000FYEMW4A5,New (migrated from IRMDEV aKagP00000003NpSAI as-is)
+IMICC9S-1729,Case Creation Rule (data),Case_Creation_Rule__c,GCCS -> Legal_GCCS_Queue,aKVWJ00000FYEMX4A5,New (migrated from IRMDEV aKagP00000003NjSAI "Legal Review"; renamed per user confirmation, Queue unchanged)
+IMICC9S-1729,Case Creation Rule (data),Case_Creation_Rule__c,InfoSec / Security Questionnaire -> InfoSec_Queue,aKVWJ00000FYEMY4A5,New (migrated from IRMDEV aKagP00000003NkSAI "InfoSec Security Review"; renamed per user confirmation, Queue unchanged)
+IMICC9S-1729,Case Creation Rule (data),Case_Creation_Rule__c,Deal Desk -> Deal_Desk_Queue,aKVWJ00000FYEMZ4A5,New (migrated from IRMDEV aKagP00000003NiSAI "Pricing"; renamed per user confirmation, Queue remapped from DOC_Pricing_Queue)
+IMICC9S-1729,Case Creation Rule (data),Case_Creation_Rule__c,Solution Architects -> Solution_Architects_Queue,Case_Creation_Rule__c,Blocked - no matching rule found in IRMDEV/IRMNewDev; needs Stage + trigger-condition input before authoring
+IMICC9S-1729,Case Creation Rule (data),Case_Creation_Rule__c,Managed Services Program -> Managed_Services_Queue,Case_Creation_Rule__c,Blocked - no matching rule found in IRMDEV/IRMNewDev; needs Stage + trigger-condition input before authoring
+IMICC9S-1729,Case Creation Rule (data),Case_Creation_Rule__c,Finance -> Finance_Commercial_Queue,Case_Creation_Rule__c,Blocked - no matching rule found in IRMDEV/IRMNewDev; needs Stage + trigger-condition input before authoring
+IMICC9S-1729,Case Creation Condition (data),Case_Creation_Condition__c,9 condition records for the 7 migrated rules above,Case_Creation_Condition__c,New (migrated from IRMDEV; see manifest/data-load-sheet-Case_Creation_Condition.csv for full lineage)
+IMICC9S-1729,Custom Field (gap),Case_Creation_Rule__c,Logic_Expression__c + Notes__c,Logic_Expression__c;Notes__c,Flag - defined in local source metadata but NOT deployed to IRMNewDev (bulk load failed until dropped from payload); deploy these 2 fields to IRMNewDev, then backfill Logic_Expression__c on the 7 rules above from manifest/data-load-sheet-Case_Creation_Rule.csv source values

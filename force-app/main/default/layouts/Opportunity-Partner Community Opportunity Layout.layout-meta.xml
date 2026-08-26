@@ -5,7 +5,9 @@
     <excludeButtons>Clone</excludeButtons>
     <excludeButtons>Delete</excludeButtons>
     <excludeButtons>Edit</excludeButtons>
+    <excludeButtons>OpenSlackRecordChannel</excludeButtons>
     <excludeButtons>Share</excludeButtons>
+    <excludeButtons>SmartFillEnrich</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <feedLayout>
         <autocollapsePublisher>true</autocollapsePublisher>
@@ -133,6 +135,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Converted_Lead__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>BV_Stage_Gate_Bypass__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -423,7 +429,6 @@
         <fields>IM_Booked_Date__c</fields>
         <fields>CloseDate</fields>
         <relatedLists>
-            <fields>MemberName</fields>
             <relatedList>RelatedOpportunitySalesTeam</relatedList>
         </relatedLists>
     </miniLayout>
@@ -432,11 +437,16 @@
     </platformActionList>
     <quickActionList/>
     <relatedLists>
+        <relatedList>RelatedEntityHistoryList</relatedList>
+    </relatedLists>
+    <relatedLists>
         <excludeButtons>OppTeamMemberMultiEdit</excludeButtons>
         <fields>MemberName</fields>
         <fields>OppAccessLevel</fields>
         <fields>TeamMemberRole</fields>
         <relatedList>RelatedOpportunitySalesTeam</relatedList>
+        <sortField>MemberName</sortField>
+        <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>

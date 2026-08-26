@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Opportunity_Product_Validation_Rule</fullName>
+    <active>false</active>
+    <description>Opportunity Product Validation Rule for Lightning 
+#28952 Only IMNA Product, IME Products, and IME Bill Code Products can be saved on Standard Opps</description>
+    <errorConditionFormula>AND(NOT($Setup.Metadata_Activation_Settings__c.Disable_VR__c &amp;&amp; OR(ISBLANK($Setup.Metadata_Activation_Settings__c.SObject_API_Name__c), CONTAINS($Setup.Metadata_Activation_Settings__c.SObject_API_Name__c, &apos;OpportunityLineItem&apos;))),
+AND(
+OR(
+Opportunity.RecordType.Name = &apos;Standard Opportunity&apos;,
+Opportunity.RecordType.Name = &apos;IMLA Standard Opportunity&apos;,
+Opportunity.RecordType.Name = &apos;IMAP Standard Opportunity&apos;,
+Opportunity.RecordType.Name = &apos;IME Standard Opportunity&apos;),
+OR(
+AND(Product2.RecordType.DeveloperName = &apos;IMNA_Product&apos;,$CustomMetadata.Allowed_Opportunity_Products__mdt.IMNA_Product.Allowed__c ==False),
+AND(Product2.RecordType.DeveloperName = &apos;IME&apos;,$CustomMetadata.Allowed_Opportunity_Products__mdt.IME.Allowed__c ==False),
+AND(Product2.RecordType.DeveloperName = &apos;IME_Bill_Code&apos;,$CustomMetadata.Allowed_Opportunity_Products__mdt.IME_Bill_Code.Allowed__c ==False),
+AND(Product2.RecordType.DeveloperName = &apos;QTB_Global_Sales_Product&apos;,$CustomMetadata.Allowed_Opportunity_Products__mdt.QTB_Global_Sales_Product.Allowed__c ==False),
+AND(Product2.RecordType.DeveloperName = &apos;Bill_Code&apos;,$CustomMetadata.Allowed_Opportunity_Products__mdt.Bill_Code.Allowed__c ==False)
+),
+NOT(Contains(Product2.Name,&apos;SITAD&apos;))
+))</errorConditionFormula>
+    <errorMessage>Please choose IME or IMNA Product(s)</errorMessage>
+</ValidationRule>

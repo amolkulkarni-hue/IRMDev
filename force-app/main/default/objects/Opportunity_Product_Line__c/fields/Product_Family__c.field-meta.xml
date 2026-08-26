@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Product_Family__c</fullName>
+    <description>Optional, descriptive product grouping within the selected Business Unit. Not required to save a line — Business Unit is the required field on this object.</description>
+    <inlineHelpText>Optional. If you know more detail than just the Business Unit, select a Product Family here — choices are filtered to the Business Unit you selected above.</inlineHelpText>
+    <label>Product Family</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>Business_Unit__c</controllingField>
+        <restricted>true</restricted>
+        <valueSetName>Product_Family</valueSetName>
+        <valueSettings>
+            <controllingFieldValue>Digital</controllingFieldValue>
+            <valueName>Products</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>RIM</controllingFieldValue>
+            <valueName>Data Management</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>RIM</controllingFieldValue>
+            <valueName>MAS</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>RIM</controllingFieldValue>
+            <valueName>Records Management</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>RIM</controllingFieldValue>
+            <valueName>Shred</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>RIM</controllingFieldValue>
+            <valueName>W&amp;L</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>ALM</controllingFieldValue>
+            <valueName>DM SITAD</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

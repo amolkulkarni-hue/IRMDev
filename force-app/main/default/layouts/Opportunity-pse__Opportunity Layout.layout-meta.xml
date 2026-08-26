@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Layout xmlns="http://soap.sforce.com/2006/04/metadata">
+    <excludeButtons>OpenSlackRecordChannel</excludeButtons>
+    <excludeButtons>SmartFillEnrich</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <layoutSections>
         <customLabel>false</customLabel>
@@ -70,6 +72,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Converted_Lead__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>BV_Stage_Gate_Bypass__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -232,6 +238,9 @@
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
     <relatedLists>
+        <relatedList>RelatedEntityHistoryList</relatedList>
+    </relatedLists>
+    <relatedLists>
         <customButtons>pse__Create_Project_From_Template</customButtons>
         <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
@@ -328,12 +337,10 @@
     <relatedLists>
         <fields>ContactName</fields>
         <fields>Role</fields>
-        <fields>ContactTitle</fields>
         <fields>IsPrimary</fields>
-        <fields>ContactPhone</fields>
-        <fields>ContactEmail</fields>
-        <fields>ContactAccountName</fields>
         <relatedList>RelatedContactRoleList</relatedList>
+        <sortField>IsPrimary</sortField>
+        <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
         <fields>ACCOUNT.NAME</fields>
@@ -362,7 +369,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00hd000000MsuaP</masterLabel>
+        <masterLabel>00hHr00000arkYq</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

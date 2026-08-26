@@ -3,7 +3,7 @@
     <fullName>Validation_on_CloseDate</fullName>
     <active>true</active>
     <errorConditionFormula>AND(
-  NOT(Bypass_Validation__c),
+  NOT($Permission.Bypass_Opportunity_Validation),
 				 ISCHANGED(CloseDate), 
 				CloseDate &lt; TODAY()
 )</errorConditionFormula>

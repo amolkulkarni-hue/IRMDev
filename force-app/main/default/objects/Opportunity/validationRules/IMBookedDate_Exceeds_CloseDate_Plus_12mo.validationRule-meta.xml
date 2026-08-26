@@ -3,10 +3,29 @@
     <fullName>IMBookedDate_Exceeds_CloseDate_Plus_12mo</fullName>
     <active>true</active>
     <errorConditionFormula>AND(
-     NOT(Bypass_Validation__c),
+    NOT($Permission.Bypass_Opportunity_Validation),
+    OR(
+        RecordType.DeveloperName = &quot;Standard_Opportunity&quot;,
+        RecordType.DeveloperName = &quot;Framework_Parent_Opportunity&quot;
+    ),
+    OR(
+        ISPICKVAL(Type, &quot;New Deal&quot;),
+        ISPICKVAL(Type, &quot;Renewal&quot;),
+        ISPICKVAL(Type, &quot;Cross-Sell/Upsell&quot;)
+    ),
+    OR(
+        ISPICKVAL(Touch_Level__c, &quot;High Touch&quot;),
+        ISPICKVAL(Touch_Level__c, &quot;Medium Touch&quot;),
+        ISPICKVAL(Touch_Level__c, &quot;Low Touch&quot;),
+        ISPICKVAL(Touch_Level__c, &quot;No Touch&quot;)
+    ),
+    OR(
+        ISPICKVAL(Business_Unit__c, &quot;RIM&quot;),
+        ISPICKVAL(Business_Unit__c, &quot;Digital&quot;),
+        ISPICKVAL(Business_Unit__c, &quot;ALM&quot;)
+    ),
     NOT(ISBLANK(IM_Booked_Date__c)),
     IM_Booked_Date__c &gt; ADDMONTHS(CloseDate, 12)
 )</errorConditionFormula>
-    <errorDisplayField>IM_Booked_Date__c</errorDisplayField>
     <errorMessage>The anticipated First Bill Date must be within 12 months of the Close Date.</errorMessage>
 </ValidationRule>

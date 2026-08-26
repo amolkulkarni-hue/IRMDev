@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>INFOSEC_Requester_Info_Complete__c</fullName>
+    <description>Field to check if all required InfoSecurity fields are populated.</description>
+    <formula>AND(
+				NOT(ISBLANK(TEXT(INFOSEC_Due_Date__c))),
+				NOT(ISBLANK(TEXT(INFOSEC_Customer_Audits__c))),
+				NOT(ISBLANK(TEXT(INFOSEC_Facility_Cert_Required__c))),
+				NOT(ISBLANK(TEXT(INFOSEC_Data_Risk_Level__c))),
+				NOT(ISBLANK(TEXT(INFOSEC_Security_Risk_Level__c)))
+)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <inlineHelpText>Required InfoSecurity fields are populated</inlineHelpText>
+    <label>Requester Info Complete</label>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

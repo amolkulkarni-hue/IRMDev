@@ -80,6 +80,14 @@
                 <field>Total_Contract_Value_TCV__c</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Framework_Booked_Amount__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Open_Pipeline_Amount__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Required</behavior>
                 <field>CurrencyIsoCode</field>
             </layoutItems>
@@ -106,6 +114,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Converted_Lead__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>BV_Stage_Gate_Bypass__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -140,10 +152,6 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Eligible_for_Counterparty_Paper__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Required</behavior>
-                <field>Primary_Product_Interest__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -388,6 +396,9 @@
         </relatedContentItems>
     </relatedContent>
     <relatedLists>
+        <relatedList>RelatedEntityHistoryList</relatedList>
+    </relatedLists>
+    <relatedLists>
         <fields>CASES.CASE_NUMBER</fields>
         <fields>CASES.STATUS</fields>
         <fields>CASES.SUBJECT</fields>
@@ -405,13 +416,18 @@
         <fields>ironclad__Workflow_Status__c</fields>
         <fields>CREATED_DATE</fields>
         <relatedList>ironclad__Ironclad_Workflow__c.Opportunity__c</relatedList>
+        <sortField>CREATED_DATE</sortField>
+        <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
         <fields>ironclad__Account__c</fields>
         <fields>ironclad__Contract_Type__c</fields>
         <fields>ironclad__CounterpartySignedId__c</fields>
+        <fields>CREATED_DATE</fields>
         <relatedList>ironclad__Ironclad_Contract__c.Opportunity__c</relatedList>
+        <sortField>CREATED_DATE</sortField>
+        <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
         <relatedList>RelatedFileList</relatedList>

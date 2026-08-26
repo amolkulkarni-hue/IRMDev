@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>applyCaseFieldMappings</name>
+        <label>Apply Case Field Mappings</label>
+        <locationX>176</locationX>
+        <locationY>528</locationY>
+        <actionName>CaseFieldMappingEngine</actionName>
+        <actionType>apex</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>caseId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>CaseFieldMappingEngine</nameSegment>
+    </actionCalls>
+    <apiVersion>61.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <decisions>
+        <name>checkEligibleRecordType</name>
+        <label>Eligible Record Type?</label>
+        <locationX>176</locationX>
+        <locationY>408</locationY>
+        <defaultConnectorLabel>Not Eligible — End</defaultConnectorLabel>
+        <rules>
+            <name>isEligibleRecordType</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>varCaseRecordTypeDevName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Post_Sale_Support</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>varCaseRecordTypeDevName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Deal_Support</stringValue>
+                </rightValue>
+            </conditions>
+            <label>Eligible (B2B Implementation or Deal Support)</label>
+            <connector>
+                <targetReference>applyCaseFieldMappings</targetReference>
+            </connector>
+        </rules>
+    </decisions>
+    <description>Record-Triggered Flow on Case (After Insert), Asynchronous Path only — nothing runs in the Case-insert transaction itself. Filters to Cases linked to an Opportunity, resolves the Case&apos;s Record Type Developer Name, and — only for Post_Sale_Support or Deal_Support — calls CaseFieldMappingEngine.applyMappings to copy configured Opportunity/Account field values onto the Case (see Case_Field_Mapping__c). The Record Type check here is a declarative first gate; CaseFieldMappingEngine re-checks its own ELIGIBLE_RECORD_TYPES allow-list independently.</description>
+    <label>Case Field Mapping Apply Flow</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <name>getCaseRecordType</name>
+        <label>Get Case Record Type</label>
+        <locationX>176</locationX>
+        <locationY>288</locationY>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>checkEligibleRecordType</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.RecordTypeId</elementReference>
+            </value>
+        </filters>
+        <object>RecordType</object>
+        <outputAssignments>
+            <assignToReference>varCaseRecordTypeDevName</assignToReference>
+            <field>DeveloperName</field>
+        </outputAssignments>
+    </recordLookups>
+    <start>
+        <locationX>176</locationX>
+        <locationY>48</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Opportunity__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <object>Case</object>
+        <recordTriggerType>Create</recordTriggerType>
+        <scheduledPaths>
+            <name>applyMappingsAsync</name>
+            <connector>
+                <targetReference>getCaseRecordType</targetReference>
+            </connector>
+            <label>Apply Field Mappings (Async)</label>
+            <offsetNumber>0</offsetNumber>
+            <offsetUnit>Minutes</offsetUnit>
+            <timeSource>RecordTriggerEvent</timeSource>
+        </scheduledPaths>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+    <variables>
+        <name>varCaseRecordTypeDevName</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>

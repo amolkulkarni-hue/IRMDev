@@ -1,8 +1,14 @@
-trigger LeadListener on Lead (after insert, after update)
+trigger LeadListener on Lead (before insert, after insert)
 {
-    if (trigger.isAfter && (trigger.isInsert || trigger.isUpdate))
+    if (trigger.isBefore && trigger.isInsert)
     {
-        if (!LeadToAccountMatching.updatingLeads)
-            LeadToAccountMatching.handleLeadTrigger(trigger.new,trigger.oldMap);
+        for (Lead l : trigger.new)
+        {
+            if (l.Related_Account__c != null)
+                l.RelatedAccountMatchingComplete__c = true;
+        }
     }
+
+    if (trigger.isAfter && trigger.isInsert)
+        LeadToAccountMatching.handleLeadTrigger(trigger.new);
 }

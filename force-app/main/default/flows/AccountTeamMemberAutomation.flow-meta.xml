@@ -923,6 +923,72 @@
             </value>
         </assignmentItems>
         <connector>
+            <targetReference>Is_W_L_Owner_changed</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Creates ATM assignment, with role as W&amp;L Owner , userId as Account.W&amp;L Owner and added to Collection</description>
+        <name>Create_W_L_Owner</name>
+        <label>Create W&amp;L Owner</label>
+        <locationX>50</locationX>
+        <locationY>16451</locationY>
+        <assignmentItems>
+            <assignToReference>W_L_OWNER_ATM.TeamMemberRole</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>W&amp;L Owner</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>W_L_OWNER_ATM.AccountId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>W_L_OWNER_ATM.UserId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.WL_Owner__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>W_L_OWNER_ATM.OpportunityAccessLevel</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Edit</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>W_L_OWNER_ATM.AccountAccessLevel</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Read</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>W_L_OWNER_ATM.CaseAccessLevel</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Read</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>W_L_OWNER_ATM.ContactAccessLevel</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Read</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>RecordsToBeCreated</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>W_L_OWNER_ATM</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
             <targetReference>Are_there_records_to_delete</targetReference>
         </connector>
     </assignments>
@@ -1164,6 +1230,23 @@
             <targetReference>Loop_through_Existing_RIM_SDE</targetReference>
         </connector>
     </assignments>
+    <assignments>
+        <description>Delete the old ATM record with role as W&amp;L Owner</description>
+        <name>Delete_Previous_W_L_Owner</name>
+        <label>Delete Previous W&amp;L Owner</label>
+        <locationX>162</locationX>
+        <locationY>16067</locationY>
+        <assignmentItems>
+            <assignToReference>RecordsTobeDeleted</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>Loop_through_Existing_W_L_Owner</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Loop_through_Existing_W_L_Owner</targetReference>
+        </connector>
+    </assignments>
     <collectionProcessors>
         <description>Filter to identify previous ATM with role as AE/ISR</description>
         <name>FIlter_Previous_AE_ISR</name>
@@ -1171,12 +1254,12 @@
         <label>FIlter Previous AE/ISR</label>
         <locationX>182</locationX>
         <locationY>3923</locationY>
-        <assignNextValueToReference>currentItem_FIlter_Previous_GAM</assignNextValueToReference>
+        <assignNextValueToReference>currentItem_FIlter_Previous_RIM_SDE</assignNextValueToReference>
         <collectionProcessorType>FilterCollectionProcessor</collectionProcessorType>
         <collectionReference>Get_Account_Team_Members</collectionReference>
         <conditionLogic>and</conditionLogic>
         <conditions>
-            <leftValueReference>currentItem_FIlter_Previous_GAM.TeamMemberRole</leftValueReference>
+            <leftValueReference>currentItem_FIlter_Previous_RIM_SDE.TeamMemberRole</leftValueReference>
             <operator>EqualTo</operator>
             <rightValue>
                 <stringValue>AE/ISR (Account Owner)</stringValue>
@@ -1193,12 +1276,12 @@
         <label>FIlter Previous AE/ISR Manager</label>
         <locationX>182</locationX>
         <locationY>4823</locationY>
-        <assignNextValueToReference>currentItem_FIlter_Previous_GAM</assignNextValueToReference>
+        <assignNextValueToReference>currentItem_FIlter_Previous_RIM_SDE</assignNextValueToReference>
         <collectionProcessorType>FilterCollectionProcessor</collectionProcessorType>
         <collectionReference>Get_Account_Team_Members</collectionReference>
         <conditionLogic>and</conditionLogic>
         <conditions>
-            <leftValueReference>currentItem_FIlter_Previous_GAM.TeamMemberRole</leftValueReference>
+            <leftValueReference>currentItem_FIlter_Previous_RIM_SDE.TeamMemberRole</leftValueReference>
             <operator>EqualTo</operator>
             <rightValue>
                 <stringValue>AE/ISR Manager</stringValue>
@@ -1215,12 +1298,12 @@
         <label>FIlter Previous ALM</label>
         <locationX>182</locationX>
         <locationY>9191</locationY>
-        <assignNextValueToReference>currentItem_FIlter_Previous_GAM</assignNextValueToReference>
+        <assignNextValueToReference>currentItem_FIlter_Previous_RIM_SDE</assignNextValueToReference>
         <collectionProcessorType>FilterCollectionProcessor</collectionProcessorType>
         <collectionReference>Get_Account_Team_Members</collectionReference>
         <conditionLogic>and</conditionLogic>
         <conditions>
-            <leftValueReference>currentItem_FIlter_Previous_GAM.TeamMemberRole</leftValueReference>
+            <leftValueReference>currentItem_FIlter_Previous_RIM_SDE.TeamMemberRole</leftValueReference>
             <operator>EqualTo</operator>
             <rightValue>
                 <stringValue>ALM SDE(Solution Development Executive)</stringValue>
@@ -1237,12 +1320,12 @@
         <label>FIlter Previous ALM EAM</label>
         <locationX>182</locationX>
         <locationY>10283</locationY>
-        <assignNextValueToReference>currentItem_FIlter_Previous_GAM</assignNextValueToReference>
+        <assignNextValueToReference>currentItem_FIlter_Previous_RIM_SDE</assignNextValueToReference>
         <collectionProcessorType>FilterCollectionProcessor</collectionProcessorType>
         <collectionReference>Get_Account_Team_Members</collectionReference>
         <conditionLogic>and</conditionLogic>
         <conditions>
-            <leftValueReference>currentItem_FIlter_Previous_GAM.TeamMemberRole</leftValueReference>
+            <leftValueReference>currentItem_FIlter_Previous_RIM_SDE.TeamMemberRole</leftValueReference>
             <operator>EqualTo</operator>
             <rightValue>
                 <stringValue>ALM PME(Program Management Executive)</stringValue>
@@ -1259,12 +1342,12 @@
         <label>FIlter Previous AMD</label>
         <locationX>182</locationX>
         <locationY>13559</locationY>
-        <assignNextValueToReference>currentItem_FIlter_Previous_GAM</assignNextValueToReference>
+        <assignNextValueToReference>currentItem_FIlter_Previous_RIM_SDE</assignNextValueToReference>
         <collectionProcessorType>FilterCollectionProcessor</collectionProcessorType>
         <collectionReference>Get_Account_Team_Members</collectionReference>
         <conditionLogic>and</conditionLogic>
         <conditions>
-            <leftValueReference>currentItem_FIlter_Previous_GAM.TeamMemberRole</leftValueReference>
+            <leftValueReference>currentItem_FIlter_Previous_RIM_SDE.TeamMemberRole</leftValueReference>
             <operator>EqualTo</operator>
             <rightValue>
                 <stringValue>AMD</stringValue>
@@ -1281,12 +1364,12 @@
         <label>FIlter Previous CSM</label>
         <locationX>182</locationX>
         <locationY>7007</locationY>
-        <assignNextValueToReference>currentItem_FIlter_Previous_GAM</assignNextValueToReference>
+        <assignNextValueToReference>currentItem_FIlter_Previous_RIM_SDE</assignNextValueToReference>
         <collectionProcessorType>FilterCollectionProcessor</collectionProcessorType>
         <collectionReference>Get_Account_Team_Members</collectionReference>
         <conditionLogic>and</conditionLogic>
         <conditions>
-            <leftValueReference>currentItem_FIlter_Previous_GAM.TeamMemberRole</leftValueReference>
+            <leftValueReference>currentItem_FIlter_Previous_RIM_SDE.TeamMemberRole</leftValueReference>
             <operator>EqualTo</operator>
             <rightValue>
                 <stringValue>Customer Success Manager</stringValue>
@@ -1303,12 +1386,12 @@
         <label>FIlter Previous DBU</label>
         <locationX>182</locationX>
         <locationY>8099</locationY>
-        <assignNextValueToReference>currentItem_FIlter_Previous_GAM</assignNextValueToReference>
+        <assignNextValueToReference>currentItem_FIlter_Previous_RIM_SDE</assignNextValueToReference>
         <collectionProcessorType>FilterCollectionProcessor</collectionProcessorType>
         <collectionReference>Get_Account_Team_Members</collectionReference>
         <conditionLogic>and</conditionLogic>
         <conditions>
-            <leftValueReference>currentItem_FIlter_Previous_GAM.TeamMemberRole</leftValueReference>
+            <leftValueReference>currentItem_FIlter_Previous_RIM_SDE.TeamMemberRole</leftValueReference>
             <operator>EqualTo</operator>
             <rightValue>
                 <stringValue>DBU SDE</stringValue>
@@ -1325,12 +1408,12 @@
         <label>FIlter Previous Enterprise ISR</label>
         <locationX>182</locationX>
         <locationY>5915</locationY>
-        <assignNextValueToReference>currentItem_FIlter_Previous_GAM</assignNextValueToReference>
+        <assignNextValueToReference>currentItem_FIlter_Previous_RIM_SDE</assignNextValueToReference>
         <collectionProcessorType>FilterCollectionProcessor</collectionProcessorType>
         <collectionReference>Get_Account_Team_Members</collectionReference>
         <conditionLogic>and</conditionLogic>
         <conditions>
-            <leftValueReference>currentItem_FIlter_Previous_GAM.TeamMemberRole</leftValueReference>
+            <leftValueReference>currentItem_FIlter_Previous_RIM_SDE.TeamMemberRole</leftValueReference>
             <operator>EqualTo</operator>
             <rightValue>
                 <stringValue>Enterprise ISR</stringValue>
@@ -1347,12 +1430,12 @@
         <label>FIlter Previous GAM</label>
         <locationX>347</locationX>
         <locationY>539</locationY>
-        <assignNextValueToReference>currentItem_FIlter_Previous_GAM</assignNextValueToReference>
+        <assignNextValueToReference>currentItem_FIlter_Previous_RIM_SDE</assignNextValueToReference>
         <collectionProcessorType>FilterCollectionProcessor</collectionProcessorType>
         <collectionReference>Get_Account_Team_Members</collectionReference>
         <conditionLogic>and</conditionLogic>
         <conditions>
-            <leftValueReference>currentItem_FIlter_Previous_GAM.TeamMemberRole</leftValueReference>
+            <leftValueReference>currentItem_FIlter_Previous_RIM_SDE.TeamMemberRole</leftValueReference>
             <operator>EqualTo</operator>
             <rightValue>
                 <stringValue>GAM</stringValue>
@@ -1369,12 +1452,12 @@
         <label>Filter Previous GAR</label>
         <locationX>347</locationX>
         <locationY>1631</locationY>
-        <assignNextValueToReference>currentItem_FIlter_Previous_GAM</assignNextValueToReference>
+        <assignNextValueToReference>currentItem_FIlter_Previous_RIM_SDE</assignNextValueToReference>
         <collectionProcessorType>FilterCollectionProcessor</collectionProcessorType>
         <collectionReference>Get_Account_Team_Members</collectionReference>
         <conditionLogic>and</conditionLogic>
         <conditions>
-            <leftValueReference>currentItem_FIlter_Previous_GAM.TeamMemberRole</leftValueReference>
+            <leftValueReference>currentItem_FIlter_Previous_RIM_SDE.TeamMemberRole</leftValueReference>
             <operator>EqualTo</operator>
             <rightValue>
                 <stringValue>GAR</stringValue>
@@ -1391,12 +1474,12 @@
         <label>FIlter Previous LSO</label>
         <locationX>182</locationX>
         <locationY>12467</locationY>
-        <assignNextValueToReference>currentItem_FIlter_Previous_GAM</assignNextValueToReference>
+        <assignNextValueToReference>currentItem_FIlter_Previous_RIM_SDE</assignNextValueToReference>
         <collectionProcessorType>FilterCollectionProcessor</collectionProcessorType>
         <collectionReference>Get_Account_Team_Members</collectionReference>
         <conditionLogic>and</conditionLogic>
         <conditions>
-            <leftValueReference>currentItem_FIlter_Previous_GAM.TeamMemberRole</leftValueReference>
+            <leftValueReference>currentItem_FIlter_Previous_RIM_SDE.TeamMemberRole</leftValueReference>
             <operator>EqualTo</operator>
             <rightValue>
                 <stringValue>Library Service Owner</stringValue>
@@ -1413,12 +1496,12 @@
         <label>FIlter Previous MAS</label>
         <locationX>182</locationX>
         <locationY>11375</locationY>
-        <assignNextValueToReference>currentItem_FIlter_Previous_GAM</assignNextValueToReference>
+        <assignNextValueToReference>currentItem_FIlter_Previous_RIM_SDE</assignNextValueToReference>
         <collectionProcessorType>FilterCollectionProcessor</collectionProcessorType>
         <collectionReference>Get_Account_Team_Members</collectionReference>
         <conditionLogic>and</conditionLogic>
         <conditions>
-            <leftValueReference>currentItem_FIlter_Previous_GAM.TeamMemberRole</leftValueReference>
+            <leftValueReference>currentItem_FIlter_Previous_RIM_SDE.TeamMemberRole</leftValueReference>
             <operator>EqualTo</operator>
             <rightValue>
                 <stringValue>MAS Owner</stringValue>
@@ -1435,12 +1518,12 @@
         <label>FIlter Previous MD</label>
         <locationX>347</locationX>
         <locationY>2723</locationY>
-        <assignNextValueToReference>currentItem_FIlter_Previous_GAM</assignNextValueToReference>
+        <assignNextValueToReference>currentItem_FIlter_Previous_RIM_SDE</assignNextValueToReference>
         <collectionProcessorType>FilterCollectionProcessor</collectionProcessorType>
         <collectionReference>Get_Account_Team_Members</collectionReference>
         <conditionLogic>and</conditionLogic>
         <conditions>
-            <leftValueReference>currentItem_FIlter_Previous_GAM.TeamMemberRole</leftValueReference>
+            <leftValueReference>currentItem_FIlter_Previous_RIM_SDE.TeamMemberRole</leftValueReference>
             <operator>EqualTo</operator>
             <rightValue>
                 <stringValue>MD</stringValue>
@@ -1457,12 +1540,12 @@
         <label>FIlter Previous RIM SDE</label>
         <locationX>182</locationX>
         <locationY>14651</locationY>
-        <assignNextValueToReference>currentItem_FIlter_Previous_GAM</assignNextValueToReference>
+        <assignNextValueToReference>currentItem_FIlter_Previous_RIM_SDE</assignNextValueToReference>
         <collectionProcessorType>FilterCollectionProcessor</collectionProcessorType>
         <collectionReference>Get_Account_Team_Members</collectionReference>
         <conditionLogic>and</conditionLogic>
         <conditions>
-            <leftValueReference>currentItem_FIlter_Previous_GAM.TeamMemberRole</leftValueReference>
+            <leftValueReference>currentItem_FIlter_Previous_RIM_SDE.TeamMemberRole</leftValueReference>
             <operator>EqualTo</operator>
             <rightValue>
                 <stringValue>RIM SDE</stringValue>
@@ -1470,6 +1553,28 @@
         </conditions>
         <connector>
             <targetReference>RIM_SDE_Already_Exist</targetReference>
+        </connector>
+    </collectionProcessors>
+    <collectionProcessors>
+        <description>Filter to identify previous ATM with role as W&amp;L Owner</description>
+        <name>FIlter_Previous_W_L_Owner</name>
+        <elementSubtype>FilterCollectionProcessor</elementSubtype>
+        <label>FIlter Previous W&amp;L Owner</label>
+        <locationX>182</locationX>
+        <locationY>15743</locationY>
+        <assignNextValueToReference>currentItem_FIlter_Previous_RIM_SDE</assignNextValueToReference>
+        <collectionProcessorType>FilterCollectionProcessor</collectionProcessorType>
+        <collectionReference>Get_Account_Team_Members</collectionReference>
+        <conditionLogic>and</conditionLogic>
+        <conditions>
+            <leftValueReference>currentItem_FIlter_Previous_RIM_SDE.TeamMemberRole</leftValueReference>
+            <operator>EqualTo</operator>
+            <rightValue>
+                <stringValue>W&amp;L Owner</stringValue>
+            </rightValue>
+        </conditions>
+        <connector>
+            <targetReference>W_L_Owner_Already_Exist</targetReference>
         </connector>
     </collectionProcessors>
     <decisions>
@@ -1673,7 +1778,7 @@
         <name>Are_there_records_to_create</name>
         <label>Are there records to create?</label>
         <locationX>501</locationX>
-        <locationY>16019</locationY>
+        <locationY>17111</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Yes_create</name>
@@ -1696,7 +1801,7 @@
         <name>Are_there_records_to_delete</name>
         <label>Are there records to delete?</label>
         <locationX>501</locationX>
-        <locationY>15719</locationY>
+        <locationY>16811</locationY>
         <defaultConnector>
             <targetReference>Are_there_records_to_create</targetReference>
         </defaultConnector>
@@ -2580,7 +2685,7 @@
         <locationX>336</locationX>
         <locationY>14543</locationY>
         <defaultConnector>
-            <targetReference>Are_there_records_to_delete</targetReference>
+            <targetReference>Is_W_L_Owner_changed</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -2604,6 +2709,39 @@
                 <targetReference>FIlter_Previous_RIM_SDE</targetReference>
             </connector>
             <label>New_Or_RIM SDE Changed</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Checks if W&amp;L Owner value is changed for triggering account</description>
+        <name>Is_W_L_Owner_changed</name>
+        <label>Is W&amp;L Owner changed?</label>
+        <locationX>336</locationX>
+        <locationY>15635</locationY>
+        <defaultConnector>
+            <targetReference>Are_there_records_to_delete</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>New_Or_W_L_Owner_Changed</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>ISNEW</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.WL_Owner__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>FIlter_Previous_W_L_Owner</targetReference>
+            </connector>
+            <label>New_Or_W&amp;L Owner Changed</label>
         </rules>
     </decisions>
     <decisions>
@@ -2783,7 +2921,7 @@
         <locationX>182</locationX>
         <locationY>15251</locationY>
         <defaultConnector>
-            <targetReference>Are_there_records_to_delete</targetReference>
+            <targetReference>Is_W_L_Owner_changed</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -2809,12 +2947,72 @@
             <label>Yes_RIM SDE_Present</label>
         </rules>
     </decisions>
+    <decisions>
+        <description>Check if previously ATM was there or not. If yes, executes, Yes_W&amp;L Owner_Exist path to delete the ATM record and creates new W&amp;L Owner record with new user. else runs Default Outcome to create ATM record with new User.</description>
+        <name>W_L_Owner_Already_Exist</name>
+        <label>W&amp;L Owner Already Exist?</label>
+        <locationX>182</locationX>
+        <locationY>15851</locationY>
+        <defaultConnector>
+            <targetReference>W_L_Owner_available</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes_W_L_Owner_Exist</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>FIlter_Previous_W_L_Owner</leftValueReference>
+                <operator>IsEmpty</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Loop_through_Existing_W_L_Owner</targetReference>
+            </connector>
+            <label>Yes_W&amp;L Owner_Exist</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Check if W&amp;L Owner value is present on Account or not. If yes, executes Yes_W&amp;L Owner_Present to create a new ATM record else executes Default Outcome path</description>
+        <name>W_L_Owner_available</name>
+        <label>W&amp;L Owner available?</label>
+        <locationX>182</locationX>
+        <locationY>16343</locationY>
+        <defaultConnector>
+            <targetReference>Are_there_records_to_delete</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes_W_L_Owner_Present</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.WL_Owner__c</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.WL_Owner__r.IsActive</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Create_W_L_Owner</targetReference>
+            </connector>
+            <label>Yes_W&amp;L Owner_Present</label>
+        </rules>
+    </decisions>
     <description>Flow creates Account Team Member based on the Account Coverage field values.
 #Gitlab: 26233
 #28690
 #30097: Modified flow to not break the flow when inactive user is entered on AE/ISR and Enterprise ISR
 #31271: Modified flow to not break the flow when inactive user is entered on other Account Coverage Fields
-#34449: Added AMD and RIM SDE as new Account Coverage fields and Account Team Roles</description>
+#34449: Added AMD and RIM SDE as new Account Coverage fields and Account Team Roles
+#36947: Added W&amp;L Owner as new Account Coverage fields and Account Team Roles</description>
     <environments>Default</environments>
     <formulas>
         <description>Formula evaluates to True if a new record is created</description>
@@ -3039,6 +3237,21 @@
             <targetReference>RIM_SDE_available</targetReference>
         </noMoreValuesConnector>
     </loops>
+    <loops>
+        <description>Loop through filtered ATM records</description>
+        <name>Loop_through_Existing_W_L_Owner</name>
+        <label>Loop through Existing W&amp;L Owner</label>
+        <locationX>74</locationX>
+        <locationY>15959</locationY>
+        <collectionReference>FIlter_Previous_W_L_Owner</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>Delete_Previous_W_L_Owner</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>W_L_Owner_available</targetReference>
+        </noMoreValuesConnector>
+    </loops>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -3063,7 +3276,7 @@
         <name>Create_Team_Members</name>
         <label>Create Team Members</label>
         <locationX>369</locationX>
-        <locationY>16127</locationY>
+        <locationY>17219</locationY>
         <inputReference>RecordsToBeCreated</inputReference>
     </recordCreates>
     <recordDeletes>
@@ -3071,7 +3284,7 @@
         <name>Delete_Previous_Team_Member_Records</name>
         <label>Delete Previous Team Member Records</label>
         <locationX>369</locationX>
-        <locationY>15827</locationY>
+        <locationY>16919</locationY>
         <connector>
             <targetReference>Are_there_records_to_create</targetReference>
         </connector>
@@ -3117,7 +3330,8 @@ ISCHANGED({!$Record.DM_Cloud_Sales_Rep__c}),
 ISCHANGED({!$Record.Primary_Local_Market_Rep_1__c}),
 ISCHANGED({!$Record.Library_Services_BDE__c}),
 ISCHANGED({!$Record.AMD__c}),
-ISCHANGED({!$Record.RIM_SDE__c})
+ISCHANGED({!$Record.RIM_SDE__c}),
+ISCHANGED({!$Record.WL_Owner__c})
 )</filterFormula>
         <object>Account</object>
         <recordTriggerType>CreateAndUpdate</recordTriggerType>
@@ -3173,7 +3387,7 @@ ISCHANGED({!$Record.RIM_SDE__c})
         <objectType>AccountTeamMember</objectType>
     </variables>
     <variables>
-        <name>currentItem_FIlter_Previous_GAM</name>
+        <name>currentItem_FIlter_Previous_RIM_SDE</name>
         <dataType>SObject</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
@@ -3254,6 +3468,14 @@ ISCHANGED({!$Record.RIM_SDE__c})
     </variables>
     <variables>
         <name>RIM_SDE_ATM</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>AccountTeamMember</objectType>
+    </variables>
+    <variables>
+        <name>W_L_OWNER_ATM</name>
         <dataType>SObject</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>

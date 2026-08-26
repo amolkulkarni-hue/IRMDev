@@ -8,7 +8,7 @@
  NOT($Permission.VR_Bypass_Clari) &amp;&amp; (ISPICKVAL(Primary_Product_Line__c , &quot;DM SITAD&quot;) &amp;&amp;
  CONTAINS($Label.QTB_SITAD_Countries, QTB_Billing_Country_Name__c)) &amp;&amp;
  NOT((ISPICKVAL(StageName, &quot;7 - Closed&quot;) &amp;&amp;  CloseDate &lt;  DATE(2024,04,19)) || ISPICKVAL(StageName, &quot;6 - Setup&quot;)),
-NOT($Permission.VR_Bypass_Permission), NOT(Bypass_Validation__c))</errorConditionFormula>
+NOT($Permission.VR_Bypass_Permission), NOT($Permission.Bypass_Opportunity_Validation))</errorConditionFormula>
     <errorDisplayField>Billing_Account__c</errorDisplayField>
     <errorMessage>SITAD Up-sell opportunities require an Billing Account</errorMessage>
 </ValidationRule>

@@ -4,6 +4,7 @@
     <active>true</active>
     <description>&quot;Digital Use Case&quot; is required when moving to Stage 2 and the Primary Product is Digital Solutions Gitlab #17099.</description>
     <errorConditionFormula>AND(
+	NOT(ISNEW()),
 	NOT(ISPICKVAL(StageName, &quot;1 - Qualification&quot;)),
 	(OR(
 		ISPICKVAL(Primary_Product_Line__c,&quot;Digital Solutions&quot;),

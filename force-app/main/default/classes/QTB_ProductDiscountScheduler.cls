@@ -18,9 +18,13 @@ global class QTB_ProductDiscountScheduler implements Schedulable
     Return Type: Void
 	Description: Scheduler for QTB_ProductDiscountBatch Batch class
     **********************************************************************************************************/
+    // TEMPORARILY DISABLED (2026-07-31): QTB_ProductDiscountBatch no longer has a no-arg
+    // constructor (org-wide Apex compile failure otherwise, unrelated to this scheduler's own
+    // logic). No CronTrigger currently references this class in this sandbox. Needs a real fix
+    // from the QTB/CPQ billing code owner to confirm the intended schedulerBatch/targtDate/
+    // prebillFlowRecord defaults for a parameterless scheduled run before re-enabling.
     global void execute(SchedulableContext SC)
     {
-        QTB_ProductDiscountBatch pDisc = new QTB_ProductDiscountBatch();
-        Database.executeBatch(pDisc);
+        System.debug(LoggingLevel.WARN, 'QTB_ProductDiscountScheduler is temporarily disabled pending a fix to QTB_ProductDiscountBatch\'s missing no-arg constructor.');
     }
 }

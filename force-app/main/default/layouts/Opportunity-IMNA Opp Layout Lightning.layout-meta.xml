@@ -92,6 +92,14 @@
                 <behavior>Edit</behavior>
                 <field>Converted_Lead__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Counterparty_Signature_Date__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>BV_Stage_Gate_Bypass__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -963,7 +971,6 @@
             <relatedList>RelatedOpportunitySalesTeam</relatedList>
         </relatedLists>
         <relatedLists>
-            <fields>ContactName</fields>
             <relatedList>RelatedContactRoleList</relatedList>
         </relatedLists>
         <relatedLists>
@@ -1121,13 +1128,35 @@
         <fields>ironclad__Workflow_Status__c</fields>
         <fields>CREATED_DATE</fields>
         <relatedList>ironclad__Ironclad_Workflow__c.Opportunity__c</relatedList>
+        <sortField>CREATED_DATE</sortField>
+        <sortOrder>Desc</sortOrder>
+    </relatedLists>
+    <relatedLists>
+        <fields>CASES.CASE_NUMBER</fields>
+        <fields>CASES.SUBJECT</fields>
+        <fields>CASES.CREATED_DATE</fields>
+        <fields>CASES.PRIORITY</fields>
+        <relatedList>Case.Opportunity__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>OPPORTUNITY.NAME</fields>
+        <fields>ACCOUNT.NAME</fields>
+        <fields>OPPORTUNITY.STAGE_NAME</fields>
+        <fields>OPPORTUNITY.AMOUNT</fields>
+        <fields>IMGA_Name__c</fields>
+        <fields>Billing_Country_Code__c</fields>
+        <fields>CORE.USERS.FULL_NAME</fields>
+        <relatedList>Opportunity.IM_Parent_Opportunity__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
         <fields>ironclad__Account__c</fields>
         <fields>ironclad__Contract_Type__c</fields>
         <fields>ironclad__CounterpartySignedId__c</fields>
+        <fields>CREATED_DATE</fields>
         <relatedList>ironclad__Ironclad_Contract__c.Opportunity__c</relatedList>
+        <sortField>CREATED_DATE</sortField>
+        <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
         <excludeButtons>MassChangeOwner</excludeButtons>
@@ -1193,12 +1222,10 @@
     <relatedLists>
         <fields>ContactName</fields>
         <fields>Role</fields>
-        <fields>ContactTitle</fields>
         <fields>IsPrimary</fields>
-        <fields>ContactPhone</fields>
-        <fields>ContactEmail</fields>
-        <fields>ContactAccountName</fields>
         <relatedList>RelatedContactRoleList</relatedList>
+        <sortField>IsPrimary</sortField>
+        <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
         <excludeButtons>ChoosePricebook</excludeButtons>

@@ -12,7 +12,7 @@
             <assignToReference>$Record.Accepted_Date_Time__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>$System.OriginDateTime</elementReference>
+                <elementReference>$Flow.CurrentDateTime</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -60,7 +60,7 @@
             <targetReference>Assign_the_Values_for_Date_and_Hours</targetReference>
         </connector>
         <filterFormula>AND(
-  {!$Record.RecordType.Name} = &quot;Standard Lead&quot;,
+  {!$Record.RecordType.DeveloperName} = &apos;Standard_Lead&apos;,
   ISPICKVAL(PRIORVALUE({!$Record.Status}), &quot;New&quot;),
 ISPICKVAL({!$Record.Status}, &quot;Accepted&quot;),
 ISBLANK({!$Record.Accepted_Date_Time__c})

@@ -4,7 +4,11 @@
     <active>true</active>
     <description>A validation rule will prevent Sellers from modifying Deal Type once the Opportunity has reached or progressed beyond Negotiation.</description>
     <errorConditionFormula>AND(
-    NOT(Bypass_Validation__c),     
+    NOT($Permission.Bypass_Opportunity_Validation),
+    OR(
+        RecordType.DeveloperName = &quot;Standard_Opportunity&quot;,
+        RecordType.DeveloperName = &quot;Framework_Parent_Opportunity&quot;
+    ),
     ISCHANGED(Type),
     NOT($Permission.Edit_Type_After_Negotiation),
     OR(
@@ -16,6 +20,5 @@
         ISPICKVAL(StageName, &quot;Lost&quot;)
     )
 )</errorConditionFormula>
-    <errorDisplayField>Type</errorDisplayField>
     <errorMessage>Deal Type cannot be modified after the Opportunity enters Negotiation. Contact an authorized operational team if a correction is required.</errorMessage>
 </ValidationRule>

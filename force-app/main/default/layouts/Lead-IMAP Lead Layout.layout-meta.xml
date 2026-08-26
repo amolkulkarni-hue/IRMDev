@@ -149,6 +149,18 @@
                 <behavior>Edit</behavior>
                 <field>RelatedAccountMatchingComplete__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Test__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>AssignmentReady__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Re_engaged_Lead__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -302,7 +314,7 @@
                 <field>IM_Product_Line__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Required</behavior>
                 <field>Product_Interest__c</field>
             </layoutItems>
             <layoutItems>
@@ -549,17 +561,22 @@
     </relatedContent>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>sixsense__segment_names__c</fields>
+        <fields>sixsense__CompanyBuyingStage__c</fields>
+        <fields>sixsense__intent_score__c</fields>
+        <fields>LAST_ACTIVITY</fields>
         <relatedList>sixsense__X6sense_Lead_Scores__c.sixsense__lead_id__c</relatedList>
+        <sortField>LAST_ACTIVITY</sortField>
+        <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
         <fields>CAMPAIGN.NAME</fields>
         <fields>CM.STATUS</fields>
-        <fields>IM_Campaign_List_Source__c</fields>
-        <fields>IM_Campaign_Product_Service__c</fields>
-        <fields>IM_Campaign_Segment__c</fields>
-        <fields>CM.RESPONDED</fields>
         <fields>CM.FIRST_RESPONDED_DATE</fields>
+        <fields>CAMPAIGN.LAST_UPDATE</fields>
         <relatedList>RelatedCampaignList</relatedList>
+        <sortField>CAMPAIGN.LAST_UPDATE</sortField>
+        <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
         <fields>TASK.SUBJECT</fields>

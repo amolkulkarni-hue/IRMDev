@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>67.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <environments>Default</environments>
+    <interviewLabel>Framework Booked Amount Recalc On Child Delete {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Framework Booked Amount Recalc On Child Delete</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Recalculate_Parent_On_Child_Delete</targetReference>
+        </connector>
+        <filterFormula>NOT(ISBLANK({!$Record.IM_Parent_Opportunity__c}))</filterFormula>
+        <object>Opportunity</object>
+        <recordTriggerType>Delete</recordTriggerType>
+        <triggerType>RecordBeforeDelete</triggerType>
+    </start>
+    <status>Active</status>
+    <subflows>
+        <name>Recalculate_Parent_On_Child_Delete</name>
+        <label>Recalculate Parent On Child Delete</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <flowName>Recalculate_Framework_Booked_Amount</flowName>
+        <inputAssignments>
+            <name>parentOpportunityId</name>
+            <value>
+                <elementReference>$Record.IM_Parent_Opportunity__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>excludeChildId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+</Flow>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>VR_Opp_S2_Free_Storage_Period</fullName>
+    <active>true</active>
+    <description>Requires Free Storage Period to be populated for New Deal RIM Opportunities, from Stage 2 onward through Closed.</description>
+    <errorConditionFormula>AND(
+    NOT($Permission.Bypass_Opportunity_Validation),
+
+    OR(
+        RecordType.DeveloperName = &quot;Standard_Opportunity&quot;,
+        RecordType.DeveloperName = &quot;Framework_Parent_Opportunity&quot;
+    ),
+
+    ISPICKVAL(Type, &quot;New Deal&quot;),
+
+    OR(
+        ISPICKVAL(Touch_Level__c, &quot;High Touch&quot;),
+        ISPICKVAL(Touch_Level__c, &quot;Medium Touch&quot;),
+        ISPICKVAL(Touch_Level__c, &quot;Low Touch&quot;),
+        ISPICKVAL(Touch_Level__c, &quot;No Touch&quot;)
+    ),
+
+    ISPICKVAL(Business_Unit__c, &quot;RIM&quot;),
+
+    OR(
+        AND(
+            ISPICKVAL(PRIORVALUE(StageName), &quot;Solutioning&quot;),
+            ISPICKVAL(StageName, &quot;Negotiation&quot;)
+        ),
+        IF(
+            RecordType.DeveloperName = &quot;Framework_Parent_Opportunity&quot;,
+            AND(
+                ISPICKVAL(PRIORVALUE(StageName), &quot;Negotiation&quot;),
+                ISPICKVAL(StageName, &quot;Booked&quot;)
+            ),
+            AND(
+                ISPICKVAL(PRIORVALUE(StageName), &quot;Negotiation&quot;),
+                ISPICKVAL(StageName, &quot;Booking Verification&quot;)
+            )
+        ),
+        AND(
+            ISPICKVAL(PRIORVALUE(StageName), &quot;Booking Verification&quot;),
+            ISPICKVAL(StageName, &quot;Booked&quot;)
+        ),
+        AND(
+            ISPICKVAL(PRIORVALUE(StageName), &quot;Booked&quot;),
+            ISPICKVAL(StageName, &quot;Setup&quot;)
+        ),
+        ISPICKVAL(StageName, &quot;Closed&quot;)
+    ),
+
+    ISPICKVAL(Free_Storage_Period__c, &quot;&quot;)
+)</errorConditionFormula>
+    <errorMessage>Please select a Free Storage Period for this RIM New Deal Opportunity. Need help? Contact your Sales Operations Business Partner.</errorMessage>
+</ValidationRule>

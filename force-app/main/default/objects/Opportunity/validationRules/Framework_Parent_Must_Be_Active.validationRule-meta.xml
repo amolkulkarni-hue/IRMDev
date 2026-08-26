@@ -2,14 +2,14 @@
 <ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Framework_Parent_Must_Be_Active</fullName>
     <active>true</active>
-    <description>FW-03 AC3 (IRM_Touch_Level_Classification_SDD Section 21.3.3): A child opportunity can only be linked to a Framework Parent that is Booked (Closed Won) and has Framework Status = Active.</description>
-    <errorConditionFormula>AND(
+    <description>FW-03 AC3 (IRM_Touch_Level_Classification_SDD Section 21.3.3): A child opportunity can only be linked to a Framework Parent that is Closed (Closed Won) and has Framework Status = Active.</description>
+    <errorConditionFormula>AND(RecordType.DeveloperName = &quot;Framework_Parent_Opportunity&quot;,
     NOT(ISBLANK(IM_Parent_Opportunity__c)),
     OR(
-        NOT(ISPICKVAL(IM_Parent_Opportunity__r.StageName, &quot;Booked&quot;)),
+        NOT(ISPICKVAL(IM_Parent_Opportunity__r.StageName, &quot;Closed&quot;)),
         NOT(ISPICKVAL(IM_Parent_Opportunity__r.Framework_Status__c, &quot;Active&quot;))
     )
 )</errorConditionFormula>
     <errorDisplayField>IM_Parent_Opportunity__c</errorDisplayField>
-    <errorMessage>The selected Framework Parent Opportunity must be Booked (Closed Won) and have Framework Status = Active. Please select a valid parent or contact Sales Ops.</errorMessage>
+    <errorMessage>The selected Framework Parent Opportunity must be Closed (Closed Won) and have Framework Status = Active. Please select a valid parent or contact Sales Ops.</errorMessage>
 </ValidationRule>

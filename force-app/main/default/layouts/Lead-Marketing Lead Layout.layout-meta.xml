@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Layout xmlns="http://soap.sforce.com/2006/04/metadata">
+    <excludeButtons>DataDotComClean</excludeButtons>
     <excludeButtons>Delete</excludeButtons>
+    <excludeButtons>OpenSlackRecordChannel</excludeButtons>
+    <excludeButtons>SmartFillEnrich</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <headers>PersonalTagging</headers>
     <headers>PublicTagging</headers>
@@ -13,6 +16,18 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>RelatedAccountMatchingComplete__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Test__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>AssignmentReady__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Re_engaged_Lead__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns/>
@@ -76,11 +91,11 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>Primary_Product_Line__c</field>
+                <field>Business_Unit__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Business_Unit__c</field>
+                <behavior>Required</behavior>
+                <field>Product_Interest__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
@@ -246,7 +261,6 @@
         <fields>IM_Lead_Stage__c</fields>
         <fields>LeadSource</fields>
         <relatedLists>
-            <fields>CAMPAIGN.NAME</fields>
             <relatedList>RelatedCampaignList</relatedList>
         </relatedLists>
         <relatedLists>
@@ -341,29 +355,34 @@
         </relatedContentItems>
     </relatedContent>
     <relatedLists>
-        <fields>Name</fields>
+        <fields>Description</fields>
         <fields>CallType</fields>
-        <fields>FromPhoneNumber</fields>
-        <fields>CallResolution</fields>
         <fields>CallStartDateTime</fields>
-        <fields>EndUser</fields>
+        <fields>CallDurationInSeconds</fields>
         <fields>Owner</fields>
-        <fields>QualityScore</fields>
+        <fields>CallDisposition</fields>
         <relatedList>VoiceCall.NF_Lead__c</relatedList>
+        <sortField>CallStartDateTime</sortField>
+        <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>sixsense__segment_names__c</fields>
+        <fields>sixsense__CompanyBuyingStage__c</fields>
+        <fields>sixsense__intent_score__c</fields>
+        <fields>LAST_ACTIVITY</fields>
         <relatedList>sixsense__X6sense_Lead_Scores__c.sixsense__lead_id__c</relatedList>
+        <sortField>LAST_ACTIVITY</sortField>
+        <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
         <fields>CAMPAIGN.NAME</fields>
-        <fields>CM.FIRST_ASSOCIATED_DATE</fields>
         <fields>CM.STATUS</fields>
-        <fields>IM_Campaign_Product_Service__c</fields>
-        <fields>IM_Campaign_Segment__c</fields>
-        <fields>CM.RESPONDED</fields>
         <fields>CM.FIRST_RESPONDED_DATE</fields>
+        <fields>CAMPAIGN.LAST_UPDATE</fields>
         <relatedList>RelatedCampaignList</relatedList>
+        <sortField>CAMPAIGN.LAST_UPDATE</sortField>
+        <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
         <fields>TASK.SUBJECT</fields>
@@ -377,16 +396,19 @@
     </relatedLists>
     <relatedLists>
         <fields>Gong__Gong_Interaction__c</fields>
-        <fields>Gong__Title__c</fields>
-        <fields>Gong__Started__c</fields>
+        <fields>CREATED_DATE</fields>
         <fields>Gong__Participants_Emails__c</fields>
+        <fields>Gong__Call_Duration_Min__c</fields>
+        <fields>CREATEDBY_USER</fields>
         <relatedList>Gong__Related_Lead__c.Gong__Related_Entity_ID__c</relatedList>
+        <sortField>CREATED_DATE</sortField>
+        <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
         <fields>Competitor__c</fields>
-        <fields>Competitor_Expiration_Date__c</fields>
-        <fields>Expiration_Notification_Date__c</fields>
         <relatedList>Lead_Competitor__c.Lead__c</relatedList>
+        <sortField>Competitor__c</sortField>
+        <sortOrder>Asc</sortOrder>
     </relatedLists>
     <relatedLists>
         <fields>TASK.SUBJECT</fields>

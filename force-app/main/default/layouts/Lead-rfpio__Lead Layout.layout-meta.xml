@@ -8,6 +8,10 @@
         <label>Lead Information</label>
         <layoutColumns>
             <layoutItems>
+                <behavior>Required</behavior>
+                <field>Product_Interest__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>OwnerId</field>
             </layoutItems>
@@ -98,6 +102,18 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>RelatedAccountMatchingComplete__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Test__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>AssignmentReady__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Re_engaged_Lead__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -241,6 +257,9 @@
         </layoutColumns>
         <style>OneColumn</style>
     </layoutSections>
+    <miniLayout>
+        <fields>Product_Interest__c</fields>
+    </miniLayout>
     <quickActionList>
         <quickActionListItems>
             <quickActionName>FeedItem.TextPost</quickActionName>

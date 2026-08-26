@@ -46,8 +46,12 @@ public with sharing class App_Constants {
     public static final string CONTRACT_STATUS_CANCELLED = 'Cancelled';
     public static final string CONTRACT_STATUS_TERMINATED = 'Terminated';
     
-    //Contract RecordType DeveloperName 
+    //Contract RecordType DeveloperName
      public static final string IME_PARENTCONTRCT_DEVELOPERNAME = 'IME_Contract';
      public static final string IME_CHILDCONTRACT_DEVELOPERNAME = 'IME_Child_Contract';
      public static final string IME_ADDENDUMEXTENSION_DEVELOPENAME = 'IME_Addendum_Extension';
+
+    /* --- Case Object Record Type Ids (used by CaseFieldMappingEngine's eligibility gate) --- */
+    public static final Id B2B_IMPLEMENTATION_CASE_RECTYPE_ID = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('Post_Sale_Support').getRecordTypeId();
+    public static final Id DEAL_SUPPORT_CASE_RECTYPE_ID = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('Deal_Support').getRecordTypeId();
 }

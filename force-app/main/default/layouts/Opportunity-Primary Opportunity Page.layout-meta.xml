@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Layout xmlns="http://soap.sforce.com/2006/04/metadata">
+    <excludeButtons>OpenSlackRecordChannel</excludeButtons>
+    <excludeButtons>SmartFillEnrich</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <feedLayout>
         <autocollapsePublisher>true</autocollapsePublisher>
@@ -110,6 +112,14 @@
                 <behavior>Edit</behavior>
                 <field>Converted_Lead__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Accepted_Quote__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>BV_Stage_Gate_Bypass__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -143,10 +153,6 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Eligible_for_Counterparty_Paper__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Required</behavior>
-                <field>Primary_Product_Interest__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -396,6 +402,9 @@
         </relatedContentItems>
     </relatedContent>
     <relatedLists>
+        <relatedList>RelatedEntityHistoryList</relatedList>
+    </relatedLists>
+    <relatedLists>
         <fields>CASES.CASE_NUMBER</fields>
         <fields>CASES.STATUS</fields>
         <fields>CASES.SUBJECT</fields>
@@ -425,13 +434,18 @@
         <fields>ironclad__Workflow_Status__c</fields>
         <fields>CREATED_DATE</fields>
         <relatedList>ironclad__Ironclad_Workflow__c.Opportunity__c</relatedList>
+        <sortField>CREATED_DATE</sortField>
+        <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
         <fields>ironclad__Account__c</fields>
         <fields>ironclad__Contract_Type__c</fields>
         <fields>ironclad__CounterpartySignedId__c</fields>
+        <fields>CREATED_DATE</fields>
         <relatedList>ironclad__Ironclad_Contract__c.Opportunity__c</relatedList>
+        <sortField>CREATED_DATE</sortField>
+        <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
         <relatedList>RelatedFileList</relatedList>
@@ -446,35 +460,36 @@
     <relatedLists>
         <fields>ContactName</fields>
         <fields>Role</fields>
-        <fields>ContactTitle</fields>
         <fields>IsPrimary</fields>
-        <fields>ContactPhone</fields>
-        <fields>ContactEmail</fields>
-        <fields>ContactAccountName</fields>
         <relatedList>RelatedContactRoleList</relatedList>
+        <sortField>IsPrimary</sortField>
+        <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
         <fields>MemberName</fields>
         <fields>OppAccessLevel</fields>
         <fields>TeamMemberRole</fields>
         <relatedList>RelatedOpportunitySalesTeam</relatedList>
+        <sortField>MemberName</sortField>
+        <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
         <fields>SplitOwner</fields>
-        <fields>SplitType</fields>
         <fields>SplitPercentage</fields>
         <fields>SplitAmount</fields>
-        <fields>SplitNote</fields>
+        <fields>SplitOwnerID__c</fields>
         <relatedList>RelatedOpportunitySplits</relatedList>
+        <sortField>SplitPercentage</sortField>
+        <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
         <fields>Product2</fields>
         <fields>Quantity</fields>
         <fields>UnitPrice</fields>
-        <fields>ServiceDate</fields>
-        <fields>Description</fields>
-        <fields>ListPrice</fields>
+        <fields>SUBTOTAL</fields>
         <relatedList>RelatedLineItemList</relatedList>
+        <sortField>SUBTOTAL</sortField>
+        <sortOrder>Asc</sortOrder>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>

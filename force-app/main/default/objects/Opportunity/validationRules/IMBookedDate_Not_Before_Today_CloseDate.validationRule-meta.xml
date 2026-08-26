@@ -3,13 +3,37 @@
     <fullName>IMBookedDate_Not_Before_Today_CloseDate</fullName>
     <active>true</active>
     <errorConditionFormula>AND(
-    NOT(Bypass_Validation__c),
-    NOT(ISBLANK(IM_Booked_Date__c)),
-    OR(
-        IM_Booked_Date__c &lt; TODAY(),
-        IM_Booked_Date__c &lt; CloseDate
-    )
-)</errorConditionFormula>
-    <errorDisplayField>IM_Booked_Date__c</errorDisplayField>
+    NOT($Permission.Bypass_Opportunity_Validation),
+OR(
+    RecordType.DeveloperName = &quot;Standard&quot;,
+    RecordType.DeveloperName = &quot;Framework&quot;
+),
+
+OR(
+    ISPICKVAL(Type, &quot;New Deal&quot;),
+    ISPICKVAL(Type, &quot;Renewal&quot;),
+    ISPICKVAL(Type, &quot;Cross-Sell/Upsell&quot;),
+     ISPICKVAL(Type, &quot;Renewal&quot;)
+),
+
+OR(
+    ISPICKVAL(Touch_Level__c, &quot;High Touch&quot;),
+    ISPICKVAL(Touch_Level__c, &quot;Medium Touch&quot;),
+    ISPICKVAL(Touch_Level__c, &quot;Low Touch&quot;),
+    ISPICKVAL(Touch_Level__c, &quot;No Touch&quot;)
+),
+
+OR(
+    ISPICKVAL(Business_Unit__c, &quot;RIM&quot;),
+    ISPICKVAL(Business_Unit__c, &quot;Digital&quot;),
+    ISPICKVAL(Business_Unit__c, &quot;ALM&quot;)
+),
+
+NOT(ISBLANK(IM_Booked_Date__c)),
+
+OR(
+    IM_Booked_Date__c &lt; TODAY(),
+    IM_Booked_Date__c &lt; CloseDate
+))</errorConditionFormula>
     <errorMessage>First Bill Date cannot be in the past or prior to the Close Date.</errorMessage>
 </ValidationRule>

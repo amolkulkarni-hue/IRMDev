@@ -1,45 +1,68 @@
-import { LightningElement, api, wire } from 'lwc';
-import { CurrentPageReference } from 'lightning/navigation';
-import { ShowToastEvent } from "lightning/platformShowToastEvent";
+import { LightningElement, api, wire, track } from 'lwc';
+import { CurrentPageReference, NavigationMixin } from 'lightning/navigation';
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
-// Import the Apex methods
-import saveLogikConfiguration from '@salesforce/apex/logikTransaButtRedirectActionController.saveLogikConfiguration';
+
+import { loadStyle } from 'lightning/platformResourceLoader';
+import hideAppPageHeader from '@salesforce/resourceUrl/hideAppPageHeader';
+
+// Import Apex Line Upsert Method
 import upsertLogikTransactionLines from '@salesforce/apex/logikTransaButtRedirectActionController.upsertLogikTransactionLines';
 
+export default class LogikOppConfigAction extends NavigationMixin(LightningElement) {
 
-export default class LogikOppConfigAction extends LightningElement {
-
-    @api recordId;
-    @api logikConfigurableProductId;
+    @api recordId;                   // Opportunity Record Id
+    @api logikConfigurableProductId; 
     @api pricebook2Id;
     @api currency = 'USD';
     @api logikPid;
-    @api sfTransactionId;
+    @api sfTransactionId;            // SF Transaction Record Id
     @api lgkTransactionId;
     @api logikUiHost;
     @api logikApiHost;
     @api logikApiToken;
     @api frameHeight = '80vh';
-    @api logikApiTransactionId;
-    @api configUuid;
+    @api logikApiTransactionId;      // Logik Transaction UUID
+
+    @track overrideIframeUrl = null; // Holds the Transaction UI URL after 'Quote' is clicked
+    isCssLoaded = false;
+    
+    renderedCallback() {
+        // 1. Inyect CSS
+        if (!this.isCssLoaded) {
+            loadStyle(this, hideAppPageHeader)
+                .then(() => {
+                    this.isCssLoaded = true;
+                })
+                .catch(error => {
+                    console.error('[LWC] Error loading CSS from logikOppConfigAction:', error);
+                });
+        }
+
+        // frameHeight
+        const iframe = this.template.querySelector('iframe');
+        if (iframe && this.frameHeight) {
+            iframe.style.height = this.frameHeight;
+        }
+    }
 
 
-    // Add event listener for message from iframe
     connectedCallback() {
-        console.log('connectedCallback');
-        window.addEventListener("message", (event) => this.receiveMessage(event,this,this));
+        window.addEventListener("message", this.handleMessage);
     }
 
-    // Remove event listener for message from iframe
     disconnectedCallback() {
-    window.removeEventListener("message", (event) => this.receiveMessage(event,this,this));
+        window.removeEventListener("message", this.handleMessage);
     }
+
+    handleMessage = (event) => {
+        this.receiveMessage(event);
+    };
 
     @wire(CurrentPageReference)
     handlePageRef({ state } = {}) {
         if (!state) return;
 
-        
         if (state.c__recordId)                   this.recordId                   = state.c__recordId;
         if (state.c__logikConfigurableProductId) this.logikConfigurableProductId = state.c__logikConfigurableProductId;
         if (state.c__pricebook2Id)               this.pricebook2Id               = state.c__pricebook2Id;
@@ -52,11 +75,7 @@ export default class LogikOppConfigAction extends LightningElement {
         if (state.c__sfTransactionId)            this.sfTransactionId            = state.c__sfTransactionId;
         if (state.c__lgkTransactionId)           this.lgkTransactionId           = state.c__lgkTransactionId;
         if (state.c__logikApiTransactionId)      this.logikApiTransactionId      = state.c__logikApiTransactionId;
-        if (state.c__configUuid)                 this.configUuid                 = state.c__configUuid;
-
-
     }
-
 
     get normalizedUiHost() {
         if (!this.logikUiHost) {
@@ -67,140 +86,119 @@ export default class LogikOppConfigAction extends LightningElement {
             : this.logikUiHost;
     }
 
+    // Dynamic Iframe URL getter
     get finalUrl() {
+        // 1. If user clicked 'Quote', load the Logik Transaction UI screen
+        if (this.overrideIframeUrl) {
+            return this.overrideIframeUrl;
+        }
+
         if (!this.normalizedUiHost || !this.logikConfigurableProductId) {
             return '';
         }
 
-        /*const baseUrl =
-            `${this.normalizedUiHost}/ui/configure/${encodeURIComponent(this.logikConfigurableProductId)}`;
-        */
-
-        // logikApiTransactionId  or lgkTransactionId
-        const baseUrl =
-            `${this.normalizedUiHost}/ui/transact/${encodeURIComponent(this.logikApiTransactionId)}`;  
+        // 2. Default: Load the Logik Configurator UI screen
+        const baseUrl = `${this.normalizedUiHost}/ui/configure/${encodeURIComponent(this.logikConfigurableProductId)}`;  
 
         const params = new URLSearchParams();
-
         params.set('v', '1');
 
-        /*
-        if (this.logikPid) {
-            params.set('pid', this.logikPid);
+        const txnId = this.logikApiTransactionId || this.lgkTransactionId;
+        if (txnId) {
+            params.set('tid', txnId);
         }
-        */
 
-        
-        /*
-        if (this.lgkTransactionId) {
-            params.set('lid', this.sfTransactionId);
-        }
-            */
-        
-        
         if (this.currency) {
             params.set('currency', this.currency);
         }
 
-        /*
-        if (this.pricebook2Id) {
-            params.set('pid', this.pricebook2Id);
+        if (this.pricebook2Id || this.logikPid) {
+            params.set('pid', this.pricebook2Id || this.logikPid);
         }
-        */
 
-        /*
         if (this.recordId) {
             params.set('recordId', this.recordId);
+            params.set('opptyId', this.recordId); // Seeds cfgRequest.opptyId on boot
         }
-        */
-
-        /*
-        if (this.logikApiHost) {
-            params.set('rta', this.logikApiHost);
-        }
-        */
-        
-
-        /*
-        if (this.logikApiToken) {
-            params.set('rt', this.logikApiToken);
-        }
-        */
-
-        /*
-        if (this.sfTransactionId) {
-            const returnUrl = `${window.location.origin}/lightning/cmp/LGK__transactionAuraComponent?LGK__recordId=${this.sfTransactionId}`;
-            params.set('return', returnUrl);
-        }
-        */
-        
-        const finalUrl = `${baseUrl}?${params.toString()}`;
-        console.log('finalUrl logikOppConfigAction: ' + finalUrl);
 
         return `${baseUrl}?${params.toString()}`;
     }
 
-    renderedCallback() {
-        const iframe = this.template.querySelector('iframe');
-        if (iframe && this.frameHeight) {
-            iframe.style.height = this.frameHeight;
-        }
-    }
-
-    // log message
-    async receiveMessage(event, t) {
-        // Verify that the event is from Logik
-        if (event.origin.includes(".logik.io") === false) {
+    async receiveMessage(event) {
+        if (!event.origin || !event.origin.includes(".logik.io")) {
             return;
         }
 
         try {
-            const data = JSON.parse(event.data);
-            console.log('Logik payload data: ', JSON.stringify(data));
-
-
-            /*
-
-            // Ensure the uuid exists before making callouts
-            if (!data || !data.uuid) {
-                return;
+            let data = {};
+            if (typeof event.data === 'string') {
+                try {
+                    data = JSON.parse(event.data);
+                } catch (e) {
+                    data = {};
+                }
+            } else if (typeof event.data === 'object' && event.data !== null) {
+                data = event.data;
             }
 
-            const configUuid = data.uuid;
+            console.log('Logik postMessage payload received: ', JSON.stringify(data));
 
-            // 1. Save Logik Configuration (Synchronous wait)
-            await saveLogikConfiguration({ configUuid: configUuid });
-            console.log('Configuration saved successfully.');
+            const configUuid = data?.uuid;
 
-            // 2. Upsert Logik Transaction Lines (Synchronous wait)
-            await upsertLogikTransactionLines({ logikTransactionId: this.lgkTransactionId, configUuid: configUuid });
-            console.log('Transaction lines upserted successfully.');
+            // ---------------------------------------------------------------
+            // 1. QUOTE / SAVE EVENT: User clicks 'Quote' inside Configurator
+            // ---------------------------------------------------------------
+            if (configUuid) {
+                const targetTxnId = this.logikApiTransactionId || this.lgkTransactionId;
 
-            */
+                // Step A: Upsert transaction lines
+                await upsertLogikTransactionLines({ 
+                    logikTransactionId: targetTxnId, 
+                    configUuid: configUuid 
+                });
 
-            // Show success toast after both operations complete
-            const toast = new ShowToastEvent({
-                title: "Logik.io Configuration Synced",
-                message: `Meesage received from logik.io`,
-                variant: "success",
-                mode: "dismissable"
-            });
-            this.dispatchEvent(toast);
+                this.dispatchEvent(new ShowToastEvent({
+                    title: "Logik.io Configuration Saved",
+                    message: "Loading Transaction UI...",
+                    variant: "success"
+                }));
+
+                // Step B: Switch iframe source to Logik Transaction UI (/ui/transact/{tid})
+                this.overrideIframeUrl = `${this.normalizedUiHost}/ui/transact/${targetTxnId}`;
+            } 
+            // ---------------------------------------------------------------
+            // 2. CANCEL EVENT: User clicks 'Cancel' inside Iframe
+            // ---------------------------------------------------------------
+            else {
+                this.dispatchEvent(new ShowToastEvent({
+                    title: "Configuration Canceled",
+                    message: "Returned to Opportunity.",
+                    variant: "info"
+                }));
+
+                // Redirect user back to the Opportunity record
+                if (this.recordId) {
+                    this[NavigationMixin.Navigate]({
+                        type: 'standard__recordPage',
+                        attributes: {
+                            recordId: this.recordId,
+                            actionName: 'view'
+                        }
+                    });
+                }
+            }
 
         } catch (error) {
             console.error('Error during Logik sync operations:', error);
-            
-            // Extract error message
+
             const errorMessage = error?.body?.message || error.message || 'Unknown error occurred';
-            
-            // Show error toast
-            const errorToast = new ShowToastEvent({
+
+            this.dispatchEvent(new ShowToastEvent({
                 title: "Error syncing with Logik",
                 message: errorMessage,
                 variant: "error",
                 mode: "sticky"
-            });
-            this.dispatchEvent(errorToast);
+            }));
         }
     }
 }

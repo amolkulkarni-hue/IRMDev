@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>REVMGMT_Requester_Info_Complete__c</fullName>
+    <description>Field to check if all required Revenue Management Case-Requester fields are populated.</description>
+    <formula>AND(
+			NOT(ISBLANK(TEXT(REVMGMT_Request_Reason__c)))
+)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <inlineHelpText>Required Revenue Management Case-Requester fields are populated.</inlineHelpText>
+    <label>Requester Info Complete</label>
+    <trackHistory>false</trackHistory>
+    <type>Checkbox</type>
+</CustomField>

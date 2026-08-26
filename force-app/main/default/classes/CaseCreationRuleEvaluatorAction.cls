@@ -31,9 +31,35 @@ public with sharing class CaseCreationRuleEvaluatorAction {
         public Integer matchedRuleCount;
     }
 
+    // Parsed form of Case_Creation_Condition__c.Field_API_Name__c. Supports either a direct
+    // Opportunity field ("Amount") or a single-level Account relationship field
+    // ("Account.Tier__c") — matching SOQL relationship-traversal syntax. Anything else
+    // (unrecognized relationship, more than one dot) is treated as invalid and dropped by
+    // the callers, same fail-closed behavior already applied to unrecognized field names.
+    private class FieldPath {
+        public String relationship; // null => direct Opportunity field; 'Account' otherwise
+        public String field;        // bare field API name
+    }
+
+    private static FieldPath parseFieldPath(String raw) {
+        if (String.isBlank(raw)) return null;
+        String trimmed = raw.trim();
+        Integer dotIdx = trimmed.indexOf('.');
+        FieldPath fp = new FieldPath();
+        if (dotIdx < 0) {
+            fp.field = trimmed;
+            return fp;
+        }
+        if (trimmed.indexOf('.', dotIdx + 1) >= 0) return null; // more than one dot — unsupported
+        if (!trimmed.substring(0, dotIdx).equalsIgnoreCase('Account')) return null; // only Account is supported
+        fp.relationship = 'Account';
+        fp.field = trimmed.substring(dotIdx + 1);
+        return fp;
+    }
+
     @InvocableMethod(
         label='Evaluate Case Creation Rules'
-        description='Evaluates Case_Creation_Rule__c conditions against Opportunity fields. Returns matched rules with doc requirements.'
+        description='Evaluates Case_Creation_Rule__c conditions against Opportunity (and Account) fields. Returns matched rules with doc requirements.'
         category='IRM Touch Level'
     )
     public static List<Result> evaluate(List<Request> requests) {
@@ -47,7 +73,10 @@ public with sharing class CaseCreationRuleEvaluatorAction {
         List<Case_Creation_Rule__c> allRules = queryActiveRules();
         Map<String, List<Case_Creation_Rule__c>> rulesByStage = groupByStage(allRules);
 
-        Set<String> fieldsToQuery = deriveWatchedFields(allRules);
+        Set<String> fieldsToQuery = new Set<String>(deriveWatchedOpportunityFields(allRules));
+        for (String acctField : deriveWatchedAccountFields(allRules)) {
+            fieldsToQuery.add('Account.' + acctField);
+        }
         String oppSoql = 'SELECT ' + String.join(new List<String>(fieldsToQuery), ', ')
             + ' FROM Opportunity WHERE Id IN :oppIds';
         Map<Id, Opportunity> oppMap = new Map<Id, Opportunity>((List<Opportunity>) Database.query(oppSoql));
@@ -85,6 +114,7 @@ public with sharing class CaseCreationRuleEvaluatorAction {
         List<Case_Creation_Rule__c> allRules = null;
         Map<String, List<Case_Creation_Rule__c>> rulesByStage = null;
         Set<String> watchedFields = null;
+        Set<String> watchedAccountFields = null;
 
         List<Opportunity> relevantOpps = new List<Opportunity>();
         for (Opportunity opp : newOpps) {
@@ -92,16 +122,136 @@ public with sharing class CaseCreationRuleEvaluatorAction {
                 if (watchedFields == null) {
                     allRules = queryActiveRules();
                     rulesByStage = groupByStage(allRules);
-                    watchedFields = deriveWatchedFields(allRules);
+                    watchedFields = deriveWatchedOpportunityFields(allRules);
+                    watchedAccountFields = deriveWatchedAccountFields(allRules);
                 }
                 if (!hasRelevantFieldChanged(opp, oldMap.get(opp.Id), watchedFields)) continue;
             } else if (rulesByStage == null) {
                 allRules = queryActiveRules();
                 rulesByStage = groupByStage(allRules);
+                watchedAccountFields = deriveWatchedAccountFields(allRules);
             }
             relevantOpps.add(opp);
         }
         if (relevantOpps.isEmpty()) return;
+
+        // Attaches each Opportunity's Account snapshot (only the fields any active
+        // Case_Creation_Condition__c actually references via "Account.<field>") so
+        // evaluateCondition can traverse it — a no-op query when no rule references Account.
+        // Returns a (possibly cloned) list rather than mutating relevantOpps in place: in the
+        // AfterInsert/AfterUpdate context this runs in, relevantOpps are Trigger.new records,
+        // which are read-only — putSObject() on them throws System.FinalException.
+        List<Opportunity> oppsWithAccountData = attachAccountData(relevantOpps, watchedAccountFields);
+
+        evaluateAndCreateForOpportunities(oppsWithAccountData, rulesByStage);
+    }
+
+    // Re-evaluation entry point for Account-driven changes — called from the
+    // "Reevaluate Case Creation For Account Changes" invocable below, itself invoked by
+    // Case_Creation_Account_Reevaluation_Flow (Account, record-triggered, after save).
+    // Unlike the Opportunity-triggered path above, there is no per-Opportunity "did a
+    // watched field change" gate here: the fact that we were called at all already means a
+    // watched Account field changed, so every open Opportunity on that Account is
+    // re-evaluated directly. Closed Opportunities are excluded — an Account edit should
+    // never reopen or re-case a deal that's already done.
+    public static void reevaluateOpenOpportunitiesForAccounts(Set<Id> accountIds, List<Case_Creation_Rule__c> allRules) {
+        if (accountIds == null || accountIds.isEmpty()) return;
+
+        Map<String, List<Case_Creation_Rule__c>> rulesByStage = groupByStage(allRules);
+        Set<String> watchedAccountFields = deriveWatchedAccountFields(allRules);
+
+        Set<String> oppSelectFields = new Set<String>{ 'Id', 'AccountId', 'StageName', 'OwnerId', 'Touch_Level__c' };
+        oppSelectFields.addAll(deriveWatchedOpportunityFields(allRules));
+        String oppSoql = 'SELECT ' + String.join(new List<String>(oppSelectFields), ', ')
+            + ' FROM Opportunity WHERE AccountId IN :accountIds AND IsClosed = false';
+        List<Opportunity> openOpps = Database.query(oppSoql);
+        if (openOpps.isEmpty()) return;
+
+        List<Opportunity> oppsWithAccountData = attachAccountData(openOpps, watchedAccountFields);
+        evaluateAndCreateForOpportunities(oppsWithAccountData, rulesByStage);
+    }
+
+    // Callable core for Account-driven re-evaluation — exposed as a Flow action via the
+    // separate CaseCreationAccountReevaluationAction class (Apex only supports one
+    // @InvocableMethod being unambiguously addressable per class from Flow metadata, and
+    // this class already has one — evaluate() — so the Flow-facing wrapper lives apart,
+    // matching how IRM_NotifyOpportunityOwnerAction separates its Flow-facing
+    // notifyInvocable() from the reusable notify() core).
+    public static void reevaluateForAccountChanges(List<CaseCreationAccountReevaluationRequest> requests) {
+        if (requests == null || requests.isEmpty()) return;
+
+        List<Case_Creation_Rule__c> allRules = queryActiveRules();
+        Set<String> watchedAccountFields = deriveWatchedAccountFields(allRules);
+        if (watchedAccountFields.isEmpty()) return; // no rule references an Account field — nothing to do
+
+        Set<Id> changedAccountIds = new Set<Id>();
+        for (CaseCreationAccountReevaluationRequest req : requests) {
+            if (req.newAccount == null || req.newAccount.Id == null) continue;
+            if (hasAccountFieldChanged(req.newAccount, req.oldAccount, watchedAccountFields)) {
+                changedAccountIds.add(req.newAccount.Id);
+            }
+        }
+        if (changedAccountIds.isEmpty()) return;
+
+        reevaluateOpenOpportunitiesForAccounts(changedAccountIds, allRules);
+    }
+
+    private static Boolean hasAccountFieldChanged(Account newAcct, Account oldAcct, Set<String> watchedFields) {
+        if (oldAcct == null) return true;
+        for (String fieldName : watchedFields) {
+            if (newAcct.get(fieldName) != oldAcct.get(fieldName)) return true;
+        }
+        return false;
+    }
+
+    // Queries only the Account fields any active Case_Creation_Condition__c references
+    // (via "Account.<field>") and returns each Opportunity with that data attached onto its
+    // in-memory "Account" relationship via putSObject — letting evaluateCondition traverse
+    // it exactly as it would a real SOQL relationship query.
+    //
+    // Returns a new list rather than mutating opps in place: callers may be passing
+    // AfterInsert/AfterUpdate Trigger.new records, which are read-only in Apex —
+    // putSObject() directly on them throws System.FinalException ("Record is read-only").
+    // Cloning first (preserving Id) sidesteps that without affecting the real records being
+    // saved; Opportunities with no watched-Account-field data to attach pass through as-is.
+    private static List<Opportunity> attachAccountData(List<Opportunity> opps, Set<String> watchedAccountFields) {
+        if (watchedAccountFields == null || watchedAccountFields.isEmpty() || opps.isEmpty()) return opps;
+
+        Set<Id> accountIds = new Set<Id>();
+        for (Opportunity opp : opps) {
+            if (opp.AccountId != null) accountIds.add(opp.AccountId);
+        }
+        if (accountIds.isEmpty()) return opps;
+
+        Set<String> selectFields = new Set<String>{ 'Id' };
+        selectFields.addAll(watchedAccountFields);
+        String acctSoql = 'SELECT ' + String.join(new List<String>(selectFields), ', ')
+            + ' FROM Account WHERE Id IN :accountIds';
+        Map<Id, Account> acctById = new Map<Id, Account>((List<Account>) Database.query(acctSoql));
+
+        List<Opportunity> result = new List<Opportunity>();
+        for (Opportunity opp : opps) {
+            Account acct = opp.AccountId == null ? null : acctById.get(opp.AccountId);
+            if (acct == null) {
+                result.add(opp);
+                continue;
+            }
+            Opportunity writableCopy = opp.clone(true, true, true, true);
+            writableCopy.putSObject('Account', acct);
+            result.add(writableCopy);
+        }
+        return result;
+    }
+
+    // Shared evaluate+create core — matches every relevantOpp against its stage's active
+    // rules, resolves/creates the Case for each matched pair, creates the matched Doc
+    // Requirement checklists, and notifies Opportunity owners. Used by both the
+    // Opportunity-triggered path (createEligibleChecklistsAfterSave, gated on
+    // hasRelevantFieldChanged) and the Account-driven path
+    // (reevaluateOpenOpportunitiesForAccounts, which has no such gate — an Account field
+    // change is itself sufficient reason to re-run this for that Account's open Opportunities).
+    private static void evaluateAndCreateForOpportunities(
+            List<Opportunity> relevantOpps, Map<String, List<Case_Creation_Rule__c>> rulesByStage) {
 
         // Pass 1 — collect every matched (Opportunity, Rule) pair. This determines which Cases
         // need to exist; Document_Checklist__c candidates are built afterward, once each pair's
@@ -351,9 +501,16 @@ public with sharing class CaseCreationRuleEvaluatorAction {
     }
 
     // Opportunity field API names referenced by any active Case_Creation_Condition__c, plus
-    // StageName (always relevant, since which rules apply at all is stage-scoped).
+    // StageName (always relevant, since which rules apply at all is stage-scoped). Account
+    // relationship fields (e.g. "Account.Tier__c") are excluded here — see getWatchedAccountFieldNames.
     public static Set<String> getWatchedFieldNames() {
-        return deriveWatchedFields(queryActiveRules());
+        return deriveWatchedOpportunityFields(queryActiveRules());
+    }
+
+    // Bare Account field API names (without the "Account." prefix) referenced by any active
+    // Case_Creation_Condition__c.
+    public static Set<String> getWatchedAccountFieldNames() {
+        return deriveWatchedAccountFields(queryActiveRules());
     }
 
     private static String dedupeKey(Id oppId, Id ruleId, String docType) {
@@ -454,7 +611,7 @@ public with sharing class CaseCreationRuleEvaluatorAction {
         return rulesByStage;
     }
 
-    private static Set<String> deriveWatchedFields(List<Case_Creation_Rule__c> allRules) {
+    private static Set<String> deriveWatchedOpportunityFields(List<Case_Creation_Rule__c> allRules) {
         // 'Id' is retained here (not just in getWatchedFieldNames' change-detection use) because
         // evaluate() reuses this same set to build its Opportunity SOQL query.
         Set<String> fields = new Set<String>{ 'Id', 'StageName' };
@@ -463,10 +620,27 @@ public with sharing class CaseCreationRuleEvaluatorAction {
             List<SObject> conds = rule.getSObjects('Conditions__r');
             if (conds != null) {
                 for (SObject c : conds) {
-                    String fn = (String) c.get('Field_API_Name__c');
-                    if (String.isNotBlank(fn) && oppFieldMap.containsKey(fn.trim().toLowerCase())) {
-                        fields.add(fn.trim());
-                    }
+                    FieldPath fp = parseFieldPath((String) c.get('Field_API_Name__c'));
+                    if (fp == null || fp.relationship != null) continue; // Account-scoped — see deriveWatchedAccountFields
+                    if (oppFieldMap.containsKey(fp.field.toLowerCase())) fields.add(fp.field);
+                }
+            }
+        }
+        return fields;
+    }
+
+    // Bare Account field API names (no "Account." prefix) referenced by any active
+    // Case_Creation_Condition__c whose Field_API_Name__c is an "Account.<field>" path.
+    private static Set<String> deriveWatchedAccountFields(List<Case_Creation_Rule__c> allRules) {
+        Set<String> fields = new Set<String>();
+        Map<String, Schema.SObjectField> acctFieldMap = Schema.SObjectType.Account.fields.getMap();
+        for (Case_Creation_Rule__c rule : allRules) {
+            List<SObject> conds = rule.getSObjects('Conditions__r');
+            if (conds != null) {
+                for (SObject c : conds) {
+                    FieldPath fp = parseFieldPath((String) c.get('Field_API_Name__c'));
+                    if (fp == null || fp.relationship == null) continue;
+                    if (acctFieldMap.containsKey(fp.field.toLowerCase())) fields.add(fp.field);
                 }
             }
         }
@@ -491,12 +665,22 @@ public with sharing class CaseCreationRuleEvaluatorAction {
     }
 
     private static Boolean evaluateCondition(SObject cond, SObject record) {
-        String fieldName    = (String) cond.get('Field_API_Name__c');
-        String operator     = (String) cond.get('Operator__c');
-        String compareValue = (String) cond.get('Value__c');
+        String fieldApiName = (String) cond.get('Field_API_Name__c');
+        String operator      = (String) cond.get('Operator__c');
+        String compareValue  = (String) cond.get('Value__c');
 
+        FieldPath fp = parseFieldPath(fieldApiName);
         Object fieldValue;
-        try { fieldValue = record.get(fieldName); } catch (Exception e) { return false; }
+        try {
+            if (fp == null) {
+                fieldValue = null;
+            } else if (fp.relationship == null) {
+                fieldValue = record.get(fp.field);
+            } else {
+                SObject related = record.getSObject(fp.relationship);
+                fieldValue = related == null ? null : related.get(fp.field);
+            }
+        } catch (Exception e) { return false; }
 
         if (operator == 'IS_NULL')     return fieldValue == null;
         if (operator == 'IS_NOT_NULL') return fieldValue != null;

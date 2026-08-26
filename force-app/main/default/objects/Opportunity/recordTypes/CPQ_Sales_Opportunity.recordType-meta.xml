@@ -1299,6 +1299,21 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>Framework_Status__c</picklist>
+        <values>
+            <fullName>Active</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Draft</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Expired</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Free_Storage_Period__c</picklist>
         <values>
             <fullName>0 months</fullName>
@@ -4248,6 +4263,17 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>PO_Required__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Partner_Association__c</picklist>
         <values>
             <fullName>Co-Sell</fullName>
@@ -4263,29 +4289,44 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>Payment_Terms__c</picklist>
+        <values>
+            <fullName>30</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>45</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>60</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>90</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Primary_Product_Interest__c</picklist>
         <values>
-            <fullName>AI%2FML Insights</fullName>
+            <fullName>Clean Start</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Archive</fullName>
+            <fullName>DM %28All other service lines%29</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Cloud Backup</fullName>
+            <fullName>DM SITAD</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Consulting Services</fullName>
+            <fullName>DM Tape Vaulting</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Data Center Decommissioning</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Data Centers</fullName>
+            <fullName>DXP %28InSight%29</fullName>
             <default>false</default>
         </values>
         <values>
@@ -4293,11 +4334,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Data Restoration and Migration Services</fullName>
+            <fullName>Data Restoration %26 Migration</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Document Imaging</fullName>
+            <fullName>Digitization</fullName>
             <default>false</default>
         </values>
         <values>
@@ -4305,19 +4346,23 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Fine Art %26 Museum</fullName>
+            <fullName>Information Governance</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Fixed Asset Management</fullName>
+            <fullName>MAS</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>IT Asset Destruction</fullName>
+            <fullName>Professional Staffing</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Records Storage</fullName>
+            <fullName>RM Secure Storage</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SITAD</fullName>
             <default>false</default>
         </values>
         <values>
@@ -4325,50 +4370,58 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Staffing</fullName>
+            <fullName>Smart Suite</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Tape Storage</fullName>
+            <fullName>Special projects - Data Management</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Warehousing and Logistics</fullName>
+            <fullName>TAAS</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Workplace ITAM</fullName>
+            <fullName>Tape Vaulting</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>W%26L Secure Storage</fullName>
             <default>false</default>
         </values>
     </picklistValues>
     <picklistValues>
         <picklist>Primary_Product_Line__c</picklist>
         <values>
+            <fullName>Clean Start</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>DXP %28InSight%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Data Management</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Insight</fullName>
+            <fullName>Data Restoration %26 Migration</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Records Management</fullName>
+            <fullName>Digitization</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Regency Technologies - Contracted Sales Only</fullName>
+            <fullName>MAS</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>SMB Packages</fullName>
+            <fullName>Professional Staffing</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Scan</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Shred</fullName>
+            <fullName>Smart Suite</fullName>
             <default>false</default>
         </values>
         <values>
@@ -4376,15 +4429,15 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Special Projects - International</fullName>
+            <fullName>TAAS</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Special Projects - Records Management %26 Shred</fullName>
+            <fullName>Tape Vaulting</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Warehouse and Logistics</fullName>
+            <fullName>W%26L Secure Storage</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -5594,10 +5647,6 @@
         <picklist>Type</picklist>
         <values>
             <fullName>Cross-Sell%2FUpsell</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>New</fullName>
             <default>false</default>
         </values>
         <values>

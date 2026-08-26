@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Is_Sales_Site__c</fullName>
+    <description>Indicates whether the Account is classified as a Sales Site. This field is used by system configuration to support Lead Account lookup filtering.</description>
+    <formula>ISPICKVAL(IM_Hierarchy_Level__c, &quot;Sales (Site)&quot;)</formula>
+    <inlineHelpText>System-generated field used to determine whether an Account qualifies as a Sales Site. This field is not intended for manual use.</inlineHelpText>
+    <label>Is Sales Site</label>
+    <trackHistory>false</trackHistory>
+    <type>Checkbox</type>
+</CustomField>

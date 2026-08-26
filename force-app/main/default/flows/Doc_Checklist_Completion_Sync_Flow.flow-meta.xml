@@ -27,7 +27,7 @@
             <label>No Non-Final Docs — Set True</label>
         </rules>
     </decisions>
-    <description>Record-Triggered After Save flow on Document_Checklist__c (Create and Update). Fires when Status__c changes and Case__c is not null. Queries for any non-Final exit docs on the parent Case (Case_Creation_Rule__c is null — excludes the Case-first "start"/"required for case" checklists CaseCreationRuleEvaluatorAction links via Case__c, which have their own All_Start_Docs_Final__c indicator maintained by Case_Creation_Trigger_Flow). If none exist, sets All_Exit_Docs_Final__c = true on the Case; otherwise sets it to false. This triggers Case_Completion_Update_Flow to recalculate the completion percentage.</description>
+    <description>Record-Triggered After Save flow on Document_Checklist__c (Create and Update). Fires when Status__c changes and Case__c is not null. Queries for any non-Final exit docs on the parent Case (Case_Creation_Rule__c is null — excludes the Case-first &quot;start&quot;/&quot;required for case&quot; checklists CaseCreationRuleEvaluatorAction links via Case__c, which have their own All_Start_Docs_Final__c indicator maintained by Case_Creation_Trigger_Flow). If none exist, sets All_Exit_Docs_Final__c = true on the Case; otherwise sets it to false. This triggers Case_Completion_Update_Flow to recalculate the completion percentage.</description>
     <label>Doc Checklist Completion Sync Flow</label>
     <processType>AutoLaunchedFlow</processType>
     <recordLookups>

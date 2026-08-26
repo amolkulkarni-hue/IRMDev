@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Accepted_Quote__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>Stores a reference to the Quote that was accepted upon approval of the associated Transaction. This field is populated automatically by system automation.</description>
+    <inlineHelpText>Automatically populated when the Transaction is approved. Identifies the Quote that has been accepted for the Transaction.</inlineHelpText>
+    <label>Accepted Quote</label>
+    <lookupFilter>
+        <active>true</active>
+        <filterItems>
+            <field>LGK__Transaction__c.Deal_Review_Status__c</field>
+            <operation>equals</operation>
+            <value>Approved</value>
+        </filterItems>
+        <isOptional>false</isOptional>
+    </lookupFilter>
+    <referenceTo>LGK__Transaction__c</referenceTo>
+    <relationshipLabel>Opportunities (Accepted Quote)</relationshipLabel>
+    <relationshipName>Opportunities</relationshipName>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Lookup</type>
+</CustomField>

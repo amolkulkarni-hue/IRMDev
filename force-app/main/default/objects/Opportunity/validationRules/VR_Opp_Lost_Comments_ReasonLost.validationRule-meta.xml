@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>VR_Opp_Lost_Comments_ReasonLost</fullName>
+    <active>true</active>
+    <description>Requires both Lost Comments and Reason Lost to be populated when Opportunity Stage = Lost.</description>
+    <errorConditionFormula>AND(
+    NOT($Permission.Bypass_Opportunity_Validation),
+    OR(
+        RecordType.DeveloperName = &quot;Standard_Opportunity&quot;,
+        RecordType.DeveloperName = &quot;Framework_Parent_Opportunity&quot;
+    ),
+    ISPICKVAL(StageName, &quot;Lost&quot;),
+    OR(
+        ISBLANK(IM_Lost_Comments__c),
+        ISPICKVAL(IM_Reason_Lost__c, &quot;&quot;)
+    )
+)</errorConditionFormula>
+    <errorDisplayField>IM_Lost_Comments__c</errorDisplayField>
+    <errorMessage>Please complete Lost Comments and Reason Lost before marking this Opportunity as Lost. Need help? Contact your Sales Operations Business Partner.</errorMessage>
+</ValidationRule>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>BM_Request_Type__c</fullName>
+    <description>Identifies which type of bid request this Case represents, recorded by the Case Owner as part of closing the request out.</description>
+    <inlineHelpText>Select the type of bid activity this request covers.</inlineHelpText>
+    <label>Request Type</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>RFP/RFT</fullName>
+                <default>false</default>
+                <label>RFP/RFT</label>
+            </value>
+            <value>
+                <fullName>RFI/EOI</fullName>
+                <default>false</default>
+                <label>RFI/EOI</label>
+            </value>
+            <value>
+                <fullName>RFQ</fullName>
+                <default>false</default>
+                <label>RFQ</label>
+            </value>
+            <value>
+                <fullName>BAFO</fullName>
+                <default>false</default>
+                <label>BAFO</label>
+            </value>
+            <value>
+                <fullName>Presentation</fullName>
+                <default>false</default>
+                <label>Presentation</label>
+            </value>
+            <value>
+                <fullName>Proactive</fullName>
+                <default>false</default>
+                <label>Proactive</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

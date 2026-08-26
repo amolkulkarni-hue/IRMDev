@@ -3,7 +3,7 @@
     <fullName>UpSell_Sold_To_required_for_UpSell_Opt</fullName>
     <active>true</active>
     <description>The Validation Rule excludes Enterprise, Child, and Standard Opportunity record types.  This rule will be used by International.</description>
-    <errorConditionFormula>AND(NOT(Bypass_Validation__c), ISPICKVAL(Type,&quot;Up-Sell/Lift&quot;),(LEN( IM_Up_Sell_Sold_To__c ) = 0),(NOT( RecordTypeId = &quot;01280000000BDec&quot;)), (NOT( RecordTypeId = &quot;01280000000BDeh&quot;)), (NOT (RecordTypeId = &quot;01280000000BDei&quot;)), NOT( ISPICKVAL( Primary_Product_Line__c , &quot;DM SITAD&quot;)), NOT($Permission.VR_Bypass_Permission))</errorConditionFormula>
+    <errorConditionFormula>AND(NOT($Permission.Bypass_Opportunity_Validation), ISPICKVAL(Type,&quot;Up-Sell/Lift&quot;),(LEN( IM_Up_Sell_Sold_To__c ) = 0),(NOT( RecordTypeId = &quot;01280000000BDec&quot;)), (NOT( RecordTypeId = &quot;01280000000BDeh&quot;)), (NOT (RecordTypeId = &quot;01280000000BDei&quot;)), NOT( ISPICKVAL( Primary_Product_Line__c , &quot;DM SITAD&quot;)), NOT($Permission.VR_Bypass_Permission))</errorConditionFormula>
     <errorDisplayField>IM_Up_Sell_Sold_To__c</errorDisplayField>
     <errorMessage>If Type is Up-Sell, you must fill in the Up-Sell Oracle Account ID#</errorMessage>
 </ValidationRule>

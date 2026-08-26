@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <description>Access to view, create, edit and delete all Supplier Products for all Accounts (grants View All on Account and Contact).</description>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account.NameCountryKey__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Kimble Edit All Supplier Product</label>
     <objectPermissions>
