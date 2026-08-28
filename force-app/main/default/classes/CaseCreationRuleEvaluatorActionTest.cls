@@ -358,11 +358,17 @@ private class CaseCreationRuleEvaluatorActionTest {
     @IsTest
     static void testIsTrueOperator_MatchesRealBooleanField() {
         Opportunity opp = getOpp();
-        update new Opportunity(Id = opp.Id, RFx_RFI_RFQ_RFP__c = true);
 
+        // Rule/conditions must exist BEFORE any Opportunity/Account DML below: this org's live
+        // trigger automation calls into CaseCreationRuleEvaluatorAction on Opportunity/Account
+        // save, which populates its per-transaction active-rules cache. Updating the Opportunity
+        // first would cache the rule list as it stood before this rule existed, and the later
+        // evaluate() call below would use that stale cache and never see this rule at all.
         Case_Creation_Rule__c rule = makeRule('Qualification', 'RFP/Bid Management',
             'Deal_Support', 'Bid_Management_Queue', null);
         makeCondition(rule.Id, 1, 'RFx_RFI_RFQ_RFP__c', 'IS_TRUE', null);
+
+        update new Opportunity(Id = opp.Id, RFx_RFI_RFQ_RFP__c = true);
 
         Test.startTest();
         CaseCreationRuleEvaluatorAction.Request req = new CaseCreationRuleEvaluatorAction.Request();
@@ -381,11 +387,15 @@ private class CaseCreationRuleEvaluatorActionTest {
     @IsTest
     static void testAccountRelationshipBooleanCondition_Matches() {
         Opportunity opp = getOpp();
-        update new Account(Id = opp.AccountId, Strategic_Account__c = true);
 
+        // See ordering note in testIsTrueOperator_MatchesRealBooleanField above — the rule must
+        // exist before the Account update, or the live automation's per-transaction rule cache
+        // goes stale before this rule is in it.
         Case_Creation_Rule__c rule = makeRule('Qualification', 'Solution Architects',
             'Deal_Support', 'Solution_Architects_Queue', null);
         makeCondition(rule.Id, 1, 'Account.Strategic_Account__c', 'IS_TRUE', null);
+
+        update new Account(Id = opp.AccountId, Strategic_Account__c = true);
 
         Test.startTest();
         CaseCreationRuleEvaluatorAction.Request req = new CaseCreationRuleEvaluatorAction.Request();
@@ -403,11 +413,13 @@ private class CaseCreationRuleEvaluatorActionTest {
     @IsTest
     static void testInOperator_MatchesCommaSeparatedValue() {
         Opportunity opp = getOpp();
-        update new Opportunity(Id = opp.Id, Business_Unit__c = 'ALM');
 
+        // See ordering note in testIsTrueOperator_MatchesRealBooleanField above.
         Case_Creation_Rule__c rule = makeRule('Qualification', 'Managed Services Program',
             'Deal_Support', 'Managed_Services_Queue', null);
         makeCondition(rule.Id, 1, 'Business_Unit__c', 'IN', 'RIM,ALM');
+
+        update new Opportunity(Id = opp.Id, Business_Unit__c = 'ALM');
 
         Test.startTest();
         CaseCreationRuleEvaluatorAction.Request req = new CaseCreationRuleEvaluatorAction.Request();
@@ -427,11 +439,13 @@ private class CaseCreationRuleEvaluatorActionTest {
     @IsTest
     static void testContainsOperator_MatchesWithinMultiSelectPicklist() {
         Opportunity opp = getOpp();
-        update new Opportunity(Id = opp.Id, IM_Sales_Event__c = 'HCLS: Managed Service;Cross-Sell Campaign');
 
+        // See ordering note in testIsTrueOperator_MatchesRealBooleanField above.
         Case_Creation_Rule__c rule = makeRule('Qualification', 'Managed Services Program',
             'Deal_Support', 'Managed_Services_Queue', null);
         makeCondition(rule.Id, 1, 'IM_Sales_Event__c', 'CONTAINS', 'HCLS: Managed Service');
+
+        update new Opportunity(Id = opp.Id, IM_Sales_Event__c = 'HCLS: Managed Service;Cross-Sell Campaign');
 
         Test.startTest();
         CaseCreationRuleEvaluatorAction.Request req = new CaseCreationRuleEvaluatorAction.Request();
@@ -473,19 +487,23 @@ private class CaseCreationRuleEvaluatorActionTest {
     @IsTest
     static void testParenthesizedOrGroup_AppendedConditionGatesEveryBranch() {
         Opportunity opp = getOpp(); // Amount = 500000, Touch_Level__c left unset
-        update new Account(Id = opp.AccountId, Strategic_Account__c = true);
 
         // Shape of the real seeded Solution Architects rules: an OR-group carried over from the
         // client's own logic, followed by an appended Touch Level condition that must gate the
         // WHOLE expression. Guards against a caught bug where the appended condition was tacked
         // onto a flat "1 AND 2 OR 3 AND 4" string — since the evaluator splits on OR first, that
         // form only gated the LAST OR-branch, letting condition 3 alone produce a false match.
+        //
+        // Rule/conditions created before the Account update below — see ordering note in
+        // testIsTrueOperator_MatchesRealBooleanField above.
         Case_Creation_Rule__c rule = makeRule('Qualification', 'Solution Architects',
             'Deal_Support', 'Solution_Architects_Queue', '(1 AND 2 OR 3) AND 4');
         makeCondition(rule.Id, 1, 'Business_Unit__c', 'EQUALS', 'RIM');                  // fails
         makeCondition(rule.Id, 2, 'Amount', 'GREATER_THAN', '1000000');                 // fails
         makeCondition(rule.Id, 3, 'Account.Strategic_Account__c', 'IS_TRUE', null);     // passes
         makeCondition(rule.Id, 4, 'Touch_Level__c', 'EQUALS', 'High Touch');            // fails (unset)
+
+        update new Account(Id = opp.AccountId, Strategic_Account__c = true);
 
         Test.startTest();
         CaseCreationRuleEvaluatorAction.Request req = new CaseCreationRuleEvaluatorAction.Request();
@@ -504,15 +522,18 @@ private class CaseCreationRuleEvaluatorActionTest {
     @IsTest
     static void testParenthesizedOrGroup_MatchesWhenAppendedConditionAlsoPasses() {
         Opportunity opp = getOpp();
-        update new Opportunity(Id = opp.Id, Touch_Level__c = 'High Touch');
-        update new Account(Id = opp.AccountId, Strategic_Account__c = true);
 
+        // See ordering note in testIsTrueOperator_MatchesRealBooleanField above — rule/conditions
+        // must exist before either DML statement below.
         Case_Creation_Rule__c rule = makeRule('Qualification', 'Solution Architects',
             'Deal_Support', 'Solution_Architects_Queue', '(1 AND 2 OR 3) AND 4');
         makeCondition(rule.Id, 1, 'Business_Unit__c', 'EQUALS', 'RIM');                  // fails
         makeCondition(rule.Id, 2, 'Amount', 'GREATER_THAN', '1000000');                 // fails
         makeCondition(rule.Id, 3, 'Account.Strategic_Account__c', 'IS_TRUE', null);     // passes -> OR group true
         makeCondition(rule.Id, 4, 'Touch_Level__c', 'EQUALS', 'High Touch');            // passes
+
+        update new Opportunity(Id = opp.Id, Touch_Level__c = 'High Touch');
+        update new Account(Id = opp.AccountId, Strategic_Account__c = true);
 
         Test.startTest();
         CaseCreationRuleEvaluatorAction.Request req = new CaseCreationRuleEvaluatorAction.Request();
