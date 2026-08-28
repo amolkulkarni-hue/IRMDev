@@ -49,7 +49,7 @@ private class CaseCreationRuleEvaluatorActionTest {
     }
 
     private static Opportunity getOpp() {
-        return [SELECT Id, StageName, Amount FROM Opportunity LIMIT 1];
+        return [SELECT Id, StageName, Amount, AccountId FROM Opportunity LIMIT 1];
     }
 
     private static Case_Creation_Rule__c makeRule(
@@ -346,5 +346,183 @@ private class CaseCreationRuleEvaluatorActionTest {
 
         System.assertEquals(1, results.size());
         System.assertEquals(false, results[0].hasMatches);
+    }
+
+    // ──────────────────────────────────────────────────────────
+    // MVP Support Teams Cases Logic scenarios — targeting the exact bug classes
+    // caught and fixed while seeding Case_Creation_Rule__c/Condition__c from the
+    // client's mapping doc, so a regression in any of them fails a test instead of
+    // silently mis-routing Cases in production.
+    // ──────────────────────────────────────────────────────────
+
+    @IsTest
+    static void testIsTrueOperator_MatchesRealBooleanField() {
+        Opportunity opp = getOpp();
+        update new Opportunity(Id = opp.Id, RFx_RFI_RFQ_RFP__c = true);
+
+        Case_Creation_Rule__c rule = makeRule('Qualification', 'RFP/Bid Management',
+            'Deal_Support', 'Bid_Management_Queue', null);
+        makeCondition(rule.Id, 1, 'RFx_RFI_RFQ_RFP__c', 'IS_TRUE', null);
+
+        Test.startTest();
+        CaseCreationRuleEvaluatorAction.Request req = new CaseCreationRuleEvaluatorAction.Request();
+        req.opportunityId = opp.Id;
+        List<CaseCreationRuleEvaluatorAction.Result> results =
+            CaseCreationRuleEvaluatorAction.evaluate(
+                new List<CaseCreationRuleEvaluatorAction.Request>{ req });
+        Test.stopTest();
+
+        System.assertEquals(true, results[0].hasMatches,
+            'IS_TRUE against a real Boolean field should match. Guards against a caught bug ' +
+            'where Boolean fields were seeded as EQUALS \'Yes\' instead — the evaluator compares ' +
+            'Boolean fields with fieldValue == true, so a string \'Yes\' never matches.');
+    }
+
+    @IsTest
+    static void testAccountRelationshipBooleanCondition_Matches() {
+        Opportunity opp = getOpp();
+        update new Account(Id = opp.AccountId, Strategic_Account__c = true);
+
+        Case_Creation_Rule__c rule = makeRule('Qualification', 'Solution Architects',
+            'Deal_Support', 'Solution_Architects_Queue', null);
+        makeCondition(rule.Id, 1, 'Account.Strategic_Account__c', 'IS_TRUE', null);
+
+        Test.startTest();
+        CaseCreationRuleEvaluatorAction.Request req = new CaseCreationRuleEvaluatorAction.Request();
+        req.opportunityId = opp.Id;
+        List<CaseCreationRuleEvaluatorAction.Result> results =
+            CaseCreationRuleEvaluatorAction.evaluate(
+                new List<CaseCreationRuleEvaluatorAction.Request>{ req });
+        Test.stopTest();
+
+        System.assertEquals(true, results[0].hasMatches,
+            'A condition on Account.Strategic_Account__c should traverse the relationship (via the ' +
+            'Account.<field> SELECT the evaluator builds dynamically) and match.');
+    }
+
+    @IsTest
+    static void testInOperator_MatchesCommaSeparatedValue() {
+        Opportunity opp = getOpp();
+        update new Opportunity(Id = opp.Id, Business_Unit__c = 'ALM');
+
+        Case_Creation_Rule__c rule = makeRule('Qualification', 'Managed Services Program',
+            'Deal_Support', 'Managed_Services_Queue', null);
+        makeCondition(rule.Id, 1, 'Business_Unit__c', 'IN', 'RIM,ALM');
+
+        Test.startTest();
+        CaseCreationRuleEvaluatorAction.Request req = new CaseCreationRuleEvaluatorAction.Request();
+        req.opportunityId = opp.Id;
+        List<CaseCreationRuleEvaluatorAction.Result> results =
+            CaseCreationRuleEvaluatorAction.evaluate(
+                new List<CaseCreationRuleEvaluatorAction.Request>{ req });
+        Test.stopTest();
+
+        System.assertEquals(true, results[0].hasMatches,
+            'IN should match when the field value is one of the comma-separated candidates. Guards ' +
+            'against a caught bug where IN value lists were joined with semicolons — the evaluator\'s ' +
+            'toSet() helper splits only on commas, so a semicolon-joined list is treated as one ' +
+            'unmatchable value.');
+    }
+
+    @IsTest
+    static void testContainsOperator_MatchesWithinMultiSelectPicklist() {
+        Opportunity opp = getOpp();
+        update new Opportunity(Id = opp.Id, IM_Sales_Event__c = 'HCLS: Managed Service;Cross-Sell Campaign');
+
+        Case_Creation_Rule__c rule = makeRule('Qualification', 'Managed Services Program',
+            'Deal_Support', 'Managed_Services_Queue', null);
+        makeCondition(rule.Id, 1, 'IM_Sales_Event__c', 'CONTAINS', 'HCLS: Managed Service');
+
+        Test.startTest();
+        CaseCreationRuleEvaluatorAction.Request req = new CaseCreationRuleEvaluatorAction.Request();
+        req.opportunityId = opp.Id;
+        List<CaseCreationRuleEvaluatorAction.Result> results =
+            CaseCreationRuleEvaluatorAction.evaluate(
+                new List<CaseCreationRuleEvaluatorAction.Request>{ req });
+        Test.stopTest();
+
+        System.assertEquals(true, results[0].hasMatches,
+            'CONTAINS should match a single selected value even when the multipicklist field holds ' +
+            'more than one. Guards against a caught bug where this was seeded as EQUALS, which only ' +
+            'matches when the field\'s full semicolon-joined string equals the compare value exactly.');
+    }
+
+    @IsTest
+    static void testGreaterOrEqual_MatchesPlainNumericValue() {
+        Opportunity opp = getOpp(); // Amount = 500000
+
+        Case_Creation_Rule__c rule = makeRule('Qualification', 'Remarketing',
+            'Deal_Support', 'Remarketing_Queue', null);
+        makeCondition(rule.Id, 1, 'Amount', 'GREATER_OR_EQUAL', '250000');
+
+        Test.startTest();
+        CaseCreationRuleEvaluatorAction.Request req = new CaseCreationRuleEvaluatorAction.Request();
+        req.opportunityId = opp.Id;
+        List<CaseCreationRuleEvaluatorAction.Result> results =
+            CaseCreationRuleEvaluatorAction.evaluate(
+                new List<CaseCreationRuleEvaluatorAction.Request>{ req });
+        Test.stopTest();
+
+        System.assertEquals(true, results[0].hasMatches,
+            'GREATER_OR_EQUAL parses Value__c via Decimal.valueOf(). Guards against a caught bug ' +
+            'where currency thresholds were seeded as "$250,000" / "$1mil"-style strings, which ' +
+            'Decimal.valueOf() cannot parse — the evaluator catches that exception and silently ' +
+            'returns false rather than matching.');
+    }
+
+    @IsTest
+    static void testParenthesizedOrGroup_AppendedConditionGatesEveryBranch() {
+        Opportunity opp = getOpp(); // Amount = 500000, Touch_Level__c left unset
+        update new Account(Id = opp.AccountId, Strategic_Account__c = true);
+
+        // Shape of the real seeded Solution Architects rules: an OR-group carried over from the
+        // client's own logic, followed by an appended Touch Level condition that must gate the
+        // WHOLE expression. Guards against a caught bug where the appended condition was tacked
+        // onto a flat "1 AND 2 OR 3 AND 4" string — since the evaluator splits on OR first, that
+        // form only gated the LAST OR-branch, letting condition 3 alone produce a false match.
+        Case_Creation_Rule__c rule = makeRule('Qualification', 'Solution Architects',
+            'Deal_Support', 'Solution_Architects_Queue', '(1 AND 2 OR 3) AND 4');
+        makeCondition(rule.Id, 1, 'Business_Unit__c', 'EQUALS', 'RIM');                  // fails
+        makeCondition(rule.Id, 2, 'Amount', 'GREATER_THAN', '1000000');                 // fails
+        makeCondition(rule.Id, 3, 'Account.Strategic_Account__c', 'IS_TRUE', null);     // passes
+        makeCondition(rule.Id, 4, 'Touch_Level__c', 'EQUALS', 'High Touch');            // fails (unset)
+
+        Test.startTest();
+        CaseCreationRuleEvaluatorAction.Request req = new CaseCreationRuleEvaluatorAction.Request();
+        req.opportunityId = opp.Id;
+        List<CaseCreationRuleEvaluatorAction.Result> results =
+            CaseCreationRuleEvaluatorAction.evaluate(
+                new List<CaseCreationRuleEvaluatorAction.Request>{ req });
+        Test.stopTest();
+
+        System.assertEquals(false, results[0].hasMatches,
+            'Condition 4 fails and must gate the entire rule, not just the last OR-branch — under ' +
+            'the buggy flat-string form, condition 3 alone (Strategic Account) would have produced ' +
+            'an incorrect match here.');
+    }
+
+    @IsTest
+    static void testParenthesizedOrGroup_MatchesWhenAppendedConditionAlsoPasses() {
+        Opportunity opp = getOpp();
+        update new Opportunity(Id = opp.Id, Touch_Level__c = 'High Touch');
+        update new Account(Id = opp.AccountId, Strategic_Account__c = true);
+
+        Case_Creation_Rule__c rule = makeRule('Qualification', 'Solution Architects',
+            'Deal_Support', 'Solution_Architects_Queue', '(1 AND 2 OR 3) AND 4');
+        makeCondition(rule.Id, 1, 'Business_Unit__c', 'EQUALS', 'RIM');                  // fails
+        makeCondition(rule.Id, 2, 'Amount', 'GREATER_THAN', '1000000');                 // fails
+        makeCondition(rule.Id, 3, 'Account.Strategic_Account__c', 'IS_TRUE', null);     // passes -> OR group true
+        makeCondition(rule.Id, 4, 'Touch_Level__c', 'EQUALS', 'High Touch');            // passes
+
+        Test.startTest();
+        CaseCreationRuleEvaluatorAction.Request req = new CaseCreationRuleEvaluatorAction.Request();
+        req.opportunityId = opp.Id;
+        List<CaseCreationRuleEvaluatorAction.Result> results =
+            CaseCreationRuleEvaluatorAction.evaluate(
+                new List<CaseCreationRuleEvaluatorAction.Request>{ req });
+        Test.stopTest();
+
+        System.assertEquals(true, results[0].hasMatches,
+            'OR-group true (via condition 3) AND condition 4 true — the whole rule should match.');
     }
 }
