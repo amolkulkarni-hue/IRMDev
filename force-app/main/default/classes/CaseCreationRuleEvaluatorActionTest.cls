@@ -645,16 +645,25 @@ private class CaseCreationRuleEvaluatorActionTest {
         System.assertEquals(true, closeBlocked,
             'Closing the Case should be blocked while a required exit document is not yet Final.');
 
-        // 6. Finalize the exit document — Submitted_Date__c is required by a validation rule on
-        //    Document_Checklist__c before Status can become Final — then closing should succeed.
+        // 6. Finalize BOTH checklists — Submitted_Date__c is required by a validation rule on
+        //    Document_Checklist__c before Status can become Final. Confirmed by testing: despite
+        //    its name, Case_Exit_Document_Validation_Flow's actual query (getNonFinalCaseExitDocs)
+        //    blocks the close while ANY Document_Checklist__c on the Case is non-Final — it has no
+        //    filter distinguishing exit-designated docs from intake ones, so the intake checklist
+        //    from step 2 must also be finalized here, not just the exit one.
         Document_Checklist__c exitDoc = exitDocs[0];
         exitDoc.Status__c = 'Final';
         exitDoc.Submitted_Date__c = Date.today();
         update exitDoc;
 
+        Document_Checklist__c intakeDoc = intakeDocs[0];
+        intakeDoc.Status__c = 'Final';
+        intakeDoc.Submitted_Date__c = Date.today();
+        update intakeDoc;
+
         update new Case(Id = c.Id, Status = 'Closed - Approved');
         Case closedCase = [SELECT Status FROM Case WHERE Id = :c.Id];
         System.assertEquals('Closed - Approved', closedCase.Status,
-            'Closing should succeed once the required exit document is Final.');
+            'Closing should succeed once every Document_Checklist__c on the Case is Final.');
     }
 }
