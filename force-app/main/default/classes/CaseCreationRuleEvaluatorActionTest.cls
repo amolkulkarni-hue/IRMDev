@@ -24,6 +24,13 @@ private class CaseCreationRuleEvaluatorActionTest {
         // via "Update Pricebook On Opportunity" flow — queries this record by name)
         insert new OpportunityProductSelection__c(Name = 'CloudSolutionsProduct',
             Product_Class_Name__c = 'Cloud', Product_Line_Name__c = 'Cloud Solutions');
+        // Required by SVStatus.updateSVStatus (called from OpportunityHelper.OpportunityBeforeUpdate
+        // on OpportunityTrigger.BeforeUpdate whenever Amount/Type/RecordTypeId/StageName changes) —
+        // SVStatus__c.getValues('SVStatusPassed') is dereferenced with no null check, so any real
+        // Opportunity update in a test context throws a NullPointerException without this record.
+        // Leaving OpptType__c/Stage__c/Amount__c blank is safe: the calling code only reads them
+        // inside an `if (OpptType__c != null)` guard.
+        insert new SVStatus__c(Name = 'SVStatusPassed');
 
         Account acc = new Account(
             Name = 'IRM Test Account',
