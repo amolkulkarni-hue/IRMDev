@@ -546,4 +546,108 @@ private class CaseCreationRuleEvaluatorActionTest {
         System.assertEquals(true, results[0].hasMatches,
             'OR-group true (via condition 3) AND condition 4 true — the whole rule should match.');
     }
+
+    // ──────────────────────────────────────────────────────────
+    // Full lifecycle, end to end: an Opportunity update that satisfies a Case_Creation_Rule__c
+    // exercises this org's real automation chain in one pass — Case creation, the intake
+    // Document_Checklist__c, Case_Detail_Auto_Create_Flow's Case_Detail__c, the exit
+    // Document_Checklist__c (Case_Exit_Doc_Checklist_Creation_Flow), and the exit-document
+    // validation that blocks (then allows) closing the Case. No prior test in this class
+    // exercises the actual Case-creation DML path (createEligibleChecklistsAfterSave) — every
+    // other test here only calls the evaluate() invocable and inspects its returned JSON,
+    // without ever creating a real Case.
+    // ──────────────────────────────────────────────────────────
+
+    @IsTest
+    static void testEndToEndCaseLifecycle_CreationThroughExitValidation() {
+        Opportunity opp = getOpp(); // Amount = 500000, StageName = Qualification
+
+        // Rule/conditions/doc-requirements created before any Opportunity DML — see ordering
+        // note on testIsTrueOperator_MatchesRealBooleanField above: this org's live trigger
+        // automation caches the active-rules list on Opportunity save, so it must already
+        // include this rule by the time that save happens.
+        Case_Creation_Rule__c rule = makeRule('Qualification', 'E2E Bid Mgmt Case Type',
+            'Deal_Support', 'Bid_Management_Queue', null);
+        makeCondition(rule.Id, 1, 'Amount', 'GREATER_THAN', '100000');
+        makeDocReq(rule.Id, 'RFP (Request for Proposal)', true, true);
+
+        insert new Case_Exit_Doc_Requirement__c(
+            Case_Record_Type_Dev_Name__c = 'Deal_Support',
+            Case_Type__c = 'E2E Bid Mgmt Case Type',
+            Doc_Category__c = 'RFx & Bid Management',
+            Doc_Type__c = 'Bid Response Package',
+            Is_Active__c = true
+        );
+
+        Test.startTest();
+        // Amount must actually change (not just be re-set to its existing value) — the trigger
+        // gates on hasRelevantFieldChanged, which compares new vs. old field values and would
+        // otherwise skip this Opportunity entirely.
+        update new Opportunity(Id = opp.Id, Amount = 600000);
+        Test.stopTest();
+
+        // 1. Case created (CaseCreationRuleEvaluatorAction.createEligibleChecklistsAfterSave,
+        //    called from OpportunityTriggerHandler.AfterUpdate)
+        List<Case> cases = [SELECT Id, Type, RecordType.DeveloperName, Status
+                             FROM Case WHERE Opportunity__c = :opp.Id];
+        System.assertEquals(1, cases.size(), 'Exactly one Case should be created for the matched rule.');
+        Case c = cases[0];
+        System.assertEquals('E2E Bid Mgmt Case Type', c.Type);
+        System.assertEquals('Deal_Support', c.RecordType.DeveloperName);
+
+        // 2. Intake Document_Checklist__c created from the Case_Creation_Doc_Requirement__c —
+        //    linked to both the Case and the Opportunity (distinguishing it from the exit
+        //    checklist below, which is Case-only). Note: DocumentType__c on this object comes
+        //    back blank on records created by this automation — not something this test
+        //    controls or asserts on, so Doc_Category__c is used instead to confirm identity.
+        List<Document_Checklist__c> intakeDocs = [
+            SELECT Id, Status__c, Doc_Category__c FROM Document_Checklist__c
+            WHERE Case__c = :c.Id AND Opportunity__c = :opp.Id
+        ];
+        System.assertEquals(1, intakeDocs.size(),
+            'The intake doc requirement (RFP) should produce one Draft Document_Checklist__c linked to both the Case and the Opportunity.');
+        System.assertEquals('Draft', intakeDocs[0].Status__c);
+
+        // 3. Case_Detail__c created (Case_Detail_Auto_Create_Flow — Record Create trigger on
+        //    Case, filters on RecordType Name = 'Deal Support' or 'Post Sale Support')
+        List<Case_Detail__c> details = [SELECT Id FROM Case_Detail__c WHERE Case__c = :c.Id];
+        System.assertEquals(1, details.size(),
+            'Case_Detail_Auto_Create_Flow should create exactly one Case_Detail__c for a Deal_Support-record-type Case.');
+
+        // 4. Exit Document_Checklist__c created (Case_Exit_Doc_Checklist_Creation_Flow, keyed by
+        //    the Case's own RecordType + Type — Opportunity__c is left blank on this one, which
+        //    is how it's distinguished from the intake checklist above)
+        List<Document_Checklist__c> exitDocs = [
+            SELECT Id, Status__c FROM Document_Checklist__c
+            WHERE Case__c = :c.Id AND Opportunity__c = null
+        ];
+        System.assertEquals(1, exitDocs.size(),
+            'The exit doc requirement (Bid Response Package) should produce one Draft Document_Checklist__c linked only to the Case.');
+        System.assertEquals('Draft', exitDocs[0].Status__c);
+
+        // 5. Closing the Case is blocked while the exit document is still Draft
+        //    (Case_Exit_Document_Validation_Flow — Before Update, Status -> Closed - Approved).
+        Boolean closeBlocked = false;
+        try {
+            update new Case(Id = c.Id, Status = 'Closed - Approved');
+        } catch (DmlException e) {
+            closeBlocked = true;
+            System.assert(e.getMessage().contains('Status of Final'),
+                'Expected the exit-document validation error, got: ' + e.getMessage());
+        }
+        System.assertEquals(true, closeBlocked,
+            'Closing the Case should be blocked while a required exit document is not yet Final.');
+
+        // 6. Finalize the exit document — Submitted_Date__c is required by a validation rule on
+        //    Document_Checklist__c before Status can become Final — then closing should succeed.
+        Document_Checklist__c exitDoc = exitDocs[0];
+        exitDoc.Status__c = 'Final';
+        exitDoc.Submitted_Date__c = Date.today();
+        update exitDoc;
+
+        update new Case(Id = c.Id, Status = 'Closed - Approved');
+        Case closedCase = [SELECT Status FROM Case WHERE Id = :c.Id];
+        System.assertEquals('Closed - Approved', closedCase.Status,
+            'Closing should succeed once the required exit document is Final.');
+    }
 }
