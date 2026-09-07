@@ -63,11 +63,11 @@ private class CaseFieldMappingDualTargetTest {
 
     @IsTest
     static void testMappingTargetingCaseStillWorks() {
-        // Confirms the existing, already-working Case-target behavior is untouched. Note this
-        // relies on Case.Sales_Billing_Estimate__c, which per the migration design should have
-        // been deleted from Case once Case_Detail__c's copy went live — it hasn't been yet
-        // (see CaseDetailAutoCreationTest.testMigratedFieldsShouldNoLongerExistOnCase). Update
-        // this test's target field once that cleanup lands.
+        // Confirms the existing, already-working Case-target behavior is untouched.
+        // Sales_Billing_Estimate__c was migrated off Case entirely (the field-deletion cleanup
+        // this test class originally flagged as pending has since landed), so this uses
+        // Annual_Revenue__c — an unrelated, still-live Case currency field — purely as a target
+        // to prove Target_Object__c = 'Case' routing still works.
         Contact con = [SELECT Id, AccountId FROM Contact LIMIT 1];
         Opportunity opp = new Opportunity(
             Name = 'DualTargetE2E Opp Case-target', AccountId = con.AccountId, StageName = 'Qualification',
@@ -79,7 +79,7 @@ private class CaseFieldMappingDualTargetTest {
             Source_Object__c = 'Opportunity',
             Source_Field_Path__c = 'Amount',
             Target_Object__c = 'Case',
-            Target_Field_API_Name__c = 'Sales_Billing_Estimate__c',
+            Target_Field_API_Name__c = 'Annual_Revenue__c',
             Is_Active__c = true
         );
 
@@ -96,8 +96,8 @@ private class CaseFieldMappingDualTargetTest {
         CaseFieldMappingEngine.applyMappings(new List<CaseFieldMappingEngine.Request>{ req });
         Test.stopTest();
 
-        Case caseAfter = [SELECT Sales_Billing_Estimate__c FROM Case WHERE Id = :c.Id];
-        System.assertEquals(77000, caseAfter.Sales_Billing_Estimate__c,
+        Case caseAfter = [SELECT Annual_Revenue__c FROM Case WHERE Id = :c.Id];
+        System.assertEquals(77000, caseAfter.Annual_Revenue__c,
             'A Case_Field_Mapping__c row with Target_Object__c = Case should continue to write onto the Case itself.');
     }
 }
