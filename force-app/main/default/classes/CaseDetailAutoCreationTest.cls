@@ -3,6 +3,10 @@ private class CaseDetailAutoCreationTest {
 
     @TestSetup
     static void setup() {
+        // Required by OpportunityHelper.createOpportunityShare — see CaseCreationEndToEndTest
+        // for the full explanation of why every Opportunity-inserting test needs this.
+        insert new Country_Settings__c(Name = 'United States', Object_Name__c = 'Opportunity', SetupOwnerId = UserInfo.getOrganizationId());
+
         Account acc = new Account(Name = 'CaseDetailAutoCreate Test Account');
         insert acc;
         insert new Contact(LastName = 'CaseDetailAutoCreate', AccountId = acc.Id);

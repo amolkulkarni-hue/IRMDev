@@ -12,6 +12,14 @@ private class CaseCreationEndToEndTest {
 
     @TestSetup
     static void setup() {
+        // Required by OpportunityHelper.createOpportunityShare, which every Opportunity
+        // insert/update triggers: it queries Country_Settings__c.getAll() to build a dynamic
+        // SOQL IN() clause. Custom Setting data isn't inherited from the org in test context,
+        // so without this the clause renders as "IN ()" (invalid SOQL) and blocks every
+        // Opportunity DML in this test with a generic addError. Same fix already used by
+        // CaseCreationRuleEvaluatorActionTest.cls.
+        insert new Country_Settings__c(Name = 'United States', Object_Name__c = 'Opportunity', SetupOwnerId = UserInfo.getOrganizationId());
+
         Account acc = new Account(Name = 'CaseCreationE2E Test Account');
         insert acc;
 
