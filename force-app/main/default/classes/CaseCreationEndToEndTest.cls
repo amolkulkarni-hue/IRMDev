@@ -109,8 +109,13 @@ private class CaseCreationEndToEndTest {
         Case_Detail__c detail = [SELECT Id, Case__c FROM Case_Detail__c WHERE Case__c = :createdCase.Id];
 
         // Step 5: mark every checklist item Final — Case_Creation_Trigger_Flow should flip
-        // Case.All_Start_Docs_Final__c to true once none remain non-Final.
-        for (Document_Checklist__c dc : checklists) dc.Status__c = 'Final';
+        // Case.All_Start_Docs_Final__c to true once none remain non-Final. A validation rule
+        // requires Submitted_Date__c before a document can go Final, matching the real-world
+        // "upload the document" step in the manual walkthrough.
+        for (Document_Checklist__c dc : checklists) {
+            dc.Status__c = 'Final';
+            dc.Submitted_Date__c = Date.today();
+        }
         update checklists;
         Case afterDocs = [SELECT All_Start_Docs_Final__c FROM Case WHERE Id = :createdCase.Id];
         System.assertEquals(true, afterDocs.All_Start_Docs_Final__c,
