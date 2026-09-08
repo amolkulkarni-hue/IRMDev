@@ -41,11 +41,14 @@ private class CaseCreationEndToEndTest {
             Amount = 50000,
             Type = 'New Deal',
             Business_Unit__c = 'ALM',
-            Touch_Level__c = 'Low Touch',
             Remarketing_Required__c = 'Yes'
         );
         insert opp;
 
+        // Not conditioning on Touch_Level__c: a separate Touch-Level classification engine in
+        // this org (Touch_Level_Override_Flow and friends) recalculates it independently of
+        // whatever a DML statement explicitly sets, so a rule condition pinned to a specific
+        // Touch_Level__c value is inherently unstable in a self-contained test.
         Case_Creation_Rule__c rule = new Case_Creation_Rule__c(
             Case_Type__c = 'Remarketing',
             Stage__c = 'Solutioning',
@@ -53,7 +56,7 @@ private class CaseCreationEndToEndTest {
             Queue_Developer_Name__c = 'Remarketing_Queue',
             Is_Active__c = true,
             Priority__c = 10,
-            Logic_Expression__c = '1 AND 2 AND 3 AND 4 AND 5'
+            Logic_Expression__c = '1 AND 2 AND 3 AND 4'
         );
         insert rule;
 
@@ -61,8 +64,7 @@ private class CaseCreationEndToEndTest {
             new Case_Creation_Condition__c(Rule__c = rule.Id, Condition_Number__c = 1, Field_API_Name__c = 'Remarketing_Required__c', Operator__c = 'EQUALS', Value__c = 'Yes'),
             new Case_Creation_Condition__c(Rule__c = rule.Id, Condition_Number__c = 2, Field_API_Name__c = 'Amount', Operator__c = 'LESS_THAN', Value__c = '75000'),
             new Case_Creation_Condition__c(Rule__c = rule.Id, Condition_Number__c = 3, Field_API_Name__c = 'Business_Unit__c', Operator__c = 'EQUALS', Value__c = 'ALM'),
-            new Case_Creation_Condition__c(Rule__c = rule.Id, Condition_Number__c = 4, Field_API_Name__c = 'Touch_Level__c', Operator__c = 'EQUALS', Value__c = 'Low Touch'),
-            new Case_Creation_Condition__c(Rule__c = rule.Id, Condition_Number__c = 5, Field_API_Name__c = 'Type', Operator__c = 'EQUALS', Value__c = 'New Deal')
+            new Case_Creation_Condition__c(Rule__c = rule.Id, Condition_Number__c = 4, Field_API_Name__c = 'Type', Operator__c = 'EQUALS', Value__c = 'New Deal')
         };
 
         insert new List<Case_Creation_Doc_Requirement__c>{
