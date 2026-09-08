@@ -6,6 +6,8 @@ private class CaseDetailAutoCreationTest {
         // Required by OpportunityHelper.createOpportunityShare — see CaseCreationEndToEndTest
         // for the full explanation of why every Opportunity-inserting test needs this.
         insert new Country_Settings__c(Name = 'United States', Object_Name__c = 'Opportunity', SetupOwnerId = UserInfo.getOrganizationId());
+        // See CaseCreationEndToEndTest for why this second seed row is also required.
+        insert new OpportunityProductSelection__c(Name = 'CloudSolutionsProduct', Product_Class_Name__c = 'Cloud Solutions', Product_Line_Name__c = 'Cloud Solutions');
 
         Account acc = new Account(Name = 'CaseDetailAutoCreate Test Account');
         insert acc;

@@ -19,6 +19,11 @@ private class CaseCreationEndToEndTest {
         // Opportunity DML in this test with a generic addError. Same fix already used by
         // CaseCreationRuleEvaluatorActionTest.cls.
         insert new Country_Settings__c(Name = 'United States', Object_Name__c = 'Opportunity', SetupOwnerId = UserInfo.getOrganizationId());
+        // OppPartnerAction has a class-level static SOQL (no LIMIT) for a row named
+        // 'CloudSolutionsProduct' — it runs on class init, which any Opportunity trigger
+        // execution forces. With zero rows in test context this throws "List has no rows for
+        // assignment to SObject" before any Opportunity DML in this test can even run.
+        insert new OpportunityProductSelection__c(Name = 'CloudSolutionsProduct', Product_Class_Name__c = 'Cloud Solutions', Product_Line_Name__c = 'Cloud Solutions');
 
         Account acc = new Account(Name = 'CaseCreationE2E Test Account');
         insert acc;
