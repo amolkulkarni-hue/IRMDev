@@ -45,7 +45,7 @@ private class CaseOwnershipAndSubmitFlowTest {
             CloseDate = Date.today().addDays(30), Amount = 250000, OwnerId = UserInfo.getUserId()
         );
         insert opp;
-        makeUnconditionalRule('Solution_Specialist_Queue');
+        makeUnconditionalRule('Remarketing_Queue');
 
         Test.startTest();
         CaseCreationRuleEvaluatorAction.createEligibleChecklistsAfterSave(new List<Opportunity>{ opp }, null);
@@ -59,10 +59,10 @@ private class CaseOwnershipAndSubmitFlowTest {
 
     @IsTest
     static void testSubmitToSupportFlowReassignsOwnerAndSetsSubmittedFlagWithoutTouchingStatus() {
-        Group queue = [SELECT Id FROM Group WHERE DeveloperName = 'Solution_Specialist_Queue' AND Type = 'Queue' LIMIT 1];
+        Group queue = [SELECT Id FROM Group WHERE DeveloperName = 'Remarketing_Queue' AND Type = 'Queue' LIMIT 1];
         Contact con = [SELECT Id FROM Contact LIMIT 1];
 
-        Case_Creation_Rule__c rule = makeUnconditionalRule('Solution_Specialist_Queue');
+        Case_Creation_Rule__c rule = makeUnconditionalRule('Remarketing_Queue');
         Case c = new Case(
             RecordTypeId = dealSupportRTId(),
             Type = 'Remarketing',

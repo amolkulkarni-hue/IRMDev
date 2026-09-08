@@ -24,6 +24,11 @@ private class CaseCreationEndToEndTest {
         // execution forces. With zero rows in test context this throws "List has no rows for
         // assignment to SObject" before any Opportunity DML in this test can even run.
         insert new OpportunityProductSelection__c(Name = 'CloudSolutionsProduct', Product_Class_Name__c = 'Cloud Solutions', Product_Line_Name__c = 'Cloud Solutions');
+        // SVStatus.updateSVStatus (fires on Opportunity Amount/Type/RecordType/Stage change)
+        // does SVStatus__c.getValues('SVStatusPassed') with no null guard — without this row it
+        // NPEs on the StageName update this test performs. Only this test class needs it, since
+        // it's the only one that updates an Opportunity's Stage after insert.
+        insert new SVStatus__c(Name = 'SVStatusPassed', OpptType__c = 'New Deal', Stage__c = 'Solutioning', Amount__c = 0);
 
         Account acc = new Account(Name = 'CaseCreationE2E Test Account');
         insert acc;
