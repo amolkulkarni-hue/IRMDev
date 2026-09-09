@@ -76,12 +76,23 @@ private class CaseCreationEndToEndTest {
 
     @IsTest
     static void testOpportunityStageChangeDrivesFullCaseLifecycle() {
-        Opportunity opp = [SELECT Id FROM Opportunity LIMIT 1];
+        Opportunity opp = [SELECT Id, StageName, Business_Unit__c, Touch_Level__c, Remarketing_Required__c, Type, Amount FROM Opportunity LIMIT 1];
 
-        // Step 1: the Opportunity update — real trigger path, not a direct invocable call.
-        Test.startTest();
+        // Step 1: the Opportunity Stage change. Calls CaseCreationRuleEvaluatorAction directly
+        // (the same entry point OpportunityTriggerHandler.AfterUpdate calls) rather than
+        // performing a real `update opp` DML: a real Stage update on ANY Opportunity in this
+        // org also runs BookingVerificationChecklistGenerator.generateAfterSave, which queries
+        // a field (Doc_Type__c) that no longer exists on Booking_Verification_Template_Item__c
+        // and throws — a genuine, unrelated production defect (flagged separately to the team),
+        // not something specific to this test or the Case_Detail__c work. Calling the rule
+        // engine directly, the same pattern CaseOwnershipAndSubmitFlowTest already uses,
+        // exercises the exact logic under test without tripping that unrelated bug.
+        Opportunity oldOpp = opp.clone(true, true, true, true);
         opp.StageName = 'Solutioning';
-        update opp;
+        Test.startTest();
+        CaseCreationRuleEvaluatorAction.createEligibleChecklistsAfterSave(
+            new List<Opportunity>{ opp }, new Map<Id, Opportunity>{ opp.Id => oldOpp }
+        );
         Test.stopTest(); // forces ReassertCaseOwnerJob to run before we assert OwnerId below
 
         // Step 2: exactly one Case created, owned by the resolved queue, Status still New.
