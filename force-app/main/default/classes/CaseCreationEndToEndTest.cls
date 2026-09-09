@@ -76,7 +76,7 @@ private class CaseCreationEndToEndTest {
 
     @IsTest
     static void testOpportunityStageChangeDrivesFullCaseLifecycle() {
-        Opportunity opp = [SELECT Id, AccountId, StageName, Business_Unit__c, Touch_Level__c, Remarketing_Required__c, Type, Amount FROM Opportunity LIMIT 1];
+        Opportunity opp = [SELECT Id, AccountId, OwnerId, StageName, Business_Unit__c, Touch_Level__c, Remarketing_Required__c, Type, Amount FROM Opportunity LIMIT 1];
 
         // Step 1: the Opportunity Stage change. Calls CaseCreationRuleEvaluatorAction directly
         // (the same entry point OpportunityTriggerHandler.AfterUpdate calls) rather than
