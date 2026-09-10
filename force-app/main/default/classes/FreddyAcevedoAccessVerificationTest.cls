@@ -164,9 +164,19 @@ private class FreddyAcevedoAccessVerificationTest {
         }
         System.debug('###STEP6_CAN_CLOSE_CASE: ok=' + step6Ok + ' err=' + step6Error);
 
-        // No hard assertions — this test exists to surface Freddy's real access gaps via debug
-        // log output, not to pass/fail the build. Assert only on the parts that must always be
-        // true regardless of Freddy's permissions, so a real regression still fails the build.
-        System.assertNotEquals(null, caseId, 'Sanity check: the automation itself must still create the Case regardless of Freddy\'s permissions.');
+        // Dump every step's result into the assertion message itself so the full picture shows
+        // up directly in the deploy/test report, without needing to pull debug logs separately.
+        String report = '\n1) Opportunity Stage change: ' + (step1Ok ? 'OK' : 'BLOCKED — ' + step1Error)
+            + '\n2) System-context Case created: ' + (caseId != null ? 'YES (' + caseId + ')' : 'NO')
+            + '\n3) Freddy can see the Case: ' + (step2Ok ? 'OK' : 'BLOCKED — ' + step2Error)
+            + '\n4) Freddy can see the Case_Detail__c child: ' + (step3Ok ? 'OK' : 'BLOCKED — ' + step3Error)
+            + '\n5) Freddy can edit Case_Detail__c Remarketing fields: ' + (step4Ok ? 'OK' : 'BLOCKED — ' + step4Error)
+            + '\n6) Freddy can see/finalize Document Checklists (visible count=' + docsVisibleToFreddy + '): ' + (step5Ok ? 'OK' : 'BLOCKED — ' + step5Error)
+            + '\n7) Freddy can close the Case as Approved: ' + (step6Ok ? 'OK' : 'BLOCKED — ' + step6Error);
+
+        System.assert(
+            step1Ok && caseId != null && step2Ok && step3Ok && step4Ok && step5Ok && step6Ok,
+            'FREDDY ACCESS REPORT (fails intentionally if any step is blocked, so results are visible here):' + report
+        );
     }
 }
