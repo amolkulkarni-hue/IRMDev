@@ -63,6 +63,17 @@ private class FreddyAcevedoAccessVerificationTest {
         System.debug('###STEP1_OPP_STAGE_CHANGE: ok=' + step1Ok + ' err=' + step1Error);
 
         // Step 2: can Freddy even SEE the Case the automation created?
+        List<Case> anyCasesForOpp = [SELECT Id, Type FROM Case WHERE Opportunity__c = :opp.Id];
+        System.debug('###ANY_CASE_COUNT_FOR_OPP: ' + anyCasesForOpp.size());
+        for (Case c : anyCasesForOpp) System.debug('###ANY_CASE: Type=' + c.Type);
+
+        CaseCreationRuleEvaluatorAction.Request evalReq = new CaseCreationRuleEvaluatorAction.Request();
+        evalReq.opportunityId = opp.Id;
+        List<CaseCreationRuleEvaluatorAction.Result> evalResults = CaseCreationRuleEvaluatorAction.evaluate(new List<CaseCreationRuleEvaluatorAction.Request>{ evalReq });
+        for (CaseCreationRuleEvaluatorAction.Result r : evalResults) {
+            System.debug('###RULE_EVAL: hasMatches=' + r.hasMatches + ' count=' + r.matchedRuleCount + ' json=' + r.matchedRulesJson);
+        }
+
         List<Case> createdCases = [SELECT Id, Type FROM Case WHERE Opportunity__c = :opp.Id AND Type = 'Remarketing'];
         System.debug('###SYSTEM_CONTEXT_CASE_COUNT: ' + createdCases.size());
         Id caseId = createdCases.isEmpty() ? null : createdCases[0].Id;
@@ -167,7 +178,9 @@ private class FreddyAcevedoAccessVerificationTest {
         // Dump every step's result into the assertion message itself so the full picture shows
         // up directly in the deploy/test report, without needing to pull debug logs separately.
         String report = '\n1) Opportunity Stage change: ' + (step1Ok ? 'OK' : 'BLOCKED — ' + step1Error)
-            + '\n2) System-context Case created: ' + (caseId != null ? 'YES (' + caseId + ')' : 'NO')
+            + '\n1b) Any Case at all for this Opportunity: ' + anyCasesForOpp.size()
+            + '\n1c) Rule evaluate() match count: ' + (evalResults.isEmpty() ? 'n/a' : evalResults[0].matchedRuleCount + ' :: ' + evalResults[0].matchedRulesJson)
+            + '\n2) System-context Remarketing Case created: ' + (caseId != null ? 'YES (' + caseId + ')' : 'NO')
             + '\n3) Freddy can see the Case: ' + (step2Ok ? 'OK' : 'BLOCKED — ' + step2Error)
             + '\n4) Freddy can see the Case_Detail__c child: ' + (step3Ok ? 'OK' : 'BLOCKED — ' + step3Error)
             + '\n5) Freddy can edit Case_Detail__c Remarketing fields: ' + (step4Ok ? 'OK' : 'BLOCKED — ' + step4Error)
