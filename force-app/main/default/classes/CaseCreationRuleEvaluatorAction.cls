@@ -1,5 +1,13 @@
 public with sharing class CaseCreationRuleEvaluatorAction {
 
+    // Per-transaction cache for queryActiveRules(). Case Creation eligibility is
+    // deliberately re-entered on every genuine AfterUpdate (see OpportunityTriggerHandler),
+    // including the recursive pass triggered by PrimaryBURecalcAction's Opportunity update.
+    // The active-rules reference data can't change mid-transaction, so cache it once here
+    // instead of re-querying it on every re-entry. Reset automatically at the start of each
+    // new transaction because static state does not survive across transactions.
+    private static List<Case_Creation_Rule__c> cachedActiveRules;
+
     public class Request {
         @InvocableVariable(label='Opportunity Id' required=true)
         public Id opportunityId;
@@ -160,7 +168,7 @@ public with sharing class CaseCreationRuleEvaluatorAction {
         Map<String, List<Case_Creation_Rule__c>> rulesByStage = groupByStage(allRules);
         Set<String> watchedAccountFields = deriveWatchedAccountFields(allRules);
 
-        Set<String> oppSelectFields = new Set<String>{ 'Id', 'AccountId', 'StageName', 'OwnerId', 'Touch_Level__c' };
+        Set<String> oppSelectFields = new Set<String>{ 'Id', 'Name', 'AccountId', 'StageName', 'OwnerId', 'Touch_Level__c' };
         oppSelectFields.addAll(deriveWatchedOpportunityFields(allRules));
         String oppSoql = 'SELECT ' + String.join(new List<String>(oppSelectFields), ', ')
             + ' FROM Opportunity WHERE AccountId IN :accountIds AND IsClosed = false';
@@ -392,6 +400,7 @@ public with sharing class CaseCreationRuleEvaluatorAction {
                 Opportunity__c          = opp.Id,
                 Case_Creation_Rule__c   = rule.Id,
                 Type                    = rule.Case_Type__c,
+                Subject                 = rule.Case_Type__c + ' — ' + opp.Name,
                 Origin                  = 'Opportunity Workflow',
                 Status                  = 'New',
                 Opportunity_Touch_Level__c = opp.Touch_Level__c
@@ -566,6 +575,9 @@ public with sharing class CaseCreationRuleEvaluatorAction {
     }
 
     private static List<Case_Creation_Rule__c> queryActiveRules() {
+        if (cachedActiveRules != null) {
+            return cachedActiveRules;
+        }
         // Dynamic SOQL — bypasses compile-time relationship name check so objects and
         // Apex can deploy in a single package before the schema is registered.
         String soql =
@@ -578,7 +590,8 @@ public with sharing class CaseCreationRuleEvaluatorAction {
             'FROM Case_Creation_Rule__c ' +
             'WHERE Is_Active__c = true ' +
             'ORDER BY Stage__c ASC, Priority__c ASC NULLS LAST';
-        return Database.query(soql);
+        cachedActiveRules = Database.query(soql);
+        return cachedActiveRules;
     }
 
     private static Map<String, List<Case_Creation_Rule__c>> groupByStage(List<Case_Creation_Rule__c> allRules) {
