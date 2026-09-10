@@ -114,7 +114,7 @@ private class IRM_CaseCompletionTest {
         Test.startTest();
         insert new Document_Checklist__c(
             Case__c = c.Id, Status__c = 'Draft',
-            Document_Category__c = 'Scoping & Technical'
+            Doc_Category__c = 'Scoping & Technical'
         );
         Test.stopTest();
 
@@ -138,7 +138,7 @@ private class IRM_CaseCompletionTest {
         // Insert a Draft doc: Sync flow → All_Exit_Docs_Final__c=false → Completion flow → Pct=90
         Document_Checklist__c doc = new Document_Checklist__c(
             Case__c = c.Id, Status__c = 'Draft',
-            Document_Category__c = 'Scoping & Technical'
+            Doc_Category__c = 'Scoping & Technical'
         );
         insert doc;
 
@@ -188,7 +188,7 @@ private class IRM_CaseCompletionTest {
         Test.startTest();
         insert new Document_Checklist__c(
             Case__c = c.Id, Status__c = 'Draft',
-            Document_Category__c = 'Scoping & Technical'
+            Doc_Category__c = 'Scoping & Technical'
         );
         Test.stopTest();
 

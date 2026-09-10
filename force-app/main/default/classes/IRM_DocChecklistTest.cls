@@ -67,8 +67,8 @@ private class IRM_DocChecklistTest {
             Field_API_Name__c = 'Amount', Operator__c = 'GREATER_OR_EQUAL', Value__c = '500000'
         );
         insert new Case_Creation_Doc_Requirement__c(
-            Rule__c = rule.Id, Document_Type__c = 'Business Problem Statement',
-            Document_Category__c = 'Scoping and Technical Documents',
+            Rule__c = rule.Id, Doc_Type__c = 'Business Problem Statement',
+            Doc_Category__c = 'Scoping & Technical',
             Is_Required_To_Start__c = true, Is_Required_For_Case__c = true
         );
     }
@@ -100,7 +100,7 @@ private class IRM_DocChecklistTest {
         Id oppId = [SELECT Id FROM Opportunity LIMIT 1].Id;
         Test.startTest();
         Document_Checklist__c doc = new Document_Checklist__c(
-            Opportunity__c = oppId, Case_Creation_Rule__c = rule.Id, Status__c = 'Draft', Document_Category__c = 'Scoping & Technical'
+            Opportunity__c = oppId, Case_Creation_Rule__c = rule.Id, Status__c = 'Draft', Doc_Category__c = 'Scoping & Technical'
         );
         insert doc;
         Test.stopTest();
@@ -115,7 +115,7 @@ private class IRM_DocChecklistTest {
         Case_Creation_Rule__c rule = getRule();
         Id oppId = [SELECT Id FROM Opportunity LIMIT 1].Id;
         Document_Checklist__c doc = new Document_Checklist__c(
-            Opportunity__c = oppId, Case_Creation_Rule__c = rule.Id, Status__c = 'Draft', Document_Category__c = 'Scoping & Technical'
+            Opportunity__c = oppId, Case_Creation_Rule__c = rule.Id, Status__c = 'Draft', Doc_Category__c = 'Scoping & Technical'
         );
         insert doc;
 
@@ -135,7 +135,7 @@ private class IRM_DocChecklistTest {
         Case_Creation_Rule__c rule = getRule();
         Id oppId = [SELECT Id FROM Opportunity LIMIT 1].Id;
         Document_Checklist__c doc = new Document_Checklist__c(
-            Opportunity__c = oppId, Case_Creation_Rule__c = rule.Id, Status__c = 'Draft', Document_Category__c = 'Scoping & Technical'
+            Opportunity__c = oppId, Case_Creation_Rule__c = rule.Id, Status__c = 'Draft', Doc_Category__c = 'Scoping & Technical'
         );
         insert doc;
 
@@ -219,8 +219,8 @@ private class IRM_DocChecklistTest {
         Case_Creation_Rule__c rule = getRule();
         // Second required-for-case doc on the same rule
         insert new Case_Creation_Doc_Requirement__c(
-            Rule__c = rule.Id, Document_Type__c = 'Technical Scoping Form',
-            Document_Category__c = 'Scoping and Technical Documents',
+            Rule__c = rule.Id, Doc_Type__c = 'Technical Scoping Form',
+            Doc_Category__c = 'Scoping & Technical',
             Is_Required_To_Start__c = false, Is_Required_For_Case__c = true
         );
 
@@ -254,8 +254,8 @@ private class IRM_DocChecklistTest {
         insert new Case_Exit_Doc_Requirement__c(
             Case_Record_Type_Dev_Name__c = 'Deal_Support',
             Case_Type__c                 = 'SA Assignment',
-            Document_Category__c         = 'Scoping & Technical',
-            Document_Type__c             = 'Technical Scoping Form',
+            Doc_Category__c               = 'Scoping & Technical',
+            Doc_Type__c                   = 'Technical Scoping Form',
             Is_Active__c                 = true
         );
 
@@ -286,7 +286,7 @@ private class IRM_DocChecklistTest {
         Case_Creation_Rule__c rule = getRule();
         Id oppId = [SELECT Id FROM Opportunity LIMIT 1].Id;
         Document_Checklist__c doc = new Document_Checklist__c(
-            Opportunity__c = oppId, Case_Creation_Rule__c = rule.Id, Status__c = 'Draft', Document_Category__c = 'Scoping & Technical'
+            Opportunity__c = oppId, Case_Creation_Rule__c = rule.Id, Status__c = 'Draft', Doc_Category__c = 'Scoping & Technical'
         );
         insert doc;
 
@@ -307,7 +307,7 @@ private class IRM_DocChecklistTest {
         Case_Creation_Rule__c rule = getRule();
         Id oppId = [SELECT Id FROM Opportunity LIMIT 1].Id;
         Document_Checklist__c doc = new Document_Checklist__c(
-            Opportunity__c = oppId, Case_Creation_Rule__c = rule.Id, Status__c = 'Draft', Document_Category__c = 'Scoping & Technical'
+            Opportunity__c = oppId, Case_Creation_Rule__c = rule.Id, Status__c = 'Draft', Doc_Category__c = 'Scoping & Technical'
         );
         insert doc;
 
@@ -328,7 +328,7 @@ private class IRM_DocChecklistTest {
         Case_Creation_Rule__c rule = getRule();
         Id oppId = [SELECT Id FROM Opportunity LIMIT 1].Id;
         Document_Checklist__c doc = new Document_Checklist__c(
-            Opportunity__c = oppId, Case_Creation_Rule__c = rule.Id, Status__c = 'Draft', Document_Category__c = 'Scoping & Technical'
+            Opportunity__c = oppId, Case_Creation_Rule__c = rule.Id, Status__c = 'Draft', Doc_Category__c = 'Scoping & Technical'
         );
         insert doc;
 
