@@ -322,7 +322,8 @@ public with sharing class CaseCreationRuleEvaluatorAction {
                     Case_Creation_Rule__c  = rule.Id,
                     Doc_Type__c            = (String) dr.get('Doc_Type__c'),
                     Doc_Category__c        = (String) dr.get('Doc_Category__c'),
-                    Status__c              = 'Draft'
+                    Status__c              = 'Draft',
+                    Case_Type_Context__c   = 'Sales' // seller-facing intake doc, as distinct from a support-facing exit doc (see Case_Exit_Doc_Checklist_Creation_Flow)
                 );
                 if (caseId != null) dc.Case__c = caseId;
                 checklistCandidates.add(dc);
