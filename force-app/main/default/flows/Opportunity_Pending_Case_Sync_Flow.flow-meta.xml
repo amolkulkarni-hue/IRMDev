@@ -33,6 +33,22 @@
             <targetReference>Loop_Open_Cases</targetReference>
         </connector>
     </assignments>
+    <assignments>
+        <name>Set_Opportunity_Count</name>
+        <label>Set Opportunity Count</label>
+        <locationX>176</locationX>
+        <locationY>480</locationY>
+        <assignmentItems>
+            <assignToReference>varOpportunityToUpdate.Open_Cases_Pending_Seller_Action__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>varOpenCaseCount</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_Opportunity_Count</targetReference>
+        </connector>
+    </assignments>
     <description>Record-Triggered Flow on Case (After Save, Create and Update), scoped to Cases linked to an Opportunity. Recomputes Opportunity.Open_Cases_Pending_Seller_Action__c as the count of open Cases on that Opportunity not yet Submitted_To_Support__c = true, so the seller sees at a glance, from the Opportunity itself, how many Cases still need their attention (whether that's Case Detail fields, intake documents, or a fully-ready Case just waiting on the Submit to Support click).</description>
     <environments>Default</environments>
     <interviewLabel>Opportunity Pending Case Sync Flow {!$Flow.CurrentDateTime}</interviewLabel>
@@ -48,7 +64,7 @@
             <targetReference>Increment_Count</targetReference>
         </nextValueConnector>
         <noMoreValuesConnector>
-            <targetReference>Update_Opportunity_Count</targetReference>
+            <targetReference>Set_Opportunity_Count</targetReference>
         </noMoreValuesConnector>
     </loops>
     <processType>AutoLaunchedFlow</processType>
@@ -91,13 +107,7 @@
         <name>Update_Opportunity_Count</name>
         <label>Update Opportunity Count</label>
         <locationX>176</locationX>
-        <locationY>480</locationY>
-        <inputAssignments>
-            <field>Open_Cases_Pending_Seller_Action__c</field>
-            <value>
-                <elementReference>varOpenCaseCount</elementReference>
-            </value>
-        </inputAssignments>
+        <locationY>540</locationY>
         <inputReference>varOpportunityToUpdate</inputReference>
     </recordUpdates>
     <start>
