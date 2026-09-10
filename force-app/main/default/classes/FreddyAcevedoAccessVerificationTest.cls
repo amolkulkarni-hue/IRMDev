@@ -167,6 +167,6 @@ private class FreddyAcevedoAccessVerificationTest {
         // No hard assertions — this test exists to surface Freddy's real access gaps via debug
         // log output, not to pass/fail the build. Assert only on the parts that must always be
         // true regardless of Freddy's permissions, so a real regression still fails the build.
-        System.assertNotEquals(null, caseId, 'Sanity check: the automation itself must still create the Case regardless of Freddy''s permissions.');
+        System.assertNotEquals(null, caseId, 'Sanity check: the automation itself must still create the Case regardless of Freddy\'s permissions.');
     }
 }
