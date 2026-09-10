@@ -71,6 +71,12 @@ private class FreddyAcevedoAccessVerificationTest {
         System.debug('###ANY_CASE_COUNT_FOR_OPP: ' + anyCasesForOpp.size());
         for (Case c : anyCasesForOpp) System.debug('###ANY_CASE: Type=' + c.Type);
 
+        List<Case_Creation_Rule__c> ruleCheck = [SELECT Id, Stage__c, Is_Active__c, Case_Type__c FROM Case_Creation_Rule__c WHERE Id = :rule.Id];
+        System.debug('###RULE_ROW_CHECK: count=' + ruleCheck.size() + (ruleCheck.isEmpty() ? '' : ' stage=' + ruleCheck[0].Stage__c + ' active=' + ruleCheck[0].Is_Active__c + ' type=' + ruleCheck[0].Case_Type__c));
+        List<Case_Creation_Condition__c> condCheck = [SELECT Field_API_Name__c, Operator__c, Value__c FROM Case_Creation_Condition__c WHERE Rule__c = :rule.Id];
+        System.debug('###COND_ROW_CHECK: count=' + condCheck.size());
+        for (Case_Creation_Condition__c cc : condCheck) System.debug('###COND: ' + cc.Field_API_Name__c + ' ' + cc.Operator__c + ' ' + cc.Value__c);
+
         CaseCreationRuleEvaluatorAction.Request evalReq = new CaseCreationRuleEvaluatorAction.Request();
         evalReq.opportunityId = opp.Id;
         List<CaseCreationRuleEvaluatorAction.Result> evalResults = CaseCreationRuleEvaluatorAction.evaluate(new List<CaseCreationRuleEvaluatorAction.Request>{ evalReq });
@@ -186,6 +192,8 @@ private class FreddyAcevedoAccessVerificationTest {
                 + ' type=' + oppPostUpdate.Type + ' remarketingReq=' + oppPostUpdate.Remarketing_Required__c + ' amount=' + oppPostUpdate.Amount
             + '\n1b) Any Case at all for this Opportunity: ' + anyCasesForOpp.size()
             + '\n1c) Rule evaluate() match count: ' + (evalResults.isEmpty() ? 'n/a' : evalResults[0].matchedRuleCount + ' :: ' + evalResults[0].matchedRulesJson)
+            + '\n1d) Rule row: ' + ruleCheck.size() + (ruleCheck.isEmpty() ? '' : ' stage=' + ruleCheck[0].Stage__c + ' active=' + ruleCheck[0].Is_Active__c + ' type=' + ruleCheck[0].Case_Type__c)
+            + '\n1e) Condition rows: ' + condCheck.size() + ' :: ' + JSON.serialize(condCheck)
             + '\n2) System-context Remarketing Case created: ' + (caseId != null ? 'YES (' + caseId + ')' : 'NO')
             + '\n3) Freddy can see the Case: ' + (step2Ok ? 'OK' : 'BLOCKED — ' + step2Error)
             + '\n4) Freddy can see the Case_Detail__c child: ' + (step3Ok ? 'OK' : 'BLOCKED — ' + step3Error)
