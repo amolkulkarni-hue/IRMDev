@@ -62,6 +62,10 @@ private class FreddyAcevedoAccessVerificationTest {
         }
         System.debug('###STEP1_OPP_STAGE_CHANGE: ok=' + step1Ok + ' err=' + step1Error);
 
+        Opportunity oppPostUpdate = [SELECT StageName, Business_Unit__c, Type, Remarketing_Required__c, Amount FROM Opportunity WHERE Id = :opp.Id];
+        System.debug('###OPP_POST_UPDATE_STATE: stage=' + oppPostUpdate.StageName + ' bu=' + oppPostUpdate.Business_Unit__c
+            + ' type=' + oppPostUpdate.Type + ' remarketingReq=' + oppPostUpdate.Remarketing_Required__c + ' amount=' + oppPostUpdate.Amount);
+
         // Step 2: can Freddy even SEE the Case the automation created?
         List<Case> anyCasesForOpp = [SELECT Id, Type FROM Case WHERE Opportunity__c = :opp.Id];
         System.debug('###ANY_CASE_COUNT_FOR_OPP: ' + anyCasesForOpp.size());
@@ -178,6 +182,8 @@ private class FreddyAcevedoAccessVerificationTest {
         // Dump every step's result into the assertion message itself so the full picture shows
         // up directly in the deploy/test report, without needing to pull debug logs separately.
         String report = '\n1) Opportunity Stage change: ' + (step1Ok ? 'OK' : 'BLOCKED — ' + step1Error)
+            + '\n1a) Post-update field state: stage=' + oppPostUpdate.StageName + ' bu=' + oppPostUpdate.Business_Unit__c
+                + ' type=' + oppPostUpdate.Type + ' remarketingReq=' + oppPostUpdate.Remarketing_Required__c + ' amount=' + oppPostUpdate.Amount
             + '\n1b) Any Case at all for this Opportunity: ' + anyCasesForOpp.size()
             + '\n1c) Rule evaluate() match count: ' + (evalResults.isEmpty() ? 'n/a' : evalResults[0].matchedRuleCount + ' :: ' + evalResults[0].matchedRulesJson)
             + '\n2) System-context Remarketing Case created: ' + (caseId != null ? 'YES (' + caseId + ')' : 'NO')
