@@ -206,37 +206,66 @@ List<Case_Field_Mapping__c> mappings = new List<Case_Field_Mapping__c>{
     ),
 
     // ── B2B Implementation (Record Type-scoped, blank Case Type) ──
+    // 2026-09-17: redirected all 3 to Target_Object__c = 'Case_Detail__c' with the real
+    // B2B_-prefixed field names. They previously targeted plain, non-prefixed names directly on
+    // Case, which never existed there -- CaseFieldMappingEngine only ever wrote to Case at the
+    // time these were first seeded, and Target_Object__c wasn't read at all. Now that the engine
+    // supports Case_Detail__c targets, point these at where the real fields actually live.
     new Case_Field_Mapping__c(
         Name = 'B2B Implementation - Forecast Billing Months',
         Record_Type_Developer_Name__c = 'B2B_Implementation',
         Source_Object__c = 'Opportunity',
         Source_Field_Path__c = 'No_of_Forecast_Billing_Month__c',
-        Target_Field_API_Name__c = 'Forecast_Billing_Months__c',
+        Target_Object__c = 'Case_Detail__c',
+        Target_Field_API_Name__c = 'B2B_Forecast_Billing_Months__c',
         Is_Active__c = true,
-        Description__c = 'Case Fields sheet, B2B Implementation section, row "Forecast Billing Months".'
+        Description__c = 'Case Fields sheet, B2B Implementation section, row "Forecast Billing Months". Targets Case_Detail__c (the real B2B_Forecast_Billing_Months__c field lives there, not on Case).'
     ),
     new Case_Field_Mapping__c(
         Name = 'B2B Implementation - Sales Billing Estimate',
         Record_Type_Developer_Name__c = 'B2B_Implementation',
         Source_Object__c = 'Opportunity',
         Source_Field_Path__c = 'Total_Sales_Billing_Estimate__c',
-        Target_Field_API_Name__c = 'Sales_Billing_Estimate__c',
+        Target_Object__c = 'Case_Detail__c',
+        Target_Field_API_Name__c = 'B2B_Sales_Billing_Estimate__c',
         Is_Active__c = true,
-        Description__c = 'Case Fields sheet, B2B Implementation section, row "Sales Billing Estimate".'
+        Description__c = 'Case Fields sheet, B2B Implementation section, row "Sales Billing Estimate". Targets Case_Detail__c (the real B2B_Sales_Billing_Estimate__c field lives there, not on Case). Supersedes the older, separately-created "Case Detail - Sales Billing Estimate" mapping, which is deactivated.'
     ),
     new Case_Field_Mapping__c(
         Name = 'B2B Implementation - Delay Category',
         Record_Type_Developer_Name__c = 'B2B_Implementation',
         Source_Object__c = 'Opportunity',
         Source_Field_Path__c = 'Delay_Category__c',
-        Target_Field_API_Name__c = 'Delay_Category__c',
+        Target_Object__c = 'Case_Detail__c',
+        Target_Field_API_Name__c = 'B2B_Delay_Category__c',
         Is_Active__c = true,
-        Description__c = 'Case Fields sheet, B2B Implementation section, row "Delay Category".'
+        Description__c = 'Case Fields sheet, B2B Implementation section, row "Delay Category". Targets Case_Detail__c (the real B2B_Delay_Category__c field lives there, not on Case).'
     )
 };
 insert mappings;
 
 System.debug('=== SEEDED ' + mappings.size() + ' Case_Field_Mapping__c records ===');
+
+// ── Deactivate stray legacy records superseded by the B2B Implementation mappings above ──
+// "Case Detail - Sales Billing Estimate" and "Case Detail - Name" predate this script (created
+// directly, not via a prior run of it -- outside the seedNames cleanup set above) and were both
+// broken: the first targeted a field name that never existed on Case_Detail__c (real field is
+// B2B_Sales_Billing_Estimate__c, now covered by "B2B Implementation - Sales Billing Estimate"
+// above); the second targeted Case_Detail__c.Name, a read-only AutoNumber that can never be a
+// valid mapping target under any field name. Deactivated rather than deleted, to preserve them
+// as a record of what was tried. Done before the validation check below so its report reflects
+// the final, fixed state.
+List<Case_Field_Mapping__c> legacyToDeactivate = [
+    SELECT Id, Is_Active__c FROM Case_Field_Mapping__c
+    WHERE Name IN ('Case Detail - Sales Billing Estimate', 'Case Detail - Name') AND Is_Active__c = true
+];
+for (Case_Field_Mapping__c m : legacyToDeactivate) {
+    m.Is_Active__c = false;
+}
+if (!legacyToDeactivate.isEmpty()) {
+    update legacyToDeactivate;
+    System.debug('=== Deactivated ' + legacyToDeactivate.size() + ' stray legacy Case_Field_Mapping__c record(s) ===');
+}
 
 // ── Sanity check every seeded (and any other active) mapping against the real schema ──
 List<String> problems = CaseFieldMappingEngine.validateActiveMappings();
@@ -256,12 +285,6 @@ if (problems.isEmpty()) {
 // NOTE: "Rejection Reason" and "Actual Labor Hours" (All Cases) are marked Track History = Yes
 // in the sheet but have no Opportunity/Account source at all -- they are Case-native fields,
 // not mirrors, and were never built. Out of scope for this mapping engine.
-//
-// B2B Implementation's Forecast_Billing_Months__c/Sales_Billing_Estimate__c targets above are
-// plain Case fields (no NF_ prefix, untouched from the original seed) -- flagged separately as
-// likely redundant with the properly-prefixed B2B_Forecast_Billing_Months__c/
-// B2B_Sales_Billing_Estimate__c fields that already exist on Case_Detail__c; not changed here
-// since it wasn't part of today's ask.
 //
 // Still open: the Solution Architects section's own inline note (row 106) flags that Digital
 // Use Case, Add-On, and Cloud Provider are captured on the Opportunity but undecided whether/
