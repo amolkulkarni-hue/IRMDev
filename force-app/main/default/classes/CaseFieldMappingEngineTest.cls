@@ -67,11 +67,17 @@ private class CaseFieldMappingEngineTest {
 
     private static Case_Field_Mapping__c makeMapping(
             String recordTypeDevName, String caseType, String sourceObject, String sourceFieldPath, String targetField) {
+        return makeMapping(recordTypeDevName, caseType, sourceObject, sourceFieldPath, null, targetField);
+    }
+
+    private static Case_Field_Mapping__c makeMapping(
+            String recordTypeDevName, String caseType, String sourceObject, String sourceFieldPath, String targetObject, String targetField) {
         Case_Field_Mapping__c m = new Case_Field_Mapping__c(
             Record_Type_Developer_Name__c = recordTypeDevName,
             Case_Type__c = caseType,
             Source_Object__c = sourceObject,
             Source_Field_Path__c = sourceFieldPath,
+            Target_Object__c = targetObject,
             Target_Field_API_Name__c = targetField,
             Is_Active__c = true
         );
@@ -344,5 +350,73 @@ private class CaseFieldMappingEngineTest {
         CaseFieldMappingEngine.applyMappings(null);
         Test.stopTest();
         // No exception thrown is the assertion here.
+    }
+
+    // ──────────────────────────────────────────────────────────
+    // Case_Detail__c targeting
+    // ──────────────────────────────────────────────────────────
+
+    @IsTest
+    static void testCaseDetailTargetMapping_populatesCaseDetailChild() {
+        Opportunity opp = getOpp();
+        makeMapping('Deal_Support', null, 'Opportunity', 'Amount', 'Case_Detail__c', 'B2B_Sales_Billing_Estimate__c');
+        Case c = makeCase(App_Constants.DEAL_SUPPORT_CASE_RECTYPE_ID, opp.Id, opp.AccountId, getContact().Id);
+        insert new Case_Detail__c(Case__c = c.Id);
+
+        Test.startTest();
+        applyToCases(new List<Id>{ c.Id });
+        Test.stopTest();
+
+        // LIMIT 1 rather than a bare single-row assignment: this org may have its own
+        // automation (Case_Detail_Auto_Create_Flow) also creating a Case_Detail__c on Case
+        // insert, so more than one child can legitimately exist here.
+        Case_Detail__c result = [SELECT B2B_Sales_Billing_Estimate__c FROM Case_Detail__c WHERE Case__c = :c.Id AND B2B_Sales_Billing_Estimate__c != null LIMIT 1];
+        System.assertEquals(opp.Amount, result.B2B_Sales_Billing_Estimate__c,
+            'A mapping with Target_Object__c = Case_Detail__c should copy onto the related Case_Detail__c child, not the Case.');
+    }
+
+    @IsTest
+    static void testCaseDetailTarget_noChildYet_isNoOpWithoutError() {
+        Opportunity opp = getOpp();
+        makeMapping('Deal_Support', null, 'Opportunity', 'Amount', 'Case_Detail__c', 'B2B_Sales_Billing_Estimate__c');
+        Case c = makeCase(App_Constants.DEAL_SUPPORT_CASE_RECTYPE_ID, opp.Id, opp.AccountId, getContact().Id);
+        // Deliberately no Case_Detail__c child inserted.
+
+        Test.startTest();
+        applyToCases(new List<Id>{ c.Id });
+        Test.stopTest();
+        // No exception thrown is the assertion here — a Case_Detail__c-targeted mapping with no
+        // child record yet must be silently skipped, not fail the whole invocation.
+    }
+
+    @IsTest
+    static void testBlankTargetObject_defaultsToCase() {
+        Opportunity opp = getOpp();
+        // Every pre-existing Case_Field_Mapping__c row predates Target_Object__c and leaves it
+        // blank — must keep behaving exactly as before (writes to Case).
+        makeMapping('Deal_Support', 'Opportunity', 'Amount', 'Account_Closing_Admin_Fee__c');
+        Case c = makeCase(App_Constants.DEAL_SUPPORT_CASE_RECTYPE_ID, opp.Id, opp.AccountId, getContact().Id);
+
+        Test.startTest();
+        applyToCases(new List<Id>{ c.Id });
+        Test.stopTest();
+
+        Case result = [SELECT Account_Closing_Admin_Fee__c FROM Case WHERE Id = :c.Id];
+        System.assertEquals(opp.Amount, result.Account_Closing_Admin_Fee__c,
+            'A blank Target_Object__c must default to Case, preserving every existing mapping\'s behavior.');
+    }
+
+    @IsTest
+    static void testValidateActiveMappings_flagsBadCaseDetailTarget() {
+        makeMapping('Deal_Support', null, 'Opportunity', 'Amount', 'Case_Detail__c', 'Not_A_Real_Field__c'); // bad target on Case_Detail__c
+        makeMapping('Deal_Support', null, 'Opportunity', 'Amount', 'Case_Detail__c', 'Name'); // read-only AutoNumber
+        makeMapping('Deal_Support', null, 'Opportunity', 'Amount', 'Case_Detail__c', 'B2B_Sales_Billing_Estimate__c'); // valid
+
+        Test.startTest();
+        List<String> problems = CaseFieldMappingEngine.validateActiveMappings();
+        Test.stopTest();
+
+        System.assertEquals(2, problems.size(),
+            'Only the nonexistent-field and read-only-field rows should be flagged; the valid Case_Detail__c mapping should not.');
     }
 }
