@@ -1,0 +1,343 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Doc_Type__c</fullName>
+    <description>Document type, dependent on Doc_Category__c. Global-value-set-backed replacement for the legacy Document Type field on this object. Not required at the field level (unlike the legacy field) because a restricted dependent picklist rejects any real value when Doc_Category__c is blank — marking this required would force every config record to have both fields set, which would remove the ability to represent an intentionally incomplete/in-progress config record.</description>
+    <label>Document Type</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>Doc_Category__c</controllingField>
+        <restricted>true</restricted>
+        <valueSetName>Document_Type</valueSetName>
+        <valueSettings>
+            <controllingFieldValue>RFx &amp; Bid Management</controllingFieldValue>
+            <valueName>RFP (Request for Proposal)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>RFx &amp; Bid Management</controllingFieldValue>
+            <valueName>RFQ (Request for Quotation)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>RFx &amp; Bid Management</controllingFieldValue>
+            <valueName>RFI (Request for Information)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>RFx &amp; Bid Management</controllingFieldValue>
+            <valueName>Portal Submission Credentials</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>RFx &amp; Bid Management</controllingFieldValue>
+            <valueName>Bid Response Package</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Scoping &amp; Technical</controllingFieldValue>
+            <valueName>Business Problem Statement</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Scoping &amp; Technical</controllingFieldValue>
+            <valueName>Solution Assessment</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Scoping &amp; Technical</controllingFieldValue>
+            <valueName>Technical Scoping Form</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Scoping &amp; Technical</controllingFieldValue>
+            <valueName>DRMS Scoping Form</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Scoping &amp; Technical</controllingFieldValue>
+            <valueName>Scanning Questionnaire</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Scoping &amp; Technical</controllingFieldValue>
+            <valueName>Inventory List</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Scoping &amp; Technical</controllingFieldValue>
+            <valueName>Asset Condition Report</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Scoping &amp; Technical</controllingFieldValue>
+            <valueName>Media Format List</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Scoping &amp; Technical</controllingFieldValue>
+            <valueName>Environmental Requirements Document</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Scoping &amp; Technical</controllingFieldValue>
+            <valueName>Restoration Scope</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Scoping &amp; Technical</controllingFieldValue>
+            <valueName>Site Logistics / Floor Plan</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Scoping &amp; Technical</controllingFieldValue>
+            <valueName>Preliminary SOW Draft</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Scoping &amp; Technical</controllingFieldValue>
+            <valueName>Complexity Assessment</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Scoping &amp; Technical</controllingFieldValue>
+            <valueName>Media Sample Analysis Data</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Scoping &amp; Technical</controllingFieldValue>
+            <valueName>Service Frequency Schedule</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Scoping &amp; Technical</controllingFieldValue>
+            <valueName>Revenue Share Model</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>SOW &amp; Contracts</controllingFieldValue>
+            <valueName>Standardized SOW Template</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>SOW &amp; Contracts</controllingFieldValue>
+            <valueName>Technical SOW (Final)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>SOW &amp; Contracts</controllingFieldValue>
+            <valueName>SOW Exhibit</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>SOW &amp; Contracts</controllingFieldValue>
+            <valueName>DRMS Scope Form / SOW</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>SOW &amp; Contracts</controllingFieldValue>
+            <valueName>Standard SOW (Auto-generated)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>SOW &amp; Contracts</controllingFieldValue>
+            <valueName>Executed Contract / SOW</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Pricing &amp; Financial</controllingFieldValue>
+            <valueName>PA Model (Profitability Analysis)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Pricing &amp; Financial</controllingFieldValue>
+            <valueName>Manual PA Model</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Pricing &amp; Financial</controllingFieldValue>
+            <valueName>Large Deal Model (LDM)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Pricing &amp; Financial</controllingFieldValue>
+            <valueName>Standardized Rate Card</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Pricing &amp; Financial</controllingFieldValue>
+            <valueName>CPQ Output</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Pricing &amp; Financial</controllingFieldValue>
+            <valueName>Proposed Quote / Draft Contract</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Pricing &amp; Financial</controllingFieldValue>
+            <valueName>Renewal Quote</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Pricing &amp; Financial</controllingFieldValue>
+            <valueName>Approved Pricing Strategy</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Pricing &amp; Financial</controllingFieldValue>
+            <valueName>Revenue Management Sign-off</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Pricing &amp; Financial</controllingFieldValue>
+            <valueName>Pricing Documentation</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Pricing &amp; Financial</controllingFieldValue>
+            <valueName>Competitive Intelligence</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Contract &amp; Legal</controllingFieldValue>
+            <valueName>Customer Paper / MSA</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Contract &amp; Legal</controllingFieldValue>
+            <valueName>Customer Paper / GSA</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Contract &amp; Legal</controllingFieldValue>
+            <valueName>Customer Paper / Order Form</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Contract &amp; Legal</controllingFieldValue>
+            <valueName>Redlined Contract</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Contract &amp; Legal</controllingFieldValue>
+            <valueName>Redlined MSA/GSA</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Contract &amp; Legal</controllingFieldValue>
+            <valueName>Governing Agreement</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Contract &amp; Legal</controllingFieldValue>
+            <valueName>Approved Contract (Final Version)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Contract &amp; Legal</controllingFieldValue>
+            <valueName>Signed Schedule A / Order Form</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Contract &amp; Legal</controllingFieldValue>
+            <valueName>Signed MSA / Contract</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Contract &amp; Legal</controllingFieldValue>
+            <valueName>Justification for Contract Deviation</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Contract &amp; Legal</controllingFieldValue>
+            <valueName>Partner Contract / DPA Requirements</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Compliance, Risk &amp; Privacy</controllingFieldValue>
+            <valueName>Regulatory Requirements List</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Compliance, Risk &amp; Privacy</controllingFieldValue>
+            <valueName>Export Control Documents (ITAR/EAR)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Compliance, Risk &amp; Privacy</controllingFieldValue>
+            <valueName>Compliance Approval Certificate</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Compliance, Risk &amp; Privacy</controllingFieldValue>
+            <valueName>Technical Exhibit B</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Compliance, Risk &amp; Privacy</controllingFieldValue>
+            <valueName>Data Processing Agreement (DPA)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Compliance, Risk &amp; Privacy</controllingFieldValue>
+            <valueName>Business Associate Agreement (BAA)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Compliance, Risk &amp; Privacy</controllingFieldValue>
+            <valueName>Customer Security Questionnaire</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Compliance, Risk &amp; Privacy</controllingFieldValue>
+            <valueName>Completed Security Questionnaire</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Compliance, Risk &amp; Privacy</controllingFieldValue>
+            <valueName>Risk Mitigation Plan</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Compliance, Risk &amp; Privacy</controllingFieldValue>
+            <valueName>DPA Sign-off</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Compliance, Risk &amp; Privacy</controllingFieldValue>
+            <valueName>Approved DPA</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Compliance, Risk &amp; Privacy</controllingFieldValue>
+            <valueName>Certificate of Insurance</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Compliance, Risk &amp; Privacy</controllingFieldValue>
+            <valueName>PA Model (Cash View)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Approvals &amp; Sign-off</controllingFieldValue>
+            <valueName>Technical Feasibility Sign-off</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Approvals &amp; Sign-off</controllingFieldValue>
+            <valueName>Operational Sign-off</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Approvals &amp; Sign-off</controllingFieldValue>
+            <valueName>Route Capacity Approval</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Approvals &amp; Sign-off</controllingFieldValue>
+            <valueName>Deal Review / OBR Approval</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Approvals &amp; Sign-off</controllingFieldValue>
+            <valueName>Financial Sign-off</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Approvals &amp; Sign-off</controllingFieldValue>
+            <valueName>Legal Risk Sign-off</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Approvals &amp; Sign-off</controllingFieldValue>
+            <valueName>Risk Sign-off</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Approvals &amp; Sign-off</controllingFieldValue>
+            <valueName>Compliance Approval</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Approvals &amp; Sign-off</controllingFieldValue>
+            <valueName>Deal Review: Approved</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Onboarding &amp; Setup</controllingFieldValue>
+            <valueName>Authorized User Form (RM/DM/ALM)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Onboarding &amp; Setup</controllingFieldValue>
+            <valueName>Welcome Letter</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Onboarding &amp; Setup</controllingFieldValue>
+            <valueName>Portal Access Credentials</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Onboarding &amp; Setup</controllingFieldValue>
+            <valueName>Written Resolution</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Onboarding &amp; Setup</controllingFieldValue>
+            <valueName>Escalation Path Document</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Onboarding &amp; Setup</controllingFieldValue>
+            <valueName>Current Reporting Specification</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Booking Verification</controllingFieldValue>
+            <valueName>BV Pass Confirmation</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Booking Verification</controllingFieldValue>
+            <valueName>BV Rejection Notice</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Booking Verification</controllingFieldValue>
+            <valueName>Credit Approval Proof</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Booking Verification</controllingFieldValue>
+            <valueName>Tax / Local Regulatory Form</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Booking Verification</controllingFieldValue>
+            <valueName>Implementation Workbook</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

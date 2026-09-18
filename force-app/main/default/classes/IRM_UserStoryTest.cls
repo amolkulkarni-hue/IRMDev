@@ -131,8 +131,8 @@ private class IRM_UserStoryTest {
         );
         insert new Case_Creation_Doc_Requirement__c(
             Rule__c                   = saRule.Id,
-            Document_Type__c          = 'Business Problem Statement',
-            Document_Category__c      = 'Scoping and Technical Documents',
+            Doc_Type__c                = 'Business Problem Statement',
+            Doc_Category__c            = 'Scoping & Technical',
             Is_Required_To_Start__c   = true,
             Is_Required_For_Case__c   = true
         );
@@ -421,7 +421,7 @@ private class IRM_UserStoryTest {
         Test.startTest();
         Document_Checklist__c doc = new Document_Checklist__c(
             Opportunity__c = opp.Id, Case_Creation_Rule__c = rule.Id, Status__c = 'Draft',
-            Document_Category__c = 'Scoping & Technical'
+            Doc_Category__c = 'Scoping & Technical'
         );
         insert doc;
         Test.stopTest();
@@ -437,7 +437,7 @@ private class IRM_UserStoryTest {
         Opportunity opp = makeOpp('Qualification', 100000);
         Document_Checklist__c doc = new Document_Checklist__c(
             Opportunity__c = opp.Id, Case_Creation_Rule__c = rule.Id, Status__c = 'Draft',
-            Document_Category__c = 'Scoping & Technical'
+            Doc_Category__c = 'Scoping & Technical'
         );
         insert doc;
 
@@ -458,7 +458,7 @@ private class IRM_UserStoryTest {
         Opportunity opp = makeOpp('Qualification', 100000);
         Document_Checklist__c doc = new Document_Checklist__c(
             Opportunity__c = opp.Id, Case_Creation_Rule__c = rule.Id, Status__c = 'Final',
-            Document_Category__c = 'Scoping & Technical', Submitted_Date__c = Date.today()
+            Doc_Category__c = 'Scoping & Technical', Submitted_Date__c = Date.today()
         );
         insert doc;
 
@@ -496,7 +496,7 @@ private class IRM_UserStoryTest {
 
         // Non-Final doc linked to the Case — Case_Exit_Document_Validation_Flow matches on Case__c
         insert new Document_Checklist__c(
-            Case__c = c.Id, Opportunity__c = opp.Id, Status__c = 'Draft', Document_Category__c = 'Scoping & Technical'
+            Case__c = c.Id, Opportunity__c = opp.Id, Status__c = 'Draft', Doc_Category__c = 'Scoping & Technical'
         );
 
         Test.startTest();
@@ -530,7 +530,7 @@ private class IRM_UserStoryTest {
         // All docs are Final — linked to the Case, matching Case_Exit_Document_Validation_Flow's Case__c filter
         insert new Document_Checklist__c(
             Case__c = c.Id, Opportunity__c = opp.Id, Status__c = 'Final',
-            Document_Category__c = 'Scoping & Technical', Submitted_Date__c = Date.today()
+            Doc_Category__c = 'Scoping & Technical', Submitted_Date__c = Date.today()
         );
 
         Test.startTest();

@@ -116,7 +116,7 @@ private class IRM_FreddyAccessTest {
             insert c;
             doc = new Document_Checklist__c(
                 Case__c = c.Id, Status__c = 'Draft',
-                Document_Category__c = 'Scoping & Technical'
+                Doc_Category__c = 'Scoping & Technical'
             );
             insert doc;
         }

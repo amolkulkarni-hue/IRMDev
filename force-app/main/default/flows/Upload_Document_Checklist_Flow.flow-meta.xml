@@ -235,15 +235,15 @@
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>DocumentType__c</field>
+            <field>Doc_Type__c</field>
             <value>
-                <elementReference>varDocChecklist.DocumentType__c</elementReference>
+                <elementReference>varDocChecklist.Doc_Type__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>Document_Category__c</field>
+            <field>Doc_Category__c</field>
             <value>
-                <elementReference>varDocChecklist.Document_Category__c</elementReference>
+                <elementReference>varDocChecklist.Doc_Category__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -289,10 +289,10 @@
         </connector>
         <filterLogic>1 AND (2 OR 3)</filterLogic>
         <filters>
-            <field>DocumentType__c</field>
+            <field>Doc_Type__c</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>varDocChecklist.DocumentType__c</elementReference>
+                <elementReference>varDocChecklist.Doc_Type__c</elementReference>
             </value>
         </filters>
         <filters>
@@ -423,7 +423,7 @@
         </connector>
         <fields>
             <name>displayDupWarning</name>
-            <fieldText>&lt;p&gt;&lt;b&gt;Warning: Duplicate Document Type&lt;/b&gt;&lt;/p&gt;&lt;p&gt;A document checklist of type &lt;b&gt;{!varDocChecklist.DocumentType__c}&lt;/b&gt; already exists on this record.&lt;/p&gt;&lt;p&gt;Click &lt;b&gt;Back&lt;/b&gt; to change the document type, or &lt;b&gt;Next&lt;/b&gt; to create a duplicate entry.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;b&gt;Warning: Duplicate Document Type&lt;/b&gt;&lt;/p&gt;&lt;p&gt;A document checklist of type &lt;b&gt;{!varDocChecklist.Doc_Type__c}&lt;/b&gt; already exists on this record.&lt;/p&gt;&lt;p&gt;Click &lt;b&gt;Back&lt;/b&gt; to change the document type, or &lt;b&gt;Next&lt;/b&gt; to create a duplicate entry.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <styleProperties>
                 <verticalAlignment>
@@ -520,7 +520,7 @@
             <fieldType>ObjectProvided</fieldType>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>false</isRequired>
-            <objectFieldReference>varDocChecklist.Document_Category__c</objectFieldReference>
+            <objectFieldReference>varDocChecklist.Doc_Category__c</objectFieldReference>
             <styleProperties>
                 <verticalAlignment>
                     <stringValue>top</stringValue>
@@ -534,7 +534,7 @@
             <fieldType>ObjectProvided</fieldType>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>false</isRequired>
-            <objectFieldReference>varDocChecklist.DocumentType__c</objectFieldReference>
+            <objectFieldReference>varDocChecklist.Doc_Type__c</objectFieldReference>
             <styleProperties>
                 <verticalAlignment>
                     <stringValue>top</stringValue>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NF_Opportunity_Amount__c</fullName>
+    <description>Auto-populated from the related Opportunity's Amount at Case creation, via Case_Field_Mapping__c / CaseFieldMappingEngine. Case Fields sheet, All Cases section, row "Total Annual Amount (TAA)" - the sheet's own cited source field (Opportunity_Total_Annual_Amount__c) doesn't exist; per explicit direction this copies the standard Opportunity.Amount instead. Note: Opportunity also has its own separate Eligible_Annual_Amount__c custom field for a related but distinct reporting/incentive purpose - not the source used here.</description>
+    <label>Total Annual Amount (TAA)</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>2</scale>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Currency</type>
+</CustomField>

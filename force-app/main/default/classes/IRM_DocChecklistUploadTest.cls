@@ -90,8 +90,8 @@ private class IRM_DocChecklistUploadTest {
         Document_Checklist__c doc = new Document_Checklist__c(
             Case__c = caseId,
             Opportunity__c = oppId,
-            DocumentType__c = 'Technical Scoping Form',
-            Document_Category__c = 'Scoping & Technical',
+            Doc_Type__c = 'Technical Scoping Form',
+            Doc_Category__c = 'Scoping & Technical',
             Status__c = 'Draft'
         );
         insert doc;

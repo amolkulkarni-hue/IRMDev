@@ -43,8 +43,8 @@ private class IRM_CaseExitDocCreationTest {
         insert new Case_Exit_Doc_Requirement__c(
             Case_Record_Type_Dev_Name__c = 'Deal_Support',
             Case_Type__c                 = 'SA Assignment',
-            Document_Category__c         = 'Scoping & Technical',
-            Document_Type__c             = 'Technical Scoping Form',
+            Doc_Category__c               = 'Scoping & Technical',
+            Doc_Type__c                   = 'Technical Scoping Form',
             Is_Active__c                 = true
         );
     }
@@ -77,7 +77,7 @@ private class IRM_CaseExitDocCreationTest {
         Test.stopTest();
 
         List<Document_Checklist__c> docs = [
-            SELECT Id, Status__c, IsRequired__c, DocumentType__c
+            SELECT Id, Status__c, IsRequired__c, Doc_Type__c
             FROM Document_Checklist__c
             WHERE Case__c = :c.Id
         ];
@@ -102,8 +102,8 @@ private class IRM_CaseExitDocCreationTest {
         insert new Case_Exit_Doc_Requirement__c(
             Case_Record_Type_Dev_Name__c = 'Deal_Support',
             Case_Type__c                 = 'SA Assignment',
-            Document_Category__c         = 'Scoping & Technical',
-            Document_Type__c             = 'Complexity Assessment',
+            Doc_Category__c               = 'Scoping & Technical',
+            Doc_Type__c                   = 'Complexity Assessment',
             Is_Active__c                 = true
         );
 
