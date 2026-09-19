@@ -1,8 +1,9 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <QuickAction xmlns="http://soap.sforce.com/2006/04/metadata">
-    <description>Opens the Upload Document Checklist screen flow. Creates a Document_Checklist__c record and uploads files. Files are cross-linked to the linked Opportunity when available.</description>
-    <flowDefinition>Upload_Document_Checklist_Flow</flowDefinition>
+    <actionSubtype>ScreenAction</actionSubtype>
+    <description
+  >Opens the Upload Documents screen, listing this Case's existing Document Checklist rows so a file can be attached to each one. Files are cross-linked to the Case's Opportunity when available.</description>
     <label>Upload Document</label>
-    <optionsCreateFeedItem>false</optionsCreateFeedItem>
-    <type>Flow</type>
+    <lightningComponent>c:nfDocumentChecklistUpload</lightningComponent>
+    <type>LightningWebComponent</type>
 </QuickAction>

@@ -1,0 +1,80 @@
+<template>
+  <lightning-card title="Upload Documents" icon-name="standard:document">
+    <template if:true={isLoading}>
+      <lightning-spinner
+        alternative-text="Loading"
+        size="small"
+      ></lightning-spinner>
+    </template>
+    <template if:false={isLoading}>
+      <template if:true={hasItems}>
+        <table class="slds-table slds-table_bordered slds-table_cell-buffer">
+          <thead>
+            <tr class="slds-line-height_reset">
+              <th scope="col">Category / Type</th>
+              <th scope="col">Status</th>
+              <th scope="col">Due Date</th>
+              <th scope="col">Required</th>
+              <th scope="col">File</th>
+            </tr>
+          </thead>
+          <tbody>
+            <template for:each={items} for:item="item">
+              <tr key={item.checklistId}>
+                <td>
+                  <div class="slds-truncate">{item.docCategory}</div>
+                  <div class="slds-text-body_small slds-text-color_weak">
+                    {item.docType}
+                  </div>
+                </td>
+                <td>
+                  <lightning-badge label={item.status}></lightning-badge>
+                </td>
+                <td>{item.dueDate}</td>
+                <td>
+                  <template if:true={item.isRequired}>
+                    <lightning-icon
+                      icon-name="utility:check"
+                      size="x-small"
+                      alternative-text="Required"
+                    ></lightning-icon>
+                  </template>
+                </td>
+                <td>
+                  <template if:true={item.isFinalizing}>
+                    <lightning-spinner
+                      alternative-text="Saving"
+                      size="x-small"
+                    ></lightning-spinner>
+                  </template>
+                  <template if:false={item.isFinalizing}>
+                    <template if:true={item.hasExistingFile}>
+                      <p class="slds-truncate slds-m-bottom_x-small">
+                        <lightning-icon
+                          icon-name="doctype:attachment"
+                          size="x-small"
+                        ></lightning-icon>
+                        {item.existingFileName}
+                      </p>
+                    </template>
+                    <lightning-file-upload
+                      data-checklist-id={item.checklistId}
+                      label={item.uploadLabel}
+                      record-id={item.checklistId}
+                      onuploadfinished={handleUploadFinished}
+                    ></lightning-file-upload>
+                  </template>
+                </td>
+              </tr>
+            </template>
+          </tbody>
+        </table>
+      </template>
+      <template if:false={hasItems}>
+        <p class="slds-p-around_medium slds-text-color_weak">
+          No document checklist items found for this record.
+        </p>
+      </template>
+    </template>
+  </lightning-card>
+</template>
