@@ -1,5 +1,5 @@
 /**
- * IRM_DocumentChecklistUploadControllerTest
+ * IRM_DocChecklistUploadCtrlTest
  * Tests for IRM_DocumentChecklistUploadController — the Apex controller behind
  * the nfDocumentChecklistUpload LWC quick action.
  *
@@ -12,7 +12,7 @@
  *   AC6 — finalizeUpload replaces a previous file: stale links removed, new link added
  */
 @IsTest
-private class IRM_DocumentChecklistUploadControllerTest {
+private class IRM_DocChecklistUploadCtrlTest {
   @TestSetup
   static void setup() {
     IM_Country__c testCountry = new IM_Country__c(Name = 'United States');

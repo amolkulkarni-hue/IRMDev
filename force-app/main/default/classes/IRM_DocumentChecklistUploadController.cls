@@ -45,7 +45,7 @@ public with sharing class IRM_DocumentChecklistUploadController {
           IsRequired__c
         FROM Document_Checklist__c
         WHERE Opportunity__c = :recordId OR Case__c = :recordId
-        WITH SECURITY_ENFORCED
+        WITH USER_MODE
         ORDER BY Doc_Category__c, Doc_Type__c
       ]) {
         ChecklistItem item = new ChecklistItem();
@@ -87,7 +87,7 @@ public with sharing class IRM_DocumentChecklistUploadController {
         SELECT Id, Opportunity__c, Case__c
         FROM Document_Checklist__c
         WHERE Id = :checklistId
-        WITH SECURITY_ENFORCED
+        WITH USER_MODE
         LIMIT 1
       ];
 
