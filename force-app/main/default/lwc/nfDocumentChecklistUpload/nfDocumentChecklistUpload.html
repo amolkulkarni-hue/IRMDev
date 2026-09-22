@@ -1,5 +1,10 @@
 <template>
   <lightning-card title="Upload Documents" icon-name="standard:document">
+    <lightning-button
+      slot="actions"
+      label="Close"
+      onclick={handleClose}
+    ></lightning-button>
     <template if:true={isLoading}>
       <lightning-spinner
         alternative-text="Loading"
@@ -28,7 +33,14 @@
                   </div>
                 </td>
                 <td>
-                  <lightning-badge label={item.status}></lightning-badge>
+                  <lightning-combobox
+                    label="Status"
+                    variant="label-hidden"
+                    value={item.status}
+                    options={statusOptions}
+                    data-checklist-id={item.checklistId}
+                    onchange={handleStatusChange}
+                  ></lightning-combobox>
                 </td>
                 <td>{item.dueDate}</td>
                 <td>
@@ -48,7 +60,23 @@
                     ></lightning-spinner>
                   </template>
                   <template if:false={item.isFinalizing}>
-                    <template if:true={item.hasExistingFile}>
+                    <template if:true={item.showFileUpload}>
+                      <lightning-file-upload
+                        data-checklist-id={item.checklistId}
+                        label={item.uploadLabel}
+                        record-id={item.checklistId}
+                        onuploadfinished={handleUploadFinished}
+                      ></lightning-file-upload>
+                      <template if:true={item.hasExistingFile}>
+                        <lightning-button
+                          variant="base"
+                          label="Cancel"
+                          data-checklist-id={item.checklistId}
+                          onclick={handleCancelReplace}
+                        ></lightning-button>
+                      </template>
+                    </template>
+                    <template if:false={item.showFileUpload}>
                       <p class="slds-truncate slds-m-bottom_x-small">
                         <lightning-icon
                           icon-name="doctype:attachment"
@@ -56,13 +84,13 @@
                         ></lightning-icon>
                         {item.existingFileName}
                       </p>
+                      <lightning-button
+                        variant="neutral"
+                        label="Replace File"
+                        data-checklist-id={item.checklistId}
+                        onclick={handleReplaceClick}
+                      ></lightning-button>
                     </template>
-                    <lightning-file-upload
-                      data-checklist-id={item.checklistId}
-                      label={item.uploadLabel}
-                      record-id={item.checklistId}
-                      onuploadfinished={handleUploadFinished}
-                    ></lightning-file-upload>
                   </template>
                 </td>
               </tr>

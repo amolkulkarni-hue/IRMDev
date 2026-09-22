@@ -1,13 +1,21 @@
 import { LightningElement, api, wire } from "lwc";
 import { ShowToastEvent } from "lightning/platformShowToastEvent";
+import { CloseActionScreenEvent } from "lightning/actions";
 import getChecklistItems from "@salesforce/apex/IRM_DocumentChecklistUploadController.getChecklistItems";
 import finalizeUpload from "@salesforce/apex/IRM_DocumentChecklistUploadController.finalizeUpload";
+import updateStatus from "@salesforce/apex/IRM_DocumentChecklistUploadController.updateStatus";
+
+const STATUS_OPTIONS = [
+  { label: "Draft", value: "Draft" },
+  { label: "Final", value: "Final" }
+];
 
 export default class NfDocumentChecklistUpload extends LightningElement {
   @api recordId;
 
   items = [];
   isLoading = true;
+  statusOptions = STATUS_OPTIONS;
 
   @wire(getChecklistItems, { recordId: "$recordId" })
   wiredChecklistItems({ data, error }) {
@@ -20,18 +28,72 @@ export default class NfDocumentChecklistUpload extends LightningElement {
   }
 
   toRow(item) {
+    const hasExistingFile = !!item.existingContentDocumentId;
     return {
       ...item,
-      hasExistingFile: !!item.existingContentDocumentId,
+      hasExistingFile,
+      showFileUpload: !hasExistingFile,
       isFinalizing: false,
-      uploadLabel: item.existingContentDocumentId
-        ? "Replace File"
-        : "Upload File"
+      uploadLabel: hasExistingFile ? "Replace File" : "Upload File"
     };
   }
 
   get hasItems() {
     return this.items.length > 0;
+  }
+
+  handleClose() {
+    this.dispatchEvent(new CloseActionScreenEvent());
+  }
+
+  handleReplaceClick(event) {
+    const checklistId = event.target.dataset.checklistId;
+    const rowIndex = this.items.findIndex(
+      (row) => row.checklistId === checklistId
+    );
+    if (rowIndex === -1) {
+      return;
+    }
+    this.setRow(rowIndex, { showFileUpload: true });
+  }
+
+  handleCancelReplace(event) {
+    const checklistId = event.target.dataset.checklistId;
+    const rowIndex = this.items.findIndex(
+      (row) => row.checklistId === checklistId
+    );
+    if (rowIndex === -1) {
+      return;
+    }
+    this.setRow(rowIndex, { showFileUpload: false });
+  }
+
+  handleStatusChange(event) {
+    const checklistId = event.target.dataset.checklistId;
+    const newStatus = event.detail.value;
+    const rowIndex = this.items.findIndex(
+      (row) => row.checklistId === checklistId
+    );
+    if (rowIndex === -1) {
+      return;
+    }
+    const previousStatus = this.items[rowIndex].status;
+    this.setRow(rowIndex, { status: newStatus });
+
+    updateStatus({ checklistId, status: newStatus })
+      .then(() => {
+        this.dispatchEvent(
+          new ShowToastEvent({
+            title: "Success",
+            message: "Status updated.",
+            variant: "success"
+          })
+        );
+      })
+      .catch((error) => {
+        this.setRow(rowIndex, { status: previousStatus });
+        this.showError(error);
+      });
   }
 
   handleUploadFinished(event) {
@@ -64,6 +126,7 @@ export default class NfDocumentChecklistUpload extends LightningElement {
           existingContentDocumentId: newContentDocumentId,
           existingFileName: fileName,
           hasExistingFile: true,
+          showFileUpload: false,
           uploadLabel: "Replace File",
           status: "Final"
         });
