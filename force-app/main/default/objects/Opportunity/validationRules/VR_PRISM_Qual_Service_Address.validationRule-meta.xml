@@ -3,7 +3,7 @@
     <fullName>VR_PRISM_Qual_Service_Address</fullName>
     <active>true</active>
     <description
-  >[IRM feedback row OppVR40] Requires Service Address while in Solutioning or Negotiation only (narrowed per IRM). Service_Address__Street__s confirmed correct compound-field proxy, answering IRM&apos;s question.</description>
+  >[IRM feedback row OppVR40] Requires Service Address on moving into Solutioning or Negotiation only (narrowed per IRM). Service_Address__Street__s confirmed correct compound-field proxy, answering IRM&apos;s question.</description>
     <errorConditionFormula>AND(
     NOT($Permission.ECommerce_Deal_Bypass),
 
@@ -26,8 +26,18 @@
     ),
 
     OR(
-        ISPICKVAL(StageName, &apos;Solutioning&apos;),
-        ISPICKVAL(StageName, &apos;Negotiation&apos;)
+        AND(
+            ISNEW(),
+            ISPICKVAL(StageName, &apos;Qualification&apos;)
+        ),
+        AND(
+            ISPICKVAL(PRIORVALUE(StageName), &apos;Qualification&apos;),
+            ISPICKVAL(StageName, &apos;Solutioning&apos;)
+        ),
+        AND(
+            ISPICKVAL(PRIORVALUE(StageName), &apos;Solutioning&apos;),
+            ISPICKVAL(StageName, &apos;Negotiation&apos;)
+        )
     ),
 
     ISBLANK(Service_Address__Street__s)

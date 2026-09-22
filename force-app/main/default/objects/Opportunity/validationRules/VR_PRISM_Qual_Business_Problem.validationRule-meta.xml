@@ -3,7 +3,7 @@
     <fullName>VR_PRISM_Qual_Business_Problem</fullName>
     <active>true</active>
     <description
-  >[IRM feedback row OppVR27] Requires Business Problem while in Solutioning, Negotiation or Booking Verification. Simplified per IRM feedback.</description>
+  >[IRM feedback row OppVR27] Requires Business Problem on moving into Solutioning, Negotiation or Booking Verification. Simplified per IRM feedback.</description>
     <errorConditionFormula>AND(
     NOT($Permission.ECommerce_Deal_Bypass),
 
@@ -18,9 +18,22 @@
     ),
 
     OR(
-        ISPICKVAL(StageName, &apos;Solutioning&apos;),
-        ISPICKVAL(StageName, &apos;Negotiation&apos;),
-        ISPICKVAL(StageName, &apos;Booking Verification&apos;)
+        AND(
+            ISNEW(),
+            ISPICKVAL(StageName, &apos;Qualification&apos;)
+        ),
+        AND(
+            ISPICKVAL(PRIORVALUE(StageName), &apos;Qualification&apos;),
+            ISPICKVAL(StageName, &apos;Solutioning&apos;)
+        ),
+        AND(
+            ISPICKVAL(PRIORVALUE(StageName), &apos;Solutioning&apos;),
+            ISPICKVAL(StageName, &apos;Negotiation&apos;)
+        ),
+        AND(
+            ISPICKVAL(PRIORVALUE(StageName), &apos;Negotiation&apos;),
+            ISPICKVAL(StageName, &apos;Booking Verification&apos;)
+        )
     ),
 
     ISPICKVAL(Business_Problem_Evidenced__c, &apos;&apos;)

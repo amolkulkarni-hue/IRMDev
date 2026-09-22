@@ -3,7 +3,7 @@
     <fullName>VR_PRISM_Sol_First_Bill_Date</fullName>
     <active>true</active>
     <description
-  >[IRM feedback row OppVR49] Requires First Bill Date while in Negotiation, Booking Verification, Booked, Setup or Closed. Simplified per IRM. Note: &apos;First Bill Date&apos; maps to IM_Booked_Date__c.</description>
+  >[IRM feedback row OppVR49] Requires First Bill Date on moving into Negotiation, Booking Verification, Booked, Setup or Closed. Simplified per IRM. Note: &apos;First Bill Date&apos; maps to IM_Booked_Date__c.</description>
     <errorConditionFormula>AND(
     NOT($Permission.ECommerce_Deal_Bypass),
 
@@ -19,11 +19,37 @@
     ),
 
     OR(
-        ISPICKVAL(StageName, &apos;Negotiation&apos;),
-        ISPICKVAL(StageName, &apos;Booking Verification&apos;),
-        ISPICKVAL(StageName, &apos;Booked&apos;),
-        ISPICKVAL(StageName, &apos;Setup&apos;),
-        ISPICKVAL(StageName, &apos;Closed&apos;)
+        AND(
+            ISPICKVAL(PRIORVALUE(StageName), &apos;Qualification&apos;),
+            ISPICKVAL(StageName, &apos;Solutioning&apos;)
+        ),
+        AND(
+            ISPICKVAL(PRIORVALUE(StageName), &apos;Solutioning&apos;),
+            ISPICKVAL(StageName, &apos;Negotiation&apos;)
+        ),
+        AND(
+            ISPICKVAL(PRIORVALUE(StageName), &apos;Negotiation&apos;),
+            ISPICKVAL(StageName, &apos;Booking Verification&apos;)
+        ),
+        AND(
+            ISPICKVAL(PRIORVALUE(StageName), &apos;Booking Verification&apos;),
+            ISPICKVAL(StageName, &apos;Booked&apos;)
+        ),
+        AND(
+            ISPICKVAL(PRIORVALUE(StageName), &apos;Booked&apos;),
+            ISPICKVAL(StageName, &apos;Setup&apos;)
+        ),
+        IF(
+            RecordType.DeveloperName = &apos;Framework_Parent_Opportunity&apos;,
+            AND(
+            ISPICKVAL(PRIORVALUE(StageName), &apos;Booking Verification&apos;),
+            ISPICKVAL(StageName, &apos;Closed&apos;)
+        ),
+            AND(
+            ISPICKVAL(PRIORVALUE(StageName), &apos;Setup&apos;),
+            ISPICKVAL(StageName, &apos;Closed&apos;)
+        )
+        )
     ),
 
     ISBLANK(IM_Booked_Date__c)

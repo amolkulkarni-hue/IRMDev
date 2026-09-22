@@ -3,7 +3,7 @@
     <fullName>VR_PRISM_Neg_Reason_Won</fullName>
     <active>true</active>
     <description
-  >[IRM feedback row OppVR18] Requires Reason Won while in Booking Verification, Booked, Setup or Closed. Simplified per IRM feedback.</description>
+  >[IRM feedback row OppVR18] Requires Reason Won on moving into Booking Verification, Booked, Setup or Closed. Simplified per IRM feedback.</description>
     <errorConditionFormula>AND(
     NOT($Permission.ECommerce_Deal_Bypass),
 
@@ -19,10 +19,33 @@
     ),
 
     OR(
-        ISPICKVAL(StageName, &apos;Booking Verification&apos;),
-        ISPICKVAL(StageName, &apos;Booked&apos;),
-        ISPICKVAL(StageName, &apos;Setup&apos;),
-        ISPICKVAL(StageName, &apos;Closed&apos;)
+        AND(
+            ISPICKVAL(PRIORVALUE(StageName), &apos;Solutioning&apos;),
+            ISPICKVAL(StageName, &apos;Negotiation&apos;)
+        ),
+        AND(
+            ISPICKVAL(PRIORVALUE(StageName), &apos;Negotiation&apos;),
+            ISPICKVAL(StageName, &apos;Booking Verification&apos;)
+        ),
+        AND(
+            ISPICKVAL(PRIORVALUE(StageName), &apos;Booking Verification&apos;),
+            ISPICKVAL(StageName, &apos;Booked&apos;)
+        ),
+        AND(
+            ISPICKVAL(PRIORVALUE(StageName), &apos;Booked&apos;),
+            ISPICKVAL(StageName, &apos;Setup&apos;)
+        ),
+        IF(
+            RecordType.DeveloperName = &apos;Framework_Parent_Opportunity&apos;,
+            AND(
+            ISPICKVAL(PRIORVALUE(StageName), &apos;Booking Verification&apos;),
+            ISPICKVAL(StageName, &apos;Closed&apos;)
+        ),
+            AND(
+            ISPICKVAL(PRIORVALUE(StageName), &apos;Setup&apos;),
+            ISPICKVAL(StageName, &apos;Closed&apos;)
+        )
+        )
     ),
 
     ISPICKVAL(IME_Reason_Won__c, &apos;&apos;)

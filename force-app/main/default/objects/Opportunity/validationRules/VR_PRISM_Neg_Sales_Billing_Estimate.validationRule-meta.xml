@@ -3,7 +3,7 @@
     <fullName>VR_PRISM_Neg_Sales_Billing_Estimate</fullName>
     <active>true</active>
     <description
-  >[IRM feedback row OppVR19] Requires Sales Billing Estimate while in Booking Verification, when EAA proxy (Amount, currency-converted) is &gt;= $25K USD. Simplified per IRM feedback; now converts Amount via CURRENCYRATE per IRM&apos;s currency-conversion note.</description>
+  >[IRM feedback row OppVR19] Requires Sales Billing Estimate on moving into Negotiation and again into Booking Verification, when EAA proxy (Amount, currency-converted) is &gt;= $25K USD. Now converts Amount via CURRENCYRATE per IRM&apos;s note.</description>
     <errorConditionFormula>AND(
     NOT($Permission.ECommerce_Deal_Bypass),
 
@@ -16,7 +16,16 @@
 
     Amount / CURRENCYRATE(TEXT(CurrencyIsoCode)) &gt;= 25000,
 
-    ISPICKVAL(StageName, &apos;Booking Verification&apos;),
+    OR(
+        AND(
+            ISPICKVAL(PRIORVALUE(StageName), &apos;Solutioning&apos;),
+            ISPICKVAL(StageName, &apos;Negotiation&apos;)
+        ),
+        AND(
+            ISPICKVAL(PRIORVALUE(StageName), &apos;Negotiation&apos;),
+            ISPICKVAL(StageName, &apos;Booking Verification&apos;)
+        )
+    ),
 
     OR(ISBLANK(Total_Sales_Billing_Estimate__c), Total_Sales_Billing_Estimate__c &lt;= 0)
 )</errorConditionFormula>

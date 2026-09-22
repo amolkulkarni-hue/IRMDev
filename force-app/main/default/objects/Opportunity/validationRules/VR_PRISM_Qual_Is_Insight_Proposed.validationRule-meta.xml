@@ -3,7 +3,7 @@
     <fullName>VR_PRISM_Qual_Is_Insight_Proposed</fullName>
     <active>true</active>
     <description
-  >[IRM feedback row OppVR36] Requires Is Insight Being Proposed? while in Solutioning, Negotiation or Booking Verification. PPL corrected per IRM (Digitization/Info Governance only, no InSight). Stage inferred from sibling rules.</description>
+  >[IRM feedback row OppVR36] Requires Is Insight Being Proposed? on moving into Solutioning, Negotiation or Booking Verification. PPL corrected per IRM (Digitization/Info Governance only, no InSight). Stage inferred from sibling rules.</description>
     <errorConditionFormula>AND(
     NOT($Permission.ECommerce_Deal_Bypass),
 
@@ -23,9 +23,22 @@
     ),
 
     OR(
-        ISPICKVAL(StageName, &apos;Solutioning&apos;),
-        ISPICKVAL(StageName, &apos;Negotiation&apos;),
-        ISPICKVAL(StageName, &apos;Booking Verification&apos;)
+        AND(
+            ISNEW(),
+            ISPICKVAL(StageName, &apos;Qualification&apos;)
+        ),
+        AND(
+            ISPICKVAL(PRIORVALUE(StageName), &apos;Qualification&apos;),
+            ISPICKVAL(StageName, &apos;Solutioning&apos;)
+        ),
+        AND(
+            ISPICKVAL(PRIORVALUE(StageName), &apos;Solutioning&apos;),
+            ISPICKVAL(StageName, &apos;Negotiation&apos;)
+        ),
+        AND(
+            ISPICKVAL(PRIORVALUE(StageName), &apos;Negotiation&apos;),
+            ISPICKVAL(StageName, &apos;Booking Verification&apos;)
+        )
     ),
 
     ISBLANK(Is_InSight_being_proposed__c)

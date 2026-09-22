@@ -3,7 +3,7 @@
     <fullName>VR_PRISM_Sol_Marketplace</fullName>
     <active>true</active>
     <description
-  >[IRM feedback row OppVR52] Requires Marketplace? while in Negotiation only, for Digitization/Information Governance/InSight deals. PPL values corrected per IRM feedback. Stage narrowed to Negotiation-only per IRM&apos;s answer for this Solutioning cluster.</description>
+  >[IRM feedback row OppVR52] Requires Marketplace? on moving into Negotiation only, for Digitization/Information Governance/InSight deals. PPL values corrected per IRM feedback. Stage narrowed to Negotiation-only per IRM&apos;s answer for this Solutioning...</description>
     <errorConditionFormula>AND(
     NOT($Permission.ECommerce_Deal_Bypass),
 
@@ -24,7 +24,16 @@
         ISPICKVAL(Primary_Product_Line__c, &apos;InSight&apos;)
     ),
 
-    ISPICKVAL(StageName, &apos;Negotiation&apos;),
+    OR(
+        AND(
+            ISPICKVAL(PRIORVALUE(StageName), &apos;Qualification&apos;),
+            ISPICKVAL(StageName, &apos;Solutioning&apos;)
+        ),
+        AND(
+            ISPICKVAL(PRIORVALUE(StageName), &apos;Solutioning&apos;),
+            ISPICKVAL(StageName, &apos;Negotiation&apos;)
+        )
+    ),
 
     ISPICKVAL(Marketplace__c, &apos;&apos;)
 )</errorConditionFormula>

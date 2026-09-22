@@ -3,7 +3,7 @@
     <fullName>VR_PRISM_Qual_Unit_Of_Measure</fullName>
     <active>true</active>
     <description
-  >[IRM feedback row OppVR41] Requires Unit of Measure while in Solutioning, Negotiation or Booking Verification, for cross-sell/upsell deals. Simplified per IRM feedback.</description>
+  >[IRM feedback row OppVR41] Requires Unit of Measure on moving into Solutioning, Negotiation or Booking Verification, for cross-sell/upsell deals. Simplified per IRM feedback.</description>
     <errorConditionFormula>AND(
     NOT($Permission.ECommerce_Deal_Bypass),
 
@@ -15,9 +15,22 @@
     ISPICKVAL(Type, &apos;Cross-Sell/Upsell&apos;),
 
     OR(
-        ISPICKVAL(StageName, &apos;Solutioning&apos;),
-        ISPICKVAL(StageName, &apos;Negotiation&apos;),
-        ISPICKVAL(StageName, &apos;Booking Verification&apos;)
+        AND(
+            ISNEW(),
+            ISPICKVAL(StageName, &apos;Qualification&apos;)
+        ),
+        AND(
+            ISPICKVAL(PRIORVALUE(StageName), &apos;Qualification&apos;),
+            ISPICKVAL(StageName, &apos;Solutioning&apos;)
+        ),
+        AND(
+            ISPICKVAL(PRIORVALUE(StageName), &apos;Solutioning&apos;),
+            ISPICKVAL(StageName, &apos;Negotiation&apos;)
+        ),
+        AND(
+            ISPICKVAL(PRIORVALUE(StageName), &apos;Negotiation&apos;),
+            ISPICKVAL(StageName, &apos;Booking Verification&apos;)
+        )
     ),
 
     ISPICKVAL(IM_Unit_of_Measure__c, &apos;&apos;)

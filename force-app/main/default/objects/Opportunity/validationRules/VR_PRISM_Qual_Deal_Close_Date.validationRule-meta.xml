@@ -3,7 +3,7 @@
     <fullName>VR_PRISM_Qual_Deal_Close_Date</fullName>
     <active>true</active>
     <description
-  >[IRM feedback row OppVR31] Requires (Deal) Close Date while in Solutioning, Negotiation, Booking Verification, Booked, Setup or Closed - record should never be saved without a Close Date. Simplified per IRM feedback.</description>
+  >[IRM feedback row OppVR31] Requires (Deal) Close Date on moving into Solutioning, Negotiation, Booking Verification, Booked, Setup or Closed - record should never be saved without a Close Date. Simplified per IRM feedback.</description>
     <errorConditionFormula>AND(
     OR(
         RecordType.DeveloperName = &apos;Framework_Parent_Opportunity&apos;,
@@ -17,12 +17,41 @@
     ),
 
     OR(
-        ISPICKVAL(StageName, &apos;Solutioning&apos;),
-        ISPICKVAL(StageName, &apos;Negotiation&apos;),
-        ISPICKVAL(StageName, &apos;Booking Verification&apos;),
-        ISPICKVAL(StageName, &apos;Booked&apos;),
-        ISPICKVAL(StageName, &apos;Setup&apos;),
-        ISPICKVAL(StageName, &apos;Closed&apos;)
+        AND(
+            ISNEW(),
+            ISPICKVAL(StageName, &apos;Qualification&apos;)
+        ),
+        AND(
+            ISPICKVAL(PRIORVALUE(StageName), &apos;Qualification&apos;),
+            ISPICKVAL(StageName, &apos;Solutioning&apos;)
+        ),
+        AND(
+            ISPICKVAL(PRIORVALUE(StageName), &apos;Solutioning&apos;),
+            ISPICKVAL(StageName, &apos;Negotiation&apos;)
+        ),
+        AND(
+            ISPICKVAL(PRIORVALUE(StageName), &apos;Negotiation&apos;),
+            ISPICKVAL(StageName, &apos;Booking Verification&apos;)
+        ),
+        AND(
+            ISPICKVAL(PRIORVALUE(StageName), &apos;Booking Verification&apos;),
+            ISPICKVAL(StageName, &apos;Booked&apos;)
+        ),
+        AND(
+            ISPICKVAL(PRIORVALUE(StageName), &apos;Booked&apos;),
+            ISPICKVAL(StageName, &apos;Setup&apos;)
+        ),
+        IF(
+            RecordType.DeveloperName = &apos;Framework_Parent_Opportunity&apos;,
+            AND(
+            ISPICKVAL(PRIORVALUE(StageName), &apos;Booking Verification&apos;),
+            ISPICKVAL(StageName, &apos;Closed&apos;)
+        ),
+            AND(
+            ISPICKVAL(PRIORVALUE(StageName), &apos;Setup&apos;),
+            ISPICKVAL(StageName, &apos;Closed&apos;)
+        )
+        )
     ),
 
     ISBLANK(CloseDate)

@@ -3,7 +3,7 @@
     <fullName>VR_PRISM_Qual_Digital_Use_Case</fullName>
     <active>true</active>
     <description
-  >[IRM feedback row OppVR33] Requires Digital Use Case while in Solutioning, Negotiation or BV, Digitization/InfoGov/InSight deals. PPL corrected per IRM. Stage inferred from sibling rules - confirm if different.</description>
+  >[IRM feedback row OppVR33] Requires Digital Use Case on moving into Solutioning, Negotiation or BV, Digitization/InfoGov/InSight deals. PPL corrected per IRM. Stage inferred from sibling rules - confirm if different.</description>
     <errorConditionFormula>AND(
     NOT($Permission.ECommerce_Deal_Bypass),
 
@@ -24,9 +24,22 @@
     ),
 
     OR(
-        ISPICKVAL(StageName, &apos;Solutioning&apos;),
-        ISPICKVAL(StageName, &apos;Negotiation&apos;),
-        ISPICKVAL(StageName, &apos;Booking Verification&apos;)
+        AND(
+            ISNEW(),
+            ISPICKVAL(StageName, &apos;Qualification&apos;)
+        ),
+        AND(
+            ISPICKVAL(PRIORVALUE(StageName), &apos;Qualification&apos;),
+            ISPICKVAL(StageName, &apos;Solutioning&apos;)
+        ),
+        AND(
+            ISPICKVAL(PRIORVALUE(StageName), &apos;Solutioning&apos;),
+            ISPICKVAL(StageName, &apos;Negotiation&apos;)
+        ),
+        AND(
+            ISPICKVAL(PRIORVALUE(StageName), &apos;Negotiation&apos;),
+            ISPICKVAL(StageName, &apos;Booking Verification&apos;)
+        )
     ),
 
     ISPICKVAL(InSight_Opportunities__c, &apos;&apos;)

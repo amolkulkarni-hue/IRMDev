@@ -3,7 +3,7 @@
     <fullName>VR_PRISM_Qual_Multi_Country</fullName>
     <active>true</active>
     <description
-  >[IRM feedback row OppVR38] GAP: requires Multi_Country__c (picklist) while in Solutioning/Negotiation/BV, per IRM correction (not the existing Multiple_Markets__c checkbox). Multi_Country__c does NOT exist yet - field must be created first; won&apos;t...</description>
+  >[IRM feedback row OppVR38] GAP: requires Multi_Country__c (picklist) on moving into Solutioning/Negotiation/BV, per IRM correction (not the existing Multiple_Markets__c checkbox). Multi_Country__c does NOT exist yet - field must be created first;...</description>
     <errorConditionFormula>AND(
     NOT($Permission.ECommerce_Deal_Bypass),
 
@@ -19,9 +19,22 @@
     ),
 
     OR(
-        ISPICKVAL(StageName, &apos;Solutioning&apos;),
-        ISPICKVAL(StageName, &apos;Negotiation&apos;),
-        ISPICKVAL(StageName, &apos;Booking Verification&apos;)
+        AND(
+            ISNEW(),
+            ISPICKVAL(StageName, &apos;Qualification&apos;)
+        ),
+        AND(
+            ISPICKVAL(PRIORVALUE(StageName), &apos;Qualification&apos;),
+            ISPICKVAL(StageName, &apos;Solutioning&apos;)
+        ),
+        AND(
+            ISPICKVAL(PRIORVALUE(StageName), &apos;Solutioning&apos;),
+            ISPICKVAL(StageName, &apos;Negotiation&apos;)
+        ),
+        AND(
+            ISPICKVAL(PRIORVALUE(StageName), &apos;Negotiation&apos;),
+            ISPICKVAL(StageName, &apos;Booking Verification&apos;)
+        )
     ),
 
     ISPICKVAL(Multi_Country__c, &apos;&apos;)
