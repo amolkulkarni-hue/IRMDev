@@ -20,31 +20,24 @@
 
     OR(
         AND(
-            ISPICKVAL(PRIORVALUE(StageName), &apos;Solutioning&apos;),
+            ISCHANGED(StageName),
             ISPICKVAL(StageName, &apos;Negotiation&apos;)
         ),
         AND(
-            ISPICKVAL(PRIORVALUE(StageName), &apos;Negotiation&apos;),
+            ISCHANGED(StageName),
             ISPICKVAL(StageName, &apos;Booking Verification&apos;)
         ),
         AND(
-            ISPICKVAL(PRIORVALUE(StageName), &apos;Booking Verification&apos;),
+            ISCHANGED(StageName),
             ISPICKVAL(StageName, &apos;Booked&apos;)
         ),
         AND(
-            ISPICKVAL(PRIORVALUE(StageName), &apos;Booked&apos;),
+            ISCHANGED(StageName),
             ISPICKVAL(StageName, &apos;Setup&apos;)
         ),
-        IF(
-            RecordType.DeveloperName = &apos;Framework_Parent_Opportunity&apos;,
-            AND(
-            ISPICKVAL(PRIORVALUE(StageName), &apos;Booking Verification&apos;),
+        AND(
+            ISCHANGED(StageName),
             ISPICKVAL(StageName, &apos;Closed&apos;)
-        ),
-            AND(
-            ISPICKVAL(PRIORVALUE(StageName), &apos;Setup&apos;),
-            ISPICKVAL(StageName, &apos;Closed&apos;)
-        )
         )
     ),
 

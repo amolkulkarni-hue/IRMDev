@@ -18,19 +18,19 @@
 
     OR(
         AND(
-            ISNEW(),
+            ISCHANGED(StageName),
             ISPICKVAL(StageName, &apos;Qualification&apos;)
         ),
         AND(
-            ISPICKVAL(PRIORVALUE(StageName), &apos;Qualification&apos;),
+            ISCHANGED(StageName),
             ISPICKVAL(StageName, &apos;Solutioning&apos;)
         ),
         AND(
-            ISPICKVAL(PRIORVALUE(StageName), &apos;Solutioning&apos;),
+            ISCHANGED(StageName),
             ISPICKVAL(StageName, &apos;Negotiation&apos;)
         ),
         AND(
-            ISPICKVAL(PRIORVALUE(StageName), &apos;Negotiation&apos;),
+            ISCHANGED(StageName),
             ISPICKVAL(StageName, &apos;Booking Verification&apos;)
         )
     ),
