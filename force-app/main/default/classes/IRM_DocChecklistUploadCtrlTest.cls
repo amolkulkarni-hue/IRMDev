@@ -10,6 +10,8 @@
  *   AC4 — finalizeUpload (Opportunity-only row) links the file to the Opportunity and sets Status/Submitted Date
  *   AC5 — finalizeUpload (Case + Opportunity row) cross-links the file to both
  *   AC6 — finalizeUpload replaces a previous file: stale links removed, new link added
+ *   AC7 — updateStatus persists a valid Status__c change
+ *   AC8 — updateStatus surfaces an invalid Status__c value as an AuraHandledException
  */
 @IsTest
 private class IRM_DocChecklistUploadCtrlTest {
@@ -361,6 +363,58 @@ private class IRM_DocChecklistUploadCtrlTest {
       1,
       countLinks(newFileId, opp.Id),
       'AC6: New file should be linked to the Opportunity'
+    );
+  }
+
+  // ── AC7: updateStatus persists a valid Status__c change ────────────────────
+
+  @IsTest
+  static void test_updateStatusChangesStatusField() {
+    Opportunity opp = makeOpp();
+    Document_Checklist__c doc = makeDocChecklist(null, opp.Id);
+    doc.Status__c = 'Final';
+    update doc;
+
+    Test.startTest();
+    IRM_DocumentChecklistUploadController.updateStatus(doc.Id, 'Draft');
+    Test.stopTest();
+
+    Assert.areEqual(
+      'Draft',
+      [SELECT Status__c FROM Document_Checklist__c WHERE Id = :doc.Id]
+      .Status__c,
+      'AC7: Status__c should be updated to Draft'
+    );
+  }
+
+  // ── AC8: updateStatus surfaces an invalid value as an AuraHandledException ──
+
+  @IsTest
+  static void test_updateStatusInvalidValueThrowsAuraHandledException() {
+    Opportunity opp = makeOpp();
+    Document_Checklist__c doc = makeDocChecklist(null, opp.Id);
+
+    Test.startTest();
+    Boolean threwAuraHandledException = false;
+    try {
+      IRM_DocumentChecklistUploadController.updateStatus(
+        doc.Id,
+        'Not A Real Status'
+      );
+    } catch (AuraHandledException ex) {
+      threwAuraHandledException = true;
+    }
+    Test.stopTest();
+
+    Assert.isTrue(
+      threwAuraHandledException,
+      'AC8: An invalid Status__c value should surface as an AuraHandledException'
+    );
+    Assert.areEqual(
+      'Draft',
+      [SELECT Status__c FROM Document_Checklist__c WHERE Id = :doc.Id]
+      .Status__c,
+      'AC8: Status__c should remain unchanged after the failed update'
     );
   }
 }
