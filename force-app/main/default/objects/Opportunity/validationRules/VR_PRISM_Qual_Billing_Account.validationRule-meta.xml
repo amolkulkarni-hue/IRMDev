@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>VR_PRISM_Qual_Billing_Account</fullName>
+    <active>true</active>
+    <description
+  >[IRM feedback row OppVR24] Requires Billing Account while in Solutioning, Negotiation or Booking Verification, for ITAD cross-sell/upsell deals. Simplified per IRM feedback; &apos;ITAD&apos; now used literally per IRM correction.</description>
+    <errorConditionFormula>AND(
+    OR(
+        RecordType.DeveloperName = &apos;Standard_Opportunity&apos;,
+        RecordType.DeveloperName = &apos;Framework_Parent_Opportunity&apos;
+    ),
+
+    ISPICKVAL(Type, &apos;Cross-Sell/Upsell&apos;),
+
+    (ISPICKVAL(Primary_Product_Line__c, &apos;ITAD&apos;) &amp;&amp;
+    CONTAINS($Label.QTB_SITAD_Countries, QTB_Billing_Country_Name__c)) &amp;&amp;
+    NOT((ISPICKVAL(StageName, &apos;Closed&apos;) &amp;&amp; CloseDate &lt; DATE(2024,04,19)) || ISPICKVAL(StageName, &apos;Setup&apos;)),
+
+    OR(
+        ISPICKVAL(StageName, &apos;Solutioning&apos;),
+        ISPICKVAL(StageName, &apos;Negotiation&apos;),
+        ISPICKVAL(StageName, &apos;Booking Verification&apos;)
+    ),
+
+    ISBLANK(Billing_Account__c)
+)</errorConditionFormula>
+    <errorDisplayField>Billing_Account__c</errorDisplayField>
+    <errorMessage
+  >Billing Account is required. Please select a Billing Account for this Opportunity.</errorMessage>
+</ValidationRule>

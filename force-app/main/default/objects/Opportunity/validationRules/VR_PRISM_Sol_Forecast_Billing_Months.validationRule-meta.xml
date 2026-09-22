@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>VR_PRISM_Sol_Forecast_Billing_Months</fullName>
+    <active>true</active>
+    <description
+  >[IRM feedback row OppVR53] Requires Number of Forecast Billing Months while in Negotiation or Booking Verification, when EAA proxy (Amount, currency-converted) is &gt;= $25K USD. Simplified per IRM feedback; now converts Amount via CURRENCYRATE.</description>
+    <errorConditionFormula>AND(
+    NOT($Permission.ECommerce_Deal_Bypass),
+
+    RecordType.DeveloperName = &apos;Standard_Opportunity&apos;,
+
+    OR(
+        ISPICKVAL(Type, &apos;New Deal&apos;),
+        ISPICKVAL(Type, &apos;Cross-Sell/Upsell&apos;)
+    ),
+
+    Amount / CURRENCYRATE(TEXT(CurrencyIsoCode)) &gt;= 25000,
+
+    OR(
+        ISPICKVAL(StageName, &apos;Negotiation&apos;),
+        ISPICKVAL(StageName, &apos;Booking Verification&apos;)
+    ),
+
+    ISPICKVAL(No_of_Forecast_Billing_Month__c, &apos;&apos;)
+)</errorConditionFormula>
+    <errorDisplayField>No_of_Forecast_Billing_Month__c</errorDisplayField>
+    <errorMessage
+  >Number of Forecast Billing Months is required to advance to the next stage. Please enter a value.</errorMessage>
+</ValidationRule>

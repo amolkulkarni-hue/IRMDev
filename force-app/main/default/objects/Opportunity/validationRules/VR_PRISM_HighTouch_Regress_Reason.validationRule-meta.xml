@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>VR_PRISM_HighTouch_Regress_Reason</fullName>
+    <active>true</active>
+    <description
+  >[Sheet row 67 / OppVR87] High Touch Opportunities require a Regression Reason when moving Negotiation-&gt;Solutioning/Qualification or Solutioning-&gt;Qualification. Confirmed needed by IRM as part of the stage-regression build, no logic change.</description>
+    <errorConditionFormula>AND(
+    ISPICKVAL(Touch_Level__c, &apos;High Touch&apos;),
+
+    OR(
+        AND(ISPICKVAL(PRIORVALUE(StageName), &apos;Negotiation&apos;), OR(ISPICKVAL(StageName, &apos;Solutioning&apos;), ISPICKVAL(StageName, &apos;Qualification&apos;))),
+        AND(ISPICKVAL(PRIORVALUE(StageName), &apos;Solutioning&apos;), ISPICKVAL(StageName, &apos;Qualification&apos;))
+    ),
+
+    ISBLANK(Stage_Regression_Reason__c)
+)</errorConditionFormula>
+    <errorDisplayField>Stage_Regression_Reason__c</errorDisplayField>
+    <errorMessage
+  >Regression Reason is required. Please enter a reason for moving this Opportunity backwards.</errorMessage>
+</ValidationRule>

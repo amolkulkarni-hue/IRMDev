@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>VR_PRISM_Lock_All_Fields_During_BV</fullName>
+    <active>true</active>
+    <description
+  >[Sheet row OppVR80] Blocks any field edit while Stage = Booking Verification. ISCHANGED(LastModifiedDate), gated by Disable_VR__c so flows/integrations toggle that setting instead - answers IRM&apos;s question. No logic change.</description>
+    <errorConditionFormula>AND(
+    NOT($Setup.Metadata_Activation_Settings__c.Disable_VR__c &amp;&amp;
+        OR(
+            ISBLANK($Setup.Metadata_Activation_Settings__c.SObject_API_Name__c),
+            CONTAINS($Setup.Metadata_Activation_Settings__c.SObject_API_Name__c, &apos;Opportunity&apos;)
+        )),
+
+    NOT(OR(
+        $Permission.Sales_Operations_Bypass,
+        $Permission.Booking_Verification_Access
+    )),
+
+    ISPICKVAL(StageName, &apos;Booking Verification&apos;),
+
+    ISCHANGED(LastModifiedDate)
+)</errorConditionFormula>
+    <errorMessage
+  >Insufficient permissions. Opportunities in Booking Verification stage cannot be updated. Please contact your regional Sales Operations Business Partner for assistance.</errorMessage>
+</ValidationRule>

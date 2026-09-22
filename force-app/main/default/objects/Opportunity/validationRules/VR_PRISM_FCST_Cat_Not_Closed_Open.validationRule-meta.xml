@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>VR_PRISM_FCST_Cat_Not_Closed_Open</fullName>
+    <active>true</active>
+    <description
+  >[Sheet row 56 / OppVR76] Forecast Category cannot be &apos;Closed&apos; while in Qualification, Solutioning, Negotiation or Booking Verification. Approved by IRM, no change.</description>
+    <errorConditionFormula>AND(
+    ISPICKVAL(ForecastCategoryName, &apos;Closed&apos;),
+
+    OR(
+        ISPICKVAL(StageName, &apos;Qualification&apos;),
+        ISPICKVAL(StageName, &apos;Solutioning&apos;),
+        ISPICKVAL(StageName, &apos;Negotiation&apos;),
+        ISPICKVAL(StageName, &apos;Booking Verification&apos;)
+    )
+)</errorConditionFormula>
+    <errorDisplayField>ForecastCategoryName</errorDisplayField>
+    <errorMessage
+  >Invalid Forecast Category. The Forecast Category cannot be &apos;Closed&apos; while the Opportunity is in an Open Stage.</errorMessage>
+</ValidationRule>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>VR_PRISM_Qual_UpSell_Quantity</fullName>
+    <active>true</active>
+    <description
+  >[IRM feedback row OppVR43] Requires Up-Sell Quantity while in Solutioning, Negotiation or Booking Verification, for cross-sell/upsell deals. Simplified per IRM feedback.</description>
+    <errorConditionFormula>AND(
+    NOT($Permission.ECommerce_Deal_Bypass),
+
+    OR(
+        RecordType.DeveloperName = &apos;Standard_Opportunity&apos;,
+        RecordType.DeveloperName = &apos;Framework_Parent_Opportunity&apos;
+    ),
+
+    ISPICKVAL(Type, &apos;Cross-Sell/Upsell&apos;),
+
+    OR(
+        ISPICKVAL(StageName, &apos;Solutioning&apos;),
+        ISPICKVAL(StageName, &apos;Negotiation&apos;),
+        ISPICKVAL(StageName, &apos;Booking Verification&apos;)
+    ),
+
+    OR(ISBLANK(IM_Up_Sell_Quantity__c), IM_Up_Sell_Quantity__c &lt;= 0)
+)</errorConditionFormula>
+    <errorDisplayField>IM_Up_Sell_Quantity__c</errorDisplayField>
+    <errorMessage
+  >Up-Sell Quantity is required to advance to the next stage. Please enter a value.</errorMessage>
+</ValidationRule>

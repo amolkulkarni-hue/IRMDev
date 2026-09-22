@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>VR_PRISM_Sol_Fuel_Surcharge_Waiver</fullName>
+    <active>true</active>
+    <description
+  >[IRM feedback row OppVR51] Requires Fuel Surcharge Waiver while in Negotiation only, for RIM/MAS Business Unit deals (NOT ALM, per IRM correction) billing to the listed countries. Simplified per IRM feedback.</description>
+    <errorConditionFormula>AND(
+    NOT($Permission.ECommerce_Deal_Bypass),
+
+    RecordType.DeveloperName = &apos;Standard_Opportunity&apos;,
+
+    OR(
+        ISPICKVAL(Type, &apos;New Deal&apos;),
+        ISPICKVAL(Type, &apos;Cross-Sell/Upsell&apos;)
+    ),
+
+    AND(
+        OR(
+            RIM_BU__c = TRUE,
+            MAS_BU__c = TRUE
+        ),
+        OR(
+        QTB_Billing_Country_Name__c = &apos;United States&apos;,
+        QTB_Billing_Country_Name__c = &apos;Canada&apos;,
+        QTB_Billing_Country_Name__c = &apos;Ireland&apos;,
+        QTB_Billing_Country_Name__c = &apos;France&apos;,
+        QTB_Billing_Country_Name__c = &apos;Belgium&apos;,
+        QTB_Billing_Country_Name__c = &apos;Netherlands&apos;,
+        QTB_Billing_Country_Name__c = &apos;Sweden&apos;,
+        QTB_Billing_Country_Name__c = &apos;Denmark&apos;
+    )
+    ),
+
+    ISPICKVAL(StageName, &apos;Negotiation&apos;),
+
+    ISPICKVAL(Fuel_Surcharge_Waiver__c, &apos;&apos;)
+)</errorConditionFormula>
+    <errorDisplayField>Fuel_Surcharge_Waiver__c</errorDisplayField>
+    <errorMessage
+  >Fuel Surcharge Waiver is required to advance to the next stage. Please enter a value.</errorMessage>
+</ValidationRule>

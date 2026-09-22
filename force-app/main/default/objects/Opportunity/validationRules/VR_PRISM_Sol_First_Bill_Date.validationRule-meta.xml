@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>VR_PRISM_Sol_First_Bill_Date</fullName>
+    <active>true</active>
+    <description
+  >[IRM feedback row OppVR49] Requires First Bill Date while in Negotiation, Booking Verification, Booked, Setup or Closed. Simplified per IRM. Note: &apos;First Bill Date&apos; maps to IM_Booked_Date__c.</description>
+    <errorConditionFormula>AND(
+    NOT($Permission.ECommerce_Deal_Bypass),
+
+    OR(
+        RecordType.DeveloperName = &apos;Framework_Parent_Opportunity&apos;,
+        RecordType.DeveloperName = &apos;Standard_Opportunity&apos;
+    ),
+
+    OR(
+        ISPICKVAL(Type, &apos;New Deal&apos;),
+        ISPICKVAL(Type, &apos;Cross-Sell/Upsell&apos;),
+        ISPICKVAL(Type, &apos;Renewal&apos;)
+    ),
+
+    OR(
+        ISPICKVAL(StageName, &apos;Negotiation&apos;),
+        ISPICKVAL(StageName, &apos;Booking Verification&apos;),
+        ISPICKVAL(StageName, &apos;Booked&apos;),
+        ISPICKVAL(StageName, &apos;Setup&apos;),
+        ISPICKVAL(StageName, &apos;Closed&apos;)
+    ),
+
+    ISBLANK(IM_Booked_Date__c)
+)</errorConditionFormula>
+    <errorDisplayField>IM_Booked_Date__c</errorDisplayField>
+    <errorMessage
+  >First Bill Date is required to advance to the next stage. Please enter a date.</errorMessage>
+</ValidationRule>

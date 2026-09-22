@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>VR_PRISM_LowMedTouch_Regress_Reason</fullName>
+    <active>true</active>
+    <description
+  >[Sheet row 68 / OppVR88] Low/Medium Touch Opportunities require a Regression Reason when moving Negotiation-&gt;Solutioning/Qualification or Solutioning-&gt;Qualification. Confirmed needed by IRM, no logic change.</description>
+    <errorConditionFormula>AND(
+    OR(
+        ISPICKVAL(Touch_Level__c, &apos;Low Touch&apos;),
+        ISPICKVAL(Touch_Level__c, &apos;Medium Touch&apos;)
+    ),
+
+    OR(
+        AND(ISPICKVAL(PRIORVALUE(StageName), &apos;Negotiation&apos;), OR(ISPICKVAL(StageName, &apos;Solutioning&apos;), ISPICKVAL(StageName, &apos;Qualification&apos;))),
+        AND(ISPICKVAL(PRIORVALUE(StageName), &apos;Solutioning&apos;), ISPICKVAL(StageName, &apos;Qualification&apos;))
+    ),
+
+    ISBLANK(Stage_Regression_Reason__c)
+)</errorConditionFormula>
+    <errorDisplayField>Stage_Regression_Reason__c</errorDisplayField>
+    <errorMessage
+  >Regression Reason is required. Please enter a reason for moving this Opportunity backwards.</errorMessage>
+</ValidationRule>

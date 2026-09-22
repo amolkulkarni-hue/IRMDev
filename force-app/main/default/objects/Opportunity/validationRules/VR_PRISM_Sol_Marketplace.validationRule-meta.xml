@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>VR_PRISM_Sol_Marketplace</fullName>
+    <active>true</active>
+    <description
+  >[IRM feedback row OppVR52] Requires Marketplace? while in Negotiation only, for Digitization/Information Governance/InSight deals. PPL values corrected per IRM feedback. Stage narrowed to Negotiation-only per IRM&apos;s answer for this Solutioning cluster.</description>
+    <errorConditionFormula>AND(
+    NOT($Permission.ECommerce_Deal_Bypass),
+
+    OR(
+        RecordType.DeveloperName = &apos;Framework_Parent_Opportunity&apos;,
+        RecordType.DeveloperName = &apos;Standard_Opportunity&apos;
+    ),
+
+    OR(
+        ISPICKVAL(Type, &apos;New Deal&apos;),
+        ISPICKVAL(Type, &apos;Cross-Sell/Upsell&apos;),
+        ISPICKVAL(Type, &apos;Renewal&apos;)
+    ),
+
+    OR(
+        ISPICKVAL(Primary_Product_Line__c, &apos;Digitization&apos;),
+        ISPICKVAL(Primary_Product_Line__c, &apos;Information Governance&apos;),
+        ISPICKVAL(Primary_Product_Line__c, &apos;InSight&apos;)
+    ),
+
+    ISPICKVAL(StageName, &apos;Negotiation&apos;),
+
+    ISPICKVAL(Marketplace__c, &apos;&apos;)
+)</errorConditionFormula>
+    <errorDisplayField>Marketplace__c</errorDisplayField>
+    <errorMessage
+  >Marketplace? is required to advance to the next stage. Please select a value.</errorMessage>
+</ValidationRule>

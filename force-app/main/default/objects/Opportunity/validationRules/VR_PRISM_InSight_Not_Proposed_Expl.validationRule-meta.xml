@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>VR_PRISM_InSight_Not_Proposed_Expl</fullName>
+    <active>true</active>
+    <description
+  >[Sheet row 38 / OppVR58] Requires InSight Not In Proposal Explanation when Is Insight Being Proposed? indicates &apos;No&apos;. Approved by IRM, no change.</description>
+    <errorConditionFormula>AND(
+    NOT($Permission.ECommerce_Deal_Bypass),
+
+    OR(
+        INCLUDES(Is_InSight_being_proposed__c, &apos;No - Using Hyland Software due to feature requirements&apos;),
+        INCLUDES(Is_InSight_being_proposed__c, &apos;No - Using other IRM product&apos;),
+        INCLUDES(Is_InSight_being_proposed__c, &apos;No - Price&apos;),
+        INCLUDES(Is_InSight_being_proposed__c, &apos;No - Missing Feature&apos;),
+        INCLUDES(Is_InSight_being_proposed__c, &apos;No - Customer has internal solution&apos;),
+        INCLUDES(Is_InSight_being_proposed__c, &apos;No - Other&apos;)
+    ),
+
+    ISBLANK(InSight_not_in_proposal_Explanation__c)
+)</errorConditionFormula>
+    <errorDisplayField
+  >InSight_not_in_proposal_Explanation__c</errorDisplayField>
+    <errorMessage
+  >An explanation is required when Insight is not proposed. Please complete the InSight Not In Proposal Explanation field.</errorMessage>
+</ValidationRule>

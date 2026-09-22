@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>VR_PRISM_FCST_Cat_Omitted_Lost</fullName>
+    <active>true</active>
+    <description
+  >[Sheet row 57 / OppVR77] Forecast Category must be &apos;Omitted&apos; when Stage = Lost. Approved by IRM, no change.</description>
+    <errorConditionFormula>AND(
+    ISPICKVAL(StageName, &apos;Lost&apos;),
+
+    NOT(ISPICKVAL(ForecastCategoryName, &apos;Omitted&apos;))
+)</errorConditionFormula>
+    <errorDisplayField>ForecastCategoryName</errorDisplayField>
+    <errorMessage
+  >Forecast Category mismatch. Use &apos;Closed&apos; for Booked/Setup/Closed Stages, and &apos;Omitted&apos; for the Lost Stage.</errorMessage>
+</ValidationRule>

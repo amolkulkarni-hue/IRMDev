@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>VR_PRISM_Marketplace_Details_Required</fullName>
+    <active>true</active>
+    <description
+  >[Sheet row 39 / OppVR59] Requires Marketplace Details when Marketplace? is populated. Approved by IRM, no change.</description>
+    <errorConditionFormula>AND(
+    NOT($Permission.ECommerce_Deal_Bypass),
+
+    NOT(ISPICKVAL(Marketplace__c, &apos;&apos;)),
+
+    ISBLANK(Marketplace_Details__c)
+)</errorConditionFormula>
+    <errorDisplayField>Marketplace_Details__c</errorDisplayField>
+    <errorMessage
+  >Marketplace Details are required because Marketplace is selected. Please enter the details.</errorMessage>
+</ValidationRule>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>VR_PRISM_No_Regression_After_BV_Complete</fullName>
+    <active>true</active>
+    <description
+  >[Sheet row 44 / OppVR64] Opportunity cannot move from Booking Verification back to Qualification/Solutioning/Negotiation once BV = Pass. Rebuilt per IRM correction (was a generic regression check).</description>
+    <errorConditionFormula>AND(
+    ISCHANGED(StageName),
+
+    ISPICKVAL(PRIORVALUE(StageName), &apos;Booking Verification&apos;),
+
+    OR(
+        ISPICKVAL(StageName, &apos;Qualification&apos;),
+        ISPICKVAL(StageName, &apos;Solutioning&apos;),
+        ISPICKVAL(StageName, &apos;Negotiation&apos;)
+    ),
+
+    ISPICKVAL(Deal_Validation__c, &apos;Pass&apos;)
+)</errorConditionFormula>
+    <errorMessage
+  >Stage regression is not allowed. You cannot move an Opportunity backwards after Booking Verification is complete.</errorMessage>
+</ValidationRule>

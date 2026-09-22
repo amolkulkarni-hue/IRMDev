@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>VR_PRISM_FBD_Not_Past_Open_Stages</fullName>
+    <active>true</active>
+    <description
+  >[Sheet row 55 / OppVR75] First Bill Date cannot be in the past while in/moving to Qualification, Solutioning, Negotiation or Booking Verification. Note: &apos;First Bill Date&apos; mapped to IM_Booked_Date__c. Approved by IRM, no change.</description>
+    <errorConditionFormula>AND(
+    NOT($Permission.ECommerce_Deal_Bypass),
+
+    NOT(ISBLANK(IM_Booked_Date__c)),
+
+    IM_Booked_Date__c &lt; TODAY(),
+
+    OR(
+        ISPICKVAL(StageName, &apos;Qualification&apos;),
+        ISPICKVAL(StageName, &apos;Solutioning&apos;),
+        ISPICKVAL(StageName, &apos;Negotiation&apos;),
+        ISPICKVAL(StageName, &apos;Booking Verification&apos;)
+    )
+)</errorConditionFormula>
+    <errorDisplayField>IM_Booked_Date__c</errorDisplayField>
+    <errorMessage
+  >Invalid First Bill Date. The First Bill Date cannot be in the past for active Opportunities.</errorMessage>
+</ValidationRule>

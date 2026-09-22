@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>VR_PRISM_Qual_Budget_Validated</fullName>
+    <active>true</active>
+    <description
+  >[IRM feedback row OppVR25] Requires Budget Validated while in Solutioning, Negotiation or Booking Verification. Simplified per IRM feedback.</description>
+    <errorConditionFormula>AND(
+    NOT($Permission.ECommerce_Deal_Bypass),
+
+    OR(
+        RecordType.DeveloperName = &apos;Framework_Parent_Opportunity&apos;,
+        RecordType.DeveloperName = &apos;Standard_Opportunity&apos;
+    ),
+
+    OR(
+        ISPICKVAL(Type, &apos;New Deal&apos;),
+        ISPICKVAL(Type, &apos;Cross-Sell/Upsell&apos;)
+    ),
+
+    OR(
+        ISPICKVAL(StageName, &apos;Solutioning&apos;),
+        ISPICKVAL(StageName, &apos;Negotiation&apos;),
+        ISPICKVAL(StageName, &apos;Booking Verification&apos;)
+    ),
+
+    ISPICKVAL(Budget_Validated__c, &apos;&apos;)
+)</errorConditionFormula>
+    <errorDisplayField>Budget_Validated__c</errorDisplayField>
+    <errorMessage
+  >Budget Validated is required to advance to the next stage. Please enter a value.</errorMessage>
+</ValidationRule>
