@@ -373,6 +373,7 @@ private class IRM_DocChecklistUploadCtrlTest {
     Opportunity opp = makeOpp();
     Document_Checklist__c doc = makeDocChecklist(null, opp.Id);
     doc.Status__c = 'Final';
+    doc.Submitted_Date__c = Date.today();
     update doc;
 
     Test.startTest();
