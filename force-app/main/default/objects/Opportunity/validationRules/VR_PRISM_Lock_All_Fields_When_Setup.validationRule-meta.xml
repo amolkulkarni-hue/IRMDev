@@ -3,7 +3,7 @@
     <fullName>VR_PRISM_Lock_All_Fields_When_Setup</fullName>
     <active>true</active>
     <description
-  >[Sheet row OppVR82] Blocks any field edit while Stage = Setup. ISCHANGED(LastModifiedDate), gated by Disable_VR__c so flows/integrations toggle that setting instead - answers IRM&apos;s question. No logic change.</description>
+  >[Sheet row OppVR82] Blocks field edits while Stage = Setup. Per IRM correction: restricted to users with the &apos;Sales &amp; Account Management&apos; profile only. ISCHANGED(LastModifiedDate), gated by Disable_VR__c so flows/integrations toggle that setting instead.</description>
     <errorConditionFormula>AND(
     NOT($Setup.Metadata_Activation_Settings__c.Disable_VR__c &amp;&amp;
         OR(
@@ -14,6 +14,8 @@
     NOT($Permission.Sales_Operations_Bypass),
 
     ISPICKVAL(StageName, &apos;Setup&apos;),
+
+    $Profile.Name = &apos;Sales &amp; Account Management&apos;,
 
     ISCHANGED(LastModifiedDate)
 )</errorConditionFormula>

@@ -3,7 +3,7 @@
     <fullName>VR_PRISM_Lock_All_Fields_When_Closed</fullName>
     <active>true</active>
     <description
-  >[Sheet row OppVR83] Blocks any field edit while Stage = Closed. ISCHANGED(LastModifiedDate), gated by Disable_VR__c so flows/integrations toggle that setting instead - answers IRM&apos;s question. No logic change.</description>
+  >[Sheet row OppVR83] Blocks field edits while Stage = Closed. Per IRM correction: restricted to users with the &apos;Sales &amp; Account Management&apos; profile only. ISCHANGED(LastModifiedDate), gated by Disable_VR__c so flows/integrations toggle that setting instead.</description>
     <errorConditionFormula>AND(
     NOT($Setup.Metadata_Activation_Settings__c.Disable_VR__c &amp;&amp;
         OR(
@@ -12,6 +12,8 @@
         )),
 
     ISPICKVAL(StageName, &apos;Closed&apos;),
+
+    $Profile.Name = &apos;Sales &amp; Account Management&apos;,
 
     ISCHANGED(LastModifiedDate)
 )</errorConditionFormula>

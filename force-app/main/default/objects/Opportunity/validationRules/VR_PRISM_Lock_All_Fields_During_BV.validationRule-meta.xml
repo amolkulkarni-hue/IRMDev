@@ -3,7 +3,7 @@
     <fullName>VR_PRISM_Lock_All_Fields_During_BV</fullName>
     <active>true</active>
     <description
-  >[Sheet row OppVR80] Blocks any field edit while Stage = Booking Verification. ISCHANGED(LastModifiedDate), gated by Disable_VR__c so flows/integrations toggle that setting instead - answers IRM&apos;s question. No logic change.</description>
+  >[Sheet row OppVR80] Blocks field edits while Stage = Booking Verification. Per IRM correction: Stage changes are explicitly allowed - only non-Stage field edits are blocked (NOT(ISCHANGED(StageName)) added). Note: cannot fully prevent a Stage change...</description>
     <errorConditionFormula>AND(
     NOT($Setup.Metadata_Activation_Settings__c.Disable_VR__c &amp;&amp;
         OR(
@@ -18,7 +18,9 @@
 
     ISPICKVAL(StageName, &apos;Booking Verification&apos;),
 
-    ISCHANGED(LastModifiedDate)
+    ISCHANGED(LastModifiedDate),
+
+    NOT(ISCHANGED(StageName))
 )</errorConditionFormula>
     <errorMessage
   >Insufficient permissions. Opportunities in Booking Verification stage cannot be updated. Please contact your regional Sales Operations Business Partner for assistance.</errorMessage>

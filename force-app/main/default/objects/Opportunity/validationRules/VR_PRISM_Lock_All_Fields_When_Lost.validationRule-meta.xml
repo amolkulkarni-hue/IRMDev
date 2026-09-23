@@ -3,7 +3,7 @@
     <fullName>VR_PRISM_Lock_All_Fields_When_Lost</fullName>
     <active>true</active>
     <description
-  >[Sheet row OppVR79] Blocks any field edit while Stage = Lost. ISCHANGED(LastModifiedDate), gated by Disable_VR__c so flows/integrations toggle that setting instead - answers IRM&apos;s question. No logic change.</description>
+  >[Sheet row OppVR79] Blocks field edits while Stage = Lost. ISCHANGED(LastModifiedDate), gated by Disable_VR__c so flows/integrations toggle that setting instead.</description>
     <errorConditionFormula>AND(
     NOT($Setup.Metadata_Activation_Settings__c.Disable_VR__c &amp;&amp;
         OR(
