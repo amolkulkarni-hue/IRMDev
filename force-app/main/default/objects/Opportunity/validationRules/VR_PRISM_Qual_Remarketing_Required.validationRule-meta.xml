@@ -20,22 +20,10 @@
     ALM_BU__c = TRUE,
 
     OR(
-        AND(
-            ISCHANGED(StageName),
-            ISPICKVAL(StageName, &apos;Qualification&apos;)
-        ),
-        AND(
-            ISCHANGED(StageName),
-            ISPICKVAL(StageName, &apos;Solutioning&apos;)
-        ),
-        AND(
-            ISCHANGED(StageName),
-            ISPICKVAL(StageName, &apos;Negotiation&apos;)
-        ),
-        AND(
-            ISCHANGED(StageName),
-            ISPICKVAL(StageName, &apos;Booking Verification&apos;)
-        )
+        ISPICKVAL(StageName, &apos;Qualification&apos;),
+        ISPICKVAL(StageName, &apos;Solutioning&apos;),
+        ISPICKVAL(StageName, &apos;Negotiation&apos;),
+        ISPICKVAL(StageName, &apos;Booking Verification&apos;)
     ),
 
     ISPICKVAL(Remarketing_Required__c, &apos;&apos;)

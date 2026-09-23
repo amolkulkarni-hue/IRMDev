@@ -32,14 +32,8 @@
     ),
 
     OR(
-        AND(
-            ISCHANGED(StageName),
-            ISPICKVAL(StageName, &apos;Solutioning&apos;)
-        ),
-        AND(
-            ISCHANGED(StageName),
-            ISPICKVAL(StageName, &apos;Negotiation&apos;)
-        )
+        ISPICKVAL(StageName, &apos;Solutioning&apos;),
+        ISPICKVAL(StageName, &apos;Negotiation&apos;)
     ),
 
     ISPICKVAL(Fuel_Surcharge_Waiver__c, &apos;&apos;)

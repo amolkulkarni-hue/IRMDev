@@ -26,18 +26,9 @@
     ),
 
     OR(
-        AND(
-            ISCHANGED(StageName),
-            ISPICKVAL(StageName, &apos;Qualification&apos;)
-        ),
-        AND(
-            ISCHANGED(StageName),
-            ISPICKVAL(StageName, &apos;Solutioning&apos;)
-        ),
-        AND(
-            ISCHANGED(StageName),
-            ISPICKVAL(StageName, &apos;Negotiation&apos;)
-        )
+        ISPICKVAL(StageName, &apos;Qualification&apos;),
+        ISPICKVAL(StageName, &apos;Solutioning&apos;),
+        ISPICKVAL(StageName, &apos;Negotiation&apos;)
     ),
 
     ISBLANK(Service_Address__Street__s)

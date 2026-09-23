@@ -30,14 +30,8 @@
     ),
 
     OR(
-        AND(
-            ISCHANGED(StageName),
-            ISPICKVAL(StageName, &apos;Negotiation&apos;)
-        ),
-        AND(
-            ISCHANGED(StageName),
-            ISPICKVAL(StageName, &apos;Booking Verification&apos;)
-        )
+        ISPICKVAL(StageName, &apos;Negotiation&apos;),
+        ISPICKVAL(StageName, &apos;Booking Verification&apos;)
     ),
 
     ISPICKVAL(PO_Required__c, &apos;&apos;)

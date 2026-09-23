@@ -23,22 +23,10 @@
     ),
 
     OR(
-        AND(
-            ISCHANGED(StageName),
-            ISPICKVAL(StageName, &apos;Qualification&apos;)
-        ),
-        AND(
-            ISCHANGED(StageName),
-            ISPICKVAL(StageName, &apos;Solutioning&apos;)
-        ),
-        AND(
-            ISCHANGED(StageName),
-            ISPICKVAL(StageName, &apos;Negotiation&apos;)
-        ),
-        AND(
-            ISCHANGED(StageName),
-            ISPICKVAL(StageName, &apos;Booking Verification&apos;)
-        )
+        ISPICKVAL(StageName, &apos;Qualification&apos;),
+        ISPICKVAL(StageName, &apos;Solutioning&apos;),
+        ISPICKVAL(StageName, &apos;Negotiation&apos;),
+        ISPICKVAL(StageName, &apos;Booking Verification&apos;)
     ),
 
     OR(ISBLANK(Expected_CuFt__c), Expected_CuFt__c &lt;= 0)

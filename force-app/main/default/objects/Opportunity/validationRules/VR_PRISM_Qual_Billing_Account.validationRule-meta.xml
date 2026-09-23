@@ -17,22 +17,10 @@
     NOT((ISPICKVAL(StageName, &apos;Closed&apos;) &amp;&amp; CloseDate &lt; DATE(2024,04,19)) || ISPICKVAL(StageName, &apos;Setup&apos;)),
 
     OR(
-        AND(
-            ISCHANGED(StageName),
-            ISPICKVAL(StageName, &apos;Qualification&apos;)
-        ),
-        AND(
-            ISCHANGED(StageName),
-            ISPICKVAL(StageName, &apos;Solutioning&apos;)
-        ),
-        AND(
-            ISCHANGED(StageName),
-            ISPICKVAL(StageName, &apos;Negotiation&apos;)
-        ),
-        AND(
-            ISCHANGED(StageName),
-            ISPICKVAL(StageName, &apos;Booking Verification&apos;)
-        )
+        ISPICKVAL(StageName, &apos;Qualification&apos;),
+        ISPICKVAL(StageName, &apos;Solutioning&apos;),
+        ISPICKVAL(StageName, &apos;Negotiation&apos;),
+        ISPICKVAL(StageName, &apos;Booking Verification&apos;)
     ),
 
     ISBLANK(Billing_Account__c)
