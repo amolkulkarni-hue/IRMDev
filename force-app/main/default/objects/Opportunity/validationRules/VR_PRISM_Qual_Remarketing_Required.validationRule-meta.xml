@@ -3,7 +3,7 @@
     <fullName>VR_PRISM_Qual_Remarketing_Required</fullName>
     <active>true</active>
     <description
-  >[IRM feedback row OppVR39] Requires Remarketing Required while in Solutioning, Negotiation or Booking Verification, for ALM Business Unit deals. Simplified per IRM feedback. Uses ALM_BU__c (not Business_Unit__c).</description>
+  >[IRM feedback row OppVR39] Requires Remarketing Required while in Solutioning, Negotiation or Booking Verification, for ALM Business Unit deals (ALM_BU__c). Stage updated 2026-09-24 per IRM.</description>
     <errorConditionFormula>AND(
     NOT($Permission.ECommerce_Deal_Bypass),
 
@@ -20,7 +20,6 @@
     ALM_BU__c = TRUE,
 
     OR(
-        ISPICKVAL(StageName, &apos;Qualification&apos;),
         ISPICKVAL(StageName, &apos;Solutioning&apos;),
         ISPICKVAL(StageName, &apos;Negotiation&apos;),
         ISPICKVAL(StageName, &apos;Booking Verification&apos;)

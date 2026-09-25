@@ -3,7 +3,7 @@
     <fullName>VR_PRISM_Sol_Forecast_Billing_Months</fullName>
     <active>true</active>
     <description
-  >[IRM feedback row OppVR53] Requires Number of Forecast Billing Months while in Negotiation or Booking Verification, when EAA proxy (Amount, currency-converted) is &gt;= $25K USD. Simplified per IRM feedback; now converts Amount via CURRENCYRATE.</description>
+  >[IRM feedback row OppVR53] Requires Number of Forecast Billing Months while in Negotiation or Booking Verification, when EAA proxy &gt;= $25K USD. Stage updated 2026-09-24 per IRM.</description>
     <errorConditionFormula>AND(
     NOT($Permission.ECommerce_Deal_Bypass),
 
@@ -17,7 +17,6 @@
     Amount / CURRENCYRATE(TEXT(CurrencyIsoCode)) &gt;= 25000,
 
     OR(
-        ISPICKVAL(StageName, &apos;Solutioning&apos;),
         ISPICKVAL(StageName, &apos;Negotiation&apos;),
         ISPICKVAL(StageName, &apos;Booking Verification&apos;)
     ),

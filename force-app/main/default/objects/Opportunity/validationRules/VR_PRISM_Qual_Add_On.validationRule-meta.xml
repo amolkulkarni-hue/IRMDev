@@ -3,7 +3,7 @@
     <fullName>VR_PRISM_Qual_Add_On</fullName>
     <active>true</active>
     <description
-  >[IRM feedback row OppVR23] Requires Add-On? while in Solutioning, Negotiation or Booking Verification, for Digitization/Information Governance/InSight deals. PPL values corrected per IRM feedback (was &apos;Digital Solutions&apos;, should be &apos;Digitization&apos;;...</description>
+  >[IRM feedback row OppVR23] Requires Add-On? while in Solutioning, Negotiation or Booking Verification, for Digitization/Info Governance/InSight deals. Stage updated 2026-09-24 per IRM.</description>
     <errorConditionFormula>AND(
     NOT($Permission.ECommerce_Deal_Bypass),
 
@@ -24,7 +24,6 @@
     ),
 
     OR(
-        ISPICKVAL(StageName, &apos;Qualification&apos;),
         ISPICKVAL(StageName, &apos;Solutioning&apos;),
         ISPICKVAL(StageName, &apos;Negotiation&apos;),
         ISPICKVAL(StageName, &apos;Booking Verification&apos;)

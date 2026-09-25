@@ -3,7 +3,7 @@
     <fullName>VR_PRISM_Qual_UpSell_Oracle_Acct_ID</fullName>
     <active>true</active>
     <description
-  >[IRM feedback row OppVR22] Requires Up-Sell Oracle Account ID# while in Solutioning, Negotiation or Booking Verification, non-ITAD non-NA deals. Simplified per IRM; &apos;ITAD&apos; now literal (confirmed live value).</description>
+  >[IRM feedback row OppVR22] Requires Up-Sell Oracle Account ID# while in Solutioning, Negotiation or Booking Verification, non-ITAD non-NA deals. Stage updated 2026-09-24 per IRM.</description>
     <errorConditionFormula>AND(
     OR(
         RecordType.DeveloperName = &apos;Framework_Parent_Opportunity&apos;,
@@ -18,7 +18,6 @@
     ),
 
     OR(
-        ISPICKVAL(StageName, &apos;Qualification&apos;),
         ISPICKVAL(StageName, &apos;Solutioning&apos;),
         ISPICKVAL(StageName, &apos;Negotiation&apos;),
         ISPICKVAL(StageName, &apos;Booking Verification&apos;)

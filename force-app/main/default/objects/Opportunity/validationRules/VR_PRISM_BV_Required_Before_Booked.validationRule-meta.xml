@@ -3,7 +3,7 @@
     <fullName>VR_PRISM_BV_Required_Before_Booked</fullName>
     <active>true</active>
     <description
-  >[Sheet row 45 / OppVR65] Opportunity cannot advance from BV to Booked (Standard) or Closed (Framework) until Deal_Validation__c=&apos;Pass&apos;. Rebuilt to add the Framework BV-&gt;Closed path per IRM&apos;s correction.</description>
+  >[Sheet row 45 / OppVR65] Blocks BV-&gt;Booked/Setup/Closed until Deal_Validation__c=&apos;Pass&apos;. Setup added as an applicable stage 2026-09-24 per IRM feedback.</description>
     <errorConditionFormula>AND(
     NOT(ISPICKVAL(Deal_Validation__c, &apos;Pass&apos;)),
 
@@ -11,6 +11,7 @@
 
     OR(
         ISPICKVAL(StageName, &apos;Booked&apos;),
+        ISPICKVAL(StageName, &apos;Setup&apos;),
         ISPICKVAL(StageName, &apos;Closed&apos;)
     )
 )</errorConditionFormula>

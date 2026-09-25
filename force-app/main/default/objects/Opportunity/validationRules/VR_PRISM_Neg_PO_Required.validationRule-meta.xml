@@ -3,7 +3,7 @@
     <fullName>VR_PRISM_Neg_PO_Required</fullName>
     <active>true</active>
     <description
-  >[IRM feedback row OppVR17] Requires PO Required? while in Negotiation and Booking Verification, for opportunities billing to the listed countries. Stage-based per IRM&apos;s clarification: applies throughout the listed stages, not just on transition.</description>
+  >[IRM feedback row OppVR17] Requires PO Required? while in Booking Verification, for opportunities billing to the listed countries. Stage updated 2026-09-24: gate evaluates the next stage per IRM.</description>
     <errorConditionFormula>AND(
     NOT($Permission.ECommerce_Deal_Bypass),
 
@@ -29,10 +29,7 @@
         QTB_Billing_Country_Name__c = &apos;Denmark&apos;
     ),
 
-    OR(
-        ISPICKVAL(StageName, &apos;Negotiation&apos;),
-        ISPICKVAL(StageName, &apos;Booking Verification&apos;)
-    ),
+    ISPICKVAL(StageName, &apos;Booking Verification&apos;),
 
     ISPICKVAL(PO_Required__c, &apos;&apos;)
 )</errorConditionFormula>

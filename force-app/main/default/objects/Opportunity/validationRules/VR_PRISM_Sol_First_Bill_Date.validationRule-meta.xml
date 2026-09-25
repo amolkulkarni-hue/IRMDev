@@ -3,7 +3,7 @@
     <fullName>VR_PRISM_Sol_First_Bill_Date</fullName>
     <active>true</active>
     <description
-  >[IRM feedback row OppVR49] Requires First Bill Date while in Negotiation, Booking Verification, Booked, Setup or Closed. Simplified per IRM. Note: &apos;First Bill Date&apos; maps to IM_Booked_Date__c.</description>
+  >[IRM feedback row OppVR49] Requires First Bill Date (IM_Booked_Date__c) while in Negotiation, Booking Verification, Booked, Setup or Closed. Stage updated 2026-09-24 per IRM.</description>
     <errorConditionFormula>AND(
     NOT($Permission.ECommerce_Deal_Bypass),
 
@@ -19,7 +19,6 @@
     ),
 
     OR(
-        ISPICKVAL(StageName, &apos;Solutioning&apos;),
         ISPICKVAL(StageName, &apos;Negotiation&apos;),
         ISPICKVAL(StageName, &apos;Booking Verification&apos;),
         ISPICKVAL(StageName, &apos;Booked&apos;),

@@ -3,7 +3,7 @@
     <fullName>VR_PRISM_Qual_GSA_SLED_Pricing</fullName>
     <active>true</active>
     <description
-  >[IRM feedback row OppVR34] Requires GSA/SLED/Public Sector Pricing while in Solutioning, Negotiation or Booking Verification, for US/Canada billing deals. Simplified per IRM feedback.</description>
+  >[IRM feedback row OppVR34] Requires GSA/SLED/Public Sector Pricing while in Solutioning, Negotiation or Booking Verification, for US/Canada billing deals. Stage updated 2026-09-24 per IRM.</description>
     <errorConditionFormula>AND(
     NOT($Permission.ECommerce_Deal_Bypass),
 
@@ -24,7 +24,6 @@
     ),
 
     OR(
-        ISPICKVAL(StageName, &apos;Qualification&apos;),
         ISPICKVAL(StageName, &apos;Solutioning&apos;),
         ISPICKVAL(StageName, &apos;Negotiation&apos;),
         ISPICKVAL(StageName, &apos;Booking Verification&apos;)

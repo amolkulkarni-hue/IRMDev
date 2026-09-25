@@ -3,7 +3,7 @@
     <fullName>VR_PRISM_Qual_Billing_Account</fullName>
     <active>true</active>
     <description
-  >[IRM feedback row OppVR24] Requires Billing Account while in Solutioning, Negotiation or Booking Verification, for ITAD cross-sell/upsell deals. Simplified per IRM feedback; &apos;ITAD&apos; now used literally per IRM correction.</description>
+  >[IRM feedback row OppVR24] Requires Billing Account while in Solutioning, Negotiation or Booking Verification, for ITAD cross-sell/upsell deals. Stage updated 2026-09-24 per IRM.</description>
     <errorConditionFormula>AND(
     OR(
         RecordType.DeveloperName = &apos;Standard_Opportunity&apos;,
@@ -17,7 +17,6 @@
     NOT((ISPICKVAL(StageName, &apos;Closed&apos;) &amp;&amp; CloseDate &lt; DATE(2024,04,19)) || ISPICKVAL(StageName, &apos;Setup&apos;)),
 
     OR(
-        ISPICKVAL(StageName, &apos;Qualification&apos;),
         ISPICKVAL(StageName, &apos;Solutioning&apos;),
         ISPICKVAL(StageName, &apos;Negotiation&apos;),
         ISPICKVAL(StageName, &apos;Booking Verification&apos;)

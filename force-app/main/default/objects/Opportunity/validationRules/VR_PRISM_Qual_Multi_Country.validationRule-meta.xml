@@ -3,7 +3,7 @@
     <fullName>VR_PRISM_Qual_Multi_Country</fullName>
     <active>true</active>
     <description
-  >[IRM feedback row OppVR38] Requires Multi_Country__c (picklist) per IRM correction (not the existing Multiple_Markets__c checkbox). Field has since been created in IRMNewDev - dependency resolved.</description>
+  >[IRM feedback row OppVR38] Requires Multi_Country__c (picklist) per IRM correction. Field created in IRMNewDev. Stage updated 2026-09-24: gate evaluates the next stage per IRM.</description>
     <errorConditionFormula>AND(
     NOT($Permission.ECommerce_Deal_Bypass),
 
@@ -19,7 +19,6 @@
     ),
 
     OR(
-        ISPICKVAL(StageName, &apos;Qualification&apos;),
         ISPICKVAL(StageName, &apos;Solutioning&apos;),
         ISPICKVAL(StageName, &apos;Negotiation&apos;),
         ISPICKVAL(StageName, &apos;Booking Verification&apos;)
