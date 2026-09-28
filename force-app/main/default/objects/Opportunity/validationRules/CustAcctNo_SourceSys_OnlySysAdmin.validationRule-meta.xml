@@ -1,8 +1,9 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>CustAcctNo_SourceSys_OnlySysAdmin</fullName>
     <active>false</active>
-    <description>Customer ID and Source System can only be updated by system administrator</description>
+    <description
+  >Deactivated as part of VR Cleanup project - DO NOT USE</description>
     <errorConditionFormula>AND
 (NOT(ISBLANK(PRIORVALUE( Customer_Account_Number__c ))),
 OR(ISCHANGED(Customer_Account_Number__c), 
@@ -17,5 +18,6 @@ $Profile.Name &lt;&gt; &quot;IMLA_Custom Sys&quot;,
 NOT( $Permission.Update_Customer_ID_Source_System ),
 NOT($Permission.VR_Bypass_Permission)
 )</errorConditionFormula>
-    <errorMessage>Customer ID/Account Number and/or Source System can only be updated by the system administrator. Please raise a case to have this updated.</errorMessage>
+    <errorMessage
+  >Customer ID/Account Number and/or Source System can only be updated by the system administrator. Please raise a case to have this updated.</errorMessage>
 </ValidationRule>

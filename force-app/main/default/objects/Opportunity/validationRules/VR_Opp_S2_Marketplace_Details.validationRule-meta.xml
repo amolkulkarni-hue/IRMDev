@@ -1,8 +1,9 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>VR_Opp_S2_Marketplace_Details</fullName>
-    <active>true</active>
-    <description>Requires Marketplace Details to be populated leaving Stage 2, and to remain populated through every later stage and once Closed.</description>
+    <active>false</active>
+    <description
+  >Deactivated as part of VR Cleanup project - DO NOT USE</description>
     <errorConditionFormula>AND(
     NOT($Permission.Bypass_Opportunity_Validation),
     OR(
@@ -50,5 +51,6 @@
     ISPICKVAL(Marketplace__c, &quot;Yes&quot;),
     ISBLANK(Marketplace_Details__c)
 )</errorConditionFormula>
-    <errorMessage>Please complete Marketplace Details before leaving Stage 2. Need help? Contact your Sales Operations Business Partner.</errorMessage>
+    <errorMessage
+  >Please complete Marketplace Details before leaving Stage 2. Need help? Contact your Sales Operations Business Partner.</errorMessage>
 </ValidationRule>

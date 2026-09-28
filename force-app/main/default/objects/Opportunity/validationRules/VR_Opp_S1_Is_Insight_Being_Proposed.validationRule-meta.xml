@@ -1,8 +1,9 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>VR_Opp_S1_Is_Insight_Being_Proposed</fullName>
-    <active>true</active>
-    <description>Requires Is Insight Being Proposed? to be populated when Primary Product Line = Digitization, from Stage 1 onward through Closed.</description>
+    <active>false</active>
+    <description
+  >Deactivated as part of VR Cleanup project - DO NOT USE</description>
     <errorConditionFormula>AND(
     NOT($Permission.Bypass_Opportunity_Validation),
 
@@ -60,5 +61,6 @@
 
     NOT(INCLUDES(Is_InSight_being_proposed__c, &quot;No&quot;))
 )</errorConditionFormula>
-    <errorMessage>Please indicate whether Insight is being proposed. Need help? Contact your Sales Operations Business Partner.</errorMessage>
+    <errorMessage
+  >Please indicate whether Insight is being proposed. Need help? Contact your Sales Operations Business Partner.</errorMessage>
 </ValidationRule>

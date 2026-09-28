@@ -1,8 +1,9 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>VR_Opp_S3_System_Fields_Consolidated</fullName>
-    <active>true</active>
-    <description>Requires Contract Term (Months), Eligible Annual Amount, PO Required?, and Total Contract Value (TCV) to be populated leaving Stage 3, and to remain populated through every later stage and once Closed.</description>
+    <active>false</active>
+    <description
+  >Deactivated as part of VR Cleanup project - DO NOT USE</description>
     <errorConditionFormula>AND(
     NOT($Permission.Bypass_Opportunity_Validation),
 
@@ -60,5 +61,6 @@
         ISBLANK(Total_Contract_Value_TCV__c)
     )
 )</errorConditionFormula>
-    <errorMessage>Please complete Contract Term (Months), Eligible Annual Amount, PO Required?, and Total Contract Value (TCV) before leaving Stage 3. Need help? Contact your Sales Operations Business Partner.</errorMessage>
+    <errorMessage
+  >Please complete Contract Term (Months), Eligible Annual Amount, PO Required?, and Total Contract Value (TCV) before leaving Stage 3. Need help? Contact your Sales Operations Business Partner.</errorMessage>
 </ValidationRule>

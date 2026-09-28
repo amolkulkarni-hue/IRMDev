@@ -1,8 +1,9 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Restrict_Opportunity_for_IMGA_Account</fullName>
     <active>false</active>
-    <description>This validation restricts creating a new opportunity for IMGA account. #08253692</description>
+    <description
+  >Deactivated as part of VR Cleanup project - DO NOT USE</description>
     <errorConditionFormula>OR(
 AND( ISNEW(), ISPICKVAL( Account.IM_Hierarchy_Level__c ,&apos;IM Group (IMGA)&apos;),NOT($Permission.VR_Bypass_Permission)),
 AND( ISCHANGED( AccountId ), ISPICKVAL( Account.IM_Hierarchy_Level__c ,&apos;IM Group (IMGA)&apos;),

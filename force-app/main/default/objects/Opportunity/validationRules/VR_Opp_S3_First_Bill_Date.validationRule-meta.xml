@@ -1,8 +1,9 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>VR_Opp_S3_First_Bill_Date</fullName>
-    <active>true</active>
-    <description>Requires First Bill Date to be populated, later than Close Date, and not in the past, leaving Stage 3 and through every later stage and once Closed.</description>
+    <active>false</active>
+    <description
+  >Deactivated as part of VR Cleanup project - DO NOT USE</description>
     <errorConditionFormula>AND(
     NOT($Permission.Bypass_Opportunity_Validation),
 
@@ -59,5 +60,6 @@
 
     ISBLANK(IM_Booked_Date__c)
 )</errorConditionFormula>
-    <errorMessage>Please enter a First Bill Date that is later than the Close Date and not in the past. Need help? Contact your Sales Operations Business Partner.</errorMessage>
+    <errorMessage
+  >Please enter a First Bill Date that is later than the Close Date and not in the past. Need help? Contact your Sales Operations Business Partner.</errorMessage>
 </ValidationRule>

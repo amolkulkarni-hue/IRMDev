@@ -1,8 +1,9 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Record_Type_Change_Primary_Product_Line</fullName>
     <active>false</active>
-    <description>While changing the record type we need to make &apos;Primary Product Line&apos; as respective to the Record Type(CPQ Sales Opportunity).</description>
+    <description
+  >Deactivated as part of VR Cleanup project - DO NOT USE</description>
     <errorConditionFormula>AND(
 AND(
 OR(
@@ -23,5 +24,6 @@ NOT($Setup.Metadata_Activation_Settings__c.Disable_VR__c)
 		),false,true),false),
 NOT($Permission.VR_Bypass_Permission)
 )</errorConditionFormula>
-    <errorMessage>Please select the CPQ related &apos;Primary Product Line&apos;</errorMessage>
+    <errorMessage
+  >Please select the CPQ related &apos;Primary Product Line&apos;</errorMessage>
 </ValidationRule>
