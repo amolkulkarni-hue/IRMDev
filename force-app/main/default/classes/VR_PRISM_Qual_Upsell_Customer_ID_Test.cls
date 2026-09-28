@@ -11,13 +11,13 @@ private class VR_PRISM_Qual_Upsell_Customer_ID_Test {
       VR_PRISM_TestSupport.stdRecordTypeId(),
       type
     );
-    o.Region__c = 'North America';
+    o.Billing_Country__c = VR_PRISM_TestSupport.getUnitedStatesCountryId();
     o.Primary_Product_Line__c = 'Records Management';
     return o;
   }
 
   @isTest
-  static void test_blocked_when_Upsell_Customer_ID__c_blank() {
+  static void test_blocked_when_Upsell_Customer_ID_blank() {
     Opportunity o = buildInScopeOpp('Solutioning', 'Cross-Sell/Upsell');
     Boolean threw = false;
     Test.startTest();
@@ -39,9 +39,9 @@ private class VR_PRISM_Qual_Upsell_Customer_ID_Test {
   }
 
   @isTest
-  static void test_allowed_when_Upsell_Customer_ID__c_populated() {
+  static void test_allowed_when_Upsell_Customer_ID_populated() {
     Opportunity o = buildInScopeOpp('Solutioning', 'Cross-Sell/Upsell');
-    o.Upsell_Customer_ID__c = VR_PRISM_TestSupport.getAccountId();
+    o.Upsell_Customer_ID__c = VR_PRISM_TestSupport.getCustomerAccountId();
     Test.startTest();
     insert o;
     Test.stopTest();

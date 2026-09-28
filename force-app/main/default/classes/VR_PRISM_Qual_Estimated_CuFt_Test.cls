@@ -16,7 +16,7 @@ private class VR_PRISM_Qual_Estimated_CuFt_Test {
   }
 
   @isTest
-  static void test_blocked_when_Expected_CuFt__c_blank() {
+  static void test_blocked_when_Expected_CuFt_blank() {
     Opportunity o = buildInScopeOpp('Solutioning', 'New Deal');
     Boolean threw = false;
     Test.startTest();
@@ -38,7 +38,7 @@ private class VR_PRISM_Qual_Estimated_CuFt_Test {
   }
 
   @isTest
-  static void test_allowed_when_Expected_CuFt__c_populated() {
+  static void test_allowed_when_Expected_CuFt_populated() {
     Opportunity o = buildInScopeOpp('Solutioning', 'New Deal');
     o.Expected_CuFt__c = 100;
     Test.startTest();

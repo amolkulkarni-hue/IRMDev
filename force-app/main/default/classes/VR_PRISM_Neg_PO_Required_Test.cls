@@ -11,12 +11,12 @@ private class VR_PRISM_Neg_PO_Required_Test {
       VR_PRISM_TestSupport.stdRecordTypeId(),
       type
     );
-    o.QTB_Billing_Country_Name__c = 'United States';
+    o.Billing_Country__c = VR_PRISM_TestSupport.getUnitedStatesCountryId();
     return o;
   }
 
   @isTest
-  static void test_blocked_when_PO_Required__c_blank() {
+  static void test_blocked_when_PO_Required_blank() {
     Opportunity o = buildInScopeOpp('Booking Verification', 'New Deal');
     Boolean threw = false;
     Test.startTest();
@@ -37,7 +37,7 @@ private class VR_PRISM_Neg_PO_Required_Test {
   }
 
   @isTest
-  static void test_allowed_when_PO_Required__c_populated() {
+  static void test_allowed_when_PO_Required_populated() {
     Opportunity o = buildInScopeOpp('Booking Verification', 'New Deal');
     o.PO_Required__c = 'No';
     Test.startTest();

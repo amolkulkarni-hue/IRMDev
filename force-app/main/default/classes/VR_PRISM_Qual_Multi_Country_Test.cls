@@ -15,7 +15,7 @@ private class VR_PRISM_Qual_Multi_Country_Test {
   }
 
   @isTest
-  static void test_blocked_when_Multi_Country__c_blank() {
+  static void test_blocked_when_Multi_Country_blank() {
     Opportunity o = buildInScopeOpp('Solutioning', 'New Deal');
     Boolean threw = false;
     Test.startTest();
@@ -36,7 +36,7 @@ private class VR_PRISM_Qual_Multi_Country_Test {
   }
 
   @isTest
-  static void test_allowed_when_Multi_Country__c_populated() {
+  static void test_allowed_when_Multi_Country_populated() {
     Opportunity o = buildInScopeOpp('Solutioning', 'New Deal');
     o.Multi_Country__c = 'Yes';
     Test.startTest();

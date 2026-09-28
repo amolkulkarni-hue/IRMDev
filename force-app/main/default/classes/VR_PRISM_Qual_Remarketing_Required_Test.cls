@@ -16,7 +16,7 @@ private class VR_PRISM_Qual_Remarketing_Required_Test {
   }
 
   @isTest
-  static void test_blocked_when_Remarketing_Required__c_blank() {
+  static void test_blocked_when_Remarketing_Required_blank() {
     Opportunity o = buildInScopeOpp('Solutioning', 'New Deal');
     Boolean threw = false;
     Test.startTest();
@@ -38,7 +38,7 @@ private class VR_PRISM_Qual_Remarketing_Required_Test {
   }
 
   @isTest
-  static void test_allowed_when_Remarketing_Required__c_populated() {
+  static void test_allowed_when_Remarketing_Required_populated() {
     Opportunity o = buildInScopeOpp('Solutioning', 'New Deal');
     o.Remarketing_Required__c = 'Yes';
     Test.startTest();

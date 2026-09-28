@@ -15,7 +15,7 @@ private class VR_PRISM_Neg_Reason_Won_Test {
   }
 
   @isTest
-  static void test_blocked_when_IME_Reason_Won__c_blank() {
+  static void test_blocked_when_IME_Reason_Won_blank() {
     Opportunity o = buildInScopeOpp('Booking Verification', 'New Deal');
     Boolean threw = false;
     Test.startTest();
@@ -36,7 +36,7 @@ private class VR_PRISM_Neg_Reason_Won_Test {
   }
 
   @isTest
-  static void test_allowed_when_IME_Reason_Won__c_populated() {
+  static void test_allowed_when_IME_Reason_Won_populated() {
     Opportunity o = buildInScopeOpp('Booking Verification', 'New Deal');
     o.IME_Reason_Won__c = 'Price';
     Test.startTest();

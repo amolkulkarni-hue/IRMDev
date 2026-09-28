@@ -50,11 +50,24 @@ public class VR_PRISM_TestSupport {
       Product_Line_Name__c = 'Cloud Solutions'
     );
 
-    IM_Country__c testCountry = new IM_Country__c(Name = 'United States');
+    IM_Country__c testCountry = new IM_Country__c(
+      Name = 'United States',
+      Active__c = true,
+      Region__c = 'North America'
+    );
     insert testCountry;
     insert new IM_Alternative_Country_Name__c(
       IM_Country__c = testCountry.Id,
       Alternative_Name__c = 'United States'
+    );
+    // Second country, outside North America, for rules that gate on a non-NA Region
+    // (e.g. VR_PRISM_Qual_UpSell_Oracle_Acct_ID). QTB_Billing_Country_Name__c and
+    // Region__c on Opportunity are both formulas off Billing_Country__c - not directly
+    // writeable - so tests set Billing_Country__c to one of these two records instead.
+    insert new IM_Country__c(
+      Name = 'Ireland',
+      Active__c = true,
+      Region__c = 'Europe'
     );
 
     insert new Account(
@@ -63,11 +76,32 @@ public class VR_PRISM_TestSupport {
       BillingState = 'NY',
       BillingPostalCode = '11209'
     );
+
+    insert new IM_Customer_Account__c(Name = 'VR-PRISM-TEST-001');
   }
 
   public static Id getAccountId() {
     return [SELECT Id FROM Account WHERE Name = 'VR_PRISM Test Account' LIMIT 1]
     .Id;
+  }
+
+  public static Id getCustomerAccountId() {
+    return [
+      SELECT Id
+      FROM IM_Customer_Account__c
+      WHERE Name = 'VR-PRISM-TEST-001'
+      LIMIT 1
+    ]
+    .Id;
+  }
+
+  public static Id getUnitedStatesCountryId() {
+    return [SELECT Id FROM IM_Country__c WHERE Name = 'United States' LIMIT 1]
+    .Id;
+  }
+
+  public static Id getIrelandCountryId() {
+    return [SELECT Id FROM IM_Country__c WHERE Name = 'Ireland' LIMIT 1].Id;
   }
 
   /**

@@ -11,12 +11,12 @@ private class VR_PRISM_Qual_Service_Address_Test {
       VR_PRISM_TestSupport.stdRecordTypeId(),
       type
     );
-    o.QTB_Billing_Country_Name__c = 'United States';
+    o.Billing_Country__c = VR_PRISM_TestSupport.getUnitedStatesCountryId();
     return o;
   }
 
   @isTest
-  static void test_blocked_when_Service_Address__Street__s_blank() {
+  static void test_blocked_when_Service_Address_Street_s_blank() {
     Opportunity o = buildInScopeOpp('Solutioning', 'New Deal');
     Boolean threw = false;
     Test.startTest();
@@ -38,7 +38,7 @@ private class VR_PRISM_Qual_Service_Address_Test {
   }
 
   @isTest
-  static void test_allowed_when_Service_Address__Street__s_populated() {
+  static void test_allowed_when_Service_Address_Street_s_populated() {
     Opportunity o = buildInScopeOpp('Solutioning', 'New Deal');
     o.Service_Address__Street__s = '123 Main St';
     Test.startTest();

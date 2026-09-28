@@ -15,7 +15,7 @@ private class VR_PRISM_Qual_Business_Problem_Test {
   }
 
   @isTest
-  static void test_blocked_when_Business_Problem_Evidenced__c_blank() {
+  static void test_blocked_when_Business_Problem_Evidenced_blank() {
     Opportunity o = buildInScopeOpp('Solutioning', 'New Deal');
     Boolean threw = false;
     Test.startTest();
@@ -37,7 +37,7 @@ private class VR_PRISM_Qual_Business_Problem_Test {
   }
 
   @isTest
-  static void test_allowed_when_Business_Problem_Evidenced__c_populated() {
+  static void test_allowed_when_Business_Problem_Evidenced_populated() {
     Opportunity o = buildInScopeOpp('Solutioning', 'New Deal');
     o.Business_Problem_Evidenced__c = 'Improve Efficiency or Reduce Manual Work';
     Test.startTest();

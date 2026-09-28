@@ -15,7 +15,7 @@ private class VR_PRISM_Qual_UpSell_Quantity_Test {
   }
 
   @isTest
-  static void test_blocked_when_IM_Up_Sell_Quantity__c_blank() {
+  static void test_blocked_when_IM_Up_Sell_Quantity_blank() {
     Opportunity o = buildInScopeOpp('Solutioning', 'Cross-Sell/Upsell');
     Boolean threw = false;
     Test.startTest();
@@ -37,7 +37,7 @@ private class VR_PRISM_Qual_UpSell_Quantity_Test {
   }
 
   @isTest
-  static void test_allowed_when_IM_Up_Sell_Quantity__c_populated() {
+  static void test_allowed_when_IM_Up_Sell_Quantity_populated() {
     Opportunity o = buildInScopeOpp('Solutioning', 'Cross-Sell/Upsell');
     o.IM_Up_Sell_Quantity__c = 5;
     Test.startTest();

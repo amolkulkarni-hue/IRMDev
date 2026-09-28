@@ -12,12 +12,12 @@ private class VR_PRISM_Qual_Billing_Account_Test {
       type
     );
     o.Primary_Product_Line__c = 'ITAD';
-    o.QTB_Billing_Country_Name__c = 'United States';
+    o.Billing_Country__c = VR_PRISM_TestSupport.getUnitedStatesCountryId();
     return o;
   }
 
   @isTest
-  static void test_blocked_when_Billing_Account__c_blank() {
+  static void test_blocked_when_Billing_Account_blank() {
     Opportunity o = buildInScopeOpp('Solutioning', 'Cross-Sell/Upsell');
     Boolean threw = false;
     Test.startTest();
@@ -39,7 +39,7 @@ private class VR_PRISM_Qual_Billing_Account_Test {
   }
 
   @isTest
-  static void test_allowed_when_Billing_Account__c_populated() {
+  static void test_allowed_when_Billing_Account_populated() {
     Opportunity o = buildInScopeOpp('Solutioning', 'Cross-Sell/Upsell');
     o.Billing_Account__c = VR_PRISM_TestSupport.getAccountId();
     Test.startTest();

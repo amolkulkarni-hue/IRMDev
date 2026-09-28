@@ -15,7 +15,7 @@ private class VR_PRISM_Qual_Budget_Validated_Test {
   }
 
   @isTest
-  static void test_blocked_when_Budget_Validated__c_blank() {
+  static void test_blocked_when_Budget_Validated_blank() {
     Opportunity o = buildInScopeOpp('Solutioning', 'New Deal');
     Boolean threw = false;
     Test.startTest();
@@ -37,7 +37,7 @@ private class VR_PRISM_Qual_Budget_Validated_Test {
   }
 
   @isTest
-  static void test_allowed_when_Budget_Validated__c_populated() {
+  static void test_allowed_when_Budget_Validated_populated() {
     Opportunity o = buildInScopeOpp('Solutioning', 'New Deal');
     o.Budget_Validated__c = 'Yes';
     Test.startTest();

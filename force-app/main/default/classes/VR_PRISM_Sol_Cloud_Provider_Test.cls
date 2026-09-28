@@ -16,7 +16,7 @@ private class VR_PRISM_Sol_Cloud_Provider_Test {
   }
 
   @isTest
-  static void test_blocked_when_Cloud_Provider__c_blank() {
+  static void test_blocked_when_Cloud_Provider_blank() {
     Opportunity o = buildInScopeOpp('Negotiation', 'New Deal');
     Boolean threw = false;
     Test.startTest();
@@ -37,7 +37,7 @@ private class VR_PRISM_Sol_Cloud_Provider_Test {
   }
 
   @isTest
-  static void test_allowed_when_Cloud_Provider__c_populated() {
+  static void test_allowed_when_Cloud_Provider_populated() {
     Opportunity o = buildInScopeOpp('Negotiation', 'New Deal');
     o.Cloud_Provider__c = 'AWS';
     Test.startTest();

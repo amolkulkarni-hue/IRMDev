@@ -16,7 +16,7 @@ private class VR_PRISM_Qual_Is_Insight_Proposed_Test {
   }
 
   @isTest
-  static void test_blocked_when_Is_InSight_being_proposed__c_blank() {
+  static void test_blocked_when_Is_InSight_being_proposed_blank() {
     Opportunity o = buildInScopeOpp('Solutioning', 'New Deal');
     Boolean threw = false;
     Test.startTest();
@@ -38,7 +38,7 @@ private class VR_PRISM_Qual_Is_Insight_Proposed_Test {
   }
 
   @isTest
-  static void test_allowed_when_Is_InSight_being_proposed__c_populated() {
+  static void test_allowed_when_Is_InSight_being_proposed_populated() {
     Opportunity o = buildInScopeOpp('Solutioning', 'New Deal');
     o.Is_InSight_being_proposed__c = 'Yes - InSight Enterprise Edition is part of the proposal';
     Test.startTest();

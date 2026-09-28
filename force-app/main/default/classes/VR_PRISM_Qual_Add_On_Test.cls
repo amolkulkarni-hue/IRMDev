@@ -16,7 +16,7 @@ private class VR_PRISM_Qual_Add_On_Test {
   }
 
   @isTest
-  static void test_blocked_when_Add_On__c_blank() {
+  static void test_blocked_when_Add_On_blank() {
     Opportunity o = buildInScopeOpp('Solutioning', 'New Deal');
     Boolean threw = false;
     Test.startTest();
@@ -37,7 +37,7 @@ private class VR_PRISM_Qual_Add_On_Test {
   }
 
   @isTest
-  static void test_allowed_when_Add_On__c_populated() {
+  static void test_allowed_when_Add_On_populated() {
     Opportunity o = buildInScopeOpp('Solutioning', 'New Deal');
     o.Add_On__c = 'Workflow';
     Test.startTest();

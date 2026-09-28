@@ -12,12 +12,12 @@ private class VR_PRISM_Sol_Free_Storage_Period_Test {
       type
     );
     o.RIM_BU__c = true;
-    o.QTB_Billing_Country_Name__c = 'United States';
+    o.Billing_Country__c = VR_PRISM_TestSupport.getUnitedStatesCountryId();
     return o;
   }
 
   @isTest
-  static void test_blocked_when_Free_Storage_Period__c_blank() {
+  static void test_blocked_when_Free_Storage_Period_blank() {
     Opportunity o = buildInScopeOpp('Negotiation', 'New Deal');
     Boolean threw = false;
     Test.startTest();
@@ -39,7 +39,7 @@ private class VR_PRISM_Sol_Free_Storage_Period_Test {
   }
 
   @isTest
-  static void test_allowed_when_Free_Storage_Period__c_populated() {
+  static void test_allowed_when_Free_Storage_Period_populated() {
     Opportunity o = buildInScopeOpp('Negotiation', 'New Deal');
     o.Free_Storage_Period__c = '1 month';
     Test.startTest();
