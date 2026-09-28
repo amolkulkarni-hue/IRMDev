@@ -70,14 +70,19 @@ public class VR_PRISM_TestSupport {
       Region__c = 'Europe'
     );
 
-    insert new Account(
+    Account testAccount = new Account(
       Name = 'VR_PRISM Test Account',
       BillingCountry = 'United States',
       BillingState = 'NY',
       BillingPostalCode = '11209'
     );
+    insert testAccount;
 
-    insert new IM_Customer_Account__c(Name = 'VR-PRISM-TEST-001');
+    // IM_Account__c is Master-Detail to Account, so it's required.
+    insert new IM_Customer_Account__c(
+      Name = 'VR-PRISM-TEST-001',
+      IM_Account__c = testAccount.Id
+    );
   }
 
   public static Id getAccountId() {
