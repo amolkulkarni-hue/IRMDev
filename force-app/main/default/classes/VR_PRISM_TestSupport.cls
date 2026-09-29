@@ -109,19 +109,53 @@ public class VR_PRISM_TestSupport {
     return [SELECT Id FROM IM_Country__c WHERE Name = 'Ireland' LIMIT 1].Id;
   }
 
+  private static final Set<String> SOLUTIONING_PLUS = new Set<String>{
+    'Solutioning',
+    'Negotiation',
+    'Booking Verification',
+    'Booked',
+    'Setup',
+    'Closed'
+  };
+  private static final Set<String> NEGOTIATION_PLUS = new Set<String>{
+    'Negotiation',
+    'Booking Verification',
+    'Booked',
+    'Setup',
+    'Closed'
+  };
+  private static final Set<String> BV_PLUS = new Set<String>{
+    'Booking Verification',
+    'Booked',
+    'Setup',
+    'Closed'
+  };
+  private static final Set<String> WON_STAGES = new Set<String>{
+    'Booked',
+    'Setup',
+    'Closed'
+  };
+
   /**
    * Minimally-valid Opportunity for exercising a single VR_PRISM rule. All BU flags
    * default false and Amount defaults low (1000) so BU-gated / amount-threshold rules
    * don't fire unless a test deliberately overrides them. Callers set whatever
    * additional fields their specific rule cares about (PPL, country, target field, ...)
    * on the returned record before insert.
+   *
+   * Also defensively satisfies OTHER still-active validation rules (both pre-existing
+   * legacy rules and the other 60 VR_PRISM rules deployed alongside this one) that would
+   * otherwise block the insert/update before the rule actually under test gets evaluated,
+   * based on the stage passed in. A handful of these defaulted fields are themselves the
+   * *target* field of one specific VR_PRISM rule's own test class - that test's "blocked"
+   * scenario explicitly nulls the field back out after calling this method.
    */
   public static Opportunity baseOpp(
     String stage,
     Id recordTypeId,
     String type
   ) {
-    return new Opportunity(
+    Opportunity o = new Opportunity(
       Name = 'VR PRISM Test Opportunity',
       AccountId = getAccountId(),
       RecordTypeId = recordTypeId,
@@ -136,6 +170,36 @@ public class VR_PRISM_TestSupport {
       Digital_BU__c = false,
       W_L_BU__c = false
     );
+
+    // VR_Opp_S1_Qual_Checklist_Fields-style legacy requirement: Budget Validated and
+    // Business Problem must be populated from Solutioning onward.
+    if (SOLUTIONING_PLUS.contains(stage)) {
+      o.Budget_Validated__c = 'Yes';
+      o.Business_Problem_Evidenced__c = 'Improve Efficiency or Reduce Manual Work';
+    }
+    // CT_Required_in_BV_and_Negotiation / TCV_Required_in_BV_and_Negotiation: both
+    // required (Contract Term >= 13, TCV >= 1) from Negotiation onward.
+    if (NEGOTIATION_PLUS.contains(stage)) {
+      o.Contract_Term_months__c = 24;
+      o.Total_Contract_Value_TCV__c = 100000;
+    }
+    // When_Opty_is_Won_Reason_Won_is_Required (legacy, Booked only) and this rule's own
+    // sibling VR_PRISM_Neg_Reason_Won (Booking Verification onward) both need this.
+    if (BV_PLUS.contains(stage)) {
+      o.IME_Reason_Won__c = 'Price';
+    }
+    // Forecast_Category_Validation_Rule / Forecast_Category_cant_be_closed_till_4
+    // (legacy) and this rule's own VR_PRISM_FCST_Cat_* siblings all enforce the same
+    // Stage <-> Forecast Category mapping.
+    if (WON_STAGES.contains(stage)) {
+      o.ForecastCategoryName = 'Closed';
+    } else if (stage == 'Lost') {
+      o.ForecastCategoryName = 'Omitted';
+    } else {
+      o.ForecastCategoryName = 'Pipeline';
+    }
+
+    return o;
   }
 
   // Standard_Opportunity is the default record type used by tests that don't care

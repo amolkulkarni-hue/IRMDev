@@ -53,7 +53,7 @@ private class VR_PRISM_Sol_Forecast_Bill_Months_Test {
 
   @isTest
   static void test_notBlocked_outOfScope_type() {
-    Opportunity o = buildInScopeOpp('Negotiation', 'Price Change');
+    Opportunity o = buildInScopeOpp('Negotiation', 'Rate Change');
     Test.startTest();
     insert o;
     Test.stopTest();

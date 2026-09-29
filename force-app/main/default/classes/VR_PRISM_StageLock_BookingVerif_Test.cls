@@ -7,6 +7,7 @@ private class VR_PRISM_StageLock_BookingVerif_Test {
 
   @isTest
   static void test_blocked_whenChangingStageAwayFromBookingVerification() {
+    User plainUser = VR_PRISM_TestSupport.getSalesAccountManagementUser();
     Opportunity o = VR_PRISM_TestSupport.baseOpp(
       'Booking Verification',
       VR_PRISM_TestSupport.stdRecordTypeId(),
@@ -16,15 +17,17 @@ private class VR_PRISM_StageLock_BookingVerif_Test {
     o.StageName = 'Qualification';
     Boolean threw = false;
     Test.startTest();
-    try {
-      update o;
-    } catch (DmlException e) {
-      threw = true;
-      System.assert(
-        e.getMessage().contains('cannot have their Stage changed'),
-        'Expected the VR_PRISM_StageLock_BookingVerification error, got: ' +
-        e.getMessage()
-      );
+    System.runAs(plainUser) {
+      try {
+        update o;
+      } catch (DmlException e) {
+        threw = true;
+        System.assert(
+          e.getMessage().contains('cannot have their Stage changed'),
+          'Expected the VR_PRISM_StageLock_BookingVerification error, got: ' +
+          e.getMessage()
+        );
+      }
     }
     Test.stopTest();
     System.assert(

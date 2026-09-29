@@ -40,7 +40,7 @@ private class VR_PRISM_Qual_Digital_Use_Case_Test {
   @isTest
   static void test_allowed_when_InSight_Opportunities_populated() {
     Opportunity o = buildInScopeOpp('Solutioning', 'New Deal');
-    o.InSight_Opportunities__c = 'Invoice Automation';
+    o.InSight_Opportunities__c = 'Invoice Processing';
     Test.startTest();
     insert o;
     Test.stopTest();
@@ -53,7 +53,7 @@ private class VR_PRISM_Qual_Digital_Use_Case_Test {
 
   @isTest
   static void test_notBlocked_outOfScope_type() {
-    Opportunity o = buildInScopeOpp('Solutioning', 'Price Change');
+    Opportunity o = buildInScopeOpp('Solutioning', 'Rate Change');
     Test.startTest();
     insert o;
     Test.stopTest();

@@ -7,6 +7,10 @@ private class VR_PRISM_FBD_Within_12Months_Test {
 
   @isTest
   static void test_blocked_whenFirstBillDateBeyond12Months() {
+    // This rule is also gated on NOT($Permission.Booking_Verification_Access) - the
+    // default test-running (admin) user has that permission granted org-wide, so the
+    // rule would never fire for them. Run as a user who lacks it instead.
+    User plainUser = VR_PRISM_TestSupport.getSalesAccountManagementUser();
     Opportunity o = VR_PRISM_TestSupport.baseOpp(
       'Qualification',
       VR_PRISM_TestSupport.stdRecordTypeId(),
@@ -15,15 +19,17 @@ private class VR_PRISM_FBD_Within_12Months_Test {
     o.IM_Booked_Date__c = o.CloseDate.addDays(400);
     Boolean threw = false;
     Test.startTest();
-    try {
-      insert o;
-    } catch (DmlException e) {
-      threw = true;
-      System.assert(
-        e.getMessage().contains('within 12 months'),
-        'Expected the VR_PRISM_FirstBillDate_Within_12Months error, got: ' +
-        e.getMessage()
-      );
+    System.runAs(plainUser) {
+      try {
+        insert o;
+      } catch (DmlException e) {
+        threw = true;
+        System.assert(
+          e.getMessage().contains('within 12 months'),
+          'Expected the VR_PRISM_FirstBillDate_Within_12Months error, got: ' +
+          e.getMessage()
+        );
+      }
     }
     Test.stopTest();
     System.assert(

@@ -54,7 +54,7 @@ private class VR_PRISM_Qual_Upsell_Customer_ID_Test {
 
   @isTest
   static void test_notBlocked_outOfScope_type() {
-    Opportunity o = buildInScopeOpp('Solutioning', 'Price Change');
+    Opportunity o = buildInScopeOpp('Solutioning', 'Rate Change');
     Test.startTest();
     insert o;
     Test.stopTest();

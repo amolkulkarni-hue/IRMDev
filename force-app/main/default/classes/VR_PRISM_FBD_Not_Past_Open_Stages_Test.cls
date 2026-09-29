@@ -12,7 +12,7 @@ private class VR_PRISM_FBD_Not_Past_Open_Stages_Test {
       VR_PRISM_TestSupport.stdRecordTypeId(),
       'New Deal'
     );
-    o.IM_Booked_Date__c = Date.today().addDays(-1);
+    o.IM_Booked_Date__c = Date.today().addDays(-5);
     Boolean threw = false;
     Test.startTest();
     try {
@@ -39,7 +39,7 @@ private class VR_PRISM_FBD_Not_Past_Open_Stages_Test {
       VR_PRISM_TestSupport.stdRecordTypeId(),
       'New Deal'
     );
-    o.IM_Booked_Date__c = Date.today().addDays(10);
+    o.IM_Booked_Date__c = o.CloseDate.addDays(10);
     Test.startTest();
     insert o;
     Test.stopTest();
@@ -57,7 +57,7 @@ private class VR_PRISM_FBD_Not_Past_Open_Stages_Test {
       VR_PRISM_TestSupport.stdRecordTypeId(),
       'New Deal'
     );
-    o.IM_Booked_Date__c = Date.today().addDays(-1);
+    o.IM_Booked_Date__c = Date.today().addDays(-5);
     Test.startTest();
     insert o;
     Test.stopTest();

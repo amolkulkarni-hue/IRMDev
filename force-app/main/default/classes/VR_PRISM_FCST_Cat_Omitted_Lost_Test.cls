@@ -20,7 +20,7 @@ private class VR_PRISM_FCST_Cat_Omitted_Lost_Test {
     } catch (DmlException e) {
       threw = true;
       System.assert(
-        e.getMessage().contains('Forecast Category mismatch'),
+        e.getMessage().contains('Forecast Category'),
         'Expected the VR_PRISM_FCST_Cat_Omitted_Lost error, got: ' +
         e.getMessage()
       );

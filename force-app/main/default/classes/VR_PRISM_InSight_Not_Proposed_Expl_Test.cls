@@ -12,6 +12,7 @@ private class VR_PRISM_InSight_Not_Proposed_Expl_Test {
       VR_PRISM_TestSupport.stdRecordTypeId(),
       'New Deal'
     );
+    o.Primary_Product_Line__c = 'Digitization';
     o.Is_InSight_being_proposed__c = 'No - Price';
     Boolean threw = false;
     Test.startTest();
@@ -39,6 +40,7 @@ private class VR_PRISM_InSight_Not_Proposed_Expl_Test {
       VR_PRISM_TestSupport.stdRecordTypeId(),
       'New Deal'
     );
+    o.Primary_Product_Line__c = 'Digitization';
     o.Is_InSight_being_proposed__c = 'No - Price';
     o.InSight_not_in_proposal_Explanation__c = 'Customer preferred a lower-cost alternative.';
     Test.startTest();
@@ -58,6 +60,7 @@ private class VR_PRISM_InSight_Not_Proposed_Expl_Test {
       VR_PRISM_TestSupport.stdRecordTypeId(),
       'New Deal'
     );
+    o.Primary_Product_Line__c = 'Digitization';
     o.Is_InSight_being_proposed__c = 'Yes - InSight Enterprise Edition is part of the proposal';
     Test.startTest();
     insert o;

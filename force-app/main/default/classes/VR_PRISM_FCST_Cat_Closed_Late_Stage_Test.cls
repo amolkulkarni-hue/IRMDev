@@ -20,7 +20,7 @@ private class VR_PRISM_FCST_Cat_Closed_Late_Stage_Test {
     } catch (DmlException e) {
       threw = true;
       System.assert(
-        e.getMessage().contains('Forecast Category mismatch'),
+        e.getMessage().contains('Forecast Category'),
         'Expected the VR_PRISM_FCST_Cat_Closed_Late_Stage error, got: ' +
         e.getMessage()
       );

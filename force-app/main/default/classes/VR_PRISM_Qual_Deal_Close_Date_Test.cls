@@ -53,7 +53,7 @@ private class VR_PRISM_Qual_Deal_Close_Date_Test {
 
   @isTest
   static void test_notBlocked_outOfScope_type() {
-    Opportunity o = buildInScopeOpp('Solutioning', 'Price Change');
+    Opportunity o = buildInScopeOpp('Solutioning', 'Rate Change');
     o.CloseDate = null;
     Test.startTest();
     insert o;

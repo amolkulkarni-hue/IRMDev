@@ -52,7 +52,7 @@ private class VR_PRISM_Neg_PO_Required_Test {
 
   @isTest
   static void test_notBlocked_outOfScope_type() {
-    Opportunity o = buildInScopeOpp('Booking Verification', 'Price Change');
+    Opportunity o = buildInScopeOpp('Booking Verification', 'Rate Change');
     Test.startTest();
     insert o;
     Test.stopTest();

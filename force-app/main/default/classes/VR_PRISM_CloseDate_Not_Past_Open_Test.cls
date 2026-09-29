@@ -12,7 +12,7 @@ private class VR_PRISM_CloseDate_Not_Past_Open_Test {
       VR_PRISM_TestSupport.stdRecordTypeId(),
       'New Deal'
     );
-    o.CloseDate = Date.today().addDays(-1);
+    o.CloseDate = Date.today().addDays(-5);
     Boolean threw = false;
     Test.startTest();
     try {
@@ -56,7 +56,7 @@ private class VR_PRISM_CloseDate_Not_Past_Open_Test {
       VR_PRISM_TestSupport.stdRecordTypeId(),
       'New Deal'
     );
-    o.CloseDate = Date.today().addDays(-1);
+    o.CloseDate = Date.today().addDays(-5);
     Test.startTest();
     insert o;
     Test.stopTest();

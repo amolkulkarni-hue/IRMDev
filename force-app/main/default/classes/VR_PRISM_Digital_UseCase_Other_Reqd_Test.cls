@@ -58,7 +58,7 @@ private class VR_PRISM_Digital_UseCase_Other_Reqd_Test {
       VR_PRISM_TestSupport.stdRecordTypeId(),
       'New Deal'
     );
-    o.InSight_Opportunities__c = 'Invoice Automation';
+    o.InSight_Opportunities__c = 'Invoice Processing';
     Test.startTest();
     insert o;
     Test.stopTest();
