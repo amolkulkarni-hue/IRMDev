@@ -1,8 +1,9 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>VR_Opp_S1_Qual_Checklist_Fields</fullName>
-    <active>true</active>
-    <description>Requires Service Address, Budget Validated, Business Problem Evidenced, Customer Outcome Predefined, Decision Process Defined, and Impact / Consequences Identified to be populated leaving Stage 1, and to remain populated through every later stage and once</description>
+    <active>false</active>
+    <description
+  >Deactivated as part of VR Cleanup project - DO NOT USE</description>
     <errorConditionFormula>AND(
     NOT($Permission.Bypass_Opportunity_Validation),
 
@@ -67,11 +68,9 @@
     ISBLANK(Service_Address__PostalCode__s),
     ISBLANK(TEXT(Service_Address__CountryCode__s)),
     ISBLANK(TEXT(Budget_Validated__c)),
-    ISBLANK(TEXT(Business_Problem_Evidenced__c)),
-    ISBLANK(Customer_Outcome_Predefined__c),
-    NOT(Decision_Process_Defined__c),
-    ISBLANK(TEXT(Impact_Consequences_Identified__c))
+    ISBLANK(TEXT(Business_Problem_Evidenced__c))
 )
 )</errorConditionFormula>
-    <errorMessage>Please complete Service Address, Budget Validated, Business Problem Evidenced, Customer Outcome Predefined, Decision Process Defined, and Impact / Consequences Identified before leaving Stage 1. Need help? Contact your Sales Operations Business Partner.</errorMessage>
+    <errorMessage
+  >Please complete Service Address, Budget Validated, and Business Problem Evidenced before leaving Stage 1. Need help? Contact your Sales Operations Business Partner.</errorMessage>
 </ValidationRule>

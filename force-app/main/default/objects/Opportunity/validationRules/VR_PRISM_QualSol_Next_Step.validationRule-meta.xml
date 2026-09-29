@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>VR_PRISM_QualSol_Next_Step</fullName>
+    <active>true</active>
+    <description
+  >[IRM feedback row OppVR45] Requires NextStep at the moment of moving Qualification-&gt;Solutioning or Solutioning-&gt;Negotiation, for Medium/High Touch deals only. Per IRM correction, this is transition-specific (not a static stage check) and does not...</description>
+    <errorConditionFormula>AND(
+    NOT($Permission.ECommerce_Deal_Bypass),
+
+    OR(
+        RecordType.DeveloperName = &apos;Framework_Parent_Opportunity&apos;,
+        RecordType.DeveloperName = &apos;Standard_Opportunity&apos;
+    ),
+
+    OR(
+        ISPICKVAL(Type, &apos;New Deal&apos;),
+        ISPICKVAL(Type, &apos;Cross-Sell/Upsell&apos;),
+        ISPICKVAL(Type, &apos;Renewal&apos;)
+    ),
+
+    OR(
+        ISPICKVAL(Touch_Level__c, &apos;Medium Touch&apos;),
+        ISPICKVAL(Touch_Level__c, &apos;High Touch&apos;)
+    ),
+
+    OR(
+        AND(
+            ISPICKVAL(PRIORVALUE(StageName), &apos;Qualification&apos;),
+            ISPICKVAL(StageName, &apos;Solutioning&apos;)
+        ),
+        AND(
+            ISPICKVAL(PRIORVALUE(StageName), &apos;Solutioning&apos;),
+            ISPICKVAL(StageName, &apos;Negotiation&apos;)
+        )
+    ),
+
+    ISBLANK(NextStep)
+)</errorConditionFormula>
+    <errorDisplayField>NextStep</errorDisplayField>
+    <errorMessage
+  >Next Step is required to advance to the next stage. Please enter the next steps.</errorMessage>
+</ValidationRule>

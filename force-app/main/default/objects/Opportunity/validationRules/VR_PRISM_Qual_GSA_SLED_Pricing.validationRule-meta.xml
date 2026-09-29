@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>VR_PRISM_Qual_GSA_SLED_Pricing</fullName>
+    <active>true</active>
+    <description
+  >[IRM feedback row OppVR34] Requires GSA/SLED/Public Sector Pricing while in Solutioning, Negotiation or Booking Verification, for US/Canada billing deals. Stage updated 2026-09-24 per IRM.</description>
+    <errorConditionFormula>AND(
+    NOT($Permission.ECommerce_Deal_Bypass),
+
+    OR(
+        RecordType.DeveloperName = &apos;Framework_Parent_Opportunity&apos;,
+        RecordType.DeveloperName = &apos;Standard_Opportunity&apos;
+    ),
+
+    OR(
+        ISPICKVAL(Type, &apos;New Deal&apos;),
+        ISPICKVAL(Type, &apos;Cross-Sell/Upsell&apos;),
+        ISPICKVAL(Type, &apos;Renewal&apos;)
+    ),
+
+    OR(
+        QTB_Billing_Country_Name__c = &apos;United States&apos;,
+        QTB_Billing_Country_Name__c = &apos;Canada&apos;
+    ),
+
+    OR(
+        ISPICKVAL(StageName, &apos;Solutioning&apos;),
+        ISPICKVAL(StageName, &apos;Negotiation&apos;),
+        ISPICKVAL(StageName, &apos;Booking Verification&apos;)
+    ),
+
+    ISPICKVAL(US_Federal_GSA_Pricing__c, &apos;&apos;)
+)</errorConditionFormula>
+    <errorDisplayField>US_Federal_GSA_Pricing__c</errorDisplayField>
+    <errorMessage
+  >GSA/SLED/Public Sector Pricing is required to advance to the next stage. Please select a value.</errorMessage>
+</ValidationRule>

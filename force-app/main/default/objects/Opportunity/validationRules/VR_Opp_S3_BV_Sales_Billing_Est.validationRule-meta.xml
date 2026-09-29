@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>VR_Opp_S3_BV_Sales_Billing_Est</fullName>
+    <active>false</active>
+    <description
+  >Deactivated as part of VR Cleanup project - DO NOT USE</description>
+    <errorConditionFormula>AND(
+    NOT($Permission.Bypass_Opportunity_Validation),
+
+    ISPICKVAL(PRIORVALUE(StageName), &quot;Negotiation&quot;),
+    ISPICKVAL(StageName, &quot;Booking Verification&quot;),
+
+    OR(
+        ISBLANK(Total_Sales_Billing_Estimate__c),
+        Total_Sales_Billing_Estimate__c &lt;= 1
+    )
+)</errorConditionFormula>
+    <errorDisplayField>Total_Sales_Billing_Estimate__c</errorDisplayField>
+    <errorMessage
+  >Total Sales Billing Estimate must be greater than 1 before advancing to Booking Verification.</errorMessage>
+</ValidationRule>

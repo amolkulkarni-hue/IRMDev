@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>VR_PRISM_ReasonLost_Comments_Required</fullName>
+    <active>true</active>
+    <description
+  >[Sheet row 65 / OppVR85] Reason Lost and Lost Comments are required when moving to Stage = Lost. Approved by IRM, no change.</description>
+    <errorConditionFormula>AND(
+    ISPICKVAL(StageName, &apos;Lost&apos;),
+
+    ISCHANGED(StageName),
+
+    OR(
+        ISPICKVAL(IM_Reason_Lost__c, &apos;&apos;),
+        ISBLANK(IM_Lost_Comments__c)
+    )
+)</errorConditionFormula>
+    <errorDisplayField>IM_Reason_Lost__c</errorDisplayField>
+    <errorMessage
+  >Reason Lost and Lost Comments are required. Please enter values for both fields.</errorMessage>
+</ValidationRule>

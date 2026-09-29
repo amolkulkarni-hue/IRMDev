@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>VR_PRISM_CloseDate_Lock_On_Signature</fullName>
+    <active>true</active>
+    <description
+  >[Sheet row 46 / OppVR66] Close Date cannot be changed once signature is captured (CLM), in Booking Verification/Booked/Setup/Closed/Lost. Uses Deal_Close_Date_Locked__c (same indicator as Deal_Close_Date_Finalized). Approved by IRM, no change.</description>
+    <errorConditionFormula>AND(
+    Deal_Close_Date_Locked__c,
+
+    ISCHANGED(CloseDate),
+
+    OR(
+        ISPICKVAL(StageName, &apos;Booking Verification&apos;),
+        ISPICKVAL(StageName, &apos;Booked&apos;),
+        ISPICKVAL(StageName, &apos;Setup&apos;),
+        ISPICKVAL(StageName, &apos;Closed&apos;),
+        ISPICKVAL(StageName, &apos;Lost&apos;)
+    )
+)</errorConditionFormula>
+    <errorDisplayField>CloseDate</errorDisplayField>
+    <errorMessage
+  >Close Date is locked. You cannot update the Close Date after the Customer Signature has been received.</errorMessage>
+</ValidationRule>

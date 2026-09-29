@@ -42,9 +42,14 @@ public with sharing class CaseFieldMappingEngine {
         public String sourceObject;      // 'Opportunity' or 'Account'
         public String relationshipName;  // null => direct field on the Source Object
         public String field;
+        public String targetObject;      // 'Case' or 'Case_Detail__c' — blank on the config row defaults
+                                          // to 'Case' (every mapping predates this field existing).
         public String targetField;
         public String selectExpression;  // what to put in the supplemental SOQL SELECT list
     }
+
+    private static final String TARGET_CASE = 'Case';
+    private static final String TARGET_CASE_DETAIL = 'Case_Detail__c';
 
     @InvocableMethod(
         label='Apply Case Field Mappings'
@@ -80,15 +85,34 @@ public with sharing class CaseFieldMappingEngine {
 
         Set<Id> oppIds = new Set<Id>();
         Set<Id> acctIds = new Set<Id>();
+        Set<Id> caseIdsWithOpp = new Set<Id>();
         for (Case c : cases) {
             if (c.Opportunity__c != null) oppIds.add(c.Opportunity__c);
             if (c.AccountId != null) acctIds.add(c.AccountId);
+            caseIdsWithOpp.add(c.Id);
         }
 
         Map<Id, SObject> oppById = queryBySelectExpressions('Opportunity', oppIds, resolved);
         Map<Id, SObject> acctById = queryBySelectExpressions('Account', acctIds, resolved);
 
+        // Case_Detail__c children of these Cases, only queried when at least one resolved
+        // mapping actually targets Case_Detail__c — grouped by parent Case Id since a Case can
+        // in principle have more than one Case_Detail__c child.
+        Boolean anyCaseDetailTarget = false;
+        for (ResolvedMapping rm : resolved) {
+            if (rm.targetObject == TARGET_CASE_DETAIL) { anyCaseDetailTarget = true; break; }
+        }
+        Map<Id, List<Case_Detail__c>> caseDetailsByCaseId = new Map<Id, List<Case_Detail__c>>();
+        if (anyCaseDetailTarget) {
+            for (Case_Detail__c cd : [SELECT Id, Case__c FROM Case_Detail__c WHERE Case__c IN :caseIdsWithOpp]) {
+                if (!caseDetailsByCaseId.containsKey(cd.Case__c)) caseDetailsByCaseId.put(cd.Case__c, new List<Case_Detail__c>());
+                caseDetailsByCaseId.get(cd.Case__c).add(cd);
+            }
+        }
+
         List<Case> casesToUpdate = new List<Case>();
+        List<Case_Detail__c> caseDetailsToUpdate = new List<Case_Detail__c>();
+
         for (Case c : cases) {
             String recordTypeDevName = RECTYPE_ID_TO_DEV_NAME.get(c.RecordTypeId);
             List<ResolvedMapping> applicable = new List<ResolvedMapping>();
@@ -100,7 +124,11 @@ public with sharing class CaseFieldMappingEngine {
             if (applicable.isEmpty()) continue;
 
             Case caseToUpdate = new Case(Id = c.Id);
-            Boolean hasAnyValue = false;
+            Boolean caseHasAnyValue = false;
+
+            // One update sObject per related Case_Detail__c child, keyed by its Id, only
+            // created the first time a Case_Detail__c-targeted mapping actually has a value.
+            Map<Id, Case_Detail__c> caseDetailUpdatesById = new Map<Id, Case_Detail__c>();
 
             for (ResolvedMapping rm : applicable) {
                 SObject sourceRecord = rm.sourceObject == 'Account' ? acctById.get(c.AccountId) : oppById.get(c.Opportunity__c);
@@ -110,21 +138,37 @@ public with sharing class CaseFieldMappingEngine {
                     Object value = rm.relationshipName == null
                         ? sourceRecord.get(rm.field)
                         : safeRelatedGet(sourceRecord, rm.relationshipName, rm.field);
-                    caseToUpdate.put(rm.targetField, value);
-                    hasAnyValue = true;
+
+                    if (rm.targetObject == TARGET_CASE_DETAIL) {
+                        List<Case_Detail__c> children = caseDetailsByCaseId.get(c.Id);
+                        if (children == null) continue; // no Case_Detail__c child yet — nothing to update
+                        for (Case_Detail__c cd : children) {
+                            if (!caseDetailUpdatesById.containsKey(cd.Id)) {
+                                caseDetailUpdatesById.put(cd.Id, new Case_Detail__c(Id = cd.Id));
+                            }
+                            caseDetailUpdatesById.get(cd.Id).put(rm.targetField, value);
+                        }
+                    } else {
+                        caseToUpdate.put(rm.targetField, value);
+                        caseHasAnyValue = true;
+                    }
                 } catch (Exception e) {
                     // A bad target field name or an incompatible value/type for this one
-                    // mapping — skip just this field, never the whole Case update.
+                    // mapping — skip just this field, never the whole Case/Case_Detail__c update.
                     System.debug(LoggingLevel.WARN,
-                        'CaseFieldMappingEngine: skipped mapping to ' + rm.targetField + ' on Case ' + c.Id + ' - ' + e.getMessage());
+                        'CaseFieldMappingEngine: skipped mapping to ' + rm.targetObject + '.' + rm.targetField + ' for Case ' + c.Id + ' - ' + e.getMessage());
                 }
             }
 
-            if (hasAnyValue) casesToUpdate.add(caseToUpdate);
+            if (caseHasAnyValue) casesToUpdate.add(caseToUpdate);
+            if (!caseDetailUpdatesById.isEmpty()) caseDetailsToUpdate.addAll(caseDetailUpdatesById.values());
         }
 
         if (!casesToUpdate.isEmpty()) {
             Database.update(casesToUpdate, false);
+        }
+        if (!caseDetailsToUpdate.isEmpty()) {
+            Database.update(caseDetailsToUpdate, false);
         }
     }
 
@@ -135,7 +179,7 @@ public with sharing class CaseFieldMappingEngine {
 
     private static List<Case_Field_Mapping__c> queryActiveMappings() {
         return [
-            SELECT Id, Record_Type_Developer_Name__c, Case_Type__c, Source_Object__c, Source_Field_Path__c, Target_Field_API_Name__c
+            SELECT Id, Record_Type_Developer_Name__c, Case_Type__c, Source_Object__c, Source_Field_Path__c, Target_Object__c, Target_Field_API_Name__c
             FROM Case_Field_Mapping__c
             WHERE Is_Active__c = true
         ];
@@ -151,6 +195,7 @@ public with sharing class CaseFieldMappingEngine {
             Schema.DescribeSObjectResult acctDescribe) {
 
         Map<String, Schema.SObjectField> caseFieldMap = Schema.SObjectType.Case.fields.getMap();
+        Map<String, Schema.SObjectField> caseDetailFieldMap = Schema.SObjectType.Case_Detail__c.fields.getMap();
 
         List<ResolvedMapping> results = new List<ResolvedMapping>();
         for (Case_Field_Mapping__c raw : rawMappings) {
@@ -158,8 +203,15 @@ public with sharing class CaseFieldMappingEngine {
                 logInvalid(raw, 'missing Source Object, Source Field Path, or Target Field API Name');
                 continue;
             }
-            if (!caseFieldMap.containsKey(raw.Target_Field_API_Name__c.toLowerCase())) {
-                logInvalid(raw, 'Target_Field_API_Name__c "' + raw.Target_Field_API_Name__c + '" does not exist on Case');
+
+            String targetObject = String.isBlank(raw.Target_Object__c) ? TARGET_CASE : raw.Target_Object__c.trim();
+            Map<String, Schema.SObjectField> targetFieldMap = targetObject == TARGET_CASE_DETAIL ? caseDetailFieldMap : caseFieldMap;
+            if (targetObject != TARGET_CASE && targetObject != TARGET_CASE_DETAIL) {
+                logInvalid(raw, 'Target_Object__c "' + raw.Target_Object__c + '" must be Case or Case_Detail__c');
+                continue;
+            }
+            if (!targetFieldMap.containsKey(raw.Target_Field_API_Name__c.toLowerCase())) {
+                logInvalid(raw, 'Target_Field_API_Name__c "' + raw.Target_Field_API_Name__c + '" does not exist on ' + targetObject);
                 continue;
             }
 
@@ -173,6 +225,7 @@ public with sharing class CaseFieldMappingEngine {
             rm.recordTypeDevName = String.isBlank(raw.Record_Type_Developer_Name__c) ? UNIVERSAL_BUCKET : raw.Record_Type_Developer_Name__c.trim();
             rm.caseType = String.isBlank(raw.Case_Type__c) ? UNIVERSAL_BUCKET : raw.Case_Type__c.trim();
             rm.sourceObject = raw.Source_Object__c;
+            rm.targetObject = targetObject;
             rm.targetField = raw.Target_Field_API_Name__c;
             results.add(rm);
         }
@@ -266,22 +319,29 @@ public with sharing class CaseFieldMappingEngine {
         Schema.DescribeSObjectResult oppDescribe = Schema.SObjectType.Opportunity;
         Schema.DescribeSObjectResult acctDescribe = Schema.SObjectType.Account;
         Map<String, Schema.SObjectField> caseFieldMap = Schema.SObjectType.Case.fields.getMap();
+        Map<String, Schema.SObjectField> caseDetailFieldMap = Schema.SObjectType.Case_Detail__c.fields.getMap();
 
         for (Case_Field_Mapping__c raw : queryActiveMappings()) {
-            String label = 'Case_Field_Mapping__c ' + raw.Id + ' (' + raw.Source_Object__c + '.' + raw.Source_Field_Path__c + ' -> ' + raw.Target_Field_API_Name__c + ')';
+            String targetObject = String.isBlank(raw.Target_Object__c) ? TARGET_CASE : raw.Target_Object__c.trim();
+            String label = 'Case_Field_Mapping__c ' + raw.Id + ' (' + raw.Source_Object__c + '.' + raw.Source_Field_Path__c + ' -> ' + targetObject + '.' + raw.Target_Field_API_Name__c + ')';
 
             if (String.isBlank(raw.Source_Object__c) || String.isBlank(raw.Source_Field_Path__c) || String.isBlank(raw.Target_Field_API_Name__c)) {
                 problems.add(label + ': missing a required field');
                 continue;
             }
 
-            Schema.SObjectField targetField = caseFieldMap.get(raw.Target_Field_API_Name__c.toLowerCase());
-            if (targetField == null) {
-                problems.add(label + ': target field does not exist on Case');
+            if (targetObject != TARGET_CASE && targetObject != TARGET_CASE_DETAIL) {
+                problems.add(label + ': Target Object must be Case or Case_Detail__c');
             } else {
-                Schema.DescribeFieldResult targetDescribe = targetField.getDescribe();
-                if (targetDescribe.isCalculated() || !targetDescribe.isUpdateable()) {
-                    problems.add(label + ': target field is a formula/read-only field on Case, not writable');
+                Map<String, Schema.SObjectField> targetFieldMap = targetObject == TARGET_CASE_DETAIL ? caseDetailFieldMap : caseFieldMap;
+                Schema.SObjectField targetField = targetFieldMap.get(raw.Target_Field_API_Name__c.toLowerCase());
+                if (targetField == null) {
+                    problems.add(label + ': target field does not exist on ' + targetObject);
+                } else {
+                    Schema.DescribeFieldResult targetDescribe = targetField.getDescribe();
+                    if (targetDescribe.isCalculated() || !targetDescribe.isUpdateable()) {
+                        problems.add(label + ': target field is a formula/read-only field on ' + targetObject + ', not writable');
+                    }
                 }
             }
 

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>VR_PRISM_Booked_Date_Locked</fullName>
+    <active>true</active>
+    <description
+  >[Sheet row 52 / OppVR72] Booked Date cannot be changed once Stage is Booked, Setup, Closed or Lost. Approved by IRM, no change.</description>
+    <errorConditionFormula>AND(
+    NOT($Permission.Sales_Operations_Bypass),
+
+    ISCHANGED(Deal_Booked_Date__c),
+
+    OR(
+        ISPICKVAL(StageName, &apos;Booked&apos;),
+        ISPICKVAL(StageName, &apos;Setup&apos;),
+        ISPICKVAL(StageName, &apos;Closed&apos;),
+        ISPICKVAL(StageName, &apos;Lost&apos;)
+    )
+)</errorConditionFormula>
+    <errorDisplayField>Deal_Booked_Date__c</errorDisplayField>
+    <errorMessage
+  >Booked Date is locked. You cannot update the Booked Date after an Opportunity is Won. Contact your Sales Operations Business Partner for help.</errorMessage>
+</ValidationRule>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>VR_PRISM_Type_Locked_After_Negotiation</fullName>
+    <active>true</active>
+    <description
+  >[Sheet row 70 / OppVR90] Type cannot change once Stage is Negotiation/BV/Booked/Setup/Closed. Rebuilt per IRM to check CURRENT StageName (not PRIORVALUE, which wasn&apos;t firing reliably).</description>
+    <errorConditionFormula>AND(
+    ISCHANGED(Type),
+
+    OR(
+        ISPICKVAL(StageName, &apos;Negotiation&apos;),
+        ISPICKVAL(StageName, &apos;Booking Verification&apos;),
+        ISPICKVAL(StageName, &apos;Booked&apos;),
+        ISPICKVAL(StageName, &apos;Setup&apos;),
+        ISPICKVAL(StageName, &apos;Closed&apos;)
+    )
+)</errorConditionFormula>
+    <errorDisplayField>Type</errorDisplayField>
+    <errorMessage
+  >Type is locked. You cannot change the Type once the Opportunity reaches the Negotiation Stage.</errorMessage>
+</ValidationRule>

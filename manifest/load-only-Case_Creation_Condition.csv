@@ -1,10 +1,136 @@
-Rule__c,Condition_Number__c,Field_API_Name__c,Operator__c,Value__c
-aKVWJ00000FYEMT4A5,1,Touch_Level__c,EQUALS,High Touch
-aKVWJ00000FYEMU4A5,1,Bid_RFP__c,IS_TRUE,
-aKVWJ00000FYEMV4A5,1,Renewal_Upsell__c,IS_TRUE,
-aKVWJ00000FYEMV4A5,2,Touch_Level__c,IN,High Touch;Medium Touch
-aKVWJ00000FYEMW4A5,1,Touch_Level__c,IN,High Touch;Medium Touch
-aKVWJ00000FYEMX4A5,1,Legal_Review_Required__c,IS_TRUE,
-aKVWJ00000FYEMY4A5,1,InfoSec_Review_Required__c,IS_TRUE,
-aKVWJ00000FYEMZ4A5,1,Touch_Level__c,IN,High Touch;Medium Touch
-aKVWJ00000FYEMZ4A5,2,Pricing_Support_Required__c,IS_TRUE,
+Rule_Name,Condition_Number__c,Field_API_Name__c,Operator__c,Value__c
+CCR-BK-BI-HT,1,Business_Unit__c,EQUALS,RIM
+CCR-BK-BI-HT,2,Amount,GREATER_THAN,25000
+CCR-BK-BI-HT,3,Touch_Level__c,EQUALS,High Touch
+CCR-BK-BI-HT,4,Type,IN,"New Deal,Cross-Sell/Upsell"
+CCR-BK-BI-LT,1,Business_Unit__c,EQUALS,RIM
+CCR-BK-BI-LT,2,Amount,GREATER_THAN,25000
+CCR-BK-BI-LT,3,Touch_Level__c,EQUALS,Low Touch
+CCR-BK-BI-LT,4,Type,IN,"Cross-Sell/Upsell,New Deal"
+CCR-BK-BI-MT,1,Business_Unit__c,EQUALS,RIM
+CCR-BK-BI-MT,2,Amount,GREATER_THAN,25000
+CCR-BK-BI-MT,3,Touch_Level__c,EQUALS,Medium Touch
+CCR-BK-BI-MT,4,Type,IN,"Cross-Sell/Upsell,New Deal"
+CCR-S-INFOSECU-HT,1,Amount,GREATER_THAN,500000
+CCR-S-INFOSECU-HT,2,Touch_Level__c,EQUALS,High Touch
+CCR-S-INFOSECU-LT,1,Touch_Level__c,EQUALS,Low Touch
+CCR-S-SA-MT-04,1,Business_Unit__c,EQUALS,Digital
+CCR-S-SA-MT-04,2,Touch_Level__c,EQUALS,Medium Touch
+CCR-S-SA-NT,1,Business_Unit__c,EQUALS,ALM
+CCR-S-SA-NT,2,Type,EQUALS,New Logo
+CCR-S-SA-NT,3,Amount,LESS_THAN,100000
+CCR-S-SA-NT,4,Touch_Level__c,EQUALS,No Touch
+CCR-S-SA-NT-02,1,Business_Unit__c,EQUALS,ALM
+CCR-S-SA-NT-02,2,Type,EQUALS,Renewal
+CCR-S-SA-NT-02,3,Touch_Level__c,EQUALS,No Touch
+CCR-S-SA-NT-03,1,Business_Unit__c,EQUALS,RIM
+CCR-S-SA-NT-03,2,Primary_Product_Line__c,EQUALS,Secure Shredding
+CCR-S-SA-NT-03,3,Amount,LESS_THAN,100000
+CCR-S-SA-NT-03,4,Touch_Level__c,EQUALS,No Touch
+CCR-S-SA-NT-03,5,Type,EQUALS,New Deal
+CCR-S-SA-NT-04,1,Business_Unit__c,EQUALS,RIM
+CCR-S-SA-NT-04,2,Primary_Product_Line__c,EQUALS,RM Secure Storage
+CCR-S-SA-NT-04,3,Primary_Product_Line__c,EQUALS,Smart Suite
+CCR-S-SA-NT-04,4,Touch_Level__c,EQUALS,No Touch
+CCR-S-SA-NT-04,5,Type,EQUALS,New Deal
+CCR2-Q-BM-HT-All-R1,1,RFx_RFI_RFQ_RFP__c,IS_TRUE,
+CCR2-Q-BM-HT-All-R1,2,Account.Sales_Strategic_Account__c,IS_TRUE,
+CCR2-Q-BM-HT-All-R1,3,Amount_USD__c,GREATER_THAN,100000
+CCR2-Q-BM-HT-W&L-R4,1,RFx_RFI_RFQ_RFP__c,IS_TRUE,
+CCR2-Q-BM-HT-W&L-R4,2,W_L_BU__c,IS_TRUE,
+CCR2-Q-BM-HT-W&L-R4,3,Amount_USD__c,GREATER_OR_EQUAL,250000
+CCR2-Q-BM-LT-All-R3,1,RFx_RFI_RFQ_RFP__c,IS_TRUE,
+CCR2-Q-BM-LT-All-R3,2,Amount_USD__c,LESS_THAN,50000
+CCR2-Q-BM-MT-All-R2,1,RFx_RFI_RFQ_RFP__c,IS_TRUE,
+CCR2-Q-BM-MT-All-R2,2,Amount_USD__c,LESS_THAN,100000
+CCR2-Q-BM-MT-All-R2,3,Amount_USD__c,GREATER_OR_EQUAL,50000
+CCR2-Q-BM-MT-All-R2,4,Region__c,EQUALS,Latin America
+CCR2-Q-BM-MT-All-R2,5,Region__c,EQUALS,Europe
+CCR2-Q-BM-MT-All-R2,6,Region__c,EQUALS,MENAT
+CCR2-Q-BM-MT-All-R2,7,Amount_USD__c,GREATER_OR_EQUAL,50000
+CCR2-Q-BM-MT-All-R2,8,Region__c,EQUALS,North America
+CCR2-Q-BM-MT-All-R2,9,Region__c,EQUALS,Asia Pacific
+CCR2-Q-MSP-HT-RIMALM-R8,1,IM_Sales_Event__c,CONTAINS,Managed Service Program
+CCR2-Q-RMKT-HT-ALM-R7,1,Remarketing_Required__c,EQUALS,Yes
+CCR2-Q-RMKT-HT-ALM-R7,2,ALM_BU__c,IS_TRUE,
+CCR2-Q-RMKT-HT-ALM-R7,3,Amount_USD__c,GREATER_OR_EQUAL,1000000
+CCR2-Q-RMKT-HT-ALM-R7,4,Primary_Product_Line__c,EQUALS,ITAD
+CCR2-Q-RMKT-LT-ALM-R5,1,Remarketing_Required__c,EQUALS,Yes
+CCR2-Q-RMKT-LT-ALM-R5,2,Amount_USD__c,LESS_THAN,75000
+CCR2-Q-RMKT-LT-ALM-R5,3,ALM_BU__c,IS_TRUE,
+CCR2-Q-RMKT-MT-ALM-R6,1,Remarketing_Required__c,EQUALS,Yes
+CCR2-Q-RMKT-MT-ALM-R6,2,Amount_USD__c,GREATER_OR_EQUAL,75000
+CCR2-Q-RMKT-MT-ALM-R6,3,ALM_BU__c,IS_TRUE,
+CCR2-S-RMKT-HT-ALM-R7,1,Remarketing_Required__c,EQUALS,Yes
+CCR2-S-RMKT-HT-ALM-R7,2,ALM_BU__c,IS_TRUE,
+CCR2-S-RMKT-HT-ALM-R7,3,Amount_USD__c,GREATER_OR_EQUAL,1000000
+CCR2-S-RMKT-HT-ALM-R7,4,Primary_Product_Line__c,EQUALS,ITAD
+CCR2-S-RMKT-LT-ALM-R5,1,Remarketing_Required__c,EQUALS,Yes
+CCR2-S-RMKT-LT-ALM-R5,2,Amount_USD__c,LESS_THAN,75000
+CCR2-S-RMKT-LT-ALM-R5,3,ALM_BU__c,IS_TRUE,
+CCR2-S-RMKT-MT-ALM-R6,1,Remarketing_Required__c,EQUALS,Yes
+CCR2-S-RMKT-MT-ALM-R6,2,Amount_USD__c,GREATER_OR_EQUAL,75000
+CCR2-S-RMKT-MT-ALM-R6,3,ALM_BU__c,IS_TRUE,
+CCR2-S-SA-HT-ALM-R10,1,ALM_BU__c,IS_TRUE,
+CCR2-S-SA-HT-ALM-R10,2,Type,EQUALS,New Deal
+CCR2-S-SA-HT-ALM-R10,3,RecordTypeId,EQUALS,012WJ000002GcueYAC
+CCR2-S-SA-HT-ALM-R10,4,Amount_USD__c,GREATER_OR_EQUAL,1000000
+CCR2-S-SA-HT-ALM-R10,5,Custom_Solution_Required__c,IS_TRUE,
+CCR2-S-SA-HT-ALM-R10,6,Multi_Country__c,EQUALS,Yes
+CCR2-S-SA-HT-ALM-R10,7,Account.Sales_Strategic_Account__c,IS_TRUE,
+CCR2-S-SA-HT-ALM-R12,1,ALM_BU__c,IS_TRUE,
+CCR2-S-SA-HT-ALM-R12,2,Type,EQUALS,Renewal
+CCR2-S-SA-HT-ALM-R12,3,Amount_USD__c,GREATER_OR_EQUAL,1000000
+CCR2-S-SA-HT-ALM-R12,4,Custom_Solution_Required__c,IS_TRUE,
+CCR2-S-SA-HT-ALM-R12,5,Multi_Country__c,EQUALS,Yes
+CCR2-S-SA-HT-ALM-R12,6,Account.Sales_Strategic_Account__c,IS_TRUE,
+CCR2-S-SA-HT-ALM-R12,7,Account.IM_Industry__c,EQUALS,Hyperscalers & OEMs
+CCR2-S-SA-HT-Digital-R13,1,Digital_BU__c,IS_TRUE,
+CCR2-S-SA-HT-Digital-R13,2,Account.Sales_Strategic_Account__c,IS_TRUE,
+CCR2-S-SA-HT-Digital-R13,3,Amount_USD__c,GREATER_OR_EQUAL,3500000
+CCR2-S-SA-HT-Digital-R14,1,Digital_BU__c,IS_TRUE,
+CCR2-S-SA-HT-Digital-R14,2,Amount_USD__c,GREATER_OR_EQUAL,250000
+CCR2-S-SA-HT-Digital-R14,3,Multi_BU_Flag__c,IS_TRUE,
+CCR2-S-SA-HT-Digital-R14,4,Multi_Country__c,EQUALS,Yes
+CCR2-S-SA-HT-MAS-R19,1,MAS_BU__c,IS_TRUE,
+CCR2-S-SA-HT-MAS-R19,2,Account.Sales_Strategic_Account__c,IS_TRUE,
+CCR2-S-SA-HT-RIM-R17,1,RIM_BU__c,IS_TRUE,
+CCR2-S-SA-HT-RIM-R17,2,Primary_Product_Line__c,EQUALS,Secure Shred
+CCR2-S-SA-HT-RIM-R17,3,Account.Sales_Strategic_Account__c,IS_TRUE,
+CCR2-S-SA-HT-RIM-R17,4,Account.Sector__c,EQUALS,BFSI
+CCR2-S-SA-HT-RIM-R17,5,Account.IM_Industry__c,EQUALS,Hyperscalers & OEMs
+CCR2-S-SA-HT-RIM-R17,6,Account.IM_Industry__c,EQUALS,Manufacturing
+CCR2-S-SA-HT-RIM-R17,7,Amount_USD__c,GREATER_OR_EQUAL,100000
+CCR2-S-SA-HT-RIM-R22,1,RIM_BU__c,IS_TRUE,
+CCR2-S-SA-HT-RIM-R22,2,Primary_Product_Line__c,EQUALS,Records Management
+CCR2-S-SA-HT-RIM-R22,3,Primary_Product_Line__c,EQUALS,Project Services
+CCR2-S-SA-HT-RIM-R22,4,Account.Sales_Strategic_Account__c,IS_TRUE,
+CCR2-S-SA-HT-RIM-R22,5,Expected_CuFt__c,GREATER_THAN,15000
+CCR2-S-SA-HT-RIM-R22,6,Amount_USD__c,GREATER_THAN,100000
+CCR2-S-SA-HT-W&L-R20,1,W_L_BU__c,IS_TRUE,
+CCR2-S-SA-HT-W&L-R20,2,Amount_USD__c,GREATER_OR_EQUAL,250000
+CCR2-S-SA-HT-W&L-R20,3,Account.Sales_Strategic_Account__c,IS_TRUE,
+CCR2-S-SA-MT-ALM-R11,1,ALM_BU__c,IS_TRUE,
+CCR2-S-SA-MT-ALM-R11,2,Type,EQUALS,Renewal
+CCR2-S-SA-MT-ALM-R11,3,Amount_USD__c,GREATER_OR_EQUAL,1000000
+CCR2-S-SA-MT-ALM-R11,4,Custom_Solution_Required__c,IS_FALSE,
+CCR2-S-SA-MT-ALM-R11,5,Multi_Country__c,EQUALS,No
+CCR2-S-SA-MT-ALM-R9,1,ALM_BU__c,IS_TRUE,
+CCR2-S-SA-MT-ALM-R9,2,Multi_Country__c,EQUALS,Yes
+CCR2-S-SA-MT-ALM-R9,3,Type,EQUALS,New Deal
+CCR2-S-SA-MT-ALM-R9,4,Custom_Solution_Required__c,IS_TRUE,
+CCR2-S-SA-MT-ALM-R9,5,Amount_USD__c,GREATER_THAN,100000
+CCR2-S-SA-MT-ALM-R9,6,Amount_USD__c,LESS_THAN,1000000
+CCR2-S-SA-MT-Digital-R15,1,Digital_BU__c,IS_TRUE,
+CCR2-S-SA-MT-Digital-R15,2,Amount_USD__c,GREATER_THAN,250000
+CCR2-S-SA-MT-Digital-R15,3,Primary_Product_Line__c,EQUALS,Insight
+CCR2-S-SA-MT-MAS-R18,1,MAS_BU__c,IS_TRUE,
+CCR2-S-SA-MT-RIM-R16,1,RIM_BU__c,IS_TRUE,
+CCR2-S-SA-MT-RIM-R16,2,Primary_Product_Line__c,EQUALS,Secure Shred
+CCR2-S-SA-MT-RIM-R16,3,Amount_USD__c,LESS_THAN,100000
+CCR2-S-SA-MT-RIM-R16,4,Account.Sales_Strategic_Account__c,IS_TRUE,
+CCR2-S-SA-MT-RIM-R21,1,RIM_BU__c,IS_TRUE,
+CCR2-S-SA-MT-RIM-R21,2,Primary_Product_Line__c,EQUALS,Records Management
+CCR2-S-SA-MT-RIM-R21,3,Primary_Product_Line__c,EQUALS,Project Services
+CCR2-S-SA-MT-RIM-R21,4,Expected_CuFt__c,GREATER_THAN,500
+CCR2-S-SA-MT-RIM-R21,5,Expected_CuFt__c,LESS_THAN,15000

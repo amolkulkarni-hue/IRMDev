@@ -1,5 +1,6 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <Layout xmlns="http://soap.sforce.com/2006/04/metadata">
+    <excludeButtons>GenerateKnowledge</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <feedLayout>
         <autocollapsePublisher>true</autocollapsePublisher>
@@ -47,7 +48,7 @@
                 <field>Value_Hypothesis_Scope_Reviewed__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Required</behavior>
                 <field>AccountId</field>
             </layoutItems>
             <layoutItems>
@@ -72,10 +73,6 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Deal_Type__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>Win_Reason__c</field>
             </layoutItems>
             <layoutItems>
@@ -90,6 +87,18 @@
                 <behavior>Edit</behavior>
                 <field>BV_Stage_Gate_Bypass__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Requested_Regression_Stage__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Amount_USD__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Required</behavior>
+                <field>Eligible_Annual_Amount__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -99,6 +108,10 @@
             <layoutItems>
                 <behavior>Required</behavior>
                 <field>CloseDate</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Required</behavior>
+                <field>ForecastCategoryName</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Required</behavior>
@@ -125,7 +138,7 @@
                 <field>Amount</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Required</behavior>
                 <field>Billing_Country__c</field>
             </layoutItems>
         </layoutColumns>
@@ -202,6 +215,57 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Group_Purchasing_Organization_GPO__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <style>TwoColumnsLeftToRight</style>
+    </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
+        <editHeading>true</editHeading>
+        <label>Business Unit</label>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ALM_BU__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ALM_EAA__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Digital_BU__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Digital_EAA__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>MAS_BU__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>MAS_EAA__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>RIM_BU__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>RIM_EAA__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>W_L_BU__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>W_L_EAA__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -289,17 +353,18 @@
         <detailHeading>true</detailHeading>
         <editHeading>true</editHeading>
         <label>Booking Verification</label>
-        <layoutColumns/>
-        <layoutColumns/>
+        <layoutColumns />
+        <layoutColumns />
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
     <layoutSections>
         <customLabel>true</customLabel>
         <detailHeading>false</detailHeading>
         <editHeading>false</editHeading>
-        <label>Booked, Setup / Implementation, Closed / Won or Closed / Lost</label>
-        <layoutColumns/>
-        <layoutColumns/>
+        <label
+    >Booked, Setup / Implementation, Closed / Won or Closed / Lost</label>
+        <layoutColumns />
+        <layoutColumns />
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
     <layoutSections>
@@ -326,57 +391,52 @@
         <detailHeading>true</detailHeading>
         <editHeading>false</editHeading>
         <label>Custom Links</label>
-        <layoutColumns/>
-        <layoutColumns/>
-        <layoutColumns/>
+        <layoutColumns />
+        <layoutColumns />
+        <layoutColumns />
         <style>CustomLinks</style>
     </layoutSections>
     <platformActionList>
         <actionListContext>Record</actionListContext>
         <platformActionListItems>
-            <actionName>refedge__LogACall</actionName>
+            <actionName>NewTask</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>0</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>NewTask</actionName>
+            <actionName>NewEvent</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>1</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>NewEvent</actionName>
+            <actionName>FeedItem.TextPost</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>2</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>FeedItem.TextPost</actionName>
+            <actionName>SendEmail</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>3</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>SendEmail</actionName>
+            <actionName>Opportunity.Override_Touch_Level</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>4</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>Opportunity.Upload_Document_Checklist</actionName>
+            <actionName>Opportunity.Create_Renewal_Opportunity</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>5</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>Opportunity.Override_Touch_Level</actionName>
+            <actionName>Opportunity.Create_Quote</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>6</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>Opportunity.Create_Renewal_Opportunity</actionName>
+            <actionName>Opportunity.Upload_Document_LWC</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>7</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>Opportunity.Create_Quote</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>8</sortOrder>
         </platformActionListItems>
     </platformActionList>
     <relatedContent>
@@ -394,6 +454,24 @@
         </relatedContentItems>
     </relatedContent>
     <relatedLists>
+        <fields>NAME</fields>
+        <fields>LGK__EditLink__c</fields>
+        <fields>LGK__Stage__c</fields>
+        <relatedList>LGK__Transaction__c.LGK__OpportunityId__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>Account__c</fields>
+        <fields>IMGA__c</fields>
+        <fields>Opportunity_Type__c</fields>
+        <fields>Status__c</fields>
+        <fields>Pricing_Recommendations4__c</fields>
+        <fields>Pricing_Recommendations3__c</fields>
+        <fields>Pricing_Recommendations1__c</fields>
+        <fields>Pricing_Recommendations2__c</fields>
+        <relatedList>Schedule_A__c.Opportunity__c</relatedList>
+    </relatedLists>
+    <relatedLists>
         <fields>ContactName</fields>
         <fields>Role</fields>
         <fields>IsPrimary</fields>
@@ -409,6 +487,18 @@
         <relatedList>Case.Opportunity__c</relatedList>
     </relatedLists>
     <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>sbaa__Approval__c.sbaa__Opportunity__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>CreatedDate</fields>
+        <fields>StepStatus</fields>
+        <fields>OriginalActor</fields>
+        <fields>Actor</fields>
+        <fields>Comments</fields>
+        <relatedList>RelatedProcessHistoryList</relatedList>
+    </relatedLists>
+    <relatedLists>
         <fields>OPPORTUNITY.NAME</fields>
         <fields>ACCOUNT.NAME</fields>
         <fields>OPPORTUNITY.STAGE_NAME</fields>
@@ -417,22 +507,6 @@
         <fields>Billing_Country_Code__c</fields>
         <fields>CORE.USERS.FULL_NAME</fields>
         <relatedList>Opportunity.IM_Parent_Opportunity__c</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <fields>NAME</fields>
-        <fields>CREATED_DATE</fields>
-        <fields>Product_Line__c</fields>
-        <fields>Business_Unit__c</fields>
-        <fields>Is_Primary__c</fields>
-        <relatedList>Opportunity_Product_Line__c.Opportunity__c</relatedList>
-        <sortField>CREATED_DATE</sortField>
-        <sortOrder>Desc</sortOrder>
-    </relatedLists>
-    <relatedLists>
-        <fields>NAME</fields>
-        <fields>LGK__EditLink__c</fields>
-        <fields>LGK__Stage__c</fields>
-        <relatedList>LGK__Transaction__c.LGK__OpportunityId__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
@@ -448,7 +522,8 @@
         <fields>NAME</fields>
         <fields>Forecast_Revenue_Month__c</fields>
         <fields>Total_Annual_Amount__c</fields>
-        <relatedList>Sales_Revenue_Forecast__c.Forecast_Opportunity__c</relatedList>
+        <relatedList
+    >Sales_Revenue_Forecast__c.Forecast_Opportunity__c</relatedList>
         <sortField>Forecast_Revenue_Month__c</sortField>
         <sortOrder>Asc</sortOrder>
     </relatedLists>
@@ -466,13 +541,15 @@
     <relatedLists>
         <fields>NAME</fields>
         <fields>Business_Unit__c</fields>
+        <fields>Opportunity_Touch_Level__c</fields>
+        <fields>Opportunity_EAA__c</fields>
+        <fields>Opportunity_Score__c</fields>
+        <fields>Priority__c</fields>
         <fields>Completed_Date__c</fields>
-        <fields>CREATED_DATE</fields>
         <fields>Deal_Type__c</fields>
         <fields>Status__c</fields>
-        <relatedList>Booking_Verification_Checklist__c.Opportunity__c</relatedList>
-        <sortField>CREATED_DATE</sortField>
-        <sortOrder>Desc</sortOrder>
+        <relatedList
+    >Booking_Verification_Checklist__c.Opportunity__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
@@ -499,7 +576,8 @@
         <fields>NAME</fields>
         <fields>Gong__Primary_Account__c</fields>
         <fields>Gong__Call_Duration__c</fields>
-        <relatedList>Gong__Gong_Call__c.Gong__Primary_Opportunity__c</relatedList>
+        <relatedList
+    >Gong__Gong_Call__c.Gong__Primary_Opportunity__c</relatedList>
         <sortField>Gong__Call_Duration__c</sortField>
         <sortOrder>Desc</sortOrder>
     </relatedLists>
@@ -574,7 +652,8 @@
         <fields>NAME</fields>
         <fields>rfpio__Status__c</fields>
         <fields>LAST_UPDATE</fields>
-        <relatedList>rfpio__ResponsiveProposals__c.rfpio__OpportunityId__c</relatedList>
+        <relatedList
+    >rfpio__ResponsiveProposals__c.rfpio__OpportunityId__c</relatedList>
         <sortField>LAST_UPDATE</sortField>
         <sortOrder>Desc</sortOrder>
     </relatedLists>
@@ -586,7 +665,8 @@
         <fields>DL_VC__Status__c</fields>
         <fields>CREATEDBY_USER</fields>
         <fields>CREATED_DATE</fields>
-        <relatedList>DL_VC__VC_Value_Proposition__c.DL_VC__VC_Opportunity__c</relatedList>
+        <relatedList
+    >DL_VC__VC_Value_Proposition__c.DL_VC__VC_Opportunity__c</relatedList>
         <sortField>CREATED_DATE</sortField>
         <sortOrder>Desc</sortOrder>
     </relatedLists>
@@ -618,7 +698,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00hgP000002dzGz</masterLabel>
+        <masterLabel>00hWJ000007AjZL</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

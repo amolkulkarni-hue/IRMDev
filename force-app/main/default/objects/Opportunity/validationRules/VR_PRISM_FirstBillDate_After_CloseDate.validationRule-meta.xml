@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>VR_PRISM_FirstBillDate_After_CloseDate</fullName>
+    <active>true</active>
+    <description
+  >[Sheet row 54 / OppVR74] First Bill Date must be on or after the Close Date. Note: &apos;First Bill Date&apos; mapped to IM_Booked_Date__c. Approved by IRM, no change.</description>
+    <errorConditionFormula>AND(
+    NOT(ISBLANK(IM_Booked_Date__c)),
+
+    IM_Booked_Date__c &lt; CloseDate
+)</errorConditionFormula>
+    <errorDisplayField>IM_Booked_Date__c</errorDisplayField>
+    <errorMessage
+  >Invalid First Bill Date. The First Bill Date must be on or after the Close Date.</errorMessage>
+</ValidationRule>

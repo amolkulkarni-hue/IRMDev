@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>VR_PRISM_WinLoss_Exclusion_Reason</fullName>
+    <active>true</active>
+    <description
+  >[Sheet row 69 / OppVR89] Reason for Win Loss Exclusion is required when Exclude From Win Loss Feedback = TRUE. Approved by IRM, no change.</description>
+    <errorConditionFormula>AND(
+    Exclude_from_Win_Loss_Feedback__c,
+
+    ISBLANK(Reason_for_win_loss_exclusion__c)
+)</errorConditionFormula>
+    <errorDisplayField>Reason_for_win_loss_exclusion__c</errorDisplayField>
+    <errorMessage
+  >Reason for Win Loss Exclusion is required because the Opportunity is excluded from Win Loss Feedback. Please enter a reason.</errorMessage>
+</ValidationRule>

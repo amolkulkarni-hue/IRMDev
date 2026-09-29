@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>VR_PRISM_Neg_Reason_Won</fullName>
+    <active>true</active>
+    <description
+  >[IRM feedback row OppVR18] Requires Reason Won while in Booking Verification, Booked, Setup or Closed. Stage updated 2026-09-24: gate evaluates the next stage per IRM.</description>
+    <errorConditionFormula>AND(
+    NOT($Permission.ECommerce_Deal_Bypass),
+
+    OR(
+        RecordType.DeveloperName = &apos;Framework_Parent_Opportunity&apos;,
+        RecordType.DeveloperName = &apos;Standard_Opportunity&apos;
+    ),
+
+    OR(
+        ISPICKVAL(Type, &apos;New Deal&apos;),
+        ISPICKVAL(Type, &apos;Cross-Sell/Upsell&apos;),
+        ISPICKVAL(Type, &apos;Renewal&apos;)
+    ),
+
+    OR(
+        ISPICKVAL(StageName, &apos;Booking Verification&apos;),
+        ISPICKVAL(StageName, &apos;Booked&apos;),
+        ISPICKVAL(StageName, &apos;Setup&apos;),
+        ISPICKVAL(StageName, &apos;Closed&apos;)
+    ),
+
+    ISPICKVAL(IME_Reason_Won__c, &apos;&apos;)
+)</errorConditionFormula>
+    <errorDisplayField>IME_Reason_Won__c</errorDisplayField>
+    <errorMessage
+  >Reason Won is required. Please select a reason for winning this opportunity.</errorMessage>
+</ValidationRule>

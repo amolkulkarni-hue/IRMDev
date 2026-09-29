@@ -1,8 +1,9 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>The_First_Bill_Date_MUST_ALWAYS_be_later</fullName>
     <active>false</active>
-    <description>The First Bill Date MUST ALWAYS be later than the Close date</description>
+    <description
+  >Deactivated as part of VR Cleanup project - DO NOT USE</description>
     <errorConditionFormula>AND(
 AND(
 NOT($Setup.Metadata_Activation_Settings__c.Disable_VR__c &amp;&amp; OR(ISBLANK($Setup.Metadata_Activation_Settings__c.SObject_API_Name__c),
@@ -20,5 +21,6 @@ QTB_APIProcess__c = false
 NOT($Permission.VR_Bypass_Permission)
 )</errorConditionFormula>
     <errorDisplayField>IM_Booked_Date__c</errorDisplayField>
-    <errorMessage>The First Bill Date must be always the same date or later than Close date</errorMessage>
+    <errorMessage
+  >The First Bill Date must be always the same date or later than Close date</errorMessage>
 </ValidationRule>

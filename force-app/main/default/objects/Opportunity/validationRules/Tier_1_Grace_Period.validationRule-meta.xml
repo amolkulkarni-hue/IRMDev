@@ -1,7 +1,9 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Tier_1_Grace_Period</fullName>
     <active>false</active>
+    <description
+  >Deactivated as part of VR Cleanup project - DO NOT USE</description>
     <errorConditionFormula>AND(
   ISPICKVAL(Service_Type__c, &quot;Storage A la carte&quot;),
   OR(
@@ -14,5 +16,6 @@ ISPICKVAL(Type, &quot;Framework&quot;)
   NOT($Permission.VR_Bypass_Permission)
 )</errorConditionFormula>
     <errorDisplayField>Grace_Period__c</errorDisplayField>
-    <errorMessage>Grace Period is Not Applicable for Tier 1 New Deals and Framework Opportunities</errorMessage>
+    <errorMessage
+  >Grace Period is Not Applicable for Tier 1 New Deals and Framework Opportunities</errorMessage>
 </ValidationRule>

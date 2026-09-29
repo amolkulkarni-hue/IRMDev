@@ -1,5 +1,13 @@
 public with sharing class CaseCreationRuleEvaluatorAction {
 
+    // Per-transaction cache for queryActiveRules(). Case Creation eligibility is
+    // deliberately re-entered on every genuine AfterUpdate (see OpportunityTriggerHandler),
+    // including the recursive pass triggered by PrimaryBURecalcAction's Opportunity update.
+    // The active-rules reference data can't change mid-transaction, so cache it once here
+    // instead of re-querying it on every re-entry. Reset automatically at the start of each
+    // new transaction because static state does not survive across transactions.
+    private static List<Case_Creation_Rule__c> cachedActiveRules;
+
     public class Request {
         @InvocableVariable(label='Opportunity Id' required=true)
         public Id opportunityId;
@@ -160,7 +168,7 @@ public with sharing class CaseCreationRuleEvaluatorAction {
         Map<String, List<Case_Creation_Rule__c>> rulesByStage = groupByStage(allRules);
         Set<String> watchedAccountFields = deriveWatchedAccountFields(allRules);
 
-        Set<String> oppSelectFields = new Set<String>{ 'Id', 'AccountId', 'StageName', 'OwnerId', 'Touch_Level__c' };
+        Set<String> oppSelectFields = new Set<String>{ 'Id', 'Name', 'AccountId', 'StageName', 'OwnerId', 'Touch_Level__c' };
         oppSelectFields.addAll(deriveWatchedOpportunityFields(allRules));
         String oppSoql = 'SELECT ' + String.join(new List<String>(oppSelectFields), ', ')
             + ' FROM Opportunity WHERE AccountId IN :accountIds AND IsClosed = false';
@@ -312,9 +320,10 @@ public with sharing class CaseCreationRuleEvaluatorAction {
                 Document_Checklist__c dc = new Document_Checklist__c(
                     Opportunity__c        = opp.Id,
                     Case_Creation_Rule__c  = rule.Id,
-                    DocumentType__c        = (String) dr.get('Document_Type__c'),
-                    Document_Category__c   = mapDocCategory((String) dr.get('Document_Category__c')),
-                    Status__c              = 'Draft'
+                    Doc_Type__c            = (String) dr.get('Doc_Type__c'),
+                    Doc_Category__c        = (String) dr.get('Doc_Category__c'),
+                    Status__c              = 'Draft',
+                    Case_Type_Context__c   = 'Sales' // seller-facing intake doc, as distinct from a support-facing exit doc (see Case_Exit_Doc_Checklist_Creation_Flow)
                 );
                 if (caseId != null) dc.Case__c = caseId;
                 checklistCandidates.add(dc);
@@ -325,18 +334,18 @@ public with sharing class CaseCreationRuleEvaluatorAction {
 
         Set<String> existingChecklistKeys = new Set<String>();
         for (Document_Checklist__c existing : [
-            SELECT Opportunity__c, Case_Creation_Rule__c, DocumentType__c
+            SELECT Opportunity__c, Case_Creation_Rule__c, Doc_Type__c
             FROM Document_Checklist__c
             WHERE Opportunity__c IN :candidateOppIds AND Case_Creation_Rule__c IN :candidateRuleIds
         ]) {
-            existingChecklistKeys.add(dedupeKey(existing.Opportunity__c, existing.Case_Creation_Rule__c, existing.DocumentType__c));
+            existingChecklistKeys.add(dedupeKey(existing.Opportunity__c, existing.Case_Creation_Rule__c, existing.Doc_Type__c));
         }
 
         List<Document_Checklist__c> checklistsToInsert = new List<Document_Checklist__c>();
         List<Opportunity> ownerOppForInsert = new List<Opportunity>();
         for (Integer i = 0; i < checklistCandidates.size(); i++) {
             Document_Checklist__c dc = checklistCandidates[i];
-            String key = dedupeKey(dc.Opportunity__c, dc.Case_Creation_Rule__c, dc.DocumentType__c);
+            String key = dedupeKey(dc.Opportunity__c, dc.Case_Creation_Rule__c, dc.Doc_Type__c);
             if (!existingChecklistKeys.contains(key)) {
                 existingChecklistKeys.add(key); // guard against duplicate candidates within this same batch
                 checklistsToInsert.add(dc);
@@ -345,7 +354,7 @@ public with sharing class CaseCreationRuleEvaluatorAction {
         }
         if (!checklistsToInsert.isEmpty()) {
             // Partial success — a single misconfigured Doc Requirement (e.g. missing
-            // Document_Category__c) fails only that row, not the whole batch.
+            // Doc_Category__c) fails only that row, not the whole batch.
             Database.insert(checklistsToInsert, false);
         }
 
@@ -392,6 +401,7 @@ public with sharing class CaseCreationRuleEvaluatorAction {
                 Opportunity__c          = opp.Id,
                 Case_Creation_Rule__c   = rule.Id,
                 Type                    = rule.Case_Type__c,
+                Subject                 = rule.Case_Type__c + ' — ' + opp.Name,
                 Origin                  = 'Opportunity Workflow',
                 Status                  = 'New',
                 Opportunity_Touch_Level__c = opp.Touch_Level__c
@@ -517,26 +527,6 @@ public with sharing class CaseCreationRuleEvaluatorAction {
         return oppId + '|' + ruleId + '|' + docType;
     }
 
-    // Case_Creation_Doc_Requirement__c.Document_Category__c and Document_Checklist__c.Document_Category__c
-    // are two distinct picklists with different value sets despite representing the same
-    // concept (e.g. 'Scoping and Technical Documents' vs 'Scoping & Technical') — translate
-    // between them rather than copying the raw value across.
-    private static final Map<String, String> DOC_CATEGORY_TRANSLATION = new Map<String, String>{
-        'RFx and Bid Documents'                  => 'RFx & Bid Management',
-        'Scoping and Technical Documents'        => 'Scoping & Technical',
-        'Statement of Work (SOW) Documents'      => 'SOW & Contracts',
-        'Pricing and Financial Documents'        => 'Pricing & Financial',
-        'Contract and Legal Documents'           => 'Contract & Legal',
-        'Compliance, Risk and Privacy Documents' => 'Compliance, Risk & Privacy',
-        'Approval and Sign-off Documents'        => 'Approvals & Sign-off',
-        'Onboarding and Setup Documents'         => 'Onboarding & Setup',
-        'Booking Verification Documents'         => 'Booking Verification'
-    };
-
-    private static String mapDocCategory(String docReqCategory) {
-        return DOC_CATEGORY_TRANSLATION.get(docReqCategory);
-    }
-
     private static Boolean hasRelevantFieldChanged(Opportunity newOpp, Opportunity oldOpp, Set<String> watchedFields) {
         if (oldOpp == null) return true;
         for (String fieldName : watchedFields) {
@@ -569,7 +559,7 @@ public with sharing class CaseCreationRuleEvaluatorAction {
             List<SObject> docReqs = rule.getSObjects('Doc_Requirements__r');
             if (docReqs != null) {
                 for (SObject dr : docReqs) {
-                    String docType = (String) dr.get('Document_Type__c');
+                    String docType = (String) dr.get('Doc_Type__c');
                     if ((Boolean) dr.get('Is_Required_To_Start__c')) startDocs.add(docType);
                     if ((Boolean) dr.get('Is_Required_For_Case__c'))  caseDocs.add(docType);
                 }
@@ -586,6 +576,9 @@ public with sharing class CaseCreationRuleEvaluatorAction {
     }
 
     private static List<Case_Creation_Rule__c> queryActiveRules() {
+        if (cachedActiveRules != null) {
+            return cachedActiveRules;
+        }
         // Dynamic SOQL — bypasses compile-time relationship name check so objects and
         // Apex can deploy in a single package before the schema is registered.
         String soql =
@@ -593,12 +586,13 @@ public with sharing class CaseCreationRuleEvaluatorAction {
             '       Queue_Developer_Name__c, Logic_Expression__c, Priority__c, ' +
             '(SELECT Id, Condition_Number__c, Field_API_Name__c, Operator__c, Value__c ' +
             ' FROM Conditions__r ORDER BY Condition_Number__c ASC), ' +
-            '(SELECT Id, Document_Type__c, Document_Category__c, Is_Required_To_Start__c, Is_Required_For_Case__c ' +
+            '(SELECT Id, Doc_Type__c, Doc_Category__c, Is_Required_To_Start__c, Is_Required_For_Case__c ' +
             ' FROM Doc_Requirements__r) ' +
             'FROM Case_Creation_Rule__c ' +
             'WHERE Is_Active__c = true ' +
             'ORDER BY Stage__c ASC, Priority__c ASC NULLS LAST';
-        return Database.query(soql);
+        cachedActiveRules = Database.query(soql);
+        return cachedActiveRules;
     }
 
     private static Map<String, List<Case_Creation_Rule__c>> groupByStage(List<Case_Creation_Rule__c> allRules) {

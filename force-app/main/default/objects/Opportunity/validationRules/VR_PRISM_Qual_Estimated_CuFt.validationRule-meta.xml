@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>VR_PRISM_Qual_Estimated_CuFt</fullName>
+    <active>true</active>
+    <description
+  >[IRM feedback row OppVR26] Requires Estimated CuFt while in Solutioning, Negotiation or Booking Verification, for Project Services/Records Management deals. Stage updated 2026-09-24 per IRM.</description>
+    <errorConditionFormula>AND(
+    NOT($Permission.ECommerce_Deal_Bypass),
+
+    OR(
+        RecordType.DeveloperName = &apos;Framework_Parent_Opportunity&apos;,
+        RecordType.DeveloperName = &apos;Standard_Opportunity&apos;
+    ),
+
+    OR(
+        ISPICKVAL(Type, &apos;New Deal&apos;),
+        ISPICKVAL(Type, &apos;Cross-Sell/Upsell&apos;)
+    ),
+
+    OR(
+        ISPICKVAL(Primary_Product_Line__c, &apos;Project Services&apos;),
+        ISPICKVAL(Primary_Product_Line__c, &apos;Records Management&apos;)
+    ),
+
+    OR(
+        ISPICKVAL(StageName, &apos;Solutioning&apos;),
+        ISPICKVAL(StageName, &apos;Negotiation&apos;),
+        ISPICKVAL(StageName, &apos;Booking Verification&apos;)
+    ),
+
+    OR(ISBLANK(Expected_CuFt__c), Expected_CuFt__c &lt;= 0)
+)</errorConditionFormula>
+    <errorDisplayField>Expected_CuFt__c</errorDisplayField>
+    <errorMessage
+  >Estimated CuFt is required. Please add estimated cuft.</errorMessage>
+</ValidationRule>

@@ -1,8 +1,9 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>VR_Opp_S3_Negotiation_Checklist</fullName>
-    <active>true</active>
-    <description>Requires Close Date Validated, Executed Agreement Uploaded, Final Pricing &amp; Terms Proposed, and Value Hypothesis &amp; Scope Reviewed to be populated leaving Stage 3, and to remain populated through every later stage and once Closed.</description>
+    <active>false</active>
+    <description
+  >Deactivated as part of VR Cleanup project - DO NOT USE</description>
     <errorConditionFormula>AND(
     NOT($Permission.Bypass_Opportunity_Validation),
 
@@ -52,5 +53,6 @@
         NOT(Value_Hypothesis_Scope_Reviewed__c)
     )
 )</errorConditionFormula>
-    <errorMessage>Please complete Close Date Validated, Executed Agreement Uploaded, Final Pricing &amp; Terms Proposed, and Value Hypothesis &amp; Scope Reviewed before leaving Stage 3. Need help? Contact your Sales Operations Business Partner.</errorMessage>
+    <errorMessage
+  >Please complete Close Date Validated, Executed Agreement Uploaded, Final Pricing &amp; Terms Proposed, and Value Hypothesis &amp; Scope Reviewed before leaving Stage 3. Need help? Contact your Sales Operations Business Partner.</errorMessage>
 </ValidationRule>

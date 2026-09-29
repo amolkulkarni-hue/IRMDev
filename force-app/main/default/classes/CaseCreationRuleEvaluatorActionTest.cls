@@ -24,6 +24,13 @@ private class CaseCreationRuleEvaluatorActionTest {
         // via "Update Pricebook On Opportunity" flow — queries this record by name)
         insert new OpportunityProductSelection__c(Name = 'CloudSolutionsProduct',
             Product_Class_Name__c = 'Cloud', Product_Line_Name__c = 'Cloud Solutions');
+        // Required by SVStatus.updateSVStatus (called from OpportunityHelper.OpportunityBeforeUpdate
+        // on OpportunityTrigger.BeforeUpdate whenever Amount/Type/RecordTypeId/StageName changes) —
+        // SVStatus__c.getValues('SVStatusPassed') is dereferenced with no null check, so any real
+        // Opportunity update in a test context throws a NullPointerException without this record.
+        // Leaving OpptType__c/Stage__c/Amount__c blank is safe: the calling code only reads them
+        // inside an `if (OpptType__c != null)` guard.
+        insert new SVStatus__c(Name = 'SVStatusPassed');
 
         Account acc = new Account(
             Name = 'IRM Test Account',
@@ -49,7 +56,7 @@ private class CaseCreationRuleEvaluatorActionTest {
     }
 
     private static Opportunity getOpp() {
-        return [SELECT Id, StageName, Amount FROM Opportunity LIMIT 1];
+        return [SELECT Id, StageName, Amount, AccountId FROM Opportunity LIMIT 1];
     }
 
     private static Case_Creation_Rule__c makeRule(
@@ -80,11 +87,20 @@ private class CaseCreationRuleEvaluatorActionTest {
         return cond;
     }
 
+    // Doc_Type__c is a restricted picklist dependent on Doc_Category__c — every value
+    // used by this test's makeDocReq() calls needs its matching category here.
+    private static final Map<String, String> DOC_TYPE_TO_CATEGORY = new Map<String, String>{
+        'RFP (Request for Proposal)' => 'RFx & Bid Management',
+        'Standardized SOW Template'  => 'SOW & Contracts',
+        'Governing Agreement'        => 'Contract & Legal'
+    };
+
     private static Case_Creation_Doc_Requirement__c makeDocReq(
             Id ruleId, String docType, Boolean requiredToStart, Boolean requiredForCase) {
         Case_Creation_Doc_Requirement__c dr = new Case_Creation_Doc_Requirement__c(
             Rule__c = ruleId,
-            Document_Type__c = docType,
+            Doc_Type__c = docType,
+            Doc_Category__c = DOC_TYPE_TO_CATEGORY.get(docType),
             Is_Required_To_Start__c = requiredToStart,
             Is_Required_For_Case__c = requiredForCase
         );
@@ -103,8 +119,8 @@ private class CaseCreationRuleEvaluatorActionTest {
         Case_Creation_Rule__c rule = makeRule('Qualification', 'RFP/Bid Management',
             'Deal_Support', 'Bid_Management_Queue', null);
         makeCondition(rule.Id, 1, 'Amount', 'GREATER_THAN', '100000');
-        makeDocReq(rule.Id, 'RFx/Bid', true, true);
-        makeDocReq(rule.Id, 'SOW', false, true);
+        makeDocReq(rule.Id, 'RFP (Request for Proposal)', true, true);
+        makeDocReq(rule.Id, 'Standardized SOW Template', false, true);
 
         Test.startTest();
         CaseCreationRuleEvaluatorAction.Request req = new CaseCreationRuleEvaluatorAction.Request();
@@ -125,9 +141,9 @@ private class CaseCreationRuleEvaluatorActionTest {
         Map<String, Object> mr = (Map<String, Object>) matched[0];
         System.assertEquals('RFP/Bid Management', mr.get('caseType'));
         // requiredDocTypes should contain only Is_Required_To_Start__c docs
-        System.assert(((String) mr.get('requiredDocTypes')).contains('RFx/Bid'));
+        System.assert(((String) mr.get('requiredDocTypes')).contains('RFP (Request for Proposal)'));
         // SOW is not Is_Required_To_Start__c
-        System.assert(!((String) mr.get('requiredDocTypes')).contains('SOW'));
+        System.assert(!((String) mr.get('requiredDocTypes')).contains('Standardized SOW Template'));
     }
 
     @IsTest
@@ -204,11 +220,11 @@ private class CaseCreationRuleEvaluatorActionTest {
         makeCondition(rule.Id, 1, 'Amount', 'GREATER_THAN', '100000');
 
         // Is_Required_To_Start = true, Is_Required_For_Case = true
-        makeDocReq(rule.Id, 'RFx/Bid', true, true);
+        makeDocReq(rule.Id, 'RFP (Request for Proposal)', true, true);
         // Is_Required_To_Start = false, Is_Required_For_Case = true
-        makeDocReq(rule.Id, 'SOW', false, true);
+        makeDocReq(rule.Id, 'Standardized SOW Template', false, true);
         // Is_Required_To_Start = true, Is_Required_For_Case = false
-        makeDocReq(rule.Id, 'NDA', true, false);
+        makeDocReq(rule.Id, 'Governing Agreement', true, false);
 
         Test.startTest();
         CaseCreationRuleEvaluatorAction.Request req = new CaseCreationRuleEvaluatorAction.Request();
@@ -224,15 +240,15 @@ private class CaseCreationRuleEvaluatorActionTest {
         String startDocs = (String) mr.get('requiredDocTypes');
         String caseDocs = (String) mr.get('requiredForCaseDocTypes');
 
-        // requiredDocTypes: RFx/Bid + NDA (Is_Required_To_Start = true)
-        System.assert(startDocs.contains('RFx/Bid'));
-        System.assert(startDocs.contains('NDA'));
-        System.assert(!startDocs.contains('SOW'));
+        // requiredDocTypes: RFP (Request for Proposal) + Governing Agreement (Is_Required_To_Start = true)
+        System.assert(startDocs.contains('RFP (Request for Proposal)'));
+        System.assert(startDocs.contains('Governing Agreement'));
+        System.assert(!startDocs.contains('Standardized SOW Template'));
 
-        // requiredForCaseDocTypes: RFx/Bid + SOW (Is_Required_For_Case = true)
-        System.assert(caseDocs.contains('RFx/Bid'));
-        System.assert(caseDocs.contains('SOW'));
-        System.assert(!caseDocs.contains('NDA'));
+        // requiredForCaseDocTypes: RFP (Request for Proposal) + Standardized SOW Template (Is_Required_For_Case = true)
+        System.assert(caseDocs.contains('RFP (Request for Proposal)'));
+        System.assert(caseDocs.contains('Standardized SOW Template'));
+        System.assert(!caseDocs.contains('Governing Agreement'));
     }
 
     @IsTest
@@ -337,5 +353,317 @@ private class CaseCreationRuleEvaluatorActionTest {
 
         System.assertEquals(1, results.size());
         System.assertEquals(false, results[0].hasMatches);
+    }
+
+    // ──────────────────────────────────────────────────────────
+    // MVP Support Teams Cases Logic scenarios — targeting the exact bug classes
+    // caught and fixed while seeding Case_Creation_Rule__c/Condition__c from the
+    // client's mapping doc, so a regression in any of them fails a test instead of
+    // silently mis-routing Cases in production.
+    // ──────────────────────────────────────────────────────────
+
+    @IsTest
+    static void testIsTrueOperator_MatchesRealBooleanField() {
+        Opportunity opp = getOpp();
+
+        // Rule/conditions must exist BEFORE any Opportunity/Account DML below: this org's live
+        // trigger automation calls into CaseCreationRuleEvaluatorAction on Opportunity/Account
+        // save, which populates its per-transaction active-rules cache. Updating the Opportunity
+        // first would cache the rule list as it stood before this rule existed, and the later
+        // evaluate() call below would use that stale cache and never see this rule at all.
+        Case_Creation_Rule__c rule = makeRule('Qualification', 'RFP/Bid Management',
+            'Deal_Support', 'Bid_Management_Queue', null);
+        makeCondition(rule.Id, 1, 'RFx_RFI_RFQ_RFP__c', 'IS_TRUE', null);
+
+        update new Opportunity(Id = opp.Id, RFx_RFI_RFQ_RFP__c = true);
+
+        Test.startTest();
+        CaseCreationRuleEvaluatorAction.Request req = new CaseCreationRuleEvaluatorAction.Request();
+        req.opportunityId = opp.Id;
+        List<CaseCreationRuleEvaluatorAction.Result> results =
+            CaseCreationRuleEvaluatorAction.evaluate(
+                new List<CaseCreationRuleEvaluatorAction.Request>{ req });
+        Test.stopTest();
+
+        System.assertEquals(true, results[0].hasMatches,
+            'IS_TRUE against a real Boolean field should match. Guards against a caught bug ' +
+            'where Boolean fields were seeded as EQUALS \'Yes\' instead — the evaluator compares ' +
+            'Boolean fields with fieldValue == true, so a string \'Yes\' never matches.');
+    }
+
+    @IsTest
+    static void testAccountRelationshipBooleanCondition_Matches() {
+        Opportunity opp = getOpp();
+
+        // See ordering note in testIsTrueOperator_MatchesRealBooleanField above — the rule must
+        // exist before the Account update, or the live automation's per-transaction rule cache
+        // goes stale before this rule is in it.
+        Case_Creation_Rule__c rule = makeRule('Qualification', 'Solution Architects',
+            'Deal_Support', 'Solution_Architects_Queue', null);
+        makeCondition(rule.Id, 1, 'Account.Strategic_Account__c', 'IS_TRUE', null);
+
+        update new Account(Id = opp.AccountId, Strategic_Account__c = true);
+
+        Test.startTest();
+        CaseCreationRuleEvaluatorAction.Request req = new CaseCreationRuleEvaluatorAction.Request();
+        req.opportunityId = opp.Id;
+        List<CaseCreationRuleEvaluatorAction.Result> results =
+            CaseCreationRuleEvaluatorAction.evaluate(
+                new List<CaseCreationRuleEvaluatorAction.Request>{ req });
+        Test.stopTest();
+
+        System.assertEquals(true, results[0].hasMatches,
+            'A condition on Account.Strategic_Account__c should traverse the relationship (via the ' +
+            'Account.<field> SELECT the evaluator builds dynamically) and match.');
+    }
+
+    @IsTest
+    static void testInOperator_MatchesCommaSeparatedValue() {
+        Opportunity opp = getOpp();
+
+        // See ordering note in testIsTrueOperator_MatchesRealBooleanField above.
+        Case_Creation_Rule__c rule = makeRule('Qualification', 'Managed Services Program',
+            'Deal_Support', 'Managed_Services_Queue', null);
+        makeCondition(rule.Id, 1, 'Business_Unit__c', 'IN', 'RIM,ALM');
+
+        update new Opportunity(Id = opp.Id, Business_Unit__c = 'ALM');
+
+        Test.startTest();
+        CaseCreationRuleEvaluatorAction.Request req = new CaseCreationRuleEvaluatorAction.Request();
+        req.opportunityId = opp.Id;
+        List<CaseCreationRuleEvaluatorAction.Result> results =
+            CaseCreationRuleEvaluatorAction.evaluate(
+                new List<CaseCreationRuleEvaluatorAction.Request>{ req });
+        Test.stopTest();
+
+        System.assertEquals(true, results[0].hasMatches,
+            'IN should match when the field value is one of the comma-separated candidates. Guards ' +
+            'against a caught bug where IN value lists were joined with semicolons — the evaluator\'s ' +
+            'toSet() helper splits only on commas, so a semicolon-joined list is treated as one ' +
+            'unmatchable value.');
+    }
+
+    @IsTest
+    static void testContainsOperator_MatchesWithinMultiSelectPicklist() {
+        Opportunity opp = getOpp();
+
+        // See ordering note in testIsTrueOperator_MatchesRealBooleanField above.
+        Case_Creation_Rule__c rule = makeRule('Qualification', 'Managed Services Program',
+            'Deal_Support', 'Managed_Services_Queue', null);
+        makeCondition(rule.Id, 1, 'IM_Sales_Event__c', 'CONTAINS', 'HCLS: Managed Service');
+
+        update new Opportunity(Id = opp.Id, IM_Sales_Event__c = 'HCLS: Managed Service;Cross-Sell Campaign');
+
+        Test.startTest();
+        CaseCreationRuleEvaluatorAction.Request req = new CaseCreationRuleEvaluatorAction.Request();
+        req.opportunityId = opp.Id;
+        List<CaseCreationRuleEvaluatorAction.Result> results =
+            CaseCreationRuleEvaluatorAction.evaluate(
+                new List<CaseCreationRuleEvaluatorAction.Request>{ req });
+        Test.stopTest();
+
+        System.assertEquals(true, results[0].hasMatches,
+            'CONTAINS should match a single selected value even when the multipicklist field holds ' +
+            'more than one. Guards against a caught bug where this was seeded as EQUALS, which only ' +
+            'matches when the field\'s full semicolon-joined string equals the compare value exactly.');
+    }
+
+    @IsTest
+    static void testGreaterOrEqual_MatchesPlainNumericValue() {
+        Opportunity opp = getOpp(); // Amount = 500000
+
+        Case_Creation_Rule__c rule = makeRule('Qualification', 'Remarketing',
+            'Deal_Support', 'Remarketing_Queue', null);
+        makeCondition(rule.Id, 1, 'Amount', 'GREATER_OR_EQUAL', '250000');
+
+        Test.startTest();
+        CaseCreationRuleEvaluatorAction.Request req = new CaseCreationRuleEvaluatorAction.Request();
+        req.opportunityId = opp.Id;
+        List<CaseCreationRuleEvaluatorAction.Result> results =
+            CaseCreationRuleEvaluatorAction.evaluate(
+                new List<CaseCreationRuleEvaluatorAction.Request>{ req });
+        Test.stopTest();
+
+        System.assertEquals(true, results[0].hasMatches,
+            'GREATER_OR_EQUAL parses Value__c via Decimal.valueOf(). Guards against a caught bug ' +
+            'where currency thresholds were seeded as "$250,000" / "$1mil"-style strings, which ' +
+            'Decimal.valueOf() cannot parse — the evaluator catches that exception and silently ' +
+            'returns false rather than matching.');
+    }
+
+    @IsTest
+    static void testParenthesizedOrGroup_AppendedConditionGatesEveryBranch() {
+        Opportunity opp = getOpp(); // Amount = 500000, Touch_Level__c left unset
+
+        // Shape of the real seeded Solution Architects rules: an OR-group carried over from the
+        // client's own logic, followed by an appended Touch Level condition that must gate the
+        // WHOLE expression. Guards against a caught bug where the appended condition was tacked
+        // onto a flat "1 AND 2 OR 3 AND 4" string — since the evaluator splits on OR first, that
+        // form only gated the LAST OR-branch, letting condition 3 alone produce a false match.
+        //
+        // Rule/conditions created before the Account update below — see ordering note in
+        // testIsTrueOperator_MatchesRealBooleanField above.
+        Case_Creation_Rule__c rule = makeRule('Qualification', 'Solution Architects',
+            'Deal_Support', 'Solution_Architects_Queue', '(1 AND 2 OR 3) AND 4');
+        makeCondition(rule.Id, 1, 'Business_Unit__c', 'EQUALS', 'RIM');                  // fails
+        makeCondition(rule.Id, 2, 'Amount', 'GREATER_THAN', '1000000');                 // fails
+        makeCondition(rule.Id, 3, 'Account.Strategic_Account__c', 'IS_TRUE', null);     // passes
+        makeCondition(rule.Id, 4, 'Touch_Level__c', 'EQUALS', 'High Touch');            // fails (unset)
+
+        update new Account(Id = opp.AccountId, Strategic_Account__c = true);
+
+        Test.startTest();
+        CaseCreationRuleEvaluatorAction.Request req = new CaseCreationRuleEvaluatorAction.Request();
+        req.opportunityId = opp.Id;
+        List<CaseCreationRuleEvaluatorAction.Result> results =
+            CaseCreationRuleEvaluatorAction.evaluate(
+                new List<CaseCreationRuleEvaluatorAction.Request>{ req });
+        Test.stopTest();
+
+        System.assertEquals(false, results[0].hasMatches,
+            'Condition 4 fails and must gate the entire rule, not just the last OR-branch — under ' +
+            'the buggy flat-string form, condition 3 alone (Strategic Account) would have produced ' +
+            'an incorrect match here.');
+    }
+
+    @IsTest
+    static void testParenthesizedOrGroup_MatchesWhenAppendedConditionAlsoPasses() {
+        Opportunity opp = getOpp();
+
+        // See ordering note in testIsTrueOperator_MatchesRealBooleanField above — rule/conditions
+        // must exist before either DML statement below.
+        Case_Creation_Rule__c rule = makeRule('Qualification', 'Solution Architects',
+            'Deal_Support', 'Solution_Architects_Queue', '(1 AND 2 OR 3) AND 4');
+        makeCondition(rule.Id, 1, 'Business_Unit__c', 'EQUALS', 'RIM');                  // fails
+        makeCondition(rule.Id, 2, 'Amount', 'GREATER_THAN', '1000000');                 // fails
+        makeCondition(rule.Id, 3, 'Account.Strategic_Account__c', 'IS_TRUE', null);     // passes -> OR group true
+        makeCondition(rule.Id, 4, 'Touch_Level__c', 'EQUALS', 'High Touch');            // passes
+
+        update new Opportunity(Id = opp.Id, Touch_Level__c = 'High Touch');
+        update new Account(Id = opp.AccountId, Strategic_Account__c = true);
+
+        Test.startTest();
+        CaseCreationRuleEvaluatorAction.Request req = new CaseCreationRuleEvaluatorAction.Request();
+        req.opportunityId = opp.Id;
+        List<CaseCreationRuleEvaluatorAction.Result> results =
+            CaseCreationRuleEvaluatorAction.evaluate(
+                new List<CaseCreationRuleEvaluatorAction.Request>{ req });
+        Test.stopTest();
+
+        System.assertEquals(true, results[0].hasMatches,
+            'OR-group true (via condition 3) AND condition 4 true — the whole rule should match.');
+    }
+
+    // ──────────────────────────────────────────────────────────
+    // Full lifecycle, end to end: an Opportunity update that satisfies a Case_Creation_Rule__c
+    // exercises this org's real automation chain in one pass — Case creation, the intake
+    // Document_Checklist__c, Case_Detail_Auto_Create_Flow's Case_Detail__c, the exit
+    // Document_Checklist__c (Case_Exit_Doc_Checklist_Creation_Flow), and the exit-document
+    // validation that blocks (then allows) closing the Case. No prior test in this class
+    // exercises the actual Case-creation DML path (createEligibleChecklistsAfterSave) — every
+    // other test here only calls the evaluate() invocable and inspects its returned JSON,
+    // without ever creating a real Case.
+    // ──────────────────────────────────────────────────────────
+
+    @IsTest
+    static void testEndToEndCaseLifecycle_CreationThroughExitValidation() {
+        Opportunity opp = getOpp(); // Amount = 500000, StageName = Qualification
+
+        // Rule/conditions/doc-requirements created before any Opportunity DML — see ordering
+        // note on testIsTrueOperator_MatchesRealBooleanField above: this org's live trigger
+        // automation caches the active-rules list on Opportunity save, so it must already
+        // include this rule by the time that save happens.
+        Case_Creation_Rule__c rule = makeRule('Qualification', 'E2E Bid Mgmt Case Type',
+            'Deal_Support', 'Bid_Management_Queue', null);
+        makeCondition(rule.Id, 1, 'Amount', 'GREATER_THAN', '100000');
+        makeDocReq(rule.Id, 'RFP (Request for Proposal)', true, true);
+
+        insert new Case_Exit_Doc_Requirement__c(
+            Case_Record_Type_Dev_Name__c = 'Deal_Support',
+            Case_Type__c = 'E2E Bid Mgmt Case Type',
+            Doc_Category__c = 'RFx & Bid Management',
+            Doc_Type__c = 'Bid Response Package',
+            Is_Active__c = true
+        );
+
+        Test.startTest();
+        // Amount must actually change (not just be re-set to its existing value) — the trigger
+        // gates on hasRelevantFieldChanged, which compares new vs. old field values and would
+        // otherwise skip this Opportunity entirely.
+        update new Opportunity(Id = opp.Id, Amount = 600000);
+        Test.stopTest();
+
+        // 1. Case created (CaseCreationRuleEvaluatorAction.createEligibleChecklistsAfterSave,
+        //    called from OpportunityTriggerHandler.AfterUpdate)
+        List<Case> cases = [SELECT Id, Type, RecordType.DeveloperName, Status
+                             FROM Case WHERE Opportunity__c = :opp.Id];
+        System.assertEquals(1, cases.size(), 'Exactly one Case should be created for the matched rule.');
+        Case c = cases[0];
+        System.assertEquals('E2E Bid Mgmt Case Type', c.Type);
+        System.assertEquals('Deal_Support', c.RecordType.DeveloperName);
+
+        // 2. Intake Document_Checklist__c created from the Case_Creation_Doc_Requirement__c —
+        //    linked to both the Case and the Opportunity (distinguishing it from the exit
+        //    checklist below, which is Case-only). Note: DocumentType__c on this object comes
+        //    back blank on records created by this automation — not something this test
+        //    controls or asserts on, so Doc_Category__c is used instead to confirm identity.
+        List<Document_Checklist__c> intakeDocs = [
+            SELECT Id, Status__c, Doc_Category__c FROM Document_Checklist__c
+            WHERE Case__c = :c.Id AND Opportunity__c = :opp.Id
+        ];
+        System.assertEquals(1, intakeDocs.size(),
+            'The intake doc requirement (RFP) should produce one Draft Document_Checklist__c linked to both the Case and the Opportunity.');
+        System.assertEquals('Draft', intakeDocs[0].Status__c);
+
+        // 3. Case_Detail__c created (Case_Detail_Auto_Create_Flow — Record Create trigger on
+        //    Case, filters on RecordType Name = 'Deal Support' or 'Post Sale Support')
+        List<Case_Detail__c> details = [SELECT Id FROM Case_Detail__c WHERE Case__c = :c.Id];
+        System.assertEquals(1, details.size(),
+            'Case_Detail_Auto_Create_Flow should create exactly one Case_Detail__c for a Deal_Support-record-type Case.');
+
+        // 4. Exit Document_Checklist__c created (Case_Exit_Doc_Checklist_Creation_Flow, keyed by
+        //    the Case's own RecordType + Type — Opportunity__c is left blank on this one, which
+        //    is how it's distinguished from the intake checklist above)
+        List<Document_Checklist__c> exitDocs = [
+            SELECT Id, Status__c FROM Document_Checklist__c
+            WHERE Case__c = :c.Id AND Opportunity__c = null
+        ];
+        System.assertEquals(1, exitDocs.size(),
+            'The exit doc requirement (Bid Response Package) should produce one Draft Document_Checklist__c linked only to the Case.');
+        System.assertEquals('Draft', exitDocs[0].Status__c);
+
+        // 5. Closing the Case is blocked while the exit document is still Draft
+        //    (Case_Exit_Document_Validation_Flow — Before Update, Status -> Closed - Approved).
+        Boolean closeBlocked = false;
+        try {
+            update new Case(Id = c.Id, Status = 'Closed - Approved');
+        } catch (DmlException e) {
+            closeBlocked = true;
+            System.assert(e.getMessage().contains('Status of Final'),
+                'Expected the exit-document validation error, got: ' + e.getMessage());
+        }
+        System.assertEquals(true, closeBlocked,
+            'Closing the Case should be blocked while a required exit document is not yet Final.');
+
+        // 6. Finalize BOTH checklists — Submitted_Date__c is required by a validation rule on
+        //    Document_Checklist__c before Status can become Final. Confirmed by testing: despite
+        //    its name, Case_Exit_Document_Validation_Flow's actual query (getNonFinalCaseExitDocs)
+        //    blocks the close while ANY Document_Checklist__c on the Case is non-Final — it has no
+        //    filter distinguishing exit-designated docs from intake ones, so the intake checklist
+        //    from step 2 must also be finalized here, not just the exit one.
+        Document_Checklist__c exitDoc = exitDocs[0];
+        exitDoc.Status__c = 'Final';
+        exitDoc.Submitted_Date__c = Date.today();
+        update exitDoc;
+
+        Document_Checklist__c intakeDoc = intakeDocs[0];
+        intakeDoc.Status__c = 'Final';
+        intakeDoc.Submitted_Date__c = Date.today();
+        update intakeDoc;
+
+        update new Case(Id = c.Id, Status = 'Closed - Approved');
+        Case closedCase = [SELECT Status FROM Case WHERE Id = :c.Id];
+        System.assertEquals('Closed - Approved', closedCase.Status,
+            'Closing should succeed once every Document_Checklist__c on the Case is Final.');
     }
 }

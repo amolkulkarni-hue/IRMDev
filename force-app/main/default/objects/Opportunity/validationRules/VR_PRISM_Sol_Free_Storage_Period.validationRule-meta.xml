@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>VR_PRISM_Sol_Free_Storage_Period</fullName>
+    <active>true</active>
+    <description
+  >[IRM feedback row OppVR50] Requires Free Storage Period while in Negotiation only, for RIM/MAS/ALM Business Unit deals in listed countries. Formula updated 2026-09-24 to drop Solutioning.</description>
+    <errorConditionFormula>AND(
+    NOT($Permission.ECommerce_Deal_Bypass),
+
+    RecordType.DeveloperName = &apos;Standard_Opportunity&apos;,
+
+    OR(
+        ISPICKVAL(Type, &apos;New Deal&apos;),
+        ISPICKVAL(Type, &apos;Cross-Sell/Upsell&apos;)
+    ),
+
+    AND(
+        OR(
+            RIM_BU__c = TRUE,
+            MAS_BU__c = TRUE,
+            ALM_BU__c = TRUE
+        ),
+        OR(
+        QTB_Billing_Country_Name__c = &apos;United States&apos;,
+        QTB_Billing_Country_Name__c = &apos;Canada&apos;,
+        QTB_Billing_Country_Name__c = &apos;Ireland&apos;,
+        QTB_Billing_Country_Name__c = &apos;France&apos;,
+        QTB_Billing_Country_Name__c = &apos;Belgium&apos;,
+        QTB_Billing_Country_Name__c = &apos;Netherlands&apos;,
+        QTB_Billing_Country_Name__c = &apos;Sweden&apos;,
+        QTB_Billing_Country_Name__c = &apos;Denmark&apos;
+    )
+    ),
+
+    ISPICKVAL(StageName, &apos;Negotiation&apos;),
+
+    ISPICKVAL(Free_Storage_Period__c, &apos;&apos;)
+)</errorConditionFormula>
+    <errorDisplayField>Free_Storage_Period__c</errorDisplayField>
+    <errorMessage
+  >Free Storage Period is required to advance to the next stage. Please enter a value.</errorMessage>
+</ValidationRule>

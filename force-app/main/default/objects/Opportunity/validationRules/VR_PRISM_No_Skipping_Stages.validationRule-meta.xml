@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>VR_PRISM_No_Skipping_Stages</fullName>
+    <active>true</active>
+    <description
+  >[Sheet row 53 / OppVR73] Open Opportunity stages cannot be skipped; only applies to Opps created after 11/9/2026. Rebuilt per IRM: Standard path ends at Booked, Framework path is BV-&gt;Closed (skips Booked/Setup).</description>
+    <errorConditionFormula>AND(
+    NOT($Permission.ECommerce_Deal_Bypass),
+
+    DATEVALUE(CreatedDate) &gt; DATE(2026, 11, 9),
+
+    ISCHANGED(StageName),
+
+    NOT(ISPICKVAL(PRIORVALUE(StageName), &apos;Lost&apos;)),
+
+    NOT(ISPICKVAL(StageName, &apos;Lost&apos;)),
+
+    NOT(OR(
+        AND(ISPICKVAL(PRIORVALUE(StageName), &apos;Qualification&apos;), ISPICKVAL(StageName, &apos;Solutioning&apos;)),
+        AND(ISPICKVAL(PRIORVALUE(StageName), &apos;Solutioning&apos;), ISPICKVAL(StageName, &apos;Negotiation&apos;)),
+        AND(ISPICKVAL(PRIORVALUE(StageName), &apos;Negotiation&apos;), ISPICKVAL(StageName, &apos;Booking Verification&apos;)),
+        AND(
+            ISPICKVAL(PRIORVALUE(StageName), &apos;Booking Verification&apos;),
+            IF(RecordType.DeveloperName = &apos;Framework_Parent_Opportunity&apos;, ISPICKVAL(StageName, &apos;Closed&apos;), ISPICKVAL(StageName, &apos;Booked&apos;))
+        ),
+        AND(ISPICKVAL(PRIORVALUE(StageName), &apos;Solutioning&apos;), ISPICKVAL(StageName, &apos;Qualification&apos;)),
+        AND(ISPICKVAL(PRIORVALUE(StageName), &apos;Negotiation&apos;), ISPICKVAL(StageName, &apos;Solutioning&apos;)),
+        AND(ISPICKVAL(PRIORVALUE(StageName), &apos;Negotiation&apos;), ISPICKVAL(StageName, &apos;Qualification&apos;))
+    ))
+)</errorConditionFormula>
+    <errorDisplayField>StageName</errorDisplayField>
+    <errorMessage
+  >Stage skipping is not allowed. You must progress through all required Stages on an Open Opportunity.</errorMessage>
+</ValidationRule>

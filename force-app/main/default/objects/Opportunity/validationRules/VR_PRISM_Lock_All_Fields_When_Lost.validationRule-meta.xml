@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>VR_PRISM_Lock_All_Fields_When_Lost</fullName>
+    <active>true</active>
+    <description
+  >[Sheet row OppVR79] Blocks field edits while Stage = Lost. ISCHANGED(LastModifiedDate), gated by Disable_VR__c so flows/integrations toggle that setting instead.</description>
+    <errorConditionFormula>AND(
+    NOT($Setup.Metadata_Activation_Settings__c.Disable_VR__c &amp;&amp;
+        OR(
+            ISBLANK($Setup.Metadata_Activation_Settings__c.SObject_API_Name__c),
+            CONTAINS($Setup.Metadata_Activation_Settings__c.SObject_API_Name__c, &apos;Opportunity&apos;)
+        )),
+
+    NOT($Permission.Sales_Operations_Bypass),
+
+    ISPICKVAL(StageName, &apos;Lost&apos;),
+
+    ISCHANGED(LastModifiedDate)
+)</errorConditionFormula>
+    <errorMessage
+  >Insufficient permissions. Opportunities in Lost stage cannot be updated. Please contact your regional Sales Operations Business Partner for assistance.</errorMessage>
+</ValidationRule>

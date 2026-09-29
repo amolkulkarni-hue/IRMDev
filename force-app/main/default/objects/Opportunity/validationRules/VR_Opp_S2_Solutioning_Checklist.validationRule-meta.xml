@@ -1,8 +1,9 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>VR_Opp_S2_Solutioning_Checklist</fullName>
-    <active>true</active>
-    <description>Requires Business Case Justification, Desired Future State, Internal Approvals Received, Solution Approach Validated, Success Criteria, and Technical Validation Completed to be populated leaving Stage 2, and to remain populated through every later stage a</description>
+    <active>false</active>
+    <description
+  >Deactivated as part of VR Cleanup project - DO NOT USE</description>
     <errorConditionFormula>AND(
 NOT($Permission.Bypass_Opportunity_Validation),
 
@@ -61,5 +62,6 @@ ISBLANK(Success_Criteria__c),
 NOT(Technical_Validation_Completed__c)
 )
 )</errorConditionFormula>
-    <errorMessage>Please complete Business Case Justification, Desired Future State, Internal Approvals Received, Solution Approach Validated, Success Criteria, and Technical Validation Completed before leaving Stage 2. Need help? Contact your Sales Operations Business Par</errorMessage>
+    <errorMessage
+  >Please complete Business Case Justification, Desired Future State, Internal Approvals Received, Solution Approach Validated, Success Criteria, and Technical Validation Completed before leaving Stage 2. Need help? Contact your Sales Operations Business Par</errorMessage>
 </ValidationRule>

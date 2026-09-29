@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>VR_PRISM_Neg_Sales_Billing_Estimate</fullName>
+    <active>true</active>
+    <description
+  >[IRM feedback row OppVR19] Requires Sales Billing Estimate while in Booking Verification, when EAA proxy (Amount, currency-converted) is &gt;= $25K USD. Stage updated 2026-09-24 per IRM.</description>
+    <errorConditionFormula>AND(
+    NOT($Permission.ECommerce_Deal_Bypass),
+
+    RecordType.DeveloperName = &apos;Standard_Opportunity&apos;,
+
+    OR(
+        ISPICKVAL(Type, &apos;New Deal&apos;),
+        ISPICKVAL(Type, &apos;Cross-Sell/Upsell&apos;)
+    ),
+
+    Amount / CURRENCYRATE(TEXT(CurrencyIsoCode)) &gt;= 25000,
+
+    ISPICKVAL(StageName, &apos;Booking Verification&apos;),
+
+    OR(ISBLANK(Total_Sales_Billing_Estimate__c), Total_Sales_Billing_Estimate__c &lt;= 0)
+)</errorConditionFormula>
+    <errorDisplayField>Total_Sales_Billing_Estimate__c</errorDisplayField>
+    <errorMessage
+  >Sales Billing Estimates must be updated. Please review and update the Sales Billing Forecast.</errorMessage>
+</ValidationRule>

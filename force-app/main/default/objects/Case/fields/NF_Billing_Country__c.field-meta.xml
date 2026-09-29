@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NF_Billing_Country__c</fullName>
+    <description>Auto-populated from the related Opportunity's Billing Country at Case creation, via Case_Field_Mapping__c / CaseFieldMappingEngine. Case Fields sheet, All Cases section, row "Billing Country". Text rather than a Lookup deliberately, so this copy can never fail if the Opportunity's Billing Country lookup is blank or its target record is later deleted.</description>
+    <externalId>false</externalId>
+    <label>Billing Country</label>
+    <length>255</length>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

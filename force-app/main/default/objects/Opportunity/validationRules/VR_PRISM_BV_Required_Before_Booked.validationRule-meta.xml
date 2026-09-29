@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>VR_PRISM_BV_Required_Before_Booked</fullName>
+    <active>true</active>
+    <description
+  >[Sheet row 45 / OppVR65] Blocks BV-&gt;Booked/Setup/Closed until Deal_Validation__c=&apos;Pass&apos;. Setup added as an applicable stage 2026-09-24 per IRM feedback.</description>
+    <errorConditionFormula>AND(
+    NOT(ISPICKVAL(Deal_Validation__c, &apos;Pass&apos;)),
+
+    ISPICKVAL(PRIORVALUE(StageName), &apos;Booking Verification&apos;),
+
+    OR(
+        ISPICKVAL(StageName, &apos;Booked&apos;),
+        ISPICKVAL(StageName, &apos;Setup&apos;),
+        ISPICKVAL(StageName, &apos;Closed&apos;)
+    )
+)</errorConditionFormula>
+    <errorMessage
+  >Booking Verification is required. You cannot advance this Opportunity until Booking Verification is complete.</errorMessage>
+</ValidationRule>

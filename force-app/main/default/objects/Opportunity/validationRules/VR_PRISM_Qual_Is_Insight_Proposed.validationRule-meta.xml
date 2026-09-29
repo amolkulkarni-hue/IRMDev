@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>VR_PRISM_Qual_Is_Insight_Proposed</fullName>
+    <active>true</active>
+    <description
+  >[IRM feedback row OppVR36] Requires Is Insight Being Proposed? while in Solutioning, Negotiation or Booking Verification. Stage updated 2026-09-24 per IRM.</description>
+    <errorConditionFormula>AND(
+    NOT($Permission.ECommerce_Deal_Bypass),
+
+    OR(
+        RecordType.DeveloperName = &apos;Framework_Parent_Opportunity&apos;,
+        RecordType.DeveloperName = &apos;Standard_Opportunity&apos;
+    ),
+
+    OR(
+        ISPICKVAL(Type, &apos;New Deal&apos;),
+        ISPICKVAL(Type, &apos;Cross-Sell/Upsell&apos;)
+    ),
+
+    OR(
+        ISPICKVAL(Primary_Product_Line__c, &apos;Digitization&apos;),
+        ISPICKVAL(Primary_Product_Line__c, &apos;Information Governance&apos;)
+    ),
+
+    OR(
+        ISPICKVAL(StageName, &apos;Solutioning&apos;),
+        ISPICKVAL(StageName, &apos;Negotiation&apos;),
+        ISPICKVAL(StageName, &apos;Booking Verification&apos;)
+    ),
+
+    ISBLANK(Is_InSight_being_proposed__c)
+)</errorConditionFormula>
+    <errorMessage
+  >Is Insight Being Proposed? is required to advance to the next stage. Please select a value.</errorMessage>
+</ValidationRule>

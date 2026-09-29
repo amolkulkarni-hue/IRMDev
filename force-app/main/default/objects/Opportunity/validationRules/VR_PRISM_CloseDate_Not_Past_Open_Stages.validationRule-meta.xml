@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>VR_PRISM_CloseDate_Not_Past_Open_Stages</fullName>
+    <active>true</active>
+    <description
+  >[Sheet row 50 / OppVR70] Close Date cannot be in the past while in Qualification/Solutioning, or when moving to Solutioning/Negotiation. Approved by IRM (matches IRM&apos;s restated intent), no change.</description>
+    <errorConditionFormula>AND(
+    CloseDate &lt; TODAY(),
+
+    OR(
+        ISPICKVAL(StageName, &apos;Qualification&apos;),
+        ISPICKVAL(StageName, &apos;Solutioning&apos;),
+        AND(
+            ISCHANGED(StageName),
+            OR(ISPICKVAL(StageName, &apos;Solutioning&apos;), ISPICKVAL(StageName, &apos;Negotiation&apos;))
+        )
+    )
+)</errorConditionFormula>
+    <errorDisplayField>CloseDate</errorDisplayField>
+    <errorMessage
+  >Invalid Close Date. The Close Date cannot be in the past. Please select today&apos;s date or a future date.</errorMessage>
+</ValidationRule>

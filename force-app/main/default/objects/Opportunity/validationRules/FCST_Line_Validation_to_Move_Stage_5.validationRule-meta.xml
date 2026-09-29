@@ -1,7 +1,9 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>FCST_Line_Validation_to_Move_Stage_5</fullName>
     <active>false</active>
+    <description
+  >Deactivated as part of VR Cleanup project - DO NOT USE</description>
     <errorConditionFormula>AND(
 ISCHANGED(StageName),
 ISPICKVAL(StageName, &apos;5 - Signed/PO in&apos;),
@@ -20,5 +22,6 @@ ISPICKVAL(Type,&apos;New Deal&apos;)
 Amount / CURRENCYRATE(TEXT(CurrencyIsoCode)) &gt;= 25000, NOT($Permission.VR_Bypass_Permission)
 
 )</errorConditionFormula>
-    <errorMessage>Can&apos;t reach to Stage-5 directly, Please move the opportunity to Stage-4.</errorMessage>
+    <errorMessage
+  >Can&apos;t reach to Stage-5 directly, Please move the opportunity to Stage-4.</errorMessage>
 </ValidationRule>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>VR_PRISM_StageLock_Setup</fullName>
+    <active>true</active>
+    <description
+  >[Sheet row 48 / OppVR68] Stage cannot be changed once an Opportunity is in Setup. Split from the combined rule per IRM feedback since different teams manage different stage-lock windows independently.</description>
+    <errorConditionFormula>AND(
+    NOT($Permission.Sales_Operations_Bypass),
+
+    ISCHANGED(StageName),
+
+    ISPICKVAL(PRIORVALUE(StageName), &apos;Setup&apos;)
+)</errorConditionFormula>
+    <errorDisplayField>StageName</errorDisplayField>
+    <errorMessage
+  >Insufficient permissions. Opportunities in Setup stage cannot have their Stage changed. Please contact your regional Sales Operations Business Partner for assistance.</errorMessage>
+</ValidationRule>
