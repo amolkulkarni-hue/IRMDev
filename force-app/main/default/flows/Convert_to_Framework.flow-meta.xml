@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>67.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <description
+  >Converts a Standard Opportunity to a Framework Parent Opportunity. Sets RecordTypeId to Framework_Parent_Opportunity and Framework_Status__c to Draft while preserving all other existing field values. Story: Convert to Framework (AC1-AC4).</description>
+    <environments>Default</environments>
+    <interviewLabel
+  >Convert to Framework {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Convert to Framework</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>Flow</processType>
+    <recordLookups>
+        <description
+    >Get the Framework Parent Opportunity record type Id dynamically, rather than hardcoding it</description>
+        <name>Get_Framework_Parent_Record_Type</name>
+        <label>Get Framework Parent Record Type</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignNullValuesIfNoRecordsFound
+    >false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Confirm_Conversion</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>SobjectType</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Opportunity</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Framework_Parent_Opportunity</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>RecordType</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordUpdates>
+        <description
+    >Update only RecordTypeId and Framework_Status__c on the current Opportunity so every other field value is preserved (AC3)</description>
+        <name>Update_Opportunity_to_Framework</name>
+        <label>Update Opportunity to Framework</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Conversion_Complete</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>RecordTypeId</field>
+            <value>
+                <elementReference
+        >Get_Framework_Parent_Record_Type.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Framework_Status__c</field>
+            <value>
+                <stringValue>Draft</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Opportunity</object>
+    </recordUpdates>
+    <runInMode>SystemModeWithSharing</runInMode>
+    <screens>
+        <name>Confirm_Conversion</name>
+        <label>Confirm Conversion</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Update_Opportunity_to_Framework</targetReference>
+        </connector>
+        <fields>
+            <name>ConfirmConversionWarning</name>
+            <fieldText
+      >&lt;p&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;You are about to convert this Opportunity to a &lt;strong&gt;Framework Opportunity&lt;/strong&gt;. Its record type will change to Framework Parent Opportunity and Framework Status will be set to Draft. All other field values are preserved. This cannot be undone from the UI.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
+        </fields>
+        <nextOrFinishButtonLabel>Convert to Framework</nextOrFinishButtonLabel>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Conversion_Complete</name>
+        <label>Conversion Complete</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>ConversionCompleteMessage</name>
+            <fieldText
+      >&lt;p&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;This Opportunity has been converted to a Framework Opportunity. &lt;/span&gt;&lt;a href=&quot;/{!recordId}&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot; style=&quot;font-size: 14px;&quot;&gt;View Opportunity&lt;/a&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <start>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Get_Framework_Parent_Record_Type</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <variables>
+        <description
+    >Id of the Opportunity being converted, passed in by the quick action</description>
+        <name>recordId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>

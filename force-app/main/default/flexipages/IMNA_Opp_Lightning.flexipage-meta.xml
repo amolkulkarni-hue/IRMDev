@@ -1,15 +1,102 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <FlexiPage xmlns="http://soap.sforce.com/2006/04/metadata">
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
+                <componentInstanceProperties>
+                    <name>actionNames</name>
+                    <valueList>
+                        <valueListItems>
+                            <value>Opportunity.Create_Quote</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Edit</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value
+              >Opportunity.Create_New_Deal_Review_Record</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Online_PA_Model_Quote</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>NewEvent_IMNA</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>NewTask_IMNA</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>LogACall_IMNA</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>SendEmail</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>FeedItem.TextPost</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>FeedItem.ContentPost</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>FeedItem.LinkPost</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>FeedItem.RypplePost</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>FeedItem.PollPost</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Delete</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>DeepClone</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Opportunity.Oppty_Updates</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>ChangeOwnerOne</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Clone</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>ChangeRecordType</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>refedge__Find_a_Reference</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Opportunity.Convert_to_Framework</value>
+                            <visibilityRule>
+                                <booleanFilter>1 OR 2 OR 3</booleanFilter>
+                                <criteria>
+                                    <leftValue>{!Record.StageName}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Qualification</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.StageName}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Solutioning</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.StageName}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Negotiation</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
+                    </valueList>
+                </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>collapsed</name>
                     <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>enableActionsConfiguration</name>
-                    <value>false</value>
+                    <value>true</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>enableActionsInNative</name>
@@ -45,8 +132,10 @@
                     <name>variant</name>
                     <value>linear</value>
                 </componentInstanceProperties>
-                <componentName>runtime_sales_pathassistant:pathAssistant</componentName>
-                <identifier>runtime_sales_pathassistant_pathAssistant</identifier>
+                <componentName
+        >runtime_sales_pathassistant:pathAssistant</componentName>
+                <identifier
+        >runtime_sales_pathassistant_pathAssistant</identifier>
             </componentInstance>
         </itemInstances>
         <name>subheader</name>
@@ -175,7 +264,8 @@
                 <identifier>RecordUS_Federal_GSA_Pricing_cField2</identifier>
                 <visibilityRule>
                     <criteria>
-                        <leftValue>{!Record.Is_Billing_Country_US_or_Canada__c}</leftValue>
+                        <leftValue
+            >{!Record.Is_Billing_Country_US_or_Canada__c}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>true</rightValue>
                     </criteria>
@@ -188,17 +278,21 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.Group_Purchasing_Organization_GPO__c</fieldItem>
-                <identifier>RecordGroup_Purchasing_Organization_GPO_cField2</identifier>
+                <fieldItem
+        >Record.Group_Purchasing_Organization_GPO__c</fieldItem>
+                <identifier
+        >RecordGroup_Purchasing_Organization_GPO_cField2</identifier>
                 <visibilityRule>
                     <booleanFilter>1 AND 2</booleanFilter>
                     <criteria>
-                        <leftValue>{!Record.Is_Billing_Country_US_or_Canada__c}</leftValue>
+                        <leftValue
+            >{!Record.Is_Billing_Country_US_or_Canada__c}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>true</rightValue>
                     </criteria>
                     <criteria>
-                        <leftValue>{!Record.Is_Healthcare_Industry__c}</leftValue>
+                        <leftValue
+            >{!Record.Is_Healthcare_Industry__c}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>true</rightValue>
                     </criteria>
@@ -238,7 +332,8 @@
                 <identifier>RecordNext_Step_Date_cField</identifier>
                 <visibilityRule>
                     <criteria>
-                        <leftValue>{!Record.Is_Standard_or_High_Touch__c}</leftValue>
+                        <leftValue
+            >{!Record.Is_Standard_or_High_Touch__c}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>true</rightValue>
                     </criteria>
@@ -309,7 +404,8 @@
                         <rightValue>Cross-Sell/Upsell</rightValue>
                     </criteria>
                     <criteria>
-                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                        <leftValue
+            >{!Record.RecordType.DeveloperName}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>Framework_Parent_Opportunity</rightValue>
                     </criteria>
@@ -371,7 +467,8 @@
                         <rightValue>Cross-Sell/Upsell</rightValue>
                     </criteria>
                     <criteria>
-                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                        <leftValue
+            >{!Record.RecordType.DeveloperName}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>Framework_Parent_Opportunity</rightValue>
                     </criteria>
@@ -385,7 +482,8 @@
                     <value>none</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.Customer_Outcome_Predefined__c</fieldItem>
-                <identifier>RecordCustomer_Outcome_Predefined_cField</identifier>
+                <identifier
+        >RecordCustomer_Outcome_Predefined_cField</identifier>
                 <visibilityRule>
                     <booleanFilter>1 OR 2 OR 3</booleanFilter>
                     <criteria>
@@ -399,7 +497,8 @@
                         <rightValue>Cross-Sell/Upsell</rightValue>
                     </criteria>
                     <criteria>
-                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                        <leftValue
+            >{!Record.RecordType.DeveloperName}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>Framework_Parent_Opportunity</rightValue>
                     </criteria>
@@ -427,7 +526,8 @@
                         <rightValue>Cross-Sell/Upsell</rightValue>
                     </criteria>
                     <criteria>
-                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                        <leftValue
+            >{!Record.RecordType.DeveloperName}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>Framework_Parent_Opportunity</rightValue>
                     </criteria>
@@ -441,7 +541,8 @@
                     <value>none</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.Impact_Consequences_Identified__c</fieldItem>
-                <identifier>RecordImpact_Consequences_Identified_cField</identifier>
+                <identifier
+        >RecordImpact_Consequences_Identified_cField</identifier>
                 <visibilityRule>
                     <booleanFilter>1 OR 2 OR 3</booleanFilter>
                     <criteria>
@@ -455,7 +556,8 @@
                         <rightValue>Cross-Sell/Upsell</rightValue>
                     </criteria>
                     <criteria>
-                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                        <leftValue
+            >{!Record.RecordType.DeveloperName}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>Framework_Parent_Opportunity</rightValue>
                     </criteria>
@@ -488,7 +590,8 @@
                         <rightValue>Cross-Sell/Upsell</rightValue>
                     </criteria>
                     <criteria>
-                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                        <leftValue
+            >{!Record.RecordType.DeveloperName}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>Framework_Parent_Opportunity</rightValue>
                     </criteria>
@@ -516,7 +619,8 @@
                         <rightValue>Cross-Sell/Upsell</rightValue>
                     </criteria>
                     <criteria>
-                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                        <leftValue
+            >{!Record.RecordType.DeveloperName}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>Framework_Parent_Opportunity</rightValue>
                     </criteria>
@@ -559,7 +663,8 @@
                         <rightValue>Cross-Sell/Upsell</rightValue>
                     </criteria>
                     <criteria>
-                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                        <leftValue
+            >{!Record.RecordType.DeveloperName}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>Framework_Parent_Opportunity</rightValue>
                     </criteria>
@@ -597,7 +702,8 @@
                         <rightValue>Cross-Sell/Upsell</rightValue>
                     </criteria>
                     <criteria>
-                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                        <leftValue
+            >{!Record.RecordType.DeveloperName}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>Framework_Parent_Opportunity</rightValue>
                     </criteria>
@@ -630,7 +736,8 @@
                         <rightValue>Cross-Sell/Upsell</rightValue>
                     </criteria>
                     <criteria>
-                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                        <leftValue
+            >{!Record.RecordType.DeveloperName}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>Framework_Parent_Opportunity</rightValue>
                     </criteria>
@@ -666,8 +773,10 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.InSight_not_in_proposal_Explanation__c</fieldItem>
-                <identifier>RecordInSight_not_in_proposal_Explanation_cField</identifier>
+                <fieldItem
+        >Record.InSight_not_in_proposal_Explanation__c</fieldItem>
+                <identifier
+        >RecordInSight_not_in_proposal_Explanation_cField</identifier>
                 <visibilityRule>
                     <booleanFilter>1 AND (2 OR 3 OR 4)</booleanFilter>
                     <criteria>
@@ -686,7 +795,8 @@
                         <rightValue>Cross-Sell/Upsell</rightValue>
                     </criteria>
                     <criteria>
-                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                        <leftValue
+            >{!Record.RecordType.DeveloperName}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>Framework_Parent_Opportunity</rightValue>
                     </criteria>
@@ -724,7 +834,8 @@
                         <rightValue>Cross-Sell/Upsell</rightValue>
                     </criteria>
                     <criteria>
-                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                        <leftValue
+            >{!Record.RecordType.DeveloperName}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>Framework_Parent_Opportunity</rightValue>
                     </criteria>
@@ -766,7 +877,8 @@
                     <value>none</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.No_of_Forecast_Billing_Month__c</fieldItem>
-                <identifier>RecordNo_of_Forecast_Billing_Month_cField</identifier>
+                <identifier
+        >RecordNo_of_Forecast_Billing_Month_cField</identifier>
                 <visibilityRule>
                     <booleanFilter>(1 OR 2) AND 3</booleanFilter>
                     <criteria>
@@ -889,7 +1001,8 @@
                         <rightValue>Cross-Sell/Upsell</rightValue>
                     </criteria>
                     <criteria>
-                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                        <leftValue
+            >{!Record.RecordType.DeveloperName}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>Framework_Parent_Opportunity</rightValue>
                     </criteria>
@@ -917,7 +1030,8 @@
                         <rightValue>Cross-Sell/Upsell</rightValue>
                     </criteria>
                     <criteria>
-                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                        <leftValue
+            >{!Record.RecordType.DeveloperName}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>Framework_Parent_Opportunity</rightValue>
                     </criteria>
@@ -935,7 +1049,8 @@
                     <value>none</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.Business_Case_Justification__c</fieldItem>
-                <identifier>RecordBusiness_Case_Justification_cField3</identifier>
+                <identifier
+        >RecordBusiness_Case_Justification_cField3</identifier>
                 <visibilityRule>
                     <booleanFilter>1 OR 2 OR 3</booleanFilter>
                     <criteria>
@@ -949,7 +1064,8 @@
                         <rightValue>Cross-Sell/Upsell</rightValue>
                     </criteria>
                     <criteria>
-                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                        <leftValue
+            >{!Record.RecordType.DeveloperName}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>Framework_Parent_Opportunity</rightValue>
                     </criteria>
@@ -963,7 +1079,8 @@
                     <value>none</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.Solution_Approach_Validated__c</fieldItem>
-                <identifier>RecordSolution_Approach_Validated_cField2</identifier>
+                <identifier
+        >RecordSolution_Approach_Validated_cField2</identifier>
                 <visibilityRule>
                     <booleanFilter>1 OR 2 OR 3</booleanFilter>
                     <criteria>
@@ -977,7 +1094,8 @@
                         <rightValue>Cross-Sell/Upsell</rightValue>
                     </criteria>
                     <criteria>
-                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                        <leftValue
+            >{!Record.RecordType.DeveloperName}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>Framework_Parent_Opportunity</rightValue>
                     </criteria>
@@ -991,7 +1109,8 @@
                     <value>none</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.Technical_Validation_Completed__c</fieldItem>
-                <identifier>RecordTechnical_Validation_Completed_cField2</identifier>
+                <identifier
+        >RecordTechnical_Validation_Completed_cField2</identifier>
                 <visibilityRule>
                     <booleanFilter>1 OR 2 OR 3</booleanFilter>
                     <criteria>
@@ -1005,7 +1124,8 @@
                         <rightValue>Cross-Sell/Upsell</rightValue>
                     </criteria>
                     <criteria>
-                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                        <leftValue
+            >{!Record.RecordType.DeveloperName}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>Framework_Parent_Opportunity</rightValue>
                     </criteria>
@@ -1019,7 +1139,8 @@
                     <value>none</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.Internal_Approvals_Received__c</fieldItem>
-                <identifier>RecordInternal_Approvals_Received_cField2</identifier>
+                <identifier
+        >RecordInternal_Approvals_Received_cField2</identifier>
                 <visibilityRule>
                     <booleanFilter>(1 OR 2 OR 3) AND 4</booleanFilter>
                     <criteria>
@@ -1033,7 +1154,8 @@
                         <rightValue>Cross-Sell/Upsell</rightValue>
                     </criteria>
                     <criteria>
-                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                        <leftValue
+            >{!Record.RecordType.DeveloperName}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>Framework_Parent_Opportunity</rightValue>
                     </criteria>
@@ -1147,7 +1269,8 @@
                     <value>none</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.Total_Sales_Billing_Estimate__c</fieldItem>
-                <identifier>RecordTotal_Sales_Billing_Estimate_cField3</identifier>
+                <identifier
+        >RecordTotal_Sales_Billing_Estimate_cField3</identifier>
                 <visibilityRule>
                     <booleanFilter>(1 OR 2) AND 3 AND 4 AND 5</booleanFilter>
                     <criteria>
@@ -1205,7 +1328,8 @@
                     <value>none</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.Exclude_from_Win_Loss_Feedback__c</fieldItem>
-                <identifier>RecordExclude_from_Win_Loss_Feedback_cField2</identifier>
+                <identifier
+        >RecordExclude_from_Win_Loss_Feedback_cField2</identifier>
                 <visibilityRule>
                     <booleanFilter>1 OR 2</booleanFilter>
                     <criteria>
@@ -1228,7 +1352,8 @@
                     <value>none</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.Reason_for_win_loss_exclusion__c</fieldItem>
-                <identifier>RecordReason_for_win_loss_exclusion_cField3</identifier>
+                <identifier
+        >RecordReason_for_win_loss_exclusion_cField3</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -1248,7 +1373,8 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.Counterparty_Signature_Date__c</fieldItem>
-                <identifier>RecordCounterparty_Signature_Date__cField</identifier>
+                <identifier
+        >RecordCounterparty_Signature_Date__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-5018a42b-e85f-4312-802c-376cc75515b0</name>
@@ -1289,7 +1415,8 @@
                     <value>none</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.Value_Hypothesis_Scope_Reviewed__c</fieldItem>
-                <identifier>RecordValue_Hypothesis_Scope_Reviewed_cField2</identifier>
+                <identifier
+        >RecordValue_Hypothesis_Scope_Reviewed_cField2</identifier>
                 <visibilityRule>
                     <booleanFilter>1 OR 2 OR 3</booleanFilter>
                     <criteria>
@@ -1303,7 +1430,8 @@
                         <rightValue>Cross-Sell/Upsell</rightValue>
                     </criteria>
                     <criteria>
-                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                        <leftValue
+            >{!Record.RecordType.DeveloperName}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>Framework_Parent_Opportunity</rightValue>
                     </criteria>
@@ -1317,7 +1445,8 @@
                     <value>none</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.Final_Pricing_Terms_Proposed__c</fieldItem>
-                <identifier>RecordFinal_Pricing_Terms_Proposed_cField2</identifier>
+                <identifier
+        >RecordFinal_Pricing_Terms_Proposed_cField2</identifier>
                 <visibilityRule>
                     <booleanFilter>1 OR 2 OR 3</booleanFilter>
                     <criteria>
@@ -1331,7 +1460,8 @@
                         <rightValue>Cross-Sell/Upsell</rightValue>
                     </criteria>
                     <criteria>
-                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                        <leftValue
+            >{!Record.RecordType.DeveloperName}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>Framework_Parent_Opportunity</rightValue>
                     </criteria>
@@ -1359,7 +1489,8 @@
                         <rightValue>Cross-Sell/Upsell</rightValue>
                     </criteria>
                     <criteria>
-                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                        <leftValue
+            >{!Record.RecordType.DeveloperName}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>Framework_Parent_Opportunity</rightValue>
                     </criteria>
@@ -1373,7 +1504,8 @@
                     <value>none</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.Executed_Agreement_Uploaded__c</fieldItem>
-                <identifier>RecordExecuted_Agreement_Uploaded_cField3</identifier>
+                <identifier
+        >RecordExecuted_Agreement_Uploaded_cField3</identifier>
                 <visibilityRule>
                     <booleanFilter>1 OR 2 OR 3</booleanFilter>
                     <criteria>
@@ -1387,7 +1519,8 @@
                         <rightValue>Cross-Sell/Upsell</rightValue>
                     </criteria>
                     <criteria>
-                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                        <leftValue
+            >{!Record.RecordType.DeveloperName}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>Framework_Parent_Opportunity</rightValue>
                     </criteria>
@@ -1401,7 +1534,8 @@
                     <value>none</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.Exclude_from_Win_Loss_Feedback__c</fieldItem>
-                <identifier>RecordExclude_from_Win_Loss_Feedback_cField3</identifier>
+                <identifier
+        >RecordExclude_from_Win_Loss_Feedback_cField3</identifier>
                 <visibilityRule>
                     <booleanFilter>1 OR 2 OR 3 OR 4</booleanFilter>
                     <criteria>
@@ -1578,7 +1712,8 @@
                     <value>none</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.No_of_Forecast_Billing_Month__c</fieldItem>
-                <identifier>RecordNo_of_Forecast_Billing_Month_cField4</identifier>
+                <identifier
+        >RecordNo_of_Forecast_Billing_Month_cField4</identifier>
                 <visibilityRule>
                     <booleanFilter>(1 OR 2) AND 3</booleanFilter>
                     <criteria>
@@ -1616,7 +1751,8 @@
                     <value>none</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.Total_Sales_Billing_Estimate__c</fieldItem>
-                <identifier>RecordTotal_Sales_Billing_Estimate_cField</identifier>
+                <identifier
+        >RecordTotal_Sales_Billing_Estimate_cField</identifier>
                 <visibilityRule>
                     <booleanFilter>(1 OR 2) AND 3 AND 4 AND 5</booleanFilter>
                     <criteria>
@@ -1685,7 +1821,8 @@
                 <identifier>RecordUS_Federal_GSA_Pricing_cField</identifier>
                 <visibilityRule>
                     <criteria>
-                        <leftValue>{!Record.Is_Billing_Country_US_or_Canada__c}</leftValue>
+                        <leftValue
+            >{!Record.Is_Billing_Country_US_or_Canada__c}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>true</rightValue>
                     </criteria>
@@ -1698,17 +1835,21 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.Group_Purchasing_Organization_GPO__c</fieldItem>
-                <identifier>RecordGroup_Purchasing_Organization_GPO_cField</identifier>
+                <fieldItem
+        >Record.Group_Purchasing_Organization_GPO__c</fieldItem>
+                <identifier
+        >RecordGroup_Purchasing_Organization_GPO_cField</identifier>
                 <visibilityRule>
                     <booleanFilter>1 AND 2</booleanFilter>
                     <criteria>
-                        <leftValue>{!Record.Is_Billing_Country_US_or_Canada__c}</leftValue>
+                        <leftValue
+            >{!Record.Is_Billing_Country_US_or_Canada__c}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>true</rightValue>
                     </criteria>
                     <criteria>
-                        <leftValue>{!Record.Is_Healthcare_Industry__c}</leftValue>
+                        <leftValue
+            >{!Record.Is_Healthcare_Industry__c}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>true</rightValue>
                     </criteria>
@@ -1830,7 +1971,8 @@
                 <identifier>RecordIMGS_Approval_Status_cField</identifier>
                 <visibilityRule>
                     <criteria>
-                        <leftValue>{!Record.Is_Billing_Country_US_or_Canada__c}</leftValue>
+                        <leftValue
+            >{!Record.Is_Billing_Country_US_or_Canada__c}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>true</rightValue>
                     </criteria>
@@ -1847,7 +1989,8 @@
                 <identifier>RecordGSA_Eligibility_cField</identifier>
                 <visibilityRule>
                     <criteria>
-                        <leftValue>{!Record.Is_Billing_Country_US_or_Canada__c}</leftValue>
+                        <leftValue
+            >{!Record.Is_Billing_Country_US_or_Canada__c}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>true</rightValue>
                     </criteria>
@@ -1881,7 +2024,8 @@
                     <value>none</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.Eligible_for_Countyparty_Paper__c</fieldItem>
-                <identifier>RecordEligible_for_Countyparty_Paper_cField</identifier>
+                <identifier
+        >RecordEligible_for_Countyparty_Paper_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-d746657e-507b-4246-8b53-acbeae7b3f6c</name>
@@ -1939,7 +2083,8 @@
                     <value>none</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.Exclude_from_Win_Loss_Feedback__c</fieldItem>
-                <identifier>RecordExclude_from_Win_Loss_Feedback_cField</identifier>
+                <identifier
+        >RecordExclude_from_Win_Loss_Feedback_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -1949,7 +2094,8 @@
                     <value>none</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.Reason_for_win_loss_exclusion__c</fieldItem>
-                <identifier>RecordReason_for_win_loss_exclusion_cField</identifier>
+                <identifier
+        >RecordReason_for_win_loss_exclusion_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -2236,7 +2382,8 @@
                         <rightValue>Cross-Sell/Upsell</rightValue>
                     </criteria>
                     <criteria>
-                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                        <leftValue
+            >{!Record.RecordType.DeveloperName}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>Framework_Parent_Opportunity</rightValue>
                     </criteria>
@@ -2511,7 +2658,8 @@
                 <identifier>RecordTotal_Booked_Amount_cField</identifier>
                 <visibilityRule>
                     <criteria>
-                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                        <leftValue
+            >{!Record.RecordType.DeveloperName}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>Framework_Parent_Opportunity</rightValue>
                     </criteria>
@@ -2528,7 +2676,8 @@
                 <identifier>RecordFramework_Status_cField</identifier>
                 <visibilityRule>
                     <criteria>
-                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                        <leftValue
+            >{!Record.RecordType.DeveloperName}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>Framework_Parent_Opportunity</rightValue>
                     </criteria>
@@ -2545,7 +2694,8 @@
                 <identifier>RecordFramework_Booked_Amount_cField</identifier>
                 <visibilityRule>
                     <criteria>
-                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                        <leftValue
+            >{!Record.RecordType.DeveloperName}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>Framework_Parent_Opportunity</rightValue>
                     </criteria>
@@ -2586,7 +2736,8 @@
                     <value>none</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.Touch_Level_Override_Reason__c</fieldItem>
-                <identifier>RecordTouch_Level_Override_Reason_cField</identifier>
+                <identifier
+        >RecordTouch_Level_Override_Reason_cField</identifier>
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!Record.Touch_Level_Override__c}</leftValue>
@@ -2645,7 +2796,8 @@
                         <rightValue>Cross-Sell/Upsell</rightValue>
                     </criteria>
                     <criteria>
-                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                        <leftValue
+            >{!Record.RecordType.DeveloperName}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>Framework_Parent_Opportunity</rightValue>
                     </criteria>
@@ -2659,7 +2811,8 @@
                     <value>none</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.Business_Problem_Evidenced__c</fieldItem>
-                <identifier>RecordBusiness_Problem_Evidenced_cField5</identifier>
+                <identifier
+        >RecordBusiness_Problem_Evidenced_cField5</identifier>
                 <visibilityRule>
                     <booleanFilter>1 OR 2 OR 3</booleanFilter>
                     <criteria>
@@ -2673,7 +2826,8 @@
                         <rightValue>Cross-Sell/Upsell</rightValue>
                     </criteria>
                     <criteria>
-                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                        <leftValue
+            >{!Record.RecordType.DeveloperName}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>Framework_Parent_Opportunity</rightValue>
                     </criteria>
@@ -2687,7 +2841,8 @@
                     <value>none</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.Customer_Outcome_Predefined__c</fieldItem>
-                <identifier>RecordCustomer_Outcome_Predefined_cField5</identifier>
+                <identifier
+        >RecordCustomer_Outcome_Predefined_cField5</identifier>
                 <visibilityRule>
                     <booleanFilter>1 OR 2 OR 3</booleanFilter>
                     <criteria>
@@ -2701,7 +2856,8 @@
                         <rightValue>Cross-Sell/Upsell</rightValue>
                     </criteria>
                     <criteria>
-                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                        <leftValue
+            >{!Record.RecordType.DeveloperName}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>Framework_Parent_Opportunity</rightValue>
                     </criteria>
@@ -2729,7 +2885,8 @@
                         <rightValue>Cross-Sell/Upsell</rightValue>
                     </criteria>
                     <criteria>
-                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                        <leftValue
+            >{!Record.RecordType.DeveloperName}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>Framework_Parent_Opportunity</rightValue>
                     </criteria>
@@ -2743,7 +2900,8 @@
                     <value>none</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.Impact_Consequences_Identified__c</fieldItem>
-                <identifier>RecordImpact_Consequences_Identified_cField4</identifier>
+                <identifier
+        >RecordImpact_Consequences_Identified_cField4</identifier>
                 <visibilityRule>
                     <booleanFilter>1 OR 2 OR 3</booleanFilter>
                     <criteria>
@@ -2757,7 +2915,8 @@
                         <rightValue>Cross-Sell/Upsell</rightValue>
                     </criteria>
                     <criteria>
-                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                        <leftValue
+            >{!Record.RecordType.DeveloperName}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>Framework_Parent_Opportunity</rightValue>
                     </criteria>
@@ -2785,7 +2944,8 @@
                         <rightValue>Cross-Sell/Upsell</rightValue>
                     </criteria>
                     <criteria>
-                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                        <leftValue
+            >{!Record.RecordType.DeveloperName}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>Framework_Parent_Opportunity</rightValue>
                     </criteria>
@@ -2813,7 +2973,8 @@
                         <rightValue>Cross-Sell/Upsell</rightValue>
                     </criteria>
                     <criteria>
-                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                        <leftValue
+            >{!Record.RecordType.DeveloperName}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>Framework_Parent_Opportunity</rightValue>
                     </criteria>
@@ -2827,7 +2988,8 @@
                     <value>none</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.Business_Case_Justification__c</fieldItem>
-                <identifier>RecordBusiness_Case_Justification_cField</identifier>
+                <identifier
+        >RecordBusiness_Case_Justification_cField</identifier>
                 <visibilityRule>
                     <booleanFilter>1 OR 2 OR 3</booleanFilter>
                     <criteria>
@@ -2841,7 +3003,8 @@
                         <rightValue>Cross-Sell/Upsell</rightValue>
                     </criteria>
                     <criteria>
-                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                        <leftValue
+            >{!Record.RecordType.DeveloperName}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>Framework_Parent_Opportunity</rightValue>
                     </criteria>
@@ -2859,7 +3022,8 @@
                     <value>none</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.Solution_Approach_Validated__c</fieldItem>
-                <identifier>RecordSolution_Approach_Validated_cField4</identifier>
+                <identifier
+        >RecordSolution_Approach_Validated_cField4</identifier>
                 <visibilityRule>
                     <booleanFilter>1 OR 2 OR 3</booleanFilter>
                     <criteria>
@@ -2873,7 +3037,8 @@
                         <rightValue>Cross-Sell/Upsell</rightValue>
                     </criteria>
                     <criteria>
-                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                        <leftValue
+            >{!Record.RecordType.DeveloperName}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>Framework_Parent_Opportunity</rightValue>
                     </criteria>
@@ -2887,7 +3052,8 @@
                     <value>none</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.Technical_Validation_Completed__c</fieldItem>
-                <identifier>RecordTechnical_Validation_Completed_cField4</identifier>
+                <identifier
+        >RecordTechnical_Validation_Completed_cField4</identifier>
                 <visibilityRule>
                     <booleanFilter>1 OR 2 OR 3</booleanFilter>
                     <criteria>
@@ -2901,7 +3067,8 @@
                         <rightValue>Cross-Sell/Upsell</rightValue>
                     </criteria>
                     <criteria>
-                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                        <leftValue
+            >{!Record.RecordType.DeveloperName}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>Framework_Parent_Opportunity</rightValue>
                     </criteria>
@@ -2915,7 +3082,8 @@
                     <value>none</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.Internal_Approvals_Received__c</fieldItem>
-                <identifier>RecordInternal_Approvals_Received_cField</identifier>
+                <identifier
+        >RecordInternal_Approvals_Received_cField</identifier>
                 <visibilityRule>
                     <booleanFilter>(1 OR 2 OR 3) AND 4</booleanFilter>
                     <criteria>
@@ -2929,7 +3097,8 @@
                         <rightValue>Cross-Sell/Upsell</rightValue>
                     </criteria>
                     <criteria>
-                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                        <leftValue
+            >{!Record.RecordType.DeveloperName}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>Framework_Parent_Opportunity</rightValue>
                     </criteria>
@@ -2948,7 +3117,8 @@
                     <value>none</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.Value_Hypothesis_Scope_Reviewed__c</fieldItem>
-                <identifier>RecordValue_Hypothesis_Scope_Reviewed_cField6</identifier>
+                <identifier
+        >RecordValue_Hypothesis_Scope_Reviewed_cField6</identifier>
                 <visibilityRule>
                     <booleanFilter>1 OR 2 OR 3</booleanFilter>
                     <criteria>
@@ -2962,7 +3132,8 @@
                         <rightValue>Cross-Sell/Upsell</rightValue>
                     </criteria>
                     <criteria>
-                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                        <leftValue
+            >{!Record.RecordType.DeveloperName}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>Framework_Parent_Opportunity</rightValue>
                     </criteria>
@@ -2976,7 +3147,8 @@
                     <value>none</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.Final_Pricing_Terms_Proposed__c</fieldItem>
-                <identifier>RecordFinal_Pricing_Terms_Proposed_cField</identifier>
+                <identifier
+        >RecordFinal_Pricing_Terms_Proposed_cField</identifier>
                 <visibilityRule>
                     <booleanFilter>1 AND 2 AND 3</booleanFilter>
                     <criteria>
@@ -2990,7 +3162,8 @@
                         <rightValue>Cross-Sell/Upsell</rightValue>
                     </criteria>
                     <criteria>
-                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                        <leftValue
+            >{!Record.RecordType.DeveloperName}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>Framework_Parent_Opportunity</rightValue>
                     </criteria>
@@ -3018,7 +3191,8 @@
                         <rightValue>Cross-Sell/Upsell</rightValue>
                     </criteria>
                     <criteria>
-                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                        <leftValue
+            >{!Record.RecordType.DeveloperName}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>Framework_Parent_Opportunity</rightValue>
                     </criteria>
@@ -3032,7 +3206,8 @@
                     <value>none</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.Executed_Agreement_Uploaded__c</fieldItem>
-                <identifier>RecordExecuted_Agreement_Uploaded_cField</identifier>
+                <identifier
+        >RecordExecuted_Agreement_Uploaded_cField</identifier>
                 <visibilityRule>
                     <booleanFilter>1 OR 2 OR 3</booleanFilter>
                     <criteria>
@@ -3046,7 +3221,8 @@
                         <rightValue>Cross-Sell/Upsell</rightValue>
                     </criteria>
                     <criteria>
-                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                        <leftValue
+            >{!Record.RecordType.DeveloperName}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>Framework_Parent_Opportunity</rightValue>
                     </criteria>
@@ -3107,7 +3283,8 @@
                         <rightValue>Cross-Sell/Upsell</rightValue>
                     </criteria>
                     <criteria>
-                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                        <leftValue
+            >{!Record.RecordType.DeveloperName}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>Framework_Parent_Opportunity</rightValue>
                     </criteria>
@@ -3153,7 +3330,8 @@
                         <rightValue>Cross-Sell/Upsell</rightValue>
                     </criteria>
                     <criteria>
-                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                        <leftValue
+            >{!Record.RecordType.DeveloperName}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>Framework_Parent_Opportunity</rightValue>
                     </criteria>
@@ -3196,7 +3374,8 @@
                         <rightValue>Cross-Sell/Upsell</rightValue>
                     </criteria>
                     <criteria>
-                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                        <leftValue
+            >{!Record.RecordType.DeveloperName}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>Framework_Parent_Opportunity</rightValue>
                     </criteria>
@@ -3214,7 +3393,8 @@
                 <visibilityRule>
                     <booleanFilter>1 AND 2 AND (3 OR 4 OR 5)</booleanFilter>
                     <criteria>
-                        <leftValue>{!Record.Is_Digital_Primary_Product_Line__c}</leftValue>
+                        <leftValue
+            >{!Record.Is_Digital_Primary_Product_Line__c}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>true</rightValue>
                     </criteria>
@@ -3234,7 +3414,8 @@
                         <rightValue>Cross-Sell/Upsell</rightValue>
                     </criteria>
                     <criteria>
-                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                        <leftValue
+            >{!Record.RecordType.DeveloperName}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>Framework_Parent_Opportunity</rightValue>
                     </criteria>
@@ -3267,7 +3448,8 @@
                         <rightValue>Cross-Sell/Upsell</rightValue>
                     </criteria>
                     <criteria>
-                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                        <leftValue
+            >{!Record.RecordType.DeveloperName}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>Framework_Parent_Opportunity</rightValue>
                     </criteria>
@@ -3280,8 +3462,10 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.InSight_not_in_proposal_Explanation__c</fieldItem>
-                <identifier>RecordInSight_not_in_proposal_Explanation_cField3</identifier>
+                <fieldItem
+        >Record.InSight_not_in_proposal_Explanation__c</fieldItem>
+                <identifier
+        >RecordInSight_not_in_proposal_Explanation_cField3</identifier>
                 <visibilityRule>
                     <booleanFilter>1 AND (2 OR 3 OR 4)</booleanFilter>
                     <criteria>
@@ -3300,7 +3484,8 @@
                         <rightValue>Cross-Sell/Upsell</rightValue>
                     </criteria>
                     <criteria>
-                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                        <leftValue
+            >{!Record.RecordType.DeveloperName}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>Framework_Parent_Opportunity</rightValue>
                     </criteria>
@@ -3338,7 +3523,8 @@
                         <rightValue>Cross-Sell/Upsell</rightValue>
                     </criteria>
                     <criteria>
-                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                        <leftValue
+            >{!Record.RecordType.DeveloperName}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>Framework_Parent_Opportunity</rightValue>
                     </criteria>
@@ -3611,7 +3797,8 @@
                     <value>none</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.Upload_PA_Model_for_Approval__c</fieldItem>
-                <identifier>RecordUpload_PA_Model_for_Approval_cField</identifier>
+                <identifier
+        >RecordUpload_PA_Model_for_Approval_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-54a3c6b6-b4e8-4f7b-a971-5b5f8c758e29</name>
