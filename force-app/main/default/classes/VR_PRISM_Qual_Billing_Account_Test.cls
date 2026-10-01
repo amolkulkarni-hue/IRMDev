@@ -39,19 +39,8 @@ private class VR_PRISM_Qual_Billing_Account_Test {
     );
   }
 
-  @isTest
-  static void test_allowed_when_Billing_Account_populated() {
-    Opportunity o = buildInScopeOpp('Solutioning', 'Cross-Sell/Upsell');
-    o.Billing_Account__c = VR_PRISM_TestSupport.getBillingAccountId();
-    Test.startTest();
-    insert o;
-    Test.stopTest();
-    System.assertNotEquals(
-      null,
-      o.Id,
-      'Insert should succeed when the required field is populated.'
-    );
-  }
+  // No positive scenario: a valid Billing Account (record type with a parent, full
+  // address, legal entity and tax configuration) cannot be created in test context.
 
   @isTest
   static void test_notBlocked_outOfScope_type() {

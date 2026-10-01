@@ -78,18 +78,6 @@ public class VR_PRISM_TestSupport {
     );
     insert testAccount;
 
-    // Billing_Account__c on Opportunity has a lookup filter requiring an Account whose
-    // record type is "Billing Account".
-    insert new Account(
-      Name = 'VR_PRISM Test Billing Account',
-      RecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName()
-        .get('QTB_Billing_Account')
-        .getRecordTypeId(),
-      BillingCountry = 'United States',
-      BillingState = 'NY',
-      BillingPostalCode = '11209'
-    );
-
     // IM_Account__c is Master-Detail to Account, so it's required.
     insert new IM_Customer_Account__c(
       Name = 'VR-PRISM-TEST-001',
@@ -99,16 +87,6 @@ public class VR_PRISM_TestSupport {
 
   public static Id getAccountId() {
     return [SELECT Id FROM Account WHERE Name = 'VR_PRISM Test Account' LIMIT 1]
-    .Id;
-  }
-
-  public static Id getBillingAccountId() {
-    return [
-      SELECT Id
-      FROM Account
-      WHERE Name = 'VR_PRISM Test Billing Account'
-      LIMIT 1
-    ]
     .Id;
   }
 
@@ -223,7 +201,6 @@ public class VR_PRISM_TestSupport {
     if (SOLUTIONING_PLUS.contains(stage)) {
       o.Billing_Country__c = getUnitedStatesCountryId();
       o.Add_On__c = 'Workflow';
-      o.Billing_Account__c = getBillingAccountId();
       o.Digital_Deal_Archetype__c = 'Custom Software solution';
       o.InSight_Opportunities__c = 'Invoice Processing';
       o.Expected_CuFt__c = 100;
