@@ -19,6 +19,7 @@ private class VR_PRISM_Qual_Billing_Account_Test {
   @isTest
   static void test_blocked_when_Billing_Account_blank() {
     Opportunity o = buildInScopeOpp('Solutioning', 'Cross-Sell/Upsell');
+    o.Billing_Account__c = null;
     Boolean threw = false;
     Test.startTest();
     try {
@@ -55,6 +56,7 @@ private class VR_PRISM_Qual_Billing_Account_Test {
   @isTest
   static void test_notBlocked_outOfScope_type() {
     Opportunity o = buildInScopeOpp('Solutioning', 'Rate Change');
+    o.Billing_Account__c = null;
     Test.startTest();
     insert o;
     Test.stopTest();

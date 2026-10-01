@@ -15,6 +15,7 @@ private class VR_PRISM_No_Regress_After_BV_Test {
     o.Deal_Validation__c = 'Pass';
     insert o;
     o.StageName = 'Qualification';
+    VR_PRISM_TestSupport.applyStageDefaults(o, 'Qualification');
     Boolean threw = false;
     Test.startTest();
     try {
@@ -40,6 +41,7 @@ private class VR_PRISM_No_Regress_After_BV_Test {
     );
     insert o; // Deal_Validation__c left blank (not 'Pass')
     o.StageName = 'Qualification';
+    VR_PRISM_TestSupport.applyStageDefaults(o, 'Qualification');
     Test.startTest();
     update o;
     Test.stopTest();
@@ -61,6 +63,7 @@ private class VR_PRISM_No_Regress_After_BV_Test {
     o.Deal_Validation__c = 'Pass';
     insert o;
     o.StageName = 'Qualification';
+    VR_PRISM_TestSupport.applyStageDefaults(o, 'Qualification');
     Test.startTest();
     update o;
     Test.stopTest();

@@ -23,6 +23,7 @@ private class VR_PRISM_No_Skipping_Stages_Test {
     );
     insert o; // CreatedDate is "today" - before the 2026-11-09 cutover
     o.StageName = 'Booking Verification'; // would be a skip (Solutioning, Negotiation), if the rule applied
+    VR_PRISM_TestSupport.applyStageDefaults(o, 'Booking Verification');
     Test.startTest();
     update o; // must not throw
     Test.stopTest();

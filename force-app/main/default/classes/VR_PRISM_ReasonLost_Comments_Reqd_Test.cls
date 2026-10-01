@@ -20,6 +20,7 @@ private class VR_PRISM_ReasonLost_Comments_Reqd_Test {
     );
     insert o;
     o.StageName = 'Lost';
+    VR_PRISM_TestSupport.applyStageDefaults(o, 'Lost');
     Boolean threw = false;
     Test.startTest();
     try {
@@ -43,6 +44,7 @@ private class VR_PRISM_ReasonLost_Comments_Reqd_Test {
     );
     insert o;
     o.StageName = 'Lost';
+    VR_PRISM_TestSupport.applyStageDefaults(o, 'Lost');
     o.IM_Reason_Lost__c = 'Competitor';
     o.IM_Lost_Comments__c = 'Lost to a lower-priced competitor.';
     Test.startTest();
@@ -70,6 +72,7 @@ private class VR_PRISM_ReasonLost_Comments_Reqd_Test {
     );
     insert o;
     o.StageName = 'Solutioning';
+    VR_PRISM_TestSupport.applyStageDefaults(o, 'Solutioning');
     Test.startTest();
     update o;
     Test.stopTest();

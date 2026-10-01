@@ -170,18 +170,67 @@ public class VR_PRISM_TestSupport {
       Digital_BU__c = false,
       W_L_BU__c = false
     );
+    applyStageDefaults(o, stage);
+    return o;
+  }
 
+  /**
+   * Applies every stage-gated baseline field this org's other active validation rules
+   * (legacy and sibling VR_PRISM_*) require once an Opportunity reaches a given stage.
+   * baseOpp() calls this for the insert-time stage; any test that later moves an
+   * existing Opportunity to a DIFFERENT stage via `o.StageName = X; update o;` must
+   * call this again with the new stage first - the insert-time defaults don't
+   * retroactively cover a stage the record didn't start at.
+   */
+  public static void applyStageDefaults(Opportunity o, String stage) {
     // VR_Opp_S1_Qual_Checklist_Fields-style legacy requirement: Budget Validated and
     // Business Problem must be populated from Solutioning onward.
     if (SOLUTIONING_PLUS.contains(stage)) {
       o.Budget_Validated__c = 'Yes';
       o.Business_Problem_Evidenced__c = 'Improve Efficiency or Reduce Manual Work';
     }
+    // The 22 other VR_PRISM_Qual_*/Sol_* "field required from stage X onward" rules
+    // (Category A) all gate on PPL/BU/Type combinations that baseOpp() itself never
+    // turns on - but several test classes' own "extra" setters (e.g. setting
+    // Primary_Product_Line__c to satisfy their OWN target field's gate) incidentally
+    // satisfy a SIBLING rule's gate too, tripping it before the rule under test is
+    // even reached. Defaulting all of them here mirrors an Opportunity that a real
+    // user actually advanced through the process cleanly, and is harmless for tests
+    // whose own gate never opens. Skips Is_InSight_being_proposed__c, a picklist
+    // dependent on Primary_Product_Line__c - not safe to default without knowing PPL.
+    if (SOLUTIONING_PLUS.contains(stage)) {
+      o.Billing_Country__c = getUnitedStatesCountryId();
+      o.Add_On__c = 'Workflow';
+      o.Billing_Account__c = getAccountId();
+      o.Digital_Deal_Archetype__c = 'Custom Software solution';
+      o.InSight_Opportunities__c = 'Invoice Processing';
+      o.Expected_CuFt__c = 100;
+      o.US_Federal_GSA_Pricing__c = 'No';
+      o.Multi_Country__c = 'Yes';
+      o.Remarketing_Required__c = 'Yes';
+      o.Service_Address__Street__s = '123 Main St';
+      o.IM_Unit_of_Measure__c = 'Cubic Ft';
+      o.IM_Up_Sell_Detail__c = 'Additional storage racks';
+      o.IM_Up_Sell_Sold_To__c = 'ORCL-12345';
+      o.IM_Up_Sell_Quantity__c = 5;
+      o.Upsell_Customer_ID__c = getCustomerAccountId();
+      o.NextStep = 'Follow up call';
+      o.Next_Step_Date__c = Date.today().addDays(7);
+    }
     // CT_Required_in_BV_and_Negotiation / TCV_Required_in_BV_and_Negotiation: both
     // required (Contract Term >= 13, TCV >= 1) from Negotiation onward.
     if (NEGOTIATION_PLUS.contains(stage)) {
       o.Contract_Term_months__c = 24;
       o.Total_Contract_Value_TCV__c = 100000;
+      o.PO_Required__c = 'No';
+      o.Cloud_Provider__c = 'AWS';
+      o.IM_Booked_Date__c = Date.today().addDays(45);
+      o.No_of_Forecast_Billing_Month__c = '1';
+      o.Free_Storage_Period__c = '1 month';
+      o.Fuel_Surcharge_Waiver__c = 'Yes';
+      o.Marketplace__c = 'Yes';
+      o.Marketplace_Details__c = 'Marketplace details for testing';
+      o.IM_Servicing_Region__c = 'Aberdeen';
     }
     // When_Opty_is_Won_Reason_Won_is_Required (legacy, Booked only) and this rule's own
     // sibling VR_PRISM_Neg_Reason_Won (Booking Verification onward) both need this.
@@ -198,8 +247,6 @@ public class VR_PRISM_TestSupport {
     } else {
       o.ForecastCategoryName = 'Pipeline';
     }
-
-    return o;
   }
 
   // Standard_Opportunity is the default record type used by tests that don't care

@@ -15,6 +15,7 @@ private class VR_PRISM_StageLock_BookingVerif_Test {
     );
     insert o;
     o.StageName = 'Qualification';
+    VR_PRISM_TestSupport.applyStageDefaults(o, 'Qualification');
     Boolean threw = false;
     Test.startTest();
     System.runAs(plainUser) {
@@ -65,6 +66,7 @@ private class VR_PRISM_StageLock_BookingVerif_Test {
     );
     insert o;
     o.StageName = 'Solutioning';
+    VR_PRISM_TestSupport.applyStageDefaults(o, 'Solutioning');
     Test.startTest();
     update o;
     Test.stopTest();

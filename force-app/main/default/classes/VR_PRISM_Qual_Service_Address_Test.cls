@@ -18,6 +18,7 @@ private class VR_PRISM_Qual_Service_Address_Test {
   @isTest
   static void test_blocked_when_Service_Address_Street_s_blank() {
     Opportunity o = buildInScopeOpp('Solutioning', 'New Deal');
+    o.Service_Address__Street__s = null;
     Boolean threw = false;
     Test.startTest();
     try {
@@ -54,6 +55,7 @@ private class VR_PRISM_Qual_Service_Address_Test {
   @isTest
   static void test_notBlocked_outOfScope_type() {
     Opportunity o = buildInScopeOpp('Solutioning', 'Rate Change');
+    o.Service_Address__Street__s = null;
     Test.startTest();
     insert o;
     Test.stopTest();

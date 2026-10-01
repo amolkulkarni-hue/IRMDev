@@ -37,7 +37,7 @@ private class VR_PRISM_Lock_All_Fields_When_Lost_Test {
   @isTest
   static void test_notBlocked_outOfScope_stage() {
     Opportunity o = VR_PRISM_TestSupport.baseOpp(
-      'Qualification',
+      'Negotiation',
       VR_PRISM_TestSupport.stdRecordTypeId(),
       'New Deal'
     );

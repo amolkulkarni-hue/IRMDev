@@ -14,6 +14,7 @@ private class VR_PRISM_StageLock_Setup_Test {
     );
     insert o;
     o.StageName = 'Qualification';
+    VR_PRISM_TestSupport.applyStageDefaults(o, 'Qualification');
     Boolean threw = false;
     Test.startTest();
     try {
@@ -58,6 +59,7 @@ private class VR_PRISM_StageLock_Setup_Test {
     );
     insert o;
     o.StageName = 'Solutioning';
+    VR_PRISM_TestSupport.applyStageDefaults(o, 'Solutioning');
     Test.startTest();
     update o;
     Test.stopTest();

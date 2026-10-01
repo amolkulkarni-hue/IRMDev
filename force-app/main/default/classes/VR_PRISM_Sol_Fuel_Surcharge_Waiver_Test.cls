@@ -19,6 +19,7 @@ private class VR_PRISM_Sol_Fuel_Surcharge_Waiver_Test {
   @isTest
   static void test_blocked_when_Fuel_Surcharge_Waiver_blank() {
     Opportunity o = buildInScopeOpp('Negotiation', 'New Deal');
+    o.Fuel_Surcharge_Waiver__c = null;
     Boolean threw = false;
     Test.startTest();
     try {
@@ -55,6 +56,7 @@ private class VR_PRISM_Sol_Fuel_Surcharge_Waiver_Test {
   @isTest
   static void test_notBlocked_outOfScope_type() {
     Opportunity o = buildInScopeOpp('Negotiation', 'Rate Change');
+    o.Fuel_Surcharge_Waiver__c = null;
     Test.startTest();
     insert o;
     Test.stopTest();

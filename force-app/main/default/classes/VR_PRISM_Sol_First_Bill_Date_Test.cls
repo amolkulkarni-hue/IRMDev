@@ -17,6 +17,7 @@ private class VR_PRISM_Sol_First_Bill_Date_Test {
   @isTest
   static void test_blocked_when_IM_Booked_Date_blank() {
     Opportunity o = buildInScopeOpp('Negotiation', 'New Deal');
+    o.IM_Booked_Date__c = null;
     Boolean threw = false;
     Test.startTest();
     try {
@@ -53,6 +54,7 @@ private class VR_PRISM_Sol_First_Bill_Date_Test {
   @isTest
   static void test_notBlocked_outOfScope_type() {
     Opportunity o = buildInScopeOpp('Negotiation', 'Rate Change');
+    o.IM_Booked_Date__c = null;
     Test.startTest();
     insert o;
     Test.stopTest();

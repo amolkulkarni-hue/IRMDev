@@ -9,19 +9,28 @@ private class VR_PRISM_FBD_Within_12Months_Test {
   static void test_blocked_whenFirstBillDateBeyond12Months() {
     // This rule is also gated on NOT($Permission.Booking_Verification_Access) - the
     // default test-running (admin) user has that permission granted org-wide, so the
-    // rule would never fire for them. Run as a user who lacks it instead.
-    User plainUser = VR_PRISM_TestSupport.getSalesAccountManagementUser();
+    // rule would never fire for them. Run as a user who lacks it instead. The
+    // Opportunity is inserted as the admin first and only the update to push First
+    // Bill Date out of range runs as plainUser - inserting directly as plainUser
+    // throws INSUFFICIENT_ACCESS_ON_CROSS_REFERENCE_ENTITY on the Account lookup,
+    // since that profile has no sharing access to an Account it doesn't own.
     Opportunity o = VR_PRISM_TestSupport.baseOpp(
       'Qualification',
       VR_PRISM_TestSupport.stdRecordTypeId(),
       'New Deal'
     );
-    o.IM_Booked_Date__c = o.CloseDate.addDays(400);
+    o.IM_Booked_Date__c = o.CloseDate.addDays(100);
+    insert o;
+    User plainUser = VR_PRISM_TestSupport.getSalesAccountManagementUser();
     Boolean threw = false;
     Test.startTest();
     System.runAs(plainUser) {
+      Opportunity toUpdate = new Opportunity(
+        Id = o.Id,
+        IM_Booked_Date__c = o.CloseDate.addDays(400)
+      );
       try {
-        insert o;
+        update toUpdate;
       } catch (DmlException e) {
         threw = true;
         System.assert(

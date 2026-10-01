@@ -18,6 +18,7 @@ private class VR_PRISM_Sol_Forecast_Bill_Months_Test {
   @isTest
   static void test_blocked_when_No_of_Forecast_Billing_Month_blank() {
     Opportunity o = buildInScopeOpp('Negotiation', 'New Deal');
+    o.No_of_Forecast_Billing_Month__c = null;
     Boolean threw = false;
     Test.startTest();
     try {
@@ -54,6 +55,7 @@ private class VR_PRISM_Sol_Forecast_Bill_Months_Test {
   @isTest
   static void test_notBlocked_outOfScope_type() {
     Opportunity o = buildInScopeOpp('Negotiation', 'Rate Change');
+    o.No_of_Forecast_Billing_Month__c = null;
     Test.startTest();
     insert o;
     Test.stopTest();

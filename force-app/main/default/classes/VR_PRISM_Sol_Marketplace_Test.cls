@@ -18,6 +18,7 @@ private class VR_PRISM_Sol_Marketplace_Test {
   @isTest
   static void test_blocked_when_Marketplace_blank() {
     Opportunity o = buildInScopeOpp('Negotiation', 'New Deal');
+    o.Marketplace__c = null;
     Boolean threw = false;
     Test.startTest();
     try {
@@ -53,6 +54,7 @@ private class VR_PRISM_Sol_Marketplace_Test {
   @isTest
   static void test_notBlocked_outOfScope_type() {
     Opportunity o = buildInScopeOpp('Negotiation', 'Rate Change');
+    o.Marketplace__c = null;
     Test.startTest();
     insert o;
     Test.stopTest();

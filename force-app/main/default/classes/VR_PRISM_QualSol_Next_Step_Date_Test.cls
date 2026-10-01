@@ -19,6 +19,7 @@ private class VR_PRISM_QualSol_Next_Step_Date_Test {
   @isTest
   static void test_blocked_when_Next_Step_Date_blank() {
     Opportunity o = buildInScopeOpp('Solutioning', 'New Deal');
+    o.Next_Step_Date__c = null;
     Boolean threw = false;
     Test.startTest();
     try {
@@ -55,6 +56,7 @@ private class VR_PRISM_QualSol_Next_Step_Date_Test {
   @isTest
   static void test_notBlocked_outOfScope_type() {
     Opportunity o = buildInScopeOpp('Solutioning', 'Rate Change');
+    o.Next_Step_Date__c = null;
     Test.startTest();
     insert o;
     Test.stopTest();

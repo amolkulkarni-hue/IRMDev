@@ -48,6 +48,7 @@ private class VR_PRISM_Lock_All_Fields_During_BV_Test {
     );
     insert o;
     o.StageName = 'Booked';
+    VR_PRISM_TestSupport.applyStageDefaults(o, 'Booked');
     Test.startTest();
     update o; // Stage changes are explicitly allowed during BV - must not throw
     Test.stopTest();
@@ -62,7 +63,7 @@ private class VR_PRISM_Lock_All_Fields_During_BV_Test {
   @isTest
   static void test_notBlocked_outOfScope_stage() {
     Opportunity o = VR_PRISM_TestSupport.baseOpp(
-      'Qualification',
+      'Negotiation',
       VR_PRISM_TestSupport.stdRecordTypeId(),
       'New Deal'
     );

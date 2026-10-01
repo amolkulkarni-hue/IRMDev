@@ -16,6 +16,7 @@ private class VR_PRISM_LowMedTouch_Regress_Reason_Test {
     o.Touch_Level__c = 'Medium Touch';
     insert o;
     o.StageName = 'Solutioning';
+    VR_PRISM_TestSupport.applyStageDefaults(o, 'Solutioning');
     Boolean threw = false;
     Test.startTest();
     try {
@@ -46,6 +47,7 @@ private class VR_PRISM_LowMedTouch_Regress_Reason_Test {
     o.Touch_Level__c = 'Medium Touch';
     insert o;
     o.StageName = 'Solutioning';
+    VR_PRISM_TestSupport.applyStageDefaults(o, 'Solutioning');
     o.Stage_Regression_Reason__c = 'Budget approval delayed.';
     Test.startTest();
     update o;
@@ -69,6 +71,7 @@ private class VR_PRISM_LowMedTouch_Regress_Reason_Test {
     o.Touch_Level__c = 'High Touch';
     insert o;
     o.StageName = 'Solutioning';
+    VR_PRISM_TestSupport.applyStageDefaults(o, 'Solutioning');
     Test.startTest();
     update o;
     Test.stopTest();
