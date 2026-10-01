@@ -17,6 +17,7 @@ private class VR_PRISM_Sol_Servicing_Dist_Mkt_Test {
   @isTest
   static void test_blocked_when_IM_Servicing_Region_blank() {
     Opportunity o = buildInScopeOpp('Negotiation', 'New Deal');
+    o.IM_Servicing_Region__c = null;
     Boolean threw = false;
     Test.startTest();
     try {
@@ -53,6 +54,7 @@ private class VR_PRISM_Sol_Servicing_Dist_Mkt_Test {
   @isTest
   static void test_notBlocked_outOfScope_type() {
     Opportunity o = buildInScopeOpp('Negotiation', 'Rate Change');
+    o.IM_Servicing_Region__c = null;
     Test.startTest();
     insert o;
     Test.stopTest();

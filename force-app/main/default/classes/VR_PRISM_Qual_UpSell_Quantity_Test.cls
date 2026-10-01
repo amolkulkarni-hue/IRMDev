@@ -17,6 +17,7 @@ private class VR_PRISM_Qual_UpSell_Quantity_Test {
   @isTest
   static void test_blocked_when_IM_Up_Sell_Quantity_blank() {
     Opportunity o = buildInScopeOpp('Solutioning', 'Cross-Sell/Upsell');
+    o.IM_Up_Sell_Quantity__c = null;
     Boolean threw = false;
     Test.startTest();
     try {
@@ -53,6 +54,7 @@ private class VR_PRISM_Qual_UpSell_Quantity_Test {
   @isTest
   static void test_notBlocked_outOfScope_type() {
     Opportunity o = buildInScopeOpp('Solutioning', 'Rate Change');
+    o.IM_Up_Sell_Quantity__c = null;
     Test.startTest();
     insert o;
     Test.stopTest();

@@ -57,6 +57,10 @@ private class VR_PRISM_FBD_Not_Past_Open_Stages_Test {
       VR_PRISM_TestSupport.stdRecordTypeId(),
       'New Deal'
     );
+    // Both CloseDate and First Bill Date pushed into the past together (First Bill
+    // Date still on/after Close Date) so this doesn't trip VR_PRISM_FirstBillDate_
+    // After_CloseDate, which - unlike this rule - is NOT restricted to open stages.
+    o.CloseDate = Date.today().addDays(-10);
     o.IM_Booked_Date__c = Date.today().addDays(-5);
     Test.startTest();
     insert o;

@@ -18,6 +18,7 @@ private class VR_PRISM_Qual_Is_Insight_Proposed_Test {
   @isTest
   static void test_blocked_when_Is_InSight_being_proposed_blank() {
     Opportunity o = buildInScopeOpp('Solutioning', 'New Deal');
+    o.Is_InSight_being_proposed__c = null;
     Boolean threw = false;
     Test.startTest();
     try {
@@ -54,6 +55,7 @@ private class VR_PRISM_Qual_Is_Insight_Proposed_Test {
   @isTest
   static void test_notBlocked_outOfScope_type() {
     Opportunity o = buildInScopeOpp('Solutioning', 'Rate Change');
+    o.Is_InSight_being_proposed__c = null;
     Test.startTest();
     insert o;
     Test.stopTest();

@@ -17,6 +17,7 @@ private class VR_PRISM_Qual_Unit_Of_Measure_Test {
   @isTest
   static void test_blocked_when_IM_Unit_of_Measure_blank() {
     Opportunity o = buildInScopeOpp('Solutioning', 'Cross-Sell/Upsell');
+    o.IM_Unit_of_Measure__c = null;
     Boolean threw = false;
     Test.startTest();
     try {
@@ -53,6 +54,7 @@ private class VR_PRISM_Qual_Unit_Of_Measure_Test {
   @isTest
   static void test_notBlocked_outOfScope_type() {
     Opportunity o = buildInScopeOpp('Solutioning', 'Rate Change');
+    o.IM_Unit_of_Measure__c = null;
     Test.startTest();
     insert o;
     Test.stopTest();

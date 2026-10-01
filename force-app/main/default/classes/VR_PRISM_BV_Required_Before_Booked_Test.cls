@@ -14,6 +14,7 @@ private class VR_PRISM_BV_Required_Before_Booked_Test {
     );
     insert o; // Deal_Validation__c left blank
     o.StageName = 'Booked';
+    VR_PRISM_TestSupport.applyStageDefaults(o, 'Booked');
     Boolean threw = false;
     Test.startTest();
     try {
@@ -40,6 +41,7 @@ private class VR_PRISM_BV_Required_Before_Booked_Test {
     o.Deal_Validation__c = 'Pass';
     insert o;
     o.StageName = 'Booked';
+    VR_PRISM_TestSupport.applyStageDefaults(o, 'Booked');
     Test.startTest();
     update o;
     Test.stopTest();
@@ -60,6 +62,7 @@ private class VR_PRISM_BV_Required_Before_Booked_Test {
     );
     insert o;
     o.StageName = 'Booked';
+    VR_PRISM_TestSupport.applyStageDefaults(o, 'Booked');
     Test.startTest();
     update o;
     Test.stopTest();

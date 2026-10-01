@@ -18,6 +18,7 @@ private class VR_PRISM_Sol_Cloud_Provider_Test {
   @isTest
   static void test_blocked_when_Cloud_Provider_blank() {
     Opportunity o = buildInScopeOpp('Negotiation', 'New Deal');
+    o.Cloud_Provider__c = null;
     Boolean threw = false;
     Test.startTest();
     try {
@@ -53,6 +54,7 @@ private class VR_PRISM_Sol_Cloud_Provider_Test {
   @isTest
   static void test_notBlocked_outOfScope_type() {
     Opportunity o = buildInScopeOpp('Negotiation', 'Rate Change');
+    o.Cloud_Provider__c = null;
     Test.startTest();
     insert o;
     Test.stopTest();

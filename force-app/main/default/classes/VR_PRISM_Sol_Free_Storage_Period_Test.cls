@@ -19,6 +19,7 @@ private class VR_PRISM_Sol_Free_Storage_Period_Test {
   @isTest
   static void test_blocked_when_Free_Storage_Period_blank() {
     Opportunity o = buildInScopeOpp('Negotiation', 'New Deal');
+    o.Free_Storage_Period__c = null;
     Boolean threw = false;
     Test.startTest();
     try {
@@ -55,6 +56,7 @@ private class VR_PRISM_Sol_Free_Storage_Period_Test {
   @isTest
   static void test_notBlocked_outOfScope_type() {
     Opportunity o = buildInScopeOpp('Negotiation', 'Rate Change');
+    o.Free_Storage_Period__c = null;
     Test.startTest();
     insert o;
     Test.stopTest();

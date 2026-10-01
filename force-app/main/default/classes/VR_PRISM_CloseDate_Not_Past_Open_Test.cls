@@ -5,6 +5,12 @@ private class VR_PRISM_CloseDate_Not_Past_Open_Test {
     VR_PRISM_TestSupport.setupCommonTestData();
   }
 
+  // A separate, undocumented piece of automation in this org silently rewrites a
+  // past Close Date to a valid future one on INSERT (confirmed empirically - a bare
+  // insert with CloseDate 5 days in the past persists with CloseDate ~30 days in the
+  // future instead), so the validation rule never even sees a past date to block on
+  // insert. The same past value DOES survive on UPDATE, where this rule fires
+  // correctly - so the blocked scenario is exercised via insert-then-update instead.
   @isTest
   static void test_blocked_whenCloseDateInPast_openStage() {
     Opportunity o = VR_PRISM_TestSupport.baseOpp(
@@ -12,11 +18,12 @@ private class VR_PRISM_CloseDate_Not_Past_Open_Test {
       VR_PRISM_TestSupport.stdRecordTypeId(),
       'New Deal'
     );
+    insert o;
     o.CloseDate = Date.today().addDays(-5);
     Boolean threw = false;
     Test.startTest();
     try {
-      insert o;
+      update o;
     } catch (DmlException e) {
       threw = true;
       System.assert(

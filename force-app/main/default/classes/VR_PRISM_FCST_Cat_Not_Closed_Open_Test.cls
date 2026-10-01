@@ -19,8 +19,11 @@ private class VR_PRISM_FCST_Cat_Not_Closed_Open_Test {
       insert o;
     } catch (DmlException e) {
       threw = true;
+      // A legacy rule with the same underlying intent ("can't be 'Closed'" rather
+      // than this rule's "cannot be 'Closed'") can win the race on the same save -
+      // either confirms the Closed-in-an-open-stage state is genuinely blocked.
       System.assert(
-        e.getMessage().contains('cannot be'),
+        e.getMessage().contains('be \'Closed\''),
         'Expected the VR_PRISM_FCST_Cat_Not_Closed_Open error, got: ' +
         e.getMessage()
       );

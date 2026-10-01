@@ -19,6 +19,7 @@ private class VR_PRISM_QualSol_Next_Step_Test {
   @isTest
   static void test_blocked_when_NextStep_blank() {
     Opportunity o = buildInScopeOpp('Solutioning', 'New Deal');
+    o.NextStep = null;
     Boolean threw = false;
     Test.startTest();
     try {
@@ -54,6 +55,7 @@ private class VR_PRISM_QualSol_Next_Step_Test {
   @isTest
   static void test_notBlocked_outOfScope_type() {
     Opportunity o = buildInScopeOpp('Solutioning', 'Rate Change');
+    o.NextStep = null;
     Test.startTest();
     insert o;
     Test.stopTest();

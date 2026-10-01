@@ -18,6 +18,7 @@ private class VR_PRISM_Qual_Add_On_Test {
   @isTest
   static void test_blocked_when_Add_On_blank() {
     Opportunity o = buildInScopeOpp('Solutioning', 'New Deal');
+    o.Add_On__c = null;
     Boolean threw = false;
     Test.startTest();
     try {
@@ -53,6 +54,7 @@ private class VR_PRISM_Qual_Add_On_Test {
   @isTest
   static void test_notBlocked_outOfScope_type() {
     Opportunity o = buildInScopeOpp('Solutioning', 'Rate Change');
+    o.Add_On__c = null;
     Test.startTest();
     insert o;
     Test.stopTest();

@@ -46,6 +46,7 @@ private class VR_PRISM_Neg_Sales_Billing_Estimate_Test {
     insert o;
     VR_PRISM_TestSupport.addSalesRevenueForecast(o.Id, 30000);
     o.StageName = 'Booking Verification';
+    VR_PRISM_TestSupport.applyStageDefaults(o, 'Booking Verification');
     Test.startTest();
     update o;
     Test.stopTest();
