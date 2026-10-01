@@ -142,4 +142,61 @@ private class AceDijonOppAccessVerificationTest {
         createError
     );
   }
+
+  // The two tests above pass, so neither AccountId nor RecordTypeId is the blocker. The flow
+  // also copies Get_Account.Division (Global, 02d800000004CzGAAU) onto the new Opportunity
+  // (see log 07LWJ00000W45Bi2AJ); no earlier test set Division.
+  @IsTest
+  static void testAceCanCreateOpportunityWithGlobalDivision() {
+    User ace = getAce();
+    Division globalDivision = [
+      SELECT Id
+      FROM Division
+      WHERE Name = 'Global'
+      LIMIT 1
+    ];
+
+    Account acc = new Account(
+      Name = 'ABC Account',
+      BillingCountry = 'United States',
+      BillingState = 'NY',
+      BillingPostalCode = '11209'
+    );
+    insert acc;
+
+    Opportunity opp = VR_PRISM_TestSupport.baseOpp(
+      'Qualification',
+      VR_PRISM_TestSupport.frameworkParentRecordTypeId(),
+      'New Deal'
+    );
+    opp.Name = 'ABC Account - Ace Division Test Opp';
+    opp.AccountId = acc.Id;
+    opp.OwnerId = ace.Id;
+    opp.put('Division', globalDivision.Id);
+
+    Boolean createOk = false;
+    String createError = '';
+    System.runAs(ace) {
+      try {
+        insert as user opp;
+        createOk = true;
+      } catch (Exception e) {
+        createError = e.getMessage();
+      }
+    }
+
+    System.debug(
+      '###ACE_CREATE_OPP_GLOBAL_DIVISION: ok=' +
+        createOk +
+        ' err=' +
+        createError
+    );
+
+    Assert.isTrue(
+      createOk,
+      'Ace Dijon should be able to create an Opportunity with Division = Global, ' +
+        'but the insert was blocked: ' +
+        createError
+    );
+  }
 }
