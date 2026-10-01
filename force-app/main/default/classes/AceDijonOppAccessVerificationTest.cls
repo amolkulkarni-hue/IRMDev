@@ -69,4 +69,77 @@ private class AceDijonOppAccessVerificationTest {
         createError
     );
   }
+
+  // Debug log 07LWJ00000W45Bi2AJ shows Opportunity_Creation_from_Account_Flow's
+  // Create_Opportunity element failing with INSUFFICIENT_ACCESS_ON_CROSS_REFERENCE_ENTITY
+  // when Ace creates an Opportunity from ABC Account with RecordTypeId =
+  // Framework_Parent_Opportunity (012WJ000002GcueYAC) - the flow's fRecordTypeId formula
+  // resolves to that record type whenever the user doesn't pick "Standard"/"Choice Standard
+  // Opp". The test above proves AccountId and Standard_Opportunity aren't the blocker;
+  // this isolates RecordTypeId by swapping only that field in, confirming whether Ace's
+  // profile (Sales & Account Management) simply isn't assigned the Framework Parent
+  // Opportunity record type.
+  @IsTest
+  static void testAceCanCreateFrameworkParentOpportunityUnderAbcAccount() {
+    User ace = getAce();
+
+    Account acc = new Account(
+      Name = 'ABC Account',
+      BillingCountry = 'United States',
+      BillingState = 'NY',
+      BillingPostalCode = '11209'
+    );
+    insert acc;
+
+    Opportunity opp = VR_PRISM_TestSupport.baseOpp(
+      'Qualification',
+      VR_PRISM_TestSupport.frameworkParentRecordTypeId(),
+      'New Deal'
+    );
+    opp.Name = 'ABC Account - Ace Framework RT Test Opp';
+    opp.AccountId = acc.Id;
+    opp.OwnerId = ace.Id;
+
+    Boolean createOk = false;
+    String createError = '';
+    Boolean frameworkRtAvailable;
+    System.runAs(ace) {
+      for (
+        Schema.RecordTypeInfo rt : Opportunity.SObjectType.getDescribe()
+          .getRecordTypeInfos()
+      ) {
+        if (
+          rt.getRecordTypeId() ==
+          VR_PRISM_TestSupport.frameworkParentRecordTypeId()
+        ) {
+          frameworkRtAvailable = rt.isAvailable();
+        }
+      }
+      try {
+        insert as user opp;
+        createOk = true;
+      } catch (Exception e) {
+        createError = e.getMessage();
+      }
+    }
+
+    System.debug(
+      '###ACE_CREATE_FRAMEWORK_PARENT_OPP_UNDER_ABC_ACCOUNT: ok=' +
+        createOk +
+        ' frameworkRtAvailableToProfile=' +
+        frameworkRtAvailable +
+        ' err=' +
+        createError
+    );
+
+    Assert.isTrue(
+      createOk,
+      'Ace Dijon (ace@digitalae.irm.com.newprism) should be able to create a ' +
+        'Framework Parent Opportunity under ABC Account, but the insert was blocked ' +
+        '(Framework Parent Opportunity record type available to his profile: ' +
+        frameworkRtAvailable +
+        '): ' +
+        createError
+    );
+  }
 }
