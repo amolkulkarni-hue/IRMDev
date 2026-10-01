@@ -20,8 +20,9 @@ private class VR_PRISM_FBD_Within_12Months_Test {
       'New Deal'
     );
     o.IM_Booked_Date__c = o.CloseDate.addDays(100);
-    insert o;
     User plainUser = VR_PRISM_TestSupport.getSalesAccountManagementUser();
+    o.OwnerId = plainUser.Id;
+    insert o;
     Boolean threw = false;
     Test.startTest();
     System.runAs(plainUser) {

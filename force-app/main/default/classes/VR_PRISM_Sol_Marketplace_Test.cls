@@ -12,6 +12,7 @@ private class VR_PRISM_Sol_Marketplace_Test {
       type
     );
     o.Primary_Product_Line__c = 'Digitization';
+    o.Is_InSight_being_proposed__c = 'Yes - InSight Enterprise Edition is part of the proposal';
     return o;
   }
 

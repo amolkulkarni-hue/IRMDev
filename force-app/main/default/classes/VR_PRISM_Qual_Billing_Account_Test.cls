@@ -42,7 +42,7 @@ private class VR_PRISM_Qual_Billing_Account_Test {
   @isTest
   static void test_allowed_when_Billing_Account_populated() {
     Opportunity o = buildInScopeOpp('Solutioning', 'Cross-Sell/Upsell');
-    o.Billing_Account__c = VR_PRISM_TestSupport.getAccountId();
+    o.Billing_Account__c = VR_PRISM_TestSupport.getBillingAccountId();
     Test.startTest();
     insert o;
     Test.stopTest();
