@@ -1,11 +1,10 @@
 @IsTest
 private class AceDijonOppAccessVerificationTest {
-  // Reproduces the "insufficient access rights on cross-reference id" error Ace Dijon
-  // (ace@digitalae.irm.com.newprism, Sales & Account Management profile / Digital AE role)
-  // hits creating an Opportunity against ABC Account in production: the Account is owned
-  // by a user outside his role hierarchy and nothing shares it back to him. `insert as user`
-  // forces full sharing/FLS enforcement under his context so the check is actually
-  // exercised here, not just assumed from reading his permission set/profile grants.
+  // Isolates why ace@digitalae.irm.com.newprism (Sales & Account Management profile) hits
+  // INSUFFICIENT_ACCESS_ON_CROSS_REFERENCE_ENTITY in Opportunity_Creation_from_Account_Flow
+  // (Create_Opportunity element, debug log 07LWJ00000W45Bi2AJ) when creating an Opportunity
+  // from ABC Account. `insert as user` forces sharing/FLS enforcement under his context.
+  // Setup is self-contained on purpose: VR_PRISM_TestSupport is shared and in flux.
 
   private static User getAce() {
     return [
@@ -18,90 +17,132 @@ private class AceDijonOppAccessVerificationTest {
 
   @TestSetup
   static void setup() {
-    VR_PRISM_TestSupport.setupCommonTestData();
+    insert new SVStatus__c(
+      Name = 'SVStatusPassed',
+      Amount__c = 0,
+      SetupOwnerId = UserInfo.getOrganizationId()
+    );
+    insert new Country_Settings__c(
+      Name = 'United States',
+      Object_Name__c = 'Opportunity',
+      SetupOwnerId = UserInfo.getOrganizationId()
+    );
+    insert new List<Opportunity_Security__c>{
+      new Opportunity_Security__c(
+        Name = 'Primary CDE',
+        Field_Name__c = 'Primary_CDE__c',
+        Object_Name__c = 'Account',
+        Visibility_Access_Level__c = 'R',
+        SetupOwnerId = UserInfo.getOrganizationId()
+      ),
+      new Opportunity_Security__c(
+        Name = 'Original Lead Owner',
+        Field_Name__c = 'IM_Original_Lead_Owner__c',
+        Object_Name__c = 'Opportunity',
+        Visibility_Access_Level__c = 'W',
+        SetupOwnerId = UserInfo.getOrganizationId()
+      ),
+      new Opportunity_Security__c(
+        Name = 'Primary BDE',
+        Field_Name__c = 'Primary_BDE__c',
+        Object_Name__c = 'Account',
+        Visibility_Access_Level__c = 'W',
+        SetupOwnerId = UserInfo.getOrganizationId()
+      )
+    };
+    insert new OpportunityProductSelection__c(
+      Name = 'CloudSolutionsProduct',
+      Product_Class_Name__c = 'Cloud',
+      Product_Line_Name__c = 'Cloud Solutions'
+    );
+
+    IM_Country__c testCountry = new IM_Country__c(
+      Name = 'United States',
+      Active__c = true,
+      Region__c = 'North America'
+    );
+    insert testCountry;
+    insert new IM_Alternative_Country_Name__c(
+      IM_Country__c = testCountry.Id,
+      Alternative_Name__c = 'United States'
+    );
+
+    // Owned by the default test-running (admin) user, outside Ace's role hierarchy -
+    // mirrors the real ABC Account he's launching the flow from.
+    Account acc = new Account(
+      Name = 'ABC Account',
+      BillingCountry = 'United States',
+      BillingState = 'NY',
+      BillingPostalCode = '11209'
+    );
+    insert acc;
+    insert new IM_Customer_Account__c(
+      Name = 'ACE-TEST-001',
+      IM_Account__c = acc.Id
+    );
+  }
+
+  private static Opportunity newOpp(Id recordTypeId, String name, User ace) {
+    Account acc = [SELECT Id FROM Account WHERE Name = 'ABC Account' LIMIT 1];
+    return new Opportunity(
+      Name = name,
+      AccountId = acc.Id,
+      OwnerId = ace.Id,
+      RecordTypeId = recordTypeId,
+      Type = 'New Deal',
+      StageName = 'Qualification',
+      CloseDate = Date.today().addDays(30),
+      Pricebook2Id = Test.getStandardPricebookId(),
+      Amount = 1000,
+      ForecastCategoryName = 'Pipeline',
+      ALM_BU__c = false,
+      RIM_BU__c = false,
+      MAS_BU__c = false,
+      Digital_BU__c = false,
+      W_L_BU__c = false
+    );
+  }
+
+  private static String insertAsAce(User ace, Opportunity opp) {
+    String err = '';
+    System.runAs(ace) {
+      try {
+        insert as user opp;
+      } catch (Exception e) {
+        err = e.getMessage();
+      }
+    }
+    return err;
   }
 
   @IsTest
   static void testAceCanCreateOpportunityUnderAbcAccount() {
     User ace = getAce();
-
-    // Owned by the default test-running (admin) user, outside Ace's role hierarchy and
-    // not shared with him - mirrors the real ABC Account he's blocked on in production.
-    Account acc = new Account(
-      Name = 'ABC Account',
-      BillingCountry = 'United States',
-      BillingState = 'NY',
-      BillingPostalCode = '11209'
-    );
-    insert acc;
-
-    Opportunity opp = VR_PRISM_TestSupport.baseOpp(
-      'Qualification',
-      VR_PRISM_TestSupport.stdRecordTypeId(),
-      'New Deal'
-    );
-    opp.Name = 'ABC Account - Ace Access Test Opp';
-    opp.AccountId = acc.Id;
-    opp.OwnerId = ace.Id;
-
-    Boolean createOk = false;
-    String createError = '';
-    System.runAs(ace) {
-      try {
-        insert as user opp;
-        createOk = true;
-      } catch (Exception e) {
-        createError = e.getMessage();
-      }
-    }
-
-    System.debug(
-      '###ACE_CREATE_OPP_UNDER_ABC_ACCOUNT: ok=' +
-        createOk +
-        ' err=' +
-        createError
+    Opportunity opp = newOpp(
+      App_Constants.STD_OPPORTUNITY_RECTYPE_ID,
+      'ABC Account - Ace Standard RT Test Opp',
+      ace
     );
 
-    Assert.isTrue(
-      createOk,
-      'Ace Dijon (ace@digitalae.irm.com.newprism) should be able to create an ' +
-        'Opportunity under ABC Account, but the insert was blocked: ' +
-        createError
+    String err = insertAsAce(ace, opp);
+
+    System.debug('###ACE_STANDARD_RT: err=' + err);
+    Assert.areEqual(
+      '',
+      err,
+      'Ace should be able to create a Standard Opportunity under ABC Account'
     );
   }
 
-  // Debug log 07LWJ00000W45Bi2AJ shows Opportunity_Creation_from_Account_Flow's
-  // Create_Opportunity element failing with INSUFFICIENT_ACCESS_ON_CROSS_REFERENCE_ENTITY
-  // when Ace creates an Opportunity from ABC Account with RecordTypeId =
-  // Framework_Parent_Opportunity (012WJ000002GcueYAC) - the flow's fRecordTypeId formula
-  // resolves to that record type whenever the user doesn't pick "Standard"/"Choice Standard
-  // Opp". The test above proves AccountId and Standard_Opportunity aren't the blocker;
-  // this isolates RecordTypeId by swapping only that field in, confirming whether Ace's
-  // profile (Sales & Account Management) simply isn't assigned the Framework Parent
-  // Opportunity record type.
   @IsTest
   static void testAceCanCreateFrameworkParentOpportunityUnderAbcAccount() {
     User ace = getAce();
-
-    Account acc = new Account(
-      Name = 'ABC Account',
-      BillingCountry = 'United States',
-      BillingState = 'NY',
-      BillingPostalCode = '11209'
+    Opportunity opp = newOpp(
+      App_Constants.FRAMEWORK_PARENT_OPPORTUNITY_RECTYPE_ID,
+      'ABC Account - Ace Framework RT Test Opp',
+      ace
     );
-    insert acc;
 
-    Opportunity opp = VR_PRISM_TestSupport.baseOpp(
-      'Qualification',
-      VR_PRISM_TestSupport.frameworkParentRecordTypeId(),
-      'New Deal'
-    );
-    opp.Name = 'ABC Account - Ace Framework RT Test Opp';
-    opp.AccountId = acc.Id;
-    opp.OwnerId = ace.Id;
-
-    Boolean createOk = false;
-    String createError = '';
     Boolean frameworkRtAvailable;
     System.runAs(ace) {
       for (
@@ -110,42 +151,32 @@ private class AceDijonOppAccessVerificationTest {
       ) {
         if (
           rt.getRecordTypeId() ==
-          VR_PRISM_TestSupport.frameworkParentRecordTypeId()
+          App_Constants.FRAMEWORK_PARENT_OPPORTUNITY_RECTYPE_ID
         ) {
           frameworkRtAvailable = rt.isAvailable();
         }
       }
-      try {
-        insert as user opp;
-        createOk = true;
-      } catch (Exception e) {
-        createError = e.getMessage();
-      }
     }
+    String err = insertAsAce(ace, opp);
 
     System.debug(
-      '###ACE_CREATE_FRAMEWORK_PARENT_OPP_UNDER_ABC_ACCOUNT: ok=' +
-        createOk +
-        ' frameworkRtAvailableToProfile=' +
+      '###ACE_FRAMEWORK_RT: frameworkRtAvailableToProfile=' +
         frameworkRtAvailable +
         ' err=' +
-        createError
+        err
     );
-
-    Assert.isTrue(
-      createOk,
-      'Ace Dijon (ace@digitalae.irm.com.newprism) should be able to create a ' +
-        'Framework Parent Opportunity under ABC Account, but the insert was blocked ' +
-        '(Framework Parent Opportunity record type available to his profile: ' +
+    Assert.areEqual(
+      '',
+      err,
+      'Ace should be able to create a Framework Parent Opportunity under ABC Account ' +
+        '(record type available to his profile: ' +
         frameworkRtAvailable +
-        '): ' +
-        createError
+        ')'
     );
   }
 
-  // The two tests above pass, so neither AccountId nor RecordTypeId is the blocker. The flow
-  // also copies Get_Account.Division (Global, 02d800000004CzGAAU) onto the new Opportunity
-  // (see log 07LWJ00000W45Bi2AJ); no earlier test set Division.
+  // The flow copies Get_Account.Division (Global, 02d800000004CzGAAU) onto the new
+  // Opportunity; no other test sets Division.
   @IsTest
   static void testAceCanCreateOpportunityWithGlobalDivision() {
     User ace = getAce();
@@ -155,48 +186,20 @@ private class AceDijonOppAccessVerificationTest {
       WHERE Name = 'Global'
       LIMIT 1
     ];
-
-    Account acc = new Account(
-      Name = 'ABC Account',
-      BillingCountry = 'United States',
-      BillingState = 'NY',
-      BillingPostalCode = '11209'
+    Opportunity opp = newOpp(
+      App_Constants.FRAMEWORK_PARENT_OPPORTUNITY_RECTYPE_ID,
+      'ABC Account - Ace Division Test Opp',
+      ace
     );
-    insert acc;
-
-    Opportunity opp = VR_PRISM_TestSupport.baseOpp(
-      'Qualification',
-      VR_PRISM_TestSupport.frameworkParentRecordTypeId(),
-      'New Deal'
-    );
-    opp.Name = 'ABC Account - Ace Division Test Opp';
-    opp.AccountId = acc.Id;
-    opp.OwnerId = ace.Id;
     opp.put('Division', globalDivision.Id);
 
-    Boolean createOk = false;
-    String createError = '';
-    System.runAs(ace) {
-      try {
-        insert as user opp;
-        createOk = true;
-      } catch (Exception e) {
-        createError = e.getMessage();
-      }
-    }
+    String err = insertAsAce(ace, opp);
 
-    System.debug(
-      '###ACE_CREATE_OPP_GLOBAL_DIVISION: ok=' +
-        createOk +
-        ' err=' +
-        createError
-    );
-
-    Assert.isTrue(
-      createOk,
-      'Ace Dijon should be able to create an Opportunity with Division = Global, ' +
-        'but the insert was blocked: ' +
-        createError
+    System.debug('###ACE_GLOBAL_DIVISION: err=' + err);
+    Assert.areEqual(
+      '',
+      err,
+      'Ace should be able to create an Opportunity with Division = Global'
     );
   }
 }
