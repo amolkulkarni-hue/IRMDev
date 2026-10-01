@@ -1,5 +1,5 @@
 @IsTest
-private class AceDijonOpportunityAccessVerificationTest {
+private class AceDijonOppAccessVerificationTest {
   // Reproduces the "insufficient access rights on cross-reference id" error Ace Dijon
   // (ace@digitalae.irm.com.newprism, Sales & Account Management profile / Digital AE role)
   // hits creating an Opportunity against ABC Account in production: the Account is owned
