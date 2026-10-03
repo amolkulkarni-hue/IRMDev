@@ -169,6 +169,10 @@ private class IRM_FrameworkParentOpportunityTest {
 
     @IsTest
     static void test_bookingVerificationGate_blocksDirectJumpToClosed() {
+        // Isolate from NF_OpportunityFieldLockService (Booking Verification+ record lock) via its
+        // test seam: this test covers the stage gate / child linkage, and the lock itself has its
+        // own test class (NF_OpportunityFieldLockServiceTest).
+        NF_OpportunityFieldLockService.lockedOverrideIdsForTests = new Set<Id>();
         Opportunity opp = buildFrameworkOpp();
         insert opp;
         addOcrRoles(opp.Id);
@@ -193,6 +197,10 @@ private class IRM_FrameworkParentOpportunityTest {
 
     @IsTest
     static void test_bookingVerificationGate_allowsClosedAfterBookingVerification() {
+        // Isolate from NF_OpportunityFieldLockService (Booking Verification+ record lock) via its
+        // test seam: this test covers the stage gate / child linkage, and the lock itself has its
+        // own test class (NF_OpportunityFieldLockServiceTest).
+        NF_OpportunityFieldLockService.lockedOverrideIdsForTests = new Set<Id>();
         Opportunity opp = buildFrameworkOpp();
         insert opp;
         addOcrRoles(opp.Id);
@@ -356,6 +364,10 @@ private class IRM_FrameworkParentOpportunityTest {
 
     @IsTest
     static void test_childLinkage_blocksWhenParentClosedButNotActive() {
+        // Isolate from NF_OpportunityFieldLockService (Booking Verification+ record lock) via its
+        // test seam: this test covers the stage gate / child linkage, and the lock itself has its
+        // own test class (NF_OpportunityFieldLockServiceTest).
+        NF_OpportunityFieldLockService.lockedOverrideIdsForTests = new Set<Id>();
         Opportunity parent = buildFrameworkOpp();
         insert parent;
         addOcrRoles(parent.Id);
