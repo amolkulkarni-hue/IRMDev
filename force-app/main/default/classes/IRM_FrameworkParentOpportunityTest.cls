@@ -167,8 +167,11 @@ private class IRM_FrameworkParentOpportunityTest {
         );
     }
 
+    // Framework_Booking_Verification_Gate (Negotiation -> Closed) is inactive in the org; the
+    // active control is VR_PRISM_BV_Required_Before_Booked, which blocks leaving Booking
+    // Verification for Booked/Setup/Closed until Deal_Validation__c = 'Pass'.
     @IsTest
-    static void test_bookingVerificationGate_blocksDirectJumpToClosed() {
+    static void test_bookingVerificationGate_blocksClosedWithoutDealValidationPass() {
         // Isolate from NF_OpportunityFieldLockService (Booking Verification+ record lock) via its
         // test seam: this test covers the stage gate / child linkage, and the lock itself has its
         // own test class (NF_OpportunityFieldLockServiceTest).
@@ -179,6 +182,8 @@ private class IRM_FrameworkParentOpportunityTest {
         opp.StageName = 'Solutioning'; update opp;
         addAuthorizedSignatoryRole(opp.Id);
         opp.StageName = 'Negotiation'; update opp;
+        addCorrespondenceContactRole(opp.Id);
+        opp.StageName = 'Booking Verification'; update opp;
 
         Test.startTest();
         opp.StageName = 'Closed';
@@ -187,12 +192,12 @@ private class IRM_FrameworkParentOpportunityTest {
             update opp;
         } catch (DmlException e) {
             threw = true;
-            System.assert(e.getMessage().contains('must pass through Booking Verification'),
-                'Expected the Framework_Booking_Verification_Gate error, got: ' + e.getMessage());
+            System.assert(e.getMessage().contains('Booking Verification is required'),
+                'Expected the VR_PRISM_BV_Required_Before_Booked error, got: ' + e.getMessage());
         }
         Test.stopTest();
 
-        System.assert(threw, 'Jumping directly from Negotiation to Closed should be blocked.');
+        System.assert(threw, 'Moving from Booking Verification to Closed without Deal_Validation__c = Pass should be blocked.');
     }
 
     @IsTest
@@ -211,6 +216,7 @@ private class IRM_FrameworkParentOpportunityTest {
         opp.StageName = 'Booking Verification'; update opp;
 
         Test.startTest();
+        opp.Deal_Validation__c = 'Pass'; // VR_PRISM_BV_Required_Before_Booked
         opp.StageName = 'Closed';
         update opp;
         Test.stopTest();
@@ -378,6 +384,7 @@ private class IRM_FrameworkParentOpportunityTest {
         parent.StageName = 'Booking Verification'; update parent;
 
         Test.startTest();
+        parent.Deal_Validation__c = 'Pass'; // VR_PRISM_BV_Required_Before_Booked: BV must be complete to leave Booking Verification
         parent.StageName = 'Closed'; update parent; // Closed but Framework_Status__c left blank (not Active)
 
         Opportunity child = buildChildOpp();
