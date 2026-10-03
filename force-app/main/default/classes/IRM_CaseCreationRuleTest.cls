@@ -84,7 +84,7 @@ private class IRM_CaseCreationRuleTest {
         Id accId = [SELECT Id FROM Account LIMIT 1].Id;
         Opportunity opp = new Opportunity(
             Name = 'SA Rule Test', AccountId = accId,
-            Type = 'New Deal', StageName = 'Qualification', CloseDate = Date.today().addDays(30), Pricebook2Id = Test.getStandardPricebookId(), Amount = 600000,
+            Type = 'New Deal', StageName = 'Qualification', CloseDate = Date.today().addDays(30), Pricebook2Id = Test.getStandardPricebookId(), Amount = 600000, ALM_EAA__c = 600000,
             Bypass_Validation__c = true
         );
         insert opp;
@@ -130,7 +130,7 @@ private class IRM_CaseCreationRuleTest {
         Id accId = [SELECT Id FROM Account LIMIT 1].Id;
         Opportunity opp = new Opportunity(
             Name = 'Doc Type Test', AccountId = accId,
-            Type = 'New Deal', StageName = 'Qualification', CloseDate = Date.today().addDays(30), Pricebook2Id = Test.getStandardPricebookId(), Amount = 600000,
+            Type = 'New Deal', StageName = 'Qualification', CloseDate = Date.today().addDays(30), Pricebook2Id = Test.getStandardPricebookId(), Amount = 600000, ALM_EAA__c = 600000,
             Bypass_Validation__c = true
         );
         insert opp;
@@ -164,7 +164,7 @@ private class IRM_CaseCreationRuleTest {
         Id accId = [SELECT Id FROM Account LIMIT 1].Id;
         Opportunity opp = new Opportunity(
             Name = 'Low Amount Test', AccountId = accId,
-            Type = 'New Deal', StageName = 'Qualification', CloseDate = Date.today().addDays(30), Pricebook2Id = Test.getStandardPricebookId(), Amount = 50000,
+            Type = 'New Deal', StageName = 'Qualification', CloseDate = Date.today().addDays(30), Pricebook2Id = Test.getStandardPricebookId(), Amount = 50000, ALM_EAA__c = 50000,
             Bypass_Validation__c = true
         );
         insert opp;
@@ -205,7 +205,7 @@ private class IRM_CaseCreationRuleTest {
         Id accId = [SELECT Id FROM Account LIMIT 1].Id;
         Opportunity opp = new Opportunity(
             Name = 'Wrong Stage Test', AccountId = accId,
-            Type = 'New Deal', StageName = 'Solutioning', CloseDate = Date.today().addDays(30), Pricebook2Id = Test.getStandardPricebookId(), Amount = 600000,
+            Type = 'New Deal', StageName = 'Solutioning', CloseDate = Date.today().addDays(30), Pricebook2Id = Test.getStandardPricebookId(), Amount = 600000, ALM_EAA__c = 600000,
             Bypass_Validation__c = true
         );
         insert opp;
@@ -237,7 +237,7 @@ private class IRM_CaseCreationRuleTest {
         Id accId = [SELECT Id FROM Account LIMIT 1].Id;
         Opportunity opp = new Opportunity(
             Name = 'Inactive Rule Test', AccountId = accId,
-            Type = 'New Deal', StageName = 'Qualification', CloseDate = Date.today().addDays(30), Pricebook2Id = Test.getStandardPricebookId(), Amount = 600000,
+            Type = 'New Deal', StageName = 'Qualification', CloseDate = Date.today().addDays(30), Pricebook2Id = Test.getStandardPricebookId(), Amount = 600000, ALM_EAA__c = 600000,
             Bypass_Validation__c = true
         );
         insert opp;
@@ -283,7 +283,7 @@ private class IRM_CaseCreationRuleTest {
         for (Integer i = 0; i < 200; i++) {
             opps.add(new Opportunity(
                 Name = 'Bulk Opp ' + i, AccountId = accId,
-                Type = 'New Deal', StageName = 'Qualification', CloseDate = Date.today().addDays(30), Pricebook2Id = Test.getStandardPricebookId(), Amount = 600000,
+                Type = 'New Deal', StageName = 'Qualification', CloseDate = Date.today().addDays(30), Pricebook2Id = Test.getStandardPricebookId(), Amount = 600000, ALM_EAA__c = 600000,
             Bypass_Validation__c = true
             ));
         }

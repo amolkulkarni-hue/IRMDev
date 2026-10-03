@@ -89,7 +89,7 @@ private class IRM_CaseCreationEligibilityTest {
         Case_Creation_Rule__c rule = makeRule('Test Type A', '1');
         insert new Case_Creation_Condition__c(
             Rule__c = rule.Id, Condition_Number__c = 1,
-            Field_API_Name__c = 'Primary_Product_Line__c', Operator__c = 'EQUALS', Value__c = 'Secure Shredding'
+            Field_API_Name__c = 'Primary_Product_Line__c', Operator__c = 'EQUALS', Value__c = 'Secure Shred'
         );
         insert new Case_Creation_Doc_Requirement__c(
             Rule__c = rule.Id, Doc_Type__c = 'Business Problem Statement',
@@ -98,12 +98,12 @@ private class IRM_CaseCreationEligibilityTest {
         );
 
         Test.startTest();
-        Opportunity opp = buildOpp('Data Centers', 50000); // does not match
+        Opportunity opp = buildOpp('Data Management', 50000); // does not match
         insert opp;
         System.assertEquals(0, checklistCount(opp.Id, rule.Id, 'Business Problem Statement'),
             'No checklist should exist before the condition field matches');
 
-        opp.Primary_Product_Line__c = 'Secure Shredding'; // now matches — StageName untouched
+        opp.Primary_Product_Line__c = 'Secure Shred'; // now matches — StageName untouched
         update opp;
         Test.stopTest();
 
@@ -118,7 +118,7 @@ private class IRM_CaseCreationEligibilityTest {
         Case_Creation_Rule__c rule = makeRule('Test Type A', '1');
         insert new Case_Creation_Condition__c(
             Rule__c = rule.Id, Condition_Number__c = 1,
-            Field_API_Name__c = 'Primary_Product_Line__c', Operator__c = 'EQUALS', Value__c = 'Secure Shredding'
+            Field_API_Name__c = 'Primary_Product_Line__c', Operator__c = 'EQUALS', Value__c = 'Secure Shred'
         );
         insert new Case_Creation_Doc_Requirement__c(
             Rule__c = rule.Id, Doc_Type__c = 'Business Problem Statement',
@@ -127,7 +127,7 @@ private class IRM_CaseCreationEligibilityTest {
         );
 
         Test.startTest();
-        Opportunity opp = buildOpp('Secure Shredding', 50000); // matches on insert
+        Opportunity opp = buildOpp('Secure Shred', 50000); // matches on insert
         insert opp;
         System.assertEquals(1, checklistCount(opp.Id, rule.Id, 'Business Problem Statement'),
             'Checklist should be created on insert since the rule matches immediately');
@@ -156,7 +156,7 @@ private class IRM_CaseCreationEligibilityTest {
         );
 
         Test.startTest();
-        Opportunity opp = buildOpp('Data Centers', 50000); // does not match
+        Opportunity opp = buildOpp('Data Management', 50000); // does not match
         insert opp;
 
         opp.Amount = 150000; // now matches — Amount is a watched field
@@ -190,7 +190,7 @@ private class IRM_CaseCreationEligibilityTest {
         );
 
         Test.startTest();
-        Opportunity opp = buildOpp('Data Centers', 50000);
+        Opportunity opp = buildOpp('Data Management', 50000);
         insert opp; // both unconditional rules match immediately
         Test.stopTest();
 
@@ -222,7 +222,7 @@ private class IRM_CaseCreationEligibilityTest {
         );
 
         Test.startTest();
-        Opportunity opp = buildOpp('Data Centers', 50000);
+        Opportunity opp = buildOpp('Data Management', 50000);
         insert opp; // must not throw despite one bad doc requirement
         Test.stopTest();
 
@@ -242,7 +242,7 @@ private class IRM_CaseCreationEligibilityTest {
         Case_Creation_Rule__c rule = makeRule('Test Type TL', null); // unconditional
 
         Test.startTest();
-        Opportunity opp = buildOpp('Data Centers', 50000);
+        Opportunity opp = buildOpp('Data Management', 50000);
         insert opp;
         Test.stopTest();
 

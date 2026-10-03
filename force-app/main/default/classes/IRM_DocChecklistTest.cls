@@ -50,7 +50,7 @@ private class IRM_DocChecklistTest {
         insert acc;
         Opportunity setupOpp = new Opportunity(
             Name = 'IRM Doc Status Test', AccountId = acc.Id,
-            Type = 'New Deal', StageName = 'Qualification', CloseDate = Date.today().addDays(30), Pricebook2Id = Test.getStandardPricebookId(), Amount = 100000,
+            Type = 'New Deal', StageName = 'Qualification', CloseDate = Date.today().addDays(30), Pricebook2Id = Test.getStandardPricebookId(), Amount = 100000, ALM_EAA__c = 100000,
             Bypass_Validation__c = true
         );
         insert setupOpp;
@@ -85,7 +85,7 @@ private class IRM_DocChecklistTest {
         Opportunity opp = new Opportunity(
             Name = name, AccountId = getAccount().Id,
             Type = 'New Deal', StageName = 'Qualification', CloseDate = Date.today().addDays(30),
-            Pricebook2Id = Test.getStandardPricebookId(), Amount = amount,
+            Pricebook2Id = Test.getStandardPricebookId(), Amount = amount, ALM_EAA__c = amount,
             Bypass_Validation__c = true
         );
         insert opp;
@@ -183,7 +183,7 @@ private class IRM_DocChecklistTest {
         Integer casesAfterInsert = [SELECT COUNT() FROM Case WHERE Opportunity__c = :opp.Id];
 
         Test.startTest();
-        opp.Amount = 700000; // still matches the rule — Amount is a watched field, re-triggers evaluation
+        opp.Amount = 700000; opp.ALM_EAA__c = 700000; // still matches the rule — Amount is a watched field, re-triggers evaluation
         update opp;
         Test.stopTest();
 
@@ -196,20 +196,22 @@ private class IRM_DocChecklistTest {
     static void test_caseFirst_allStartDocsFinalIndicatorTracksDocStatus() {
         Case_Creation_Rule__c rule = getRule();
         Opportunity opp = makeQualifyingOpp('Indicator Test', 600000);
-
+		
+        Test.startTest();
         Case createdCase = [SELECT Id, All_Start_Docs_Final__c FROM Case WHERE Opportunity__c = :opp.Id];
         Document_Checklist__c dc = [
             SELECT Id, Status__c FROM Document_Checklist__c
             WHERE Opportunity__c = :opp.Id AND Case_Creation_Rule__c = :rule.Id LIMIT 1
         ];
 
-        Test.startTest();
+        
         dc.Status__c = 'Final';
         dc.Submitted_Date__c = Date.today();
         update dc;
-        Test.stopTest();
+        
 
         Case afterFinal = [SELECT Id, All_Start_Docs_Final__c FROM Case WHERE Id = :createdCase.Id];
+        Test.stopTest();
         System.assertEquals(true, afterFinal.All_Start_Docs_Final__c,
             'Case_Creation_Trigger_Flow should set All_Start_Docs_Final__c = true once every required-for-case doc is Final.');
     }
@@ -217,6 +219,7 @@ private class IRM_DocChecklistTest {
     @IsTest
     static void test_caseFirst_indicatorStaysFalseWhilePartialDocsFinal() {
         Case_Creation_Rule__c rule = getRule();
+        Test.startTest();
         // Second required-for-case doc on the same rule
         insert new Case_Creation_Doc_Requirement__c(
             Rule__c = rule.Id, Doc_Type__c = 'Technical Scoping Form',
@@ -232,7 +235,7 @@ private class IRM_DocChecklistTest {
         ];
         System.assertEquals(2, checklists.size(), 'Both required-for-case doc types should have Draft checklists created up front.');
 
-        Test.startTest();
+        
         checklists[0].Status__c = 'Final';
         checklists[0].Submitted_Date__c = Date.today();
         update checklists[0];
