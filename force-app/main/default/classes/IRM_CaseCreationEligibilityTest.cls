@@ -59,7 +59,7 @@ private class IRM_CaseCreationEligibilityTest {
             StageName = 'Qualification',
             CloseDate = Date.today().addDays(30),
             Pricebook2Id = Test.getStandardPricebookId(),
-            Amount = amount,
+            Amount = amount, ALM_EAA__c = amount,
             Primary_Product_Line__c = productLine
         );
     }
@@ -159,12 +159,12 @@ private class IRM_CaseCreationEligibilityTest {
         Opportunity opp = buildOpp('Data Management', 50000); // does not match
         insert opp;
 
-        opp.Amount = 150000; // now matches — Amount is a watched field
+        opp.Amount = 150000; opp.ALM_EAA__c = 150000; // now matches — Amount is a watched field
         update opp;
         System.assertEquals(1, checklistCount(opp.Id, rule.Id, 'Technical Scoping Form'),
             'First relevant Amount change into matching range should create exactly one checklist');
 
-        opp.Amount = 200000; // still matches, Amount changes again
+        opp.Amount = 200000; opp.ALM_EAA__c = 200000; // still matches, Amount changes again
         update opp;
         Test.stopTest();
 

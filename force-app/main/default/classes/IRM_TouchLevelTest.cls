@@ -74,7 +74,8 @@ private class IRM_TouchLevelTest {
             Name = 'Test Opp', AccountId = accId, Type = 'New Deal',
             RecordTypeId = App_Constants.STD_OPPORTUNITY_RECTYPE_ID,
             StageName = stage, CloseDate = Date.today().addDays(30),
-            Pricebook2Id = Test.getStandardPricebookId(), Amount = amount, ALM_EAA__c = amount
+            Pricebook2Id = Test.getStandardPricebookId(), Amount = amount, ALM_EAA__c = amount,
+            Budget_Validated__c = 'Yes', Multi_Country__c = 'No'
         );
     }
 

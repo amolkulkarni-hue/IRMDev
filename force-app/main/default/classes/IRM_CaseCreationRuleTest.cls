@@ -205,7 +205,7 @@ private class IRM_CaseCreationRuleTest {
         Id accId = [SELECT Id FROM Account LIMIT 1].Id;
         Opportunity opp = new Opportunity(
             Name = 'Wrong Stage Test', AccountId = accId,
-            Type = 'New Deal', StageName = 'Solutioning', CloseDate = Date.today().addDays(30), Pricebook2Id = Test.getStandardPricebookId(), Amount = 600000, ALM_EAA__c = 600000,
+            Type = 'New Deal', StageName = 'Solutioning', CloseDate = Date.today().addDays(30), Pricebook2Id = Test.getStandardPricebookId(), Amount = 600000, ALM_EAA__c = 600000, Budget_Validated__c = 'Yes', Multi_Country__c = 'No',
             Bypass_Validation__c = true
         );
         insert opp;

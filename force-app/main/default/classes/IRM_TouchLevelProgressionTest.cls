@@ -130,9 +130,10 @@ private class IRM_TouchLevelProgressionTest {
             StageName = stage,
             CloseDate = Date.today().addDays(30),
             Pricebook2Id = Test.getStandardPricebookId(),
-            Amount = amount,
+            Amount = amount, RIM_EAA__c = amount,
             // Org VRs (Qual_*_Required) require these before advancing out of Qualification
             Budget_Validated__c = 'Yes',
+            Multi_Country__c = 'No',
             Business_Problem_Evidenced__c = 'Improve Efficiency or Reduce Manual Work',
             //Champion__c = getContactIdByLastName('Champion'),
             Customer_Outcome_Predefined__c = 'Reduce manual reconciliation effort.',
@@ -193,7 +194,7 @@ private class IRM_TouchLevelProgressionTest {
         System.assertEquals('Medium Touch', afterStageChange.Touch_Level__c,
             'Stage change Qualification->Solutioning with Amount=50000 should recalculate to Medium Touch');
 
-        opp.Amount = 600000; // StageName unchanged
+        opp.Amount = 600000; opp.RIM_EAA__c = 600000; // StageName unchanged
         update opp;
         Opportunity afterAmountChange = [SELECT Touch_Level__c FROM Opportunity WHERE Id = :opp.Id];
         System.assertEquals('High Touch', afterAmountChange.Touch_Level__c,
@@ -260,7 +261,7 @@ private class IRM_TouchLevelProgressionTest {
         Opportunity baseline = [SELECT Touch_Level__c FROM Opportunity WHERE Id = :opp.Id];
         System.assertEquals('High Touch', baseline.Touch_Level__c, 'Baseline should be High Touch');
 
-        opp.Amount = 10000; // drops below every threshold
+        opp.Amount = 10000; opp.RIM_EAA__c = 10000; // drops below every threshold
         update opp;
         Test.stopTest();
 
@@ -286,7 +287,7 @@ private class IRM_TouchLevelProgressionTest {
         opp.Touch_Level_Override_Reason__c = 'Escalated by VP Sales';
         update opp;
 
-        opp.Amount = 10000; // would otherwise recalculate to Medium/No Touch
+        opp.Amount = 10000; opp.RIM_EAA__c = 10000; // would otherwise recalculate to Medium/No Touch
         update opp;
         Test.stopTest();
 
