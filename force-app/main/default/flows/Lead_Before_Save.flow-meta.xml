@@ -619,7 +619,7 @@
         <name>BU_Changed_Or_New</name>
         <dataType>Boolean</dataType>
         <expression
-    >AND(NOT(ISBLANK({!$Record.Business_Unit__c})), OR(ISNEW(), ISCHANGED({!$Record.Business_Unit__c})))</expression>
+    >AND(NOT(ISPICKVAL({!$Record.Business_Unit__c}, &quot;&quot;)), OR(ISNEW(), ISCHANGED({!$Record.Business_Unit__c})))</expression>
     </formulas>
     <formulas>
         <name>BU_Checkbox_Count</name>
