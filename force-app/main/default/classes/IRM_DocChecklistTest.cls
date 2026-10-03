@@ -178,12 +178,15 @@ private class IRM_DocChecklistTest {
     }
 
     // Re-evaluation is exercised by calling the evaluator directly with a changed Opportunity
-    // and its prior values, rather than via `update opp`: with the Case now created on insert,
-    // a real Amount update drives the full Opportunity/Case sync flow chain and exhausts the
-    // 100-query governor limit ("Too many SOQL queries: 101").
+    // and its prior values, rather than via `update opp`, to keep this a focused check on the
+    // evaluator's dedupe. Test.startTest() follows the insert immediately: a qualifying insert
+    // (Case-first Case + checklists + flows) uses nearly the whole 100-query governor allowance,
+    // so any further SOQL before the limits reset hits "Too many SOQL queries: 101".
     @IsTest
     static void test_caseFirst_noDuplicateCaseOnReEvaluation() {
         Opportunity opp = makeQualifyingOpp('No Dup Case Test', 600000);
+
+        Test.startTest();
         Integer casesAfterInsert = [SELECT COUNT() FROM Case WHERE Opportunity__c = :opp.Id];
         System.assertEquals(1, casesAfterInsert,
             'Precondition: the qualifying insert should have created exactly one Case-first Case.');
@@ -195,7 +198,6 @@ private class IRM_DocChecklistTest {
         Opportunity newOpp = oldOpp.clone(true, true, true, true);
         newOpp.Amount = 700000; // still matches the rule — Amount is a watched field, re-triggers evaluation
 
-        Test.startTest();
         CaseCreationRuleEvaluatorAction.createEligibleChecklistsAfterSave(
             new List<Opportunity>{ newOpp }, new Map<Id, Opportunity>{ oldOpp.Id => oldOpp });
         Test.stopTest();
