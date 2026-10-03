@@ -46,7 +46,7 @@ private class BookingVerifChecklistGenerator_Test {
         update new Booking_Verification_Template__c(Id = templateId, Status__c = 'Published');
     }
 
-    // Matched template found: header, a Document-type item (docsToInsert branch), and a
+    // Entering Solutioning with a matched template: header, a Document-type item (docsToInsert branch), and a
     // Task-type item (the "when else" branch) all get created.
     @isTest
     static void test_generateAfterSave_MatchedTemplate_CreatesHeaderAndChildren() {
@@ -68,7 +68,7 @@ private class BookingVerifChecklistGenerator_Test {
         publishTemplate(tmpl.Id);
 
         Opportunity newOpp = new Opportunity(
-            Id = insertedOpp.Id, StageName = 'Booking Verification', Business_Unit__c = 'RIM',
+            Id = insertedOpp.Id, StageName = 'Solutioning', Business_Unit__c = 'RIM',
             Type = 'New Deal', Billing_Country__c = country.Id
         );
 
@@ -93,7 +93,7 @@ private class BookingVerifChecklistGenerator_Test {
         System.assertEquals(1, docs.size(), 'Only the Document-type item should also create a Document_Checklist__c');
     }
 
-    // No published template matches this Business Unit / Deal Type / Country combo —
+    // Entering Solutioning with no published template matching this Business Unit / Deal Type / Country combo —
     // a warning Chatter post is created instead.
     @isTest
     static void test_generateAfterSave_NoMatchingTemplate_PostsChatterWarning() {
@@ -102,7 +102,7 @@ private class BookingVerifChecklistGenerator_Test {
         IM_Country__c country = testCountry('ZZ');
 
         Opportunity newOpp = new Opportunity(
-            Id = insertedOpp.Id, StageName = 'Booking Verification', Business_Unit__c = 'ALM',
+            Id = insertedOpp.Id, StageName = 'Solutioning', Business_Unit__c = 'ALM',
             Type = 'New Deal', Billing_Country__c = country.Id
         );
 
