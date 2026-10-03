@@ -1,9 +1,10 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>63.0</apiVersion>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <assignments>
-        <description>Gitlab #30528 when opportunity Active Pipeline Indicator (FORMULA) equals Last Year,Future,More than 1 year old or Stage equals Dead,Postponed,Lost then update Active Pipeline equals to False.</description>
+        <description
+    >Gitlab #30528 when opportunity Active Pipeline Indicator (FORMULA) equals Last Year,Future,More than 1 year old or Stage equals Dead,Postponed,Lost then update Active Pipeline equals to False.</description>
         <name>Active_Pipeline_Update_to_False</name>
         <label>Active Pipeline Update to False</label>
         <locationX>974</locationX>
@@ -34,6 +35,21 @@
         <connector>
             <targetReference>Stage_5_Sent_to_NCSP_Age</targetReference>
         </connector>
+    </assignments>
+    <assignments>
+        <description
+    >IMICC9S-2052: Sets Amount to the sum of the 5 BU EAA fields when the Opportunity has no Products yet.</description>
+        <name>Assign_Amount_From_EAA_Rollup</name>
+        <label>Assign Amount From EAA Rollup</label>
+        <locationX>974</locationX>
+        <locationY>3995</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Amount</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>EAA_Sum_For_Amount_Rollup</elementReference>
+            </value>
+        </assignmentItems>
     </assignments>
     <assignments>
         <name>Assign_Bands</name>
@@ -87,40 +103,174 @@
         </connector>
     </assignments>
     <assignments>
-        <description>Gitlab #30528 When Opportunity Forecast field is changed then Forecast last Modified field update to today date.
+        <description
+    >IMICC9S-2044: Copies the 5 BU EAA fields from the linked Primary Transaction onto the Opportunity as-is, and syncs the corresponding BU checkbox (checked when the synced value is greater than 0, unchecked otherwise).</description>
+        <name>Assign_EAA_From_Transaction</name>
+        <label>Assign EAA From Transaction</label>
+        <locationX>50</locationX>
+        <locationY>200</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.ALM_EAA__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference
+        >Get_Primary_Transaction.ALM_BU_EAA__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.RIM_EAA__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference
+        >Get_Primary_Transaction.RIM_BU_EAA__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Digital_EAA__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference
+        >Get_Primary_Transaction.Digital_BU_EAA__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.W_L_EAA__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference
+        >Get_Primary_Transaction.W_L_BU_EAA__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.MAS_EAA__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference
+        >Get_Primary_Transaction.MAS_BU_EAA__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.ALM_BU__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Opp_ALM_BU_Should_Check</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.RIM_BU__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Opp_RIM_BU_Should_Check</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Digital_BU__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Opp_Digital_BU_Should_Check</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.W_L_BU__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Opp_W_L_BU_Should_Check</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.MAS_BU__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Opp_MAS_BU_Should_Check</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference
+      >Derive_Primary_BU_And_Product_Line</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description
+    >IMICC9S-2047: Sets Business_Unit__c to the BU with the highest EAA value among the Opportunity&apos;s 5 synced EAA fields.</description>
+        <name>Assign_Primary_Business_Unit</name>
+        <label>Assign Primary Business Unit</label>
+        <locationX>50</locationX>
+        <locationY>300</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Business_Unit__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Winning_BU_Picklist</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Get_OLI_For_Winning_BU</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description
+    >IMICC9S-2047: Sets Primary_Product_Line__c from the highest-TotalPrice OpportunityLineItem tagged with the winning Business Unit.</description>
+        <name>Assign_Primary_Product_Line</name>
+        <label>Assign Primary Product Line</label>
+        <locationX>50</locationX>
+        <locationY>400</locationY>
+        <assignmentItems>
+            <assignToReference
+      >$Record.Primary_Product_Line__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference
+        >Get_OLI_For_Winning_BU.Product2.SNCPQ_Sales_Product_Line__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Check_for_IMGA_Account</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description
+    >Gitlab #30528 When Opportunity Forecast field is changed then Forecast last Modified field update to today date.
 Case 02534948, record when field ‘Forecast’ was last modified</description>
         <name>Forecast_last_Modified</name>
         <label>Forecast last Modified</label>
         <locationX>842</locationX>
         <locationY>3695</locationY>
         <assignmentItems>
-            <assignToReference>$Record.IME_Forecast_last_Modified__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>DateToday</elementReference>
-            </value>
-        </assignmentItems>
-    </assignments>
-    <assignments>
-        <description>Gitlab #30528 When Opportunity IM_Commit_to_Forecast__c field value is changed &amp; IME_First_Added_to_Forecast__c field value is blank then First Added to Forecast value is update to Today.
-Case 02534948, adds date opportunity was first added to forecast</description>
-        <name>IME_Update_First_Added_to_Forecast</name>
-        <label>IME Update First Added to Forecast</label>
-        <locationX>842</locationX>
-        <locationY>2495</locationY>
-        <assignmentItems>
-            <assignToReference>$Record.IME_First_Added_to_Forecast__c</assignToReference>
+            <assignToReference
+      >$Record.IME_Forecast_last_Modified__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>DateToday</elementReference>
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Opportunity_Stage_Entered_Date_updates</targetReference>
+            <targetReference>Is_Multi_BU</targetReference>
         </connector>
     </assignments>
     <assignments>
-        <description>Gitlab #30528 At the time of opportunity creation or stage got changed and Stage should be Lost.
+        <description
+    >Gitlab #30528 When Opportunity IM_Commit_to_Forecast__c field value is changed &amp; IME_First_Added_to_Forecast__c field value is blank then First Added to Forecast value is update to Today.
+Case 02534948, adds date opportunity was first added to forecast</description>
+        <name>IME_Update_First_Added_to_Forecast</name>
+        <label>IME Update First Added to Forecast</label>
+        <locationX>842</locationX>
+        <locationY>2495</locationY>
+        <assignmentItems>
+            <assignToReference
+      >$Record.IME_First_Added_to_Forecast__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>DateToday</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference
+      >Opportunity_Stage_Entered_Date_updates</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description
+    >Gitlab #30528 At the time of opportunity creation or stage got changed and Stage should be Lost.
 Similar to the stage workflows, this will update a lost flag and lost date when the opportunity stage = lost
 When an opportunity is lost, updates the lost date to today.
 When opportunity is lost, Lost Entered flag is marked as true.
@@ -144,7 +294,8 @@ When an opportunity is dead, lost or postponed, this will uncheck the Forecast c
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>$Record.IM_Commit_to_Forecast__c</assignToReference>
+            <assignToReference
+      >$Record.IM_Commit_to_Forecast__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <booleanValue>false</booleanValue>
@@ -156,18 +307,21 @@ When an opportunity is dead, lost or postponed, this will uncheck the Forecast c
     </assignments>
     <assignments>
         <name>Opportunity_Stage_1_Update_and_Stage_1_Date_Reached_Update</name>
-        <label>Opportunity Stage 1 Update and Stage 1 Date Reached Update</label>
+        <label
+    >Opportunity Stage 1 Update and Stage 1 Date Reached Update</label>
         <locationX>50</locationX>
         <locationY>2795</locationY>
         <assignmentItems>
-            <assignToReference>$Record.IM_X1_Qualification_Reached__c</assignToReference>
+            <assignToReference
+      >$Record.IM_X1_Qualification_Reached__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <booleanValue>true</booleanValue>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>$Record.IM_Stage_1_Entered_Date__c</assignToReference>
+            <assignToReference
+      >$Record.IM_Stage_1_Entered_Date__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>DateToday</elementReference>
@@ -179,18 +333,21 @@ When an opportunity is dead, lost or postponed, this will uncheck the Forecast c
     </assignments>
     <assignments>
         <name>Opportunity_Stage_2_Update_and_Stage_2_Date_Reached_Update</name>
-        <label>Opportunity Stage 2 Update and Stage 2 Date Reached Update</label>
+        <label
+    >Opportunity Stage 2 Update and Stage 2 Date Reached Update</label>
         <locationX>314</locationX>
         <locationY>2795</locationY>
         <assignmentItems>
-            <assignToReference>$Record.IM_X2_Solution_Development_Reached__c</assignToReference>
+            <assignToReference
+      >$Record.IM_X2_Solution_Development_Reached__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <booleanValue>true</booleanValue>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>$Record.IM_Stage_2_Entered_Date__c</assignToReference>
+            <assignToReference
+      >$Record.IM_Stage_2_Entered_Date__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>DateToday</elementReference>
@@ -202,18 +359,21 @@ When an opportunity is dead, lost or postponed, this will uncheck the Forecast c
     </assignments>
     <assignments>
         <name>Opportunity_Stage_3_Update_and_Stage_3_Date_Reached_Update</name>
-        <label>Opportunity Stage 3 Update and Stage 3 Date Reached Update</label>
+        <label
+    >Opportunity Stage 3 Update and Stage 3 Date Reached Update</label>
         <locationX>578</locationX>
         <locationY>2795</locationY>
         <assignmentItems>
-            <assignToReference>$Record.IM_X3_Propose_Reached__c</assignToReference>
+            <assignToReference
+      >$Record.IM_X3_Propose_Reached__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <booleanValue>true</booleanValue>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>$Record.IM_Stage_3_Entered_Date__c</assignToReference>
+            <assignToReference
+      >$Record.IM_Stage_3_Entered_Date__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>DateToday</elementReference>
@@ -225,18 +385,21 @@ When an opportunity is dead, lost or postponed, this will uncheck the Forecast c
     </assignments>
     <assignments>
         <name>Opportunity_Stage_4_Update_and_Stage_4_Date_Reached_Update</name>
-        <label>Opportunity Stage 4 Update and Stage 4 Date Reached Update</label>
+        <label
+    >Opportunity Stage 4 Update and Stage 4 Date Reached Update</label>
         <locationX>842</locationX>
         <locationY>2795</locationY>
         <assignmentItems>
-            <assignToReference>$Record.IM_X4_Negotiate_Reached__c</assignToReference>
+            <assignToReference
+      >$Record.IM_X4_Negotiate_Reached__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <booleanValue>true</booleanValue>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>$Record.IM_Stage_4_Entered_Date__c</assignToReference>
+            <assignToReference
+      >$Record.IM_Stage_4_Entered_Date__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>DateToday</elementReference>
@@ -248,18 +411,21 @@ When an opportunity is dead, lost or postponed, this will uncheck the Forecast c
     </assignments>
     <assignments>
         <name>Opportunity_Stage_5_Update_and_Stage_5_Date_Reached_Update</name>
-        <label>Opportunity Stage 5 Update and Stage 5 Date Reached Update</label>
+        <label
+    >Opportunity Stage 5 Update and Stage 5 Date Reached Update</label>
         <locationX>1106</locationX>
         <locationY>2795</locationY>
         <assignmentItems>
-            <assignToReference>$Record.IM_X5_Signed_PO_in_Reached__c</assignToReference>
+            <assignToReference
+      >$Record.IM_X5_Signed_PO_in_Reached__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <booleanValue>true</booleanValue>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>$Record.IM_Stage_5_Entered_Date__c</assignToReference>
+            <assignToReference
+      >$Record.IM_Stage_5_Entered_Date__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>DateToday</elementReference>
@@ -278,18 +444,21 @@ When an opportunity is dead, lost or postponed, this will uncheck the Forecast c
     </assignments>
     <assignments>
         <name>Opportunity_Stage_6_Update_and_Stage_6_Date_Reached_Update</name>
-        <label>Opportunity Stage 6 Update and Stage 6 Date Reached Update</label>
+        <label
+    >Opportunity Stage 6 Update and Stage 6 Date Reached Update</label>
         <locationX>1370</locationX>
         <locationY>2795</locationY>
         <assignmentItems>
-            <assignToReference>$Record.IM_X6_Setup_Reached__c</assignToReference>
+            <assignToReference
+      >$Record.IM_X6_Setup_Reached__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <booleanValue>true</booleanValue>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>$Record.IM_Stage_6_Entered_Date__c</assignToReference>
+            <assignToReference
+      >$Record.IM_Stage_6_Entered_Date__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>DateToday</elementReference>
@@ -301,18 +470,21 @@ When an opportunity is dead, lost or postponed, this will uncheck the Forecast c
     </assignments>
     <assignments>
         <name>Opportunity_Stage_7_Update_and_Stage_7_Date_Reached_Update</name>
-        <label>Opportunity Stage 7 Update and Stage 7 Date Reached Update</label>
+        <label
+    >Opportunity Stage 7 Update and Stage 7 Date Reached Update</label>
         <locationX>1634</locationX>
         <locationY>2795</locationY>
         <assignmentItems>
-            <assignToReference>$Record.IM_X7_Closed_Reached__c</assignToReference>
+            <assignToReference
+      >$Record.IM_X7_Closed_Reached__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <booleanValue>true</booleanValue>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>$Record.IM_Stage_7_Entered_Date__c</assignToReference>
+            <assignToReference
+      >$Record.IM_Stage_7_Entered_Date__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>DateToday</elementReference>
@@ -323,14 +495,16 @@ When an opportunity is dead, lost or postponed, this will uncheck the Forecast c
         </connector>
     </assignments>
     <assignments>
-        <description>Gitlab #30528 Opportunity Owner not equal to null  and Opportunity Record Type equals IME Standard Opportunity( id=01280000000UDKJAA4) or Standard Opportunity (id=01280000000BDeiAAG).
+        <description
+    >Gitlab #30528 Opportunity Owner not equal to null  and Opportunity Record Type equals IME Standard Opportunity( id=01280000000UDKJAA4) or Standard Opportunity (id=01280000000BDeiAAG).
 Updates the &apos;Owner Manager Email&apos; field located on the Opportunity so that email workflow actions can be directed to this person.</description>
         <name>Owner_Manager_Email_Update</name>
         <label>Owner Manager Email Update</label>
         <locationX>842</locationX>
         <locationY>995</locationY>
         <assignmentItems>
-            <assignToReference>$Record.Owner_Manager_Email__c</assignToReference>
+            <assignToReference
+      >$Record.Owner_Manager_Email__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>Owner_Manager_Email</elementReference>
@@ -341,7 +515,8 @@ Updates the &apos;Owner Manager Email&apos; field located on the Opportunity so 
         </connector>
     </assignments>
     <assignments>
-        <description>Gitlab #30528 When Opportunity Owner not equal to null then This field update references the Opportunity Owner&apos;s VP&apos;s email address. The VP is a lookup field on the User record.
+        <description
+    >Gitlab #30528 When Opportunity Owner not equal to null then This field update references the Opportunity Owner&apos;s VP&apos;s email address. The VP is a lookup field on the User record.
 This rule should always fire in case updates have been made elsewhere (such as the user record) so the field updates to emails are always current whenever changes have been made.</description>
         <name>Owner_VP_Email</name>
         <label>Owner VP Email</label>
@@ -359,10 +534,13 @@ This rule should always fire in case updates have been made elsewhere (such as t
         </connector>
     </assignments>
     <assignments>
-        <description>Gitlab #30528 When opportunity NCSP_Status__c field is changed and the value is Sent to NCSP or Escalated and stage should be 5 - Signed/PO in.
+        <description
+    >Gitlab #30528 When opportunity NCSP_Status__c field is changed and the value is Sent to NCSP or Escalated and stage should be 5 - Signed/PO in.
 Workflow to populate the Stage 5 - Sent to NCSP Age and Sent to NCSP Date fields.</description>
-        <name>Populate_the_Stage_5_Sent_to_NCSP_Age_and_Sent_to_NCSP_Date_fields</name>
-        <label>Populate the Stage 5 - Sent to NCSP Age and Sent to NCSP Date fields</label>
+        <name
+    >Populate_the_Stage_5_Sent_to_NCSP_Age_and_Sent_to_NCSP_Date_fields</name>
+        <label
+    >Populate the Stage 5 - Sent to NCSP Age and Sent to NCSP Date fields</label>
         <locationX>842</locationX>
         <locationY>1895</locationY>
         <assignmentItems>
@@ -373,18 +551,21 @@ Workflow to populate the Stage 5 - Sent to NCSP Age and Sent to NCSP Date fields
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>$Record.Stage_5_Sent_to_NCSP_Age__c</assignToReference>
+            <assignToReference
+      >$Record.Stage_5_Sent_to_NCSP_Age__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>Stage5SenttoNCSPAge_Update</elementReference>
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Opportunity_Rule_for_Email_Updates</targetReference>
+            <targetReference
+      >Opportunity_Rule_for_Email_Updates</targetReference>
         </connector>
     </assignments>
     <assignments>
-        <description>Gitlab #30528  if Opportunity Name contains | Delimiter then replace it from the Opportunity name at the time of opportunity creation only from Lead conversion.</description>
+        <description
+    >Gitlab #30528  if Opportunity Name contains | Delimiter then replace it from the Opportunity name at the time of opportunity creation only from Lead conversion.</description>
         <name>Replace_Delimiter_from_Opportunity_Name</name>
         <label>Replace Delimiter from Opportunity Name</label>
         <locationX>842</locationX>
@@ -401,29 +582,71 @@ Workflow to populate the Stage 5 - Sent to NCSP Age and Sent to NCSP Date fields
         </connector>
     </assignments>
     <assignments>
+        <description
+    >IMICC9S-2037: Sets Multi_BU_Flag__c to false when fewer than 2 BU checkboxes are checked.</description>
+        <name>Set_Multi_BU_False</name>
+        <label>Set Multi BU False</label>
+        <locationX>1106</locationX>
+        <locationY>3895</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Multi_BU_Flag__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Has_No_Line_Items</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description
+    >IMICC9S-2037: Sets Multi_BU_Flag__c to true when 2 or more BU checkboxes are checked.</description>
+        <name>Set_Multi_BU_True</name>
+        <label>Set Multi BU True</label>
+        <locationX>842</locationX>
+        <locationY>3895</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Multi_BU_Flag__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Has_No_Line_Items</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Update_6Sense_Buying_Stage_fields</name>
         <label>Update 6Sense Buying Stage fields</label>
         <locationX>842</locationX>
         <locationY>3395</locationY>
         <assignmentItems>
-            <assignToReference>$Record.X6Sense_Buying_Stage_ALM__c</assignToReference>
+            <assignToReference
+      >$Record.X6Sense_Buying_Stage_ALM__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>$Record.Account.X6Sense_Buying_Stage_ALM__c</elementReference>
+                <elementReference
+        >$Record.Account.X6Sense_Buying_Stage_ALM__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>$Record.X6Sense_Buying_Stage_Digital__c</assignToReference>
+            <assignToReference
+      >$Record.X6Sense_Buying_Stage_Digital__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>$Record.Account.X6Sense_Buying_Stage_Digital__c</elementReference>
+                <elementReference
+        >$Record.Account.X6Sense_Buying_Stage_Digital__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>$Record.X6Sense_Buying_Stage_RM__c</assignToReference>
+            <assignToReference
+      >$Record.X6Sense_Buying_Stage_RM__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>$Record.Account.X6Sense_Buying_Stage_RM__c</elementReference>
+                <elementReference
+        >$Record.Account.X6Sense_Buying_Stage_RM__c</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -443,11 +666,133 @@ Workflow to populate the Stage 5 - Sent to NCSP Age and Sent to NCSP Date fields
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Check_Delimiter_from_Opportunity_Name</targetReference>
+            <targetReference
+      >Check_Delimiter_from_Opportunity_Name</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_PPL_ALM_BU</name>
+        <label>Set PPL ALM BU</label>
+        <locationX>50</locationX>
+        <locationY>550</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Business_Unit__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference
+        >Get_BU_From_PPL_Mapping.Business_Unit__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.ALM_BU__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Check_for_IMGA_Account</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_PPL_RIM_BU</name>
+        <label>Set PPL RIM BU</label>
+        <locationX>50</locationX>
+        <locationY>550</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Business_Unit__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference
+        >Get_BU_From_PPL_Mapping.Business_Unit__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.RIM_BU__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Check_for_IMGA_Account</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_PPL_Digital_BU</name>
+        <label>Set PPL Digital BU</label>
+        <locationX>50</locationX>
+        <locationY>550</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Business_Unit__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference
+        >Get_BU_From_PPL_Mapping.Business_Unit__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Digital_BU__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Check_for_IMGA_Account</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_PPL_WL_BU</name>
+        <label>Set PPL WL BU</label>
+        <locationX>50</locationX>
+        <locationY>550</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Business_Unit__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference
+        >Get_BU_From_PPL_Mapping.Business_Unit__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.W_L_BU__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Check_for_IMGA_Account</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_PPL_MAS_BU</name>
+        <label>Set PPL MAS BU</label>
+        <locationX>50</locationX>
+        <locationY>550</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Business_Unit__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference
+        >Get_BU_From_PPL_Mapping.Business_Unit__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.MAS_BU__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Check_for_IMGA_Account</targetReference>
         </connector>
     </assignments>
     <decisions>
-        <description>Migrated from the &apos;Active Pipeline Flag&apos; workflow rules
+        <description
+    >Migrated from the &apos;Active Pipeline Flag&apos; workflow rules
 
 When opportunity Active Pipeline Indicator (FORMULA) equals Current Year, Next Year AND Stage equals (1-7) then update Active Pipeline equals to True.
 Gitlab #30528 when opportunity Active Pipeline Indicator (FORMULA) equals Last Year,Future,More than 1 year old or Stage equals Lost then update Active Pipeline equals to False.
@@ -463,16 +808,19 @@ Gitlab #30528 when opportunity Active Pipeline Indicator (FORMULA) equals Last Y
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Active_Pipeline_Flag</name>
-            <conditionLogic>(1 OR 2) AND (3 OR 4 OR 5 OR 6 OR 7 OR 8 OR 9) AND 10</conditionLogic>
+            <conditionLogic
+      >(1 OR 2) AND (3 OR 4 OR 5 OR 6 OR 7 OR 8 OR 9) AND 10</conditionLogic>
             <conditions>
-                <leftValueReference>ActivePipelineIndicatorFORMULA</leftValueReference>
+                <leftValueReference
+        >ActivePipelineIndicatorFORMULA</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Current Year</stringValue>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>ActivePipelineIndicatorFORMULA</leftValueReference>
+                <leftValueReference
+        >ActivePipelineIndicatorFORMULA</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Next Year</stringValue>
@@ -482,60 +830,62 @@ Gitlab #30528 when opportunity Active Pipeline Indicator (FORMULA) equals Last Y
                 <leftValueReference>$Record.StageName</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>1 - Qualification</stringValue>
+                    <stringValue>Qualification</stringValue>
                 </rightValue>
             </conditions>
             <conditions>
                 <leftValueReference>$Record.StageName</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>2 - Solution Developed</stringValue>
+                    <stringValue>Solutioning</stringValue>
                 </rightValue>
             </conditions>
             <conditions>
                 <leftValueReference>$Record.StageName</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>3 - Solution Agreed</stringValue>
+                    <stringValue>Solutioning</stringValue>
                 </rightValue>
             </conditions>
             <conditions>
                 <leftValueReference>$Record.StageName</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>4 - Negotiate</stringValue>
+                    <stringValue>Negotiation</stringValue>
                 </rightValue>
             </conditions>
             <conditions>
                 <leftValueReference>$Record.StageName</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>5 - Signed/PO in</stringValue>
+                    <stringValue>Booked</stringValue>
                 </rightValue>
             </conditions>
             <conditions>
                 <leftValueReference>$Record.StageName</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>6 - Setup</stringValue>
+                    <stringValue>Setup</stringValue>
                 </rightValue>
             </conditions>
             <conditions>
                 <leftValueReference>$Record.StageName</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>7 - Closed</stringValue>
+                    <stringValue>Closed</stringValue>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>$Record.Active_Pipeline__c</leftValueReference>
+                <leftValueReference
+        >$Record.Active_Pipeline__c</leftValueReference>
                 <operator>NotEqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Active_Pipeline_Update_to_True</targetReference>
+                <targetReference
+        >Active_Pipeline_Update_to_True</targetReference>
             </connector>
             <label>Active Pipeline Flag</label>
         </rules>
@@ -543,21 +893,24 @@ Gitlab #30528 when opportunity Active Pipeline Indicator (FORMULA) equals Last Y
             <name>InactivePipelineFlag</name>
             <conditionLogic>(1 OR 2 OR 3 OR 4) AND 5</conditionLogic>
             <conditions>
-                <leftValueReference>ActivePipelineIndicatorFORMULA</leftValueReference>
+                <leftValueReference
+        >ActivePipelineIndicatorFORMULA</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Last Year</stringValue>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>ActivePipelineIndicatorFORMULA</leftValueReference>
+                <leftValueReference
+        >ActivePipelineIndicatorFORMULA</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Future</stringValue>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>ActivePipelineIndicatorFORMULA</leftValueReference>
+                <leftValueReference
+        >ActivePipelineIndicatorFORMULA</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>More than 1 year old</stringValue>
@@ -571,14 +924,16 @@ Gitlab #30528 when opportunity Active Pipeline Indicator (FORMULA) equals Last Y
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>$Record.Active_Pipeline__c</leftValueReference>
+                <leftValueReference
+        >$Record.Active_Pipeline__c</leftValueReference>
                 <operator>NotEqualTo</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Active_Pipeline_Update_to_False</targetReference>
+                <targetReference
+        >Active_Pipeline_Update_to_False</targetReference>
             </connector>
             <label>Inactive Pipeline Flag</label>
         </rules>
@@ -613,7 +968,8 @@ Gitlab #30528 when opportunity Active Pipeline Indicator (FORMULA) equals Last Y
         </rules>
     </decisions>
     <decisions>
-        <description>Gitlab #30528  if Opportunity Name contains | Delimiter then replace it from the Opportunity name at the time of opportunity creation only from Lead conversion.</description>
+        <description
+    >Gitlab #30528  if Opportunity Name contains | Delimiter then replace it from the Opportunity name at the time of opportunity creation only from Lead conversion.</description>
         <name>Check_Delimiter_from_Opportunity_Name</name>
         <label>Check Delimiter from Opportunity Name</label>
         <locationX>974</locationX>
@@ -640,19 +996,22 @@ Gitlab #30528 when opportunity Active Pipeline Indicator (FORMULA) equals Last Y
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Replace_Delimiter_from_Opportunity_Name</targetReference>
+                <targetReference
+        >Replace_Delimiter_from_Opportunity_Name</targetReference>
             </connector>
             <label>Check Delimiter from Opportunity Name</label>
         </rules>
     </decisions>
     <decisions>
-        <description>#35885: CRM: Decommission Flows on Opportunity(#22895 Updating the IMGA Account field on Opportunity to populate it on Deal Review).</description>
+        <description
+    >#35885: CRM: Decommission Flows on Opportunity(#22895 Updating the IMGA Account field on Opportunity to populate it on Deal Review).</description>
         <name>Check_for_IMGA_Account</name>
         <label>Check for IMGA Account</label>
         <locationX>974</locationX>
         <locationY>287</locationY>
         <defaultConnector>
-            <targetReference>Check_Delimiter_from_Opportunity_Name</targetReference>
+            <targetReference
+      >Check_Delimiter_from_Opportunity_Name</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -679,52 +1038,291 @@ Gitlab #30528 when opportunity Active Pipeline Indicator (FORMULA) equals Last Y
         </rules>
     </decisions>
     <decisions>
-        <description>Gitlab #30528 When Opportunity IM_Commit_to_Forecast__c field value is changed &amp; IME_First_Added_to_Forecast__c field value is blank then First Added to Forecast value is update to Today.
-Case 02534948, adds date opportunity was first added to forecast</description>
-        <name>IME_First_Added_to_Forecast</name>
-        <label>IME First Added to Forecast</label>
-        <locationX>974</locationX>
-        <locationY>2387</locationY>
+        <description
+    >PPL-driven BU: when the Opportunity has no Primary Transaction and Primary Product Line is set (new) or changed, derive Business Unit and tick the matching BU checkbox from Product_Interest_BU_Mapping__mdt.</description>
+        <name>PPL_BU_Gate</name>
+        <label>PPL BU Gate</label>
+        <locationX>50</locationX>
+        <locationY>400</locationY>
         <defaultConnector>
-            <targetReference>Opportunity_Stage_Entered_Date_updates</targetReference>
+            <targetReference>Check_for_IMGA_Account</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Skip</defaultConnectorLabel>
+        <rules>
+            <name>No_Transaction_And_PPL_Set_Or_Changed</name>
+            <conditionLogic>1 AND 2 AND (3 OR 4)</conditionLogic>
+            <conditions>
+                <leftValueReference
+        >$Record.LGK__PrimaryTransactionId__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference
+        >$Record.Primary_Product_Line__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>ISNEW</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference
+        >$Record.Primary_Product_Line__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_BU_From_PPL_Mapping</targetReference>
+            </connector>
+            <label>No Transaction And PPL Set Or Changed</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>PPL_BU_Router</name>
+        <label>PPL BU Router</label>
+        <locationX>50</locationX>
+        <locationY>500</locationY>
+        <defaultConnector>
+            <targetReference>Check_for_IMGA_Account</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Unmapped Or No Checkbox</defaultConnectorLabel>
+        <rules>
+            <name>Mapped_ALM</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference
+        >Get_BU_From_PPL_Mapping.Business_Unit__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>ALM</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_PPL_ALM_BU</targetReference>
+            </connector>
+            <label>ALM</label>
+        </rules>
+        <rules>
+            <name>Mapped_RIM</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference
+        >Get_BU_From_PPL_Mapping.Business_Unit__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>RIM</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_PPL_RIM_BU</targetReference>
+            </connector>
+            <label>RIM</label>
+        </rules>
+        <rules>
+            <name>Mapped_Digital</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference
+        >Get_BU_From_PPL_Mapping.Business_Unit__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Digital</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_PPL_Digital_BU</targetReference>
+            </connector>
+            <label>Digital</label>
+        </rules>
+        <rules>
+            <name>Mapped_WL</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference
+        >Get_BU_From_PPL_Mapping.Business_Unit__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>W&amp;L</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_PPL_WL_BU</targetReference>
+            </connector>
+            <label>W&amp;L</label>
+        </rules>
+        <rules>
+            <name>Mapped_MAS</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference
+        >Get_BU_From_PPL_Mapping.Business_Unit__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>MAS</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_PPL_MAS_BU</targetReference>
+            </connector>
+            <label>MAS</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description
+    >IMICC9S-2047: Re-derives Business_Unit__c and Primary_Product_Line__c whenever a Primary Transaction is linked and any of the Opportunity&apos;s 5 EAA fields have changed (covers both initial link and later Transaction-driven EAA updates).</description>
+        <name>Derive_Primary_BU_And_Product_Line</name>
+        <label>Derive Primary BU And Product Line?</label>
+        <locationX>50</locationX>
+        <locationY>250</locationY>
+        <defaultConnector>
+            <targetReference>PPL_BU_Gate</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
-            <name>IMEFirstAddedtoForecast</name>
-            <conditionLogic>and</conditionLogic>
+            <name>Primary_Linked_And_EAA_Changed</name>
+            <conditionLogic>1 AND (2 OR 3 OR 4 OR 5 OR 6)</conditionLogic>
             <conditions>
-                <leftValueReference>$Record.IM_Commit_to_Forecast__c</leftValueReference>
+                <leftValueReference
+        >$Record.LGK__PrimaryTransactionId__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.ALM_EAA__c</leftValueReference>
                 <operator>IsChanged</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>$Record.IME_First_Added_to_Forecast__c</leftValueReference>
+                <leftValueReference>$Record.RIM_EAA__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Digital_EAA__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.W_L_EAA__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.MAS_EAA__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Winning_BU_Determined</targetReference>
+            </connector>
+            <label>Primary Linked And EAA Changed</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description
+    >IMICC9S-2052: When the Opportunity has no Products yet, rolls Amount up from the 5 BU EAA fields. Once Products exist, the native Opportunities-with-Products rollup owns Amount and this step does nothing.</description>
+        <name>Has_No_Line_Items</name>
+        <label>Has No Line Items?</label>
+        <locationX>974</locationX>
+        <locationY>3987</locationY>
+        <defaultConnectorLabel>Has Products</defaultConnectorLabel>
+        <rules>
+            <name>No_Line_Items</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference
+        >$Record.HasOpportunityLineItem</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_Amount_From_EAA_Rollup</targetReference>
+            </connector>
+            <label>No Line Items</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description
+    >Gitlab #30528 When Opportunity IM_Commit_to_Forecast__c field value is changed &amp; IME_First_Added_to_Forecast__c field value is blank then First Added to Forecast value is update to Today.
+Case 02534948, adds date opportunity was first added to forecast</description>
+        <name>IME_First_Added_to_Forecast</name>
+        <label>IME First Added to Forecast</label>
+        <locationX>974</locationX>
+        <locationY>2387</locationY>
+        <defaultConnector>
+            <targetReference
+      >Opportunity_Stage_Entered_Date_updates</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>IMEFirstAddedtoForecast</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference
+        >$Record.IM_Commit_to_Forecast__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference
+        >$Record.IME_First_Added_to_Forecast__c</leftValueReference>
                 <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>IME_Update_First_Added_to_Forecast</targetReference>
+                <targetReference
+        >IME_Update_First_Added_to_Forecast</targetReference>
             </connector>
             <label>IME First Added to Forecast</label>
         </rules>
     </decisions>
     <decisions>
-        <description>Gitlab #30528 When Opportunity Forecast field is changed then Forecast last Modified field update to today date.
+        <description
+    >Gitlab #30528 When Opportunity Forecast field is changed then Forecast last Modified field update to today date.
 Case 02534948, record when field ‘Forecast’ was last modified</description>
         <name>IME_Forecast_Last_Modified</name>
         <label>IME Forecast Last Modified</label>
         <locationX>974</locationX>
         <locationY>3587</locationY>
+        <defaultConnector>
+            <targetReference>Is_Multi_BU</targetReference>
+        </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>IMEForecastLastModified</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>$Record.IM_Commit_to_Forecast__c</leftValueReference>
+                <leftValueReference
+        >$Record.IM_Commit_to_Forecast__c</leftValueReference>
                 <operator>IsChanged</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
@@ -737,7 +1335,8 @@ Case 02534948, record when field ‘Forecast’ was last modified</description>
         </rules>
     </decisions>
     <decisions>
-        <description>Gitlab #30528 Opportunity Owner not equal to null  and Opportunity Record Type equals IME Standard Opportunity( id=01280000000UDKJAA4) or Standard Opportunity (id=01280000000BDeiAAG).
+        <description
+    >Gitlab #30528 Opportunity Owner not equal to null  and Opportunity Record Type equals IME Standard Opportunity( id=01280000000UDKJAA4) or Standard Opportunity (id=01280000000BDeiAAG).
 Updates the &apos;Owner Manager Email&apos; field located on the Opportunity so that email workflow actions can be directed to this person.</description>
         <name>IME_Owner_Manager_Email_Update</name>
         <label>IME Owner Manager Email Update</label>
@@ -778,7 +1377,62 @@ Updates the &apos;Owner Manager Email&apos; field located on the Opportunity so 
         </rules>
     </decisions>
     <decisions>
-        <description>Gitlab #30528 At the time of opportunity creation or stage got changed and Stage should be Lost.
+        <description
+    >IMICC9S-2037: Checks if 2 or more BU checkboxes are checked to determine Multi_BU_Flag__c value.</description>
+        <name>Is_Multi_BU</name>
+        <label>Is Multi BU?</label>
+        <locationX>974</locationX>
+        <locationY>3787</locationY>
+        <defaultConnector>
+            <targetReference>Set_Multi_BU_False</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Less Than Two</defaultConnectorLabel>
+        <rules>
+            <name>Two_or_More</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>BU_Checkbox_Count</leftValueReference>
+                <operator>GreaterThanOrEqualTo</operator>
+                <rightValue>
+                    <numberValue>2.0</numberValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Multi_BU_True</targetReference>
+            </connector>
+            <label>Two or More</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description
+    >IMICC9S-2047: Only assign Primary_Product_Line__c if a matching OpportunityLineItem was found for the winning Business Unit.</description>
+        <name>OLI_Found</name>
+        <label>OLI Found?</label>
+        <locationX>50</locationX>
+        <locationY>380</locationY>
+        <defaultConnector>
+            <targetReference>Check_for_IMGA_Account</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No Matching OLI</defaultConnectorLabel>
+        <rules>
+            <name>Found_Matching_OLI</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_OLI_For_Winning_BU</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_Primary_Product_Line</targetReference>
+            </connector>
+            <label>Found Matching OLI</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description
+    >Gitlab #30528 At the time of opportunity creation or stage got changed and Stage should be Lost.
 Similar to the stage workflows, this will update a lost flag and lost date when the opportunity stage = lost</description>
         <name>Opportunity_Lost_Update</name>
         <label>Opportunity Lost Update</label>
@@ -813,13 +1467,15 @@ Similar to the stage workflows, this will update a lost flag and lost date when 
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Lost_Date_Lost_Entered_Forecast_Commit_Flag_Update</targetReference>
+                <targetReference
+        >Lost_Date_Lost_Entered_Forecast_Commit_Flag_Update</targetReference>
             </connector>
             <label>Opportunity Lost Update</label>
         </rules>
     </decisions>
     <decisions>
-        <description>Gitlab #30528 When Opportunity Owner not equal to null then This field update references the Opportunity Owner&apos;s VP&apos;s email address. The VP is a lookup field on the User record.
+        <description
+    >Gitlab #30528 When Opportunity Owner not equal to null then This field update references the Opportunity Owner&apos;s VP&apos;s email address. The VP is a lookup field on the User record.
 This rule should always fire in case updates have been made elsewhere (such as the user record) so the field updates to emails are always current whenever changes have been made.</description>
         <name>Opportunity_Rule_for_Email_Updates</name>
         <label>Opportunity Rule for Email Updates</label>
@@ -871,7 +1527,7 @@ This rule should always fire in case updates have been made elsewhere (such as t
                 <leftValueReference>$Record.StageName</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>1 - Qualification</stringValue>
+                    <stringValue>Qualification</stringValue>
                 </rightValue>
             </conditions>
             <conditions>
@@ -889,7 +1545,8 @@ This rule should always fire in case updates have been made elsewhere (such as t
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Opportunity_Stage_1_Update_and_Stage_1_Date_Reached_Update</targetReference>
+                <targetReference
+        >Opportunity_Stage_1_Update_and_Stage_1_Date_Reached_Update</targetReference>
             </connector>
             <label>Opportunity Stage 1 Update and Stage 1 Date Reached</label>
         </rules>
@@ -918,7 +1575,8 @@ This rule should always fire in case updates have been made elsewhere (such as t
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Opportunity_Stage_2_Update_and_Stage_2_Date_Reached_Update</targetReference>
+                <targetReference
+        >Opportunity_Stage_2_Update_and_Stage_2_Date_Reached_Update</targetReference>
             </connector>
             <label>Opportunity Stage 2 Update and Stage 1 Date Reached</label>
         </rules>
@@ -947,7 +1605,8 @@ This rule should always fire in case updates have been made elsewhere (such as t
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Opportunity_Stage_3_Update_and_Stage_3_Date_Reached_Update</targetReference>
+                <targetReference
+        >Opportunity_Stage_3_Update_and_Stage_3_Date_Reached_Update</targetReference>
             </connector>
             <label>Opportunity Stage 3 Update and Stage 1 Date Reached</label>
         </rules>
@@ -976,7 +1635,8 @@ This rule should always fire in case updates have been made elsewhere (such as t
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Opportunity_Stage_4_Update_and_Stage_4_Date_Reached_Update</targetReference>
+                <targetReference
+        >Opportunity_Stage_4_Update_and_Stage_4_Date_Reached_Update</targetReference>
             </connector>
             <label>Opportunity Stage 4 Update and Stage 1 Date Reached</label>
         </rules>
@@ -1005,7 +1665,8 @@ This rule should always fire in case updates have been made elsewhere (such as t
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Opportunity_Stage_5_Update_and_Stage_5_Date_Reached_Update</targetReference>
+                <targetReference
+        >Opportunity_Stage_5_Update_and_Stage_5_Date_Reached_Update</targetReference>
             </connector>
             <label>Opportunity Stage 5 Update and Stage 1 Date Reached</label>
         </rules>
@@ -1034,7 +1695,8 @@ This rule should always fire in case updates have been made elsewhere (such as t
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Opportunity_Stage_6_Update_and_Stage_6_Date_Reached_Update</targetReference>
+                <targetReference
+        >Opportunity_Stage_6_Update_and_Stage_6_Date_Reached_Update</targetReference>
             </connector>
             <label>Opportunity Stage 6 Update and Stage 1 Date Reached</label>
         </rules>
@@ -1063,20 +1725,60 @@ This rule should always fire in case updates have been made elsewhere (such as t
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Opportunity_Stage_7_Update_and_Stage_7_Date_Reached_Update</targetReference>
+                <targetReference
+        >Opportunity_Stage_7_Update_and_Stage_7_Date_Reached_Update</targetReference>
             </connector>
             <label>Opportunity Stage 7 Update and Stage 1 Date Reached</label>
         </rules>
     </decisions>
     <decisions>
-        <description>Gitlab #30528 When opportunity NCSP_Status__c field is changed and the value is Sent to NCSP or Escalated and stage should be 5 - Signed/PO in.
+        <description
+    >IMICC9S-2044: When the Opportunity&apos;s Primary Transaction link is populated and changed, syncs the 5 BU EAA fields from that Transaction.</description>
+        <name>Primary_Transaction_Changed</name>
+        <label>Primary Transaction Changed?</label>
+        <locationX>50</locationX>
+        <locationY>50</locationY>
+        <defaultConnector>
+            <targetReference
+      >Derive_Primary_BU_And_Product_Line</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Primary_Transaction_Populated_And_Changed</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference
+        >$Record.LGK__PrimaryTransactionId__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference
+        >$Record.LGK__PrimaryTransactionId__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Primary_Transaction</targetReference>
+            </connector>
+            <label>Primary Transaction Populated And Changed</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description
+    >Gitlab #30528 When opportunity NCSP_Status__c field is changed and the value is Sent to NCSP or Escalated and stage should be 5 - Signed/PO in.
 Workflow to populate the Stage 5 - Sent to NCSP Age and Sent to NCSP Date fields.</description>
         <name>Stage_5_Sent_to_NCSP_Age</name>
         <label>Stage 5 - Sent to NCSP Age</label>
         <locationX>974</locationX>
         <locationY>1787</locationY>
         <defaultConnector>
-            <targetReference>Opportunity_Rule_for_Email_Updates</targetReference>
+            <targetReference
+      >Opportunity_Rule_for_Email_Updates</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -1111,13 +1813,42 @@ Workflow to populate the Stage 5 - Sent to NCSP Age and Sent to NCSP Date fields
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Populate_the_Stage_5_Sent_to_NCSP_Age_and_Sent_to_NCSP_Date_fields</targetReference>
+                <targetReference
+        >Populate_the_Stage_5_Sent_to_NCSP_Age_and_Sent_to_NCSP_Date_fields</targetReference>
             </connector>
             <label>Stage 5 - Sent to NCSP Age</label>
         </rules>
     </decisions>
     <decisions>
-        <description>When a Opportunity record is created below 3 new fields should pull the value from the related account fields, accordingly
+        <description
+    >IMICC9S-2047: Only proceed if at least one of the 5 EAA fields is actually populated (Max_BU_EAA &gt; 0) — otherwise leave Business_Unit__c/Primary_Product_Line__c untouched.</description>
+        <name>Winning_BU_Determined</name>
+        <label>Winning BU Determined?</label>
+        <locationX>50</locationX>
+        <locationY>280</locationY>
+        <defaultConnector>
+            <targetReference>Check_for_IMGA_Account</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Nothing Populated</defaultConnectorLabel>
+        <rules>
+            <name>Has_Winning_BU</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Winning_BU_Picklist</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_Primary_Business_Unit</targetReference>
+            </connector>
+            <label>Has Winning BU</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description
+    >When a Opportunity record is created below 3 new fields should pull the value from the related account fields, accordingly
 a)6Sense Buying Stage - ALM
 b)6Sense Buying Stage - Digital
 c)6Sense Buying Stage - RM
@@ -1149,45 +1880,60 @@ c)6Sense Buying Stage - RM
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>$Record.Account.X6Sense_Buying_Stage_ALM__c</leftValueReference>
+                <leftValueReference
+        >$Record.Account.X6Sense_Buying_Stage_ALM__c</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>$Record.Account.X6Sense_Buying_Stage_Digital__c</leftValueReference>
+                <leftValueReference
+        >$Record.Account.X6Sense_Buying_Stage_Digital__c</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>$Record.Account.X6Sense_Buying_Stage_RM__c</leftValueReference>
+                <leftValueReference
+        >$Record.Account.X6Sense_Buying_Stage_RM__c</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Update_6Sense_Buying_Stage_fields</targetReference>
+                <targetReference
+        >Update_6Sense_Buying_Stage_fields</targetReference>
             </connector>
             <label>6Sense Buying Stage Field Update</label>
         </rules>
     </decisions>
-    <description>Gitlab #30528 This flow have been created as part of Workflow Rule conversion but this can be used for all before create &amp; update opportunity scenarios.
+    <description
+  >Gitlab #30528 This flow have been created as part of Workflow Rule conversion but this can be used for all before create &amp; update opportunity scenarios.
 Workflow Rules Converted into the flows are &quot;Avoid delimiter from Account Name during lead conversion&quot;, &quot;IME Owner Manager Email Update&quot;, &quot;Opportunity Lost Update&quot;, &quot;Inactive Pipeline Flag&quot;, &quot;Stage 5 - Sent to NCSP Age&quot;,&quot;Opportunity Rule for Email Updates&quot;, &quot;IME_First_Added_to_Forecast&quot; &amp; &quot;IME Forecast Last Modified&quot;.
 
 #35878 - CRM: Merge existing Flows (6Sense Buying Stage Field Update,
 Active Pipeline Flag and AWS Deal Registration Notification (remove the cloud provider decision check,
 Opportunity Stage Date and Band Updates) with Opportunity Before Create &amp; Update Flow
-#35885: CRM: Decommission Flows on Opportunity(#22895 Updating the IMGA Account field on Opportunity to populate it on Deal Review).</description>
+#35885: CRM: Decommission Flows on Opportunity(#22895 Updating the IMGA Account field on Opportunity to populate it on Deal Review).
+
+IMICC9S-2037: Added Multi-BU Flag auto-recalculation. Counts the 5 BU checkboxes (ALM, RIM, Digital, W&amp;L, MAS) and sets Multi_BU_Flag__c to true when 2 or more are checked, false otherwise.
+
+IMICC9S-2044: Added Primary Transaction EAA sync at the very start of the flow (before all other logic, including the Multi-BU recalculation above). When LGK__PrimaryTransactionId__c is populated and changed, copies the linked Transaction&apos;s 5 BU EAA fields onto the Opportunity as-is and syncs the corresponding BU checkboxes (checked when &gt; 0, unchecked otherwise).
+
+IMICC9S-2047: Added Primary Business Unit and Primary Product Line derivation, chained right after the EAA sync above. Whenever a Primary Transaction is linked and any of the Opportunity&apos;s 5 EAA fields have changed, sets Business_Unit__c to whichever BU has the highest EAA value (tie-broken ALM, RIM, Digital, W&amp;L, MAS), then sets Primary_Product_Line__c from the highest-TotalPrice OpportunityLineItem whose Product_Business_Unit__c matches that winning BU.
+
+IMICC9S-2052: Added conditional Amount roll-up at the very end of the flow (after the Multi-BU logic). When the Opportunity has no Products yet (HasOpportunityLineItem = false), sets Amount to the sum of the 5 EAA fields (blank counts as 0). Once Products exist, this step does nothing and the native Opportunities-with-Products rollup owns Amount.</description>
     <environments>Default</environments>
     <formulas>
-        <description>Gitlab #30528 when opportunity Active Pipeline Indicator (FORMULA) equals Last Year,Future,More than 1 year old or Stage equals Dead,Postponed,Lost then update Active Pipeline equals to False.</description>
+        <description
+    >Gitlab #30528 when opportunity Active Pipeline Indicator (FORMULA) equals Last Year,Future,More than 1 year old or Stage equals Dead,Postponed,Lost then update Active Pipeline equals to False.</description>
         <name>ActivePipelineIndicatorFORMULA</name>
         <dataType>String</dataType>
-        <expression>CASE((VALUE(MID(TEXT({!$Record.CloseDate}),1,4)) - VALUE(MID(TEXT(TODAY()),1,4))),
+        <expression
+    >CASE((VALUE(MID(TEXT({!$Record.CloseDate}),1,4)) - VALUE(MID(TEXT(TODAY()),1,4))),
 
 -1, &quot;Last Year&quot;,
 0, &quot;Current Year&quot;,
@@ -1213,7 +1959,17 @@ IF(AND({!Total_ALM_Converted}&gt; 0 ,{!Total_ALM_Converted}&lt;5000), &quot;Band
 )))))))</expression>
     </formulas>
     <formulas>
-        <description>To decide the Data Center band based on Data Center BU</description>
+        <description
+    >IMICC9S-2037: Counts how many of the 5 BU checkboxes are checked on the Opportunity.</description>
+        <name>BU_Checkbox_Count</name>
+        <dataType>Number</dataType>
+        <expression
+    >(IF({!$Record.ALM_BU__c}, 1, 0)) + (IF({!$Record.RIM_BU__c}, 1, 0)) + (IF({!$Record.Digital_BU__c}, 1, 0)) + (IF({!$Record.W_L_BU__c}, 1, 0)) + (IF({!$Record.MAS_BU__c}, 1, 0))</expression>
+        <scale>0</scale>
+    </formulas>
+    <formulas>
+        <description
+    >To decide the Data Center band based on Data Center BU</description>
         <name>DataCenterBand</name>
         <dataType>String</dataType>
         <expression>IF({!Total_Data_Center_Converted}==0, &quot;Band 0&quot;,
@@ -1232,7 +1988,8 @@ IF(AND({!Total_Data_Center_Converted}&gt; 0 ,{!Total_Data_Center_Converted}&lt;5
         <expression>TODAY()</expression>
     </formulas>
     <formulas>
-        <description>To decide the Digital band based on Digital BU</description>
+        <description
+    >To decide the Digital band based on Digital BU</description>
         <name>Digital_Band</name>
         <dataType>String</dataType>
         <expression>IF({!Total_DIgital_Converted}==0, &quot;Band 0&quot;,
@@ -1244,6 +2001,15 @@ IF(AND({!Total_DIgital_Converted}&gt; 0 ,{!Total_DIgital_Converted}&lt;5000), &q
                        IF(AND({!Total_DIgital_Converted}&gt;=500000 , {!Total_DIgital_Converted}&lt;1000000),&quot;Band 6&quot;,
                                  &quot;Band 7&quot;
 )))))))</expression>
+    </formulas>
+    <formulas>
+        <description
+    >IMICC9S-2052: Sum of the 5 BU EAA fields, treating a blank field as 0, for the pre-Products Amount roll-up.</description>
+        <name>EAA_Sum_For_Amount_Rollup</name>
+        <dataType>Currency</dataType>
+        <expression
+    >BLANKVALUE({!$Record.ALM_EAA__c},0) + BLANKVALUE({!$Record.RIM_EAA__c},0) + BLANKVALUE({!$Record.Digital_EAA__c},0) + BLANKVALUE({!$Record.W_L_EAA__c},0) + BLANKVALUE({!$Record.MAS_EAA__c},0)</expression>
+        <scale>2</scale>
     </formulas>
     <formulas>
         <name>ISNEW</name>
@@ -1263,6 +2029,15 @@ IF(AND({!Total_MAS_Converted}&gt; 0 ,{!Total_MAS_Converted}&lt;5000), &quot;Band
                        IF(AND({!Total_MAS_Converted}&gt;=500000 , {!Total_MAS_Converted}&lt;1000000),&quot;Band 6&quot;,
                                  &quot;Band 7&quot;
 )))))))</expression>
+    </formulas>
+    <formulas>
+        <description
+    >IMICC9S-2047: Highest value among the Opportunity&apos;s 5 synced EAA fields.</description>
+        <name>Max_BU_EAA</name>
+        <dataType>Number</dataType>
+        <expression
+    >MAX(NULLVALUE({!$Record.ALM_EAA__c},0), NULLVALUE({!$Record.RIM_EAA__c},0), NULLVALUE({!$Record.Digital_EAA__c},0), NULLVALUE({!$Record.W_L_EAA__c},0), NULLVALUE({!$Record.MAS_EAA__c},0))</expression>
+        <scale>2</scale>
     </formulas>
     <formulas>
         <name>Opp_Acc_IMGA_Id</name>
@@ -1305,24 +2080,70 @@ IF(TEXT( {!$Record.Account.Parent.Parent.Parent.Parent.Parent.IM_Hierarchy_Level
 )</expression>
     </formulas>
     <formulas>
-        <description>Gitlab #30528 Opportunity Owner not equal to null  and Opportunity Record Type equals IME Standard Opportunity( id=01280000000UDKJAA4) or Standard Opportunity (id=01280000000BDeiAAG).
+        <description
+    >IMICC9S-2044: True when the Primary Transaction&apos;s ALM BU EAA value is greater than 0.</description>
+        <name>Opp_ALM_BU_Should_Check</name>
+        <dataType>Boolean</dataType>
+        <expression
+    >AND(NOT(ISBLANK({!Get_Primary_Transaction.ALM_BU_EAA__c})), {!Get_Primary_Transaction.ALM_BU_EAA__c} &gt; 0)</expression>
+    </formulas>
+    <formulas>
+        <description
+    >IMICC9S-2044: True when the Primary Transaction&apos;s Digital BU EAA value is greater than 0.</description>
+        <name>Opp_Digital_BU_Should_Check</name>
+        <dataType>Boolean</dataType>
+        <expression
+    >AND(NOT(ISBLANK({!Get_Primary_Transaction.Digital_BU_EAA__c})), {!Get_Primary_Transaction.Digital_BU_EAA__c} &gt; 0)</expression>
+    </formulas>
+    <formulas>
+        <description
+    >IMICC9S-2044: True when the Primary Transaction&apos;s MAS BU EAA value is greater than 0.</description>
+        <name>Opp_MAS_BU_Should_Check</name>
+        <dataType>Boolean</dataType>
+        <expression
+    >AND(NOT(ISBLANK({!Get_Primary_Transaction.MAS_BU_EAA__c})), {!Get_Primary_Transaction.MAS_BU_EAA__c} &gt; 0)</expression>
+    </formulas>
+    <formulas>
+        <description
+    >IMICC9S-2044: True when the Primary Transaction&apos;s RIM BU EAA value is greater than 0.</description>
+        <name>Opp_RIM_BU_Should_Check</name>
+        <dataType>Boolean</dataType>
+        <expression
+    >AND(NOT(ISBLANK({!Get_Primary_Transaction.RIM_BU_EAA__c})), {!Get_Primary_Transaction.RIM_BU_EAA__c} &gt; 0)</expression>
+    </formulas>
+    <formulas>
+        <description
+    >IMICC9S-2044: True when the Primary Transaction&apos;s W&amp;L BU EAA value is greater than 0.</description>
+        <name>Opp_W_L_BU_Should_Check</name>
+        <dataType>Boolean</dataType>
+        <expression
+    >AND(NOT(ISBLANK({!Get_Primary_Transaction.W_L_BU_EAA__c})), {!Get_Primary_Transaction.W_L_BU_EAA__c} &gt; 0)</expression>
+    </formulas>
+    <formulas>
+        <description
+    >Gitlab #30528 Opportunity Owner not equal to null  and Opportunity Record Type equals IME Standard Opportunity( id=01280000000UDKJAA4) or Standard Opportunity (id=01280000000BDeiAAG).
 Updates the &apos;Owner Manager Email&apos; field located on the Opportunity so that email workflow actions can be directed to this person.</description>
         <name>Owner_Manager_Email</name>
         <dataType>String</dataType>
-        <expression>if({!$Record.Owner.ManagerId}==&apos;&apos;,&apos; &apos;,{!$Record.Owner.Manager.Email})</expression>
+        <expression
+    >if({!$Record.Owner.ManagerId}==&apos;&apos;,&apos; &apos;,{!$Record.Owner.Manager.Email})</expression>
     </formulas>
     <formulas>
-        <description>Gitlab #30528 When Opportunity Owner not equal to null then This field update references the Opportunity Owner&apos;s VP&apos;s email address. The VP is a lookup field on the User record.
+        <description
+    >Gitlab #30528 When Opportunity Owner not equal to null then This field update references the Opportunity Owner&apos;s VP&apos;s email address. The VP is a lookup field on the User record.
 This rule should always fire in case updates have been made elsewhere (such as the user record) so the field updates to emails are always current whenever changes have been made.</description>
         <name>OwnerVPEmail</name>
         <dataType>String</dataType>
-        <expression>if({!$Record.Owner.IM_VP__c}==&apos;&apos;,&apos; &apos;,{!$Record.Owner.IM_VP__r.Email})</expression>
+        <expression
+    >if({!$Record.Owner.IM_VP__c}==&apos;&apos;,&apos; &apos;,{!$Record.Owner.IM_VP__r.Email})</expression>
     </formulas>
     <formulas>
-        <description>Gitlab #30528  if Opportunity Name contains | Delimiter then replace it from the Opportunity name at the time of opportunity creation only from Lead conversion.</description>
+        <description
+    >Gitlab #30528  if Opportunity Name contains | Delimiter then replace it from the Opportunity name at the time of opportunity creation only from Lead conversion.</description>
         <name>ReplaceDelimiter</name>
         <dataType>String</dataType>
-        <expression>SUBSTITUTE({!$Record.Name}, &apos;|&apos;, &apos;&apos;)</expression>
+        <expression
+    >SUBSTITUTE({!$Record.Name}, &apos;|&apos;, &apos;&apos;)</expression>
     </formulas>
     <formulas>
         <description>To decide the RIM band based on RIM BU</description>
@@ -1339,7 +2160,8 @@ IF(AND({!Total_RIM_Converted}&gt; 0 ,{!Total_RIM_Converted}&lt;5000), &quot;Band
 )))))))</expression>
     </formulas>
     <formulas>
-        <description>Gitlab #30528 When opportunity NCSP_Status__c field is changed and the value is Sent to NCSP or Escalated and stage should be 5 - Signed/PO in.
+        <description
+    >Gitlab #30528 When opportunity NCSP_Status__c field is changed and the value is Sent to NCSP or Escalated and stage should be 5 - Signed/PO in.
 Workflow to populate the Stage 5 - Sent to NCSP Age and Sent to NCSP Date fields.</description>
         <name>Stage5SenttoNCSPAge_Update</name>
         <dataType>Number</dataType>
@@ -1347,45 +2169,56 @@ Workflow to populate the Stage 5 - Sent to NCSP Age and Sent to NCSP Date fields
         <scale>0</scale>
     </formulas>
     <formulas>
-        <description>To calculated the converted amount of Total ALM</description>
+        <description
+    >To calculated the converted amount of Total ALM</description>
         <name>Total_ALM_Converted</name>
         <dataType>Currency</dataType>
-        <expression>{!$Record.Total_ALM__c}/CURRENCYRATE(Text({!$Record.CurrencyIsoCode}))</expression>
+        <expression
+    >{!$Record.Total_ALM__c}/CURRENCYRATE(Text({!$Record.CurrencyIsoCode}))</expression>
         <scale>3</scale>
     </formulas>
     <formulas>
-        <description>To calculated the converted amount of Total data Center</description>
+        <description
+    >To calculated the converted amount of Total data Center</description>
         <name>Total_Data_Center_Converted</name>
         <dataType>Currency</dataType>
-        <expression>{!$Record.Total_Data_Center__c}/CURRENCYRATE(Text({!$Record.CurrencyIsoCode}))</expression>
+        <expression
+    >{!$Record.Total_Data_Center__c}/CURRENCYRATE(Text({!$Record.CurrencyIsoCode}))</expression>
         <scale>3</scale>
     </formulas>
     <formulas>
-        <description>To calculated the converted amount of Total Digital</description>
+        <description
+    >To calculated the converted amount of Total Digital</description>
         <name>Total_DIgital_Converted</name>
         <dataType>Currency</dataType>
-        <expression>{!$Record.Total_Digital__c}/CURRENCYRATE(Text({!$Record.CurrencyIsoCode}))</expression>
+        <expression
+    >{!$Record.Total_Digital__c}/CURRENCYRATE(Text({!$Record.CurrencyIsoCode}))</expression>
         <scale>3</scale>
     </formulas>
     <formulas>
-        <description>To calculated the converted amount of Total MAS</description>
+        <description
+    >To calculated the converted amount of Total MAS</description>
         <name>Total_MAS_Converted</name>
         <dataType>Currency</dataType>
-        <expression>{!$Record.Total_IMES__c}/CURRENCYRATE(Text({!$Record.CurrencyIsoCode}))</expression>
+        <expression
+    >{!$Record.Total_IMES__c}/CURRENCYRATE(Text({!$Record.CurrencyIsoCode}))</expression>
         <scale>3</scale>
     </formulas>
     <formulas>
-        <description>To calculated the converted amount of Total RIM</description>
+        <description
+    >To calculated the converted amount of Total RIM</description>
         <name>Total_RIM_Converted</name>
         <dataType>Currency</dataType>
-        <expression>{!$Record.Total_RIM__c}/CURRENCYRATE(Text({!$Record.CurrencyIsoCode}))</expression>
+        <expression
+    >{!$Record.Total_RIM__c}/CURRENCYRATE(Text({!$Record.CurrencyIsoCode}))</expression>
         <scale>3</scale>
     </formulas>
     <formulas>
         <description>To store Total W&amp;L amount value in USD</description>
         <name>Total_W_L_Converted</name>
         <dataType>Currency</dataType>
-        <expression>{!$Record.Total_W_L__c}/CURRENCYRATE(Text({!$Record.CurrencyIsoCode}))</expression>
+        <expression
+    >{!$Record.Total_W_L__c}/CURRENCYRATE(Text({!$Record.CurrencyIsoCode}))</expression>
         <scale>3</scale>
     </formulas>
     <formulas>
@@ -1402,7 +2235,21 @@ IF(AND({!Total_W_L_Converted}&gt; 0 ,{!Total_W_L_Converted}&lt;5000), &quot;Band
                                  &quot;Band 7&quot;
 )))))))</expression>
     </formulas>
-    <interviewLabel>Opportunity Before Create &amp; Update Flow {!$Flow.CurrentDateTime}</interviewLabel>
+    <formulas>
+        <description
+    >IMICC9S-2047: Winning Business Unit picklist value, tie-broken in order ALM, RIM, Digital, W&amp;L, MAS. Blank when none of the 5 EAA fields are populated.</description>
+        <name>Winning_BU_Picklist</name>
+        <dataType>String</dataType>
+        <expression>IF({!Max_BU_EAA} &lt;= 0, &quot;&quot;,
+IF(NULLVALUE({!$Record.ALM_EAA__c},0) = {!Max_BU_EAA}, &quot;ALM&quot;,
+IF(NULLVALUE({!$Record.RIM_EAA__c},0) = {!Max_BU_EAA}, &quot;RIM&quot;,
+IF(NULLVALUE({!$Record.Digital_EAA__c},0) = {!Max_BU_EAA}, &quot;Digital&quot;,
+IF(NULLVALUE({!$Record.W_L_EAA__c},0) = {!Max_BU_EAA}, &quot;W&amp;L&quot;,
+IF(NULLVALUE({!$Record.MAS_EAA__c},0) = {!Max_BU_EAA}, &quot;MAS&quot;,
+&quot;&quot;))))))</expression>
+    </formulas>
+    <interviewLabel
+  >Opportunity Before Create &amp; Update Flow {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Opportunity Before Create &amp; Update Flow</label>
     <processMetadataValues>
         <name>BuilderType</name>
@@ -1423,11 +2270,101 @@ IF(AND({!Total_W_L_Converted}&gt; 0 ,{!Total_W_L_Converted}&lt;5000), &quot;Band
         </value>
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <description
+    >Looks up the BU for the Opportunity Primary Product Line in the active mapping rows.</description>
+        <name>Get_BU_From_PPL_Mapping</name>
+        <label>Get BU From PPL Mapping</label>
+        <locationX>50</locationX>
+        <locationY>450</locationY>
+        <assignNullValuesIfNoRecordsFound
+    >false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>PPL_BU_Router</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Primary_Product_Line__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference
+        >$Record.Primary_Product_Line__c</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Active__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Product_Interest_BU_Mapping__mdt</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <description
+    >IMICC9S-2047: Fetches the highest-TotalPrice OpportunityLineItem whose Product_Business_Unit__c matches the winning Business Unit.</description>
+        <name>Get_OLI_For_Winning_BU</name>
+        <label>Get OLI For Winning BU</label>
+        <locationX>50</locationX>
+        <locationY>350</locationY>
+        <assignNullValuesIfNoRecordsFound
+    >false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>OLI_Found</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>OpportunityId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Product_Business_Unit__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Winning_BU_Picklist</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>OpportunityLineItem</object>
+        <sortField>TotalPrice</sortField>
+        <sortOrder>Desc</sortOrder>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <description
+    >IMICC9S-2044: Fetches the Opportunity&apos;s linked Primary Transaction to sync the 5 BU EAA fields.</description>
+        <name>Get_Primary_Transaction</name>
+        <label>Get Primary Transaction</label>
+        <locationX>50</locationX>
+        <locationY>100</locationY>
+        <assignNullValuesIfNoRecordsFound
+    >false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Assign_EAA_From_Transaction</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference
+        >$Record.LGK__PrimaryTransactionId__c</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>LGK__Transaction__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
     <start>
         <locationX>848</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Check_for_IMGA_Account</targetReference>
+            <targetReference>Primary_Transaction_Changed</targetReference>
         </connector>
         <object>Opportunity</object>
         <recordTriggerType>CreateAndUpdate</recordTriggerType>
