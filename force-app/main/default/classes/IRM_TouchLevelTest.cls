@@ -144,17 +144,24 @@ private class IRM_TouchLevelTest {
 
     // ── US-996 AC2: Touch Level recalculates on stage change ─────────────────
 
+    // Stage regression (e.g. Solutioning -> Qualification) is now blocked by
+    // Regress_Stage_Direct_Enforcement for every user, so this scenario moves forward instead:
+    // Qualification (Medium Touch criteria match) -> Solutioning (no criteria seeded) must
+    // recalculate to No Touch. Type = 'New' sidesteps the VR_Qual_ServiceAddress_Required
+    // formula-engine error on the Qualification -> Solutioning transition (see
+    // IRM_TouchLevelProgressionTest).
     @IsTest
     static void test_recalculatesOnStageChange() {
-        Opportunity opp = buildOpp('Solutioning', 600000);
+        Opportunity opp = buildOpp('Qualification', 150000);
+        opp.Type = 'New';
         insert opp;
 
         Opportunity before = [SELECT Touch_Level__c FROM Opportunity WHERE Id = :opp.Id];
-        System.assertEquals('No Touch', before.Touch_Level__c,
-            'PRE-UPDATE: No criteria seeded for Solutioning — expected No Touch. Got: ' + before.Touch_Level__c);
+        System.assertEquals('Medium Touch', before.Touch_Level__c,
+            'PRE-UPDATE: Amount 150k at Qualification should be Medium Touch. Got: ' + before.Touch_Level__c);
 
-        // Before-Save flow requires Champion, Economic Decision Maker/Buyer, Problem Owner
-        // OCRs when stage changes TO Qualification — one contact per role (org VR blocks duplicates)
+        // Stage-gate flow requires Champion, Economic Decision Maker/Buyer, Problem Owner
+        // OCRs before advancing — one contact per role (org VR blocks duplicates)
         List<Contact> contacts = [SELECT Id FROM Contact ORDER BY LastName];
         insert new List<OpportunityContactRole>{
             new OpportunityContactRole(OpportunityId = opp.Id, ContactId = contacts[0].Id, Role = 'Champion'),
@@ -163,13 +170,15 @@ private class IRM_TouchLevelTest {
         };
 
         Test.startTest();
-        opp.StageName = 'Qualification';
+        opp.NextStep = 'Schedule solution review';
+        opp.Next_Step_Date__c = Date.today().addDays(7);
+        opp.StageName = 'Solutioning';
         update opp;
         Test.stopTest();
 
         Opportunity r = [SELECT Touch_Level__c FROM Opportunity WHERE Id = :opp.Id];
-        System.assertEquals('High Touch', r.Touch_Level__c,
-            'US-996: Stage changed from Solutioning→Qualification with Amount 600k — expected High Touch recalculation. Got: ' + r.Touch_Level__c);
+        System.assertEquals('No Touch', r.Touch_Level__c,
+            'US-996: Stage changed Qualification->Solutioning with no Solutioning criteria — expected No Touch recalculation. Got: ' + r.Touch_Level__c);
     }
 
     // ── US-996 AC3: Inactive criteria are ignored ────────────────────────────

@@ -108,7 +108,7 @@ private class IRM_FrameworkParentOpportunityTest {
     // Framework Parent Opportunity can advance to Negotiation.
     private static void addAuthorizedSignatoryRole(Id oppId) {
         insert new OpportunityContactRole(
-            OpportunityId = oppId, ContactId = getContactIdByLastName('AuthorizedSignatory'), Role = 'Authorized Signatory'
+            OpportunityId = oppId, ContactId = getContactIdByLastName('AuthorizedSignatory'), Role = 'Authorized Signer'
         );
     }
 
