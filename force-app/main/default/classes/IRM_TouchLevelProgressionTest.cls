@@ -154,7 +154,7 @@ private class IRM_TouchLevelProgressionTest {
         insert new List<OpportunityContactRole>{
             new OpportunityContactRole(OpportunityId = oppId, ContactId = contacts[0].Id, Role = 'Champion'),
             new OpportunityContactRole(OpportunityId = oppId, ContactId = contacts[1].Id, Role = 'Economic Decision Maker / Buyer'),
-            new OpportunityContactRole(OpportunityId = oppId, ContactId = contacts[2].Id, Role = 'Problem Owner')
+            new OpportunityContactRole(OpportunityId = oppId, ContactId = contacts[2].Id, Role = 'Business Process / Problem Owner')
         };
     }
 

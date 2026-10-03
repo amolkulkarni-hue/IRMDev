@@ -75,7 +75,10 @@ private class IRM_TouchLevelTest {
             RecordTypeId = App_Constants.STD_OPPORTUNITY_RECTYPE_ID,
             StageName = stage, CloseDate = Date.today().addDays(30),
             Pricebook2Id = Test.getStandardPricebookId(), Amount = amount, ALM_EAA__c = amount,
-            Budget_Validated__c = 'Yes', Multi_Country__c = 'No'
+            Budget_Validated__c = 'Yes', Multi_Country__c = 'No',
+            Business_Problem_Evidenced__c = 'Improve Efficiency or Reduce Manual Work', Customer_Outcome_Predefined__c = 'Reduce manual reconciliation effort.',
+            Decision_Process_Defined__c = true, Impact_Consequences_Identified__c = 'No Clear Impact Identified Yet',
+            Service_Address__Street__s = '123 Main St', Service_Address__City__s = 'New York', Service_Address__StateCode__s = 'NY', Service_Address__CountryCode__s = 'US'
         );
     }
 
@@ -156,7 +159,7 @@ private class IRM_TouchLevelTest {
         insert new List<OpportunityContactRole>{
             new OpportunityContactRole(OpportunityId = opp.Id, ContactId = contacts[0].Id, Role = 'Champion'),
             new OpportunityContactRole(OpportunityId = opp.Id, ContactId = contacts[1].Id, Role = 'Economic Decision Maker / Buyer'),
-            new OpportunityContactRole(OpportunityId = opp.Id, ContactId = contacts[2].Id, Role = 'Problem Owner')
+            new OpportunityContactRole(OpportunityId = opp.Id, ContactId = contacts[2].Id, Role = 'Business Process / Problem Owner')
         };
 
         Test.startTest();

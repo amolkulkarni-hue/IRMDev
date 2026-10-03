@@ -100,7 +100,7 @@ private class IRM_FrameworkParentOpportunityTest {
         insert new List<OpportunityContactRole>{
             new OpportunityContactRole(OpportunityId = oppId, ContactId = getContactIdByLastName('Champion'), Role = 'Champion'),
             new OpportunityContactRole(OpportunityId = oppId, ContactId = getContactIdByLastName('EconomicBuyer'), Role = 'Economic Decision Maker / Buyer'),
-            new OpportunityContactRole(OpportunityId = oppId, ContactId = getContactIdByLastName('ProblemOwner'), Role = 'Problem Owner')
+            new OpportunityContactRole(OpportunityId = oppId, ContactId = getContactIdByLastName('ProblemOwner'), Role = 'Business Process / Problem Owner')
         };
     }
 
