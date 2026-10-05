@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>BU_Checkbox_Locked_To_Primary_BU</fullName>
+    <active>true</active>
+    <description
+  >Prevents a user from unchecking the BU checkbox that matches Business_Unit__c. Fires only when that checkbox is changed to unchecked, so existing mismatched records are not blocked. Changing Business_Unit__c in the same save releases the lock.</description>
+    <errorConditionFormula>AND(
+    NOT($Permission.Bypass_Lead_Validation),
+    OR(
+        AND(ISPICKVAL(Business_Unit__c, &quot;ALM&quot;), ISCHANGED(ALM_BU__c), NOT(ALM_BU__c)),
+        AND(ISPICKVAL(Business_Unit__c, &quot;RIM&quot;), ISCHANGED(RIM_BU__c), NOT(RIM_BU__c)),
+        AND(ISPICKVAL(Business_Unit__c, &quot;Digital&quot;), ISCHANGED(Digital_BU__c), NOT(Digital_BU__c)),
+        AND(ISPICKVAL(Business_Unit__c, &quot;W&amp;L&quot;), ISCHANGED(W_L_BU__c), NOT(W_L_BU__c)),
+        AND(ISPICKVAL(Business_Unit__c, &quot;MAS&quot;), ISCHANGED(MAS_BU__c), NOT(MAS_BU__c))
+    )
+)</errorConditionFormula>
+    <errorMessage
+  >The BU checkbox that matches the Primary Business Unit cannot be unchecked. Change the Primary Business Unit (or Primary Product Interest) first.</errorMessage>
+</ValidationRule>
