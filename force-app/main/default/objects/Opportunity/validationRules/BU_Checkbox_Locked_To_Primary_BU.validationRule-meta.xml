@@ -3,7 +3,7 @@
     <fullName>BU_Checkbox_Locked_To_Primary_BU</fullName>
     <active>true</active>
     <description
-  >Prevents a user from unchecking the BU checkbox that matches Business_Unit__c. Fires only when that checkbox is changed to unchecked, and skips Opportunities with a Logik primary transaction (EAA logic owns BU there). Changing Business_Unit__c in the same save releases the lock.</description>
+  >Blocks unchecking the BU checkbox that matches Business_Unit__c. Fires only when that checkbox is unchecked in the save; skipped when a Logik primary transaction exists. Changing Business_Unit__c in the same save releases the lock.</description>
     <errorConditionFormula>AND(
     NOT($Permission.Bypass_Opportunity_Validation),
     ISBLANK(LGK__PrimaryTransactionId__c),
