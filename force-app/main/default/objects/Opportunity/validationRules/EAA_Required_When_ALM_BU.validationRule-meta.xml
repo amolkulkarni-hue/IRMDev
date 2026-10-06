@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>EAA_Required_When_ALM_BU</fullName>
+    <active>true</active>
+    <description
+  >Requires a ALM EAA greater than 0 whenever ALM_BU__c is checked. Applies to every save except insert, so Lead conversion still succeeds. Skipped for users with the Bypass_Opportunity_Validation permission.</description>
+    <errorConditionFormula>AND(
+    NOT($Permission.Bypass_Opportunity_Validation),
+    NOT(ISNEW()),
+    ALM_BU__c = TRUE,
+    OR(ISBLANK(ALM_EAA__c), ALM_EAA__c &lt;= 0)
+)</errorConditionFormula>
+    <errorDisplayField>ALM_EAA__c</errorDisplayField>
+    <errorMessage
+  >Enter a ALM EAA greater than 0 when ALM BU is checked.</errorMessage>
+</ValidationRule>

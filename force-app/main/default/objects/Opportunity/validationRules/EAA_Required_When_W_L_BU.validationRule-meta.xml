@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>EAA_Required_When_W_L_BU</fullName>
+    <active>true</active>
+    <description
+  >Requires a W&amp;L EAA greater than 0 whenever W_L_BU__c is checked. Applies to every save except insert, so Lead conversion still succeeds. Skipped for users with the Bypass_Opportunity_Validation permission.</description>
+    <errorConditionFormula>AND(
+    NOT($Permission.Bypass_Opportunity_Validation),
+    NOT(ISNEW()),
+    W_L_BU__c = TRUE,
+    OR(ISBLANK(W_L_EAA__c), W_L_EAA__c &lt;= 0)
+)</errorConditionFormula>
+    <errorDisplayField>W_L_EAA__c</errorDisplayField>
+    <errorMessage
+  >Enter a W&amp;L EAA greater than 0 when W&amp;L BU is checked.</errorMessage>
+</ValidationRule>

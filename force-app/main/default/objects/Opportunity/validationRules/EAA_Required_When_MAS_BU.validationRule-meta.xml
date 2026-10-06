@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>EAA_Required_When_MAS_BU</fullName>
+    <active>true</active>
+    <description
+  >Requires a MAS EAA greater than 0 whenever MAS_BU__c is checked. Applies to every save except insert, so Lead conversion still succeeds. Skipped for users with the Bypass_Opportunity_Validation permission.</description>
+    <errorConditionFormula>AND(
+    NOT($Permission.Bypass_Opportunity_Validation),
+    NOT(ISNEW()),
+    MAS_BU__c = TRUE,
+    OR(ISBLANK(MAS_EAA__c), MAS_EAA__c &lt;= 0)
+)</errorConditionFormula>
+    <errorDisplayField>MAS_EAA__c</errorDisplayField>
+    <errorMessage
+  >Enter a MAS EAA greater than 0 when MAS BU is checked.</errorMessage>
+</ValidationRule>

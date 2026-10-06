@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>EAA_Required_When_Digital_BU</fullName>
+    <active>true</active>
+    <description
+  >Requires a Digital EAA greater than 0 whenever Digital_BU__c is checked. Applies to every save except insert, so Lead conversion still succeeds. Skipped for users with the Bypass_Opportunity_Validation permission.</description>
+    <errorConditionFormula>AND(
+    NOT($Permission.Bypass_Opportunity_Validation),
+    NOT(ISNEW()),
+    Digital_BU__c = TRUE,
+    OR(ISBLANK(Digital_EAA__c), Digital_EAA__c &lt;= 0)
+)</errorConditionFormula>
+    <errorDisplayField>Digital_EAA__c</errorDisplayField>
+    <errorMessage
+  >Enter a Digital EAA greater than 0 when Digital BU is checked.</errorMessage>
+</ValidationRule>
