@@ -3,12 +3,17 @@
     <fullName>EAA_Required_When_ALM_BU</fullName>
     <active>true</active>
     <description
-  >Requires a ALM EAA greater than 0 whenever ALM_BU__c is checked. Applies to every save except insert, so Lead conversion still succeeds. Skipped for users with the Bypass_Opportunity_Validation permission.</description>
+  >Requires a ALM EAA greater than 0 when ALM_BU__c is checked. Fires only when the box or EAA is edited or the stage advances (not to Lost), so insert, Lead conversion and system follow-up saves pass. Bypass_Opportunity_Validation skips it.</description>
     <errorConditionFormula>AND(
     NOT($Permission.Bypass_Opportunity_Validation),
     NOT(ISNEW()),
     ALM_BU__c = TRUE,
-    OR(ISBLANK(ALM_EAA__c), ALM_EAA__c &lt;= 0)
+    OR(ISBLANK(ALM_EAA__c), ALM_EAA__c &lt;= 0),
+    OR(
+        ISCHANGED(ALM_BU__c),
+        ISCHANGED(ALM_EAA__c),
+        AND(ISCHANGED(StageName), NOT(ISPICKVAL(StageName, &quot;Lost&quot;)))
+    )
 )</errorConditionFormula>
     <errorDisplayField>ALM_EAA__c</errorDisplayField>
     <errorMessage
