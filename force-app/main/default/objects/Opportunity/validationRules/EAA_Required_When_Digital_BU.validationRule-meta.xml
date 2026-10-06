@@ -3,15 +3,23 @@
     <fullName>EAA_Required_When_Digital_BU</fullName>
     <active>true</active>
     <description
-  >Requires a Digital EAA greater than 0 when Digital_BU__c is checked. Fires only when the box or EAA is edited or the stage advances (not to Lost), so insert, Lead conversion and system follow-up saves pass. Bypass_Opportunity_Validation skips it.</description>
+  >Requires a Digital EAA greater than 0 when Digital_BU__c is checked. Evaluated whenever any BU box or EAA is edited, or the stage advances (not to Lost), so every BU/EAA pair is re-checked. Insert and conversion pass. Bypass_Opportunity_Validation skips.</description>
     <errorConditionFormula>AND(
     NOT($Permission.Bypass_Opportunity_Validation),
     NOT(ISNEW()),
     Digital_BU__c = TRUE,
     OR(ISBLANK(Digital_EAA__c), Digital_EAA__c &lt;= 0),
     OR(
+        ISCHANGED(ALM_BU__c),
+        ISCHANGED(ALM_EAA__c),
+        ISCHANGED(RIM_BU__c),
+        ISCHANGED(RIM_EAA__c),
         ISCHANGED(Digital_BU__c),
         ISCHANGED(Digital_EAA__c),
+        ISCHANGED(W_L_BU__c),
+        ISCHANGED(W_L_EAA__c),
+        ISCHANGED(MAS_BU__c),
+        ISCHANGED(MAS_EAA__c),
         AND(ISCHANGED(StageName), NOT(ISPICKVAL(StageName, &quot;Lost&quot;)))
     )
 )</errorConditionFormula>
