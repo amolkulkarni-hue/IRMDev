@@ -1,5 +1,10 @@
 <template>
   <lightning-card title="Upload Documents" icon-name="standard:document">
+    <lightning-button
+      slot="actions"
+      label="Close"
+      onclick={handleClose}
+    ></lightning-button>
     <template if:true={isLoading}>
       <lightning-spinner
         alternative-text="Loading"
@@ -15,12 +20,13 @@
               <th scope="col">Status</th>
               <th scope="col">Due Date</th>
               <th scope="col">Required</th>
+              <th scope="col">Bypass</th>
               <th scope="col">File</th>
             </tr>
           </thead>
-          <tbody>
-            <template for:each={items} for:item="item">
-              <tr key={item.checklistId}>
+          <template for:each={sortedItems} for:item="item">
+            <tbody key={item.checklistId}>
+              <tr>
                 <td>
                   <div class="slds-truncate">{item.docCategory}</div>
                   <div class="slds-text-body_small slds-text-color_weak">
@@ -28,7 +34,15 @@
                   </div>
                 </td>
                 <td>
-                  <lightning-badge label={item.status}></lightning-badge>
+                  <lightning-combobox
+                    label="Status"
+                    variant="label-hidden"
+                    value={item.status}
+                    options={statusOptions}
+                    disabled={item.bypassChecked}
+                    data-checklist-id={item.checklistId}
+                    onchange={handleStatusChange}
+                  ></lightning-combobox>
                 </td>
                 <td>{item.dueDate}</td>
                 <td>
@@ -41,33 +55,96 @@
                   </template>
                 </td>
                 <td>
-                  <template if:true={item.isFinalizing}>
-                    <lightning-spinner
-                      alternative-text="Saving"
-                      size="x-small"
-                    ></lightning-spinner>
+                  <lightning-input
+                    type="checkbox"
+                    label="Bypass"
+                    variant="label-hidden"
+                    checked={item.bypassChecked}
+                    disabled={item.isSavingBypass}
+                    data-checklist-id={item.checklistId}
+                    onchange={handleBypassToggle}
+                  ></lightning-input>
+                </td>
+                <td>
+                  <template if:true={item.bypassChecked}>
+                    <p class="slds-text-color_weak">
+                      Upload not required while Bypass is selected.
+                    </p>
                   </template>
-                  <template if:false={item.isFinalizing}>
-                    <template if:true={item.hasExistingFile}>
-                      <p class="slds-truncate slds-m-bottom_x-small">
-                        <lightning-icon
-                          icon-name="doctype:attachment"
-                          size="x-small"
-                        ></lightning-icon>
-                        {item.existingFileName}
-                      </p>
+                  <template if:false={item.bypassChecked}>
+                    <template if:true={item.isFinalizing}>
+                      <lightning-spinner
+                        alternative-text="Saving"
+                        size="x-small"
+                      ></lightning-spinner>
                     </template>
-                    <lightning-file-upload
-                      data-checklist-id={item.checklistId}
-                      label={item.uploadLabel}
-                      record-id={item.checklistId}
-                      onuploadfinished={handleUploadFinished}
-                    ></lightning-file-upload>
+                    <template if:false={item.isFinalizing}>
+                      <template if:true={item.showFileUpload}>
+                        <lightning-file-upload
+                          data-checklist-id={item.checklistId}
+                          label={item.uploadLabel}
+                          record-id={item.checklistId}
+                          onuploadfinished={handleUploadFinished}
+                        ></lightning-file-upload>
+                        <template if:true={item.hasExistingFile}>
+                          <lightning-button
+                            variant="base"
+                            label="Cancel"
+                            data-checklist-id={item.checklistId}
+                            onclick={handleCancelReplace}
+                          ></lightning-button>
+                        </template>
+                      </template>
+                      <template if:false={item.showFileUpload}>
+                        <p class="slds-truncate slds-m-bottom_x-small">
+                          <lightning-icon
+                            icon-name="doctype:attachment"
+                            size="x-small"
+                          ></lightning-icon>
+                          {item.existingFileName}
+                        </p>
+                        <lightning-button
+                          variant="neutral"
+                          label="Replace File"
+                          data-checklist-id={item.checklistId}
+                          onclick={handleReplaceClick}
+                        ></lightning-button>
+                      </template>
+                    </template>
                   </template>
                 </td>
               </tr>
-            </template>
-          </tbody>
+              <template if:true={item.bypassChecked}>
+                <tr>
+                  <td colspan="6">
+                    <template if:true={item.bypassSaved}>
+                      <div class="slds-text-title">Bypass Justification</div>
+                      <p class="slds-text-longform">
+                        {item.bypassJustification}
+                      </p>
+                    </template>
+                    <template if:false={item.bypassSaved}>
+                      <lightning-textarea
+                        label="Bypass Justification"
+                        required
+                        value={item.bypassJustification}
+                        data-checklist-id={item.checklistId}
+                        onchange={handleJustificationChange}
+                      ></lightning-textarea>
+                      <lightning-button
+                        variant="brand"
+                        label="Save"
+                        class="slds-m-top_x-small"
+                        disabled={item.saveBypassDisabled}
+                        data-checklist-id={item.checklistId}
+                        onclick={handleSaveBypass}
+                      ></lightning-button>
+                    </template>
+                  </td>
+                </tr>
+              </template>
+            </tbody>
+          </template>
         </table>
       </template>
       <template if:false={hasItems}>

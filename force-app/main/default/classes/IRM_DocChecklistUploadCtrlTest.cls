@@ -10,6 +10,12 @@
  *   AC4 — finalizeUpload (Opportunity-only row) links the file to the Opportunity and sets Status/Submitted Date
  *   AC5 — finalizeUpload (Case + Opportunity row) cross-links the file to both
  *   AC6 — finalizeUpload replaces a previous file: stale links removed, new link added
+ *   AC7 — updateStatus persists a valid Status__c change
+ *   AC8 — updateStatus surfaces an invalid Status__c value as an AuraHandledException
+ *   AC9 — saveBypass sets the flag, stores the justification and sets Final
+ *   AC10 — saveBypass without a justification is rejected
+ *   AC11 — clearBypass removes the bypass and returns the row to Draft
+ *   AC12 — getChecklistItems returns the bypass flag and justification
  */
 @IsTest
 private class IRM_DocChecklistUploadCtrlTest {
@@ -274,7 +280,6 @@ private class IRM_DocChecklistUploadCtrlTest {
       newFileId,
       null
     );
-    Test.stopTest();
 
     Assert.areEqual(
       1,
@@ -293,6 +298,8 @@ private class IRM_DocChecklistUploadCtrlTest {
       updated.Submitted_Date__c,
       'AC4: Submitted Date should be today'
     );
+
+    Test.stopTest();
   }
 
   // ── AC5: finalizeUpload on a Case + Opportunity row cross-links both ────────
@@ -311,7 +318,6 @@ private class IRM_DocChecklistUploadCtrlTest {
       newFileId,
       null
     );
-    Test.stopTest();
 
     Assert.areEqual(
       1,
@@ -323,6 +329,8 @@ private class IRM_DocChecklistUploadCtrlTest {
       countLinks(newFileId, opp.Id),
       'AC5: File should be cross-linked to the Opportunity'
     );
+
+    Test.stopTest();
   }
 
   // ── AC6: finalizeUpload replaces a previous file ────────────────────────────
@@ -345,7 +353,6 @@ private class IRM_DocChecklistUploadCtrlTest {
       newFileId,
       oldFileId
     );
-    Test.stopTest();
 
     Assert.areEqual(
       0,
@@ -361,6 +368,187 @@ private class IRM_DocChecklistUploadCtrlTest {
       1,
       countLinks(newFileId, opp.Id),
       'AC6: New file should be linked to the Opportunity'
+    );
+
+    Test.stopTest();
+  }
+
+  // ── AC7: updateStatus persists a valid Status__c change ────────────────────
+
+  @IsTest
+  static void test_updateStatusChangesStatusField() {
+    Opportunity opp = makeOpp();
+    Document_Checklist__c doc = makeDocChecklist(null, opp.Id);
+    doc.Status__c = 'Final';
+    doc.Submitted_Date__c = Date.today();
+    update doc;
+
+    Test.startTest();
+    IRM_DocumentChecklistUploadController.updateStatus(doc.Id, 'Draft');
+    Test.stopTest();
+
+    Assert.areEqual(
+      'Draft',
+      [SELECT Status__c FROM Document_Checklist__c WHERE Id = :doc.Id]
+      .Status__c,
+      'AC7: Status__c should be updated to Draft'
+    );
+  }
+
+  // ── AC8: updateStatus surfaces an invalid value as an AuraHandledException ──
+
+  @IsTest
+  static void test_updateStatusInvalidValueThrowsAuraHandledException() {
+    Opportunity opp = makeOpp();
+    Document_Checklist__c doc = makeDocChecklist(null, opp.Id);
+
+    Test.startTest();
+    Boolean threwAuraHandledException = false;
+    try {
+      IRM_DocumentChecklistUploadController.updateStatus(
+        doc.Id,
+        'Not A Real Status'
+      );
+    } catch (AuraHandledException ex) {
+      threwAuraHandledException = true;
+    }
+    Test.stopTest();
+
+    Assert.isTrue(
+      threwAuraHandledException,
+      'AC8: An invalid Status__c value should surface as an AuraHandledException'
+    );
+    Assert.areEqual(
+      'Draft',
+      [SELECT Status__c FROM Document_Checklist__c WHERE Id = :doc.Id]
+      .Status__c,
+      'AC8: Status__c should remain unchanged after the failed update'
+    );
+  }
+
+  // ── AC9: saveBypass flags the row, stores the justification, sets Final ────
+
+  @IsTest
+  static void test_saveBypassSetsFlagJustificationAndFinal() {
+    Opportunity opp = makeOpp();
+    Document_Checklist__c doc = makeDocChecklist(null, opp.Id);
+
+    Test.startTest();
+    IRM_DocumentChecklistUploadController.saveBypass(
+      doc.Id,
+      'Not applicable for this deal type'
+    );
+    Test.stopTest();
+
+    Document_Checklist__c updated = [
+      SELECT
+        Status__c,
+        Bypass_Requirement__c,
+        Bypass_Justification__c,
+        Submitted_Date__c
+      FROM Document_Checklist__c
+      WHERE Id = :doc.Id
+    ];
+    Assert.areEqual('Final', updated.Status__c, 'AC9: Status should be Final');
+    Assert.isTrue(updated.Bypass_Requirement__c, 'AC9: Bypass should be set');
+    Assert.areEqual(
+      'Not applicable for this deal type',
+      updated.Bypass_Justification__c,
+      'AC9: Justification should be stored'
+    );
+    Assert.isNull(
+      updated.Submitted_Date__c,
+      'AC9: A bypass is not a submission, so Submitted Date stays blank'
+    );
+  }
+
+  // ── AC10: saveBypass without a justification is blocked ────────────────────
+
+  @IsTest
+  static void test_saveBypassWithoutJustificationIsBlocked() {
+    Opportunity opp = makeOpp();
+    Document_Checklist__c doc = makeDocChecklist(null, opp.Id);
+
+    Test.startTest();
+    Boolean threwAuraHandledException = false;
+    try {
+      IRM_DocumentChecklistUploadController.saveBypass(doc.Id, null);
+    } catch (AuraHandledException ex) {
+      threwAuraHandledException = true;
+    }
+    Test.stopTest();
+
+    Assert.isTrue(
+      threwAuraHandledException,
+      'AC10: A bypass without a justification should be rejected'
+    );
+    Document_Checklist__c unchanged = [
+      SELECT Status__c, Bypass_Requirement__c
+      FROM Document_Checklist__c
+      WHERE Id = :doc.Id
+    ];
+    Assert.areEqual(
+      'Draft',
+      unchanged.Status__c,
+      'AC10: Status should remain Draft'
+    );
+    Assert.isFalse(
+      unchanged.Bypass_Requirement__c,
+      'AC10: Bypass should remain unset'
+    );
+  }
+
+  // ── AC11: clearBypass undoes a saved bypass and returns the row to Draft ───
+
+  @IsTest
+  static void test_clearBypassRevertsToDraft() {
+    Opportunity opp = makeOpp();
+    Document_Checklist__c doc = makeDocChecklist(null, opp.Id);
+    IRM_DocumentChecklistUploadController.saveBypass(doc.Id, 'Not needed');
+
+    Test.startTest();
+    IRM_DocumentChecklistUploadController.clearBypass(doc.Id);
+    Test.stopTest();
+
+    Document_Checklist__c updated = [
+      SELECT Status__c, Bypass_Requirement__c, Bypass_Justification__c
+      FROM Document_Checklist__c
+      WHERE Id = :doc.Id
+    ];
+    Assert.areEqual('Draft', updated.Status__c, 'AC11: Status should be Draft');
+    Assert.isFalse(
+      updated.Bypass_Requirement__c,
+      'AC11: Bypass should be cleared'
+    );
+    Assert.isNull(
+      updated.Bypass_Justification__c,
+      'AC11: Justification should be cleared'
+    );
+  }
+
+  // ── AC12: getChecklistItems surfaces the bypass state ──────────────────────
+
+  @IsTest
+  static void test_getChecklistItemsIncludesBypassState() {
+    Opportunity opp = makeOpp();
+    Document_Checklist__c doc = makeDocChecklist(null, opp.Id);
+    IRM_DocumentChecklistUploadController.saveBypass(doc.Id, 'Not needed');
+
+    Test.startTest();
+    List<IRM_DocumentChecklistUploadController.ChecklistItem> items = IRM_DocumentChecklistUploadController.getChecklistItems(
+      opp.Id
+    );
+    Test.stopTest();
+
+    Assert.areEqual(1, items.size(), 'AC12: Expected one checklist item');
+    Assert.isTrue(
+      items[0].bypassRequirement,
+      'AC12: Bypass should be returned'
+    );
+    Assert.areEqual(
+      'Not needed',
+      items[0].bypassJustification,
+      'AC12: Justification should be returned'
     );
   }
 }

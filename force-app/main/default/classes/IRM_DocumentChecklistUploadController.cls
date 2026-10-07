@@ -28,6 +28,10 @@ public with sharing class IRM_DocumentChecklistUploadController {
     public Id existingContentDocumentId;
     @AuraEnabled
     public String existingFileName;
+    @AuraEnabled
+    public Boolean bypassRequirement;
+    @AuraEnabled
+    public String bypassJustification;
   }
 
   @AuraEnabled(cacheable=true)
@@ -42,7 +46,9 @@ public with sharing class IRM_DocumentChecklistUploadController {
           Doc_Type__c,
           Status__c,
           Due_Date__c,
-          IsRequired__c
+          IsRequired__c,
+          Bypass_Requirement__c,
+          Bypass_Justification__c
         FROM Document_Checklist__c
         WHERE Opportunity__c = :recordId OR Case__c = :recordId
         WITH USER_MODE
@@ -55,6 +61,8 @@ public with sharing class IRM_DocumentChecklistUploadController {
         item.status = row.Status__c;
         item.dueDate = row.Due_Date__c;
         item.isRequired = row.IsRequired__c;
+        item.bypassRequirement = row.Bypass_Requirement__c;
+        item.bypassJustification = row.Bypass_Justification__c;
         itemsByChecklistId.put(row.Id, item);
       }
 
@@ -133,6 +141,52 @@ public with sharing class IRM_DocumentChecklistUploadController {
       doc.Status__c = 'Final';
       doc.Submitted_Date__c = Date.today();
       update as user doc;
+    } catch (DmlException dmlEx) {
+      throw new AuraHandledException(dmlEx.getDmlMessage(0));
+    } catch (Exception ex) {
+      throw new AuraHandledException(ex.getMessage());
+    }
+  }
+
+  @AuraEnabled
+  public static void saveBypass(Id checklistId, String justification) {
+    try {
+      update as user new Document_Checklist__c(
+        Id = checklistId,
+        Bypass_Requirement__c = true,
+        Bypass_Justification__c = justification,
+        Status__c = 'Final'
+      );
+    } catch (DmlException dmlEx) {
+      throw new AuraHandledException(dmlEx.getDmlMessage(0));
+    } catch (Exception ex) {
+      throw new AuraHandledException(ex.getMessage());
+    }
+  }
+
+  @AuraEnabled
+  public static void clearBypass(Id checklistId) {
+    try {
+      update as user new Document_Checklist__c(
+        Id = checklistId,
+        Bypass_Requirement__c = false,
+        Bypass_Justification__c = null,
+        Status__c = 'Draft'
+      );
+    } catch (DmlException dmlEx) {
+      throw new AuraHandledException(dmlEx.getDmlMessage(0));
+    } catch (Exception ex) {
+      throw new AuraHandledException(ex.getMessage());
+    }
+  }
+
+  @AuraEnabled
+  public static void updateStatus(Id checklistId, String status) {
+    try {
+      update as user new Document_Checklist__c(
+        Id = checklistId,
+        Status__c = status
+      );
     } catch (DmlException dmlEx) {
       throw new AuraHandledException(dmlEx.getDmlMessage(0));
     } catch (Exception ex) {
