@@ -103,6 +103,22 @@ describe("c-nf-document-checklist-upload", () => {
     });
   });
 
+  it("keeps the table to four columns, with the due date and required marker in the document column", () => {
+    const element = createComponent();
+    getChecklistItems.emit(mockChecklistItems);
+
+    return Promise.resolve().then(() => {
+      const headers = Array.from(
+        element.shadowRoot.querySelectorAll("thead th")
+      ).map((th) => th.textContent.trim());
+      expect(headers).toEqual(["Document", "Status", "Bypass", "File"]);
+
+      const documentCell = element.shadowRoot.querySelector("tbody td");
+      expect(documentCell.textContent).toContain("Due 2026-10-01");
+      expect(documentCell.querySelector("abbr.slds-required")).not.toBeNull();
+    });
+  });
+
   it("shows an empty-state message when there are no checklist items", () => {
     const element = createComponent();
     getChecklistItems.emit([]);
