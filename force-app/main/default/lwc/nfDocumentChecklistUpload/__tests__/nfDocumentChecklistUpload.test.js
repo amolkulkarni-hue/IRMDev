@@ -84,11 +84,11 @@ describe("c-nf-document-checklist-upload", () => {
     jest.clearAllMocks();
   });
 
-  function createComponent() {
+  function createComponent(recordId = "006000000000001AAA") {
     const element = createElement("c-nf-document-checklist-upload", {
       is: NfDocumentChecklistUpload
     });
-    element.recordId = "006000000000001AAA";
+    element.recordId = recordId;
     document.body.appendChild(element);
     return element;
   }
@@ -423,7 +423,7 @@ describe("c-nf-document-checklist-upload", () => {
     }
 
     it("labels seller documents and support exit documents, and nothing else", () => {
-      const element = createComponent();
+      const element = createComponent("500000000000001AAA");
       getChecklistItems.emit([seller, exit, plain]);
 
       return Promise.resolve().then(() => {
@@ -451,7 +451,7 @@ describe("c-nf-document-checklist-upload", () => {
     });
 
     it("keeps the source label but omits the Case link when the Case is not readable", () => {
-      const element = createComponent();
+      const element = createComponent("500000000000001AAA");
       getChecklistItems.emit([
         { ...exit, caseNumber: null, caseSubject: null }
       ]);
@@ -462,6 +462,111 @@ describe("c-nf-document-checklist-upload", () => {
         expect(row.querySelector("lightning-badge").label).toBe(
           "Support exit doc"
         );
+      });
+    });
+  });
+
+  describe("which documents show", () => {
+    const base = mockChecklistItems[0];
+    const sellerDoc = {
+      ...base,
+      checklistId: "a00000000000021AAA",
+      docSource: "SELLER"
+    };
+    const opportunityDoc = { ...base, checklistId: "a00000000000022AAA" };
+    const exitDoc = {
+      ...base,
+      checklistId: "a00000000000023AAA",
+      docSource: "EXIT"
+    };
+    const caseId = "500000000000001AAA";
+
+    function shownIds(element) {
+      return Array.from(
+        element.shadowRoot.querySelectorAll("tbody lightning-combobox")
+      ).map((el) => el.dataset.checklistId);
+    }
+
+    function toggle(element) {
+      return (
+        Array.from(element.shadowRoot.querySelectorAll("lightning-input")).find(
+          (el) => el.type === "toggle"
+        ) || null
+      );
+    }
+
+    it("from an Opportunity, hides Support exit documents by default but keeps seller and Opportunity-level documents", () => {
+      const element = createComponent();
+      getChecklistItems.emit([sellerDoc, opportunityDoc, exitDoc]);
+
+      return Promise.resolve().then(() => {
+        expect(shownIds(element)).toEqual([
+          sellerDoc.checklistId,
+          opportunityDoc.checklistId
+        ]);
+        expect(toggle(element).label).toBe("Show Support exit documents (1)");
+        expect(toggle(element).checked).toBe(false);
+      });
+    });
+
+    it("from an Opportunity, the toggle reveals the Support exit documents and hides them again", () => {
+      const element = createComponent();
+      getChecklistItems.emit([sellerDoc, opportunityDoc, exitDoc]);
+
+      return Promise.resolve()
+        .then(() => {
+          const t = toggle(element);
+          t.checked = true;
+          t.dispatchEvent(new CustomEvent("change"));
+        })
+        .then(() => {
+          expect(shownIds(element)).toEqual([
+            sellerDoc.checklistId,
+            opportunityDoc.checklistId,
+            exitDoc.checklistId
+          ]);
+          const t = toggle(element);
+          t.checked = false;
+          t.dispatchEvent(new CustomEvent("change"));
+        })
+        .then(() => {
+          expect(shownIds(element)).toEqual([
+            sellerDoc.checklistId,
+            opportunityDoc.checklistId
+          ]);
+        });
+    });
+
+    it("from a Case, shows every document and no toggle", () => {
+      const element = createComponent(caseId);
+      getChecklistItems.emit([sellerDoc, opportunityDoc, exitDoc]);
+
+      return Promise.resolve().then(() => {
+        expect(shownIds(element)).toHaveLength(3);
+        expect(toggle(element)).toBeNull();
+      });
+    });
+
+    it("from an Opportunity with only exit documents, explains why the list is empty and still offers the toggle", () => {
+      const element = createComponent();
+      getChecklistItems.emit([exitDoc]);
+
+      return Promise.resolve().then(() => {
+        expect(shownIds(element)).toEqual([]);
+        expect(toggle(element).label).toBe("Show Support exit documents (1)");
+        expect(
+          element.shadowRoot.querySelector("p.slds-text-color_weak").textContent
+        ).toContain("No seller-supplied documents");
+      });
+    });
+
+    it("from an Opportunity with no exit documents, shows no toggle", () => {
+      const element = createComponent();
+      getChecklistItems.emit([sellerDoc, opportunityDoc]);
+
+      return Promise.resolve().then(() => {
+        expect(shownIds(element)).toHaveLength(2);
+        expect(toggle(element)).toBeNull();
       });
     });
   });

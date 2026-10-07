@@ -12,7 +12,19 @@
       ></lightning-spinner>
     </template>
     <template if:false={isLoading}>
-      <template if:true={hasItems}>
+      <template if:true={showExitToggle}>
+        <div class="slds-p-horizontal_medium slds-p-bottom_small">
+          <lightning-input
+            type="toggle"
+            label={exitToggleLabel}
+            checked={showExitDocs}
+            message-toggle-active="Showing"
+            message-toggle-inactive="Hidden"
+            onchange={handleExitToggle}
+          ></lightning-input>
+        </div>
+      </template>
+      <template if:true={hasVisibleItems}>
         <table class="slds-table slds-table_bordered slds-table_cell-buffer">
           <thead>
             <tr class="slds-line-height_reset">
@@ -174,10 +186,8 @@
           </template>
         </table>
       </template>
-      <template if:false={hasItems}>
-        <p class="slds-p-around_medium slds-text-color_weak">
-          No document checklist items found for this record.
-        </p>
+      <template if:false={hasVisibleItems}>
+        <p class="slds-p-around_medium slds-text-color_weak">{emptyMessage}</p>
       </template>
     </template>
   </lightning-card>

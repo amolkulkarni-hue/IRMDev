@@ -17,6 +17,7 @@ export default class NfDocumentChecklistUpload extends LightningElement {
 
   items = [];
   isLoading = true;
+  showExitDocs = false;
   statusOptions = STATUS_OPTIONS;
 
   @wire(getChecklistItems, { recordId: "$recordId" })
@@ -53,15 +54,50 @@ export default class NfDocumentChecklistUpload extends LightningElement {
     };
   }
 
-  get hasItems() {
-    return this.items.length > 0;
+  // Standard Case key prefix. From a Case every document is shown; from anything else (an
+  // Opportunity) Support exit documents are hidden until the user turns them on.
+  get isCaseContext() {
+    return !!this.recordId && this.recordId.startsWith("500");
+  }
+
+  get exitDocCount() {
+    return this.items.filter((item) => item.isExitDoc).length;
+  }
+
+  get showExitToggle() {
+    return !this.isCaseContext && this.exitDocCount > 0;
+  }
+
+  get exitToggleLabel() {
+    return `Show Support exit documents (${this.exitDocCount})`;
+  }
+
+  get visibleItems() {
+    const hideExitDocs = !this.isCaseContext && !this.showExitDocs;
+    return hideExitDocs
+      ? this.items.filter((item) => !item.isExitDoc)
+      : this.items;
+  }
+
+  get hasVisibleItems() {
+    return this.visibleItems.length > 0;
+  }
+
+  get emptyMessage() {
+    return this.items.length === 0
+      ? "No document checklist items found for this record."
+      : "No seller-supplied documents for this record. Turn on Show Support exit documents to see the rest.";
+  }
+
+  handleExitToggle(event) {
+    this.showExitDocs = event.target.checked;
   }
 
   // Display order only: items keeps its original order so the row indexes
   // captured by async handlers stay valid. Array.sort is stable, so each group
   // keeps the server's category/type order.
   get sortedItems() {
-    return [...this.items].sort(
+    return [...this.visibleItems].sort(
       (a, b) => Number(a.status === "Final") - Number(b.status === "Final")
     );
   }
