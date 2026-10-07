@@ -3,9 +3,10 @@
  * Tests the BV item sync in Doc_Checklist_Completion_Sync_Flow: a Document Checklist row linked
  * to a Booking_Verification_Checklist_Item__c drives that item's System_Validated__c.
  *
- *   AC1 — a Final, non-bypassed row validates its item; moving it back to Draft clears it
- *   AC2 — a bypassed Final row does not validate its item
- *   AC3 — a row created through Ironclad validates its item as soon as it exists
+ *   AC1 — an Ironclad row that is Final and not bypassed validates its item; moving it back to Draft clears it
+ *   AC2 — an Ironclad row that is bypassed Final does not validate its item
+ *   AC3 — an Ironclad row that is still Draft does not validate its item
+ *   AC4 — a Final, non-bypassed row that did not come through Ironclad does not validate its item
  */
 @IsTest
 private class IRM_DocChecklistItemSyncTest {
@@ -89,17 +90,20 @@ private class IRM_DocChecklistItemSyncTest {
     .System_Validated__c;
   }
 
+  private static Id makeIroncladContract() {
+    // No Opportunity on the contract, so the Ironclad trigger creates no checklist row itself.
+    ironclad__Ironclad_Contract__c contract = new ironclad__Ironclad_Contract__c();
+    insert contract;
+    return contract.Id;
+  }
+
   // ── AC1 ────────────────────────────────────────────────────────────────────
 
   @IsTest
-  static void test_finalNotBypassedValidatesItemAndDraftClearsIt() {
+  static void test_ironcladFinalNotBypassedValidatesItemAndDraftClearsIt() {
     System.runAs(testRunnerUser()) {
       Booking_Verification_Checklist_Item__c item = makeItem();
-      Document_Checklist__c doc = makeDoc(item, null);
-      Assert.isFalse(
-        systemValidated(item.Id),
-        'AC1: A Draft row should not validate the item'
-      );
+      Document_Checklist__c doc = makeDoc(item, makeIroncladContract());
 
       Test.startTest();
       doc.Status__c = 'Final';
@@ -109,7 +113,7 @@ private class IRM_DocChecklistItemSyncTest {
 
       Assert.isTrue(
         systemValidated(item.Id),
-        'AC1: A Final, non-bypassed row should validate the item'
+        'AC1: An Ironclad row that is Final and not bypassed should validate the item'
       );
 
       doc.Status__c = 'Draft';
@@ -124,10 +128,10 @@ private class IRM_DocChecklistItemSyncTest {
   // ── AC2 ────────────────────────────────────────────────────────────────────
 
   @IsTest
-  static void test_bypassedFinalRowDoesNotValidateItem() {
+  static void test_ironcladBypassedFinalRowDoesNotValidateItem() {
     System.runAs(testRunnerUser()) {
       Booking_Verification_Checklist_Item__c item = makeItem();
-      Document_Checklist__c doc = makeDoc(item, null);
+      Document_Checklist__c doc = makeDoc(item, makeIroncladContract());
 
       Test.startTest();
       doc.Bypass_Requirement__c = true;
@@ -146,20 +150,38 @@ private class IRM_DocChecklistItemSyncTest {
   // ── AC3 ────────────────────────────────────────────────────────────────────
 
   @IsTest
-  static void test_ironcladRowValidatesItemOnCreate() {
+  static void test_ironcladDraftRowDoesNotValidateItem() {
     System.runAs(testRunnerUser()) {
       Booking_Verification_Checklist_Item__c item = makeItem();
-      // No Opportunity on the contract, so the Ironclad trigger creates no checklist row itself.
-      ironclad__Ironclad_Contract__c contract = new ironclad__Ironclad_Contract__c();
-      insert contract;
 
       Test.startTest();
-      makeDoc(item, contract.Id);
+      makeDoc(item, makeIroncladContract());
       Test.stopTest();
 
-      Assert.isTrue(
+      Assert.isFalse(
         systemValidated(item.Id),
-        'AC3: A row created through Ironclad should validate the item immediately'
+        'AC3: An Ironclad row that is still Draft should not validate the item'
+      );
+    }
+  }
+
+  // ── AC4 ────────────────────────────────────────────────────────────────────
+
+  @IsTest
+  static void test_finalRowNotFromIroncladDoesNotValidateItem() {
+    System.runAs(testRunnerUser()) {
+      Booking_Verification_Checklist_Item__c item = makeItem();
+      Document_Checklist__c doc = makeDoc(item, null);
+
+      Test.startTest();
+      doc.Status__c = 'Final';
+      doc.Submitted_Date__c = Date.today();
+      update doc;
+      Test.stopTest();
+
+      Assert.isFalse(
+        systemValidated(item.Id),
+        'AC4: A Final row that did not come through Ironclad should not validate the item'
       );
     }
   }

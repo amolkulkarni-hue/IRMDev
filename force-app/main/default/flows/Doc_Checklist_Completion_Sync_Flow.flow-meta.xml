@@ -106,15 +106,15 @@
         </rules>
     </decisions>
     <description
-  >Record-Triggered After Save flow on Document_Checklist__c (Create and Update). Fires when Status__c changes and Case__c is not null. Queries for any non-Final exit docs on the parent Case (Case_Creation_Rule__c is null — excludes the Case-first &quot;start&quot;/&quot;required for case&quot; checklists CaseCreationRuleEvaluatorAction links via Case__c, which have their own All_Start_Docs_Final__c indicator maintained by Case_Creation_Trigger_Flow). If none exist, sets All_Exit_Docs_Final__c = true on the Case; otherwise sets it to false. This triggers Case_Completion_Update_Flow to recalculate the completion percentage. BV item sync: when the row is linked to a Booking_Verification_Checklist_Item__c, sets that item&apos;s System_Validated__c to TRUE if the row was created through Ironclad (Ironclad_Contract__c is set) or is Final and not bypassed, otherwise FALSE. Runs on create and when Status__c, Bypass_Requirement__c, Ironclad_Contract__c or the item link changes. A failed item update does not block the Document Checklist save.</description>
+  >Record-Triggered After Save flow on Document_Checklist__c (Create and Update). Fires when Status__c changes and Case__c is not null. Queries for any non-Final exit docs on the parent Case (Case_Creation_Rule__c is null — excludes the Case-first &quot;start&quot;/&quot;required for case&quot; checklists CaseCreationRuleEvaluatorAction links via Case__c, which have their own All_Start_Docs_Final__c indicator maintained by Case_Creation_Trigger_Flow). If none exist, sets All_Exit_Docs_Final__c = true on the Case; otherwise sets it to false. This triggers Case_Completion_Update_Flow to recalculate the completion percentage. BV item sync: when the row is linked to a Booking_Verification_Checklist_Item__c, sets that item&apos;s System_Validated__c to TRUE only if the row came through Ironclad (Ironclad_Contract__c is set) AND is Final AND is not bypassed, otherwise FALSE. Runs on create and when Status__c, Bypass_Requirement__c, Ironclad_Contract__c or the item link changes. A failed item update does not block the Document Checklist save.</description>
     <environments>Default</environments>
     <formulas>
         <description
-    >TRUE when the row came from Ironclad, or is Final and not bypassed (a real document was accepted).</description>
+    >TRUE only when the row came from Ironclad AND is Final AND is not bypassed.</description>
         <name>isItemValidated</name>
         <dataType>Boolean</dataType>
         <expression
-    >OR(NOT(ISBLANK({!$Record.Ironclad_Contract__c})), AND(ISPICKVAL({!$Record.Status__c}, &quot;Final&quot;), NOT({!$Record.Bypass_Requirement__c})))</expression>
+    >AND(NOT(ISBLANK({!$Record.Ironclad_Contract__c})), ISPICKVAL({!$Record.Status__c}, &quot;Final&quot;), NOT({!$Record.Bypass_Requirement__c}))</expression>
     </formulas>
     <formulas>
         <description
