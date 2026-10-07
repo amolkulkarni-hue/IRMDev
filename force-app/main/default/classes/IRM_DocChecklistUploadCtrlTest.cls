@@ -558,7 +558,7 @@ private class IRM_DocChecklistUploadCtrlTest {
   // The org currently can't insert Case-linked checklist rows in tests (unrelated
   // RecordTypeSelection error), so the source rules are tested on in-memory rows.
   private static Id fakeId(SObjectType t) {
-    return Id.valueOf(t.getDescribe().getKeyPrefix() + '000000000001AAA');
+    return Id.valueOf(t.getDescribe().getKeyPrefix() + '000000000001');
   }
 
   // ── AC13: a row with no Case has no document source ────────────────────────
