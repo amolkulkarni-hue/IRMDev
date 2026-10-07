@@ -18,6 +18,8 @@ export default class NfDocumentChecklistUpload extends LightningElement {
   items = [];
   isLoading = true;
   showExitDocs = false;
+  sectionOverrides = {};
+  completedOverrides = {};
   statusOptions = STATUS_OPTIONS;
 
   @wire(getChecklistItems, { recordId: "$recordId" })
@@ -41,11 +43,6 @@ export default class NfDocumentChecklistUpload extends LightningElement {
       uploadLabel: hasExistingFile ? "Replace File" : "Upload File",
       isSellerDoc: item.docSource === "SELLER",
       isExitDoc: item.docSource === "EXIT",
-      showCaseLink: !!(item.caseId && item.caseNumber),
-      caseUrl: item.caseId ? `/lightning/r/Case/${item.caseId}/view` : null,
-      caseLabel: item.caseSubject
-        ? `Case ${item.caseNumber} - ${item.caseSubject}`
-        : `Case ${item.caseNumber}`,
       bypassSaved,
       bypassChecked: bypassSaved,
       bypassJustification: item.bypassJustification || "",
@@ -93,53 +90,106 @@ export default class NfDocumentChecklistUpload extends LightningElement {
     this.showExitDocs = event.target.checked;
   }
 
+  handleSectionToggle(event) {
+    const key = event.target.dataset.sectionKey;
+    const section = this.sections.find((candidate) => candidate.key === key);
+    if (!section) {
+      return;
+    }
+    this.sectionOverrides = {
+      ...this.sectionOverrides,
+      [key]: !section.isOpen
+    };
+  }
+
+  handleCompletedToggle(event) {
+    const key = event.target.dataset.sectionKey;
+    this.completedOverrides = {
+      ...this.completedOverrides,
+      [key]: this.completedOverrides[key] !== true
+    };
+  }
+
   // Display order and grouping only: items keeps its original order so the row indexes captured by
-  // async handlers stay valid. Rows are grouped by Case (Opportunity-level rows first); groups that
-  // still have unfinished documents come before fully finalized ones, and within a group unfinished
-  // rows come first. Array.sort is stable, so the server's category/type order is kept inside each
-  // tier. Group headers only show when there is more than one group.
-  get displayItems() {
+  // async handlers stay valid. Rows are grouped into one section per Case (Opportunity-level rows
+  // first); sections that still have unfinished documents come before fully finalized ones. Inside a
+  // section the unfinished documents are listed and the Final ones sit under a collapsed
+  // "Completed (n)" fold; a section with nothing left to do starts collapsed. Array.sort is stable,
+  // so the server's category/type order is kept inside each tier.
+  get sections() {
     const isFinal = (item) => item.status === "Final";
     const groups = new Map();
     this.visibleItems.forEach((item) => {
       const key = item.caseId || "none";
       if (!groups.has(key)) {
-        let title = "Opportunity-level documents";
-        if (item.caseId) {
-          title = item.caseNumber
-            ? `Case ${item.caseNumber}${item.caseSubject ? ` - ${item.caseSubject}` : ""}`
-            : "Case (details not available)";
-        }
         groups.set(key, {
+          key,
           caseId: item.caseId,
           caseNumber: item.caseNumber || "",
-          title,
+          caseSubject: item.caseSubject,
           items: []
         });
       }
       groups.get(key).items.push(item);
     });
 
-    const unfinished = (group) => group.items.some((item) => !isFinal(item));
+    const hasOutstanding = (group) =>
+      group.items.some((item) => !isFinal(item));
     const ordered = [...groups.values()].sort(
       (a, b) =>
-        Number(!unfinished(a)) - Number(!unfinished(b)) ||
+        Number(!hasOutstanding(a)) - Number(!hasOutstanding(b)) ||
         Number(!!a.caseId) - Number(!!b.caseId) ||
         a.caseNumber.localeCompare(b.caseNumber)
     );
-    const grouped = ordered.length > 1;
 
-    return ordered.flatMap((group) => {
-      const items = [...group.items].sort(
-        (a, b) => Number(isFinal(a)) - Number(isFinal(b))
-      );
-      const finalCount = items.filter(isFinal).length;
-      return items.map((item, index) => ({
-        ...item,
-        showGroupHeader: grouped && index === 0,
-        groupTitle: `${group.title} (${finalCount} of ${items.length} final)`,
-        showCaseLink: item.showCaseLink && !grouped
-      }));
+    const asRow = (item) => ({
+      ...item,
+      key: item.checklistId,
+      isFoldHeader: false
+    });
+
+    return ordered.map((group) => {
+      const outstanding = group.items.filter((item) => !isFinal(item));
+      const completed = group.items.filter(isFinal);
+      const isOpen =
+        group.key in this.sectionOverrides
+          ? this.sectionOverrides[group.key]
+          : outstanding.length > 0;
+      const completedOpen = this.completedOverrides[group.key] === true;
+
+      const rows = outstanding.map(asRow);
+      if (completed.length > 0) {
+        rows.push({
+          key: `${group.key}-completed`,
+          isFoldHeader: true,
+          sectionKey: group.key,
+          foldLabel: `Completed (${completed.length})`,
+          foldIcon: completedOpen
+            ? "utility:chevrondown"
+            : "utility:chevronright"
+        });
+        if (completedOpen) {
+          rows.push(...completed.map(asRow));
+        }
+      }
+
+      let title = "Opportunity-level documents";
+      if (group.caseId) {
+        title = group.caseNumber
+          ? `Case ${group.caseNumber}${group.caseSubject ? ` - ${group.caseSubject}` : ""}`
+          : "Case (details not available)";
+      }
+
+      return {
+        key: group.key,
+        title,
+        showCaseLink: !!(group.caseId && group.caseNumber),
+        caseUrl: group.caseId ? `/lightning/r/Case/${group.caseId}/view` : null,
+        progressLabel: `${completed.length} of ${group.items.length} final`,
+        isOpen,
+        toggleIcon: isOpen ? "utility:chevrondown" : "utility:chevronright",
+        rows
+      };
     });
   }
 

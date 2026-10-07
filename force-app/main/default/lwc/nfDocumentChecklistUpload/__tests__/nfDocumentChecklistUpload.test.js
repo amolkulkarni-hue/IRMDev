@@ -93,14 +93,49 @@ describe("c-nf-document-checklist-upload", () => {
     return element;
   }
 
-  it("renders one row per checklist item", () => {
+  const flush = () =>
+    Array.from({ length: 10 }).reduce(
+      (p) => p.then(() => {}),
+      Promise.resolve()
+    );
+
+  // Finalized documents sit under a collapsed "Completed (n)" fold in each section.
+  async function openCompleted(element) {
+    element.shadowRoot
+      .querySelectorAll("lightning-button-icon[data-section-key]")
+      .forEach((button) => {
+        if (button.iconName === "utility:chevronright") {
+          button.click();
+        }
+      });
+    await flush();
+    element.shadowRoot
+      .querySelectorAll("lightning-button[data-section-key]")
+      .forEach((button) => button.click());
+    await flush();
+  }
+
+  function sectionTitles(element) {
+    return Array.from(
+      element.shadowRoot.querySelectorAll(".section-header")
+    ).map((header) => {
+      const link = header.querySelector("lightning-formatted-url");
+      return link
+        ? link.label
+        : header.querySelector(".slds-text-title_caps").textContent.trim();
+    });
+  }
+
+  it("shows outstanding documents and folds finalized ones under Completed", async () => {
     const element = createComponent();
     getChecklistItems.emit(mockChecklistItems);
+    await flush();
+    expect(element.shadowRoot.querySelectorAll(".doc-block")).toHaveLength(1);
 
-    return Promise.resolve().then(() => {
-      const rows = element.shadowRoot.querySelectorAll(".doc-block");
-      expect(rows.length).toBe(mockChecklistItems.length);
-    });
+    await openCompleted(element);
+    expect(element.shadowRoot.querySelectorAll(".doc-block")).toHaveLength(
+      mockChecklistItems.length
+    );
   });
 
   it("lays each document out as a stacked block, not a table, with the due date and required marker in the details", () => {
@@ -147,43 +182,41 @@ describe("c-nf-document-checklist-upload", () => {
   });
 
   describe("a row that already has a file", () => {
-    it("shows the existing file name and hides the file picker by default", () => {
+    it("shows the existing file name and hides the file picker by default", async () => {
       const element = createComponent();
       getChecklistItems.emit(mockChecklistItems);
+      await flush();
+      await openCompleted(element);
 
-      return Promise.resolve().then(() => {
-        const fileNameEls = element.shadowRoot.querySelectorAll(".file-name");
-        const fileNames = Array.from(fileNameEls).map((el) =>
-          el.textContent.trim()
-        );
-        expect(fileNames.some((text) => text.includes("signed-sow.pdf"))).toBe(
-          true
-        );
-
-        const fileUpload = element.shadowRoot.querySelector(
+      const names = Array.from(
+        element.shadowRoot.querySelectorAll(".file-name")
+      ).map((el) => el.textContent.trim());
+      expect(names.some((text) => text.includes("signed-sow.pdf"))).toBe(true);
+      expect(
+        element.shadowRoot.querySelector(
           `lightning-file-upload[data-checklist-id="${mockChecklistItems[1].checklistId}"]`
-        );
-        expect(fileUpload).toBeNull();
-      });
+        )
+      ).toBeNull();
     });
 
-    it("reveals the file picker only after clicking Replace File", () => {
+    it("reveals the file picker only after clicking Replace File", async () => {
       const element = createComponent();
       getChecklistItems.emit(mockChecklistItems);
+      await flush();
+      await openCompleted(element);
 
-      return Promise.resolve().then(() => {
-        const replaceButton = element.shadowRoot.querySelector(
+      element.shadowRoot
+        .querySelector(
           `lightning-button[data-checklist-id="${mockChecklistItems[1].checklistId}"]`
-        );
-        replaceButton.click();
+        )
+        .click();
+      await flush();
 
-        return Promise.resolve().then(() => {
-          const fileUpload = element.shadowRoot.querySelector(
-            `lightning-file-upload[data-checklist-id="${mockChecklistItems[1].checklistId}"]`
-          );
-          expect(fileUpload).not.toBeNull();
-        });
-      });
+      expect(
+        element.shadowRoot.querySelector(
+          `lightning-file-upload[data-checklist-id="${mockChecklistItems[1].checklistId}"]`
+        )
+      ).not.toBeNull();
     });
   });
 
@@ -212,28 +245,27 @@ describe("c-nf-document-checklist-upload", () => {
     });
   });
 
-  it("saves the new value when the Status combobox changes", () => {
+  it("saves the new value when the Status combobox changes", async () => {
     updateStatus.mockResolvedValue();
     const element = createComponent();
     getChecklistItems.emit(mockChecklistItems);
+    await flush();
 
-    return Promise.resolve().then(() => {
-      const combobox = element.shadowRoot.querySelector(
-        `lightning-combobox[data-checklist-id="${mockChecklistItems[1].checklistId}"]`
-      );
-      combobox.dispatchEvent(
-        new CustomEvent("change", { detail: { value: "Draft" } })
-      );
+    const combobox = element.shadowRoot.querySelector(
+      `lightning-combobox[data-checklist-id="${mockChecklistItems[0].checklistId}"]`
+    );
+    combobox.dispatchEvent(
+      new CustomEvent("change", { detail: { value: "Final" } })
+    );
 
-      expect(updateStatus).toHaveBeenCalledWith({
-        checklistId: mockChecklistItems[1].checklistId,
-        status: "Draft"
-      });
+    expect(updateStatus).toHaveBeenCalledWith({
+      checklistId: mockChecklistItems[0].checklistId,
+      status: "Final"
     });
   });
 
   describe("sorting", () => {
-    it("lists unfinished rows first and Final rows last, keeping server order within each group", () => {
+    it("lists unfinished rows first, with Final rows folded under Completed after them", async () => {
       const row = (id, status) => ({
         ...mockChecklistItems[0],
         checklistId: id,
@@ -246,28 +278,25 @@ describe("c-nf-document-checklist-upload", () => {
         row("a00000000000003AAA", "Final"),
         row("a00000000000004AAA", "Draft")
       ]);
-
-      return Promise.resolve().then(() => {
-        const ids = Array.from(
+      await flush();
+      const ids = () =>
+        Array.from(
           element.shadowRoot.querySelectorAll("lightning-combobox")
         ).map((el) => el.dataset.checklistId);
-        expect(ids).toEqual([
-          "a00000000000002AAA",
-          "a00000000000004AAA",
-          "a00000000000001AAA",
-          "a00000000000003AAA"
-        ]);
-      });
+      expect(ids()).toEqual(["a00000000000002AAA", "a00000000000004AAA"]);
+
+      await openCompleted(element);
+      expect(ids()).toEqual([
+        "a00000000000002AAA",
+        "a00000000000004AAA",
+        "a00000000000001AAA",
+        "a00000000000003AAA"
+      ]);
     });
   });
 
   describe("bypass", () => {
     const draftId = mockChecklistItems[0].checklistId;
-    const flush = () =>
-      Array.from({ length: 10 }).reduce(
-        (p) => p.then(() => {}),
-        Promise.resolve()
-      );
 
     function find(element, selector) {
       return element.shadowRoot.querySelector(selector);
@@ -343,6 +372,7 @@ describe("c-nf-document-checklist-upload", () => {
 
       saveButton(element).click();
       await flush();
+      await openCompleted(element);
 
       expect(saveBypass).toHaveBeenCalledWith({
         checklistId: draftId,
@@ -387,6 +417,7 @@ describe("c-nf-document-checklist-upload", () => {
         }
       ]);
       await flush();
+      await openCompleted(element);
       expect(
         find(element, `lightning-textarea[data-checklist-id="${draftId}"]`)
       ).toBeNull();
@@ -449,13 +480,13 @@ describe("c-nf-document-checklist-upload", () => {
       });
     });
 
-    it("shows which Case the document is for as a link", () => {
+    it("shows which Case the document is for as a link in the section header", () => {
       const element = createComponent();
       getChecklistItems.emit([seller]);
 
       return Promise.resolve().then(() => {
-        const link = rowFor(element, seller.checklistId).querySelector(
-          "lightning-formatted-url"
+        const link = element.shadowRoot.querySelector(
+          ".section-header lightning-formatted-url"
         );
         expect(link.label).toBe("Case 00012345 - Onboarding");
         expect(link.value).toBe("/lightning/r/Case/500000000000001AAA/view");
@@ -583,7 +614,7 @@ describe("c-nf-document-checklist-upload", () => {
     });
   });
 
-  describe("grouping by Case", () => {
+  describe("sections by Case", () => {
     const base = mockChecklistItems[0];
     const row = (id, status, caseNo, subject) => ({
       ...base,
@@ -599,6 +630,7 @@ describe("c-nf-document-checklist-upload", () => {
     const a2 = row("a00000000000033AAA", "Final", "000000010", "Alpha");
     const b1 = row("a00000000000034AAA", "Final", "000000005", "Beta");
     const b2 = row("a00000000000035AAA", "Final", "000000005", "Beta");
+    const c1 = row("a00000000000036AAA", "Draft", "000000020", "Gamma");
 
     function shownIds(element) {
       return Array.from(
@@ -606,81 +638,97 @@ describe("c-nf-document-checklist-upload", () => {
       ).map((el) => el.dataset.checklistId);
     }
 
-    function headers(element) {
-      return Array.from(
-        element.shadowRoot.querySelectorAll(".group-header")
-      ).map((th) => th.textContent.trim());
-    }
-
-    it("groups rows by Case with Opportunity-level documents first, and a fully finalized Case last even if its number is lower", () => {
+    it("makes one section per Case with Opportunity-level documents first and a fully finalized Case last, even if its number is lower", async () => {
       const element = createComponent();
       getChecklistItems.emit([b1, a2, b2, oppDoc, a1]);
+      await flush();
 
-      return Promise.resolve().then(() => {
-        expect(shownIds(element)).toEqual([
-          oppDoc.checklistId,
-          a1.checklistId,
-          a2.checklistId,
-          b1.checklistId,
-          b2.checklistId
-        ]);
-        expect(headers(element)).toEqual([
-          "Opportunity-level documents (0 of 1 final)",
-          "Case 000000000010 - Alpha (1 of 2 final)",
-          "Case 000000000005 - Beta (2 of 2 final)"
-        ]);
-      });
+      expect(sectionTitles(element)).toEqual([
+        "Opportunity-level documents",
+        "Case 000000000010 - Alpha",
+        "Case 000000000005 - Beta"
+      ]);
+      const progress = Array.from(
+        element.shadowRoot.querySelectorAll(
+          ".section-header span.slds-text-color_weak"
+        )
+      ).map((el) => el.textContent.trim());
+      expect(progress).toEqual([
+        "0 of 1 final",
+        "1 of 2 final",
+        "2 of 2 final"
+      ]);
+      expect(shownIds(element)).toEqual([oppDoc.checklistId, a1.checklistId]);
     });
 
-    it("shows no group headers when there is only one group, and keeps the Case link on the row", () => {
+    it("keeps a fully finalized section collapsed until it is opened, then offers its Completed fold", async () => {
+      const element = createComponent();
+      getChecklistItems.emit([a1, b1, b2]);
+      await flush();
+      expect(shownIds(element)).toEqual([a1.checklistId]);
+
+      element.shadowRoot
+        .querySelector(
+          'lightning-button-icon[data-section-key="500000000005AAA"]'
+        )
+        .click();
+      await flush();
+      expect(shownIds(element)).toEqual([a1.checklistId]);
+      const folds = Array.from(
+        element.shadowRoot.querySelectorAll(
+          "lightning-button[data-section-key]"
+        )
+      );
+      expect(folds.map((b) => b.label)).toEqual(["Completed (2)"]);
+
+      folds[0].click();
+      await flush();
+      expect(shownIds(element)).toEqual([
+        a1.checklistId,
+        b1.checklistId,
+        b2.checklistId
+      ]);
+    });
+
+    it("shows a header with the Case link once, even for a single Case, and no link on the rows", async () => {
       const element = createComponent();
       getChecklistItems.emit([a1, a2]);
+      await flush();
 
-      return Promise.resolve().then(() => {
-        expect(headers(element)).toEqual([]);
-        expect(
-          element.shadowRoot.querySelectorAll("lightning-formatted-url")
-        ).toHaveLength(2);
-      });
+      expect(sectionTitles(element)).toEqual(["Case 000000000010 - Alpha"]);
+      expect(
+        element.shadowRoot.querySelectorAll("lightning-formatted-url")
+      ).toHaveLength(1);
     });
 
-    it("drops the per-row Case link once group headers already say which Case", () => {
-      const element = createComponent();
-      getChecklistItems.emit([a1, b1]);
-
-      return Promise.resolve().then(() => {
-        expect(headers(element)).toHaveLength(2);
-        expect(
-          element.shadowRoot.querySelectorAll("lightning-formatted-url")
-        ).toHaveLength(0);
-      });
-    });
-
-    it("moves a group to the bottom once its last unfinished document is finalized", () => {
+    it("moves a section below the others once its last unfinished document is finalized", async () => {
       finalizeUpload.mockResolvedValue();
       const element = createComponent();
-      getChecklistItems.emit([a1, b1]);
+      getChecklistItems.emit([a1, c1]);
+      await flush();
+      expect(sectionTitles(element)).toEqual([
+        "Case 000000000010 - Alpha",
+        "Case 000000000020 - Gamma"
+      ]);
 
-      return Promise.resolve()
-        .then(() => {
-          expect(shownIds(element)[0]).toBe(a1.checklistId);
-          element.shadowRoot
-            .querySelector(
-              `lightning-file-upload[data-checklist-id="${a1.checklistId}"]`
-            )
-            .dispatchEvent(
-              new CustomEvent("uploadfinished", {
-                detail: {
-                  files: [{ documentId: "069000000000077AAA", name: "x.pdf" }]
-                }
-              })
-            );
-        })
-        .then(() => Promise.resolve())
-        .then(() => Promise.resolve())
-        .then(() => {
-          expect(shownIds(element)).toEqual([b1.checklistId, a1.checklistId]);
-        });
+      element.shadowRoot
+        .querySelector(
+          `lightning-file-upload[data-checklist-id="${a1.checklistId}"]`
+        )
+        .dispatchEvent(
+          new CustomEvent("uploadfinished", {
+            detail: {
+              files: [{ documentId: "069000000000077AAA", name: "x.pdf" }]
+            }
+          })
+        );
+      await flush();
+
+      expect(sectionTitles(element)).toEqual([
+        "Case 000000000020 - Gamma",
+        "Case 000000000010 - Alpha"
+      ]);
+      expect(shownIds(element)).toEqual([c1.checklistId]);
     });
   });
 });
