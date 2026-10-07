@@ -68,6 +68,19 @@ public with sharing class IRM_DocumentChecklistUploadController {
     try {
       Map<Id, ChecklistItem> itemsByChecklistId = new Map<Id, ChecklistItem>();
 
+      // Case-linked rows often have no Opportunity__c; find them through the Case's Opportunity.
+      Set<Id> opportunityCaseIds = new Set<Id>();
+      if (canReadCaseOpportunity()) {
+        for (Case c : [
+          SELECT Id
+          FROM Case
+          WHERE Opportunity__c = :recordId
+          WITH USER_MODE
+        ]) {
+          opportunityCaseIds.add(c.Id);
+        }
+      }
+
       for (Document_Checklist__c row : [
         SELECT
           Id,
@@ -82,7 +95,10 @@ public with sharing class IRM_DocumentChecklistUploadController {
           Case_Creation_Rule__c,
           Case_Type_Context__c
         FROM Document_Checklist__c
-        WHERE Opportunity__c = :recordId OR Case__c = :recordId
+        WHERE
+          Opportunity__c = :recordId
+          OR Case__c = :recordId
+          OR Case__c IN :opportunityCaseIds
         WITH USER_MODE
         ORDER BY Doc_Category__c, Doc_Type__c
       ]) {
@@ -144,6 +160,25 @@ public with sharing class IRM_DocumentChecklistUploadController {
     }
   }
 
+  private static Boolean canReadCaseOpportunity() {
+    return Schema.sObjectType.Case.isAccessible() &&
+      Schema.sObjectType.Case.fields.Opportunity__c.isAccessible();
+  }
+
+  private static Id opportunityForCase(Id caseId) {
+    if (caseId == null || !canReadCaseOpportunity()) {
+      return null;
+    }
+    List<Case> cases = [
+      SELECT Opportunity__c
+      FROM Case
+      WHERE Id = :caseId
+      WITH USER_MODE
+      LIMIT 1
+    ];
+    return cases.isEmpty() ? null : cases[0].Opportunity__c;
+  }
+
   @AuraEnabled
   public static void finalizeUpload(
     Id checklistId,
@@ -159,10 +194,14 @@ public with sharing class IRM_DocumentChecklistUploadController {
         LIMIT 1
       ];
 
+      Id opportunityId = doc.Opportunity__c != null
+        ? doc.Opportunity__c
+        : opportunityForCase(doc.Case__c);
+
       if (previousContentDocumentId != null) {
         Set<Id> staleTargetIds = new Set<Id>{ doc.Id };
-        if (doc.Opportunity__c != null) {
-          staleTargetIds.add(doc.Opportunity__c);
+        if (opportunityId != null) {
+          staleTargetIds.add(opportunityId);
         }
         if (doc.Case__c != null) {
           staleTargetIds.add(doc.Case__c);
@@ -180,12 +219,10 @@ public with sharing class IRM_DocumentChecklistUploadController {
         }
       }
 
-      String targetRecordId = doc.Case__c != null
-        ? doc.Case__c
-        : doc.Opportunity__c;
+      String targetRecordId = doc.Case__c != null ? doc.Case__c : opportunityId;
       String additionalTargetRecordId = (doc.Case__c != null &&
-        doc.Opportunity__c != null)
-        ? doc.Opportunity__c
+        opportunityId != null)
+        ? opportunityId
         : null;
 
       if (String.isNotBlank(targetRecordId)) {

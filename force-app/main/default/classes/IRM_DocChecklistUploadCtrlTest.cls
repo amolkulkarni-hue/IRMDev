@@ -638,4 +638,42 @@ private class IRM_DocChecklistUploadCtrlTest {
     Assert.isNull(items[0].caseId, 'No Case on this row');
     Assert.isNull(items[0].docSource, 'No source without a Case');
   }
+
+  // ── Case-linked rows with no Opportunity are found via the Case's Opportunity ─
+
+  @IsTest
+  static void test_getChecklistItemsFindsCaseRowsViaCaseOpportunity() {
+    Opportunity opp = makeOpp();
+    Case c = makeCase(getAccount().Id, getContactId(), opp.Id);
+    Document_Checklist__c doc = makeDocChecklist(c.Id, null);
+
+    Test.startTest();
+    List<IRM_DocumentChecklistUploadController.ChecklistItem> items = IRM_DocumentChecklistUploadController.getChecklistItems(
+      opp.Id
+    );
+    Test.stopTest();
+
+    Assert.areEqual(1, items.size(), 'Row should be found through the Case');
+    Assert.areEqual(doc.Id, items[0].checklistId, 'Checklist Id should match');
+    Assert.areEqual(c.Id, items[0].caseId, 'Case Id should be returned');
+  }
+
+  @IsTest
+  static void test_finalizeUploadLinksCaseAndCaseOpportunity() {
+    Opportunity opp = makeOpp();
+    Case c = makeCase(getAccount().Id, getContactId(), opp.Id);
+    Document_Checklist__c doc = makeDocChecklist(c.Id, null);
+    Id fileId = createContentDoc('CaseOppFile');
+
+    Test.startTest();
+    IRM_DocumentChecklistUploadController.finalizeUpload(doc.Id, fileId, null);
+    Test.stopTest();
+
+    Assert.areEqual(1, countLinks(fileId, c.Id), 'File linked to the Case');
+    Assert.areEqual(
+      1,
+      countLinks(fileId, opp.Id),
+      'File linked to the Case Opportunity'
+    );
+  }
 }
