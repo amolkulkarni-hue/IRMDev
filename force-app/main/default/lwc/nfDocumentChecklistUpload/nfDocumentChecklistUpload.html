@@ -25,177 +25,161 @@
         </div>
       </template>
       <template if:true={hasVisibleItems}>
-        <div class="slds-scrollable_x">
-          <table class="slds-table slds-table_bordered doc-table">
-            <thead>
-              <tr class="slds-line-height_reset">
-                <th scope="col">Document</th>
-                <th scope="col">Status</th>
-                <th scope="col" class="bypass-col">Bypass</th>
-                <th scope="col">File</th>
-              </tr>
-            </thead>
-            <template for:each={displayItems} for:item="item">
-              <tbody key={item.checklistId}>
-                <template if:true={item.showGroupHeader}>
-                  <tr>
-                    <th
-                      colspan="4"
-                      scope="colgroup"
-                      class="slds-text-title_caps slds-theme_shade"
-                    >
-                      {item.groupTitle}
-                    </th>
-                  </tr>
-                </template>
-                <tr>
-                  <td>
-                    <div>
-                      <template if:true={item.isRequired}>
-                        <abbr class="slds-required" title="Required">*</abbr>
-                      </template>
-                      {item.docCategory}
-                    </div>
+        <template for:each={displayItems} for:item="item">
+          <div key={item.checklistId} class="doc-item">
+            <template if:true={item.showGroupHeader}>
+              <div
+                class="group-header slds-text-title_caps slds-theme_shade slds-p-horizontal_small slds-p-vertical_x-small"
+              >
+                {item.groupTitle}
+              </div>
+            </template>
+            <div class="doc-block slds-p-around_small slds-border_bottom">
+              <div class="slds-grid slds-wrap slds-grid_vertical-align-end">
+                <div class="doc-info slds-col slds-grow slds-p-right_small">
+                  <div>
+                    <template if:true={item.isRequired}>
+                      <abbr class="slds-required" title="Required">*</abbr>
+                    </template>
+                    {item.docCategory}
+                  </div>
+                  <div class="slds-text-body_small slds-text-color_weak">
+                    {item.docType}
+                  </div>
+                  <template if:true={item.dueDate}>
                     <div class="slds-text-body_small slds-text-color_weak">
-                      {item.docType}
+                      Due {item.dueDate}
                     </div>
-                    <template if:true={item.dueDate}>
-                      <div class="slds-text-body_small slds-text-color_weak">
-                        Due {item.dueDate}
-                      </div>
-                    </template>
-                    <template if:true={item.isSellerDoc}>
-                      <div class="slds-m-top_xx-small">
-                        <lightning-badge
-                          label="Seller-supplied"
-                        ></lightning-badge>
-                      </div>
-                    </template>
-                    <template if:true={item.isExitDoc}>
-                      <div class="slds-m-top_xx-small">
-                        <lightning-badge
-                          label="Support exit doc"
-                        ></lightning-badge>
-                        <span
-                          class="slds-text-body_small slds-text-color_weak slds-m-left_x-small"
-                          >Provided by Support; needed to close the Case</span
-                        >
-                      </div>
-                    </template>
-                    <template if:true={item.showCaseLink}>
-                      <div class="slds-text-body_small">
-                        <lightning-formatted-url
-                          value={item.caseUrl}
-                          label={item.caseLabel}
-                          target="_blank"
-                        ></lightning-formatted-url>
-                      </div>
-                    </template>
-                  </td>
-                  <td>
+                  </template>
+                  <template if:true={item.isSellerDoc}>
+                    <div class="slds-m-top_xx-small">
+                      <lightning-badge
+                        label="Seller-supplied"
+                      ></lightning-badge>
+                    </div>
+                  </template>
+                  <template if:true={item.isExitDoc}>
+                    <div class="slds-m-top_xx-small">
+                      <lightning-badge
+                        label="Support exit doc"
+                      ></lightning-badge>
+                      <span
+                        class="slds-text-body_small slds-text-color_weak slds-m-left_x-small"
+                        >Provided by Support; needed to close the Case</span
+                      >
+                    </div>
+                  </template>
+                  <template if:true={item.showCaseLink}>
+                    <div class="slds-text-body_small">
+                      <lightning-formatted-url
+                        value={item.caseUrl}
+                        label={item.caseLabel}
+                        target="_blank"
+                      ></lightning-formatted-url>
+                    </div>
+                  </template>
+                </div>
+                <div class="slds-col slds-grow-none slds-grid">
+                  <div class="status-field slds-m-right_small">
                     <lightning-combobox
                       label="Status"
-                      variant="label-hidden"
                       value={item.status}
                       options={statusOptions}
                       disabled={item.bypassChecked}
                       data-checklist-id={item.checklistId}
                       onchange={handleStatusChange}
                     ></lightning-combobox>
-                  </td>
-                  <td class="bypass-col">
+                  </div>
+                  <div class="slds-align-bottom slds-p-bottom_xx-small">
                     <lightning-input
                       type="checkbox"
                       label="Bypass"
-                      variant="label-hidden"
                       checked={item.bypassChecked}
                       disabled={item.isSavingBypass}
                       data-checklist-id={item.checklistId}
                       onchange={handleBypassToggle}
                     ></lightning-input>
-                  </td>
-                  <td>
-                    <template if:true={item.bypassChecked}>
-                      <p class="slds-text-color_weak">
-                        Upload not required while Bypass is selected.
-                      </p>
-                    </template>
-                    <template if:false={item.bypassChecked}>
-                      <template if:true={item.isFinalizing}>
-                        <lightning-spinner
-                          alternative-text="Saving"
-                          size="x-small"
-                        ></lightning-spinner>
-                      </template>
-                      <template if:false={item.isFinalizing}>
-                        <template if:true={item.showFileUpload}>
-                          <lightning-file-upload
-                            data-checklist-id={item.checklistId}
-                            label={item.uploadLabel}
-                            record-id={item.checklistId}
-                            onuploadfinished={handleUploadFinished}
-                          ></lightning-file-upload>
-                          <template if:true={item.hasExistingFile}>
-                            <lightning-button
-                              variant="base"
-                              label="Cancel"
-                              data-checklist-id={item.checklistId}
-                              onclick={handleCancelReplace}
-                            ></lightning-button>
-                          </template>
-                        </template>
-                        <template if:false={item.showFileUpload}>
-                          <p class="slds-truncate slds-m-bottom_x-small">
-                            <lightning-icon
-                              icon-name="doctype:attachment"
-                              size="x-small"
-                            ></lightning-icon>
-                            {item.existingFileName}
-                          </p>
-                          <lightning-button
-                            variant="neutral"
-                            label="Replace File"
-                            data-checklist-id={item.checklistId}
-                            onclick={handleReplaceClick}
-                          ></lightning-button>
-                        </template>
-                      </template>
-                    </template>
-                  </td>
-                </tr>
+                  </div>
+                </div>
+              </div>
+
+              <div class="slds-m-top_small">
                 <template if:true={item.bypassChecked}>
-                  <tr>
-                    <td colspan="4">
-                      <template if:true={item.bypassSaved}>
-                        <div class="slds-text-title">Bypass Justification</div>
-                        <p class="slds-text-longform">
-                          {item.bypassJustification}
-                        </p>
-                      </template>
-                      <template if:false={item.bypassSaved}>
-                        <lightning-textarea
-                          label="Bypass Justification"
-                          required
-                          value={item.bypassJustification}
-                          data-checklist-id={item.checklistId}
-                          onchange={handleJustificationChange}
-                        ></lightning-textarea>
+                  <p class="slds-text-color_weak">
+                    Upload not required while Bypass is selected.
+                  </p>
+                </template>
+                <template if:false={item.bypassChecked}>
+                  <template if:true={item.isFinalizing}>
+                    <lightning-spinner
+                      alternative-text="Saving"
+                      size="x-small"
+                    ></lightning-spinner>
+                  </template>
+                  <template if:false={item.isFinalizing}>
+                    <template if:true={item.showFileUpload}>
+                      <lightning-file-upload
+                        data-checklist-id={item.checklistId}
+                        label={item.uploadLabel}
+                        record-id={item.checklistId}
+                        onuploadfinished={handleUploadFinished}
+                      ></lightning-file-upload>
+                      <template if:true={item.hasExistingFile}>
                         <lightning-button
-                          variant="brand"
-                          label="Save"
-                          class="slds-m-top_x-small"
-                          disabled={item.saveBypassDisabled}
+                          variant="base"
+                          label="Cancel"
                           data-checklist-id={item.checklistId}
-                          onclick={handleSaveBypass}
+                          onclick={handleCancelReplace}
                         ></lightning-button>
                       </template>
-                    </td>
-                  </tr>
+                    </template>
+                    <template if:false={item.showFileUpload}>
+                      <p class="file-name slds-m-bottom_x-small">
+                        <lightning-icon
+                          icon-name="doctype:attachment"
+                          size="x-small"
+                        ></lightning-icon>
+                        {item.existingFileName}
+                      </p>
+                      <lightning-button
+                        variant="neutral"
+                        label="Replace File"
+                        data-checklist-id={item.checklistId}
+                        onclick={handleReplaceClick}
+                      ></lightning-button>
+                    </template>
+                  </template>
                 </template>
-              </tbody>
-            </template>
-          </table>
-        </div>
+              </div>
+
+              <template if:true={item.bypassChecked}>
+                <div class="slds-m-top_small">
+                  <template if:true={item.bypassSaved}>
+                    <div class="slds-text-title">Bypass Justification</div>
+                    <p class="slds-text-longform">{item.bypassJustification}</p>
+                  </template>
+                  <template if:false={item.bypassSaved}>
+                    <lightning-textarea
+                      label="Bypass Justification"
+                      required
+                      value={item.bypassJustification}
+                      data-checklist-id={item.checklistId}
+                      onchange={handleJustificationChange}
+                    ></lightning-textarea>
+                    <lightning-button
+                      variant="brand"
+                      label="Save"
+                      class="slds-m-top_x-small"
+                      disabled={item.saveBypassDisabled}
+                      data-checklist-id={item.checklistId}
+                      onclick={handleSaveBypass}
+                    ></lightning-button>
+                  </template>
+                </div>
+              </template>
+            </div>
+          </div>
+        </template>
       </template>
       <template if:false={hasVisibleItems}>
         <p class="slds-p-around_medium slds-text-color_weak">{emptyMessage}</p>

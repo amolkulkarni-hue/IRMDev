@@ -98,24 +98,21 @@ describe("c-nf-document-checklist-upload", () => {
     getChecklistItems.emit(mockChecklistItems);
 
     return Promise.resolve().then(() => {
-      const rows = element.shadowRoot.querySelectorAll("tbody tr");
+      const rows = element.shadowRoot.querySelectorAll(".doc-block");
       expect(rows.length).toBe(mockChecklistItems.length);
     });
   });
 
-  it("keeps the table to four columns, with the due date and required marker in the document column", () => {
+  it("lays each document out as a stacked block, not a table, with the due date and required marker in the details", () => {
     const element = createComponent();
     getChecklistItems.emit(mockChecklistItems);
 
     return Promise.resolve().then(() => {
-      const headers = Array.from(
-        element.shadowRoot.querySelectorAll("thead th")
-      ).map((th) => th.textContent.trim());
-      expect(headers).toEqual(["Document", "Status", "Bypass", "File"]);
+      expect(element.shadowRoot.querySelector("table")).toBeNull();
 
-      const documentCell = element.shadowRoot.querySelector("tbody td");
-      expect(documentCell.textContent).toContain("Due 2026-10-01");
-      expect(documentCell.querySelector("abbr.slds-required")).not.toBeNull();
+      const block = element.shadowRoot.querySelector(".doc-block");
+      expect(block.textContent).toContain("Due 2026-10-01");
+      expect(block.querySelector("abbr.slds-required")).not.toBeNull();
     });
   });
 
@@ -155,8 +152,7 @@ describe("c-nf-document-checklist-upload", () => {
       getChecklistItems.emit(mockChecklistItems);
 
       return Promise.resolve().then(() => {
-        const fileNameEls =
-          element.shadowRoot.querySelectorAll("td p.slds-truncate");
+        const fileNameEls = element.shadowRoot.querySelectorAll(".file-name");
         const fileNames = Array.from(fileNameEls).map((el) =>
           el.textContent.trim()
         );
@@ -253,7 +249,7 @@ describe("c-nf-document-checklist-upload", () => {
 
       return Promise.resolve().then(() => {
         const ids = Array.from(
-          element.shadowRoot.querySelectorAll("tbody lightning-combobox")
+          element.shadowRoot.querySelectorAll("lightning-combobox")
         ).map((el) => el.dataset.checklistId);
         expect(ids).toEqual([
           "a00000000000002AAA",
@@ -432,9 +428,9 @@ describe("c-nf-document-checklist-upload", () => {
     const plain = { ...base, checklistId: "a00000000000013AAA" };
 
     function rowFor(element, id) {
-      return Array.from(element.shadowRoot.querySelectorAll("tbody")).find(
-        (tbody) =>
-          tbody.querySelector(`lightning-combobox[data-checklist-id="${id}"]`)
+      return Array.from(element.shadowRoot.querySelectorAll(".doc-item")).find(
+        (item) =>
+          item.querySelector(`lightning-combobox[data-checklist-id="${id}"]`)
       );
     }
 
@@ -499,7 +495,7 @@ describe("c-nf-document-checklist-upload", () => {
 
     function shownIds(element) {
       return Array.from(
-        element.shadowRoot.querySelectorAll("tbody lightning-combobox")
+        element.shadowRoot.querySelectorAll("lightning-combobox")
       ).map((el) => el.dataset.checklistId);
     }
 
@@ -606,14 +602,14 @@ describe("c-nf-document-checklist-upload", () => {
 
     function shownIds(element) {
       return Array.from(
-        element.shadowRoot.querySelectorAll("tbody lightning-combobox")
+        element.shadowRoot.querySelectorAll("lightning-combobox")
       ).map((el) => el.dataset.checklistId);
     }
 
     function headers(element) {
-      return Array.from(element.shadowRoot.querySelectorAll("tbody th")).map(
-        (th) => th.textContent.trim()
-      );
+      return Array.from(
+        element.shadowRoot.querySelectorAll(".group-header")
+      ).map((th) => th.textContent.trim());
     }
 
     it("groups rows by Case with Opportunity-level documents first, and a fully finalized Case last even if its number is lower", () => {
