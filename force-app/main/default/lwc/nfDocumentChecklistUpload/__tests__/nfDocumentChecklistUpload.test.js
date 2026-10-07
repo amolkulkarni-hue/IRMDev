@@ -394,4 +394,75 @@ describe("c-nf-document-checklist-upload", () => {
       ).not.toBeNull();
     });
   });
+
+  describe("case context", () => {
+    const base = mockChecklistItems[0];
+    const seller = {
+      ...base,
+      checklistId: "a00000000000011AAA",
+      caseId: "500000000000001AAA",
+      caseNumber: "00012345",
+      caseSubject: "Onboarding",
+      docSource: "SELLER"
+    };
+    const exit = {
+      ...base,
+      checklistId: "a00000000000012AAA",
+      caseId: "500000000000001AAA",
+      caseNumber: "00012345",
+      caseSubject: "Onboarding",
+      docSource: "EXIT"
+    };
+    const plain = { ...base, checklistId: "a00000000000013AAA" };
+
+    function rowFor(element, id) {
+      return Array.from(element.shadowRoot.querySelectorAll("tbody")).find(
+        (tbody) =>
+          tbody.querySelector(`lightning-combobox[data-checklist-id="${id}"]`)
+      );
+    }
+
+    it("labels seller documents and support exit documents, and nothing else", () => {
+      const element = createComponent();
+      getChecklistItems.emit([seller, exit, plain]);
+
+      return Promise.resolve().then(() => {
+        const labels = (id) =>
+          Array.from(
+            rowFor(element, id).querySelectorAll("lightning-badge")
+          ).map((b) => b.label);
+        expect(labels(seller.checklistId)).toEqual(["Seller-supplied"]);
+        expect(labels(exit.checklistId)).toEqual(["Support exit doc"]);
+        expect(labels(plain.checklistId)).toEqual([]);
+      });
+    });
+
+    it("shows which Case the document is for as a link", () => {
+      const element = createComponent();
+      getChecklistItems.emit([seller]);
+
+      return Promise.resolve().then(() => {
+        const link = rowFor(element, seller.checklistId).querySelector(
+          "lightning-formatted-url"
+        );
+        expect(link.label).toBe("Case 00012345 - Onboarding");
+        expect(link.value).toBe("/lightning/r/Case/500000000000001AAA/view");
+      });
+    });
+
+    it("keeps the source label but omits the Case link when the Case is not readable", () => {
+      const element = createComponent();
+      getChecklistItems.emit([
+        { ...exit, caseNumber: null, caseSubject: null }
+      ]);
+
+      return Promise.resolve().then(() => {
+        const row = rowFor(element, exit.checklistId);
+        expect(row.querySelector("lightning-formatted-url")).toBeNull();
+        expect(row.querySelector("lightning-badge").label).toBe(
+          "Support exit doc"
+        );
+      });
+    });
+  });
 });

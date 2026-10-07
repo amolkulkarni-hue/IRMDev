@@ -32,6 +32,33 @@
                   <div class="slds-text-body_small slds-text-color_weak">
                     {item.docType}
                   </div>
+                  <template if:true={item.isSellerDoc}>
+                    <div class="slds-m-top_xx-small">
+                      <lightning-badge
+                        label="Seller-supplied"
+                      ></lightning-badge>
+                    </div>
+                  </template>
+                  <template if:true={item.isExitDoc}>
+                    <div class="slds-m-top_xx-small">
+                      <lightning-badge
+                        label="Support exit doc"
+                      ></lightning-badge>
+                      <span
+                        class="slds-text-body_small slds-text-color_weak slds-m-left_x-small"
+                        >Provided by Support; needed to close the Case</span
+                      >
+                    </div>
+                  </template>
+                  <template if:true={item.showCaseLink}>
+                    <div class="slds-text-body_small">
+                      <lightning-formatted-url
+                        value={item.caseUrl}
+                        label={item.caseLabel}
+                        target="_blank"
+                      ></lightning-formatted-url>
+                    </div>
+                  </template>
                 </td>
                 <td>
                   <lightning-combobox

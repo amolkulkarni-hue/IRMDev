@@ -38,6 +38,13 @@ export default class NfDocumentChecklistUpload extends LightningElement {
       showFileUpload: !hasExistingFile,
       isFinalizing: false,
       uploadLabel: hasExistingFile ? "Replace File" : "Upload File",
+      isSellerDoc: item.docSource === "SELLER",
+      isExitDoc: item.docSource === "EXIT",
+      showCaseLink: !!(item.caseId && item.caseNumber),
+      caseUrl: item.caseId ? `/lightning/r/Case/${item.caseId}/view` : null,
+      caseLabel: item.caseSubject
+        ? `Case ${item.caseNumber} - ${item.caseSubject}`
+        : `Case ${item.caseNumber}`,
       bypassSaved,
       bypassChecked: bypassSaved,
       bypassJustification: item.bypassJustification || "",

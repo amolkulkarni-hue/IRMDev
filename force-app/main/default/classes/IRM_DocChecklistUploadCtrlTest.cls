@@ -16,6 +16,9 @@
  *   AC10 — saveBypass without a justification is rejected
  *   AC11 — clearBypass removes the bypass and returns the row to Draft
  *   AC12 — getChecklistItems returns the bypass flag and justification
+ *   AC13 — a row with no Case has no document source
+ *   AC14 — Case-linked rows from the Case Creation Rule engine are seller-supplied
+ *   AC15 — other Case-linked rows are support exit documents
  */
 @IsTest
 private class IRM_DocChecklistUploadCtrlTest {
@@ -550,5 +553,89 @@ private class IRM_DocChecklistUploadCtrlTest {
       items[0].bypassJustification,
       'AC12: Justification should be returned'
     );
+  }
+
+  // The org currently can't insert Case-linked checklist rows in tests (unrelated
+  // RecordTypeSelection error), so the source rules are tested on in-memory rows.
+  private static Id fakeId(SObjectType t) {
+    return Id.valueOf(t.getDescribe().getKeyPrefix() + '000000000001AAA');
+  }
+
+  // ── AC13: a row with no Case has no document source ────────────────────────
+
+  @IsTest
+  static void test_sourceForRowWithoutCaseIsNull() {
+    Document_Checklist__c row = new Document_Checklist__c(
+      Case_Type_Context__c = 'Support'
+    );
+    Assert.isNull(
+      IRM_DocumentChecklistUploadController.sourceFor(row),
+      'AC13: A row with no Case has no document source'
+    );
+  }
+
+  // ── AC14: Case Creation Rule rows are seller-supplied ──────────────────────
+
+  @IsTest
+  static void test_sourceForCaseCreationRuleRowIsSeller() {
+    Id caseId = fakeId(Case.SObjectType);
+    Document_Checklist__c stamped = new Document_Checklist__c(
+      Case__c = caseId,
+      Case_Type_Context__c = 'Sales'
+    );
+    Document_Checklist__c withRule = new Document_Checklist__c(
+      Case__c = caseId,
+      Case_Creation_Rule__c = fakeId(Case_Creation_Rule__c.SObjectType)
+    );
+    Assert.areEqual(
+      IRM_DocumentChecklistUploadController.SOURCE_SELLER,
+      IRM_DocumentChecklistUploadController.sourceFor(stamped),
+      'AC14: A row stamped Sales is seller-supplied'
+    );
+    Assert.areEqual(
+      IRM_DocumentChecklistUploadController.SOURCE_SELLER,
+      IRM_DocumentChecklistUploadController.sourceFor(withRule),
+      'AC14: A row with a Case Creation Rule is seller-supplied even if unstamped'
+    );
+  }
+
+  // ── AC15: other Case-linked rows are support exit documents ────────────────
+
+  @IsTest
+  static void test_sourceForOtherCaseRowIsExit() {
+    Id caseId = fakeId(Case.SObjectType);
+    Document_Checklist__c stamped = new Document_Checklist__c(
+      Case__c = caseId,
+      Case_Type_Context__c = 'Support'
+    );
+    Document_Checklist__c legacy = new Document_Checklist__c(Case__c = caseId);
+    Assert.areEqual(
+      IRM_DocumentChecklistUploadController.SOURCE_EXIT,
+      IRM_DocumentChecklistUploadController.sourceFor(stamped),
+      'AC15: A row stamped Support is an exit document'
+    );
+    Assert.areEqual(
+      IRM_DocumentChecklistUploadController.SOURCE_EXIT,
+      IRM_DocumentChecklistUploadController.sourceFor(legacy),
+      'AC15: An unstamped Case-linked row with no rule is an exit document'
+    );
+  }
+
+  // ── Opportunity-only rows carry no Case details or source ──────────────────
+
+  @IsTest
+  static void test_getChecklistItemsOpportunityRowHasNoCaseDetails() {
+    Opportunity opp = makeOpp();
+    makeDocChecklist(null, opp.Id);
+
+    Test.startTest();
+    List<IRM_DocumentChecklistUploadController.ChecklistItem> items = IRM_DocumentChecklistUploadController.getChecklistItems(
+      opp.Id
+    );
+    Test.stopTest();
+
+    Assert.areEqual(1, items.size(), 'Expected one checklist item');
+    Assert.isNull(items[0].caseId, 'No Case on this row');
+    Assert.isNull(items[0].docSource, 'No source without a Case');
   }
 }
