@@ -7,6 +7,9 @@
  *   AC2 — an Ironclad row that is bypassed Final does not validate its item
  *   AC3 — an Ironclad row that is still Draft does not validate its item
  *   AC4 — a Final, non-bypassed row that did not come through Ironclad does not validate its item
+ *         but does set Document Finalized
+ *
+ * Document_Finalized__c is TRUE exactly when the row is Final and not bypassed (AC1, AC4 true; AC2, AC3 false).
  */
 @IsTest
 private class IRM_DocChecklistItemSyncTest {
@@ -90,6 +93,15 @@ private class IRM_DocChecklistItemSyncTest {
     .System_Validated__c;
   }
 
+  private static Boolean documentFinalized(Id itemId) {
+    return [
+      SELECT Document_Finalized__c
+      FROM Booking_Verification_Checklist_Item__c
+      WHERE Id = :itemId
+    ]
+    .Document_Finalized__c;
+  }
+
   private static Id makeIroncladContract() {
     // No Opportunity on the contract, so the Ironclad trigger creates no checklist row itself.
     ironclad__Ironclad_Contract__c contract = new ironclad__Ironclad_Contract__c();
@@ -115,12 +127,20 @@ private class IRM_DocChecklistItemSyncTest {
         systemValidated(item.Id),
         'AC1: An Ironclad row that is Final and not bypassed should validate the item'
       );
+      Assert.isTrue(
+        documentFinalized(item.Id),
+        'AC1: ...and should also mark the document finalized'
+      );
 
       doc.Status__c = 'Draft';
       update doc;
       Assert.isFalse(
         systemValidated(item.Id),
         'AC1: Moving the row back to Draft should clear System Validated'
+      );
+      Assert.isFalse(
+        documentFinalized(item.Id),
+        'AC1: Moving the row back to Draft should clear Document Finalized'
       );
     }
   }
@@ -144,6 +164,10 @@ private class IRM_DocChecklistItemSyncTest {
         systemValidated(item.Id),
         'AC2: A bypassed Final row is not a document and must not validate the item'
       );
+      Assert.isFalse(
+        documentFinalized(item.Id),
+        'AC2: A bypassed Final row must not mark the document finalized'
+      );
     }
   }
 
@@ -161,6 +185,10 @@ private class IRM_DocChecklistItemSyncTest {
       Assert.isFalse(
         systemValidated(item.Id),
         'AC3: An Ironclad row that is still Draft should not validate the item'
+      );
+      Assert.isFalse(
+        documentFinalized(item.Id),
+        'AC3: A Draft row must not mark the document finalized'
       );
     }
   }
@@ -182,6 +210,10 @@ private class IRM_DocChecklistItemSyncTest {
       Assert.isFalse(
         systemValidated(item.Id),
         'AC4: A Final row that did not come through Ironclad should not validate the item'
+      );
+      Assert.isTrue(
+        documentFinalized(item.Id),
+        'AC4: ...but a manually uploaded Final row should mark the document finalized'
       );
     }
   }
