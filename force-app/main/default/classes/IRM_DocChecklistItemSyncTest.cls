@@ -80,7 +80,7 @@ private class IRM_DocChecklistItemSyncTest {
       Doc_Type__c = 'Technical Scoping Form',
       Status__c = 'Draft'
     );
-    insert doc;
+    insert as system doc;
     return doc;
   }
 
@@ -89,6 +89,7 @@ private class IRM_DocChecklistItemSyncTest {
       SELECT System_Validated__c
       FROM Booking_Verification_Checklist_Item__c
       WHERE Id = :itemId
+      WITH SYSTEM_MODE
     ]
     .System_Validated__c;
   }
@@ -98,6 +99,7 @@ private class IRM_DocChecklistItemSyncTest {
       SELECT Document_Finalized__c
       FROM Booking_Verification_Checklist_Item__c
       WHERE Id = :itemId
+      WITH SYSTEM_MODE
     ]
     .Document_Finalized__c;
   }
@@ -105,7 +107,7 @@ private class IRM_DocChecklistItemSyncTest {
   private static Id makeIroncladContract() {
     // No Opportunity on the contract, so the Ironclad trigger creates no checklist row itself.
     ironclad__Ironclad_Contract__c contract = new ironclad__Ironclad_Contract__c();
-    insert contract;
+    insert as system contract;
     return contract.Id;
   }
 
@@ -120,7 +122,7 @@ private class IRM_DocChecklistItemSyncTest {
       Test.startTest();
       doc.Status__c = 'Final';
       doc.Submitted_Date__c = Date.today();
-      update doc;
+      update as system doc;
       Test.stopTest();
 
       Assert.isTrue(
@@ -133,7 +135,7 @@ private class IRM_DocChecklistItemSyncTest {
       );
 
       doc.Status__c = 'Draft';
-      update doc;
+      update as system doc;
       Assert.isFalse(
         systemValidated(item.Id),
         'AC1: Moving the row back to Draft should clear System Validated'
@@ -157,7 +159,7 @@ private class IRM_DocChecklistItemSyncTest {
       doc.Bypass_Requirement__c = true;
       doc.Bypass_Justification__c = 'Not applicable for this deal';
       doc.Status__c = 'Final';
-      update doc;
+      update as system doc;
       Test.stopTest();
 
       Assert.isFalse(
@@ -204,7 +206,7 @@ private class IRM_DocChecklistItemSyncTest {
       Test.startTest();
       doc.Status__c = 'Final';
       doc.Submitted_Date__c = Date.today();
-      update doc;
+      update as system doc;
       Test.stopTest();
 
       Assert.isFalse(
