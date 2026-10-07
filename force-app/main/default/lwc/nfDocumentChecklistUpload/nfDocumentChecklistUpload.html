@@ -36,8 +36,19 @@
               <th scope="col">File</th>
             </tr>
           </thead>
-          <template for:each={sortedItems} for:item="item">
+          <template for:each={displayItems} for:item="item">
             <tbody key={item.checklistId}>
+              <template if:true={item.showGroupHeader}>
+                <tr>
+                  <th
+                    colspan="6"
+                    scope="colgroup"
+                    class="slds-text-title_caps slds-theme_shade"
+                  >
+                    {item.groupTitle}
+                  </th>
+                </tr>
+              </template>
               <tr>
                 <td>
                   <div class="slds-truncate">{item.docCategory}</div>

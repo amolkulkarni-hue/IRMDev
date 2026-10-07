@@ -93,13 +93,54 @@ export default class NfDocumentChecklistUpload extends LightningElement {
     this.showExitDocs = event.target.checked;
   }
 
-  // Display order only: items keeps its original order so the row indexes
-  // captured by async handlers stay valid. Array.sort is stable, so each group
-  // keeps the server's category/type order.
-  get sortedItems() {
-    return [...this.visibleItems].sort(
-      (a, b) => Number(a.status === "Final") - Number(b.status === "Final")
+  // Display order and grouping only: items keeps its original order so the row indexes captured by
+  // async handlers stay valid. Rows are grouped by Case (Opportunity-level rows first); groups that
+  // still have unfinished documents come before fully finalized ones, and within a group unfinished
+  // rows come first. Array.sort is stable, so the server's category/type order is kept inside each
+  // tier. Group headers only show when there is more than one group.
+  get displayItems() {
+    const isFinal = (item) => item.status === "Final";
+    const groups = new Map();
+    this.visibleItems.forEach((item) => {
+      const key = item.caseId || "none";
+      if (!groups.has(key)) {
+        let title = "Opportunity-level documents";
+        if (item.caseId) {
+          title = item.caseNumber
+            ? `Case ${item.caseNumber}${item.caseSubject ? ` - ${item.caseSubject}` : ""}`
+            : "Case (details not available)";
+        }
+        groups.set(key, {
+          caseId: item.caseId,
+          caseNumber: item.caseNumber || "",
+          title,
+          items: []
+        });
+      }
+      groups.get(key).items.push(item);
+    });
+
+    const unfinished = (group) => group.items.some((item) => !isFinal(item));
+    const ordered = [...groups.values()].sort(
+      (a, b) =>
+        Number(!unfinished(a)) - Number(!unfinished(b)) ||
+        Number(!!a.caseId) - Number(!!b.caseId) ||
+        a.caseNumber.localeCompare(b.caseNumber)
     );
+    const grouped = ordered.length > 1;
+
+    return ordered.flatMap((group) => {
+      const items = [...group.items].sort(
+        (a, b) => Number(isFinal(a)) - Number(isFinal(b))
+      );
+      const finalCount = items.filter(isFinal).length;
+      return items.map((item, index) => ({
+        ...item,
+        showGroupHeader: grouped && index === 0,
+        groupTitle: `${group.title} (${finalCount} of ${items.length} final)`,
+        showCaseLink: item.showCaseLink && !grouped
+      }));
+    });
   }
 
   handleClose() {

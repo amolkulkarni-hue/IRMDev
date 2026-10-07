@@ -570,4 +570,105 @@ describe("c-nf-document-checklist-upload", () => {
       });
     });
   });
+
+  describe("grouping by Case", () => {
+    const base = mockChecklistItems[0];
+    const row = (id, status, caseNo, subject) => ({
+      ...base,
+      checklistId: id,
+      status,
+      docSource: caseNo ? "SELLER" : null,
+      caseId: caseNo ? `500${caseNo}AAA` : null,
+      caseNumber: caseNo ? `000${caseNo}` : null,
+      caseSubject: subject || null
+    });
+    const oppDoc = row("a00000000000031AAA", "Draft");
+    const a1 = row("a00000000000032AAA", "Draft", "000000010", "Alpha");
+    const a2 = row("a00000000000033AAA", "Final", "000000010", "Alpha");
+    const b1 = row("a00000000000034AAA", "Final", "000000005", "Beta");
+    const b2 = row("a00000000000035AAA", "Final", "000000005", "Beta");
+
+    function shownIds(element) {
+      return Array.from(
+        element.shadowRoot.querySelectorAll("tbody lightning-combobox")
+      ).map((el) => el.dataset.checklistId);
+    }
+
+    function headers(element) {
+      return Array.from(element.shadowRoot.querySelectorAll("tbody th")).map(
+        (th) => th.textContent.trim()
+      );
+    }
+
+    it("groups rows by Case with Opportunity-level documents first, and a fully finalized Case last even if its number is lower", () => {
+      const element = createComponent();
+      getChecklistItems.emit([b1, a2, b2, oppDoc, a1]);
+
+      return Promise.resolve().then(() => {
+        expect(shownIds(element)).toEqual([
+          oppDoc.checklistId,
+          a1.checklistId,
+          a2.checklistId,
+          b1.checklistId,
+          b2.checklistId
+        ]);
+        expect(headers(element)).toEqual([
+          "Opportunity-level documents (0 of 1 final)",
+          "Case 000000000010 - Alpha (1 of 2 final)",
+          "Case 000000000005 - Beta (2 of 2 final)"
+        ]);
+      });
+    });
+
+    it("shows no group headers when there is only one group, and keeps the Case link on the row", () => {
+      const element = createComponent();
+      getChecklistItems.emit([a1, a2]);
+
+      return Promise.resolve().then(() => {
+        expect(headers(element)).toEqual([]);
+        expect(
+          element.shadowRoot.querySelectorAll("lightning-formatted-url")
+        ).toHaveLength(2);
+      });
+    });
+
+    it("drops the per-row Case link once group headers already say which Case", () => {
+      const element = createComponent();
+      getChecklistItems.emit([a1, b1]);
+
+      return Promise.resolve().then(() => {
+        expect(headers(element)).toHaveLength(2);
+        expect(
+          element.shadowRoot.querySelectorAll("lightning-formatted-url")
+        ).toHaveLength(0);
+      });
+    });
+
+    it("moves a group to the bottom once its last unfinished document is finalized", () => {
+      finalizeUpload.mockResolvedValue();
+      const element = createComponent();
+      getChecklistItems.emit([a1, b1]);
+
+      return Promise.resolve()
+        .then(() => {
+          expect(shownIds(element)[0]).toBe(a1.checklistId);
+          element.shadowRoot
+            .querySelector(
+              `lightning-file-upload[data-checklist-id="${a1.checklistId}"]`
+            )
+            .dispatchEvent(
+              new CustomEvent("uploadfinished", {
+                detail: {
+                  files: [{ documentId: "069000000000077AAA", name: "x.pdf" }]
+                }
+              })
+            );
+        })
+        .then(() => Promise.resolve())
+        .then(() => Promise.resolve())
+        .then(() => {
+          expect(shownIds(element)).toEqual([b1.checklistId, a1.checklistId]);
+        });
+    });
+  });
 });
