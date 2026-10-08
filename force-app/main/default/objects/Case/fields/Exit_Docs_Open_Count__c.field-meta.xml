@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Exit_Docs_Open_Count__c</fullName>
+    <defaultValue>0</defaultValue>
+    <description
+  >Flow-managed. Number of non-Final exit Document_Checklist__c rows (Case_Creation_Rule__c is null) on this Case. Maintained by Doc_Checklist_Completion_Sync_Flow. Exists so Case_Completion_Update_Flow re-runs when an open exit doc is added to a Case whose All_Exit_Docs_Final__c is already false.</description>
+    <label>Exit Docs Open Count</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>0</scale>
+    <trackTrending>false</trackTrending>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>
