@@ -19,7 +19,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>getAnyExitDoc</targetReference>
+                <targetReference>checkDocGate</targetReference>
             </connector>
             <label>Config Found — Calculate</label>
         </rules>
@@ -53,10 +53,11 @@
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>varAnyExitDoc</leftValueReference>
-                <operator>IsNull</operator>
+                <leftValueReference
+        >$Record.Exit_Docs_Open_Count__c</leftValueReference>
+                <operator>EqualTo</operator>
                 <rightValue>
-                    <booleanValue>true</booleanValue>
+                    <numberValue>0.0</numberValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -66,39 +67,9 @@
         </rules>
     </decisions>
     <description
-  >Record-Triggered After Save flow on Case (Update). Fires when Status, All_Exit_Docs_Final__c or Exit_Docs_Open_Count__c changes. Queries Case_Status_Progress__c config for the current Status and Record Type, then sets Case_Completion_Pct__c. If config weight is 90+ and either All_Exit_Docs_Final__c is true or the Case has no exit-doc Document_Checklist__c rows (Case_Creation_Rule__c is null), the percentage is set to 100. If config weight is less than 90, or docs gate has not passed, the config weight is used directly. Ends silently if no config is found for the current Status.</description>
+  >Record-Triggered After Save flow on Case (Update). Fires when Status, All_Exit_Docs_Final__c or Exit_Docs_Open_Count__c changes. Queries Case_Status_Progress__c config for the current Status and Record Type, then sets Case_Completion_Pct__c. If config weight is 90+ and either All_Exit_Docs_Final__c is true or Exit_Docs_Open_Count__c is 0 (the Case has never had an open exit doc; the Sync flow only sets All_Exit_Docs_Final__c to false when it records at least one), the percentage is set to 100. If config weight is less than 90, or docs gate has not passed, the config weight is used directly. Ends silently if no config is found for the current Status.</description>
     <label>Case Completion Update Flow</label>
     <processType>AutoLaunchedFlow</processType>
-    <recordLookups>
-        <name>getAnyExitDoc</name>
-        <label>Get Any Exit Doc for Case</label>
-        <locationX>176</locationX>
-        <locationY>350</locationY>
-        <assignNullValuesIfNoRecordsFound
-    >true</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>checkDocGate</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Case__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>$Record.Id</elementReference>
-            </value>
-        </filters>
-        <filters>
-            <field>Case_Creation_Rule__c</field>
-            <operator>IsNull</operator>
-            <value>
-                <booleanValue>true</booleanValue>
-            </value>
-        </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>Document_Checklist__c</object>
-        <outputReference>varAnyExitDoc</outputReference>
-        <queriedFields>Id</queriedFields>
-    </recordLookups>
     <recordLookups>
         <name>getRecordTypeDevName</name>
         <label>Get Case RecordType DeveloperName</label>
@@ -235,14 +206,6 @@
         <triggerType>RecordAfterSave</triggerType>
     </start>
     <status>Active</status>
-    <variables>
-        <name>varAnyExitDoc</name>
-        <dataType>SObject</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <objectType>Document_Checklist__c</objectType>
-    </variables>
     <variables>
         <name>varCaseRTDevName</name>
         <dataType>String</dataType>
