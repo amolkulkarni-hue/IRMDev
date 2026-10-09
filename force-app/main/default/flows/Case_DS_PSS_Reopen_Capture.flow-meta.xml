@@ -79,9 +79,9 @@ IMICC9S-2215.</description>
         <dataType>Boolean</dataType>
         <expression>AND(
   {!$Record__Prior.IsClosed},
-  NOT({!$Record.Status} = {!$Record__Prior.Status}),
-  NOT(BEGINS({!$Record.Status}, "Closed")),
-  NOT({!$Record.Status} = "Lost after Booking")
+  NOT(TEXT({!$Record.Status}) = TEXT({!$Record__Prior.Status})),
+  NOT(BEGINS(TEXT({!$Record.Status}), "Closed")),
+  NOT(TEXT({!$Record.Status}) = "Lost after Booking")
 )</expression>
     </formulas>
     <interviewLabel
