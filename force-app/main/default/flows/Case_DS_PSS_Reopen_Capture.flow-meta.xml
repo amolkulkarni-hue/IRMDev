@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>68.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <name>Set_Reopened_Start_Time</name>
+        <label>Capture Reopened Start Time</label>
+        <locationX>176</locationX>
+        <locationY>350</locationY>
+        <assignmentItems>
+            <assignToReference
+      >$Record.GSC_Reopened_Start_Time__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Flow.CurrentDateTime</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <decisions>
+        <name>Check_Record_Type</name>
+        <label>Is Deal Support or Post Sale Support?</label>
+        <locationX>176</locationX>
+        <locationY>134</locationY>
+        <defaultConnectorLabel>Other RT — skip</defaultConnectorLabel>
+        <rules>
+            <name>RT_Is_DS_or_PSS</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>fml_Is_DS_or_PSS</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Check_Reopen_Event</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_Reopen_Event</name>
+        <label>Transitioning from Closed to Open?</label>
+        <locationX>176</locationX>
+        <locationY>242</locationY>
+        <defaultConnectorLabel>Not a reopen — skip</defaultConnectorLabel>
+        <rules>
+            <name>Is_Reopen</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>fml_Is_Reopen_Event</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Reopened_Start_Time</targetReference>
+            </connector>
+            <label>Yes — reopen event</label>
+        </rules>
+    </decisions>
+    <description>Before Save — Deal Support and Post Sale Support Cases only.
+When a Case transitions from a Closed status to a non-Closed status (reopen event),
+captures GSC_Reopened_Start_Time__c with the current date/time.
+Overwrites on each reopen to reflect the most recent event.
+IMICC9S-2215.</description>
+    <environments>Default</environments>
+    <formulas>
+        <name>fml_Is_DS_or_PSS</name>
+        <dataType>Boolean</dataType>
+        <expression>OR(
+  {!$Record.RecordType.DeveloperName} = &quot;Deal_Support&quot;,
+  {!$Record.RecordType.DeveloperName} = &quot;Post_Sale_Support&quot;
+)</expression>
+    </formulas>
+    <formulas>
+        <name>fml_Is_Reopen_Event</name>
+        <dataType>Boolean</dataType>
+        <expression>AND(
+  {!$Record__Prior.IsClosed},
+  NOT({!$Record.IsClosed})
+)</expression>
+    </formulas>
+    <interviewLabel
+  >Case DS/PSS - Reopen Capture {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Case DS/PSS - Reopen Capture</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Check_Record_Type</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>IsClosed</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <object>Case</object>
+        <recordTriggerType>Update</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>
