@@ -676,4 +676,54 @@ private class IRM_DocChecklistUploadCtrlTest {
       'File linked to the Case Opportunity'
     );
   }
+
+  // ── Document Category / Type are editable ─────────────────────────────────
+
+  @IsTest
+  static void test_updateDocumentTypeSavesCategoryAndType() {
+    Opportunity opp = makeOpp();
+    Document_Checklist__c doc = makeDocChecklist(null, opp.Id);
+
+    Test.startTest();
+    IRM_DocumentChecklistUploadController.updateDocumentType(
+      doc.Id,
+      'SOW & Contracts',
+      'SOW Exhibit'
+    );
+    Test.stopTest();
+
+    Document_Checklist__c saved = [
+      SELECT Doc_Category__c, Doc_Type__c
+      FROM Document_Checklist__c
+      WHERE Id = :doc.Id
+    ];
+    Assert.areEqual('SOW & Contracts', saved.Doc_Category__c, 'Category saved');
+    Assert.areEqual('SOW Exhibit', saved.Doc_Type__c, 'Type saved');
+  }
+
+  @IsTest
+  static void test_updateDocumentTypeRejectsTypeOutsideCategory() {
+    Opportunity opp = makeOpp();
+    Document_Checklist__c doc = makeDocChecklist(null, opp.Id);
+
+    Test.startTest();
+    try {
+      IRM_DocumentChecklistUploadController.updateDocumentType(
+        doc.Id,
+        'SOW & Contracts',
+        'Technical Scoping Form'
+      );
+      Assert.fail('A type from another category should be rejected');
+    } catch (AuraHandledException ex) {
+      Assert.isNotNull(ex.getMessage(), 'An error message is returned');
+    }
+    Test.stopTest();
+
+    Assert.areEqual(
+      'Scoping & Technical',
+      [SELECT Doc_Category__c FROM Document_Checklist__c WHERE Id = :doc.Id]
+      .Doc_Category__c,
+      'The row is unchanged'
+    );
+  }
 }

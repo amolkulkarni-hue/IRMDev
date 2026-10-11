@@ -278,6 +278,25 @@ public with sharing class IRM_DocumentChecklistUploadController {
   }
 
   @AuraEnabled
+  public static void updateDocumentType(
+    Id checklistId,
+    String docCategory,
+    String docType
+  ) {
+    try {
+      update as user new Document_Checklist__c(
+        Id = checklistId,
+        Doc_Category__c = docCategory,
+        Doc_Type__c = docType
+      );
+    } catch (DmlException dmlEx) {
+      throw new AuraHandledException(dmlEx.getDmlMessage(0));
+    } catch (Exception ex) {
+      throw new AuraHandledException(ex.getMessage());
+    }
+  }
+
+  @AuraEnabled
   public static void updateStatus(Id checklistId, String status) {
     try {
       update as user new Document_Checklist__c(

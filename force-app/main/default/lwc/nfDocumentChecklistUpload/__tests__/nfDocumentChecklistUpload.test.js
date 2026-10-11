@@ -3,6 +3,11 @@ import NfDocumentChecklistUpload from "c/nfDocumentChecklistUpload";
 import getChecklistItems from "@salesforce/apex/IRM_DocumentChecklistUploadController.getChecklistItems";
 import finalizeUpload from "@salesforce/apex/IRM_DocumentChecklistUploadController.finalizeUpload";
 import updateStatus from "@salesforce/apex/IRM_DocumentChecklistUploadController.updateStatus";
+import updateDocumentType from "@salesforce/apex/IRM_DocumentChecklistUploadController.updateDocumentType";
+import {
+  getObjectInfo,
+  getPicklistValuesByRecordType
+} from "lightning/uiObjectInfoApi";
 import saveBypass from "@salesforce/apex/IRM_DocumentChecklistUploadController.saveBypass";
 import clearBypass from "@salesforce/apex/IRM_DocumentChecklistUploadController.clearBypass";
 
@@ -48,6 +53,12 @@ jest.mock(
 
 jest.mock(
   "@salesforce/apex/IRM_DocumentChecklistUploadController.updateStatus",
+  () => ({ default: jest.fn() }),
+  { virtual: true }
+);
+
+jest.mock(
+  "@salesforce/apex/IRM_DocumentChecklistUploadController.updateDocumentType",
   () => ({ default: jest.fn() }),
   { virtual: true }
 );
@@ -729,6 +740,124 @@ describe("c-nf-document-checklist-upload", () => {
         "Case 000000000010 - Alpha"
       ]);
       expect(shownIds(element)).toEqual([c1.checklistId]);
+    });
+  });
+
+  describe("document category and type", () => {
+    const picklistData = {
+      picklistFieldValues: {
+        Doc_Category__c: {
+          controllerValues: {},
+          values: [
+            { label: "Scoping & Technical", value: "Scoping & Technical" },
+            { label: "SOW & Contracts", value: "SOW & Contracts" }
+          ]
+        },
+        Doc_Type__c: {
+          controllerValues: { "Scoping & Technical": 0, "SOW & Contracts": 1 },
+          values: [
+            {
+              label: "Technical Scoping Form",
+              value: "Technical Scoping Form",
+              validFor: [0]
+            },
+            {
+              label: "DRMS Scoping Form",
+              value: "DRMS Scoping Form",
+              validFor: [0]
+            },
+            {
+              label: "SOW Exhibit",
+              value: "SOW Exhibit",
+              validFor: [1]
+            }
+          ]
+        }
+      }
+    };
+
+    async function setup() {
+      const element = createComponent();
+      getObjectInfo.emit({ defaultRecordTypeId: "012000000000000AAA" });
+      getPicklistValuesByRecordType.emit(picklistData);
+      getChecklistItems.emit([mockChecklistItems[0]]);
+      await flush();
+      return element;
+    }
+
+    const combo = (element, label) =>
+      Array.from(
+        element.shadowRoot.querySelectorAll("lightning-combobox")
+      ).find((c) => c.label === label);
+
+    const choose = async (element, label, value) => {
+      combo(element, label).dispatchEvent(
+        new CustomEvent("change", { detail: { value } })
+      );
+      await flush();
+    };
+
+    it("pre-populates both fields from the record and limits types to the category", async () => {
+      const element = await setup();
+      expect(combo(element, "Document Category").value).toBe(
+        "Scoping & Technical"
+      );
+      expect(combo(element, "Document Type").value).toBe(
+        "Technical Scoping Form"
+      );
+      expect(
+        combo(element, "Document Type").options.map((o) => o.value)
+      ).toEqual(["Technical Scoping Form", "DRMS Scoping Form"]);
+    });
+
+    it("saves a new type for the same category", async () => {
+      updateDocumentType.mockResolvedValue();
+      const element = await setup();
+      await choose(element, "Document Type", "DRMS Scoping Form");
+      expect(updateDocumentType).toHaveBeenCalledWith({
+        checklistId: mockChecklistItems[0].checklistId,
+        docCategory: "Scoping & Technical",
+        docType: "DRMS Scoping Form"
+      });
+    });
+
+    it("clears the type and holds the upload until a type is chosen for a new category", async () => {
+      updateDocumentType.mockResolvedValue();
+      const element = await setup();
+      await choose(element, "Document Category", "SOW & Contracts");
+
+      expect(updateDocumentType).not.toHaveBeenCalled();
+      expect(combo(element, "Document Type").value).toBeNull();
+      expect(
+        combo(element, "Document Type").options.map((o) => o.value)
+      ).toEqual(["SOW Exhibit"]);
+      expect(
+        element.shadowRoot.querySelector("lightning-file-upload")
+      ).toBeNull();
+
+      await choose(element, "Document Type", "SOW Exhibit");
+      expect(updateDocumentType).toHaveBeenCalledWith({
+        checklistId: mockChecklistItems[0].checklistId,
+        docCategory: "SOW & Contracts",
+        docType: "SOW Exhibit"
+      });
+      expect(
+        element.shadowRoot.querySelector("lightning-file-upload")
+      ).not.toBeNull();
+    });
+
+    it("puts the saved category and type back when the save fails", async () => {
+      updateDocumentType.mockRejectedValue({ body: { message: "nope" } });
+      const element = await setup();
+      await choose(element, "Document Category", "SOW & Contracts");
+      await choose(element, "Document Type", "SOW Exhibit");
+
+      expect(combo(element, "Document Category").value).toBe(
+        "Scoping & Technical"
+      );
+      expect(combo(element, "Document Type").value).toBe(
+        "Technical Scoping Form"
+      );
     });
   });
 });

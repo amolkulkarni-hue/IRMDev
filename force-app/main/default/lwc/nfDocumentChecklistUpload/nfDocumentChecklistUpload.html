@@ -80,19 +80,41 @@
                         <div
                           class="doc-info slds-col slds-grow slds-p-right_small"
                         >
-                          <div>
-                            <template if:true={item.isRequired}>
-                              <abbr class="slds-required" title="Required"
-                                >*</abbr
-                              >
-                            </template>
-                            {item.docCategory}
-                          </div>
-                          <div
-                            class="slds-text-body_small slds-text-color_weak"
-                          >
-                            {item.docType}
-                          </div>
+                          <template if:true={canEditDocType}>
+                            <lightning-combobox
+                              label="Document Category"
+                              value={item.docCategory}
+                              options={categoryOptions}
+                              required={item.isRequired}
+                              disabled={item.isSavingType}
+                              data-checklist-id={item.checklistId}
+                              onchange={handleCategoryChange}
+                            ></lightning-combobox>
+                            <lightning-combobox
+                              label="Document Type"
+                              value={item.docType}
+                              options={item.typeOptions}
+                              placeholder="Select a type"
+                              disabled={item.isSavingType}
+                              data-checklist-id={item.checklistId}
+                              onchange={handleTypeChange}
+                            ></lightning-combobox>
+                          </template>
+                          <template if:false={canEditDocType}>
+                            <div>
+                              <template if:true={item.isRequired}>
+                                <abbr class="slds-required" title="Required"
+                                  >*</abbr
+                                >
+                              </template>
+                              {item.docCategory}
+                            </div>
+                            <div
+                              class="slds-text-body_small slds-text-color_weak"
+                            >
+                              {item.docType}
+                            </div>
+                          </template>
                           <template if:true={item.dueDate}>
                             <div
                               class="slds-text-body_small slds-text-color_weak"
@@ -150,44 +172,51 @@
                             Upload not required while Bypass is selected.
                           </p>
                         </template>
+                        <template if:true={item.typePending}>
+                          <p class="slds-text-color_weak">
+                            Select a Document Type to continue.
+                          </p>
+                        </template>
                         <template if:false={item.bypassChecked}>
-                          <template if:true={item.isFinalizing}>
-                            <lightning-spinner
-                              alternative-text="Saving"
-                              size="x-small"
-                            ></lightning-spinner>
-                          </template>
-                          <template if:false={item.isFinalizing}>
-                            <template if:true={item.showFileUpload}>
-                              <lightning-file-upload
-                                data-checklist-id={item.checklistId}
-                                label={item.uploadLabel}
-                                record-id={item.checklistId}
-                                onuploadfinished={handleUploadFinished}
-                              ></lightning-file-upload>
-                              <template if:true={item.hasExistingFile}>
-                                <lightning-button
-                                  variant="base"
-                                  label="Cancel"
+                          <template if:false={item.typePending}>
+                            <template if:true={item.isFinalizing}>
+                              <lightning-spinner
+                                alternative-text="Saving"
+                                size="x-small"
+                              ></lightning-spinner>
+                            </template>
+                            <template if:false={item.isFinalizing}>
+                              <template if:true={item.showFileUpload}>
+                                <lightning-file-upload
                                   data-checklist-id={item.checklistId}
-                                  onclick={handleCancelReplace}
+                                  label={item.uploadLabel}
+                                  record-id={item.checklistId}
+                                  onuploadfinished={handleUploadFinished}
+                                ></lightning-file-upload>
+                                <template if:true={item.hasExistingFile}>
+                                  <lightning-button
+                                    variant="base"
+                                    label="Cancel"
+                                    data-checklist-id={item.checklistId}
+                                    onclick={handleCancelReplace}
+                                  ></lightning-button>
+                                </template>
+                              </template>
+                              <template if:false={item.showFileUpload}>
+                                <p class="file-name slds-m-bottom_x-small">
+                                  <lightning-icon
+                                    icon-name="doctype:attachment"
+                                    size="x-small"
+                                  ></lightning-icon>
+                                  {item.existingFileName}
+                                </p>
+                                <lightning-button
+                                  variant="neutral"
+                                  label="Replace File"
+                                  data-checklist-id={item.checklistId}
+                                  onclick={handleReplaceClick}
                                 ></lightning-button>
                               </template>
-                            </template>
-                            <template if:false={item.showFileUpload}>
-                              <p class="file-name slds-m-bottom_x-small">
-                                <lightning-icon
-                                  icon-name="doctype:attachment"
-                                  size="x-small"
-                                ></lightning-icon>
-                                {item.existingFileName}
-                              </p>
-                              <lightning-button
-                                variant="neutral"
-                                label="Replace File"
-                                data-checklist-id={item.checklistId}
-                                onclick={handleReplaceClick}
-                              ></lightning-button>
                             </template>
                           </template>
                         </template>

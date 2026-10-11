@@ -1,8 +1,14 @@
 import { LightningElement, api, wire } from "lwc";
 import { ShowToastEvent } from "lightning/platformShowToastEvent";
 import { CloseActionScreenEvent } from "lightning/actions";
+import {
+  getObjectInfo,
+  getPicklistValuesByRecordType
+} from "lightning/uiObjectInfoApi";
+import DOCUMENT_CHECKLIST_OBJECT from "@salesforce/schema/Document_Checklist__c";
 import getChecklistItems from "@salesforce/apex/IRM_DocumentChecklistUploadController.getChecklistItems";
 import finalizeUpload from "@salesforce/apex/IRM_DocumentChecklistUploadController.finalizeUpload";
+import updateDocumentType from "@salesforce/apex/IRM_DocumentChecklistUploadController.updateDocumentType";
 import updateStatus from "@salesforce/apex/IRM_DocumentChecklistUploadController.updateStatus";
 import saveBypass from "@salesforce/apex/IRM_DocumentChecklistUploadController.saveBypass";
 import clearBypass from "@salesforce/apex/IRM_DocumentChecklistUploadController.clearBypass";
@@ -21,6 +27,52 @@ export default class NfDocumentChecklistUpload extends LightningElement {
   sectionOverrides = {};
   completedOverrides = {};
   statusOptions = STATUS_OPTIONS;
+  recordTypeId;
+  categoryOptions = [];
+  typeValues = [];
+  typeControllerValues = {};
+
+  @wire(getObjectInfo, { objectApiName: DOCUMENT_CHECKLIST_OBJECT })
+  wiredObjectInfo({ data }) {
+    if (data) {
+      this.recordTypeId = data.defaultRecordTypeId;
+    }
+  }
+
+  // Document Type is dependent on Document Category, so keep the controlling-value index and filter
+  // the type list per row.
+  @wire(getPicklistValuesByRecordType, {
+    objectApiName: DOCUMENT_CHECKLIST_OBJECT,
+    recordTypeId: "$recordTypeId"
+  })
+  wiredPicklistValues({ data }) {
+    if (data) {
+      const categories = data.picklistFieldValues.Doc_Category__c;
+      const types = data.picklistFieldValues.Doc_Type__c;
+      this.categoryOptions = categories.values.map(({ label, value }) => ({
+        label,
+        value
+      }));
+      this.typeValues = types.values;
+      this.typeControllerValues = types.controllerValues;
+      this.items = this.items.map((row) => this.withTypeOptions(row));
+    }
+  }
+
+  typeOptionsFor(category) {
+    const index = this.typeControllerValues[category];
+    return this.typeValues
+      .filter((type) => type.validFor.includes(index))
+      .map(({ label, value }) => ({ label, value }));
+  }
+
+  withTypeOptions(row) {
+    return { ...row, typeOptions: this.typeOptionsFor(row.docCategory) };
+  }
+
+  get canEditDocType() {
+    return this.categoryOptions.length > 0;
+  }
 
   @wire(getChecklistItems, { recordId: "$recordId" })
   wiredChecklistItems({ data, error }) {
@@ -37,6 +89,11 @@ export default class NfDocumentChecklistUpload extends LightningElement {
     const bypassSaved = !!item.bypassRequirement;
     return {
       ...item,
+      savedCategory: item.docCategory,
+      savedType: item.docType,
+      typePending: false,
+      isSavingType: false,
+      typeOptions: this.typeOptionsFor(item.docCategory),
       hasExistingFile,
       showFileUpload: !hasExistingFile,
       isFinalizing: false,
@@ -217,6 +274,59 @@ export default class NfDocumentChecklistUpload extends LightningElement {
       return;
     }
     this.setRow(rowIndex, { showFileUpload: false });
+  }
+
+  handleCategoryChange(event) {
+    const rowIndex = this.rowIndexFor(event);
+    if (rowIndex === -1) {
+      return;
+    }
+    const docCategory = event.detail.value;
+    const row = this.items[rowIndex];
+    if (docCategory === row.docCategory) {
+      return;
+    }
+    // The old type may not belong to the new category, so it is cleared and the user picks again;
+    // nothing is saved until a valid type is chosen.
+    this.setRow(rowIndex, {
+      docCategory,
+      docType: null,
+      typeOptions: this.typeOptionsFor(docCategory),
+      typePending: true
+    });
+  }
+
+  handleTypeChange(event) {
+    const rowIndex = this.rowIndexFor(event);
+    if (rowIndex === -1) {
+      return;
+    }
+    const docType = event.detail.value;
+    const { checklistId, docCategory, savedCategory, savedType } =
+      this.items[rowIndex];
+    this.setRow(rowIndex, { docType, isSavingType: true });
+
+    updateDocumentType({ checklistId, docCategory, docType })
+      .then(() => {
+        this.setRow(rowIndex, {
+          savedCategory: docCategory,
+          savedType: docType,
+          typePending: false
+        });
+        this.showSuccess("Document type updated.");
+      })
+      .catch((error) => {
+        this.setRow(rowIndex, {
+          docCategory: savedCategory,
+          docType: savedType,
+          typeOptions: this.typeOptionsFor(savedCategory),
+          typePending: false
+        });
+        this.showError(error);
+      })
+      .finally(() => {
+        this.setRow(rowIndex, { isSavingType: false });
+      });
   }
 
   handleStatusChange(event) {
